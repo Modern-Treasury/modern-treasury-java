@@ -26,7 +26,7 @@ interface VirtualAccountServiceAsync {
     fun retrieve(
         params: VirtualAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<VirtualAccount>
 
     /** update virtual_account */
     @JvmOverloads
