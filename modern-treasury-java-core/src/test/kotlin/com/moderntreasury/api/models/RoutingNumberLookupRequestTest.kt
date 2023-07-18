@@ -26,12 +26,6 @@ class RoutingNumberLookupRequestTest {
                 .supportedPaymentTypes(listOf(RoutingNumberLookupRequest.SupportedPaymentType.ACH))
                 .build()
         assertThat(routingNumberLookupRequest).isNotNull
-        assertThat(routingNumberLookupRequest.routingNumber()).contains("string")
-        assertThat(routingNumberLookupRequest.routingNumberType())
-            .contains(RoutingNumberLookupRequest.RoutingNumberType.ABA)
-        assertThat(routingNumberLookupRequest.supportedPaymentTypes().get())
-            .containsExactly(RoutingNumberLookupRequest.SupportedPaymentType.ACH)
-        assertThat(routingNumberLookupRequest.bankName()).contains("string")
         assertThat(routingNumberLookupRequest.bankAddress())
             .contains(
                 RoutingNumberLookupRequest.AddressRequest.builder()
@@ -43,7 +37,13 @@ class RoutingNumberLookupRequestTest {
                     .region("string")
                     .build()
             )
+        assertThat(routingNumberLookupRequest.bankName()).contains("string")
+        assertThat(routingNumberLookupRequest.routingNumber()).contains("string")
+        assertThat(routingNumberLookupRequest.routingNumberType())
+            .contains(RoutingNumberLookupRequest.RoutingNumberType.ABA)
         assertThat(routingNumberLookupRequest.sanctions())
             .contains(RoutingNumberLookupRequest.Sanctions.builder().build())
+        assertThat(routingNumberLookupRequest.supportedPaymentTypes().get())
+            .containsExactly(RoutingNumberLookupRequest.SupportedPaymentType.ACH)
     }
 }

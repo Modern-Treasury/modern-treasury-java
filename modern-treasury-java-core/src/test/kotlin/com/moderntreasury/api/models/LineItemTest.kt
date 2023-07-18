@@ -31,15 +31,6 @@ class LineItemTest {
                 .build()
         assertThat(lineItem).isNotNull
         assertThat(lineItem.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(lineItem.object_()).isEqualTo("string")
-        assertThat(lineItem.liveMode()).isEqualTo(true)
-        assertThat(lineItem.createdAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(lineItem.updatedAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(lineItem.itemizableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(lineItem.itemizableType()).isEqualTo(LineItem.ItemizableType.EXPECTED_PAYMENT)
-        assertThat(lineItem.amount()).isEqualTo(123L)
-        assertThat(lineItem.description()).contains("string")
-        assertThat(lineItem.metadata()).isEqualTo(LineItem.Metadata.builder().build())
         assertThat(lineItem.accounting())
             .isEqualTo(
                 LineItem.Accounting.builder()
@@ -50,5 +41,14 @@ class LineItemTest {
         assertThat(lineItem.accountingCategoryId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(lineItem.accountingLedgerClassId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(lineItem.amount()).isEqualTo(123L)
+        assertThat(lineItem.createdAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(lineItem.description()).contains("string")
+        assertThat(lineItem.itemizableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(lineItem.itemizableType()).isEqualTo(LineItem.ItemizableType.EXPECTED_PAYMENT)
+        assertThat(lineItem.liveMode()).isEqualTo(true)
+        assertThat(lineItem.metadata()).isEqualTo(LineItem.Metadata.builder().build())
+        assertThat(lineItem.object_()).isEqualTo("string")
+        assertThat(lineItem.updatedAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }
