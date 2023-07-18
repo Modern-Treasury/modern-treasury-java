@@ -240,11 +240,6 @@ class PaymentOrderServiceTest {
                     .documents(
                         listOf(
                             PaymentOrderCreateParams.DocumentCreateRequest.builder()
-                                .documentableId("string")
-                                .documentableType(
-                                    PaymentOrderCreateParams.DocumentCreateRequest.DocumentableType
-                                        .CASES
-                                )
                                 .file("file.txt")
                                 .documentType("string")
                                 .build()

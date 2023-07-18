@@ -39,10 +39,16 @@ class BalanceReportTest {
                 .build()
         assertThat(balanceReport).isNotNull
         assertThat(balanceReport.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(balanceReport.asOfDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(balanceReport.asOfTime()).contains("string")
+        assertThat(balanceReport.object_()).isEqualTo("string")
+        assertThat(balanceReport.liveMode()).isEqualTo(true)
+        assertThat(balanceReport.createdAt())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(balanceReport.updatedAt())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balanceReport.balanceReportType())
             .isEqualTo(BalanceReport.BalanceReportType.INTRADAY)
+        assertThat(balanceReport.asOfDate()).isEqualTo(LocalDate.parse("2019-12-27"))
+        assertThat(balanceReport.asOfTime()).contains("string")
         assertThat(balanceReport.balances())
             .containsExactly(
                 BalanceReport.Balance.builder()
@@ -58,13 +64,7 @@ class BalanceReportTest {
                     .vendorCodeType(BalanceReport.Balance.VendorCodeType.BAI2)
                     .build()
             )
-        assertThat(balanceReport.createdAt())
-            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balanceReport.internalAccountId())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(balanceReport.liveMode()).isEqualTo(true)
-        assertThat(balanceReport.object_()).isEqualTo("string")
-        assertThat(balanceReport.updatedAt())
-            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }

@@ -210,10 +210,6 @@ class PaymentOrderCreateParamsTest {
             .documents(
                 listOf(
                     PaymentOrderCreateParams.DocumentCreateRequest.builder()
-                        .documentableId("string")
-                        .documentableType(
-                            PaymentOrderCreateParams.DocumentCreateRequest.DocumentableType.CASES
-                        )
                         .file("file.txt")
                         .documentType("string")
                         .build()
@@ -433,11 +429,6 @@ class PaymentOrderCreateParamsTest {
                 .documents(
                     listOf(
                         PaymentOrderCreateParams.DocumentCreateRequest.builder()
-                            .documentableId("string")
-                            .documentableType(
-                                PaymentOrderCreateParams.DocumentCreateRequest.DocumentableType
-                                    .CASES
-                            )
                             .file("file.txt")
                             .documentType("string")
                             .build()
@@ -649,10 +640,6 @@ class PaymentOrderCreateParamsTest {
             .isEqualTo(
                 listOf(
                     PaymentOrderCreateParams.DocumentCreateRequest.builder()
-                        .documentableId("string")
-                        .documentableType(
-                            PaymentOrderCreateParams.DocumentCreateRequest.DocumentableType.CASES
-                        )
                         .file("file.txt")
                         .documentType("string")
                         .build()

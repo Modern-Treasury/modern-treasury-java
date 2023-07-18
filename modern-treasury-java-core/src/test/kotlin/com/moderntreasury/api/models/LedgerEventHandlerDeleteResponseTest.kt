@@ -56,19 +56,16 @@ class LedgerEventHandlerDeleteResponseTest {
         assertThat(ledgerEventHandlerDeleteResponse).isNotNull
         assertThat(ledgerEventHandlerDeleteResponse.id())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(ledgerEventHandlerDeleteResponse.conditions())
-            .contains(
-                LedgerEventHandlerDeleteResponse.LedgerEventHandlerConditions.builder()
-                    .field("string")
-                    .operator("string")
-                    .value("string")
-                    .build()
-            )
+        assertThat(ledgerEventHandlerDeleteResponse.object_()).isEqualTo("string")
+        assertThat(ledgerEventHandlerDeleteResponse.liveMode()).isEqualTo(true)
         assertThat(ledgerEventHandlerDeleteResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(ledgerEventHandlerDeleteResponse.description()).contains("string")
+        assertThat(ledgerEventHandlerDeleteResponse.updatedAt())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(ledgerEventHandlerDeleteResponse.discardedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(ledgerEventHandlerDeleteResponse.name()).isEqualTo("string")
+        assertThat(ledgerEventHandlerDeleteResponse.description()).contains("string")
         assertThat(ledgerEventHandlerDeleteResponse.ledgerTransactionTemplate())
             .isEqualTo(
                 LedgerEventHandlerDeleteResponse.LedgerEventHandlerLedgerTransactionTemplate
@@ -95,12 +92,15 @@ class LedgerEventHandlerDeleteResponseTest {
                     )
                     .build()
             )
-        assertThat(ledgerEventHandlerDeleteResponse.liveMode()).isEqualTo(true)
+        assertThat(ledgerEventHandlerDeleteResponse.conditions())
+            .contains(
+                LedgerEventHandlerDeleteResponse.LedgerEventHandlerConditions.builder()
+                    .field("string")
+                    .operator("string")
+                    .value("string")
+                    .build()
+            )
         assertThat(ledgerEventHandlerDeleteResponse.metadata())
             .contains(LedgerEventHandlerDeleteResponse.Metadata.builder().build())
-        assertThat(ledgerEventHandlerDeleteResponse.name()).isEqualTo("string")
-        assertThat(ledgerEventHandlerDeleteResponse.object_()).isEqualTo("string")
-        assertThat(ledgerEventHandlerDeleteResponse.updatedAt())
-            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }

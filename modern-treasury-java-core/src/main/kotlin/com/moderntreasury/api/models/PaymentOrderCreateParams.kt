@@ -4785,20 +4785,12 @@ constructor(
     @NoAutoDetect
     class DocumentCreateRequest
     private constructor(
-        private val documentableId: String?,
-        private val documentableType: DocumentableType?,
         private val documentType: String?,
         private val file: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
-
-        /** The unique identifier for the associated object. */
-        @JsonProperty("documentable_id") fun documentableId(): String? = documentableId
-
-        @JsonProperty("documentable_type")
-        fun documentableType(): DocumentableType? = documentableType
 
         /** A category given to the document, can be `null`. */
         @JsonProperty("document_type") fun documentType(): String? = documentType
@@ -4817,8 +4809,6 @@ constructor(
             }
 
             return other is DocumentCreateRequest &&
-                this.documentableId == other.documentableId &&
-                this.documentableType == other.documentableType &&
                 this.documentType == other.documentType &&
                 this.file == other.file &&
                 this.additionalProperties == other.additionalProperties
@@ -4828,8 +4818,6 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        documentableId,
-                        documentableType,
                         documentType,
                         file,
                         additionalProperties,
@@ -4839,7 +4827,7 @@ constructor(
         }
 
         override fun toString() =
-            "DocumentCreateRequest{documentableId=$documentableId, documentableType=$documentableType, documentType=$documentType, file=$file, additionalProperties=$additionalProperties}"
+            "DocumentCreateRequest{documentType=$documentType, file=$file, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -4848,30 +4836,15 @@ constructor(
 
         class Builder {
 
-            private var documentableId: String? = null
-            private var documentableType: DocumentableType? = null
             private var documentType: String? = null
             private var file: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(documentCreateRequest: DocumentCreateRequest) = apply {
-                this.documentableId = documentCreateRequest.documentableId
-                this.documentableType = documentCreateRequest.documentableType
                 this.documentType = documentCreateRequest.documentType
                 this.file = documentCreateRequest.file
                 additionalProperties(documentCreateRequest.additionalProperties)
-            }
-
-            /** The unique identifier for the associated object. */
-            @JsonProperty("documentable_id")
-            fun documentableId(documentableId: String) = apply {
-                this.documentableId = documentableId
-            }
-
-            @JsonProperty("documentable_type")
-            fun documentableType(documentableType: DocumentableType) = apply {
-                this.documentableType = documentableType
             }
 
             /** A category given to the document, can be `null`. */
@@ -4896,129 +4869,10 @@ constructor(
 
             fun build(): DocumentCreateRequest =
                 DocumentCreateRequest(
-                    checkNotNull(documentableId) { "`documentableId` is required but was not set" },
-                    checkNotNull(documentableType) {
-                        "`documentableType` is required but was not set"
-                    },
                     documentType,
                     checkNotNull(file) { "`file` is required but was not set" },
                     additionalProperties.toUnmodifiable(),
                 )
-        }
-
-        class DocumentableType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) {
-
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is DocumentableType && this.value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
-            companion object {
-
-                @JvmField val CASES = DocumentableType(JsonField.of("cases"))
-
-                @JvmField val COUNTERPARTIES = DocumentableType(JsonField.of("counterparties"))
-
-                @JvmField
-                val EXPECTED_PAYMENTS = DocumentableType(JsonField.of("expected_payments"))
-
-                @JvmField
-                val EXTERNAL_ACCOUNTS = DocumentableType(JsonField.of("external_accounts"))
-
-                @JvmField
-                val INTERNAL_ACCOUNTS = DocumentableType(JsonField.of("internal_accounts"))
-
-                @JvmField val ORGANIZATIONS = DocumentableType(JsonField.of("organizations"))
-
-                @JvmField val PAPER_ITEMS = DocumentableType(JsonField.of("paper_items"))
-
-                @JvmField val PAYMENT_ORDERS = DocumentableType(JsonField.of("payment_orders"))
-
-                @JvmField val TRANSACTIONS = DocumentableType(JsonField.of("transactions"))
-
-                @JvmField val DECISIONS = DocumentableType(JsonField.of("decisions"))
-
-                @JvmField val CONNECTIONS = DocumentableType(JsonField.of("connections"))
-
-                @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
-            }
-
-            enum class Known {
-                CASES,
-                COUNTERPARTIES,
-                EXPECTED_PAYMENTS,
-                EXTERNAL_ACCOUNTS,
-                INTERNAL_ACCOUNTS,
-                ORGANIZATIONS,
-                PAPER_ITEMS,
-                PAYMENT_ORDERS,
-                TRANSACTIONS,
-                DECISIONS,
-                CONNECTIONS,
-            }
-
-            enum class Value {
-                CASES,
-                COUNTERPARTIES,
-                EXPECTED_PAYMENTS,
-                EXTERNAL_ACCOUNTS,
-                INTERNAL_ACCOUNTS,
-                ORGANIZATIONS,
-                PAPER_ITEMS,
-                PAYMENT_ORDERS,
-                TRANSACTIONS,
-                DECISIONS,
-                CONNECTIONS,
-                _UNKNOWN,
-            }
-
-            fun value(): Value =
-                when (this) {
-                    CASES -> Value.CASES
-                    COUNTERPARTIES -> Value.COUNTERPARTIES
-                    EXPECTED_PAYMENTS -> Value.EXPECTED_PAYMENTS
-                    EXTERNAL_ACCOUNTS -> Value.EXTERNAL_ACCOUNTS
-                    INTERNAL_ACCOUNTS -> Value.INTERNAL_ACCOUNTS
-                    ORGANIZATIONS -> Value.ORGANIZATIONS
-                    PAPER_ITEMS -> Value.PAPER_ITEMS
-                    PAYMENT_ORDERS -> Value.PAYMENT_ORDERS
-                    TRANSACTIONS -> Value.TRANSACTIONS
-                    DECISIONS -> Value.DECISIONS
-                    CONNECTIONS -> Value.CONNECTIONS
-                    else -> Value._UNKNOWN
-                }
-
-            fun known(): Known =
-                when (this) {
-                    CASES -> Known.CASES
-                    COUNTERPARTIES -> Known.COUNTERPARTIES
-                    EXPECTED_PAYMENTS -> Known.EXPECTED_PAYMENTS
-                    EXTERNAL_ACCOUNTS -> Known.EXTERNAL_ACCOUNTS
-                    INTERNAL_ACCOUNTS -> Known.INTERNAL_ACCOUNTS
-                    ORGANIZATIONS -> Known.ORGANIZATIONS
-                    PAPER_ITEMS -> Known.PAPER_ITEMS
-                    PAYMENT_ORDERS -> Known.PAYMENT_ORDERS
-                    TRANSACTIONS -> Known.TRANSACTIONS
-                    DECISIONS -> Known.DECISIONS
-                    CONNECTIONS -> Known.CONNECTIONS
-                    else ->
-                        throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
-                }
-
-            fun asString(): String = _value().asStringOrThrow()
         }
     }
 }
