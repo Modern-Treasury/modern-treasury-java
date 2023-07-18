@@ -15,7 +15,6 @@ class LedgerAccountRetrieveParamsTest {
             .balances(
                 LedgerAccountRetrieveParams.Balances.builder()
                     .asOfDate(LocalDate.parse("2019-12-27"))
-                    .asOfLockVersion(123L)
                     .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .effectiveAtLowerBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .effectiveAtUpperBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -32,7 +31,6 @@ class LedgerAccountRetrieveParamsTest {
                 .balances(
                     LedgerAccountRetrieveParams.Balances.builder()
                         .asOfDate(LocalDate.parse("2019-12-27"))
-                        .asOfLockVersion(123L)
                         .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .effectiveAtLowerBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .effectiveAtUpperBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -42,7 +40,6 @@ class LedgerAccountRetrieveParamsTest {
         val expected = mutableMapOf<String, List<String>>()
         LedgerAccountRetrieveParams.Balances.builder()
             .asOfDate(LocalDate.parse("2019-12-27"))
-            .asOfLockVersion(123L)
             .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .effectiveAtLowerBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .effectiveAtUpperBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
