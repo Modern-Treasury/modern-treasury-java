@@ -2,7 +2,6 @@ name: Release Doctor
 on:
   pull_request:
   workflow_dispatch:
-  
 
 jobs:
   release_doctor:

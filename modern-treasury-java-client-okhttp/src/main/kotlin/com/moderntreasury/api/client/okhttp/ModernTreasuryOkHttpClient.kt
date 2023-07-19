@@ -11,7 +11,6 @@ import java.time.Duration
 class ModernTreasuryOkHttpClient private constructor() {
 
     companion object {
-        
 
         @JvmStatic fun builder() = Builder()
 
