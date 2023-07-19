@@ -20,7 +20,7 @@ jobs:
           stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
 
       - name: Set up Java
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-java@v3
         with:
           distribution: temurin
@@ -29,11 +29,11 @@ jobs:
             17
           cache: gradle
       - name: Set up Gradle
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
         uses: gradle/gradle-build-action@v2
 
       - name: Publish to Sonatype
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
         run: |
           ./gradlew publish
         env:
