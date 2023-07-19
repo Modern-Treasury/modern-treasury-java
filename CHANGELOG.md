@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.0.0...v1.0.1) (2023-07-19)
+
+
+### Chores
+
+* **main:** release 1.0.0 ([060030d](https://github.com/Modern-Treasury/modern-treasury-java/commit/060030dd7765847d62d2bd1b96e31d9df167d29f))
+
 ## [1.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v0.1.0...v1.0.0) (2023-07-19)
 
 ### ⚠ BREAKING CHANGES
