@@ -51,7 +51,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { createHandler.handle(it) }
+                .use { createHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -79,7 +79,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { retrieveHandler.handle(it) }
+                .use { retrieveHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -108,7 +108,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { updateHandler.handle(it) }
+                .use { updateHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -137,7 +137,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { listHandler.handle(it) }
+                .use { listHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         forEach { it.validate() }
@@ -174,7 +174,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { deleteHandler.handle(it) }
+                .use { deleteHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -208,7 +208,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
-            response.let { addLedgerAccountHandler.handle(it) }
+            response.use { addLedgerAccountHandler.handle(it) }
         }
     }
 
@@ -237,7 +237,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
-            response.let { addNestedCategoryHandler.handle(it) }
+            response.use { addNestedCategoryHandler.handle(it) }
         }
     }
 
@@ -266,7 +266,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
-            response.let { removeLedgerAccountHandler.handle(it) }
+            response.use { removeLedgerAccountHandler.handle(it) }
         }
     }
 
@@ -295,7 +295,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
-            response.let { removeNestedCategoryHandler.handle(it) }
+            response.use { removeNestedCategoryHandler.handle(it) }
         }
     }
 }

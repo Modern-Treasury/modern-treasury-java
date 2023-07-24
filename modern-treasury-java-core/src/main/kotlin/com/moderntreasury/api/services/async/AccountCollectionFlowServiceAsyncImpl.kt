@@ -6,12 +6,12 @@ import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.errors.ModernTreasuryError
+import com.moderntreasury.api.models.AccountCollectionFlow
 import com.moderntreasury.api.models.AccountCollectionFlowCreateParams
 import com.moderntreasury.api.models.AccountCollectionFlowListPageAsync
 import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
-import com.moderntreasury.api.models.AccountConnectionFlow
 import com.moderntreasury.api.services.errorHandler
 import com.moderntreasury.api.services.json
 import com.moderntreasury.api.services.jsonHandler
@@ -25,14 +25,14 @@ constructor(
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<AccountConnectionFlow> =
-        jsonHandler<AccountConnectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<AccountCollectionFlow> =
+        jsonHandler<AccountCollectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** create account_collection_flow */
     override fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AccountConnectionFlow> {
+    ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -45,7 +45,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { createHandler.handle(it) }
+                .use { createHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -54,14 +54,14 @@ constructor(
         }
     }
 
-    private val retrieveHandler: Handler<AccountConnectionFlow> =
-        jsonHandler<AccountConnectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val retrieveHandler: Handler<AccountCollectionFlow> =
+        jsonHandler<AccountCollectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** get account_collection_flow */
     override fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AccountConnectionFlow> {
+    ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -73,7 +73,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { retrieveHandler.handle(it) }
+                .use { retrieveHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -82,14 +82,14 @@ constructor(
         }
     }
 
-    private val updateHandler: Handler<AccountConnectionFlow> =
-        jsonHandler<AccountConnectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateHandler: Handler<AccountCollectionFlow> =
+        jsonHandler<AccountCollectionFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** update account_collection_flow */
     override fun update(
         params: AccountCollectionFlowUpdateParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AccountConnectionFlow> {
+    ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.PATCH)
@@ -102,7 +102,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { updateHandler.handle(it) }
+                .use { updateHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -111,8 +111,8 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<List<AccountConnectionFlow>> =
-        jsonHandler<List<AccountConnectionFlow>>(clientOptions.jsonMapper)
+    private val listHandler: Handler<List<AccountCollectionFlow>> =
+        jsonHandler<List<AccountCollectionFlow>>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** list account_collection_flows */
@@ -131,7 +131,7 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
             response
-                .let { listHandler.handle(it) }
+                .use { listHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         forEach { it.validate() }
