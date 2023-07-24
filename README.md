@@ -8,7 +8,7 @@
 
 The Modern Treasury Java SDK provides convenient access to the Modern Treasury REST API from applications written in Java. It includes helper classes with helpful types and documentation for every request and response property.
 
-This package is currently in beta (pre-v1.0.0). We expect some breaking changes to rarely-used areas of the SDK, and appreciate your [feedback](https://www.github.com/Modern-Treasury/modern-treasury-java/issues).
+We expect some breaking changes to rarely-used areas of the SDK, and appreciate your [feedback](https://www.github.com/Modern-Treasury/modern-treasury-java/issues).
 
 The Modern Treasury Java SDK is similar to the Modern Treasury Kotlin SDK but with minor differences that make it more ergonomic for use in Java, such as `Optional` instead of nullable values, `Stream` instead of `Sequence`, and `CompletableFuture` instead of suspend functions.
 
