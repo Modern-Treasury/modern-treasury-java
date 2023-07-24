@@ -8,7 +8,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowListPageAsync
 import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
-import com.moderntreasury.api.models.AccountConnectionFlow
+import com.moderntreasury.api.models.AccountCollectionFlow
 import java.util.concurrent.CompletableFuture
 
 interface AccountCollectionFlowServiceAsync {
@@ -18,21 +18,21 @@ interface AccountCollectionFlowServiceAsync {
     fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AccountConnectionFlow>
+    ): CompletableFuture<AccountCollectionFlow>
 
     /** get account_collection_flow */
     @JvmOverloads
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AccountConnectionFlow>
+    ): CompletableFuture<AccountCollectionFlow>
 
     /** update account_collection_flow */
     @JvmOverloads
     fun update(
         params: AccountCollectionFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AccountConnectionFlow>
+    ): CompletableFuture<AccountCollectionFlow>
 
     /** list account_collection_flows */
     @JvmOverloads
