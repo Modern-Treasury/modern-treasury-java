@@ -1,32 +1,28 @@
 # Changelog
 
-## [2.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.0.1...v2.0.0) (2023-07-24)
-
+## [1.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.0.1...v1.1.0) (2023-07-24)
 
 ### ⚠ BREAKING CHANGES
 
-* **types:** rename account connection flow to account collection flow
+- **types:** rename account connection flow to account collection flow
 
 ### Bug Fixes
 
-* auto-close responses even if an exception is thrown during deserialization ([3bf86f7](https://github.com/Modern-Treasury/modern-treasury-java/commit/3bf86f7bc17eb556942365d37a533c9fa03bcb57))
-
+- auto-close responses even if an exception is thrown during deserialization ([3bf86f7](https://github.com/Modern-Treasury/modern-treasury-java/commit/3bf86f7bc17eb556942365d37a533c9fa03bcb57))
 
 ### Chores
 
-* **internal:** add `codegen.log` to `.gitignore` ([daf6e97](https://github.com/Modern-Treasury/modern-treasury-java/commit/daf6e97b64360a7871898c0feb3997cfa3f5c7cc))
-
+- **internal:** add `codegen.log` to `.gitignore` ([daf6e97](https://github.com/Modern-Treasury/modern-treasury-java/commit/daf6e97b64360a7871898c0feb3997cfa3f5c7cc))
 
 ### Refactors
 
-* **types:** rename account connection flow to account collection flow ([6e9bcc3](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e9bcc386069b783e4428b8a22de122c31ac2227))
+- **types:** rename account connection flow to account collection flow ([6e9bcc3](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e9bcc386069b783e4428b8a22de122c31ac2227))
 
 ## [1.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.0.0...v1.0.1) (2023-07-19)
 
-
 ### Chores
 
-* **main:** release 1.0.0 ([060030d](https://github.com/Modern-Treasury/modern-treasury-java/commit/060030dd7765847d62d2bd1b96e31d9df167d29f))
+- **main:** release 1.0.0 ([060030d](https://github.com/Modern-Treasury/modern-treasury-java/commit/060030dd7765847d62d2bd1b96e31d9df167d29f))
 
 ## [1.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v0.1.0...v1.0.0) (2023-07-19)
 
