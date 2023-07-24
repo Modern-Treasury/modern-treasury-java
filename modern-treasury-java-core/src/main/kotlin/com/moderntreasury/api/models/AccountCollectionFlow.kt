@@ -16,9 +16,9 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = AccountConnectionFlow.Builder::class)
+@JsonDeserialize(builder = AccountCollectionFlow.Builder::class)
 @NoAutoDetect
-class AccountConnectionFlow
+class AccountCollectionFlow
 private constructor(
     private val id: JsonField<String>,
     private val object_: JsonField<String>,
@@ -121,7 +121,7 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun validate(): AccountConnectionFlow = apply {
+    fun validate(): AccountCollectionFlow = apply {
         if (!validated) {
             id()
             object_()
@@ -144,7 +144,7 @@ private constructor(
             return true
         }
 
-        return other is AccountConnectionFlow &&
+        return other is AccountCollectionFlow &&
             this.id == other.id &&
             this.object_ == other.object_ &&
             this.liveMode == other.liveMode &&
@@ -179,7 +179,7 @@ private constructor(
     }
 
     override fun toString() =
-        "AccountConnectionFlow{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, clientToken=$clientToken, status=$status, counterpartyId=$counterpartyId, externalAccountId=$externalAccountId, paymentTypes=$paymentTypes, additionalProperties=$additionalProperties}"
+        "AccountCollectionFlow{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, clientToken=$clientToken, status=$status, counterpartyId=$counterpartyId, externalAccountId=$externalAccountId, paymentTypes=$paymentTypes, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -201,18 +201,18 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(accountConnectionFlow: AccountConnectionFlow) = apply {
-            this.id = accountConnectionFlow.id
-            this.object_ = accountConnectionFlow.object_
-            this.liveMode = accountConnectionFlow.liveMode
-            this.createdAt = accountConnectionFlow.createdAt
-            this.updatedAt = accountConnectionFlow.updatedAt
-            this.clientToken = accountConnectionFlow.clientToken
-            this.status = accountConnectionFlow.status
-            this.counterpartyId = accountConnectionFlow.counterpartyId
-            this.externalAccountId = accountConnectionFlow.externalAccountId
-            this.paymentTypes = accountConnectionFlow.paymentTypes
-            additionalProperties(accountConnectionFlow.additionalProperties)
+        internal fun from(accountCollectionFlow: AccountCollectionFlow) = apply {
+            this.id = accountCollectionFlow.id
+            this.object_ = accountCollectionFlow.object_
+            this.liveMode = accountCollectionFlow.liveMode
+            this.createdAt = accountCollectionFlow.createdAt
+            this.updatedAt = accountCollectionFlow.updatedAt
+            this.clientToken = accountCollectionFlow.clientToken
+            this.status = accountCollectionFlow.status
+            this.counterpartyId = accountCollectionFlow.counterpartyId
+            this.externalAccountId = accountCollectionFlow.externalAccountId
+            this.paymentTypes = accountCollectionFlow.paymentTypes
+            additionalProperties(accountCollectionFlow.additionalProperties)
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -328,8 +328,8 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): AccountConnectionFlow =
-            AccountConnectionFlow(
+        fun build(): AccountCollectionFlow =
+            AccountCollectionFlow(
                 id,
                 object_,
                 liveMode,
