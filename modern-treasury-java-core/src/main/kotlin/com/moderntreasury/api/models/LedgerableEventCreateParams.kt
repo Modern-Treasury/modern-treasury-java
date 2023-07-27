@@ -17,8 +17,6 @@ constructor(
     private val name: String,
     private val description: String?,
     private val direction: String?,
-    private val originatingLedgerAccountId: String?,
-    private val receivingLedgerAccountId: String?,
     private val amount: Long,
     private val currency: String?,
     private val currencyExponent: Long?,
@@ -34,11 +32,6 @@ constructor(
     fun description(): Optional<String> = Optional.ofNullable(description)
 
     fun direction(): Optional<String> = Optional.ofNullable(direction)
-
-    fun originatingLedgerAccountId(): Optional<String> =
-        Optional.ofNullable(originatingLedgerAccountId)
-
-    fun receivingLedgerAccountId(): Optional<String> = Optional.ofNullable(receivingLedgerAccountId)
 
     fun amount(): Long = amount
 
@@ -56,8 +49,6 @@ constructor(
             name,
             description,
             direction,
-            originatingLedgerAccountId,
-            receivingLedgerAccountId,
             amount,
             currency,
             currencyExponent,
@@ -78,8 +69,6 @@ constructor(
         private val name: String?,
         private val description: String?,
         private val direction: String?,
-        private val originatingLedgerAccountId: String?,
-        private val receivingLedgerAccountId: String?,
         private val amount: Long?,
         private val currency: String?,
         private val currencyExponent: Long?,
@@ -98,14 +87,6 @@ constructor(
 
         /** One of `credit`, `debit`. */
         @JsonProperty("direction") fun direction(): String? = direction
-
-        /** The ledger account that initiates the money movement. */
-        @JsonProperty("originating_ledger_account_id")
-        fun originatingLedgerAccountId(): String? = originatingLedgerAccountId
-
-        /** The ledger account that receives the money movement. */
-        @JsonProperty("receiving_ledger_account_id")
-        fun receivingLedgerAccountId(): String? = receivingLedgerAccountId
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         @JsonProperty("amount") fun amount(): Long? = amount
@@ -142,8 +123,6 @@ constructor(
                 this.name == other.name &&
                 this.description == other.description &&
                 this.direction == other.direction &&
-                this.originatingLedgerAccountId == other.originatingLedgerAccountId &&
-                this.receivingLedgerAccountId == other.receivingLedgerAccountId &&
                 this.amount == other.amount &&
                 this.currency == other.currency &&
                 this.currencyExponent == other.currencyExponent &&
@@ -159,8 +138,6 @@ constructor(
                         name,
                         description,
                         direction,
-                        originatingLedgerAccountId,
-                        receivingLedgerAccountId,
                         amount,
                         currency,
                         currencyExponent,
@@ -173,7 +150,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerableEventCreateBody{name=$name, description=$description, direction=$direction, originatingLedgerAccountId=$originatingLedgerAccountId, receivingLedgerAccountId=$receivingLedgerAccountId, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerableEventCreateBody{name=$name, description=$description, direction=$direction, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -185,8 +162,6 @@ constructor(
             private var name: String? = null
             private var description: String? = null
             private var direction: String? = null
-            private var originatingLedgerAccountId: String? = null
-            private var receivingLedgerAccountId: String? = null
             private var amount: Long? = null
             private var currency: String? = null
             private var currencyExponent: Long? = null
@@ -199,9 +174,6 @@ constructor(
                 this.name = ledgerableEventCreateBody.name
                 this.description = ledgerableEventCreateBody.description
                 this.direction = ledgerableEventCreateBody.direction
-                this.originatingLedgerAccountId =
-                    ledgerableEventCreateBody.originatingLedgerAccountId
-                this.receivingLedgerAccountId = ledgerableEventCreateBody.receivingLedgerAccountId
                 this.amount = ledgerableEventCreateBody.amount
                 this.currency = ledgerableEventCreateBody.currency
                 this.currencyExponent = ledgerableEventCreateBody.currencyExponent
@@ -220,18 +192,6 @@ constructor(
             /** One of `credit`, `debit`. */
             @JsonProperty("direction")
             fun direction(direction: String) = apply { this.direction = direction }
-
-            /** The ledger account that initiates the money movement. */
-            @JsonProperty("originating_ledger_account_id")
-            fun originatingLedgerAccountId(originatingLedgerAccountId: String) = apply {
-                this.originatingLedgerAccountId = originatingLedgerAccountId
-            }
-
-            /** The ledger account that receives the money movement. */
-            @JsonProperty("receiving_ledger_account_id")
-            fun receivingLedgerAccountId(receivingLedgerAccountId: String) = apply {
-                this.receivingLedgerAccountId = receivingLedgerAccountId
-            }
 
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -281,8 +241,6 @@ constructor(
                     checkNotNull(name) { "`name` is required but was not set" },
                     description,
                     direction,
-                    originatingLedgerAccountId,
-                    receivingLedgerAccountId,
                     checkNotNull(amount) { "`amount` is required but was not set" },
                     currency,
                     currencyExponent,
@@ -308,8 +266,6 @@ constructor(
             this.name == other.name &&
             this.description == other.description &&
             this.direction == other.direction &&
-            this.originatingLedgerAccountId == other.originatingLedgerAccountId &&
-            this.receivingLedgerAccountId == other.receivingLedgerAccountId &&
             this.amount == other.amount &&
             this.currency == other.currency &&
             this.currencyExponent == other.currencyExponent &&
@@ -325,8 +281,6 @@ constructor(
             name,
             description,
             direction,
-            originatingLedgerAccountId,
-            receivingLedgerAccountId,
             amount,
             currency,
             currencyExponent,
@@ -339,7 +293,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerableEventCreateParams{name=$name, description=$description, direction=$direction, originatingLedgerAccountId=$originatingLedgerAccountId, receivingLedgerAccountId=$receivingLedgerAccountId, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerableEventCreateParams{name=$name, description=$description, direction=$direction, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -354,8 +308,6 @@ constructor(
         private var name: String? = null
         private var description: String? = null
         private var direction: String? = null
-        private var originatingLedgerAccountId: String? = null
-        private var receivingLedgerAccountId: String? = null
         private var amount: Long? = null
         private var currency: String? = null
         private var currencyExponent: Long? = null
@@ -370,8 +322,6 @@ constructor(
             this.name = ledgerableEventCreateParams.name
             this.description = ledgerableEventCreateParams.description
             this.direction = ledgerableEventCreateParams.direction
-            this.originatingLedgerAccountId = ledgerableEventCreateParams.originatingLedgerAccountId
-            this.receivingLedgerAccountId = ledgerableEventCreateParams.receivingLedgerAccountId
             this.amount = ledgerableEventCreateParams.amount
             this.currency = ledgerableEventCreateParams.currency
             this.currencyExponent = ledgerableEventCreateParams.currencyExponent
@@ -390,16 +340,6 @@ constructor(
 
         /** One of `credit`, `debit`. */
         fun direction(direction: String) = apply { this.direction = direction }
-
-        /** The ledger account that initiates the money movement. */
-        fun originatingLedgerAccountId(originatingLedgerAccountId: String) = apply {
-            this.originatingLedgerAccountId = originatingLedgerAccountId
-        }
-
-        /** The ledger account that receives the money movement. */
-        fun receivingLedgerAccountId(receivingLedgerAccountId: String) = apply {
-            this.receivingLedgerAccountId = receivingLedgerAccountId
-        }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = apply { this.amount = amount }
@@ -482,8 +422,6 @@ constructor(
                 checkNotNull(name) { "`name` is required but was not set" },
                 description,
                 direction,
-                originatingLedgerAccountId,
-                receivingLedgerAccountId,
                 checkNotNull(amount) { "`amount` is required but was not set" },
                 currency,
                 currencyExponent,
