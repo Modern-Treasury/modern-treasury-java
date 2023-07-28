@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.1.0...v1.2.0) (2023-07-28)
+
+
+### Features
+
+* **api:** updates ([#25](https://github.com/Modern-Treasury/modern-treasury-java/issues/25)) ([07feb05](https://github.com/Modern-Treasury/modern-treasury-java/commit/07feb05e82a4c9b1d1582ed500ae53342c5b9f44))
+* **api:** updates ([#27](https://github.com/Modern-Treasury/modern-treasury-java/issues/27)) ([80e252c](https://github.com/Modern-Treasury/modern-treasury-java/commit/80e252ccdd782a3634c66e2fd3ceae4d9b8c2ae5))
+* **ci:** add a publish-sonatype workflow for manual running ([#26](https://github.com/Modern-Treasury/modern-treasury-java/issues/26)) ([1d96ffc](https://github.com/Modern-Treasury/modern-treasury-java/commit/1d96ffc2716d89111cd11eb44febfefdc20c5663))
+
+
+### Chores
+
+* formatting ([#23](https://github.com/Modern-Treasury/modern-treasury-java/issues/23)) ([eae8b46](https://github.com/Modern-Treasury/modern-treasury-java/commit/eae8b46d5c7888eac1cc21209802fd5bb8860d40))
+
 ## [1.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.0.1...v1.1.0) (2023-07-24)
 
 ### ⚠ BREAKING CHANGES
