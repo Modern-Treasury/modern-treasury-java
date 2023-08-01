@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.2.0...v1.3.0) (2023-08-01)
+
+
+### Features
+
+* **test:** unskip file uploads tests ([#31](https://github.com/Modern-Treasury/modern-treasury-java/issues/31)) ([60a9300](https://github.com/Modern-Treasury/modern-treasury-java/commit/60a9300b340ed4f5cd5b0c6c9d74bfdec04198a3))
+
+
+### Chores
+
+* **internal:** change Sonatype host to oss.sonatype.org ([#29](https://github.com/Modern-Treasury/modern-treasury-java/issues/29)) ([5206c21](https://github.com/Modern-Treasury/modern-treasury-java/commit/5206c21b19a6af82815a3768325c856a5af1806d))
+
 ## [1.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.1.0...v1.2.0) (2023-07-28)
 
 
