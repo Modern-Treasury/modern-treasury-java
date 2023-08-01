@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: release
-    if: github.ref == 'refs/heads/main' && github.repository == 'Modern-Treasury/modern-treasury-java'
+    # if: github.ref == 'refs/heads/main' && github.repository == 'Modern-Treasury/modern-treasury-java'
     runs-on: ubuntu-latest
 
     steps:
