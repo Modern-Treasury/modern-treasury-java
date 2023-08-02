@@ -25,6 +25,7 @@ constructor(
     private val internalAccountId: String?,
     private val virtualAccountId: String?,
     private val asOfDate: LocalDate?,
+    private val description: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -44,6 +45,8 @@ constructor(
 
     fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
 
+    fun description(): Optional<String> = Optional.ofNullable(description)
+
     @JvmSynthetic
     internal fun getBody(): IncomingPaymentDetailCreateAsyncBody {
         return IncomingPaymentDetailCreateAsyncBody(
@@ -54,6 +57,7 @@ constructor(
             internalAccountId,
             virtualAccountId,
             asOfDate,
+            description,
             additionalBodyProperties,
         )
     }
@@ -73,6 +77,7 @@ constructor(
         private val internalAccountId: String?,
         private val virtualAccountId: String?,
         private val asOfDate: LocalDate?,
+        private val description: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -99,6 +104,9 @@ constructor(
         /** Defaults to today. */
         @JsonProperty("as_of_date") fun asOfDate(): LocalDate? = asOfDate
 
+        /** Defaults to a random description. */
+        @JsonProperty("description") fun description(): String? = description
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -118,6 +126,7 @@ constructor(
                 this.internalAccountId == other.internalAccountId &&
                 this.virtualAccountId == other.virtualAccountId &&
                 this.asOfDate == other.asOfDate &&
+                this.description == other.description &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -132,6 +141,7 @@ constructor(
                         internalAccountId,
                         virtualAccountId,
                         asOfDate,
+                        description,
                         additionalProperties,
                     )
             }
@@ -139,7 +149,7 @@ constructor(
         }
 
         override fun toString() =
-            "IncomingPaymentDetailCreateAsyncBody{type=$type, direction=$direction, amount=$amount, currency=$currency, internalAccountId=$internalAccountId, virtualAccountId=$virtualAccountId, asOfDate=$asOfDate, additionalProperties=$additionalProperties}"
+            "IncomingPaymentDetailCreateAsyncBody{type=$type, direction=$direction, amount=$amount, currency=$currency, internalAccountId=$internalAccountId, virtualAccountId=$virtualAccountId, asOfDate=$asOfDate, description=$description, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -155,6 +165,7 @@ constructor(
             private var internalAccountId: String? = null
             private var virtualAccountId: String? = null
             private var asOfDate: LocalDate? = null
+            private var description: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -168,6 +179,7 @@ constructor(
                 this.internalAccountId = incomingPaymentDetailCreateAsyncBody.internalAccountId
                 this.virtualAccountId = incomingPaymentDetailCreateAsyncBody.virtualAccountId
                 this.asOfDate = incomingPaymentDetailCreateAsyncBody.asOfDate
+                this.description = incomingPaymentDetailCreateAsyncBody.description
                 additionalProperties(incomingPaymentDetailCreateAsyncBody.additionalProperties)
             }
 
@@ -205,6 +217,10 @@ constructor(
             @JsonProperty("as_of_date")
             fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
 
+            /** Defaults to a random description. */
+            @JsonProperty("description")
+            fun description(description: String) = apply { this.description = description }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -228,6 +244,7 @@ constructor(
                     internalAccountId,
                     virtualAccountId,
                     asOfDate,
+                    description,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -252,6 +269,7 @@ constructor(
             this.internalAccountId == other.internalAccountId &&
             this.virtualAccountId == other.virtualAccountId &&
             this.asOfDate == other.asOfDate &&
+            this.description == other.description &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -266,6 +284,7 @@ constructor(
             internalAccountId,
             virtualAccountId,
             asOfDate,
+            description,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -273,7 +292,7 @@ constructor(
     }
 
     override fun toString() =
-        "IncomingPaymentDetailCreateAsyncParams{type=$type, direction=$direction, amount=$amount, currency=$currency, internalAccountId=$internalAccountId, virtualAccountId=$virtualAccountId, asOfDate=$asOfDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "IncomingPaymentDetailCreateAsyncParams{type=$type, direction=$direction, amount=$amount, currency=$currency, internalAccountId=$internalAccountId, virtualAccountId=$virtualAccountId, asOfDate=$asOfDate, description=$description, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -292,6 +311,7 @@ constructor(
         private var internalAccountId: String? = null
         private var virtualAccountId: String? = null
         private var asOfDate: LocalDate? = null
+        private var description: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -307,6 +327,7 @@ constructor(
             this.internalAccountId = incomingPaymentDetailCreateAsyncParams.internalAccountId
             this.virtualAccountId = incomingPaymentDetailCreateAsyncParams.virtualAccountId
             this.asOfDate = incomingPaymentDetailCreateAsyncParams.asOfDate
+            this.description = incomingPaymentDetailCreateAsyncParams.description
             additionalQueryParams(incomingPaymentDetailCreateAsyncParams.additionalQueryParams)
             additionalHeaders(incomingPaymentDetailCreateAsyncParams.additionalHeaders)
             additionalBodyProperties(
@@ -338,6 +359,9 @@ constructor(
 
         /** Defaults to today. */
         fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+
+        /** Defaults to a random description. */
+        fun description(description: String) = apply { this.description = description }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -402,6 +426,7 @@ constructor(
                 internalAccountId,
                 virtualAccountId,
                 asOfDate,
+                description,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
