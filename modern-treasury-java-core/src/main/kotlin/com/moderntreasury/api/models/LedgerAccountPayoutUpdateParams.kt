@@ -325,63 +325,6 @@ constructor(
             )
     }
 
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Status && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val POSTED = Status(JsonField.of("posted"))
-
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
-
-            @JvmStatic fun of(value: String) = Status(JsonField.of(value))
-        }
-
-        enum class Known {
-            POSTED,
-            ARCHIVED,
-        }
-
-        enum class Value {
-            POSTED,
-            ARCHIVED,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                POSTED -> Value.POSTED
-                ARCHIVED -> Value.ARCHIVED
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                POSTED -> Known.POSTED
-                ARCHIVED -> Known.ARCHIVED
-                else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
@@ -445,5 +388,62 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+    }
+
+    class Status
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Status && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val POSTED = Status(JsonField.of("posted"))
+
+            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+
+            @JvmStatic fun of(value: String) = Status(JsonField.of(value))
+        }
+
+        enum class Known {
+            POSTED,
+            ARCHIVED,
+        }
+
+        enum class Value {
+            POSTED,
+            ARCHIVED,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                POSTED -> Value.POSTED
+                ARCHIVED -> Value.ARCHIVED
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                POSTED -> Known.POSTED
+                ARCHIVED -> Known.ARCHIVED
+                else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }

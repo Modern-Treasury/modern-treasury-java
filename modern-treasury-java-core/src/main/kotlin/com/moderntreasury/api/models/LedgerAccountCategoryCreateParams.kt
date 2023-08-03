@@ -407,6 +407,63 @@ constructor(
             )
     }
 
+    class NormalBalance
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is NormalBalance && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val CREDIT = NormalBalance(JsonField.of("credit"))
+
+            @JvmField val DEBIT = NormalBalance(JsonField.of("debit"))
+
+            @JvmStatic fun of(value: String) = NormalBalance(JsonField.of(value))
+        }
+
+        enum class Known {
+            CREDIT,
+            DEBIT,
+        }
+
+        enum class Value {
+            CREDIT,
+            DEBIT,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                CREDIT -> Value.CREDIT
+                DEBIT -> Value.DEBIT
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                CREDIT -> Known.CREDIT
+                DEBIT -> Known.DEBIT
+                else -> throw ModernTreasuryInvalidDataException("Unknown NormalBalance: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
@@ -470,62 +527,5 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
-    }
-
-    class NormalBalance
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is NormalBalance && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CREDIT = NormalBalance(JsonField.of("credit"))
-
-            @JvmField val DEBIT = NormalBalance(JsonField.of("debit"))
-
-            @JvmStatic fun of(value: String) = NormalBalance(JsonField.of(value))
-        }
-
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown NormalBalance: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 }

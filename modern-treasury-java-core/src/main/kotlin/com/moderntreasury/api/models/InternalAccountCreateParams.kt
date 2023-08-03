@@ -437,6 +437,63 @@ constructor(
             )
     }
 
+    class Currency
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Currency && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val USD = Currency(JsonField.of("USD"))
+
+            @JvmField val CAD = Currency(JsonField.of("CAD"))
+
+            @JvmStatic fun of(value: String) = Currency(JsonField.of(value))
+        }
+
+        enum class Known {
+            USD,
+            CAD,
+        }
+
+        enum class Value {
+            USD,
+            CAD,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                USD -> Value.USD
+                CAD -> Value.CAD
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                USD -> Known.USD
+                CAD -> Known.CAD
+                else -> throw ModernTreasuryInvalidDataException("Unknown Currency: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     /** The address associated with the owner or null. */
     @JsonDeserialize(builder = PartyAddress.Builder::class)
     @NoAutoDetect
@@ -578,63 +635,6 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
-    }
-
-    class Currency
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Currency && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val USD = Currency(JsonField.of("USD"))
-
-            @JvmField val CAD = Currency(JsonField.of("CAD"))
-
-            @JvmStatic fun of(value: String) = Currency(JsonField.of(value))
-        }
-
-        enum class Known {
-            USD,
-            CAD,
-        }
-
-        enum class Value {
-            USD,
-            CAD,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                USD -> Value.USD
-                CAD -> Value.CAD
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                USD -> Known.USD
-                CAD -> Known.CAD
-                else -> throw ModernTreasuryInvalidDataException("Unknown Currency: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 
     /**
