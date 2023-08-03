@@ -17,6 +17,7 @@ constructor(
     private val id: String?,
     private val name: String?,
     private val ledgerId: String?,
+    private val currency: String?,
     private val balances: Balances?,
     private val createdAt: CreatedAt?,
     private val updatedAt: UpdatedAt?,
@@ -37,6 +38,8 @@ constructor(
 
     fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId)
 
+    fun currency(): Optional<String> = Optional.ofNullable(currency)
+
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
     fun createdAt(): Optional<CreatedAt> = Optional.ofNullable(createdAt)
@@ -54,6 +57,7 @@ constructor(
         this.id?.let { params.put("id", listOf(it.toString())) }
         this.name?.let { params.put("name", listOf(it.toString())) }
         this.ledgerId?.let { params.put("ledger_id", listOf(it.toString())) }
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
         this.balances?.forEachQueryParam { key, values -> params.put("balances[$key]", values) }
         this.createdAt?.forEachQueryParam { key, values -> params.put("created_at[$key]", values) }
         this.updatedAt?.forEachQueryParam { key, values -> params.put("updated_at[$key]", values) }
@@ -82,6 +86,7 @@ constructor(
             this.id == other.id &&
             this.name == other.name &&
             this.ledgerId == other.ledgerId &&
+            this.currency == other.currency &&
             this.balances == other.balances &&
             this.createdAt == other.createdAt &&
             this.updatedAt == other.updatedAt &&
@@ -98,6 +103,7 @@ constructor(
             id,
             name,
             ledgerId,
+            currency,
             balances,
             createdAt,
             updatedAt,
@@ -108,7 +114,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerAccountListParams{afterCursor=$afterCursor, perPage=$perPage, metadata=$metadata, id=$id, name=$name, ledgerId=$ledgerId, balances=$balances, createdAt=$createdAt, updatedAt=$updatedAt, ledgerAccountCategoryId=$ledgerAccountCategoryId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "LedgerAccountListParams{afterCursor=$afterCursor, perPage=$perPage, metadata=$metadata, id=$id, name=$name, ledgerId=$ledgerId, currency=$currency, balances=$balances, createdAt=$createdAt, updatedAt=$updatedAt, ledgerAccountCategoryId=$ledgerAccountCategoryId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -126,6 +132,7 @@ constructor(
         private var id: String? = null
         private var name: String? = null
         private var ledgerId: String? = null
+        private var currency: String? = null
         private var balances: Balances? = null
         private var createdAt: CreatedAt? = null
         private var updatedAt: UpdatedAt? = null
@@ -141,6 +148,7 @@ constructor(
             this.id = ledgerAccountListParams.id
             this.name = ledgerAccountListParams.name
             this.ledgerId = ledgerAccountListParams.ledgerId
+            this.currency = ledgerAccountListParams.currency
             this.balances = ledgerAccountListParams.balances
             this.createdAt = ledgerAccountListParams.createdAt
             this.updatedAt = ledgerAccountListParams.updatedAt
@@ -164,6 +172,8 @@ constructor(
         fun name(name: String) = apply { this.name = name }
 
         fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /**
          * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
@@ -239,6 +249,7 @@ constructor(
                 id,
                 name,
                 ledgerId,
+                currency,
                 balances,
                 createdAt,
                 updatedAt,
