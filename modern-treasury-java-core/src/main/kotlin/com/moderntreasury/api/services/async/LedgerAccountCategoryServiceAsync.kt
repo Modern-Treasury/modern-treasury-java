@@ -53,7 +53,7 @@ interface LedgerAccountCategoryServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<LedgerAccountCategory>
 
-    /** Add a ledger account category to an account. */
+    /** Add a ledger account to a ledger account category. */
     @JvmOverloads
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
@@ -67,7 +67,7 @@ interface LedgerAccountCategoryServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<Void>
 
-    /** Delete a ledger account category from an account. */
+    /** Remove a ledger account from a ledger account category. */
     @JvmOverloads
     fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,

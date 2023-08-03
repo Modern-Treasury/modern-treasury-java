@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toUnmodifiable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
+import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
@@ -21,6 +22,7 @@ constructor(
     private val description: String?,
     private val status: Status?,
     private val metadata: Metadata?,
+    private val effectiveAt: LocalDate?,
     private val ledgerEntries: List<LedgerEntryCreateRequest>?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -35,6 +37,8 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    fun effectiveAt(): Optional<LocalDate> = Optional.ofNullable(effectiveAt)
+
     fun ledgerEntries(): Optional<List<LedgerEntryCreateRequest>> =
         Optional.ofNullable(ledgerEntries)
 
@@ -44,6 +48,7 @@ constructor(
             description,
             status,
             metadata,
+            effectiveAt,
             ledgerEntries,
             additionalBodyProperties,
         )
@@ -67,6 +72,7 @@ constructor(
         private val description: String?,
         private val status: Status?,
         private val metadata: Metadata?,
+        private val effectiveAt: LocalDate?,
         private val ledgerEntries: List<LedgerEntryCreateRequest>?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -83,6 +89,12 @@ constructor(
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        /**
+         * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+         * purposes.
+         */
+        @JsonProperty("effective_at") fun effectiveAt(): LocalDate? = effectiveAt
 
         /** An array of ledger entry objects. */
         @JsonProperty("ledger_entries")
@@ -103,6 +115,7 @@ constructor(
                 this.description == other.description &&
                 this.status == other.status &&
                 this.metadata == other.metadata &&
+                this.effectiveAt == other.effectiveAt &&
                 this.ledgerEntries == other.ledgerEntries &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -114,6 +127,7 @@ constructor(
                         description,
                         status,
                         metadata,
+                        effectiveAt,
                         ledgerEntries,
                         additionalProperties,
                     )
@@ -122,7 +136,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerTransactionUpdateBody{description=$description, status=$status, metadata=$metadata, ledgerEntries=$ledgerEntries, additionalProperties=$additionalProperties}"
+            "LedgerTransactionUpdateBody{description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -134,6 +148,7 @@ constructor(
             private var description: String? = null
             private var status: Status? = null
             private var metadata: Metadata? = null
+            private var effectiveAt: LocalDate? = null
             private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -142,6 +157,7 @@ constructor(
                 this.description = ledgerTransactionUpdateBody.description
                 this.status = ledgerTransactionUpdateBody.status
                 this.metadata = ledgerTransactionUpdateBody.metadata
+                this.effectiveAt = ledgerTransactionUpdateBody.effectiveAt
                 this.ledgerEntries = ledgerTransactionUpdateBody.ledgerEntries
                 additionalProperties(ledgerTransactionUpdateBody.additionalProperties)
             }
@@ -159,6 +175,13 @@ constructor(
              */
             @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /**
+             * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+             * purposes.
+             */
+            @JsonProperty("effective_at")
+            fun effectiveAt(effectiveAt: LocalDate) = apply { this.effectiveAt = effectiveAt }
 
             /** An array of ledger entry objects. */
             @JsonProperty("ledger_entries")
@@ -185,6 +208,7 @@ constructor(
                     description,
                     status,
                     metadata,
+                    effectiveAt,
                     ledgerEntries?.toUnmodifiable(),
                     additionalProperties.toUnmodifiable(),
                 )
@@ -207,6 +231,7 @@ constructor(
             this.description == other.description &&
             this.status == other.status &&
             this.metadata == other.metadata &&
+            this.effectiveAt == other.effectiveAt &&
             this.ledgerEntries == other.ledgerEntries &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -219,6 +244,7 @@ constructor(
             description,
             status,
             metadata,
+            effectiveAt,
             ledgerEntries,
             additionalQueryParams,
             additionalHeaders,
@@ -227,7 +253,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerTransactionUpdateParams{id=$id, description=$description, status=$status, metadata=$metadata, ledgerEntries=$ledgerEntries, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerTransactionUpdateParams{id=$id, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -243,6 +269,7 @@ constructor(
         private var description: String? = null
         private var status: Status? = null
         private var metadata: Metadata? = null
+        private var effectiveAt: LocalDate? = null
         private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -254,6 +281,7 @@ constructor(
             this.description = ledgerTransactionUpdateParams.description
             this.status = ledgerTransactionUpdateParams.status
             this.metadata = ledgerTransactionUpdateParams.metadata
+            this.effectiveAt = ledgerTransactionUpdateParams.effectiveAt
             this.ledgerEntries = ledgerTransactionUpdateParams.ledgerEntries
             additionalQueryParams(ledgerTransactionUpdateParams.additionalQueryParams)
             additionalHeaders(ledgerTransactionUpdateParams.additionalHeaders)
@@ -272,6 +300,12 @@ constructor(
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        /**
+         * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+         * purposes.
+         */
+        fun effectiveAt(effectiveAt: LocalDate) = apply { this.effectiveAt = effectiveAt }
 
         /** An array of ledger entry objects. */
         fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
@@ -338,6 +372,7 @@ constructor(
                 description,
                 status,
                 metadata,
+                effectiveAt,
                 ledgerEntries?.toUnmodifiable(),
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

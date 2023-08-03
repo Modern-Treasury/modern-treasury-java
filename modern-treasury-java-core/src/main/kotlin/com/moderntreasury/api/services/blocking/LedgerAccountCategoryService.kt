@@ -52,7 +52,7 @@ interface LedgerAccountCategoryService {
         requestOptions: RequestOptions = RequestOptions.none()
     ): LedgerAccountCategory
 
-    /** Add a ledger account category to an account. */
+    /** Add a ledger account to a ledger account category. */
     @JvmOverloads
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
@@ -66,7 +66,7 @@ interface LedgerAccountCategoryService {
         requestOptions: RequestOptions = RequestOptions.none()
     )
 
-    /** Delete a ledger account category from an account. */
+    /** Remove a ledger account from a ledger account category. */
     @JvmOverloads
     fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
