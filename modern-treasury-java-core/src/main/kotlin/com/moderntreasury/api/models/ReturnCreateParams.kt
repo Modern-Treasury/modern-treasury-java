@@ -408,6 +408,58 @@ constructor(
             )
     }
 
+    class ReturnableType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ReturnableType && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField
+            val INCOMING_PAYMENT_DETAIL = ReturnableType(JsonField.of("incoming_payment_detail"))
+
+            @JvmStatic fun of(value: String) = ReturnableType(JsonField.of(value))
+        }
+
+        enum class Known {
+            INCOMING_PAYMENT_DETAIL,
+        }
+
+        enum class Value {
+            INCOMING_PAYMENT_DETAIL,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
+                else -> throw ModernTreasuryInvalidDataException("Unknown ReturnableType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     class Code
     @JsonCreator
     private constructor(
@@ -706,58 +758,6 @@ constructor(
                 R53 -> Known.R53
                 CURRENCYCLOUD -> Known.CURRENCYCLOUD
                 else -> throw ModernTreasuryInvalidDataException("Unknown Code: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class ReturnableType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is ReturnableType && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField
-            val INCOMING_PAYMENT_DETAIL = ReturnableType(JsonField.of("incoming_payment_detail"))
-
-            @JvmStatic fun of(value: String) = ReturnableType(JsonField.of(value))
-        }
-
-        enum class Known {
-            INCOMING_PAYMENT_DETAIL,
-        }
-
-        enum class Value {
-            INCOMING_PAYMENT_DETAIL,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                else -> throw ModernTreasuryInvalidDataException("Unknown ReturnableType: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()

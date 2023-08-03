@@ -339,259 +339,6 @@ private constructor(
             )
     }
 
-    class RoutingNumberType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is RoutingNumberType && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val ABA = RoutingNumberType(JsonField.of("aba"))
-
-            @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
-
-            @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
-
-            @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
-
-            @JvmField val CHIPS = RoutingNumberType(JsonField.of("chips"))
-
-            @JvmField val CNAPS = RoutingNumberType(JsonField.of("cnaps"))
-
-            @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
-
-            @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
-
-            @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
-
-            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
-
-            @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
-        }
-
-        enum class Known {
-            ABA,
-            AU_BSB,
-            BR_CODIGO,
-            CA_CPA,
-            CHIPS,
-            CNAPS,
-            GB_SORT_CODE,
-            IN_IFSC,
-            MY_BRANCH_CODE,
-            SWIFT,
-        }
-
-        enum class Value {
-            ABA,
-            AU_BSB,
-            BR_CODIGO,
-            CA_CPA,
-            CHIPS,
-            CNAPS,
-            GB_SORT_CODE,
-            IN_IFSC,
-            MY_BRANCH_CODE,
-            SWIFT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                ABA -> Value.ABA
-                AU_BSB -> Value.AU_BSB
-                BR_CODIGO -> Value.BR_CODIGO
-                CA_CPA -> Value.CA_CPA
-                CHIPS -> Value.CHIPS
-                CNAPS -> Value.CNAPS
-                GB_SORT_CODE -> Value.GB_SORT_CODE
-                IN_IFSC -> Value.IN_IFSC
-                MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
-                SWIFT -> Value.SWIFT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                ABA -> Known.ABA
-                AU_BSB -> Known.AU_BSB
-                BR_CODIGO -> Known.BR_CODIGO
-                CA_CPA -> Known.CA_CPA
-                CHIPS -> Known.CHIPS
-                CNAPS -> Known.CNAPS
-                GB_SORT_CODE -> Known.GB_SORT_CODE
-                IN_IFSC -> Known.IN_IFSC
-                MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
-                SWIFT -> Known.SWIFT
-                else ->
-                    throw ModernTreasuryInvalidDataException("Unknown RoutingNumberType: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class PaymentType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PaymentType && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val ACH = PaymentType(JsonField.of("ach"))
-
-            @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
-
-            @JvmField val BACS = PaymentType(JsonField.of("bacs"))
-
-            @JvmField val BOOK = PaymentType(JsonField.of("book"))
-
-            @JvmField val CARD = PaymentType(JsonField.of("card"))
-
-            @JvmField val CHECK = PaymentType(JsonField.of("check"))
-
-            @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
-
-            @JvmField val EFT = PaymentType(JsonField.of("eft"))
-
-            @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
-
-            @JvmField val MASAV = PaymentType(JsonField.of("masav"))
-
-            @JvmField val NEFT = PaymentType(JsonField.of("neft"))
-
-            @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
-
-            @JvmField val RTP = PaymentType(JsonField.of("rtp"))
-
-            @JvmField val SEN = PaymentType(JsonField.of("sen"))
-
-            @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
-
-            @JvmField val SIGNET = PaymentType(JsonField.of("signet"))
-
-            @JvmField val WIRE = PaymentType(JsonField.of("wire"))
-
-            @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
-        }
-
-        enum class Known {
-            ACH,
-            AU_BECS,
-            BACS,
-            BOOK,
-            CARD,
-            CHECK,
-            CROSS_BORDER,
-            EFT,
-            INTERAC,
-            MASAV,
-            NEFT,
-            PROVXCHANGE,
-            RTP,
-            SEN,
-            SEPA,
-            SIGNET,
-            WIRE,
-        }
-
-        enum class Value {
-            ACH,
-            AU_BECS,
-            BACS,
-            BOOK,
-            CARD,
-            CHECK,
-            CROSS_BORDER,
-            EFT,
-            INTERAC,
-            MASAV,
-            NEFT,
-            PROVXCHANGE,
-            RTP,
-            SEN,
-            SEPA,
-            SIGNET,
-            WIRE,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                ACH -> Value.ACH
-                AU_BECS -> Value.AU_BECS
-                BACS -> Value.BACS
-                BOOK -> Value.BOOK
-                CARD -> Value.CARD
-                CHECK -> Value.CHECK
-                CROSS_BORDER -> Value.CROSS_BORDER
-                EFT -> Value.EFT
-                INTERAC -> Value.INTERAC
-                MASAV -> Value.MASAV
-                NEFT -> Value.NEFT
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RTP -> Value.RTP
-                SEN -> Value.SEN
-                SEPA -> Value.SEPA
-                SIGNET -> Value.SIGNET
-                WIRE -> Value.WIRE
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                ACH -> Known.ACH
-                AU_BECS -> Known.AU_BECS
-                BACS -> Known.BACS
-                BOOK -> Known.BOOK
-                CARD -> Known.CARD
-                CHECK -> Known.CHECK
-                CROSS_BORDER -> Known.CROSS_BORDER
-                EFT -> Known.EFT
-                INTERAC -> Known.INTERAC
-                MASAV -> Known.MASAV
-                NEFT -> Known.NEFT
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RTP -> Known.RTP
-                SEN -> Known.SEN
-                SEPA -> Known.SEPA
-                SIGNET -> Known.SIGNET
-                WIRE -> Known.WIRE
-                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
     @JsonDeserialize(builder = Address.Builder::class)
     @NoAutoDetect
     class Address
@@ -894,5 +641,258 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+    }
+
+    class PaymentType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PaymentType && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val ACH = PaymentType(JsonField.of("ach"))
+
+            @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
+
+            @JvmField val BACS = PaymentType(JsonField.of("bacs"))
+
+            @JvmField val BOOK = PaymentType(JsonField.of("book"))
+
+            @JvmField val CARD = PaymentType(JsonField.of("card"))
+
+            @JvmField val CHECK = PaymentType(JsonField.of("check"))
+
+            @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
+
+            @JvmField val EFT = PaymentType(JsonField.of("eft"))
+
+            @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
+
+            @JvmField val MASAV = PaymentType(JsonField.of("masav"))
+
+            @JvmField val NEFT = PaymentType(JsonField.of("neft"))
+
+            @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+
+            @JvmField val RTP = PaymentType(JsonField.of("rtp"))
+
+            @JvmField val SEN = PaymentType(JsonField.of("sen"))
+
+            @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
+
+            @JvmField val SIGNET = PaymentType(JsonField.of("signet"))
+
+            @JvmField val WIRE = PaymentType(JsonField.of("wire"))
+
+            @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
+        }
+
+        enum class Known {
+            ACH,
+            AU_BECS,
+            BACS,
+            BOOK,
+            CARD,
+            CHECK,
+            CROSS_BORDER,
+            EFT,
+            INTERAC,
+            MASAV,
+            NEFT,
+            PROVXCHANGE,
+            RTP,
+            SEN,
+            SEPA,
+            SIGNET,
+            WIRE,
+        }
+
+        enum class Value {
+            ACH,
+            AU_BECS,
+            BACS,
+            BOOK,
+            CARD,
+            CHECK,
+            CROSS_BORDER,
+            EFT,
+            INTERAC,
+            MASAV,
+            NEFT,
+            PROVXCHANGE,
+            RTP,
+            SEN,
+            SEPA,
+            SIGNET,
+            WIRE,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                ACH -> Value.ACH
+                AU_BECS -> Value.AU_BECS
+                BACS -> Value.BACS
+                BOOK -> Value.BOOK
+                CARD -> Value.CARD
+                CHECK -> Value.CHECK
+                CROSS_BORDER -> Value.CROSS_BORDER
+                EFT -> Value.EFT
+                INTERAC -> Value.INTERAC
+                MASAV -> Value.MASAV
+                NEFT -> Value.NEFT
+                PROVXCHANGE -> Value.PROVXCHANGE
+                RTP -> Value.RTP
+                SEN -> Value.SEN
+                SEPA -> Value.SEPA
+                SIGNET -> Value.SIGNET
+                WIRE -> Value.WIRE
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                ACH -> Known.ACH
+                AU_BECS -> Known.AU_BECS
+                BACS -> Known.BACS
+                BOOK -> Known.BOOK
+                CARD -> Known.CARD
+                CHECK -> Known.CHECK
+                CROSS_BORDER -> Known.CROSS_BORDER
+                EFT -> Known.EFT
+                INTERAC -> Known.INTERAC
+                MASAV -> Known.MASAV
+                NEFT -> Known.NEFT
+                PROVXCHANGE -> Known.PROVXCHANGE
+                RTP -> Known.RTP
+                SEN -> Known.SEN
+                SEPA -> Known.SEPA
+                SIGNET -> Known.SIGNET
+                WIRE -> Known.WIRE
+                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
+    class RoutingNumberType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is RoutingNumberType && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val ABA = RoutingNumberType(JsonField.of("aba"))
+
+            @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
+
+            @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
+
+            @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
+
+            @JvmField val CHIPS = RoutingNumberType(JsonField.of("chips"))
+
+            @JvmField val CNAPS = RoutingNumberType(JsonField.of("cnaps"))
+
+            @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
+
+            @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
+
+            @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
+
+            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
+
+            @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
+        }
+
+        enum class Known {
+            ABA,
+            AU_BSB,
+            BR_CODIGO,
+            CA_CPA,
+            CHIPS,
+            CNAPS,
+            GB_SORT_CODE,
+            IN_IFSC,
+            MY_BRANCH_CODE,
+            SWIFT,
+        }
+
+        enum class Value {
+            ABA,
+            AU_BSB,
+            BR_CODIGO,
+            CA_CPA,
+            CHIPS,
+            CNAPS,
+            GB_SORT_CODE,
+            IN_IFSC,
+            MY_BRANCH_CODE,
+            SWIFT,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                ABA -> Value.ABA
+                AU_BSB -> Value.AU_BSB
+                BR_CODIGO -> Value.BR_CODIGO
+                CA_CPA -> Value.CA_CPA
+                CHIPS -> Value.CHIPS
+                CNAPS -> Value.CNAPS
+                GB_SORT_CODE -> Value.GB_SORT_CODE
+                IN_IFSC -> Value.IN_IFSC
+                MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
+                SWIFT -> Value.SWIFT
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                ABA -> Known.ABA
+                AU_BSB -> Known.AU_BSB
+                BR_CODIGO -> Known.BR_CODIGO
+                CA_CPA -> Known.CA_CPA
+                CHIPS -> Known.CHIPS
+                CNAPS -> Known.CNAPS
+                GB_SORT_CODE -> Known.GB_SORT_CODE
+                IN_IFSC -> Known.IN_IFSC
+                MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
+                SWIFT -> Known.SWIFT
+                else ->
+                    throw ModernTreasuryInvalidDataException("Unknown RoutingNumberType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }
