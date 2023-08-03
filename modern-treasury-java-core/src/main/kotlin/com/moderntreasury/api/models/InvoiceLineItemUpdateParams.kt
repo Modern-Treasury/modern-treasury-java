@@ -1330,6 +1330,69 @@ constructor(
         }
     }
 
+    class PaymentMethod
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PaymentMethod && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val UI = PaymentMethod(JsonField.of("ui"))
+
+            @JvmField val MANUAL = PaymentMethod(JsonField.of("manual"))
+
+            @JvmField val AUTOMATIC = PaymentMethod(JsonField.of("automatic"))
+
+            @JvmStatic fun of(value: String) = PaymentMethod(JsonField.of(value))
+        }
+
+        enum class Known {
+            UI,
+            MANUAL,
+            AUTOMATIC,
+        }
+
+        enum class Value {
+            UI,
+            MANUAL,
+            AUTOMATIC,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                UI -> Value.UI
+                MANUAL -> Value.MANUAL
+                AUTOMATIC -> Value.AUTOMATIC
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                UI -> Known.UI
+                MANUAL -> Known.MANUAL
+                AUTOMATIC -> Known.AUTOMATIC
+                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentMethod: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     class PaymentType
     @JsonCreator
     private constructor(
@@ -1472,69 +1535,6 @@ constructor(
                 SIGNET -> Known.SIGNET
                 WIRE -> Known.WIRE
                 else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class PaymentMethod
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PaymentMethod && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val UI = PaymentMethod(JsonField.of("ui"))
-
-            @JvmField val MANUAL = PaymentMethod(JsonField.of("manual"))
-
-            @JvmField val AUTOMATIC = PaymentMethod(JsonField.of("automatic"))
-
-            @JvmStatic fun of(value: String) = PaymentMethod(JsonField.of(value))
-        }
-
-        enum class Known {
-            UI,
-            MANUAL,
-            AUTOMATIC,
-        }
-
-        enum class Value {
-            UI,
-            MANUAL,
-            AUTOMATIC,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                UI -> Value.UI
-                MANUAL -> Value.MANUAL
-                AUTOMATIC -> Value.AUTOMATIC
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                UI -> Known.UI
-                MANUAL -> Known.MANUAL
-                AUTOMATIC -> Known.AUTOMATIC
-                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentMethod: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()

@@ -359,117 +359,6 @@ private constructor(
             )
     }
 
-    class DocumentableType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is DocumentableType && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CASE = DocumentableType(JsonField.of("case"))
-
-            @JvmField val COUNTERPARTY = DocumentableType(JsonField.of("counterparty"))
-
-            @JvmField val EXPECTED_PAYMENT = DocumentableType(JsonField.of("expected_payment"))
-
-            @JvmField val EXTERNAL_ACCOUNT = DocumentableType(JsonField.of("external_account"))
-
-            @JvmField val INTERNAL_ACCOUNT = DocumentableType(JsonField.of("internal_account"))
-
-            @JvmField val ORGANIZATION = DocumentableType(JsonField.of("organization"))
-
-            @JvmField val PAPER_ITEM = DocumentableType(JsonField.of("paper_item"))
-
-            @JvmField val PAYMENT_ORDER = DocumentableType(JsonField.of("payment_order"))
-
-            @JvmField val TRANSACTION = DocumentableType(JsonField.of("transaction"))
-
-            @JvmField val DECISION = DocumentableType(JsonField.of("decision"))
-
-            @JvmField val CONNECTION = DocumentableType(JsonField.of("connection"))
-
-            @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
-        }
-
-        enum class Known {
-            CASE,
-            COUNTERPARTY,
-            EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
-            INTERNAL_ACCOUNT,
-            ORGANIZATION,
-            PAPER_ITEM,
-            PAYMENT_ORDER,
-            TRANSACTION,
-            DECISION,
-            CONNECTION,
-        }
-
-        enum class Value {
-            CASE,
-            COUNTERPARTY,
-            EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
-            INTERNAL_ACCOUNT,
-            ORGANIZATION,
-            PAPER_ITEM,
-            PAYMENT_ORDER,
-            TRANSACTION,
-            DECISION,
-            CONNECTION,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CASE -> Value.CASE
-                COUNTERPARTY -> Value.COUNTERPARTY
-                EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
-                INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
-                ORGANIZATION -> Value.ORGANIZATION
-                PAPER_ITEM -> Value.PAPER_ITEM
-                PAYMENT_ORDER -> Value.PAYMENT_ORDER
-                TRANSACTION -> Value.TRANSACTION
-                DECISION -> Value.DECISION
-                CONNECTION -> Value.CONNECTION
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CASE -> Known.CASE
-                COUNTERPARTY -> Known.COUNTERPARTY
-                EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
-                INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
-                ORGANIZATION -> Known.ORGANIZATION
-                PAPER_ITEM -> Known.PAPER_ITEM
-                PAYMENT_ORDER -> Known.PAYMENT_ORDER
-                TRANSACTION -> Known.TRANSACTION
-                DECISION -> Known.DECISION
-                CONNECTION -> Known.CONNECTION
-                else -> throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
     @JsonDeserialize(builder = DocumentDetail.Builder::class)
     @NoAutoDetect
     class DocumentDetail
@@ -718,6 +607,117 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+    }
+
+    class DocumentableType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is DocumentableType && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val CASE = DocumentableType(JsonField.of("case"))
+
+            @JvmField val COUNTERPARTY = DocumentableType(JsonField.of("counterparty"))
+
+            @JvmField val EXPECTED_PAYMENT = DocumentableType(JsonField.of("expected_payment"))
+
+            @JvmField val EXTERNAL_ACCOUNT = DocumentableType(JsonField.of("external_account"))
+
+            @JvmField val INTERNAL_ACCOUNT = DocumentableType(JsonField.of("internal_account"))
+
+            @JvmField val ORGANIZATION = DocumentableType(JsonField.of("organization"))
+
+            @JvmField val PAPER_ITEM = DocumentableType(JsonField.of("paper_item"))
+
+            @JvmField val PAYMENT_ORDER = DocumentableType(JsonField.of("payment_order"))
+
+            @JvmField val TRANSACTION = DocumentableType(JsonField.of("transaction"))
+
+            @JvmField val DECISION = DocumentableType(JsonField.of("decision"))
+
+            @JvmField val CONNECTION = DocumentableType(JsonField.of("connection"))
+
+            @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
+        }
+
+        enum class Known {
+            CASE,
+            COUNTERPARTY,
+            EXPECTED_PAYMENT,
+            EXTERNAL_ACCOUNT,
+            INTERNAL_ACCOUNT,
+            ORGANIZATION,
+            PAPER_ITEM,
+            PAYMENT_ORDER,
+            TRANSACTION,
+            DECISION,
+            CONNECTION,
+        }
+
+        enum class Value {
+            CASE,
+            COUNTERPARTY,
+            EXPECTED_PAYMENT,
+            EXTERNAL_ACCOUNT,
+            INTERNAL_ACCOUNT,
+            ORGANIZATION,
+            PAPER_ITEM,
+            PAYMENT_ORDER,
+            TRANSACTION,
+            DECISION,
+            CONNECTION,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                CASE -> Value.CASE
+                COUNTERPARTY -> Value.COUNTERPARTY
+                EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
+                EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
+                INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
+                ORGANIZATION -> Value.ORGANIZATION
+                PAPER_ITEM -> Value.PAPER_ITEM
+                PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                TRANSACTION -> Value.TRANSACTION
+                DECISION -> Value.DECISION
+                CONNECTION -> Value.CONNECTION
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                CASE -> Known.CASE
+                COUNTERPARTY -> Known.COUNTERPARTY
+                EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
+                EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
+                INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
+                ORGANIZATION -> Known.ORGANIZATION
+                PAPER_ITEM -> Known.PAPER_ITEM
+                PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                TRANSACTION -> Known.TRANSACTION
+                DECISION -> Known.DECISION
+                CONNECTION -> Known.CONNECTION
+                else -> throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 
     @JsonDeserialize(builder = File.Builder::class)
