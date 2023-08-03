@@ -18,6 +18,7 @@ constructor(
     private val id: Id?,
     private val ledgerAccountId: String?,
     private val ledgerTransactionId: String?,
+    private val ledgerAccountPayoutId: String?,
     private val effectiveDate: EffectiveDate?,
     private val effectiveAt: EffectiveAt?,
     private val updatedAt: UpdatedAt?,
@@ -44,6 +45,8 @@ constructor(
     fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
     fun ledgerTransactionId(): Optional<String> = Optional.ofNullable(ledgerTransactionId)
+
+    fun ledgerAccountPayoutId(): Optional<String> = Optional.ofNullable(ledgerAccountPayoutId)
 
     fun effectiveDate(): Optional<EffectiveDate> = Optional.ofNullable(effectiveDate)
 
@@ -80,6 +83,9 @@ constructor(
         this.id?.forEachQueryParam { key, values -> params.put("id[$key]", values) }
         this.ledgerAccountId?.let { params.put("ledger_account_id", listOf(it.toString())) }
         this.ledgerTransactionId?.let { params.put("ledger_transaction_id", listOf(it.toString())) }
+        this.ledgerAccountPayoutId?.let {
+            params.put("ledger_account_payout_id", listOf(it.toString()))
+        }
         this.effectiveDate?.forEachQueryParam { key, values ->
             params.put("effective_date[$key]", values)
         }
@@ -124,6 +130,7 @@ constructor(
             this.id == other.id &&
             this.ledgerAccountId == other.ledgerAccountId &&
             this.ledgerTransactionId == other.ledgerTransactionId &&
+            this.ledgerAccountPayoutId == other.ledgerAccountPayoutId &&
             this.effectiveDate == other.effectiveDate &&
             this.effectiveAt == other.effectiveAt &&
             this.updatedAt == other.updatedAt &&
@@ -148,6 +155,7 @@ constructor(
             id,
             ledgerAccountId,
             ledgerTransactionId,
+            ledgerAccountPayoutId,
             effectiveDate,
             effectiveAt,
             updatedAt,
@@ -167,7 +175,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerEntryListParams{afterCursor=$afterCursor, perPage=$perPage, id=$id, ledgerAccountId=$ledgerAccountId, ledgerTransactionId=$ledgerTransactionId, effectiveDate=$effectiveDate, effectiveAt=$effectiveAt, updatedAt=$updatedAt, asOfLockVersion=$asOfLockVersion, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerAccountStatementId=$ledgerAccountStatementId, showDeleted=$showDeleted, direction=$direction, status=$status, orderBy=$orderBy, showBalances=$showBalances, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "LedgerEntryListParams{afterCursor=$afterCursor, perPage=$perPage, id=$id, ledgerAccountId=$ledgerAccountId, ledgerTransactionId=$ledgerTransactionId, ledgerAccountPayoutId=$ledgerAccountPayoutId, effectiveDate=$effectiveDate, effectiveAt=$effectiveAt, updatedAt=$updatedAt, asOfLockVersion=$asOfLockVersion, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerAccountStatementId=$ledgerAccountStatementId, showDeleted=$showDeleted, direction=$direction, status=$status, orderBy=$orderBy, showBalances=$showBalances, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -184,6 +192,7 @@ constructor(
         private var id: Id? = null
         private var ledgerAccountId: String? = null
         private var ledgerTransactionId: String? = null
+        private var ledgerAccountPayoutId: String? = null
         private var effectiveDate: EffectiveDate? = null
         private var effectiveAt: EffectiveAt? = null
         private var updatedAt: UpdatedAt? = null
@@ -207,6 +216,7 @@ constructor(
             this.id = ledgerEntryListParams.id
             this.ledgerAccountId = ledgerEntryListParams.ledgerAccountId
             this.ledgerTransactionId = ledgerEntryListParams.ledgerTransactionId
+            this.ledgerAccountPayoutId = ledgerEntryListParams.ledgerAccountPayoutId
             this.effectiveDate = ledgerEntryListParams.effectiveDate
             this.effectiveAt = ledgerEntryListParams.effectiveAt
             this.updatedAt = ledgerEntryListParams.updatedAt
@@ -238,6 +248,10 @@ constructor(
             this.ledgerTransactionId = ledgerTransactionId
         }
 
+        fun ledgerAccountPayoutId(ledgerAccountPayoutId: String) = apply {
+            this.ledgerAccountPayoutId = ledgerAccountPayoutId
+        }
+
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
          * transaction's effective date. Format YYYY-MM-DD
@@ -247,7 +261,7 @@ constructor(
         }
 
         /**
-         * Use "gt" (>), "gte" (>=), "lt" (<), "lte" (<=), or "eq" (=) to filter by the
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
          * transaction's effective time. Format ISO8601
          */
         fun effectiveAt(effectiveAt: EffectiveAt) = apply { this.effectiveAt = effectiveAt }
@@ -370,6 +384,7 @@ constructor(
                 id,
                 ledgerAccountId,
                 ledgerTransactionId,
+                ledgerAccountPayoutId,
                 effectiveDate,
                 effectiveAt,
                 updatedAt,
@@ -525,7 +540,7 @@ constructor(
     }
 
     /**
-     * Use "gt" (>), "gte" (>=), "lt" (<), "lte" (<=), or "eq" (=) to filter by the transaction's
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the transaction's
      * effective time. Format ISO8601
      */
     @JsonDeserialize(builder = EffectiveAt.Builder::class)

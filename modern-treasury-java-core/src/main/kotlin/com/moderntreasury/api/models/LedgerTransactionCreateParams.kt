@@ -21,7 +21,7 @@ constructor(
     private val description: String?,
     private val status: Status?,
     private val metadata: Metadata?,
-    private val effectiveAt: LocalDate,
+    private val effectiveAt: LocalDate?,
     private val effectiveDate: LocalDate?,
     private val ledgerEntries: List<LedgerEntryCreateRequest>,
     private val externalId: String?,
@@ -38,7 +38,7 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-    fun effectiveAt(): LocalDate = effectiveAt
+    fun effectiveAt(): Optional<LocalDate> = Optional.ofNullable(effectiveAt)
 
     fun effectiveDate(): Optional<LocalDate> = Optional.ofNullable(effectiveDate)
 
@@ -290,7 +290,7 @@ constructor(
                     description,
                     status,
                     metadata,
-                    checkNotNull(effectiveAt) { "`effectiveAt` is required but was not set" },
+                    effectiveAt,
                     effectiveDate,
                     checkNotNull(ledgerEntries) { "`ledgerEntries` is required but was not set" }
                         .toUnmodifiable(),
@@ -494,7 +494,7 @@ constructor(
                 description,
                 status,
                 metadata,
-                checkNotNull(effectiveAt) { "`effectiveAt` is required but was not set" },
+                effectiveAt,
                 effectiveDate,
                 checkNotNull(ledgerEntries) { "`ledgerEntries` is required but was not set" }
                     .toUnmodifiable(),

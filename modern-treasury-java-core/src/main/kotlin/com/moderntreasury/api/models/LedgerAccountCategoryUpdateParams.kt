@@ -9,8 +9,6 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toUnmodifiable
 import com.moderntreasury.api.models.*
-import java.time.LocalDate
-import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
@@ -20,7 +18,6 @@ constructor(
     private val name: String?,
     private val description: String?,
     private val metadata: Metadata?,
-    private val balances: Balances?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -34,8 +31,6 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-    fun balances(): Optional<Balances> = Optional.ofNullable(balances)
-
     @JvmSynthetic
     internal fun getBody(): LedgerAccountCategoryUpdateBody {
         return LedgerAccountCategoryUpdateBody(
@@ -46,13 +41,7 @@ constructor(
         )
     }
 
-    @JvmSynthetic
-    internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
-        this.balances?.forEachQueryParam { key, values -> params.put("balances[$key]", values) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
-    }
+    @JvmSynthetic internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
 
     @JvmSynthetic internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
@@ -195,7 +184,6 @@ constructor(
             this.name == other.name &&
             this.description == other.description &&
             this.metadata == other.metadata &&
-            this.balances == other.balances &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -207,7 +195,6 @@ constructor(
             name,
             description,
             metadata,
-            balances,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -215,7 +202,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerAccountCategoryUpdateParams{id=$id, name=$name, description=$description, metadata=$metadata, balances=$balances, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerAccountCategoryUpdateParams{id=$id, name=$name, description=$description, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -231,7 +218,6 @@ constructor(
         private var name: String? = null
         private var description: String? = null
         private var metadata: Metadata? = null
-        private var balances: Balances? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -243,7 +229,6 @@ constructor(
                 this.name = ledgerAccountCategoryUpdateParams.name
                 this.description = ledgerAccountCategoryUpdateParams.description
                 this.metadata = ledgerAccountCategoryUpdateParams.metadata
-                this.balances = ledgerAccountCategoryUpdateParams.balances
                 additionalQueryParams(ledgerAccountCategoryUpdateParams.additionalQueryParams)
                 additionalHeaders(ledgerAccountCategoryUpdateParams.additionalHeaders)
                 additionalBodyProperties(ledgerAccountCategoryUpdateParams.additionalBodyProperties)
@@ -261,13 +246,6 @@ constructor(
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
-
-        /**
-         * For example, if you want the balances as of a particular effective date (YYYY-MM-DD), the
-         * encoded query string would be balances%5Bas_of_date%5D=2000-12-31. The balances as of a
-         * date are exclusive of entries with that exact date.
-         */
-        fun balances(balances: Balances) = apply { this.balances = balances }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -329,7 +307,6 @@ constructor(
                 name,
                 description,
                 metadata,
-                balances,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -398,108 +375,6 @@ constructor(
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
-        }
-    }
-
-    /**
-     * For example, if you want the balances as of a particular effective date (YYYY-MM-DD), the
-     * encoded query string would be balances%5Bas_of_date%5D=2000-12-31. The balances as of a date
-     * are exclusive of entries with that exact date.
-     */
-    @JsonDeserialize(builder = Balances.Builder::class)
-    @NoAutoDetect
-    class Balances
-    private constructor(
-        private val asOfDate: LocalDate?,
-        private val effectiveAt: OffsetDateTime?,
-        private val additionalProperties: Map<String, List<String>>,
-    ) {
-
-        private var hashCode: Int = 0
-
-        fun asOfDate(): LocalDate? = asOfDate
-
-        fun effectiveAt(): OffsetDateTime? = effectiveAt
-
-        fun _additionalProperties(): Map<String, List<String>> = additionalProperties
-
-        @JvmSynthetic
-        internal fun forEachQueryParam(putParam: (String, List<String>) -> Unit) {
-            this.asOfDate?.let { putParam("as_of_date", listOf(it.toString())) }
-            this.effectiveAt?.let { putParam("effective_at", listOf(it.toString())) }
-            this.additionalProperties.forEach { key, values -> putParam(key, values) }
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Balances &&
-                this.asOfDate == other.asOfDate &&
-                this.effectiveAt == other.effectiveAt &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        asOfDate,
-                        effectiveAt,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Balances{asOfDate=$asOfDate, effectiveAt=$effectiveAt, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var asOfDate: LocalDate? = null
-            private var effectiveAt: OffsetDateTime? = null
-            private var additionalProperties: MutableMap<String, List<String>> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(balances: Balances) = apply {
-                this.asOfDate = balances.asOfDate
-                this.effectiveAt = balances.effectiveAt
-                additionalProperties(balances.additionalProperties)
-            }
-
-            fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
-
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
-
-            fun additionalProperties(additionalProperties: Map<String, List<String>>) = apply {
-                this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: List<String>) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, List<String>>) =
-                apply {
-                    this.additionalProperties.putAll(additionalProperties)
-                }
-
-            fun build(): Balances =
-                Balances(
-                    asOfDate,
-                    effectiveAt,
-                    additionalProperties.toUnmodifiable(),
-                )
         }
     }
 }

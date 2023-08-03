@@ -18,7 +18,7 @@ import java.util.Optional
 
 class LedgerTransactionCreateReversalParams
 constructor(
-    private val ledgerTransactionId: String,
+    private val id: String,
     private val description: String?,
     private val status: Status?,
     private val metadata: Metadata?,
@@ -31,7 +31,7 @@ constructor(
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun ledgerTransactionId(): String = ledgerTransactionId
+    fun id(): String = id
 
     fun description(): Optional<String> = Optional.ofNullable(description)
 
@@ -67,7 +67,7 @@ constructor(
 
     fun getPathParam(index: Int): String {
         return when (index) {
-            0 -> ledgerTransactionId
+            0 -> id
             else -> ""
         }
     }
@@ -284,7 +284,7 @@ constructor(
         }
 
         return other is LedgerTransactionCreateReversalParams &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
+            this.id == other.id &&
             this.description == other.description &&
             this.status == other.status &&
             this.metadata == other.metadata &&
@@ -299,7 +299,7 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
-            ledgerTransactionId,
+            id,
             description,
             status,
             metadata,
@@ -314,7 +314,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerTransactionCreateReversalParams{ledgerTransactionId=$ledgerTransactionId, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, externalId=$externalId, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerTransactionCreateReversalParams{id=$id, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, externalId=$externalId, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -326,7 +326,7 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var ledgerTransactionId: String? = null
+        private var id: String? = null
         private var description: String? = null
         private var status: Status? = null
         private var metadata: Metadata? = null
@@ -342,7 +342,7 @@ constructor(
         internal fun from(
             ledgerTransactionCreateReversalParams: LedgerTransactionCreateReversalParams
         ) = apply {
-            this.ledgerTransactionId = ledgerTransactionCreateReversalParams.ledgerTransactionId
+            this.id = ledgerTransactionCreateReversalParams.id
             this.description = ledgerTransactionCreateReversalParams.description
             this.status = ledgerTransactionCreateReversalParams.status
             this.metadata = ledgerTransactionCreateReversalParams.metadata
@@ -355,9 +355,7 @@ constructor(
             additionalBodyProperties(ledgerTransactionCreateReversalParams.additionalBodyProperties)
         }
 
-        fun ledgerTransactionId(ledgerTransactionId: String) = apply {
-            this.ledgerTransactionId = ledgerTransactionId
-        }
+        fun id(id: String) = apply { this.id = id }
 
         /**
          * An optional free-form description for the reversal ledger transaction. Maximum of 1000
@@ -454,9 +452,7 @@ constructor(
 
         fun build(): LedgerTransactionCreateReversalParams =
             LedgerTransactionCreateReversalParams(
-                checkNotNull(ledgerTransactionId) {
-                    "`ledgerTransactionId` is required but was not set"
-                },
+                checkNotNull(id) { "`id` is required but was not set" },
                 description,
                 status,
                 metadata,
