@@ -14,7 +14,7 @@ constructor(
     private val afterCursor: String?,
     private val perPage: Long?,
     private val metadata: Metadata?,
-    private val id: String?,
+    private val id: List<String>?,
     private val name: String?,
     private val ledgerId: String?,
     private val currency: String?,
@@ -32,7 +32,7 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-    fun id(): Optional<String> = Optional.ofNullable(id)
+    fun id(): Optional<List<String>> = Optional.ofNullable(id)
 
     fun name(): Optional<String> = Optional.ofNullable(name)
 
@@ -54,7 +54,7 @@ constructor(
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.metadata?.forEachQueryParam { key, values -> params.put("metadata[$key]", values) }
-        this.id?.let { params.put("id", listOf(it.toString())) }
+        this.id?.let { params.put("id[]", it.map(Any::toString)) }
         this.name?.let { params.put("name", listOf(it.toString())) }
         this.ledgerId?.let { params.put("ledger_id", listOf(it.toString())) }
         this.currency?.let { params.put("currency", listOf(it.toString())) }
@@ -129,7 +129,7 @@ constructor(
         private var afterCursor: String? = null
         private var perPage: Long? = null
         private var metadata: Metadata? = null
-        private var id: String? = null
+        private var id: List<String>? = null
         private var name: String? = null
         private var ledgerId: String? = null
         private var currency: String? = null
@@ -167,7 +167,11 @@ constructor(
          */
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
-        fun id(id: String) = apply { this.id = id }
+        /**
+         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
+         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         */
+        fun id(id: List<String>) = apply { this.id = id }
 
         fun name(name: String) = apply { this.name = name }
 
@@ -246,7 +250,7 @@ constructor(
                 afterCursor,
                 perPage,
                 metadata,
-                id,
+                id?.toUnmodifiable(),
                 name,
                 ledgerId,
                 currency,
