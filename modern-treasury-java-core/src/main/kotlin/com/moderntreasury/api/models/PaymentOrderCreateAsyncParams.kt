@@ -1045,7 +1045,7 @@ constructor(
         private var fallbackType: FallbackType? = null
         private var receivingAccount: ReceivingAccount? = null
         private var ledgerTransaction: LedgerTransactionCreateRequest? = null
-        private var lineItems: List<LineItemRequest>? = null
+        private var lineItems: MutableList<LineItemRequest> = mutableListOf()
         private var transactionMonitoringEnabled: Boolean? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -1088,7 +1088,7 @@ constructor(
             this.fallbackType = paymentOrderCreateAsyncParams.fallbackType
             this.receivingAccount = paymentOrderCreateAsyncParams.receivingAccount
             this.ledgerTransaction = paymentOrderCreateAsyncParams.ledgerTransaction
-            this.lineItems = paymentOrderCreateAsyncParams.lineItems
+            this.lineItems(paymentOrderCreateAsyncParams.lineItems ?: listOf())
             this.transactionMonitoringEnabled =
                 paymentOrderCreateAsyncParams.transactionMonitoringEnabled
             additionalQueryParams(paymentOrderCreateAsyncParams.additionalQueryParams)
@@ -1305,7 +1305,13 @@ constructor(
         }
 
         /** An array of line items that must sum up to the amount of the payment order. */
-        fun lineItems(lineItems: List<LineItemRequest>) = apply { this.lineItems = lineItems }
+        fun lineItems(lineItems: List<LineItemRequest>) = apply {
+            this.lineItems.clear()
+            this.lineItems.addAll(lineItems)
+        }
+
+        /** An array of line items that must sum up to the amount of the payment order. */
+        fun addLineItem(lineItem: LineItemRequest) = apply { this.lineItems.add(lineItem) }
 
         /**
          * A flag that determines whether a payment order should go through transaction monitoring.
@@ -1403,7 +1409,7 @@ constructor(
                 fallbackType,
                 receivingAccount,
                 ledgerTransaction,
-                lineItems?.toUnmodifiable(),
+                if (lineItems.size == 0) null else lineItems.toUnmodifiable(),
                 transactionMonitoringEnabled,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
