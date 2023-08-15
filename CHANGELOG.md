@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.4.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.3.0...v1.4.0) (2023-08-15)
+
+
+### Features
+
+* **api:** add `metadata` in several places it was missing; add `description` ([#34](https://github.com/Modern-Treasury/modern-treasury-java/issues/34)) ([e3b4fd9](https://github.com/Modern-Treasury/modern-treasury-java/commit/e3b4fd9539d48a42083bb87789cf0e1a1df621b3))
+* **api:** support multiple `id`s in `ledger` `retrieve`/`list` endpoints ([#45](https://github.com/Modern-Treasury/modern-treasury-java/issues/45)) ([f397b5d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f397b5dfb18aae18d84d0e3ae9f7f0c2d6429e99))
+* **api:** updates ([#39](https://github.com/Modern-Treasury/modern-treasury-java/issues/39)) ([1f5ce52](https://github.com/Modern-Treasury/modern-treasury-java/commit/1f5ce5299e9ec462ce6e25a2c4c2a7b51aa31b71))
+* default timeout is set for java clients ([#46](https://github.com/Modern-Treasury/modern-treasury-java/issues/46)) ([a1763d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/a1763d5e2ebe66ca1a87a0185fc67431516aaab8))
+* generate addXxx methods for array types ([#48](https://github.com/Modern-Treasury/modern-treasury-java/issues/48)) ([a29d02b](https://github.com/Modern-Treasury/modern-treasury-java/commit/a29d02b4d6609b2f3b4edf7475907cee9bdd8943))
+
+
+### Chores
+
+* assign default reviewers to release PRs ([#47](https://github.com/Modern-Treasury/modern-treasury-java/issues/47)) ([f3529d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/f3529d55d59b284a0dcfe83c8c12d99c261325ac))
+* **ci:** allow release to proceed without signing key id secret ([#40](https://github.com/Modern-Treasury/modern-treasury-java/issues/40)) ([1dcf4ba](https://github.com/Modern-Treasury/modern-treasury-java/commit/1dcf4ba3e1feecf8fd366b5b2594c6f326c3507b))
+* **internal:** publish with --stacktrace for more helpful error information ([#37](https://github.com/Modern-Treasury/modern-treasury-java/issues/37)) ([d630e01](https://github.com/Modern-Treasury/modern-treasury-java/commit/d630e01e3df16f75d6a5f1dea48e95e6750049ef))
+* **internal:** reorganize types ([#42](https://github.com/Modern-Treasury/modern-treasury-java/issues/42)) ([44718f0](https://github.com/Modern-Treasury/modern-treasury-java/commit/44718f04b233dc5aad201241488f45cca26c973a))
+* **internal:** set maven group id to com.moderntreasury ([#36](https://github.com/Modern-Treasury/modern-treasury-java/issues/36)) ([fd2559e](https://github.com/Modern-Treasury/modern-treasury-java/commit/fd2559e7497dd2835c34f8d72d3450900545e4cb))
+* **internal:** support passing GPG_SIGNING_KEY_ID from secrets ([#38](https://github.com/Modern-Treasury/modern-treasury-java/issues/38)) ([5f7cdee](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f7cdee45443cea741526593fb564d02f456c13a))
+
 ## [1.3.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.2.0...v1.3.0) (2023-08-01)
 
 
