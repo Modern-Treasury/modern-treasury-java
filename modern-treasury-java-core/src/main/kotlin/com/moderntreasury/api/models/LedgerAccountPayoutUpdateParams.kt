@@ -19,8 +19,8 @@ class LedgerAccountPayoutUpdateParams
 constructor(
     private val id: String,
     private val description: String?,
-    private val status: Status?,
     private val metadata: Metadata?,
+    private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -30,16 +30,16 @@ constructor(
 
     fun description(): Optional<String> = Optional.ofNullable(description)
 
-    fun status(): Optional<Status> = Optional.ofNullable(status)
-
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
+    fun status(): Optional<Status> = Optional.ofNullable(status)
 
     @JvmSynthetic
     internal fun getBody(): LedgerAccountPayoutUpdateBody {
         return LedgerAccountPayoutUpdateBody(
             description,
-            status,
             metadata,
+            status,
             additionalBodyProperties,
         )
     }
@@ -60,8 +60,8 @@ constructor(
     class LedgerAccountPayoutUpdateBody
     internal constructor(
         private val description: String?,
-        private val status: Status?,
         private val metadata: Metadata?,
+        private val status: Status?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -71,15 +71,15 @@ constructor(
         @JsonProperty("description") fun description(): String? = description
 
         /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        /**
          * To post a pending ledger account payout, use `posted`. To archive a pending ledger
          * transaction, use `archived`.
          */
         @JsonProperty("status") fun status(): Status? = status
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -94,8 +94,8 @@ constructor(
 
             return other is LedgerAccountPayoutUpdateBody &&
                 this.description == other.description &&
-                this.status == other.status &&
                 this.metadata == other.metadata &&
+                this.status == other.status &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -104,8 +104,8 @@ constructor(
                 hashCode =
                     Objects.hash(
                         description,
-                        status,
                         metadata,
+                        status,
                         additionalProperties,
                     )
             }
@@ -113,7 +113,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerAccountPayoutUpdateBody{description=$description, status=$status, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerAccountPayoutUpdateBody{description=$description, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -123,16 +123,16 @@ constructor(
         class Builder {
 
             private var description: String? = null
-            private var status: Status? = null
             private var metadata: Metadata? = null
+            private var status: Status? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(ledgerAccountPayoutUpdateBody: LedgerAccountPayoutUpdateBody) =
                 apply {
                     this.description = ledgerAccountPayoutUpdateBody.description
-                    this.status = ledgerAccountPayoutUpdateBody.status
                     this.metadata = ledgerAccountPayoutUpdateBody.metadata
+                    this.status = ledgerAccountPayoutUpdateBody.status
                     additionalProperties(ledgerAccountPayoutUpdateBody.additionalProperties)
                 }
 
@@ -141,17 +141,17 @@ constructor(
             fun description(description: String) = apply { this.description = description }
 
             /**
-             * To post a pending ledger account payout, use `posted`. To archive a pending ledger
-             * transaction, use `archived`.
-             */
-            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
-
-            /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
             @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /**
+             * To post a pending ledger account payout, use `posted`. To archive a pending ledger
+             * transaction, use `archived`.
+             */
+            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -170,8 +170,8 @@ constructor(
             fun build(): LedgerAccountPayoutUpdateBody =
                 LedgerAccountPayoutUpdateBody(
                     description,
-                    status,
                     metadata,
+                    status,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -191,8 +191,8 @@ constructor(
         return other is LedgerAccountPayoutUpdateParams &&
             this.id == other.id &&
             this.description == other.description &&
-            this.status == other.status &&
             this.metadata == other.metadata &&
+            this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -202,8 +202,8 @@ constructor(
         return Objects.hash(
             id,
             description,
-            status,
             metadata,
+            status,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -211,7 +211,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerAccountPayoutUpdateParams{id=$id, description=$description, status=$status, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerAccountPayoutUpdateParams{id=$id, description=$description, metadata=$metadata, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -225,8 +225,8 @@ constructor(
 
         private var id: String? = null
         private var description: String? = null
-        private var status: Status? = null
         private var metadata: Metadata? = null
+        private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -236,8 +236,8 @@ constructor(
             apply {
                 this.id = ledgerAccountPayoutUpdateParams.id
                 this.description = ledgerAccountPayoutUpdateParams.description
-                this.status = ledgerAccountPayoutUpdateParams.status
                 this.metadata = ledgerAccountPayoutUpdateParams.metadata
+                this.status = ledgerAccountPayoutUpdateParams.status
                 additionalQueryParams(ledgerAccountPayoutUpdateParams.additionalQueryParams)
                 additionalHeaders(ledgerAccountPayoutUpdateParams.additionalHeaders)
                 additionalBodyProperties(ledgerAccountPayoutUpdateParams.additionalBodyProperties)
@@ -249,15 +249,15 @@ constructor(
         fun description(description: String) = apply { this.description = description }
 
         /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        /**
          * To post a pending ledger account payout, use `posted`. To archive a pending ledger
          * transaction, use `archived`.
          */
         fun status(status: Status) = apply { this.status = status }
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -317,8 +317,8 @@ constructor(
             LedgerAccountPayoutUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 description,
-                status,
                 metadata,
+                status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

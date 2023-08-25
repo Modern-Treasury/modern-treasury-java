@@ -15,9 +15,9 @@ import java.util.Optional
 class VirtualAccountUpdateParams
 constructor(
     private val id: String,
-    private val name: String?,
     private val counterpartyId: String?,
     private val metadata: Metadata?,
+    private val name: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -25,18 +25,18 @@ constructor(
 
     fun id(): String = id
 
-    fun name(): Optional<String> = Optional.ofNullable(name)
-
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    fun name(): Optional<String> = Optional.ofNullable(name)
+
     @JvmSynthetic
     internal fun getBody(): VirtualAccountUpdateBody {
         return VirtualAccountUpdateBody(
-            name,
             counterpartyId,
             metadata,
+            name,
             additionalBodyProperties,
         )
     }
@@ -56,19 +56,19 @@ constructor(
     @NoAutoDetect
     class VirtualAccountUpdateBody
     internal constructor(
-        private val name: String?,
         private val counterpartyId: String?,
         private val metadata: Metadata?,
+        private val name: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
-        @JsonProperty("name") fun name(): String? = name
-
         @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
 
         @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        @JsonProperty("name") fun name(): String? = name
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -82,9 +82,9 @@ constructor(
             }
 
             return other is VirtualAccountUpdateBody &&
-                this.name == other.name &&
                 this.counterpartyId == other.counterpartyId &&
                 this.metadata == other.metadata &&
+                this.name == other.name &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -92,9 +92,9 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        name,
                         counterpartyId,
                         metadata,
+                        name,
                         additionalProperties,
                     )
             }
@@ -102,7 +102,7 @@ constructor(
         }
 
         override fun toString() =
-            "VirtualAccountUpdateBody{name=$name, counterpartyId=$counterpartyId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "VirtualAccountUpdateBody{counterpartyId=$counterpartyId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -111,20 +111,18 @@ constructor(
 
         class Builder {
 
-            private var name: String? = null
             private var counterpartyId: String? = null
             private var metadata: Metadata? = null
+            private var name: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(virtualAccountUpdateBody: VirtualAccountUpdateBody) = apply {
-                this.name = virtualAccountUpdateBody.name
                 this.counterpartyId = virtualAccountUpdateBody.counterpartyId
                 this.metadata = virtualAccountUpdateBody.metadata
+                this.name = virtualAccountUpdateBody.name
                 additionalProperties(virtualAccountUpdateBody.additionalProperties)
             }
-
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
@@ -133,6 +131,8 @@ constructor(
 
             @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -150,9 +150,9 @@ constructor(
 
             fun build(): VirtualAccountUpdateBody =
                 VirtualAccountUpdateBody(
-                    name,
                     counterpartyId,
                     metadata,
+                    name,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -171,9 +171,9 @@ constructor(
 
         return other is VirtualAccountUpdateParams &&
             this.id == other.id &&
-            this.name == other.name &&
             this.counterpartyId == other.counterpartyId &&
             this.metadata == other.metadata &&
+            this.name == other.name &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -182,9 +182,9 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             id,
-            name,
             counterpartyId,
             metadata,
+            name,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -192,7 +192,7 @@ constructor(
     }
 
     override fun toString() =
-        "VirtualAccountUpdateParams{id=$id, name=$name, counterpartyId=$counterpartyId, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, metadata=$metadata, name=$name, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -205,9 +205,9 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var name: String? = null
         private var counterpartyId: String? = null
         private var metadata: Metadata? = null
+        private var name: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -215,9 +215,9 @@ constructor(
         @JvmSynthetic
         internal fun from(virtualAccountUpdateParams: VirtualAccountUpdateParams) = apply {
             this.id = virtualAccountUpdateParams.id
-            this.name = virtualAccountUpdateParams.name
             this.counterpartyId = virtualAccountUpdateParams.counterpartyId
             this.metadata = virtualAccountUpdateParams.metadata
+            this.name = virtualAccountUpdateParams.name
             additionalQueryParams(virtualAccountUpdateParams.additionalQueryParams)
             additionalHeaders(virtualAccountUpdateParams.additionalHeaders)
             additionalBodyProperties(virtualAccountUpdateParams.additionalBodyProperties)
@@ -225,11 +225,11 @@ constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        fun name(name: String) = apply { this.name = name }
-
         fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
 
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        fun name(name: String) = apply { this.name = name }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -288,9 +288,9 @@ constructor(
         fun build(): VirtualAccountUpdateParams =
             VirtualAccountUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                name,
                 counterpartyId,
                 metadata,
+                name,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

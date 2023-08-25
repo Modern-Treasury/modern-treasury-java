@@ -19,8 +19,8 @@ class DocumentCreateParams
 constructor(
     private val documentableId: String,
     private val documentableType: DocumentableType,
-    private val documentType: String?,
     private val file: String,
+    private val documentType: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -30,17 +30,17 @@ constructor(
 
     fun documentableType(): DocumentableType = documentableType
 
-    fun documentType(): Optional<String> = Optional.ofNullable(documentType)
-
     fun file(): String = file
+
+    fun documentType(): Optional<String> = Optional.ofNullable(documentType)
 
     @JvmSynthetic
     internal fun getBody(): DocumentCreateBody {
         return DocumentCreateBody(
             documentableId,
             documentableType,
-            documentType,
             file,
+            documentType,
             additionalBodyProperties,
         )
     }
@@ -55,8 +55,8 @@ constructor(
     internal constructor(
         private val documentableId: String?,
         private val documentableType: DocumentableType?,
-        private val documentType: String?,
         private val file: String?,
+        private val documentType: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -68,10 +68,10 @@ constructor(
         @JsonProperty("documentable_type")
         fun documentableType(): DocumentableType? = documentableType
 
+        @JsonProperty("file") fun file(): String? = file
+
         /** A category given to the document, can be `null`. */
         @JsonProperty("document_type") fun documentType(): String? = documentType
-
-        @JsonProperty("file") fun file(): String? = file
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -87,8 +87,8 @@ constructor(
             return other is DocumentCreateBody &&
                 this.documentableId == other.documentableId &&
                 this.documentableType == other.documentableType &&
-                this.documentType == other.documentType &&
                 this.file == other.file &&
+                this.documentType == other.documentType &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -98,8 +98,8 @@ constructor(
                     Objects.hash(
                         documentableId,
                         documentableType,
-                        documentType,
                         file,
+                        documentType,
                         additionalProperties,
                     )
             }
@@ -107,7 +107,7 @@ constructor(
         }
 
         override fun toString() =
-            "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, documentType=$documentType, file=$file, additionalProperties=$additionalProperties}"
+            "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -118,16 +118,16 @@ constructor(
 
             private var documentableId: String? = null
             private var documentableType: DocumentableType? = null
-            private var documentType: String? = null
             private var file: String? = null
+            private var documentType: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(documentCreateBody: DocumentCreateBody) = apply {
                 this.documentableId = documentCreateBody.documentableId
                 this.documentableType = documentCreateBody.documentableType
-                this.documentType = documentCreateBody.documentType
                 this.file = documentCreateBody.file
+                this.documentType = documentCreateBody.documentType
                 additionalProperties(documentCreateBody.additionalProperties)
             }
 
@@ -142,11 +142,11 @@ constructor(
                 this.documentableType = documentableType
             }
 
+            @JsonProperty("file") fun file(file: String) = apply { this.file = file }
+
             /** A category given to the document, can be `null`. */
             @JsonProperty("document_type")
             fun documentType(documentType: String) = apply { this.documentType = documentType }
-
-            @JsonProperty("file") fun file(file: String) = apply { this.file = file }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -168,8 +168,8 @@ constructor(
                     checkNotNull(documentableType) {
                         "`documentableType` is required but was not set"
                     },
-                    documentType,
                     checkNotNull(file) { "`file` is required but was not set" },
+                    documentType,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -189,8 +189,8 @@ constructor(
         return other is DocumentCreateParams &&
             this.documentableId == other.documentableId &&
             this.documentableType == other.documentableType &&
-            this.documentType == other.documentType &&
             this.file == other.file &&
+            this.documentType == other.documentType &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -200,8 +200,8 @@ constructor(
         return Objects.hash(
             documentableId,
             documentableType,
-            documentType,
             file,
+            documentType,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -209,7 +209,7 @@ constructor(
     }
 
     override fun toString() =
-        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, documentType=$documentType, file=$file, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -223,8 +223,8 @@ constructor(
 
         private var documentableId: String? = null
         private var documentableType: DocumentableType? = null
-        private var documentType: String? = null
         private var file: String? = null
+        private var documentType: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -233,8 +233,8 @@ constructor(
         internal fun from(documentCreateParams: DocumentCreateParams) = apply {
             this.documentableId = documentCreateParams.documentableId
             this.documentableType = documentCreateParams.documentableType
-            this.documentType = documentCreateParams.documentType
             this.file = documentCreateParams.file
+            this.documentType = documentCreateParams.documentType
             additionalQueryParams(documentCreateParams.additionalQueryParams)
             additionalHeaders(documentCreateParams.additionalHeaders)
             additionalBodyProperties(documentCreateParams.additionalBodyProperties)
@@ -247,10 +247,10 @@ constructor(
             this.documentableType = documentableType
         }
 
+        fun file(file: String) = apply { this.file = file }
+
         /** A category given to the document, can be `null`. */
         fun documentType(documentType: String) = apply { this.documentType = documentType }
-
-        fun file(file: String) = apply { this.file = file }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -310,8 +310,8 @@ constructor(
             DocumentCreateParams(
                 checkNotNull(documentableId) { "`documentableId` is required but was not set" },
                 checkNotNull(documentableType) { "`documentableType` is required but was not set" },
-                documentType,
                 checkNotNull(file) { "`file` is required but was not set" },
+                documentType,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
