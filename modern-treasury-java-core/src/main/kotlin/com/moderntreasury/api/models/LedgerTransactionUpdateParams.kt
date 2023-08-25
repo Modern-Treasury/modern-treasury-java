@@ -20,10 +20,10 @@ class LedgerTransactionUpdateParams
 constructor(
     private val id: String,
     private val description: String?,
-    private val status: Status?,
-    private val metadata: Metadata?,
     private val effectiveAt: LocalDate?,
     private val ledgerEntries: List<LedgerEntryCreateRequest>?,
+    private val metadata: Metadata?,
+    private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -33,23 +33,23 @@ constructor(
 
     fun description(): Optional<String> = Optional.ofNullable(description)
 
-    fun status(): Optional<Status> = Optional.ofNullable(status)
-
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
-
     fun effectiveAt(): Optional<LocalDate> = Optional.ofNullable(effectiveAt)
 
     fun ledgerEntries(): Optional<List<LedgerEntryCreateRequest>> =
         Optional.ofNullable(ledgerEntries)
 
+    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
+    fun status(): Optional<Status> = Optional.ofNullable(status)
+
     @JvmSynthetic
     internal fun getBody(): LedgerTransactionUpdateBody {
         return LedgerTransactionUpdateBody(
             description,
-            status,
-            metadata,
             effectiveAt,
             ledgerEntries,
+            metadata,
+            status,
             additionalBodyProperties,
         )
     }
@@ -70,10 +70,10 @@ constructor(
     class LedgerTransactionUpdateBody
     internal constructor(
         private val description: String?,
-        private val status: Status?,
-        private val metadata: Metadata?,
         private val effectiveAt: LocalDate?,
         private val ledgerEntries: List<LedgerEntryCreateRequest>?,
+        private val metadata: Metadata?,
+        private val status: Status?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -81,14 +81,6 @@ constructor(
 
         /** An optional description for internal use. */
         @JsonProperty("description") fun description(): String? = description
-
-        /** To post a ledger transaction at creation, use `posted`. */
-        @JsonProperty("status") fun status(): Status? = status
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -99,6 +91,14 @@ constructor(
         /** An array of ledger entry objects. */
         @JsonProperty("ledger_entries")
         fun ledgerEntries(): List<LedgerEntryCreateRequest>? = ledgerEntries
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        /** To post a ledger transaction at creation, use `posted`. */
+        @JsonProperty("status") fun status(): Status? = status
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -113,10 +113,10 @@ constructor(
 
             return other is LedgerTransactionUpdateBody &&
                 this.description == other.description &&
-                this.status == other.status &&
-                this.metadata == other.metadata &&
                 this.effectiveAt == other.effectiveAt &&
                 this.ledgerEntries == other.ledgerEntries &&
+                this.metadata == other.metadata &&
+                this.status == other.status &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -125,10 +125,10 @@ constructor(
                 hashCode =
                     Objects.hash(
                         description,
-                        status,
-                        metadata,
                         effectiveAt,
                         ledgerEntries,
+                        metadata,
+                        status,
                         additionalProperties,
                     )
             }
@@ -136,7 +136,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerTransactionUpdateBody{description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, additionalProperties=$additionalProperties}"
+            "LedgerTransactionUpdateBody{description=$description, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -146,35 +146,25 @@ constructor(
         class Builder {
 
             private var description: String? = null
-            private var status: Status? = null
-            private var metadata: Metadata? = null
             private var effectiveAt: LocalDate? = null
             private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+            private var metadata: Metadata? = null
+            private var status: Status? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(ledgerTransactionUpdateBody: LedgerTransactionUpdateBody) = apply {
                 this.description = ledgerTransactionUpdateBody.description
-                this.status = ledgerTransactionUpdateBody.status
-                this.metadata = ledgerTransactionUpdateBody.metadata
                 this.effectiveAt = ledgerTransactionUpdateBody.effectiveAt
                 this.ledgerEntries = ledgerTransactionUpdateBody.ledgerEntries
+                this.metadata = ledgerTransactionUpdateBody.metadata
+                this.status = ledgerTransactionUpdateBody.status
                 additionalProperties(ledgerTransactionUpdateBody.additionalProperties)
             }
 
             /** An optional description for internal use. */
             @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
-
-            /** To post a ledger transaction at creation, use `posted`. */
-            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -188,6 +178,16 @@ constructor(
             fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
                 this.ledgerEntries = ledgerEntries
             }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonProperty("metadata")
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -206,10 +206,10 @@ constructor(
             fun build(): LedgerTransactionUpdateBody =
                 LedgerTransactionUpdateBody(
                     description,
-                    status,
-                    metadata,
                     effectiveAt,
                     ledgerEntries?.toUnmodifiable(),
+                    metadata,
+                    status,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -229,10 +229,10 @@ constructor(
         return other is LedgerTransactionUpdateParams &&
             this.id == other.id &&
             this.description == other.description &&
-            this.status == other.status &&
-            this.metadata == other.metadata &&
             this.effectiveAt == other.effectiveAt &&
             this.ledgerEntries == other.ledgerEntries &&
+            this.metadata == other.metadata &&
+            this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -242,10 +242,10 @@ constructor(
         return Objects.hash(
             id,
             description,
-            status,
-            metadata,
             effectiveAt,
             ledgerEntries,
+            metadata,
+            status,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -253,7 +253,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerTransactionUpdateParams{id=$id, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerTransactionUpdateParams{id=$id, description=$description, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, metadata=$metadata, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -267,10 +267,10 @@ constructor(
 
         private var id: String? = null
         private var description: String? = null
-        private var status: Status? = null
-        private var metadata: Metadata? = null
         private var effectiveAt: LocalDate? = null
         private var ledgerEntries: MutableList<LedgerEntryCreateRequest> = mutableListOf()
+        private var metadata: Metadata? = null
+        private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -279,10 +279,10 @@ constructor(
         internal fun from(ledgerTransactionUpdateParams: LedgerTransactionUpdateParams) = apply {
             this.id = ledgerTransactionUpdateParams.id
             this.description = ledgerTransactionUpdateParams.description
-            this.status = ledgerTransactionUpdateParams.status
-            this.metadata = ledgerTransactionUpdateParams.metadata
             this.effectiveAt = ledgerTransactionUpdateParams.effectiveAt
             this.ledgerEntries(ledgerTransactionUpdateParams.ledgerEntries ?: listOf())
+            this.metadata = ledgerTransactionUpdateParams.metadata
+            this.status = ledgerTransactionUpdateParams.status
             additionalQueryParams(ledgerTransactionUpdateParams.additionalQueryParams)
             additionalHeaders(ledgerTransactionUpdateParams.additionalHeaders)
             additionalBodyProperties(ledgerTransactionUpdateParams.additionalBodyProperties)
@@ -292,14 +292,6 @@ constructor(
 
         /** An optional description for internal use. */
         fun description(description: String) = apply { this.description = description }
-
-        /** To post a ledger transaction at creation, use `posted`. */
-        fun status(status: Status) = apply { this.status = status }
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -317,6 +309,14 @@ constructor(
         fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
             this.ledgerEntries.add(ledgerEntry)
         }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        /** To post a ledger transaction at creation, use `posted`. */
+        fun status(status: Status) = apply { this.status = status }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -376,10 +376,10 @@ constructor(
             LedgerTransactionUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 description,
-                status,
-                metadata,
                 effectiveAt,
                 if (ledgerEntries.size == 0) null else ledgerEntries.toUnmodifiable(),
+                metadata,
+                status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
