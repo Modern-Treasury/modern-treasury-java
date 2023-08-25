@@ -19,11 +19,11 @@ import java.util.Optional
 class ReturnCreateParams
 constructor(
     private val returnableId: String?,
-    private val code: Code?,
-    private val reason: String?,
-    private val dateOfDeath: LocalDate?,
-    private val additionalInformation: String?,
     private val returnableType: ReturnableType,
+    private val additionalInformation: String?,
+    private val code: Code?,
+    private val dateOfDeath: LocalDate?,
+    private val reason: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -31,25 +31,25 @@ constructor(
 
     fun returnableId(): Optional<String> = Optional.ofNullable(returnableId)
 
-    fun code(): Optional<Code> = Optional.ofNullable(code)
-
-    fun reason(): Optional<String> = Optional.ofNullable(reason)
-
-    fun dateOfDeath(): Optional<LocalDate> = Optional.ofNullable(dateOfDeath)
+    fun returnableType(): ReturnableType = returnableType
 
     fun additionalInformation(): Optional<String> = Optional.ofNullable(additionalInformation)
 
-    fun returnableType(): ReturnableType = returnableType
+    fun code(): Optional<Code> = Optional.ofNullable(code)
+
+    fun dateOfDeath(): Optional<LocalDate> = Optional.ofNullable(dateOfDeath)
+
+    fun reason(): Optional<String> = Optional.ofNullable(reason)
 
     @JvmSynthetic
     internal fun getBody(): ReturnCreateBody {
         return ReturnCreateBody(
             returnableId,
-            code,
-            reason,
-            dateOfDeath,
-            additionalInformation,
             returnableType,
+            additionalInformation,
+            code,
+            dateOfDeath,
+            reason,
             additionalBodyProperties,
         )
     }
@@ -63,11 +63,11 @@ constructor(
     class ReturnCreateBody
     internal constructor(
         private val returnableId: String?,
-        private val code: Code?,
-        private val reason: String?,
-        private val dateOfDeath: LocalDate?,
-        private val additionalInformation: String?,
         private val returnableType: ReturnableType?,
+        private val additionalInformation: String?,
+        private val code: Code?,
+        private val dateOfDeath: LocalDate?,
+        private val reason: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -76,20 +76,10 @@ constructor(
         /** The ID of the object being returned or `null`. */
         @JsonProperty("returnable_id") fun returnableId(): String? = returnableId
 
-        /** The return code. For ACH returns, this is the required ACH return code. */
-        @JsonProperty("code") fun code(): Code? = code
-
         /**
-         * An optional description of the reason for the return. This is for internal usage and will
-         * not be transmitted to the bank.”
+         * The type of object being returned. Currently, this may only be incoming_payment_detail.
          */
-        @JsonProperty("reason") fun reason(): String? = reason
-
-        /**
-         * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
-         * away.
-         */
-        @JsonProperty("date_of_death") fun dateOfDeath(): LocalDate? = dateOfDeath
+        @JsonProperty("returnable_type") fun returnableType(): ReturnableType? = returnableType
 
         /**
          * Some returns may include additional information from the bank. In these cases, this
@@ -98,10 +88,20 @@ constructor(
         @JsonProperty("additional_information")
         fun additionalInformation(): String? = additionalInformation
 
+        /** The return code. For ACH returns, this is the required ACH return code. */
+        @JsonProperty("code") fun code(): Code? = code
+
         /**
-         * The type of object being returned. Currently, this may only be incoming_payment_detail.
+         * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
+         * away.
          */
-        @JsonProperty("returnable_type") fun returnableType(): ReturnableType? = returnableType
+        @JsonProperty("date_of_death") fun dateOfDeath(): LocalDate? = dateOfDeath
+
+        /**
+         * An optional description of the reason for the return. This is for internal usage and will
+         * not be transmitted to the bank.”
+         */
+        @JsonProperty("reason") fun reason(): String? = reason
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -116,11 +116,11 @@ constructor(
 
             return other is ReturnCreateBody &&
                 this.returnableId == other.returnableId &&
-                this.code == other.code &&
-                this.reason == other.reason &&
-                this.dateOfDeath == other.dateOfDeath &&
-                this.additionalInformation == other.additionalInformation &&
                 this.returnableType == other.returnableType &&
+                this.additionalInformation == other.additionalInformation &&
+                this.code == other.code &&
+                this.dateOfDeath == other.dateOfDeath &&
+                this.reason == other.reason &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -129,11 +129,11 @@ constructor(
                 hashCode =
                     Objects.hash(
                         returnableId,
-                        code,
-                        reason,
-                        dateOfDeath,
-                        additionalInformation,
                         returnableType,
+                        additionalInformation,
+                        code,
+                        dateOfDeath,
+                        reason,
                         additionalProperties,
                     )
             }
@@ -141,7 +141,7 @@ constructor(
         }
 
         override fun toString() =
-            "ReturnCreateBody{returnableId=$returnableId, code=$code, reason=$reason, dateOfDeath=$dateOfDeath, additionalInformation=$additionalInformation, returnableType=$returnableType, additionalProperties=$additionalProperties}"
+            "ReturnCreateBody{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -151,21 +151,21 @@ constructor(
         class Builder {
 
             private var returnableId: String? = null
-            private var code: Code? = null
-            private var reason: String? = null
-            private var dateOfDeath: LocalDate? = null
-            private var additionalInformation: String? = null
             private var returnableType: ReturnableType? = null
+            private var additionalInformation: String? = null
+            private var code: Code? = null
+            private var dateOfDeath: LocalDate? = null
+            private var reason: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(returnCreateBody: ReturnCreateBody) = apply {
                 this.returnableId = returnCreateBody.returnableId
-                this.code = returnCreateBody.code
-                this.reason = returnCreateBody.reason
-                this.dateOfDeath = returnCreateBody.dateOfDeath
-                this.additionalInformation = returnCreateBody.additionalInformation
                 this.returnableType = returnCreateBody.returnableType
+                this.additionalInformation = returnCreateBody.additionalInformation
+                this.code = returnCreateBody.code
+                this.dateOfDeath = returnCreateBody.dateOfDeath
+                this.reason = returnCreateBody.reason
                 additionalProperties(returnCreateBody.additionalProperties)
             }
 
@@ -173,21 +173,14 @@ constructor(
             @JsonProperty("returnable_id")
             fun returnableId(returnableId: String) = apply { this.returnableId = returnableId }
 
-            /** The return code. For ACH returns, this is the required ACH return code. */
-            @JsonProperty("code") fun code(code: Code) = apply { this.code = code }
-
             /**
-             * An optional description of the reason for the return. This is for internal usage and
-             * will not be transmitted to the bank.”
+             * The type of object being returned. Currently, this may only be
+             * incoming_payment_detail.
              */
-            @JsonProperty("reason") fun reason(reason: String) = apply { this.reason = reason }
-
-            /**
-             * If the return code is `R14` or `R15` this is the date the deceased counterparty
-             * passed away.
-             */
-            @JsonProperty("date_of_death")
-            fun dateOfDeath(dateOfDeath: LocalDate) = apply { this.dateOfDeath = dateOfDeath }
+            @JsonProperty("returnable_type")
+            fun returnableType(returnableType: ReturnableType) = apply {
+                this.returnableType = returnableType
+            }
 
             /**
              * Some returns may include additional information from the bank. In these cases, this
@@ -198,14 +191,21 @@ constructor(
                 this.additionalInformation = additionalInformation
             }
 
+            /** The return code. For ACH returns, this is the required ACH return code. */
+            @JsonProperty("code") fun code(code: Code) = apply { this.code = code }
+
             /**
-             * The type of object being returned. Currently, this may only be
-             * incoming_payment_detail.
+             * If the return code is `R14` or `R15` this is the date the deceased counterparty
+             * passed away.
              */
-            @JsonProperty("returnable_type")
-            fun returnableType(returnableType: ReturnableType) = apply {
-                this.returnableType = returnableType
-            }
+            @JsonProperty("date_of_death")
+            fun dateOfDeath(dateOfDeath: LocalDate) = apply { this.dateOfDeath = dateOfDeath }
+
+            /**
+             * An optional description of the reason for the return. This is for internal usage and
+             * will not be transmitted to the bank.”
+             */
+            @JsonProperty("reason") fun reason(reason: String) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -224,11 +224,11 @@ constructor(
             fun build(): ReturnCreateBody =
                 ReturnCreateBody(
                     returnableId,
-                    code,
-                    reason,
-                    dateOfDeath,
-                    additionalInformation,
                     checkNotNull(returnableType) { "`returnableType` is required but was not set" },
+                    additionalInformation,
+                    code,
+                    dateOfDeath,
+                    reason,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -247,11 +247,11 @@ constructor(
 
         return other is ReturnCreateParams &&
             this.returnableId == other.returnableId &&
-            this.code == other.code &&
-            this.reason == other.reason &&
-            this.dateOfDeath == other.dateOfDeath &&
-            this.additionalInformation == other.additionalInformation &&
             this.returnableType == other.returnableType &&
+            this.additionalInformation == other.additionalInformation &&
+            this.code == other.code &&
+            this.dateOfDeath == other.dateOfDeath &&
+            this.reason == other.reason &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -260,11 +260,11 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             returnableId,
-            code,
-            reason,
-            dateOfDeath,
-            additionalInformation,
             returnableType,
+            additionalInformation,
+            code,
+            dateOfDeath,
+            reason,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -272,7 +272,7 @@ constructor(
     }
 
     override fun toString() =
-        "ReturnCreateParams{returnableId=$returnableId, code=$code, reason=$reason, dateOfDeath=$dateOfDeath, additionalInformation=$additionalInformation, returnableType=$returnableType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ReturnCreateParams{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -285,11 +285,11 @@ constructor(
     class Builder {
 
         private var returnableId: String? = null
-        private var code: Code? = null
-        private var reason: String? = null
-        private var dateOfDeath: LocalDate? = null
-        private var additionalInformation: String? = null
         private var returnableType: ReturnableType? = null
+        private var additionalInformation: String? = null
+        private var code: Code? = null
+        private var dateOfDeath: LocalDate? = null
+        private var reason: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -297,11 +297,11 @@ constructor(
         @JvmSynthetic
         internal fun from(returnCreateParams: ReturnCreateParams) = apply {
             this.returnableId = returnCreateParams.returnableId
-            this.code = returnCreateParams.code
-            this.reason = returnCreateParams.reason
-            this.dateOfDeath = returnCreateParams.dateOfDeath
-            this.additionalInformation = returnCreateParams.additionalInformation
             this.returnableType = returnCreateParams.returnableType
+            this.additionalInformation = returnCreateParams.additionalInformation
+            this.code = returnCreateParams.code
+            this.dateOfDeath = returnCreateParams.dateOfDeath
+            this.reason = returnCreateParams.reason
             additionalQueryParams(returnCreateParams.additionalQueryParams)
             additionalHeaders(returnCreateParams.additionalHeaders)
             additionalBodyProperties(returnCreateParams.additionalBodyProperties)
@@ -310,20 +310,12 @@ constructor(
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: String) = apply { this.returnableId = returnableId }
 
-        /** The return code. For ACH returns, this is the required ACH return code. */
-        fun code(code: Code) = apply { this.code = code }
-
         /**
-         * An optional description of the reason for the return. This is for internal usage and will
-         * not be transmitted to the bank.”
+         * The type of object being returned. Currently, this may only be incoming_payment_detail.
          */
-        fun reason(reason: String) = apply { this.reason = reason }
-
-        /**
-         * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
-         * away.
-         */
-        fun dateOfDeath(dateOfDeath: LocalDate) = apply { this.dateOfDeath = dateOfDeath }
+        fun returnableType(returnableType: ReturnableType) = apply {
+            this.returnableType = returnableType
+        }
 
         /**
          * Some returns may include additional information from the bank. In these cases, this
@@ -333,12 +325,20 @@ constructor(
             this.additionalInformation = additionalInformation
         }
 
+        /** The return code. For ACH returns, this is the required ACH return code. */
+        fun code(code: Code) = apply { this.code = code }
+
         /**
-         * The type of object being returned. Currently, this may only be incoming_payment_detail.
+         * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
+         * away.
          */
-        fun returnableType(returnableType: ReturnableType) = apply {
-            this.returnableType = returnableType
-        }
+        fun dateOfDeath(dateOfDeath: LocalDate) = apply { this.dateOfDeath = dateOfDeath }
+
+        /**
+         * An optional description of the reason for the return. This is for internal usage and will
+         * not be transmitted to the bank.”
+         */
+        fun reason(reason: String) = apply { this.reason = reason }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -397,11 +397,11 @@ constructor(
         fun build(): ReturnCreateParams =
             ReturnCreateParams(
                 returnableId,
-                code,
-                reason,
-                dateOfDeath,
-                additionalInformation,
                 checkNotNull(returnableType) { "`returnableType` is required but was not set" },
+                additionalInformation,
+                code,
+                dateOfDeath,
+                reason,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

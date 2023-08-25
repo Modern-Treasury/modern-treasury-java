@@ -16,11 +16,11 @@ class InvoiceLineItemUpdateParams
 constructor(
     private val invoiceId: String,
     private val id: String,
-    private val name: String?,
     private val description: String?,
+    private val direction: String?,
+    private val name: String?,
     private val quantity: Long?,
     private val unitAmount: Long?,
-    private val direction: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -30,24 +30,24 @@ constructor(
 
     fun id(): String = id
 
-    fun name(): Optional<String> = Optional.ofNullable(name)
-
     fun description(): Optional<String> = Optional.ofNullable(description)
+
+    fun direction(): Optional<String> = Optional.ofNullable(direction)
+
+    fun name(): Optional<String> = Optional.ofNullable(name)
 
     fun quantity(): Optional<Long> = Optional.ofNullable(quantity)
 
     fun unitAmount(): Optional<Long> = Optional.ofNullable(unitAmount)
 
-    fun direction(): Optional<String> = Optional.ofNullable(direction)
-
     @JvmSynthetic
     internal fun getBody(): InvoiceLineItemUpdateBody {
         return InvoiceLineItemUpdateBody(
-            name,
             description,
+            direction,
+            name,
             quantity,
             unitAmount,
-            direction,
             additionalBodyProperties,
         )
     }
@@ -68,21 +68,28 @@ constructor(
     @NoAutoDetect
     class InvoiceLineItemUpdateBody
     internal constructor(
-        private val name: String?,
         private val description: String?,
+        private val direction: String?,
+        private val name: String?,
         private val quantity: Long?,
         private val unitAmount: Long?,
-        private val direction: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
-        /** The name of the line item, typically a product or SKU name. */
-        @JsonProperty("name") fun name(): String? = name
-
         /** An optional free-form description of the line item. */
         @JsonProperty("description") fun description(): String? = description
+
+        /**
+         * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
+         * increases the invoice's `total_amount` due. `credit` has the opposite intention and
+         * effect.
+         */
+        @JsonProperty("direction") fun direction(): String? = direction
+
+        /** The name of the line item, typically a product or SKU name. */
+        @JsonProperty("name") fun name(): String? = name
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -96,13 +103,6 @@ constructor(
          */
         @JsonProperty("unit_amount") fun unitAmount(): Long? = unitAmount
 
-        /**
-         * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
-         * increases the invoice's `total_amount` due. `credit` has the opposite intention and
-         * effect.
-         */
-        @JsonProperty("direction") fun direction(): String? = direction
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -115,11 +115,11 @@ constructor(
             }
 
             return other is InvoiceLineItemUpdateBody &&
-                this.name == other.name &&
                 this.description == other.description &&
+                this.direction == other.direction &&
+                this.name == other.name &&
                 this.quantity == other.quantity &&
                 this.unitAmount == other.unitAmount &&
-                this.direction == other.direction &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -127,11 +127,11 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        name,
                         description,
+                        direction,
+                        name,
                         quantity,
                         unitAmount,
-                        direction,
                         additionalProperties,
                     )
             }
@@ -139,7 +139,7 @@ constructor(
         }
 
         override fun toString() =
-            "InvoiceLineItemUpdateBody{name=$name, description=$description, quantity=$quantity, unitAmount=$unitAmount, direction=$direction, additionalProperties=$additionalProperties}"
+            "InvoiceLineItemUpdateBody{description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -148,29 +148,37 @@ constructor(
 
         class Builder {
 
-            private var name: String? = null
             private var description: String? = null
+            private var direction: String? = null
+            private var name: String? = null
             private var quantity: Long? = null
             private var unitAmount: Long? = null
-            private var direction: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(invoiceLineItemUpdateBody: InvoiceLineItemUpdateBody) = apply {
-                this.name = invoiceLineItemUpdateBody.name
                 this.description = invoiceLineItemUpdateBody.description
+                this.direction = invoiceLineItemUpdateBody.direction
+                this.name = invoiceLineItemUpdateBody.name
                 this.quantity = invoiceLineItemUpdateBody.quantity
                 this.unitAmount = invoiceLineItemUpdateBody.unitAmount
-                this.direction = invoiceLineItemUpdateBody.direction
                 additionalProperties(invoiceLineItemUpdateBody.additionalProperties)
             }
-
-            /** The name of the line item, typically a product or SKU name. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /** An optional free-form description of the line item. */
             @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
+
+            /**
+             * Either `debit` or `credit`. `debit` indicates that a client owes the business money
+             * and increases the invoice's `total_amount` due. `credit` has the opposite intention
+             * and effect.
+             */
+            @JsonProperty("direction")
+            fun direction(direction: String) = apply { this.direction = direction }
+
+            /** The name of the line item, typically a product or SKU name. */
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /**
              * The number of units of a product or service that this line item is for. Must be a
@@ -185,14 +193,6 @@ constructor(
              */
             @JsonProperty("unit_amount")
             fun unitAmount(unitAmount: Long) = apply { this.unitAmount = unitAmount }
-
-            /**
-             * Either `debit` or `credit`. `debit` indicates that a client owes the business money
-             * and increases the invoice's `total_amount` due. `credit` has the opposite intention
-             * and effect.
-             */
-            @JsonProperty("direction")
-            fun direction(direction: String) = apply { this.direction = direction }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -210,11 +210,11 @@ constructor(
 
             fun build(): InvoiceLineItemUpdateBody =
                 InvoiceLineItemUpdateBody(
-                    name,
                     description,
+                    direction,
+                    name,
                     quantity,
                     unitAmount,
-                    direction,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -234,11 +234,11 @@ constructor(
         return other is InvoiceLineItemUpdateParams &&
             this.invoiceId == other.invoiceId &&
             this.id == other.id &&
-            this.name == other.name &&
             this.description == other.description &&
+            this.direction == other.direction &&
+            this.name == other.name &&
             this.quantity == other.quantity &&
             this.unitAmount == other.unitAmount &&
-            this.direction == other.direction &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -248,11 +248,11 @@ constructor(
         return Objects.hash(
             invoiceId,
             id,
-            name,
             description,
+            direction,
+            name,
             quantity,
             unitAmount,
-            direction,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -260,7 +260,7 @@ constructor(
     }
 
     override fun toString() =
-        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, name=$name, description=$description, quantity=$quantity, unitAmount=$unitAmount, direction=$direction, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -274,11 +274,11 @@ constructor(
 
         private var invoiceId: String? = null
         private var id: String? = null
-        private var name: String? = null
         private var description: String? = null
+        private var direction: String? = null
+        private var name: String? = null
         private var quantity: Long? = null
         private var unitAmount: Long? = null
-        private var direction: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -287,11 +287,11 @@ constructor(
         internal fun from(invoiceLineItemUpdateParams: InvoiceLineItemUpdateParams) = apply {
             this.invoiceId = invoiceLineItemUpdateParams.invoiceId
             this.id = invoiceLineItemUpdateParams.id
-            this.name = invoiceLineItemUpdateParams.name
             this.description = invoiceLineItemUpdateParams.description
+            this.direction = invoiceLineItemUpdateParams.direction
+            this.name = invoiceLineItemUpdateParams.name
             this.quantity = invoiceLineItemUpdateParams.quantity
             this.unitAmount = invoiceLineItemUpdateParams.unitAmount
-            this.direction = invoiceLineItemUpdateParams.direction
             additionalQueryParams(invoiceLineItemUpdateParams.additionalQueryParams)
             additionalHeaders(invoiceLineItemUpdateParams.additionalHeaders)
             additionalBodyProperties(invoiceLineItemUpdateParams.additionalBodyProperties)
@@ -301,11 +301,18 @@ constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        /** The name of the line item, typically a product or SKU name. */
-        fun name(name: String) = apply { this.name = name }
-
         /** An optional free-form description of the line item. */
         fun description(description: String) = apply { this.description = description }
+
+        /**
+         * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
+         * increases the invoice's `total_amount` due. `credit` has the opposite intention and
+         * effect.
+         */
+        fun direction(direction: String) = apply { this.direction = direction }
+
+        /** The name of the line item, typically a product or SKU name. */
+        fun name(name: String) = apply { this.name = name }
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -318,13 +325,6 @@ constructor(
          * invoice currency's smallest unit.
          */
         fun unitAmount(unitAmount: Long) = apply { this.unitAmount = unitAmount }
-
-        /**
-         * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
-         * increases the invoice's `total_amount` due. `credit` has the opposite intention and
-         * effect.
-         */
-        fun direction(direction: String) = apply { this.direction = direction }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -384,11 +384,11 @@ constructor(
             InvoiceLineItemUpdateParams(
                 checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
                 checkNotNull(id) { "`id` is required but was not set" },
-                name,
                 description,
+                direction,
+                name,
                 quantity,
                 unitAmount,
-                direction,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

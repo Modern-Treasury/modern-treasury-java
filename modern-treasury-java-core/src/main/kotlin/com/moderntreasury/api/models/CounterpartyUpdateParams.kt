@@ -15,9 +15,9 @@ import java.util.Optional
 class CounterpartyUpdateParams
 constructor(
     private val id: String,
-    private val name: String?,
     private val email: String?,
     private val metadata: Metadata?,
+    private val name: String?,
     private val sendRemittanceAdvice: Boolean?,
     private val taxpayerIdentifier: String?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -27,11 +27,11 @@ constructor(
 
     fun id(): String = id
 
-    fun name(): Optional<String> = Optional.ofNullable(name)
-
     fun email(): Optional<String> = Optional.ofNullable(email)
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
+    fun name(): Optional<String> = Optional.ofNullable(name)
 
     fun sendRemittanceAdvice(): Optional<Boolean> = Optional.ofNullable(sendRemittanceAdvice)
 
@@ -40,9 +40,9 @@ constructor(
     @JvmSynthetic
     internal fun getBody(): CounterpartyUpdateBody {
         return CounterpartyUpdateBody(
-            name,
             email,
             metadata,
+            name,
             sendRemittanceAdvice,
             taxpayerIdentifier,
             additionalBodyProperties,
@@ -64,18 +64,15 @@ constructor(
     @NoAutoDetect
     class CounterpartyUpdateBody
     internal constructor(
-        private val name: String?,
         private val email: String?,
         private val metadata: Metadata?,
+        private val name: String?,
         private val sendRemittanceAdvice: Boolean?,
         private val taxpayerIdentifier: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
-
-        /** A new name for the counterparty. Will only update if passed. */
-        @JsonProperty("name") fun name(): String? = name
 
         /** A new email for the counterparty. */
         @JsonProperty("email") fun email(): String? = email
@@ -85,6 +82,9 @@ constructor(
          * string or `null` as the value.
          */
         @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        /** A new name for the counterparty. Will only update if passed. */
+        @JsonProperty("name") fun name(): String? = name
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
@@ -108,9 +108,9 @@ constructor(
             }
 
             return other is CounterpartyUpdateBody &&
-                this.name == other.name &&
                 this.email == other.email &&
                 this.metadata == other.metadata &&
+                this.name == other.name &&
                 this.sendRemittanceAdvice == other.sendRemittanceAdvice &&
                 this.taxpayerIdentifier == other.taxpayerIdentifier &&
                 this.additionalProperties == other.additionalProperties
@@ -120,9 +120,9 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        name,
                         email,
                         metadata,
+                        name,
                         sendRemittanceAdvice,
                         taxpayerIdentifier,
                         additionalProperties,
@@ -132,7 +132,7 @@ constructor(
         }
 
         override fun toString() =
-            "CounterpartyUpdateBody{name=$name, email=$email, metadata=$metadata, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
+            "CounterpartyUpdateBody{email=$email, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -141,25 +141,22 @@ constructor(
 
         class Builder {
 
-            private var name: String? = null
             private var email: String? = null
             private var metadata: Metadata? = null
+            private var name: String? = null
             private var sendRemittanceAdvice: Boolean? = null
             private var taxpayerIdentifier: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(counterpartyUpdateBody: CounterpartyUpdateBody) = apply {
-                this.name = counterpartyUpdateBody.name
                 this.email = counterpartyUpdateBody.email
                 this.metadata = counterpartyUpdateBody.metadata
+                this.name = counterpartyUpdateBody.name
                 this.sendRemittanceAdvice = counterpartyUpdateBody.sendRemittanceAdvice
                 this.taxpayerIdentifier = counterpartyUpdateBody.taxpayerIdentifier
                 additionalProperties(counterpartyUpdateBody.additionalProperties)
             }
-
-            /** A new name for the counterparty. Will only update if passed. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /** A new email for the counterparty. */
             @JsonProperty("email") fun email(email: String) = apply { this.email = email }
@@ -170,6 +167,9 @@ constructor(
              */
             @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /** A new name for the counterparty. Will only update if passed. */
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /**
              * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
@@ -202,9 +202,9 @@ constructor(
 
             fun build(): CounterpartyUpdateBody =
                 CounterpartyUpdateBody(
-                    name,
                     email,
                     metadata,
+                    name,
                     sendRemittanceAdvice,
                     taxpayerIdentifier,
                     additionalProperties.toUnmodifiable(),
@@ -225,9 +225,9 @@ constructor(
 
         return other is CounterpartyUpdateParams &&
             this.id == other.id &&
-            this.name == other.name &&
             this.email == other.email &&
             this.metadata == other.metadata &&
+            this.name == other.name &&
             this.sendRemittanceAdvice == other.sendRemittanceAdvice &&
             this.taxpayerIdentifier == other.taxpayerIdentifier &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -238,9 +238,9 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             id,
-            name,
             email,
             metadata,
+            name,
             sendRemittanceAdvice,
             taxpayerIdentifier,
             additionalQueryParams,
@@ -250,7 +250,7 @@ constructor(
     }
 
     override fun toString() =
-        "CounterpartyUpdateParams{id=$id, name=$name, email=$email, metadata=$metadata, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CounterpartyUpdateParams{id=$id, email=$email, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -263,9 +263,9 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var name: String? = null
         private var email: String? = null
         private var metadata: Metadata? = null
+        private var name: String? = null
         private var sendRemittanceAdvice: Boolean? = null
         private var taxpayerIdentifier: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -275,9 +275,9 @@ constructor(
         @JvmSynthetic
         internal fun from(counterpartyUpdateParams: CounterpartyUpdateParams) = apply {
             this.id = counterpartyUpdateParams.id
-            this.name = counterpartyUpdateParams.name
             this.email = counterpartyUpdateParams.email
             this.metadata = counterpartyUpdateParams.metadata
+            this.name = counterpartyUpdateParams.name
             this.sendRemittanceAdvice = counterpartyUpdateParams.sendRemittanceAdvice
             this.taxpayerIdentifier = counterpartyUpdateParams.taxpayerIdentifier
             additionalQueryParams(counterpartyUpdateParams.additionalQueryParams)
@@ -287,9 +287,6 @@ constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        /** A new name for the counterparty. Will only update if passed. */
-        fun name(name: String) = apply { this.name = name }
-
         /** A new email for the counterparty. */
         fun email(email: String) = apply { this.email = email }
 
@@ -298,6 +295,9 @@ constructor(
          * string or `null` as the value.
          */
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        /** A new name for the counterparty. Will only update if passed. */
+        fun name(name: String) = apply { this.name = name }
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
@@ -369,9 +369,9 @@ constructor(
         fun build(): CounterpartyUpdateParams =
             CounterpartyUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                name,
                 email,
                 metadata,
+                name,
                 sendRemittanceAdvice,
                 taxpayerIdentifier,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
