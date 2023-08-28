@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.1 (2023-08-28)
+
+Full Changelog: [v1.4.0...v1.4.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.4.0...v1.4.1)
+
+### Bug Fixes
+
+* set correct timeouts on okhttp client ([#49](https://github.com/Modern-Treasury/modern-treasury-java/issues/49)) ([32b52b1](https://github.com/Modern-Treasury/modern-treasury-java/commit/32b52b13d36fbda828f38e506cc410621da79e9f))
+
+
+### Chores
+
+* **ci:** setup workflows to create releases and release PRs ([#53](https://github.com/Modern-Treasury/modern-treasury-java/issues/53)) ([f49b05d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f49b05decf6e66001ddb0e3244159fca3da4c85b))
+* **internal:** minor code re-ordering ([#52](https://github.com/Modern-Treasury/modern-treasury-java/issues/52)) ([e54fc17](https://github.com/Modern-Treasury/modern-treasury-java/commit/e54fc1767a3f70a234e0e0a393a9f696de65b9a2))
+
 ## [1.4.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.3.0...v1.4.0) (2023-08-15)
 
 
