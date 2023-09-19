@@ -3,11 +3,20 @@
 package com.moderntreasury.api.services.async.transactions
 
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.models.TransactionLineItem
 import com.moderntreasury.api.models.TransactionLineItemListPageAsync
 import com.moderntreasury.api.models.TransactionLineItemListParams
+import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface LineItemServiceAsync {
+
+    /** get transaction line item */
+    @JvmOverloads
+    fun retrieve(
+        params: TransactionLineItemRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<TransactionLineItem>
 
     /** list transaction_line_items */
     @JvmOverloads

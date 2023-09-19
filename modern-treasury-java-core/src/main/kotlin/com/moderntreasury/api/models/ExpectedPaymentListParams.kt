@@ -403,6 +403,8 @@ constructor(
 
             @JvmField val ARCHIVED = Status(JsonField.of("archived"))
 
+            @JvmField val PARTIALLY_RECONCILED = Status(JsonField.of("partially_reconciled"))
+
             @JvmField val RECONCILED = Status(JsonField.of("reconciled"))
 
             @JvmField val UNRECONCILED = Status(JsonField.of("unreconciled"))
@@ -412,12 +414,14 @@ constructor(
 
         enum class Known {
             ARCHIVED,
+            PARTIALLY_RECONCILED,
             RECONCILED,
             UNRECONCILED,
         }
 
         enum class Value {
             ARCHIVED,
+            PARTIALLY_RECONCILED,
             RECONCILED,
             UNRECONCILED,
             _UNKNOWN,
@@ -426,6 +430,7 @@ constructor(
         fun value(): Value =
             when (this) {
                 ARCHIVED -> Value.ARCHIVED
+                PARTIALLY_RECONCILED -> Value.PARTIALLY_RECONCILED
                 RECONCILED -> Value.RECONCILED
                 UNRECONCILED -> Value.UNRECONCILED
                 else -> Value._UNKNOWN
@@ -434,6 +439,7 @@ constructor(
         fun known(): Known =
             when (this) {
                 ARCHIVED -> Known.ARCHIVED
+                PARTIALLY_RECONCILED -> Known.PARTIALLY_RECONCILED
                 RECONCILED -> Known.RECONCILED
                 UNRECONCILED -> Known.UNRECONCILED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
@@ -486,17 +492,25 @@ constructor(
 
             @JvmField val NEFT = Type(JsonField.of("neft"))
 
+            @JvmField val NICS = Type(JsonField.of("nics"))
+
             @JvmField val PROVXCHANGE = Type(JsonField.of("provxchange"))
 
             @JvmField val RTP = Type(JsonField.of("rtp"))
+
+            @JvmField val SE_BANKGIROT = Type(JsonField.of("se_bankgirot"))
 
             @JvmField val SEN = Type(JsonField.of("sen"))
 
             @JvmField val SEPA = Type(JsonField.of("sepa"))
 
+            @JvmField val SIC = Type(JsonField.of("sic"))
+
             @JvmField val SIGNET = Type(JsonField.of("signet"))
 
             @JvmField val WIRE = Type(JsonField.of("wire"))
+
+            @JvmField val ZENGIN = Type(JsonField.of("zengin"))
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
@@ -513,12 +527,16 @@ constructor(
             INTERAC,
             MASAV,
             NEFT,
+            NICS,
             PROVXCHANGE,
             RTP,
+            SE_BANKGIROT,
             SEN,
             SEPA,
+            SIC,
             SIGNET,
             WIRE,
+            ZENGIN,
         }
 
         enum class Value {
@@ -533,12 +551,16 @@ constructor(
             INTERAC,
             MASAV,
             NEFT,
+            NICS,
             PROVXCHANGE,
             RTP,
+            SE_BANKGIROT,
             SEN,
             SEPA,
+            SIC,
             SIGNET,
             WIRE,
+            ZENGIN,
             _UNKNOWN,
         }
 
@@ -555,12 +577,16 @@ constructor(
                 INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 NEFT -> Value.NEFT
+                NICS -> Value.NICS
                 PROVXCHANGE -> Value.PROVXCHANGE
                 RTP -> Value.RTP
+                SE_BANKGIROT -> Value.SE_BANKGIROT
                 SEN -> Value.SEN
                 SEPA -> Value.SEPA
+                SIC -> Value.SIC
                 SIGNET -> Value.SIGNET
                 WIRE -> Value.WIRE
+                ZENGIN -> Value.ZENGIN
                 else -> Value._UNKNOWN
             }
 
@@ -577,12 +603,16 @@ constructor(
                 INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 NEFT -> Known.NEFT
+                NICS -> Known.NICS
                 PROVXCHANGE -> Known.PROVXCHANGE
                 RTP -> Known.RTP
+                SE_BANKGIROT -> Known.SE_BANKGIROT
                 SEN -> Known.SEN
                 SEPA -> Known.SEPA
+                SIC -> Known.SIC
                 SIGNET -> Known.SIGNET
                 WIRE -> Known.WIRE
+                ZENGIN -> Known.ZENGIN
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
             }
 

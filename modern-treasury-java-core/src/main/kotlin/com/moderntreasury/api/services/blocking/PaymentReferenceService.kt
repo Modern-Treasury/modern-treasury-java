@@ -7,8 +7,16 @@ import com.moderntreasury.api.models.PaymentReference
 import com.moderntreasury.api.models.PaymentReferenceListPage
 import com.moderntreasury.api.models.PaymentReferenceListParams
 import com.moderntreasury.api.models.PaymentReferenceRetireveParams
+import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
 
 interface PaymentReferenceService {
+
+    /** get payment_reference */
+    @JvmOverloads
+    fun retrieve(
+        params: PaymentReferenceRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): PaymentReference
 
     /** list payment_references */
     @JvmOverloads
