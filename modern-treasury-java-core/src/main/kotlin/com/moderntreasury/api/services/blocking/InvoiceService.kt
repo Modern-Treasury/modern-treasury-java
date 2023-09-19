@@ -4,6 +4,7 @@ package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.models.Invoice
+import com.moderntreasury.api.models.InvoiceAddPaymentOrderParams
 import com.moderntreasury.api.models.InvoiceCreateParams
 import com.moderntreasury.api.models.InvoiceListPage
 import com.moderntreasury.api.models.InvoiceListParams
@@ -42,4 +43,11 @@ interface InvoiceService {
         params: InvoiceListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): InvoiceListPage
+
+    /** Add a payment order to an invoice. */
+    @JvmOverloads
+    fun addPaymentOrder(
+        params: InvoiceAddPaymentOrderParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
 }

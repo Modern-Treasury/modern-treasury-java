@@ -43,6 +43,8 @@ interface ModernTreasuryClientAsync {
 
     fun ledgerAccounts(): LedgerAccountServiceAsync
 
+    fun ledgerAccountBalanceMonitors(): LedgerAccountBalanceMonitorServiceAsync
+
     fun ledgerAccountPayouts(): LedgerAccountPayoutServiceAsync
 
     fun ledgerAccountStatements(): LedgerAccountStatementServiceAsync

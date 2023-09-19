@@ -87,8 +87,8 @@ private constructor(
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /**
-     * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-     * `interac`, `signet`, `provexchange`.
+     * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
      */
     fun type(): PaymentOrderType = type.getRequired("type")
 
@@ -323,8 +323,8 @@ private constructor(
     @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
     /**
-     * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-     * `interac`, `signet`, `provexchange`.
+     * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
      */
     @JsonProperty("type") @ExcludeMissing fun _type() = type
 
@@ -858,14 +858,14 @@ private constructor(
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /**
-         * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-         * `interac`, `signet`, `provexchange`.
+         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
          */
         fun type(type: PaymentOrderType) = type(JsonField.of(type))
 
         /**
-         * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-         * `interac`, `signet`, `provexchange`.
+         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
          */
         @JsonProperty("type")
         @ExcludeMissing

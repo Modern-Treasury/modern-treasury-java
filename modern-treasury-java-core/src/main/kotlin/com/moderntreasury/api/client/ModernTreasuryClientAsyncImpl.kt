@@ -78,6 +78,10 @@ constructor(
         LedgerAccountServiceAsyncImpl(clientOptions)
     }
 
+    private val ledgerAccountBalanceMonitors: LedgerAccountBalanceMonitorServiceAsync by lazy {
+        LedgerAccountBalanceMonitorServiceAsyncImpl(clientOptions)
+    }
+
     private val ledgerAccountPayouts: LedgerAccountPayoutServiceAsync by lazy {
         LedgerAccountPayoutServiceAsyncImpl(clientOptions)
     }
@@ -168,6 +172,9 @@ constructor(
         ledgerAccountCategories
 
     override fun ledgerAccounts(): LedgerAccountServiceAsync = ledgerAccounts
+
+    override fun ledgerAccountBalanceMonitors(): LedgerAccountBalanceMonitorServiceAsync =
+        ledgerAccountBalanceMonitors
 
     override fun ledgerAccountPayouts(): LedgerAccountPayoutServiceAsync = ledgerAccountPayouts
 

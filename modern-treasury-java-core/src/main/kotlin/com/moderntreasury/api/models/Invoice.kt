@@ -27,6 +27,8 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val updatedAt: JsonField<OffsetDateTime>,
     private val contactDetails: JsonField<List<ContactDetail>>,
+    private val recipientEmail: JsonField<String>,
+    private val recipientName: JsonField<String>,
     private val counterpartyId: JsonField<String>,
     private val counterpartyBillingAddress: JsonField<CounterpartyBillingAddress>,
     private val counterpartyShippingAddress: JsonField<CounterpartyShippingAddress>,
@@ -36,6 +38,7 @@ private constructor(
     private val invoicerAddress: JsonField<InvoicerAddress>,
     private val originatingAccountId: JsonField<String>,
     private val receivingAccountId: JsonField<String>,
+    private val virtualAccountId: JsonField<String>,
     private val paymentEffectiveDate: JsonField<LocalDate>,
     private val paymentType: JsonField<PaymentType>,
     private val paymentMethod: JsonField<PaymentMethod>,
@@ -72,6 +75,20 @@ private constructor(
     /** The invoicer's contact details displayed at the top of the invoice. */
     fun contactDetails(): List<ContactDetail> = contactDetails.getRequired("contact_details")
 
+    /**
+     * The email of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    fun recipientEmail(): Optional<String> =
+        Optional.ofNullable(recipientEmail.getNullable("recipient_email"))
+
+    /**
+     * The name of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    fun recipientName(): Optional<String> =
+        Optional.ofNullable(recipientName.getNullable("recipient_name"))
+
     /** The ID of the counterparty receiving the invoice. */
     fun counterpartyId(): String = counterpartyId.getRequired("counterparty_id")
 
@@ -104,6 +121,10 @@ private constructor(
     /** The receiving account ID. Can be an `internal_account`. */
     fun receivingAccountId(): Optional<String> =
         Optional.ofNullable(receivingAccountId.getNullable("receiving_account_id"))
+
+    /** The ID of the virtual account the invoice should be paid to. */
+    fun virtualAccountId(): Optional<String> =
+        Optional.ofNullable(virtualAccountId.getNullable("virtual_account_id"))
 
     /**
      * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -180,6 +201,18 @@ private constructor(
     /** The invoicer's contact details displayed at the top of the invoice. */
     @JsonProperty("contact_details") @ExcludeMissing fun _contactDetails() = contactDetails
 
+    /**
+     * The email of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    @JsonProperty("recipient_email") @ExcludeMissing fun _recipientEmail() = recipientEmail
+
+    /**
+     * The name of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    @JsonProperty("recipient_name") @ExcludeMissing fun _recipientName() = recipientName
+
     /** The ID of the counterparty receiving the invoice. */
     @JsonProperty("counterparty_id") @ExcludeMissing fun _counterpartyId() = counterpartyId
 
@@ -214,6 +247,9 @@ private constructor(
     @JsonProperty("receiving_account_id")
     @ExcludeMissing
     fun _receivingAccountId() = receivingAccountId
+
+    /** The ID of the virtual account the invoice should be paid to. */
+    @JsonProperty("virtual_account_id") @ExcludeMissing fun _virtualAccountId() = virtualAccountId
 
     /**
      * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -288,6 +324,8 @@ private constructor(
             createdAt()
             updatedAt()
             contactDetails().forEach { it.validate() }
+            recipientEmail()
+            recipientName()
             counterpartyId()
             counterpartyBillingAddress().map { it.validate() }
             counterpartyShippingAddress().map { it.validate() }
@@ -297,6 +335,7 @@ private constructor(
             invoicerAddress().map { it.validate() }
             originatingAccountId()
             receivingAccountId()
+            virtualAccountId()
             paymentEffectiveDate()
             paymentType()
             paymentMethod()
@@ -327,6 +366,8 @@ private constructor(
             this.createdAt == other.createdAt &&
             this.updatedAt == other.updatedAt &&
             this.contactDetails == other.contactDetails &&
+            this.recipientEmail == other.recipientEmail &&
+            this.recipientName == other.recipientName &&
             this.counterpartyId == other.counterpartyId &&
             this.counterpartyBillingAddress == other.counterpartyBillingAddress &&
             this.counterpartyShippingAddress == other.counterpartyShippingAddress &&
@@ -336,6 +377,7 @@ private constructor(
             this.invoicerAddress == other.invoicerAddress &&
             this.originatingAccountId == other.originatingAccountId &&
             this.receivingAccountId == other.receivingAccountId &&
+            this.virtualAccountId == other.virtualAccountId &&
             this.paymentEffectiveDate == other.paymentEffectiveDate &&
             this.paymentType == other.paymentType &&
             this.paymentMethod == other.paymentMethod &&
@@ -361,6 +403,8 @@ private constructor(
                     createdAt,
                     updatedAt,
                     contactDetails,
+                    recipientEmail,
+                    recipientName,
                     counterpartyId,
                     counterpartyBillingAddress,
                     counterpartyShippingAddress,
@@ -370,6 +414,7 @@ private constructor(
                     invoicerAddress,
                     originatingAccountId,
                     receivingAccountId,
+                    virtualAccountId,
                     paymentEffectiveDate,
                     paymentType,
                     paymentMethod,
@@ -389,7 +434,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Invoice{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, contactDetails=$contactDetails, counterpartyId=$counterpartyId, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, invoicerAddress=$invoicerAddress, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentType=$paymentType, paymentMethod=$paymentMethod, notificationsEnabled=$notificationsEnabled, notificationEmailAddresses=$notificationEmailAddresses, hostedUrl=$hostedUrl, number=$number, paymentOrders=$paymentOrders, pdfUrl=$pdfUrl, status=$status, totalAmount=$totalAmount, transactionLineItemIds=$transactionLineItemIds, additionalProperties=$additionalProperties}"
+        "Invoice{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, contactDetails=$contactDetails, recipientEmail=$recipientEmail, recipientName=$recipientName, counterpartyId=$counterpartyId, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, invoicerAddress=$invoicerAddress, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, virtualAccountId=$virtualAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentType=$paymentType, paymentMethod=$paymentMethod, notificationsEnabled=$notificationsEnabled, notificationEmailAddresses=$notificationEmailAddresses, hostedUrl=$hostedUrl, number=$number, paymentOrders=$paymentOrders, pdfUrl=$pdfUrl, status=$status, totalAmount=$totalAmount, transactionLineItemIds=$transactionLineItemIds, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -404,6 +449,8 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var contactDetails: JsonField<List<ContactDetail>> = JsonMissing.of()
+        private var recipientEmail: JsonField<String> = JsonMissing.of()
+        private var recipientName: JsonField<String> = JsonMissing.of()
         private var counterpartyId: JsonField<String> = JsonMissing.of()
         private var counterpartyBillingAddress: JsonField<CounterpartyBillingAddress> =
             JsonMissing.of()
@@ -415,6 +462,7 @@ private constructor(
         private var invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of()
         private var originatingAccountId: JsonField<String> = JsonMissing.of()
         private var receivingAccountId: JsonField<String> = JsonMissing.of()
+        private var virtualAccountId: JsonField<String> = JsonMissing.of()
         private var paymentEffectiveDate: JsonField<LocalDate> = JsonMissing.of()
         private var paymentType: JsonField<PaymentType> = JsonMissing.of()
         private var paymentMethod: JsonField<PaymentMethod> = JsonMissing.of()
@@ -437,6 +485,8 @@ private constructor(
             this.createdAt = invoice.createdAt
             this.updatedAt = invoice.updatedAt
             this.contactDetails = invoice.contactDetails
+            this.recipientEmail = invoice.recipientEmail
+            this.recipientName = invoice.recipientName
             this.counterpartyId = invoice.counterpartyId
             this.counterpartyBillingAddress = invoice.counterpartyBillingAddress
             this.counterpartyShippingAddress = invoice.counterpartyShippingAddress
@@ -446,6 +496,7 @@ private constructor(
             this.invoicerAddress = invoice.invoicerAddress
             this.originatingAccountId = invoice.originatingAccountId
             this.receivingAccountId = invoice.receivingAccountId
+            this.virtualAccountId = invoice.virtualAccountId
             this.paymentEffectiveDate = invoice.paymentEffectiveDate
             this.paymentType = invoice.paymentType
             this.paymentMethod = invoice.paymentMethod
@@ -506,6 +557,38 @@ private constructor(
         @ExcludeMissing
         fun contactDetails(contactDetails: JsonField<List<ContactDetail>>) = apply {
             this.contactDetails = contactDetails
+        }
+
+        /**
+         * The email of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        fun recipientEmail(recipientEmail: String) = recipientEmail(JsonField.of(recipientEmail))
+
+        /**
+         * The email of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        @JsonProperty("recipient_email")
+        @ExcludeMissing
+        fun recipientEmail(recipientEmail: JsonField<String>) = apply {
+            this.recipientEmail = recipientEmail
+        }
+
+        /**
+         * The name of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        fun recipientName(recipientName: String) = recipientName(JsonField.of(recipientName))
+
+        /**
+         * The name of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        @JsonProperty("recipient_name")
+        @ExcludeMissing
+        fun recipientName(recipientName: JsonField<String>) = apply {
+            this.recipientName = recipientName
         }
 
         /** The ID of the counterparty receiving the invoice. */
@@ -595,6 +678,17 @@ private constructor(
         @ExcludeMissing
         fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
             this.receivingAccountId = receivingAccountId
+        }
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        fun virtualAccountId(virtualAccountId: String) =
+            virtualAccountId(JsonField.of(virtualAccountId))
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        @JsonProperty("virtual_account_id")
+        @ExcludeMissing
+        fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
+            this.virtualAccountId = virtualAccountId
         }
 
         /**
@@ -769,6 +863,8 @@ private constructor(
                 createdAt,
                 updatedAt,
                 contactDetails.map { it.toUnmodifiable() },
+                recipientEmail,
+                recipientName,
                 counterpartyId,
                 counterpartyBillingAddress,
                 counterpartyShippingAddress,
@@ -778,6 +874,7 @@ private constructor(
                 invoicerAddress,
                 originatingAccountId,
                 receivingAccountId,
+                virtualAccountId,
                 paymentEffectiveDate,
                 paymentType,
                 paymentMethod,

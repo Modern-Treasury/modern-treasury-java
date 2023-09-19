@@ -49,17 +49,25 @@ private constructor(
 
         @JvmField val NEFT = PaymentOrderType(JsonField.of("neft"))
 
+        @JvmField val NICS = PaymentOrderType(JsonField.of("nics"))
+
         @JvmField val PROVXCHANGE = PaymentOrderType(JsonField.of("provxchange"))
 
         @JvmField val RTP = PaymentOrderType(JsonField.of("rtp"))
+
+        @JvmField val SE_BANKGIROT = PaymentOrderType(JsonField.of("se_bankgirot"))
 
         @JvmField val SEN = PaymentOrderType(JsonField.of("sen"))
 
         @JvmField val SEPA = PaymentOrderType(JsonField.of("sepa"))
 
+        @JvmField val SIC = PaymentOrderType(JsonField.of("sic"))
+
         @JvmField val SIGNET = PaymentOrderType(JsonField.of("signet"))
 
         @JvmField val WIRE = PaymentOrderType(JsonField.of("wire"))
+
+        @JvmField val ZENGIN = PaymentOrderType(JsonField.of("zengin"))
 
         @JvmStatic fun of(value: String) = PaymentOrderType(JsonField.of(value))
     }
@@ -76,12 +84,16 @@ private constructor(
         INTERAC,
         MASAV,
         NEFT,
+        NICS,
         PROVXCHANGE,
         RTP,
+        SE_BANKGIROT,
         SEN,
         SEPA,
+        SIC,
         SIGNET,
         WIRE,
+        ZENGIN,
     }
 
     enum class Value {
@@ -96,12 +108,16 @@ private constructor(
         INTERAC,
         MASAV,
         NEFT,
+        NICS,
         PROVXCHANGE,
         RTP,
+        SE_BANKGIROT,
         SEN,
         SEPA,
+        SIC,
         SIGNET,
         WIRE,
+        ZENGIN,
         _UNKNOWN,
     }
 
@@ -118,12 +134,16 @@ private constructor(
             INTERAC -> Value.INTERAC
             MASAV -> Value.MASAV
             NEFT -> Value.NEFT
+            NICS -> Value.NICS
             PROVXCHANGE -> Value.PROVXCHANGE
             RTP -> Value.RTP
+            SE_BANKGIROT -> Value.SE_BANKGIROT
             SEN -> Value.SEN
             SEPA -> Value.SEPA
+            SIC -> Value.SIC
             SIGNET -> Value.SIGNET
             WIRE -> Value.WIRE
+            ZENGIN -> Value.ZENGIN
             else -> Value._UNKNOWN
         }
 
@@ -140,12 +160,16 @@ private constructor(
             INTERAC -> Known.INTERAC
             MASAV -> Known.MASAV
             NEFT -> Known.NEFT
+            NICS -> Known.NICS
             PROVXCHANGE -> Known.PROVXCHANGE
             RTP -> Known.RTP
+            SE_BANKGIROT -> Known.SE_BANKGIROT
             SEN -> Known.SEN
             SEPA -> Known.SEPA
+            SIC -> Known.SIC
             SIGNET -> Known.SIGNET
             WIRE -> Known.WIRE
+            ZENGIN -> Known.ZENGIN
             else -> throw ModernTreasuryInvalidDataException("Unknown PaymentOrderType: $value")
         }
 
