@@ -398,8 +398,8 @@ constructor(
         @JsonProperty("subtype") fun subtype(): PaymentOrderSubtype? = subtype
 
         /**
-         * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-         * `interac`, `signet`, `provexchange`.
+         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
          */
         @JsonProperty("type") fun type(): PaymentOrderType? = type
 
@@ -835,8 +835,9 @@ constructor(
             fun subtype(subtype: PaymentOrderSubtype) = apply { this.subtype = subtype }
 
             /**
-             * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-             * `au_becs`, `interac`, `signet`, `provexchange`.
+             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`,
+             * `zengin`.
              */
             @JsonProperty("type") fun type(type: PaymentOrderType) = apply { this.type = type }
 
@@ -1317,8 +1318,8 @@ constructor(
         fun subtype(subtype: PaymentOrderSubtype) = apply { this.subtype = subtype }
 
         /**
-         * One of `ach`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`, `au_becs`,
-         * `interac`, `signet`, `provexchange`.
+         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
          */
         fun type(type: PaymentOrderType) = apply { this.type = type }
 
@@ -3570,6 +3571,10 @@ constructor(
 
                     @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
 
+                    @JvmField
+                    val SE_BANKGIRO_CLEARING_CODE =
+                        RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
+
                     @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
 
                     @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
@@ -3586,12 +3591,15 @@ constructor(
 
                     @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
 
+                    @JvmField val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
+
                     @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
                 }
 
                 enum class Known {
                     ABA,
                     AU_BSB,
+                    SE_BANKGIRO_CLEARING_CODE,
                     BR_CODIGO,
                     CA_CPA,
                     CHIPS,
@@ -3600,11 +3608,13 @@ constructor(
                     IN_IFSC,
                     MY_BRANCH_CODE,
                     SWIFT,
+                    JP_ZENGIN_CODE,
                 }
 
                 enum class Value {
                     ABA,
                     AU_BSB,
+                    SE_BANKGIRO_CLEARING_CODE,
                     BR_CODIGO,
                     CA_CPA,
                     CHIPS,
@@ -3613,6 +3623,7 @@ constructor(
                     IN_IFSC,
                     MY_BRANCH_CODE,
                     SWIFT,
+                    JP_ZENGIN_CODE,
                     _UNKNOWN,
                 }
 
@@ -3620,6 +3631,7 @@ constructor(
                     when (this) {
                         ABA -> Value.ABA
                         AU_BSB -> Value.AU_BSB
+                        SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                         BR_CODIGO -> Value.BR_CODIGO
                         CA_CPA -> Value.CA_CPA
                         CHIPS -> Value.CHIPS
@@ -3628,6 +3640,7 @@ constructor(
                         IN_IFSC -> Value.IN_IFSC
                         MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
                         SWIFT -> Value.SWIFT
+                        JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                         else -> Value._UNKNOWN
                     }
 
@@ -3635,6 +3648,7 @@ constructor(
                     when (this) {
                         ABA -> Known.ABA
                         AU_BSB -> Known.AU_BSB
+                        SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                         BR_CODIGO -> Known.BR_CODIGO
                         CA_CPA -> Known.CA_CPA
                         CHIPS -> Known.CHIPS
@@ -3643,6 +3657,7 @@ constructor(
                         IN_IFSC -> Known.IN_IFSC
                         MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
                         SWIFT -> Known.SWIFT
+                        JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                         else ->
                             throw ModernTreasuryInvalidDataException(
                                 "Unknown RoutingNumberType: $value"
@@ -3678,6 +3693,8 @@ constructor(
 
                     @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
 
+                    @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
+
                     @JvmField val BACS = PaymentType(JsonField.of("bacs"))
 
                     @JvmField val BOOK = PaymentType(JsonField.of("book"))
@@ -3696,11 +3713,15 @@ constructor(
 
                     @JvmField val NEFT = PaymentType(JsonField.of("neft"))
 
+                    @JvmField val NICS = PaymentType(JsonField.of("nics"))
+
                     @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
 
                     @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
                     @JvmField val SEN = PaymentType(JsonField.of("sen"))
+
+                    @JvmField val SIC = PaymentType(JsonField.of("sic"))
 
                     @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
 
@@ -3708,12 +3729,15 @@ constructor(
 
                     @JvmField val WIRE = PaymentType(JsonField.of("wire"))
 
+                    @JvmField val ZENGIN = PaymentType(JsonField.of("zengin"))
+
                     @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
                 }
 
                 enum class Known {
                     ACH,
                     AU_BECS,
+                    SE_BANKGIROT,
                     BACS,
                     BOOK,
                     CARD,
@@ -3723,17 +3747,21 @@ constructor(
                     INTERAC,
                     MASAV,
                     NEFT,
+                    NICS,
                     PROVXCHANGE,
                     RTP,
                     SEN,
+                    SIC,
                     SEPA,
                     SIGNET,
                     WIRE,
+                    ZENGIN,
                 }
 
                 enum class Value {
                     ACH,
                     AU_BECS,
+                    SE_BANKGIROT,
                     BACS,
                     BOOK,
                     CARD,
@@ -3743,12 +3771,15 @@ constructor(
                     INTERAC,
                     MASAV,
                     NEFT,
+                    NICS,
                     PROVXCHANGE,
                     RTP,
                     SEN,
+                    SIC,
                     SEPA,
                     SIGNET,
                     WIRE,
+                    ZENGIN,
                     _UNKNOWN,
                 }
 
@@ -3756,6 +3787,7 @@ constructor(
                     when (this) {
                         ACH -> Value.ACH
                         AU_BECS -> Value.AU_BECS
+                        SE_BANKGIROT -> Value.SE_BANKGIROT
                         BACS -> Value.BACS
                         BOOK -> Value.BOOK
                         CARD -> Value.CARD
@@ -3765,12 +3797,15 @@ constructor(
                         INTERAC -> Value.INTERAC
                         MASAV -> Value.MASAV
                         NEFT -> Value.NEFT
+                        NICS -> Value.NICS
                         PROVXCHANGE -> Value.PROVXCHANGE
                         RTP -> Value.RTP
                         SEN -> Value.SEN
+                        SIC -> Value.SIC
                         SEPA -> Value.SEPA
                         SIGNET -> Value.SIGNET
                         WIRE -> Value.WIRE
+                        ZENGIN -> Value.ZENGIN
                         else -> Value._UNKNOWN
                     }
 
@@ -3778,6 +3813,7 @@ constructor(
                     when (this) {
                         ACH -> Known.ACH
                         AU_BECS -> Known.AU_BECS
+                        SE_BANKGIROT -> Known.SE_BANKGIROT
                         BACS -> Known.BACS
                         BOOK -> Known.BOOK
                         CARD -> Known.CARD
@@ -3787,12 +3823,15 @@ constructor(
                         INTERAC -> Known.INTERAC
                         MASAV -> Known.MASAV
                         NEFT -> Known.NEFT
+                        NICS -> Known.NICS
                         PROVXCHANGE -> Known.PROVXCHANGE
                         RTP -> Known.RTP
                         SEN -> Known.SEN
+                        SIC -> Known.SIC
                         SEPA -> Known.SEPA
                         SIGNET -> Known.SIGNET
                         WIRE -> Known.WIRE
+                        ZENGIN -> Known.ZENGIN
                         else ->
                             throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
                     }

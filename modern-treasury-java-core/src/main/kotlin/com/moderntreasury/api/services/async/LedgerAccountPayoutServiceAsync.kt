@@ -8,6 +8,7 @@ import com.moderntreasury.api.models.LedgerAccountPayoutCreateParams
 import com.moderntreasury.api.models.LedgerAccountPayoutListPageAsync
 import com.moderntreasury.api.models.LedgerAccountPayoutListParams
 import com.moderntreasury.api.models.LedgerAccountPayoutRetireveParams
+import com.moderntreasury.api.models.LedgerAccountPayoutRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountPayoutUpdateParams
 import java.util.concurrent.CompletableFuture
 
@@ -17,6 +18,13 @@ interface LedgerAccountPayoutServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerAccountPayoutCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<LedgerAccountPayout>
+
+    /** Get details on a single ledger account payout. */
+    @JvmOverloads
+    fun retrieve(
+        params: LedgerAccountPayoutRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<LedgerAccountPayout>
 

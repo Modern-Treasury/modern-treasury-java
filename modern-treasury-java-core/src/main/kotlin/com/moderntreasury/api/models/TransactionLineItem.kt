@@ -33,6 +33,7 @@ private constructor(
     private val description: JsonField<String>,
     private val counterpartyId: JsonField<String>,
     private val expectedPaymentId: JsonField<String>,
+    private val transactionId: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -92,10 +93,15 @@ private constructor(
     fun description(): String = description.getRequired("description")
 
     /** The ID for the counterparty for this transaction line item. */
-    fun counterpartyId(): String = counterpartyId.getRequired("counterparty_id")
+    fun counterpartyId(): Optional<String> =
+        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
 
     /** The ID of the reconciled Expected Payment, otherwise `null`. */
-    fun expectedPaymentId(): String = expectedPaymentId.getRequired("expected_payment_id")
+    fun expectedPaymentId(): Optional<String> =
+        Optional.ofNullable(expectedPaymentId.getNullable("expected_payment_id"))
+
+    /** The ID of the parent transaction. */
+    fun transactionId(): String = transactionId.getRequired("transaction_id")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
@@ -153,6 +159,9 @@ private constructor(
     @ExcludeMissing
     fun _expectedPaymentId() = expectedPaymentId
 
+    /** The ID of the parent transaction. */
+    @JsonProperty("transaction_id") @ExcludeMissing fun _transactionId() = transactionId
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -172,6 +181,7 @@ private constructor(
             description()
             counterpartyId()
             expectedPaymentId()
+            transactionId()
             validated = true
         }
     }
@@ -197,6 +207,7 @@ private constructor(
             this.description == other.description &&
             this.counterpartyId == other.counterpartyId &&
             this.expectedPaymentId == other.expectedPaymentId &&
+            this.transactionId == other.transactionId &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -217,6 +228,7 @@ private constructor(
                     description,
                     counterpartyId,
                     expectedPaymentId,
+                    transactionId,
                     additionalProperties,
                 )
         }
@@ -224,7 +236,7 @@ private constructor(
     }
 
     override fun toString() =
-        "TransactionLineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, type=$type, transactableType=$transactableType, transactableId=$transactableId, amount=$amount, description=$description, counterpartyId=$counterpartyId, expectedPaymentId=$expectedPaymentId, additionalProperties=$additionalProperties}"
+        "TransactionLineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, type=$type, transactableType=$transactableType, transactableId=$transactableId, amount=$amount, description=$description, counterpartyId=$counterpartyId, expectedPaymentId=$expectedPaymentId, transactionId=$transactionId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -246,6 +258,7 @@ private constructor(
         private var description: JsonField<String> = JsonMissing.of()
         private var counterpartyId: JsonField<String> = JsonMissing.of()
         private var expectedPaymentId: JsonField<String> = JsonMissing.of()
+        private var transactionId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -263,6 +276,7 @@ private constructor(
             this.description = transactionLineItem.description
             this.counterpartyId = transactionLineItem.counterpartyId
             this.expectedPaymentId = transactionLineItem.expectedPaymentId
+            this.transactionId = transactionLineItem.transactionId
             additionalProperties(transactionLineItem.additionalProperties)
         }
 
@@ -410,6 +424,16 @@ private constructor(
             this.expectedPaymentId = expectedPaymentId
         }
 
+        /** The ID of the parent transaction. */
+        fun transactionId(transactionId: String) = transactionId(JsonField.of(transactionId))
+
+        /** The ID of the parent transaction. */
+        @JsonProperty("transaction_id")
+        @ExcludeMissing
+        fun transactionId(transactionId: JsonField<String>) = apply {
+            this.transactionId = transactionId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -439,6 +463,7 @@ private constructor(
                 description,
                 counterpartyId,
                 expectedPaymentId,
+                transactionId,
                 additionalProperties.toUnmodifiable(),
             )
     }

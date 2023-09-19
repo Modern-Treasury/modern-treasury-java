@@ -7,9 +7,17 @@ import com.moderntreasury.api.models.PaymentReference
 import com.moderntreasury.api.models.PaymentReferenceListPageAsync
 import com.moderntreasury.api.models.PaymentReferenceListParams
 import com.moderntreasury.api.models.PaymentReferenceRetireveParams
+import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface PaymentReferenceServiceAsync {
+
+    /** get payment_reference */
+    @JvmOverloads
+    fun retrieve(
+        params: PaymentReferenceRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<PaymentReference>
 
     /** list payment_references */
     @JvmOverloads

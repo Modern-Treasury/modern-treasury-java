@@ -524,6 +524,8 @@ constructor(
 
             @JvmField val ADDRESS = Field(JsonField.of("address"))
 
+            @JvmField val JP_ZENGIN_CODE = Field(JsonField.of("jp_zengin_code"))
+
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
 
@@ -549,6 +551,7 @@ constructor(
             BR_CODIGO,
             ROUTING_NUMBER_TYPE,
             ADDRESS,
+            JP_ZENGIN_CODE,
         }
 
         enum class Value {
@@ -573,6 +576,7 @@ constructor(
             BR_CODIGO,
             ROUTING_NUMBER_TYPE,
             ADDRESS,
+            JP_ZENGIN_CODE,
             _UNKNOWN,
         }
 
@@ -599,6 +603,7 @@ constructor(
                 BR_CODIGO -> Value.BR_CODIGO
                 ROUTING_NUMBER_TYPE -> Value.ROUTING_NUMBER_TYPE
                 ADDRESS -> Value.ADDRESS
+                JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 else -> Value._UNKNOWN
             }
 
@@ -625,6 +630,7 @@ constructor(
                 BR_CODIGO -> Known.BR_CODIGO
                 ROUTING_NUMBER_TYPE -> Known.ROUTING_NUMBER_TYPE
                 ADDRESS -> Known.ADDRESS
+                JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Field: $value")
             }
 
