@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0 (2023-10-02)
+
+Full Changelog: [v1.4.2...v1.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.4.2...v1.5.0)
+
+### Features
+
+* **api:** updates ([#62](https://github.com/Modern-Treasury/modern-treasury-java/issues/62)) ([7ec7c02](https://github.com/Modern-Treasury/modern-treasury-java/commit/7ec7c02b524dffdc121930bba349414143f819e2))
+* **client:** retry on 408 Request Timeout ([#58](https://github.com/Modern-Treasury/modern-treasury-java/issues/58)) ([f8af153](https://github.com/Modern-Treasury/modern-treasury-java/commit/f8af153f2f17c8cf7a898c357c0dea50d1b95566))
+
 ## 1.4.2 (2023-08-31)
 
 Full Changelog: [v1.4.1...v1.4.2](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.4.1...v1.4.2)
