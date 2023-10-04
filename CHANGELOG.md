@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1 (2023-10-04)
+
+Full Changelog: [v1.5.0...v1.5.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.5.0...v1.5.1)
+
+### Chores
+
+* **internal:** add a top-level generated comment to each file ([#66](https://github.com/Modern-Treasury/modern-treasury-java/issues/66)) ([983130b](https://github.com/Modern-Treasury/modern-treasury-java/commit/983130be9ecb6388064648a25dacb3e69ee91965))
+
 ## 1.5.0 (2023-10-02)
 
 Full Changelog: [v1.4.2...v1.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.4.2...v1.5.0)
