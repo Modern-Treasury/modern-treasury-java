@@ -45,6 +45,7 @@ interface LedgerAccountPayoutService {
 
     /** Get details on a single ledger account payout. */
     @JvmOverloads
+    @Deprecated("use `retrieve` instead")
     fun retireve(
         params: LedgerAccountPayoutRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none()
