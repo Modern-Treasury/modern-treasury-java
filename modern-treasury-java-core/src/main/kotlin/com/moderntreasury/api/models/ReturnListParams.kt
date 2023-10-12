@@ -15,9 +15,9 @@ import java.util.Optional
 class ReturnListParams
 constructor(
     private val afterCursor: String?,
-    private val perPage: Long?,
-    private val internalAccountId: String?,
     private val counterpartyId: String?,
+    private val internalAccountId: String?,
+    private val perPage: Long?,
     private val returnableId: String?,
     private val returnableType: ReturnableType?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -26,11 +26,11 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
-    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
+    fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
-    fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     fun returnableId(): Optional<String> = Optional.ofNullable(returnableId)
 
@@ -40,9 +40,9 @@ constructor(
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
-        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
-        this.internalAccountId?.let { params.put("internal_account_id", listOf(it.toString())) }
         this.counterpartyId?.let { params.put("counterparty_id", listOf(it.toString())) }
+        this.internalAccountId?.let { params.put("internal_account_id", listOf(it.toString())) }
+        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.returnableId?.let { params.put("returnable_id", listOf(it.toString())) }
         this.returnableType?.let { params.put("returnable_type", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
@@ -62,9 +62,9 @@ constructor(
 
         return other is ReturnListParams &&
             this.afterCursor == other.afterCursor &&
-            this.perPage == other.perPage &&
-            this.internalAccountId == other.internalAccountId &&
             this.counterpartyId == other.counterpartyId &&
+            this.internalAccountId == other.internalAccountId &&
+            this.perPage == other.perPage &&
             this.returnableId == other.returnableId &&
             this.returnableType == other.returnableType &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -74,9 +74,9 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             afterCursor,
-            perPage,
-            internalAccountId,
             counterpartyId,
+            internalAccountId,
+            perPage,
             returnableId,
             returnableType,
             additionalQueryParams,
@@ -85,7 +85,7 @@ constructor(
     }
 
     override fun toString() =
-        "ReturnListParams{afterCursor=$afterCursor, perPage=$perPage, internalAccountId=$internalAccountId, counterpartyId=$counterpartyId, returnableId=$returnableId, returnableType=$returnableType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -98,9 +98,9 @@ constructor(
     class Builder {
 
         private var afterCursor: String? = null
-        private var perPage: Long? = null
-        private var internalAccountId: String? = null
         private var counterpartyId: String? = null
+        private var internalAccountId: String? = null
+        private var perPage: Long? = null
         private var returnableId: String? = null
         private var returnableType: ReturnableType? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -109,9 +109,9 @@ constructor(
         @JvmSynthetic
         internal fun from(returnListParams: ReturnListParams) = apply {
             this.afterCursor = returnListParams.afterCursor
-            this.perPage = returnListParams.perPage
-            this.internalAccountId = returnListParams.internalAccountId
             this.counterpartyId = returnListParams.counterpartyId
+            this.internalAccountId = returnListParams.internalAccountId
+            this.perPage = returnListParams.perPage
             this.returnableId = returnListParams.returnableId
             this.returnableType = returnListParams.returnableType
             additionalQueryParams(returnListParams.additionalQueryParams)
@@ -120,18 +120,18 @@ constructor(
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * Specify `counterparty_id` if you wish to see returns that occurred with a specific
+         * counterparty.
+         */
+        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
 
         /** Specify `internal_account_id` if you wish to see returns to/from a specific account. */
         fun internalAccountId(internalAccountId: String) = apply {
             this.internalAccountId = internalAccountId
         }
 
-        /**
-         * Specify `counterparty_id` if you wish to see returns that occurred with a specific
-         * counterparty.
-         */
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
         fun returnableId(returnableId: String) = apply { this.returnableId = returnableId }
@@ -187,9 +187,9 @@ constructor(
         fun build(): ReturnListParams =
             ReturnListParams(
                 afterCursor,
-                perPage,
-                internalAccountId,
                 counterpartyId,
+                internalAccountId,
+                perPage,
                 returnableId,
                 returnableType,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

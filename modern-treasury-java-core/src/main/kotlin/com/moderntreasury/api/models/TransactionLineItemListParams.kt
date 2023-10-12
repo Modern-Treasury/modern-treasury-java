@@ -15,33 +15,33 @@ import java.util.Optional
 
 class TransactionLineItemListParams
 constructor(
-    private val afterCursor: String?,
     private val id: Id?,
-    private val type: Type?,
+    private val afterCursor: String?,
     private val perPage: Long?,
     private val transactionId: String?,
+    private val type: Type?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
-    fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
-
     fun id(): Optional<Id> = Optional.ofNullable(id)
 
-    fun type(): Optional<Type> = Optional.ofNullable(type)
+    fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     fun transactionId(): Optional<String> = Optional.ofNullable(transactionId)
 
+    fun type(): Optional<Type> = Optional.ofNullable(type)
+
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
-        this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.id?.forEachQueryParam { key, values -> params.put("id[$key]", values) }
-        this.type?.let { params.put("type", listOf(it.toString())) }
+        this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.transactionId?.let { params.put("transaction_id", listOf(it.toString())) }
+        this.type?.let { params.put("type", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -58,29 +58,29 @@ constructor(
         }
 
         return other is TransactionLineItemListParams &&
-            this.afterCursor == other.afterCursor &&
             this.id == other.id &&
-            this.type == other.type &&
+            this.afterCursor == other.afterCursor &&
             this.perPage == other.perPage &&
             this.transactionId == other.transactionId &&
+            this.type == other.type &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
         return Objects.hash(
-            afterCursor,
             id,
-            type,
+            afterCursor,
             perPage,
             transactionId,
+            type,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "TransactionLineItemListParams{afterCursor=$afterCursor, id=$id, type=$type, perPage=$perPage, transactionId=$transactionId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "TransactionLineItemListParams{id=$id, afterCursor=$afterCursor, perPage=$perPage, transactionId=$transactionId, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -92,34 +92,34 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var afterCursor: String? = null
         private var id: Id? = null
-        private var type: Type? = null
+        private var afterCursor: String? = null
         private var perPage: Long? = null
         private var transactionId: String? = null
+        private var type: Type? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(transactionLineItemListParams: TransactionLineItemListParams) = apply {
-            this.afterCursor = transactionLineItemListParams.afterCursor
             this.id = transactionLineItemListParams.id
-            this.type = transactionLineItemListParams.type
+            this.afterCursor = transactionLineItemListParams.afterCursor
             this.perPage = transactionLineItemListParams.perPage
             this.transactionId = transactionLineItemListParams.transactionId
+            this.type = transactionLineItemListParams.type
             additionalQueryParams(transactionLineItemListParams.additionalQueryParams)
             additionalHeaders(transactionLineItemListParams.additionalHeaders)
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
-
         fun id(id: Id) = apply { this.id = id }
 
-        fun type(type: Type) = apply { this.type = type }
+        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
         fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         fun transactionId(transactionId: String) = apply { this.transactionId = transactionId }
+
+        fun type(type: Type) = apply { this.type = type }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -163,11 +163,11 @@ constructor(
 
         fun build(): TransactionLineItemListParams =
             TransactionLineItemListParams(
-                afterCursor,
                 id,
-                type,
+                afterCursor,
                 perPage,
                 transactionId,
+                type,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )

@@ -14,28 +14,28 @@ import java.util.Optional
 
 class DocumentListParams
 constructor(
+    private val afterCursor: String?,
     private val documentableId: String?,
     private val documentableType: DocumentableType?,
-    private val afterCursor: String?,
     private val perPage: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
+    fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
+
     fun documentableId(): Optional<String> = Optional.ofNullable(documentableId)
 
     fun documentableType(): Optional<DocumentableType> = Optional.ofNullable(documentableType)
-
-    fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
+        this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.documentableId?.let { params.put("documentable_id", listOf(it.toString())) }
         this.documentableType?.let { params.put("documentable_type", listOf(it.toString())) }
-        this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
@@ -53,9 +53,9 @@ constructor(
         }
 
         return other is DocumentListParams &&
+            this.afterCursor == other.afterCursor &&
             this.documentableId == other.documentableId &&
             this.documentableType == other.documentableType &&
-            this.afterCursor == other.afterCursor &&
             this.perPage == other.perPage &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
@@ -63,9 +63,9 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            afterCursor,
             documentableId,
             documentableType,
-            afterCursor,
             perPage,
             additionalQueryParams,
             additionalHeaders,
@@ -73,7 +73,7 @@ constructor(
     }
 
     override fun toString() =
-        "DocumentListParams{documentableId=$documentableId, documentableType=$documentableType, afterCursor=$afterCursor, perPage=$perPage, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "DocumentListParams{afterCursor=$afterCursor, documentableId=$documentableId, documentableType=$documentableType, perPage=$perPage, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -85,22 +85,24 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var afterCursor: String? = null
         private var documentableId: String? = null
         private var documentableType: DocumentableType? = null
-        private var afterCursor: String? = null
         private var perPage: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(documentListParams: DocumentListParams) = apply {
+            this.afterCursor = documentListParams.afterCursor
             this.documentableId = documentListParams.documentableId
             this.documentableType = documentListParams.documentableType
-            this.afterCursor = documentListParams.afterCursor
             this.perPage = documentListParams.perPage
             additionalQueryParams(documentListParams.additionalQueryParams)
             additionalHeaders(documentListParams.additionalHeaders)
         }
+
+        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
         /** The unique identifier for the associated object. */
         fun documentableId(documentableId: String) = apply { this.documentableId = documentableId }
@@ -113,8 +115,6 @@ constructor(
         fun documentableType(documentableType: DocumentableType) = apply {
             this.documentableType = documentableType
         }
-
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
         fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
@@ -160,9 +160,9 @@ constructor(
 
         fun build(): DocumentListParams =
             DocumentListParams(
+                afterCursor,
                 documentableId,
                 documentableType,
-                afterCursor,
                 perPage,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

@@ -13,44 +13,44 @@ import java.util.Optional
 class CounterpartyListParams
 constructor(
     private val afterCursor: String?,
-    private val perPage: Long?,
-    private val name: String?,
-    private val email: String?,
-    private val metadata: Metadata?,
     private val createdAtLowerBound: OffsetDateTime?,
     private val createdAtUpperBound: OffsetDateTime?,
+    private val email: String?,
+    private val metadata: Metadata?,
+    private val name: String?,
+    private val perPage: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
-    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
+    fun createdAtLowerBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtLowerBound)
 
-    fun name(): Optional<String> = Optional.ofNullable(name)
+    fun createdAtUpperBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtUpperBound)
 
     fun email(): Optional<String> = Optional.ofNullable(email)
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-    fun createdAtLowerBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtLowerBound)
+    fun name(): Optional<String> = Optional.ofNullable(name)
 
-    fun createdAtUpperBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtUpperBound)
+    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
-        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
-        this.name?.let { params.put("name", listOf(it.toString())) }
-        this.email?.let { params.put("email", listOf(it.toString())) }
-        this.metadata?.forEachQueryParam { key, values -> params.put("metadata[$key]", values) }
         this.createdAtLowerBound?.let {
             params.put("created_at_lower_bound", listOf(it.toString()))
         }
         this.createdAtUpperBound?.let {
             params.put("created_at_upper_bound", listOf(it.toString()))
         }
+        this.email?.let { params.put("email", listOf(it.toString())) }
+        this.metadata?.forEachQueryParam { key, values -> params.put("metadata[$key]", values) }
+        this.name?.let { params.put("name", listOf(it.toString())) }
+        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -68,12 +68,12 @@ constructor(
 
         return other is CounterpartyListParams &&
             this.afterCursor == other.afterCursor &&
-            this.perPage == other.perPage &&
-            this.name == other.name &&
-            this.email == other.email &&
-            this.metadata == other.metadata &&
             this.createdAtLowerBound == other.createdAtLowerBound &&
             this.createdAtUpperBound == other.createdAtUpperBound &&
+            this.email == other.email &&
+            this.metadata == other.metadata &&
+            this.name == other.name &&
+            this.perPage == other.perPage &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -81,19 +81,19 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             afterCursor,
-            perPage,
-            name,
-            email,
-            metadata,
             createdAtLowerBound,
             createdAtUpperBound,
+            email,
+            metadata,
+            name,
+            perPage,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "CounterpartyListParams{afterCursor=$afterCursor, perPage=$perPage, name=$name, email=$email, metadata=$metadata, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "CounterpartyListParams{afterCursor=$afterCursor, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, email=$email, metadata=$metadata, name=$name, perPage=$perPage, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -106,43 +106,29 @@ constructor(
     class Builder {
 
         private var afterCursor: String? = null
-        private var perPage: Long? = null
-        private var name: String? = null
-        private var email: String? = null
-        private var metadata: Metadata? = null
         private var createdAtLowerBound: OffsetDateTime? = null
         private var createdAtUpperBound: OffsetDateTime? = null
+        private var email: String? = null
+        private var metadata: Metadata? = null
+        private var name: String? = null
+        private var perPage: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(counterpartyListParams: CounterpartyListParams) = apply {
             this.afterCursor = counterpartyListParams.afterCursor
-            this.perPage = counterpartyListParams.perPage
-            this.name = counterpartyListParams.name
-            this.email = counterpartyListParams.email
-            this.metadata = counterpartyListParams.metadata
             this.createdAtLowerBound = counterpartyListParams.createdAtLowerBound
             this.createdAtUpperBound = counterpartyListParams.createdAtUpperBound
+            this.email = counterpartyListParams.email
+            this.metadata = counterpartyListParams.metadata
+            this.name = counterpartyListParams.name
+            this.perPage = counterpartyListParams.perPage
             additionalQueryParams(counterpartyListParams.additionalQueryParams)
             additionalHeaders(counterpartyListParams.additionalHeaders)
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
-
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
-
-        /** Performs a partial string match of the name field. This is also case insensitive. */
-        fun name(name: String) = apply { this.name = name }
-
-        /** Performs a partial string match of the email field. This is also case insensitive. */
-        fun email(email: String) = apply { this.email = email }
-
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         /** Used to return counterparties created after some datetime. */
         fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime) = apply {
@@ -153,6 +139,20 @@ constructor(
         fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime) = apply {
             this.createdAtUpperBound = createdAtUpperBound
         }
+
+        /** Performs a partial string match of the email field. This is also case insensitive. */
+        fun email(email: String) = apply { this.email = email }
+
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+        /** Performs a partial string match of the name field. This is also case insensitive. */
+        fun name(name: String) = apply { this.name = name }
+
+        fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -197,12 +197,12 @@ constructor(
         fun build(): CounterpartyListParams =
             CounterpartyListParams(
                 afterCursor,
-                perPage,
-                name,
-                email,
-                metadata,
                 createdAtLowerBound,
                 createdAtUpperBound,
+                email,
+                metadata,
+                name,
+                perPage,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
