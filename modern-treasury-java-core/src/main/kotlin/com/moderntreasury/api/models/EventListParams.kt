@@ -12,40 +12,40 @@ import java.util.Optional
 class EventListParams
 constructor(
     private val afterCursor: String?,
-    private val perPage: Long?,
-    private val eventTimeStart: OffsetDateTime?,
-    private val eventTimeEnd: OffsetDateTime?,
-    private val resource: String?,
     private val entityId: String?,
     private val eventName: String?,
+    private val eventTimeEnd: OffsetDateTime?,
+    private val eventTimeStart: OffsetDateTime?,
+    private val perPage: Long?,
+    private val resource: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
-    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
-
-    fun eventTimeStart(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeStart)
-
-    fun eventTimeEnd(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeEnd)
-
-    fun resource(): Optional<String> = Optional.ofNullable(resource)
-
     fun entityId(): Optional<String> = Optional.ofNullable(entityId)
 
     fun eventName(): Optional<String> = Optional.ofNullable(eventName)
+
+    fun eventTimeEnd(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeEnd)
+
+    fun eventTimeStart(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeStart)
+
+    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
+
+    fun resource(): Optional<String> = Optional.ofNullable(resource)
 
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
-        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
-        this.eventTimeStart?.let { params.put("event_time_start", listOf(it.toString())) }
-        this.eventTimeEnd?.let { params.put("event_time_end", listOf(it.toString())) }
-        this.resource?.let { params.put("resource", listOf(it.toString())) }
         this.entityId?.let { params.put("entity_id", listOf(it.toString())) }
         this.eventName?.let { params.put("event_name", listOf(it.toString())) }
+        this.eventTimeEnd?.let { params.put("event_time_end", listOf(it.toString())) }
+        this.eventTimeStart?.let { params.put("event_time_start", listOf(it.toString())) }
+        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
+        this.resource?.let { params.put("resource", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -63,12 +63,12 @@ constructor(
 
         return other is EventListParams &&
             this.afterCursor == other.afterCursor &&
-            this.perPage == other.perPage &&
-            this.eventTimeStart == other.eventTimeStart &&
-            this.eventTimeEnd == other.eventTimeEnd &&
-            this.resource == other.resource &&
             this.entityId == other.entityId &&
             this.eventName == other.eventName &&
+            this.eventTimeEnd == other.eventTimeEnd &&
+            this.eventTimeStart == other.eventTimeStart &&
+            this.perPage == other.perPage &&
+            this.resource == other.resource &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -76,19 +76,19 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             afterCursor,
-            perPage,
-            eventTimeStart,
-            eventTimeEnd,
-            resource,
             entityId,
             eventName,
+            eventTimeEnd,
+            eventTimeStart,
+            perPage,
+            resource,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "EventListParams{afterCursor=$afterCursor, perPage=$perPage, eventTimeStart=$eventTimeStart, eventTimeEnd=$eventTimeEnd, resource=$resource, entityId=$entityId, eventName=$eventName, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "EventListParams{afterCursor=$afterCursor, entityId=$entityId, eventName=$eventName, eventTimeEnd=$eventTimeEnd, eventTimeStart=$eventTimeStart, perPage=$perPage, resource=$resource, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -101,45 +101,45 @@ constructor(
     class Builder {
 
         private var afterCursor: String? = null
-        private var perPage: Long? = null
-        private var eventTimeStart: OffsetDateTime? = null
-        private var eventTimeEnd: OffsetDateTime? = null
-        private var resource: String? = null
         private var entityId: String? = null
         private var eventName: String? = null
+        private var eventTimeEnd: OffsetDateTime? = null
+        private var eventTimeStart: OffsetDateTime? = null
+        private var perPage: Long? = null
+        private var resource: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(eventListParams: EventListParams) = apply {
             this.afterCursor = eventListParams.afterCursor
-            this.perPage = eventListParams.perPage
-            this.eventTimeStart = eventListParams.eventTimeStart
-            this.eventTimeEnd = eventListParams.eventTimeEnd
-            this.resource = eventListParams.resource
             this.entityId = eventListParams.entityId
             this.eventName = eventListParams.eventName
+            this.eventTimeEnd = eventListParams.eventTimeEnd
+            this.eventTimeStart = eventListParams.eventTimeStart
+            this.perPage = eventListParams.perPage
+            this.resource = eventListParams.resource
             additionalQueryParams(eventListParams.additionalQueryParams)
             additionalHeaders(eventListParams.additionalHeaders)
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun entityId(entityId: String) = apply { this.entityId = entityId }
+
+        fun eventName(eventName: String) = apply { this.eventName = eventName }
+
+        /** An inclusive upper bound for when the event occurred */
+        fun eventTimeEnd(eventTimeEnd: OffsetDateTime) = apply { this.eventTimeEnd = eventTimeEnd }
 
         /** An inclusive lower bound for when the event occurred */
         fun eventTimeStart(eventTimeStart: OffsetDateTime) = apply {
             this.eventTimeStart = eventTimeStart
         }
 
-        /** An inclusive upper bound for when the event occurred */
-        fun eventTimeEnd(eventTimeEnd: OffsetDateTime) = apply { this.eventTimeEnd = eventTimeEnd }
+        fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         fun resource(resource: String) = apply { this.resource = resource }
-
-        fun entityId(entityId: String) = apply { this.entityId = entityId }
-
-        fun eventName(eventName: String) = apply { this.eventName = eventName }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -184,12 +184,12 @@ constructor(
         fun build(): EventListParams =
             EventListParams(
                 afterCursor,
-                perPage,
-                eventTimeStart,
-                eventTimeEnd,
-                resource,
                 entityId,
                 eventName,
+                eventTimeEnd,
+                eventTimeStart,
+                perPage,
+                resource,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )

@@ -11,28 +11,28 @@ import java.util.Optional
 class ConnectionListParams
 constructor(
     private val afterCursor: String?,
+    private val entity: String?,
     private val perPage: Long?,
     private val vendorCustomerId: String?,
-    private val entity: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    fun entity(): Optional<String> = Optional.ofNullable(entity)
+
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     fun vendorCustomerId(): Optional<String> = Optional.ofNullable(vendorCustomerId)
-
-    fun entity(): Optional<String> = Optional.ofNullable(entity)
 
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
+        this.entity?.let { params.put("entity", listOf(it.toString())) }
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.vendorCustomerId?.let { params.put("vendor_customer_id", listOf(it.toString())) }
-        this.entity?.let { params.put("entity", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -50,9 +50,9 @@ constructor(
 
         return other is ConnectionListParams &&
             this.afterCursor == other.afterCursor &&
+            this.entity == other.entity &&
             this.perPage == other.perPage &&
             this.vendorCustomerId == other.vendorCustomerId &&
-            this.entity == other.entity &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -60,16 +60,16 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             afterCursor,
+            entity,
             perPage,
             vendorCustomerId,
-            entity,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "ConnectionListParams{afterCursor=$afterCursor, perPage=$perPage, vendorCustomerId=$vendorCustomerId, entity=$entity, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ConnectionListParams{afterCursor=$afterCursor, entity=$entity, perPage=$perPage, vendorCustomerId=$vendorCustomerId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -82,23 +82,26 @@ constructor(
     class Builder {
 
         private var afterCursor: String? = null
+        private var entity: String? = null
         private var perPage: Long? = null
         private var vendorCustomerId: String? = null
-        private var entity: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(connectionListParams: ConnectionListParams) = apply {
             this.afterCursor = connectionListParams.afterCursor
+            this.entity = connectionListParams.entity
             this.perPage = connectionListParams.perPage
             this.vendorCustomerId = connectionListParams.vendorCustomerId
-            this.entity = connectionListParams.entity
             additionalQueryParams(connectionListParams.additionalQueryParams)
             additionalHeaders(connectionListParams.additionalHeaders)
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+
+        /** A string code representing the vendor (i.e. bank). */
+        fun entity(entity: String) = apply { this.entity = entity }
 
         fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
@@ -106,9 +109,6 @@ constructor(
         fun vendorCustomerId(vendorCustomerId: String) = apply {
             this.vendorCustomerId = vendorCustomerId
         }
-
-        /** A string code representing the vendor (i.e. bank). */
-        fun entity(entity: String) = apply { this.entity = entity }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -153,9 +153,9 @@ constructor(
         fun build(): ConnectionListParams =
             ConnectionListParams(
                 afterCursor,
+                entity,
                 perPage,
                 vendorCustomerId,
-                entity,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )

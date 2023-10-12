@@ -12,38 +12,38 @@ import java.util.Optional
 class LedgerTransactionVersionListParams
 constructor(
     private val afterCursor: String?,
-    private val perPage: Long?,
     private val createdAt: CreatedAt?,
-    private val version: Version?,
-    private val ledgerTransactionId: String?,
     private val ledgerAccountStatementId: String?,
+    private val ledgerTransactionId: String?,
+    private val perPage: Long?,
+    private val version: Version?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
-    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
-
     fun createdAt(): Optional<CreatedAt> = Optional.ofNullable(createdAt)
 
-    fun version(): Optional<Version> = Optional.ofNullable(version)
+    fun ledgerAccountStatementId(): Optional<String> = Optional.ofNullable(ledgerAccountStatementId)
 
     fun ledgerTransactionId(): Optional<String> = Optional.ofNullable(ledgerTransactionId)
 
-    fun ledgerAccountStatementId(): Optional<String> = Optional.ofNullable(ledgerAccountStatementId)
+    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
+
+    fun version(): Optional<Version> = Optional.ofNullable(version)
 
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
-        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.createdAt?.forEachQueryParam { key, values -> params.put("created_at[$key]", values) }
-        this.version?.forEachQueryParam { key, values -> params.put("version[$key]", values) }
-        this.ledgerTransactionId?.let { params.put("ledger_transaction_id", listOf(it.toString())) }
         this.ledgerAccountStatementId?.let {
             params.put("ledger_account_statement_id", listOf(it.toString()))
         }
+        this.ledgerTransactionId?.let { params.put("ledger_transaction_id", listOf(it.toString())) }
+        this.perPage?.let { params.put("per_page", listOf(it.toString())) }
+        this.version?.forEachQueryParam { key, values -> params.put("version[$key]", values) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -61,11 +61,11 @@ constructor(
 
         return other is LedgerTransactionVersionListParams &&
             this.afterCursor == other.afterCursor &&
-            this.perPage == other.perPage &&
             this.createdAt == other.createdAt &&
-            this.version == other.version &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
             this.ledgerAccountStatementId == other.ledgerAccountStatementId &&
+            this.ledgerTransactionId == other.ledgerTransactionId &&
+            this.perPage == other.perPage &&
+            this.version == other.version &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -73,18 +73,18 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             afterCursor,
-            perPage,
             createdAt,
-            version,
-            ledgerTransactionId,
             ledgerAccountStatementId,
+            ledgerTransactionId,
+            perPage,
+            version,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "LedgerTransactionVersionListParams{afterCursor=$afterCursor, perPage=$perPage, createdAt=$createdAt, version=$version, ledgerTransactionId=$ledgerTransactionId, ledgerAccountStatementId=$ledgerAccountStatementId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "LedgerTransactionVersionListParams{afterCursor=$afterCursor, createdAt=$createdAt, ledgerAccountStatementId=$ledgerAccountStatementId, ledgerTransactionId=$ledgerTransactionId, perPage=$perPage, version=$version, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -97,11 +97,11 @@ constructor(
     class Builder {
 
         private var afterCursor: String? = null
-        private var perPage: Long? = null
         private var createdAt: CreatedAt? = null
-        private var version: Version? = null
-        private var ledgerTransactionId: String? = null
         private var ledgerAccountStatementId: String? = null
+        private var ledgerTransactionId: String? = null
+        private var perPage: Long? = null
+        private var version: Version? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
@@ -109,19 +109,17 @@ constructor(
         internal fun from(ledgerTransactionVersionListParams: LedgerTransactionVersionListParams) =
             apply {
                 this.afterCursor = ledgerTransactionVersionListParams.afterCursor
-                this.perPage = ledgerTransactionVersionListParams.perPage
                 this.createdAt = ledgerTransactionVersionListParams.createdAt
-                this.version = ledgerTransactionVersionListParams.version
-                this.ledgerTransactionId = ledgerTransactionVersionListParams.ledgerTransactionId
                 this.ledgerAccountStatementId =
                     ledgerTransactionVersionListParams.ledgerAccountStatementId
+                this.ledgerTransactionId = ledgerTransactionVersionListParams.ledgerTransactionId
+                this.perPage = ledgerTransactionVersionListParams.perPage
+                this.version = ledgerTransactionVersionListParams.version
                 additionalQueryParams(ledgerTransactionVersionListParams.additionalQueryParams)
                 additionalHeaders(ledgerTransactionVersionListParams.additionalHeaders)
             }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
-
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created_at
@@ -131,10 +129,11 @@ constructor(
         fun createdAt(createdAt: CreatedAt) = apply { this.createdAt = createdAt }
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the version. For
-         * example, for all versions after 2, use version%5Bgt%5D=2.
+         * Get all ledger transaction versions that are included in the ledger account statement.
          */
-        fun version(version: Version) = apply { this.version = version }
+        fun ledgerAccountStatementId(ledgerAccountStatementId: String) = apply {
+            this.ledgerAccountStatementId = ledgerAccountStatementId
+        }
 
         /**
          * Get all the ledger transaction versions corresponding to the ID of a ledger transaction.
@@ -143,12 +142,13 @@ constructor(
             this.ledgerTransactionId = ledgerTransactionId
         }
 
+        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+
         /**
-         * Get all ledger transaction versions that are included in the ledger account statement.
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the version. For
+         * example, for all versions after 2, use version%5Bgt%5D=2.
          */
-        fun ledgerAccountStatementId(ledgerAccountStatementId: String) = apply {
-            this.ledgerAccountStatementId = ledgerAccountStatementId
-        }
+        fun version(version: Version) = apply { this.version = version }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -193,11 +193,11 @@ constructor(
         fun build(): LedgerTransactionVersionListParams =
             LedgerTransactionVersionListParams(
                 afterCursor,
-                perPage,
                 createdAt,
-                version,
-                ledgerTransactionId,
                 ledgerAccountStatementId,
+                ledgerTransactionId,
+                perPage,
+                version,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
