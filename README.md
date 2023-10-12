@@ -45,16 +45,16 @@ implementation("com.moderntreasury.api:modern-treasury-java:1.5.1")
 Use `ModernTreasuryOkHttpClient.builder()` to configure the client. At a minimum you need to set `.apiKey()` and `.organizationId()`:
 
 ```java
-import com.moderntreasury.api.client.ModernTreasuryClient;
+import com.moderntreasury.api.client.ModernTreasuryOkHttpClient;
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
 
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
-    .apiKey("<your API Key>")
+    .apiKey("My API Key")
     .organizationId("my-organization-ID")
     .build();
 ```
 
-Alternately, use `ModernTreasuryOkHttpClient.fromEnv()` to read client arguments from environment variables:
+Alternately, set the environment with `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` or `MODERN_TREASURY_WEBHOOK_KEY`, and use `ModernTreasuryOkHttpClient.fromEnv()` to read from the environment.
 
 ```java
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.fromEnv();
