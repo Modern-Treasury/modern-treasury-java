@@ -20,7 +20,7 @@ import java.util.Optional
 class CounterpartyCollectAccountParams
 constructor(
     private val id: String,
-    private val direction: Direction,
+    private val direction: TransactionDirection,
     private val customRedirect: String?,
     private val fields: List<Field>?,
     private val sendEmail: Boolean?,
@@ -31,7 +31,7 @@ constructor(
 
     fun id(): String = id
 
-    fun direction(): Direction = direction
+    fun direction(): TransactionDirection = direction
 
     fun customRedirect(): Optional<String> = Optional.ofNullable(customRedirect)
 
@@ -65,7 +65,7 @@ constructor(
     @NoAutoDetect
     class CounterpartyCollectAccountBody
     internal constructor(
-        private val direction: Direction?,
+        private val direction: TransactionDirection?,
         private val customRedirect: String?,
         private val fields: List<Field>?,
         private val sendEmail: Boolean?,
@@ -79,7 +79,7 @@ constructor(
          * when you need to charge a counterparty. This field helps us send a more tailored email to
          * your counterparties."
          */
-        @JsonProperty("direction") fun direction(): Direction? = direction
+        @JsonProperty("direction") fun direction(): TransactionDirection? = direction
 
         /**
          * The URL you want your customer to visit upon filling out the form. By default, they will
@@ -147,7 +147,7 @@ constructor(
 
         class Builder {
 
-            private var direction: Direction? = null
+            private var direction: TransactionDirection? = null
             private var customRedirect: String? = null
             private var fields: List<Field>? = null
             private var sendEmail: Boolean? = null
@@ -169,7 +169,7 @@ constructor(
              * tailored email to your counterparties."
              */
             @JsonProperty("direction")
-            fun direction(direction: Direction) = apply { this.direction = direction }
+            fun direction(direction: TransactionDirection) = apply { this.direction = direction }
 
             /**
              * The URL you want your customer to visit upon filling out the form. By default, they
@@ -273,7 +273,7 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var direction: Direction? = null
+        private var direction: TransactionDirection? = null
         private var customRedirect: String? = null
         private var fields: MutableList<Field> = mutableListOf()
         private var sendEmail: Boolean? = null
@@ -301,7 +301,7 @@ constructor(
          * when you need to charge a counterparty. This field helps us send a more tailored email to
          * your counterparties."
          */
-        fun direction(direction: Direction) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection) = apply { this.direction = direction }
 
         /**
          * The URL you want your customer to visit upon filling out the form. By default, they will
@@ -403,63 +403,6 @@ constructor(
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
             )
-    }
-
-    class Direction
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Direction && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
-
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
-
-            @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
-        }
-
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown Direction: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 
     class Field

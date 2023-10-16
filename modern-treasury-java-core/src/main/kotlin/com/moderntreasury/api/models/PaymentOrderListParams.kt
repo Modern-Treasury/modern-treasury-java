@@ -18,7 +18,7 @@ class PaymentOrderListParams
 constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
-    private val direction: Direction?,
+    private val direction: TransactionDirection?,
     private val effectiveDateEnd: LocalDate?,
     private val effectiveDateStart: LocalDate?,
     private val metadata: Metadata?,
@@ -37,7 +37,7 @@ constructor(
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
-    fun direction(): Optional<Direction> = Optional.ofNullable(direction)
+    fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
 
     fun effectiveDateEnd(): Optional<LocalDate> = Optional.ofNullable(effectiveDateEnd)
 
@@ -145,7 +145,7 @@ constructor(
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
-        private var direction: Direction? = null
+        private var direction: TransactionDirection? = null
         private var effectiveDateEnd: LocalDate? = null
         private var effectiveDateStart: LocalDate? = null
         private var metadata: Metadata? = null
@@ -182,7 +182,7 @@ constructor(
 
         fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
 
-        fun direction(direction: Direction) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection) = apply { this.direction = direction }
 
         /** An inclusive upper bound for searching effective_date */
         fun effectiveDateEnd(effectiveDateEnd: LocalDate) = apply {
@@ -283,63 +283,6 @@ constructor(
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
-    }
-
-    class Direction
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Direction && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
-
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
-
-            @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
-        }
-
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown Direction: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 
     /**
