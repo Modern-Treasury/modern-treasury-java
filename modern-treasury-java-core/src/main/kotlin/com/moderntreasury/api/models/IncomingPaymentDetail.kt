@@ -38,7 +38,7 @@ private constructor(
     private val data: JsonField<Data>,
     private val amount: JsonField<Long>,
     private val currency: JsonField<Currency>,
-    private val direction: JsonField<Direction>,
+    private val direction: JsonField<TransactionDirection>,
     private val status: JsonField<Status>,
     private val metadata: JsonField<Metadata>,
     private val asOfDate: JsonField<LocalDate>,
@@ -108,7 +108,7 @@ private constructor(
     fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
 
     /** One of `credit` or `debit`. */
-    fun direction(): Direction = direction.getRequired("direction")
+    fun direction(): TransactionDirection = direction.getRequired("direction")
 
     /**
      * The current status of the incoming payment order. One of `pending`, `completed`, or
@@ -378,7 +378,7 @@ private constructor(
         private var data: JsonField<Data> = JsonMissing.of()
         private var amount: JsonField<Long> = JsonMissing.of()
         private var currency: JsonField<Currency> = JsonMissing.of()
-        private var direction: JsonField<Direction> = JsonMissing.of()
+        private var direction: JsonField<TransactionDirection> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var asOfDate: JsonField<LocalDate> = JsonMissing.of()
@@ -570,12 +570,14 @@ private constructor(
         fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
         /** One of `credit` or `debit`. */
-        fun direction(direction: Direction) = direction(JsonField.of(direction))
+        fun direction(direction: TransactionDirection) = direction(JsonField.of(direction))
 
         /** One of `credit` or `debit`. */
         @JsonProperty("direction")
         @ExcludeMissing
-        fun direction(direction: JsonField<Direction>) = apply { this.direction = direction }
+        fun direction(direction: JsonField<TransactionDirection>) = apply {
+            this.direction = direction
+        }
 
         /**
          * The current status of the incoming payment order. One of `pending`, `completed`, or
@@ -792,63 +794,6 @@ private constructor(
 
             fun build(): Data = Data(additionalProperties.toUnmodifiable())
         }
-    }
-
-    class Direction
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Direction && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
-
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
-
-            @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
-        }
-
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown Direction: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */

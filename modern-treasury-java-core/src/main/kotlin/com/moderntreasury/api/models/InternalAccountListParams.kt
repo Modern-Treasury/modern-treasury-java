@@ -19,7 +19,7 @@ constructor(
     private val counterpartyId: String?,
     private val currency: Currency?,
     private val metadata: Metadata?,
-    private val paymentDirection: PaymentDirection?,
+    private val paymentDirection: TransactionDirection?,
     private val paymentType: PaymentType?,
     private val perPage: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -34,7 +34,7 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-    fun paymentDirection(): Optional<PaymentDirection> = Optional.ofNullable(paymentDirection)
+    fun paymentDirection(): Optional<TransactionDirection> = Optional.ofNullable(paymentDirection)
 
     fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
 
@@ -108,7 +108,7 @@ constructor(
         private var counterpartyId: String? = null
         private var currency: Currency? = null
         private var metadata: Metadata? = null
-        private var paymentDirection: PaymentDirection? = null
+        private var paymentDirection: TransactionDirection? = null
         private var paymentType: PaymentType? = null
         private var perPage: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -142,7 +142,7 @@ constructor(
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         /** The direction of payments that can be made by internal account. */
-        fun paymentDirection(paymentDirection: PaymentDirection) = apply {
+        fun paymentDirection(paymentDirection: TransactionDirection) = apply {
             this.paymentDirection = paymentDirection
         }
 
@@ -274,63 +274,6 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
-    }
-
-    class PaymentDirection
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PaymentDirection && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val CREDIT = PaymentDirection(JsonField.of("credit"))
-
-            @JvmField val DEBIT = PaymentDirection(JsonField.of("debit"))
-
-            @JvmStatic fun of(value: String) = PaymentDirection(JsonField.of(value))
-        }
-
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentDirection: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 
     class PaymentType
