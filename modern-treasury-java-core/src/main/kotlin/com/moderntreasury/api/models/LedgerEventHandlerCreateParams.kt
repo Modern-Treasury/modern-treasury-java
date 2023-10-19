@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toUnmodifiable
 import com.moderntreasury.api.models.*
+import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
@@ -388,7 +389,7 @@ constructor(
     class LedgerEventHandlerLedgerTransactionTemplate
     private constructor(
         private val description: String?,
-        private val effectiveAt: String?,
+        private val effectiveAt: OffsetDateTime?,
         private val ledgerEntries: List<LedgerEventHandlerLedgerEntries>?,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -403,7 +404,7 @@ constructor(
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
          * purposes.
          */
-        @JsonProperty("effective_at") fun effectiveAt(): String? = effectiveAt
+        @JsonProperty("effective_at") fun effectiveAt(): OffsetDateTime? = effectiveAt
 
         /** An array of ledger entry objects. */
         @JsonProperty("ledger_entries")
@@ -458,7 +459,7 @@ constructor(
         class Builder {
 
             private var description: String? = null
-            private var effectiveAt: String? = null
+            private var effectiveAt: OffsetDateTime? = null
             private var ledgerEntries: List<LedgerEventHandlerLedgerEntries>? = null
             private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -486,7 +487,7 @@ constructor(
              * purposes.
              */
             @JsonProperty("effective_at")
-            fun effectiveAt(effectiveAt: String) = apply { this.effectiveAt = effectiveAt }
+            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
 
             /** An array of ledger entry objects. */
             @JsonProperty("ledger_entries")
