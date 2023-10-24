@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.0.0 (2023-10-24)
+
+Full Changelog: [v1.5.1...v2.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.5.1...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **types:** consolidate direction enums into a shared TransactionDirection type ([#74](https://github.com/Modern-Treasury/modern-treasury-java/issues/74))
+
+### Features
+
+* **api:** updates ([#78](https://github.com/Modern-Treasury/modern-treasury-java/issues/78)) ([3aa932b](https://github.com/Modern-Treasury/modern-treasury-java/commit/3aa932b4edf4c4a7e18fae55e77e12ad213e39b4))
+* **client:** adjust retry behavior ([#79](https://github.com/Modern-Treasury/modern-treasury-java/issues/79)) ([c862814](https://github.com/Modern-Treasury/modern-treasury-java/commit/c8628148adf14978f5e2de5d8d73b8ecdb4e919b))
+* make webhook headers case insensitive ([#73](https://github.com/Modern-Treasury/modern-treasury-java/issues/73)) ([0f646f6](https://github.com/Modern-Treasury/modern-treasury-java/commit/0f646f64d3e46cbf9bdc89e8a564d3cbd476e4ef))
+* **types:** consolidate direction enums into a shared TransactionDirection type ([#74](https://github.com/Modern-Treasury/modern-treasury-java/issues/74)) ([e5e0bdc](https://github.com/Modern-Treasury/modern-treasury-java/commit/e5e0bdc1d0b32ae5401943d374992c2ebf4181dc))
+
+
+### Bug Fixes
+
+* **api:** use date-time for effective_at ([#77](https://github.com/Modern-Treasury/modern-treasury-java/issues/77)) ([477ae84](https://github.com/Modern-Treasury/modern-treasury-java/commit/477ae84d38e72159cf7dee36799b8b480677c652))
+* update maven group id in README ([#71](https://github.com/Modern-Treasury/modern-treasury-java/issues/71)) ([66779c8](https://github.com/Modern-Treasury/modern-treasury-java/commit/66779c8bfff7bd703117bad1546d80c7c8dea4e5))
+
+
+### Chores
+
+* **internal:** minor reformatting ([#70](https://github.com/Modern-Treasury/modern-treasury-java/issues/70)) ([ce8ded5](https://github.com/Modern-Treasury/modern-treasury-java/commit/ce8ded557777059ebb8b4bb814d3c7ed706057cc))
+* **internal:** rearrange client arguments ([#68](https://github.com/Modern-Treasury/modern-treasury-java/issues/68)) ([9089d98](https://github.com/Modern-Treasury/modern-treasury-java/commit/9089d9849c25a112b7fb725725bd2582e02b937a))
+* update README ([#67](https://github.com/Modern-Treasury/modern-treasury-java/issues/67)) ([bc21677](https://github.com/Modern-Treasury/modern-treasury-java/commit/bc21677ce9f472ead109501e1b680fd126325e02))
+
+
+### Documentation
+
+* organisation -&gt; organization (UK to US English) ([#75](https://github.com/Modern-Treasury/modern-treasury-java/issues/75)) ([d8778e6](https://github.com/Modern-Treasury/modern-treasury-java/commit/d8778e6854490fde0af0bb354a6083d7bfe034d0))
+
 ## 1.5.1 (2023-10-04)
 
 Full Changelog: [v1.5.0...v1.5.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.5.0...v1.5.1)
