@@ -16,45 +16,29 @@ import java.util.Optional
 
 class LedgerableEventCreateParams
 constructor(
-    private val amount: Long,
     private val name: String,
-    private val currency: String?,
-    private val currencyExponent: Long?,
     private val customData: JsonValue?,
     private val description: String?,
-    private val direction: String?,
     private val metadata: Metadata?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long = amount
-
     fun name(): String = name
-
-    fun currency(): Optional<String> = Optional.ofNullable(currency)
-
-    fun currencyExponent(): Optional<Long> = Optional.ofNullable(currencyExponent)
 
     fun customData(): Optional<JsonValue> = Optional.ofNullable(customData)
 
     fun description(): Optional<String> = Optional.ofNullable(description)
-
-    fun direction(): Optional<String> = Optional.ofNullable(direction)
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     @JvmSynthetic
     internal fun getBody(): LedgerableEventCreateBody {
         return LedgerableEventCreateBody(
-            amount,
             name,
-            currency,
-            currencyExponent,
             customData,
             description,
-            direction,
             metadata,
             additionalBodyProperties,
         )
@@ -68,42 +52,23 @@ constructor(
     @NoAutoDetect
     class LedgerableEventCreateBody
     internal constructor(
-        private val amount: Long?,
         private val name: String?,
-        private val currency: String?,
-        private val currencyExponent: Long?,
         private val customData: JsonValue?,
         private val description: String?,
-        private val direction: String?,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long? = amount
-
         /** Name of the ledgerable event. */
         @JsonProperty("name") fun name(): String? = name
-
-        /** An ISO 4217 conformed currency or a custom currency. */
-        @JsonProperty("currency") fun currency(): String? = currency
-
-        /**
-         * Must be included if currency is a custom currency. The currency_exponent cannot exceed
-         * 30.
-         */
-        @JsonProperty("currency_exponent") fun currencyExponent(): Long? = currencyExponent
 
         /** Additionally data to be used by the Ledger Event Handler. */
         @JsonProperty("custom_data") fun customData(): JsonValue? = customData
 
         /** Description of the ledgerable event. */
         @JsonProperty("description") fun description(): String? = description
-
-        /** One of `credit`, `debit`. */
-        @JsonProperty("direction") fun direction(): String? = direction
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -122,13 +87,9 @@ constructor(
             }
 
             return other is LedgerableEventCreateBody &&
-                this.amount == other.amount &&
                 this.name == other.name &&
-                this.currency == other.currency &&
-                this.currencyExponent == other.currencyExponent &&
                 this.customData == other.customData &&
                 this.description == other.description &&
-                this.direction == other.direction &&
                 this.metadata == other.metadata &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -137,13 +98,9 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        amount,
                         name,
-                        currency,
-                        currencyExponent,
                         customData,
                         description,
-                        direction,
                         metadata,
                         additionalProperties,
                     )
@@ -152,7 +109,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerableEventCreateBody{amount=$amount, name=$name, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, description=$description, direction=$direction, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerableEventCreateBody{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -161,49 +118,23 @@ constructor(
 
         class Builder {
 
-            private var amount: Long? = null
             private var name: String? = null
-            private var currency: String? = null
-            private var currencyExponent: Long? = null
             private var customData: JsonValue? = null
             private var description: String? = null
-            private var direction: String? = null
             private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(ledgerableEventCreateBody: LedgerableEventCreateBody) = apply {
-                this.amount = ledgerableEventCreateBody.amount
                 this.name = ledgerableEventCreateBody.name
-                this.currency = ledgerableEventCreateBody.currency
-                this.currencyExponent = ledgerableEventCreateBody.currencyExponent
                 this.customData = ledgerableEventCreateBody.customData
                 this.description = ledgerableEventCreateBody.description
-                this.direction = ledgerableEventCreateBody.direction
                 this.metadata = ledgerableEventCreateBody.metadata
                 additionalProperties(ledgerableEventCreateBody.additionalProperties)
             }
 
-            /**
-             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-             */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
-
             /** Name of the ledgerable event. */
             @JsonProperty("name") fun name(name: String) = apply { this.name = name }
-
-            /** An ISO 4217 conformed currency or a custom currency. */
-            @JsonProperty("currency")
-            fun currency(currency: String) = apply { this.currency = currency }
-
-            /**
-             * Must be included if currency is a custom currency. The currency_exponent cannot
-             * exceed 30.
-             */
-            @JsonProperty("currency_exponent")
-            fun currencyExponent(currencyExponent: Long) = apply {
-                this.currencyExponent = currencyExponent
-            }
 
             /** Additionally data to be used by the Ledger Event Handler. */
             @JsonProperty("custom_data")
@@ -212,10 +143,6 @@ constructor(
             /** Description of the ledgerable event. */
             @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
-
-            /** One of `credit`, `debit`. */
-            @JsonProperty("direction")
-            fun direction(direction: String) = apply { this.direction = direction }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
@@ -240,13 +167,9 @@ constructor(
 
             fun build(): LedgerableEventCreateBody =
                 LedgerableEventCreateBody(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(name) { "`name` is required but was not set" },
-                    currency,
-                    currencyExponent,
                     customData,
                     description,
-                    direction,
                     metadata,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -265,13 +188,9 @@ constructor(
         }
 
         return other is LedgerableEventCreateParams &&
-            this.amount == other.amount &&
             this.name == other.name &&
-            this.currency == other.currency &&
-            this.currencyExponent == other.currencyExponent &&
             this.customData == other.customData &&
             this.description == other.description &&
-            this.direction == other.direction &&
             this.metadata == other.metadata &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -280,13 +199,9 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
-            amount,
             name,
-            currency,
-            currencyExponent,
             customData,
             description,
-            direction,
             metadata,
             additionalQueryParams,
             additionalHeaders,
@@ -295,7 +210,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerableEventCreateParams{amount=$amount, name=$name, currency=$currency, currencyExponent=$currencyExponent, customData=$customData, description=$description, direction=$direction, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerableEventCreateParams{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -307,13 +222,9 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
         private var name: String? = null
-        private var currency: String? = null
-        private var currencyExponent: Long? = null
         private var customData: JsonValue? = null
         private var description: String? = null
-        private var direction: String? = null
         private var metadata: Metadata? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -321,44 +232,23 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerableEventCreateParams: LedgerableEventCreateParams) = apply {
-            this.amount = ledgerableEventCreateParams.amount
             this.name = ledgerableEventCreateParams.name
-            this.currency = ledgerableEventCreateParams.currency
-            this.currencyExponent = ledgerableEventCreateParams.currencyExponent
             this.customData = ledgerableEventCreateParams.customData
             this.description = ledgerableEventCreateParams.description
-            this.direction = ledgerableEventCreateParams.direction
             this.metadata = ledgerableEventCreateParams.metadata
             additionalQueryParams(ledgerableEventCreateParams.additionalQueryParams)
             additionalHeaders(ledgerableEventCreateParams.additionalHeaders)
             additionalBodyProperties(ledgerableEventCreateParams.additionalBodyProperties)
         }
 
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        fun amount(amount: Long) = apply { this.amount = amount }
-
         /** Name of the ledgerable event. */
         fun name(name: String) = apply { this.name = name }
-
-        /** An ISO 4217 conformed currency or a custom currency. */
-        fun currency(currency: String) = apply { this.currency = currency }
-
-        /**
-         * Must be included if currency is a custom currency. The currency_exponent cannot exceed
-         * 30.
-         */
-        fun currencyExponent(currencyExponent: Long) = apply {
-            this.currencyExponent = currencyExponent
-        }
 
         /** Additionally data to be used by the Ledger Event Handler. */
         fun customData(customData: JsonValue) = apply { this.customData = customData }
 
         /** Description of the ledgerable event. */
         fun description(description: String) = apply { this.description = description }
-
-        /** One of `credit`, `debit`. */
-        fun direction(direction: String) = apply { this.direction = direction }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -421,13 +311,9 @@ constructor(
 
         fun build(): LedgerableEventCreateParams =
             LedgerableEventCreateParams(
-                checkNotNull(amount) { "`amount` is required but was not set" },
                 checkNotNull(name) { "`name` is required but was not set" },
-                currency,
-                currencyExponent,
                 customData,
                 description,
-                direction,
                 metadata,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

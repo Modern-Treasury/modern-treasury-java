@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 
 interface LedgerableEventServiceAsync {
 
-    /** Translation missing: en.openapi.descriptions.ledger.operations.create_ledgerable_event */
+    /** Create a ledgerable event. */
     @JvmOverloads
     fun create(
         params: LedgerableEventCreateParams,

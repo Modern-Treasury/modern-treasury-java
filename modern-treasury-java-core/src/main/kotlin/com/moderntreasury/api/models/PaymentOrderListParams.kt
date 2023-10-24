@@ -556,6 +556,8 @@ constructor(
 
             @JvmField val CARD = Type(JsonField.of("card"))
 
+            @JvmField val CHATS = Type(JsonField.of("chats"))
+
             @JvmField val CHECK = Type(JsonField.of("check"))
 
             @JvmField val CROSS_BORDER = Type(JsonField.of("cross_border"))
@@ -569,6 +571,8 @@ constructor(
             @JvmField val NEFT = Type(JsonField.of("neft"))
 
             @JvmField val NICS = Type(JsonField.of("nics"))
+
+            @JvmField val NZ_BECS = Type(JsonField.of("nz_becs"))
 
             @JvmField val PROVXCHANGE = Type(JsonField.of("provxchange"))
 
@@ -597,6 +601,7 @@ constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -604,6 +609,7 @@ constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -621,6 +627,7 @@ constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -628,6 +635,7 @@ constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -647,6 +655,7 @@ constructor(
                 BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CARD -> Value.CARD
+                CHATS -> Value.CHATS
                 CHECK -> Value.CHECK
                 CROSS_BORDER -> Value.CROSS_BORDER
                 EFT -> Value.EFT
@@ -654,6 +663,7 @@ constructor(
                 MASAV -> Value.MASAV
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
+                NZ_BECS -> Value.NZ_BECS
                 PROVXCHANGE -> Value.PROVXCHANGE
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
@@ -673,6 +683,7 @@ constructor(
                 BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CARD -> Known.CARD
+                CHATS -> Known.CHATS
                 CHECK -> Known.CHECK
                 CROSS_BORDER -> Known.CROSS_BORDER
                 EFT -> Known.EFT
@@ -680,6 +691,7 @@ constructor(
                 MASAV -> Known.MASAV
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
+                NZ_BECS -> Known.NZ_BECS
                 PROVXCHANGE -> Known.PROVXCHANGE
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
