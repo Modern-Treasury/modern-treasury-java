@@ -91,10 +91,10 @@ constructor(
         fun routingNumber(routingNumber: String) = apply { this.routingNumber = routingNumber }
 
         /**
-         * One of `aba`, `au_bsb`, `br_codigo`, `ca_cpa`, `cnaps`, `gb_sort_code`, `in_ifsc`,
-         * `my_branch_code`, `se_bankgiro_clearing_code`, or `swift`. In sandbox mode we currently
-         * only support `aba` and `swift` with routing numbers '123456789' and 'GRINUST0XXX'
-         * respectively.
+         * The type of routing number. See
+         * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
+         * details. In sandbox mode we currently only support `aba` and `swift` with routing numbers
+         * '123456789' and 'GRINUST0XXX' respectively.
          */
         fun routingNumberType(routingNumberType: RoutingNumberType) = apply {
             this.routingNumberType = routingNumberType
@@ -187,11 +187,19 @@ constructor(
 
             @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
 
+            @JvmField
+            val HK_INTERBANK_CLEARING_CODE =
+                RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
+
             @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
 
             @JvmField val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
 
             @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
+
+            @JvmField
+            val NZ_NATIONAL_CLEARING_CODE =
+                RoutingNumberType(JsonField.of("nz_national_clearing_code"))
 
             @JvmField
             val SE_BANKGIRO_CLEARING_CODE =
@@ -210,9 +218,11 @@ constructor(
             CHIPS,
             CNAPS,
             GB_SORT_CODE,
+            HK_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
         }
@@ -225,9 +235,11 @@ constructor(
             CHIPS,
             CNAPS,
             GB_SORT_CODE,
+            HK_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
             _UNKNOWN,
@@ -242,9 +254,11 @@ constructor(
                 CHIPS -> Value.CHIPS
                 CNAPS -> Value.CNAPS
                 GB_SORT_CODE -> Value.GB_SORT_CODE
+                HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Value.IN_IFSC
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Value.SWIFT
                 else -> Value._UNKNOWN
@@ -259,9 +273,11 @@ constructor(
                 CHIPS -> Known.CHIPS
                 CNAPS -> Known.CNAPS
                 GB_SORT_CODE -> Known.GB_SORT_CODE
+                HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Known.IN_IFSC
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Known.SWIFT
                 else ->

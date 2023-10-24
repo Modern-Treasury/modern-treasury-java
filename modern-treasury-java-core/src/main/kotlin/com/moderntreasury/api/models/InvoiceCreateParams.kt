@@ -34,7 +34,7 @@ constructor(
     private val notificationsEnabled: Boolean?,
     private val paymentEffectiveDate: LocalDate?,
     private val paymentMethod: PaymentMethod?,
-    private val paymentType: PaymentType?,
+    private val paymentType: PaymentOrderType?,
     private val receivingAccountId: String?,
     private val recipientEmail: String?,
     private val recipientName: String?,
@@ -73,7 +73,7 @@ constructor(
 
     fun paymentMethod(): Optional<PaymentMethod> = Optional.ofNullable(paymentMethod)
 
-    fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
+    fun paymentType(): Optional<PaymentOrderType> = Optional.ofNullable(paymentType)
 
     fun receivingAccountId(): Optional<String> = Optional.ofNullable(receivingAccountId)
 
@@ -129,7 +129,7 @@ constructor(
         private val notificationsEnabled: Boolean?,
         private val paymentEffectiveDate: LocalDate?,
         private val paymentMethod: PaymentMethod?,
-        private val paymentType: PaymentType?,
+        private val paymentType: PaymentOrderType?,
         private val receivingAccountId: String?,
         private val recipientEmail: String?,
         private val recipientName: String?,
@@ -205,9 +205,10 @@ constructor(
 
         /**
          * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
+         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
+         * `provexchange`, `zengin`.
          */
-        @JsonProperty("payment_type") fun paymentType(): PaymentType? = paymentType
+        @JsonProperty("payment_type") fun paymentType(): PaymentOrderType? = paymentType
 
         /** The receiving account ID. Can be an `external_account`. */
         @JsonProperty("receiving_account_id") fun receivingAccountId(): String? = receivingAccountId
@@ -311,7 +312,7 @@ constructor(
             private var notificationsEnabled: Boolean? = null
             private var paymentEffectiveDate: LocalDate? = null
             private var paymentMethod: PaymentMethod? = null
-            private var paymentType: PaymentType? = null
+            private var paymentType: PaymentOrderType? = null
             private var receivingAccountId: String? = null
             private var recipientEmail: String? = null
             private var recipientName: String? = null
@@ -434,11 +435,13 @@ constructor(
 
             /**
              * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-             * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`,
-             * `zengin`.
+             * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+             * `signet`, `provexchange`, `zengin`.
              */
             @JsonProperty("payment_type")
-            fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
+            fun paymentType(paymentType: PaymentOrderType) = apply {
+                this.paymentType = paymentType
+            }
 
             /** The receiving account ID. Can be an `external_account`. */
             @JsonProperty("receiving_account_id")
@@ -596,7 +599,7 @@ constructor(
         private var notificationsEnabled: Boolean? = null
         private var paymentEffectiveDate: LocalDate? = null
         private var paymentMethod: PaymentMethod? = null
-        private var paymentType: PaymentType? = null
+        private var paymentType: PaymentOrderType? = null
         private var receivingAccountId: String? = null
         private var recipientEmail: String? = null
         private var recipientName: String? = null
@@ -727,9 +730,10 @@ constructor(
 
         /**
          * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `sic`, `signet`, `provexchange`, `zengin`.
+         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
+         * `provexchange`, `zengin`.
          */
-        fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
+        fun paymentType(paymentType: PaymentOrderType) = apply { this.paymentType = paymentType }
 
         /** The receiving account ID. Can be an `external_account`. */
         fun receivingAccountId(receivingAccountId: String) = apply {
@@ -1564,177 +1568,6 @@ constructor(
                 MANUAL -> Known.MANUAL
                 AUTOMATIC -> Known.AUTOMATIC
                 else -> throw ModernTreasuryInvalidDataException("Unknown PaymentMethod: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class PaymentType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PaymentType && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            @JvmField val ACH = PaymentType(JsonField.of("ach"))
-
-            @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
-
-            @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
-
-            @JvmField val BACS = PaymentType(JsonField.of("bacs"))
-
-            @JvmField val BOOK = PaymentType(JsonField.of("book"))
-
-            @JvmField val CARD = PaymentType(JsonField.of("card"))
-
-            @JvmField val CHECK = PaymentType(JsonField.of("check"))
-
-            @JvmField val EFT = PaymentType(JsonField.of("eft"))
-
-            @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
-
-            @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
-
-            @JvmField val MASAV = PaymentType(JsonField.of("masav"))
-
-            @JvmField val NEFT = PaymentType(JsonField.of("neft"))
-
-            @JvmField val NICS = PaymentType(JsonField.of("nics"))
-
-            @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
-
-            @JvmField val RTP = PaymentType(JsonField.of("rtp"))
-
-            @JvmField val SEN = PaymentType(JsonField.of("sen"))
-
-            @JvmField val SIC = PaymentType(JsonField.of("sic"))
-
-            @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
-
-            @JvmField val SIGNET = PaymentType(JsonField.of("signet"))
-
-            @JvmField val WIRE = PaymentType(JsonField.of("wire"))
-
-            @JvmField val ZENGIN = PaymentType(JsonField.of("zengin"))
-
-            @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
-        }
-
-        enum class Known {
-            ACH,
-            AU_BECS,
-            SE_BANKGIROT,
-            BACS,
-            BOOK,
-            CARD,
-            CHECK,
-            EFT,
-            CROSS_BORDER,
-            INTERAC,
-            MASAV,
-            NEFT,
-            NICS,
-            PROVXCHANGE,
-            RTP,
-            SEN,
-            SIC,
-            SEPA,
-            SIGNET,
-            WIRE,
-            ZENGIN,
-        }
-
-        enum class Value {
-            ACH,
-            AU_BECS,
-            SE_BANKGIROT,
-            BACS,
-            BOOK,
-            CARD,
-            CHECK,
-            EFT,
-            CROSS_BORDER,
-            INTERAC,
-            MASAV,
-            NEFT,
-            NICS,
-            PROVXCHANGE,
-            RTP,
-            SEN,
-            SIC,
-            SEPA,
-            SIGNET,
-            WIRE,
-            ZENGIN,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                ACH -> Value.ACH
-                AU_BECS -> Value.AU_BECS
-                SE_BANKGIROT -> Value.SE_BANKGIROT
-                BACS -> Value.BACS
-                BOOK -> Value.BOOK
-                CARD -> Value.CARD
-                CHECK -> Value.CHECK
-                EFT -> Value.EFT
-                CROSS_BORDER -> Value.CROSS_BORDER
-                INTERAC -> Value.INTERAC
-                MASAV -> Value.MASAV
-                NEFT -> Value.NEFT
-                NICS -> Value.NICS
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RTP -> Value.RTP
-                SEN -> Value.SEN
-                SIC -> Value.SIC
-                SEPA -> Value.SEPA
-                SIGNET -> Value.SIGNET
-                WIRE -> Value.WIRE
-                ZENGIN -> Value.ZENGIN
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                ACH -> Known.ACH
-                AU_BECS -> Known.AU_BECS
-                SE_BANKGIROT -> Known.SE_BANKGIROT
-                BACS -> Known.BACS
-                BOOK -> Known.BOOK
-                CARD -> Known.CARD
-                CHECK -> Known.CHECK
-                EFT -> Known.EFT
-                CROSS_BORDER -> Known.CROSS_BORDER
-                INTERAC -> Known.INTERAC
-                MASAV -> Known.MASAV
-                NEFT -> Known.NEFT
-                NICS -> Known.NICS
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RTP -> Known.RTP
-                SEN -> Known.SEN
-                SIC -> Known.SIC
-                SEPA -> Known.SEPA
-                SIGNET -> Known.SIGNET
-                WIRE -> Known.WIRE
-                ZENGIN -> Known.ZENGIN
-                else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()

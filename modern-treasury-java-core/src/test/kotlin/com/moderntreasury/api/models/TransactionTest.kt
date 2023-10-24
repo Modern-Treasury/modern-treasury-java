@@ -19,7 +19,6 @@ class TransactionTest {
                 .asOfTime("string")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currency(Currency.AED)
-                .details(Transaction.Details.builder().build())
                 .direction("string")
                 .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -33,8 +32,9 @@ class TransactionTest {
                 .vendorCode("string")
                 .vendorCodeType(Transaction.VendorCodeType.BAI2)
                 .vendorCustomerId("string")
-                .vendorDescription("string")
                 .vendorId("string")
+                .details(Transaction.Details.builder().build())
+                .vendorDescription("string")
                 .build()
         assertThat(transaction).isNotNull
         assertThat(transaction.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -44,7 +44,6 @@ class TransactionTest {
         assertThat(transaction.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transaction.currency()).contains(Currency.AED)
-        assertThat(transaction.details()).isEqualTo(Transaction.Details.builder().build())
         assertThat(transaction.direction()).isEqualTo("string")
         assertThat(transaction.discardedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -61,7 +60,8 @@ class TransactionTest {
         assertThat(transaction.vendorCode()).contains("string")
         assertThat(transaction.vendorCodeType()).contains(Transaction.VendorCodeType.BAI2)
         assertThat(transaction.vendorCustomerId()).contains("string")
-        assertThat(transaction.vendorDescription()).contains("string")
         assertThat(transaction.vendorId()).contains("string")
+        assertThat(transaction.details()).contains(Transaction.Details.builder().build())
+        assertThat(transaction.vendorDescription()).contains("string")
     }
 }

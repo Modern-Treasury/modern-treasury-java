@@ -471,6 +471,12 @@ constructor(
 
             @JvmField val JP_ZENGIN_CODE = Field(JsonField.of("jp_zengin_code"))
 
+            @JvmField
+            val SE_BANKGIRO_CLEARING_CODE = Field(JsonField.of("se_bankgiro_clearing_code"))
+
+            @JvmField
+            val NZ_NATIONAL_CLEARING_CODE = Field(JsonField.of("nz_national_clearing_code"))
+
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
 
@@ -497,6 +503,8 @@ constructor(
             ROUTING_NUMBER_TYPE,
             ADDRESS,
             JP_ZENGIN_CODE,
+            SE_BANKGIRO_CLEARING_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
         }
 
         enum class Value {
@@ -522,6 +530,8 @@ constructor(
             ROUTING_NUMBER_TYPE,
             ADDRESS,
             JP_ZENGIN_CODE,
+            SE_BANKGIRO_CLEARING_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
             _UNKNOWN,
         }
 
@@ -549,6 +559,8 @@ constructor(
                 ROUTING_NUMBER_TYPE -> Value.ROUTING_NUMBER_TYPE
                 ADDRESS -> Value.ADDRESS
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
+                SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
                 else -> Value._UNKNOWN
             }
 
@@ -576,6 +588,8 @@ constructor(
                 ROUTING_NUMBER_TYPE -> Known.ROUTING_NUMBER_TYPE
                 ADDRESS -> Known.ADDRESS
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
+                SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Field: $value")
             }
 

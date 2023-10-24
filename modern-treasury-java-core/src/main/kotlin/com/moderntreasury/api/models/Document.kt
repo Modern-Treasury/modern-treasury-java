@@ -641,6 +641,9 @@ private constructor(
 
             @JvmField val EXTERNAL_ACCOUNT = DocumentableType(JsonField.of("external_account"))
 
+            @JvmField
+            val INCOMING_PAYMENT_DETAIL = DocumentableType(JsonField.of("incoming_payment_detail"))
+
             @JvmField val INTERNAL_ACCOUNT = DocumentableType(JsonField.of("internal_account"))
 
             @JvmField val ORGANIZATION = DocumentableType(JsonField.of("organization"))
@@ -663,6 +666,7 @@ private constructor(
             COUNTERPARTY,
             EXPECTED_PAYMENT,
             EXTERNAL_ACCOUNT,
+            INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             ORGANIZATION,
             PAPER_ITEM,
@@ -677,6 +681,7 @@ private constructor(
             COUNTERPARTY,
             EXPECTED_PAYMENT,
             EXTERNAL_ACCOUNT,
+            INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             ORGANIZATION,
             PAPER_ITEM,
@@ -693,6 +698,7 @@ private constructor(
                 COUNTERPARTY -> Value.COUNTERPARTY
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
+                INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
                 ORGANIZATION -> Value.ORGANIZATION
                 PAPER_ITEM -> Value.PAPER_ITEM
@@ -709,6 +715,7 @@ private constructor(
                 COUNTERPARTY -> Known.COUNTERPARTY
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
+                INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
                 ORGANIZATION -> Known.ORGANIZATION
                 PAPER_ITEM -> Known.PAPER_ITEM

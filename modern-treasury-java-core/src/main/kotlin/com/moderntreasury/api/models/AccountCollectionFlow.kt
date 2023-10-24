@@ -482,6 +482,8 @@ private constructor(
 
             @JvmField val ESP = ReceivingCountry(JsonField.of("ESP"))
 
+            @JvmField val GBR = ReceivingCountry(JsonField.of("GBR"))
+
             @JvmStatic fun of(value: String) = ReceivingCountry(JsonField.of(value))
         }
 
@@ -503,6 +505,7 @@ private constructor(
             NLD,
             PER,
             ESP,
+            GBR,
         }
 
         enum class Value {
@@ -523,6 +526,7 @@ private constructor(
             NLD,
             PER,
             ESP,
+            GBR,
             _UNKNOWN,
         }
 
@@ -545,6 +549,7 @@ private constructor(
                 NLD -> Value.NLD
                 PER -> Value.PER
                 ESP -> Value.ESP
+                GBR -> Value.GBR
                 else -> Value._UNKNOWN
             }
 
@@ -567,6 +572,7 @@ private constructor(
                 NLD -> Known.NLD
                 PER -> Known.PER
                 ESP -> Known.ESP
+                GBR -> Known.GBR
                 else -> throw ModernTreasuryInvalidDataException("Unknown ReceivingCountry: $value")
             }
 
