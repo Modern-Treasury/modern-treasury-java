@@ -43,6 +43,7 @@ private constructor(
     private val remittanceInformation: JsonField<String>,
     private val reconciliationGroups: JsonValue,
     private val reconciliationFilters: JsonValue,
+    private val reconciliationRuleVariables: JsonField<List<JsonValue>>,
     private val transactionId: JsonField<String>,
     private val transactionLineItemId: JsonField<String>,
     private val status: JsonField<Status>,
@@ -133,6 +134,12 @@ private constructor(
      */
     fun remittanceInformation(): Optional<String> =
         Optional.ofNullable(remittanceInformation.getNullable("remittance_information"))
+
+    /** An array of reconciliation rule variables for this payment. */
+    fun reconciliationRuleVariables(): Optional<List<JsonValue>> =
+        Optional.ofNullable(
+            reconciliationRuleVariables.getNullable("reconciliation_rule_variables")
+        )
 
     /** The ID of the Transaction this expected payment object has been matched to. */
     fun transactionId(): Optional<String> =
@@ -245,6 +252,11 @@ private constructor(
     @ExcludeMissing
     fun _reconciliationFilters() = reconciliationFilters
 
+    /** An array of reconciliation rule variables for this payment. */
+    @JsonProperty("reconciliation_rule_variables")
+    @ExcludeMissing
+    fun _reconciliationRuleVariables() = reconciliationRuleVariables
+
     /** The ID of the Transaction this expected payment object has been matched to. */
     @JsonProperty("transaction_id") @ExcludeMissing fun _transactionId() = transactionId
 
@@ -293,6 +305,7 @@ private constructor(
             metadata().validate()
             counterpartyId()
             remittanceInformation()
+            reconciliationRuleVariables()
             transactionId()
             transactionLineItemId()
             status()
@@ -330,6 +343,7 @@ private constructor(
             this.remittanceInformation == other.remittanceInformation &&
             this.reconciliationGroups == other.reconciliationGroups &&
             this.reconciliationFilters == other.reconciliationFilters &&
+            this.reconciliationRuleVariables == other.reconciliationRuleVariables &&
             this.transactionId == other.transactionId &&
             this.transactionLineItemId == other.transactionLineItemId &&
             this.status == other.status &&
@@ -362,6 +376,7 @@ private constructor(
                     remittanceInformation,
                     reconciliationGroups,
                     reconciliationFilters,
+                    reconciliationRuleVariables,
                     transactionId,
                     transactionLineItemId,
                     status,
@@ -374,7 +389,7 @@ private constructor(
     }
 
     override fun toString() =
-        "ExpectedPayment{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, amountUpperBound=$amountUpperBound, amountLowerBound=$amountLowerBound, direction=$direction, internalAccountId=$internalAccountId, type=$type, currency=$currency, dateUpperBound=$dateUpperBound, dateLowerBound=$dateLowerBound, description=$description, statementDescriptor=$statementDescriptor, metadata=$metadata, counterpartyId=$counterpartyId, remittanceInformation=$remittanceInformation, reconciliationGroups=$reconciliationGroups, reconciliationFilters=$reconciliationFilters, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, status=$status, reconciliationMethod=$reconciliationMethod, ledgerTransactionId=$ledgerTransactionId, additionalProperties=$additionalProperties}"
+        "ExpectedPayment{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, amountUpperBound=$amountUpperBound, amountLowerBound=$amountLowerBound, direction=$direction, internalAccountId=$internalAccountId, type=$type, currency=$currency, dateUpperBound=$dateUpperBound, dateLowerBound=$dateLowerBound, description=$description, statementDescriptor=$statementDescriptor, metadata=$metadata, counterpartyId=$counterpartyId, remittanceInformation=$remittanceInformation, reconciliationGroups=$reconciliationGroups, reconciliationFilters=$reconciliationFilters, reconciliationRuleVariables=$reconciliationRuleVariables, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, status=$status, reconciliationMethod=$reconciliationMethod, ledgerTransactionId=$ledgerTransactionId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -403,6 +418,7 @@ private constructor(
         private var remittanceInformation: JsonField<String> = JsonMissing.of()
         private var reconciliationGroups: JsonValue = JsonMissing.of()
         private var reconciliationFilters: JsonValue = JsonMissing.of()
+        private var reconciliationRuleVariables: JsonField<List<JsonValue>> = JsonMissing.of()
         private var transactionId: JsonField<String> = JsonMissing.of()
         private var transactionLineItemId: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
@@ -432,6 +448,7 @@ private constructor(
             this.remittanceInformation = expectedPayment.remittanceInformation
             this.reconciliationGroups = expectedPayment.reconciliationGroups
             this.reconciliationFilters = expectedPayment.reconciliationFilters
+            this.reconciliationRuleVariables = expectedPayment.reconciliationRuleVariables
             this.transactionId = expectedPayment.transactionId
             this.transactionLineItemId = expectedPayment.transactionLineItemId
             this.status = expectedPayment.status
@@ -661,6 +678,18 @@ private constructor(
             this.reconciliationFilters = reconciliationFilters
         }
 
+        /** An array of reconciliation rule variables for this payment. */
+        fun reconciliationRuleVariables(reconciliationRuleVariables: List<JsonValue>) =
+            reconciliationRuleVariables(JsonField.of(reconciliationRuleVariables))
+
+        /** An array of reconciliation rule variables for this payment. */
+        @JsonProperty("reconciliation_rule_variables")
+        @ExcludeMissing
+        fun reconciliationRuleVariables(reconciliationRuleVariables: JsonField<List<JsonValue>>) =
+            apply {
+                this.reconciliationRuleVariables = reconciliationRuleVariables
+            }
+
         /** The ID of the Transaction this expected payment object has been matched to. */
         fun transactionId(transactionId: String) = transactionId(JsonField.of(transactionId))
 
@@ -756,6 +785,7 @@ private constructor(
                 remittanceInformation,
                 reconciliationGroups,
                 reconciliationFilters,
+                reconciliationRuleVariables.map { it.toUnmodifiable() },
                 transactionId,
                 transactionLineItemId,
                 status,

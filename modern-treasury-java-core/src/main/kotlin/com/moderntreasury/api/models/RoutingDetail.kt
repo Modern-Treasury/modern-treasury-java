@@ -60,7 +60,10 @@ private constructor(
     /** The routing number of the bank. */
     fun routingNumber(): String = routingNumber.getRequired("routing_number")
 
-    /** One of `aba`, `swift`, `ca_cpa`, `au_bsb`, `gb_sort_code`, `in_ifsc`, `cnaps`. */
+    /**
+     * The type of routing number. See
+     * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more details.
+     */
     fun routingNumberType(): RoutingNumberType =
         routingNumberType.getRequired("routing_number_type")
 
@@ -96,7 +99,10 @@ private constructor(
     /** The routing number of the bank. */
     @JsonProperty("routing_number") @ExcludeMissing fun _routingNumber() = routingNumber
 
-    /** One of `aba`, `swift`, `ca_cpa`, `au_bsb`, `gb_sort_code`, `in_ifsc`, `cnaps`. */
+    /**
+     * The type of routing number. See
+     * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more details.
+     */
     @JsonProperty("routing_number_type")
     @ExcludeMissing
     fun _routingNumberType() = routingNumberType
@@ -269,11 +275,19 @@ private constructor(
             this.routingNumber = routingNumber
         }
 
-        /** One of `aba`, `swift`, `ca_cpa`, `au_bsb`, `gb_sort_code`, `in_ifsc`, `cnaps`. */
+        /**
+         * The type of routing number. See
+         * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
+         * details.
+         */
         fun routingNumberType(routingNumberType: RoutingNumberType) =
             routingNumberType(JsonField.of(routingNumberType))
 
-        /** One of `aba`, `swift`, `ca_cpa`, `au_bsb`, `gb_sort_code`, `in_ifsc`, `cnaps`. */
+        /**
+         * The type of routing number. See
+         * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
+         * details.
+         */
         @JsonProperty("routing_number_type")
         @ExcludeMissing
         fun routingNumberType(routingNumberType: JsonField<RoutingNumberType>) = apply {
@@ -677,6 +691,8 @@ private constructor(
 
             @JvmField val CARD = PaymentType(JsonField.of("card"))
 
+            @JvmField val CHATS = PaymentType(JsonField.of("chats"))
+
             @JvmField val CHECK = PaymentType(JsonField.of("check"))
 
             @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
@@ -690,6 +706,8 @@ private constructor(
             @JvmField val NEFT = PaymentType(JsonField.of("neft"))
 
             @JvmField val NICS = PaymentType(JsonField.of("nics"))
+
+            @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
 
             @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
 
@@ -718,6 +736,7 @@ private constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -725,6 +744,7 @@ private constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -742,6 +762,7 @@ private constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -749,6 +770,7 @@ private constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -768,6 +790,7 @@ private constructor(
                 BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CARD -> Value.CARD
+                CHATS -> Value.CHATS
                 CHECK -> Value.CHECK
                 CROSS_BORDER -> Value.CROSS_BORDER
                 EFT -> Value.EFT
@@ -775,6 +798,7 @@ private constructor(
                 MASAV -> Value.MASAV
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
+                NZ_BECS -> Value.NZ_BECS
                 PROVXCHANGE -> Value.PROVXCHANGE
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
@@ -794,6 +818,7 @@ private constructor(
                 BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CARD -> Known.CARD
+                CHATS -> Known.CHATS
                 CHECK -> Known.CHECK
                 CROSS_BORDER -> Known.CROSS_BORDER
                 EFT -> Known.EFT
@@ -801,6 +826,7 @@ private constructor(
                 MASAV -> Known.MASAV
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
+                NZ_BECS -> Known.NZ_BECS
                 PROVXCHANGE -> Known.PROVXCHANGE
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
@@ -852,11 +878,19 @@ private constructor(
 
             @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
 
+            @JvmField
+            val HK_INTERBANK_CLEARING_CODE =
+                RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
+
             @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
 
             @JvmField val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
 
             @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
+
+            @JvmField
+            val NZ_NATIONAL_CLEARING_CODE =
+                RoutingNumberType(JsonField.of("nz_national_clearing_code"))
 
             @JvmField
             val SE_BANKGIRO_CLEARING_CODE =
@@ -875,9 +909,11 @@ private constructor(
             CHIPS,
             CNAPS,
             GB_SORT_CODE,
+            HK_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
         }
@@ -890,9 +926,11 @@ private constructor(
             CHIPS,
             CNAPS,
             GB_SORT_CODE,
+            HK_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
+            NZ_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
             _UNKNOWN,
@@ -907,9 +945,11 @@ private constructor(
                 CHIPS -> Value.CHIPS
                 CNAPS -> Value.CNAPS
                 GB_SORT_CODE -> Value.GB_SORT_CODE
+                HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Value.IN_IFSC
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Value.SWIFT
                 else -> Value._UNKNOWN
@@ -924,9 +964,11 @@ private constructor(
                 CHIPS -> Known.CHIPS
                 CNAPS -> Known.CNAPS
                 GB_SORT_CODE -> Known.GB_SORT_CODE
+                HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Known.IN_IFSC
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
+                NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Known.SWIFT
                 else ->

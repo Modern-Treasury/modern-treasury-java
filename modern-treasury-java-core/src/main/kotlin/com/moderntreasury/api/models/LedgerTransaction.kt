@@ -34,7 +34,7 @@ private constructor(
     private val effectiveAt: JsonField<OffsetDateTime>,
     private val effectiveDate: JsonField<LocalDate>,
     private val ledgerEntries: JsonField<List<LedgerEntry>>,
-    private val postedAt: JsonField<String>,
+    private val postedAt: JsonField<OffsetDateTime>,
     private val ledgerId: JsonField<String>,
     private val ledgerableType: JsonField<LedgerableType>,
     private val ledgerableId: JsonField<String>,
@@ -87,7 +87,8 @@ private constructor(
      * The time on which the ledger transaction posted. This is null if the ledger transaction is
      * pending.
      */
-    fun postedAt(): Optional<String> = Optional.ofNullable(postedAt.getNullable("posted_at"))
+    fun postedAt(): Optional<OffsetDateTime> =
+        Optional.ofNullable(postedAt.getNullable("posted_at"))
 
     /** The ID of the ledger this ledger transaction belongs to. */
     fun ledgerId(): String = ledgerId.getRequired("ledger_id")
@@ -290,7 +291,7 @@ private constructor(
         private var effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
         private var ledgerEntries: JsonField<List<LedgerEntry>> = JsonMissing.of()
-        private var postedAt: JsonField<String> = JsonMissing.of()
+        private var postedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var ledgerId: JsonField<String> = JsonMissing.of()
         private var ledgerableType: JsonField<LedgerableType> = JsonMissing.of()
         private var ledgerableId: JsonField<String> = JsonMissing.of()
@@ -429,7 +430,7 @@ private constructor(
          * The time on which the ledger transaction posted. This is null if the ledger transaction
          * is pending.
          */
-        fun postedAt(postedAt: String) = postedAt(JsonField.of(postedAt))
+        fun postedAt(postedAt: OffsetDateTime) = postedAt(JsonField.of(postedAt))
 
         /**
          * The time on which the ledger transaction posted. This is null if the ledger transaction
@@ -437,7 +438,7 @@ private constructor(
          */
         @JsonProperty("posted_at")
         @ExcludeMissing
-        fun postedAt(postedAt: JsonField<String>) = apply { this.postedAt = postedAt }
+        fun postedAt(postedAt: JsonField<OffsetDateTime>) = apply { this.postedAt = postedAt }
 
         /** The ID of the ledger this ledger transaction belongs to. */
         fun ledgerId(ledgerId: String) = ledgerId(JsonField.of(ledgerId))

@@ -8,15 +8,12 @@ import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.errors.ModernTreasuryError
+import com.moderntreasury.api.models.LedgerEventHandler
 import com.moderntreasury.api.models.LedgerEventHandlerCreateParams
-import com.moderntreasury.api.models.LedgerEventHandlerCreateResponse
 import com.moderntreasury.api.models.LedgerEventHandlerDeleteParams
-import com.moderntreasury.api.models.LedgerEventHandlerDeleteResponse
 import com.moderntreasury.api.models.LedgerEventHandlerListPageAsync
 import com.moderntreasury.api.models.LedgerEventHandlerListParams
-import com.moderntreasury.api.models.LedgerEventHandlerListResponse
 import com.moderntreasury.api.models.LedgerEventHandlerRetrieveParams
-import com.moderntreasury.api.models.LedgerEventHandlerRetrieveResponse
 import com.moderntreasury.api.services.errorHandler
 import com.moderntreasury.api.services.json
 import com.moderntreasury.api.services.jsonHandler
@@ -30,15 +27,14 @@ constructor(
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<LedgerEventHandlerCreateResponse> =
-        jsonHandler<LedgerEventHandlerCreateResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val createHandler: Handler<LedgerEventHandler> =
+        jsonHandler<LedgerEventHandler>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** create ledger_event_handler */
     override fun create(
         params: LedgerEventHandlerCreateParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEventHandlerCreateResponse> {
+    ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -60,15 +56,14 @@ constructor(
         }
     }
 
-    private val retrieveHandler: Handler<LedgerEventHandlerRetrieveResponse> =
-        jsonHandler<LedgerEventHandlerRetrieveResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val retrieveHandler: Handler<LedgerEventHandler> =
+        jsonHandler<LedgerEventHandler>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Get details on a single ledger event handler. */
     override fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEventHandlerRetrieveResponse> {
+    ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -89,8 +84,8 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<List<LedgerEventHandlerListResponse>> =
-        jsonHandler<List<LedgerEventHandlerListResponse>>(clientOptions.jsonMapper)
+    private val listHandler: Handler<List<LedgerEventHandler>> =
+        jsonHandler<List<LedgerEventHandler>>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** Get a list of ledger event handlers. */
@@ -126,15 +121,14 @@ constructor(
         }
     }
 
-    private val deleteHandler: Handler<LedgerEventHandlerDeleteResponse> =
-        jsonHandler<LedgerEventHandlerDeleteResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val deleteHandler: Handler<LedgerEventHandler> =
+        jsonHandler<LedgerEventHandler>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Archive a ledger event handler. */
     override fun delete(
         params: LedgerEventHandlerDeleteParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEventHandlerDeleteResponse> {
+    ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)

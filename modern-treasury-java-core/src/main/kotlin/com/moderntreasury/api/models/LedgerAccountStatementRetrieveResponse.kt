@@ -30,8 +30,8 @@ private constructor(
     private val ledgerAccountId: JsonField<String>,
     private val ledgerAccountLockVersion: JsonField<Long>,
     private val ledgerAccountNormalBalance: JsonField<TransactionDirection>,
-    private val effectiveAtLowerBound: JsonField<String>,
-    private val effectiveAtUpperBound: JsonField<String>,
+    private val effectiveAtLowerBound: JsonField<OffsetDateTime>,
+    private val effectiveAtUpperBound: JsonField<OffsetDateTime>,
     private val startingBalance: JsonField<LedgerBalances>,
     private val endingBalance: JsonField<LedgerBalances>,
     private val metadata: JsonField<Metadata>,
@@ -81,14 +81,14 @@ private constructor(
      * The inclusive lower bound of the effective_at timestamp of the ledger entries to be included
      * in the ledger account statement.
      */
-    fun effectiveAtLowerBound(): String =
+    fun effectiveAtLowerBound(): OffsetDateTime =
         effectiveAtLowerBound.getRequired("effective_at_lower_bound")
 
     /**
      * The exclusive upper bound of the effective_at timestamp of the ledger entries to be included
      * in the ledger account statement.
      */
-    fun effectiveAtUpperBound(): String =
+    fun effectiveAtUpperBound(): OffsetDateTime =
         effectiveAtUpperBound.getRequired("effective_at_upper_bound")
 
     /**
@@ -281,8 +281,8 @@ private constructor(
         private var ledgerAccountId: JsonField<String> = JsonMissing.of()
         private var ledgerAccountLockVersion: JsonField<Long> = JsonMissing.of()
         private var ledgerAccountNormalBalance: JsonField<TransactionDirection> = JsonMissing.of()
-        private var effectiveAtLowerBound: JsonField<String> = JsonMissing.of()
-        private var effectiveAtUpperBound: JsonField<String> = JsonMissing.of()
+        private var effectiveAtLowerBound: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var effectiveAtUpperBound: JsonField<OffsetDateTime> = JsonMissing.of()
         private var startingBalance: JsonField<LedgerBalances> = JsonMissing.of()
         private var endingBalance: JsonField<LedgerBalances> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -409,7 +409,7 @@ private constructor(
          * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
-        fun effectiveAtLowerBound(effectiveAtLowerBound: String) =
+        fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) =
             effectiveAtLowerBound(JsonField.of(effectiveAtLowerBound))
 
         /**
@@ -418,7 +418,7 @@ private constructor(
          */
         @JsonProperty("effective_at_lower_bound")
         @ExcludeMissing
-        fun effectiveAtLowerBound(effectiveAtLowerBound: JsonField<String>) = apply {
+        fun effectiveAtLowerBound(effectiveAtLowerBound: JsonField<OffsetDateTime>) = apply {
             this.effectiveAtLowerBound = effectiveAtLowerBound
         }
 
@@ -426,7 +426,7 @@ private constructor(
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
-        fun effectiveAtUpperBound(effectiveAtUpperBound: String) =
+        fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) =
             effectiveAtUpperBound(JsonField.of(effectiveAtUpperBound))
 
         /**
@@ -435,7 +435,7 @@ private constructor(
          */
         @JsonProperty("effective_at_upper_bound")
         @ExcludeMissing
-        fun effectiveAtUpperBound(effectiveAtUpperBound: JsonField<String>) = apply {
+        fun effectiveAtUpperBound(effectiveAtUpperBound: JsonField<OffsetDateTime>) = apply {
             this.effectiveAtUpperBound = effectiveAtUpperBound
         }
 

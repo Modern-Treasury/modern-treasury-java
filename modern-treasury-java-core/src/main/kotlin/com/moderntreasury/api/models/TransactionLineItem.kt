@@ -36,6 +36,7 @@ private constructor(
     private val counterpartyId: JsonField<String>,
     private val expectedPaymentId: JsonField<String>,
     private val transactionId: JsonField<String>,
+    private val reconcilable: JsonField<Boolean>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -105,6 +106,12 @@ private constructor(
     /** The ID of the parent transaction. */
     fun transactionId(): String = transactionId.getRequired("transaction_id")
 
+    /**
+     * Describes whether this line item should be counted towards the corresponding transaction’s
+     * reconciliation.
+     */
+    fun reconcilable(): Boolean = reconcilable.getRequired("reconcilable")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     @JsonProperty("object") @ExcludeMissing fun _object_() = object_
@@ -164,6 +171,12 @@ private constructor(
     /** The ID of the parent transaction. */
     @JsonProperty("transaction_id") @ExcludeMissing fun _transactionId() = transactionId
 
+    /**
+     * Describes whether this line item should be counted towards the corresponding transaction’s
+     * reconciliation.
+     */
+    @JsonProperty("reconcilable") @ExcludeMissing fun _reconcilable() = reconcilable
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -184,6 +197,7 @@ private constructor(
             counterpartyId()
             expectedPaymentId()
             transactionId()
+            reconcilable()
             validated = true
         }
     }
@@ -210,6 +224,7 @@ private constructor(
             this.counterpartyId == other.counterpartyId &&
             this.expectedPaymentId == other.expectedPaymentId &&
             this.transactionId == other.transactionId &&
+            this.reconcilable == other.reconcilable &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -231,6 +246,7 @@ private constructor(
                     counterpartyId,
                     expectedPaymentId,
                     transactionId,
+                    reconcilable,
                     additionalProperties,
                 )
         }
@@ -238,7 +254,7 @@ private constructor(
     }
 
     override fun toString() =
-        "TransactionLineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, type=$type, transactableType=$transactableType, transactableId=$transactableId, amount=$amount, description=$description, counterpartyId=$counterpartyId, expectedPaymentId=$expectedPaymentId, transactionId=$transactionId, additionalProperties=$additionalProperties}"
+        "TransactionLineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, type=$type, transactableType=$transactableType, transactableId=$transactableId, amount=$amount, description=$description, counterpartyId=$counterpartyId, expectedPaymentId=$expectedPaymentId, transactionId=$transactionId, reconcilable=$reconcilable, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -261,6 +277,7 @@ private constructor(
         private var counterpartyId: JsonField<String> = JsonMissing.of()
         private var expectedPaymentId: JsonField<String> = JsonMissing.of()
         private var transactionId: JsonField<String> = JsonMissing.of()
+        private var reconcilable: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -279,6 +296,7 @@ private constructor(
             this.counterpartyId = transactionLineItem.counterpartyId
             this.expectedPaymentId = transactionLineItem.expectedPaymentId
             this.transactionId = transactionLineItem.transactionId
+            this.reconcilable = transactionLineItem.reconcilable
             additionalProperties(transactionLineItem.additionalProperties)
         }
 
@@ -436,6 +454,22 @@ private constructor(
             this.transactionId = transactionId
         }
 
+        /**
+         * Describes whether this line item should be counted towards the corresponding
+         * transaction’s reconciliation.
+         */
+        fun reconcilable(reconcilable: Boolean) = reconcilable(JsonField.of(reconcilable))
+
+        /**
+         * Describes whether this line item should be counted towards the corresponding
+         * transaction’s reconciliation.
+         */
+        @JsonProperty("reconcilable")
+        @ExcludeMissing
+        fun reconcilable(reconcilable: JsonField<Boolean>) = apply {
+            this.reconcilable = reconcilable
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -466,6 +500,7 @@ private constructor(
                 counterpartyId,
                 expectedPaymentId,
                 transactionId,
+                reconcilable,
                 additionalProperties.toUnmodifiable(),
             )
     }

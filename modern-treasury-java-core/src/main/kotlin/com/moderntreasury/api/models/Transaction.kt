@@ -138,7 +138,7 @@ private constructor(
      * vary based on your banking partner. Currently, the following keys may be in the details
      * object: `originator_name`, `originator_to_beneficiary_information`.
      */
-    fun details(): Details = details.getRequired("details")
+    fun details(): Optional<Details> = Optional.ofNullable(details.getNullable("details"))
 
     /**
      * The type of the transaction. Can be one of `ach`, `wire`, `check`, `rtp`, `book`, or `sen`.
@@ -262,7 +262,7 @@ private constructor(
             posted()
             vendorCustomerId()
             reconciled()
-            details().validate()
+            details().map { it.validate() }
             type()
             validated = true
         }
@@ -676,86 +676,6 @@ private constructor(
             )
     }
 
-    /**
-     * This field contains additional information that the bank provided about the transaction. This
-     * is structured data. Some of the data in here might overlap with what is in the
-     * `vendor_description`. For example, the OBI could be a part of the vendor description, and it
-     * would also be included in here. The attributes that are passed through the details field will
-     * vary based on your banking partner. Currently, the following keys may be in the details
-     * object: `originator_name`, `originator_to_beneficiary_information`.
-     */
-    @JsonDeserialize(builder = Details.Builder::class)
-    @NoAutoDetect
-    class Details
-    private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
-
-        private var validated: Boolean = false
-
-        private var hashCode: Int = 0
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun validate(): Details = apply {
-            if (!validated) {
-                validated = true
-            }
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Details && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Details{additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(details: Details) = apply {
-                additionalProperties(details.additionalProperties)
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            @JsonAnySetter
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun build(): Details = Details(additionalProperties.toUnmodifiable())
-        }
-    }
-
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
@@ -861,6 +781,8 @@ private constructor(
 
             @JvmField val CARD = Type(JsonField.of("card"))
 
+            @JvmField val CHATS = Type(JsonField.of("chats"))
+
             @JvmField val CHECK = Type(JsonField.of("check"))
 
             @JvmField val CROSS_BORDER = Type(JsonField.of("cross_border"))
@@ -874,6 +796,8 @@ private constructor(
             @JvmField val NEFT = Type(JsonField.of("neft"))
 
             @JvmField val NICS = Type(JsonField.of("nics"))
+
+            @JvmField val NZ_BECS = Type(JsonField.of("nz_becs"))
 
             @JvmField val PROVXCHANGE = Type(JsonField.of("provxchange"))
 
@@ -902,6 +826,7 @@ private constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -909,6 +834,7 @@ private constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -926,6 +852,7 @@ private constructor(
             BACS,
             BOOK,
             CARD,
+            CHATS,
             CHECK,
             CROSS_BORDER,
             EFT,
@@ -933,6 +860,7 @@ private constructor(
             MASAV,
             NEFT,
             NICS,
+            NZ_BECS,
             PROVXCHANGE,
             RTP,
             SE_BANKGIROT,
@@ -952,6 +880,7 @@ private constructor(
                 BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CARD -> Value.CARD
+                CHATS -> Value.CHATS
                 CHECK -> Value.CHECK
                 CROSS_BORDER -> Value.CROSS_BORDER
                 EFT -> Value.EFT
@@ -959,6 +888,7 @@ private constructor(
                 MASAV -> Value.MASAV
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
+                NZ_BECS -> Value.NZ_BECS
                 PROVXCHANGE -> Value.PROVXCHANGE
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
@@ -978,6 +908,7 @@ private constructor(
                 BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CARD -> Known.CARD
+                CHATS -> Known.CHATS
                 CHECK -> Known.CHECK
                 CROSS_BORDER -> Known.CROSS_BORDER
                 EFT -> Known.EFT
@@ -985,6 +916,7 @@ private constructor(
                 MASAV -> Known.MASAV
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
+                NZ_BECS -> Known.NZ_BECS
                 PROVXCHANGE -> Known.PROVXCHANGE
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
@@ -1163,5 +1095,85 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+    }
+
+    /**
+     * This field contains additional information that the bank provided about the transaction. This
+     * is structured data. Some of the data in here might overlap with what is in the
+     * `vendor_description`. For example, the OBI could be a part of the vendor description, and it
+     * would also be included in here. The attributes that are passed through the details field will
+     * vary based on your banking partner. Currently, the following keys may be in the details
+     * object: `originator_name`, `originator_to_beneficiary_information`.
+     */
+    @JsonDeserialize(builder = Details.Builder::class)
+    @NoAutoDetect
+    class Details
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        private var hashCode: Int = 0
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): Details = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Details && this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Details{additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            @JvmStatic fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(details: Details) = apply {
+                additionalProperties(details.additionalProperties)
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): Details = Details(additionalProperties.toUnmodifiable())
+        }
     }
 }
