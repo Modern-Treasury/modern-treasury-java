@@ -2167,6 +2167,8 @@ constructor(
 
                     @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
+                    @JvmField val SG_GIRO = PaymentType(JsonField.of("sg_giro"))
+
                     @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
 
                     @JvmField val SEN = PaymentType(JsonField.of("sen"))
@@ -2201,6 +2203,7 @@ constructor(
                     NZ_BECS,
                     PROVXCHANGE,
                     RTP,
+                    SG_GIRO,
                     SE_BANKGIROT,
                     SEN,
                     SEPA,
@@ -2227,6 +2230,7 @@ constructor(
                     NZ_BECS,
                     PROVXCHANGE,
                     RTP,
+                    SG_GIRO,
                     SE_BANKGIROT,
                     SEN,
                     SEPA,
@@ -2255,6 +2259,7 @@ constructor(
                         NZ_BECS -> Value.NZ_BECS
                         PROVXCHANGE -> Value.PROVXCHANGE
                         RTP -> Value.RTP
+                        SG_GIRO -> Value.SG_GIRO
                         SE_BANKGIROT -> Value.SE_BANKGIROT
                         SEN -> Value.SEN
                         SEPA -> Value.SEPA
@@ -2283,6 +2288,7 @@ constructor(
                         NZ_BECS -> Known.NZ_BECS
                         PROVXCHANGE -> Known.PROVXCHANGE
                         RTP -> Known.RTP
+                        SG_GIRO -> Known.SG_GIRO
                         SE_BANKGIROT -> Known.SE_BANKGIROT
                         SEN -> Known.SEN
                         SEPA -> Known.SEPA

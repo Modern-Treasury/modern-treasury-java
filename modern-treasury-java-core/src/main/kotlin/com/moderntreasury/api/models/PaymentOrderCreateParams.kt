@@ -38,6 +38,7 @@ constructor(
     private val foreignExchangeContract: String?,
     private val foreignExchangeIndicator: ForeignExchangeIndicator?,
     private val ledgerTransaction: LedgerTransactionCreateRequest?,
+    private val ledgerTransactionId: String?,
     private val lineItems: List<LineItemRequest>?,
     private val metadata: Metadata?,
     private val nsfProtected: Boolean?,
@@ -95,6 +96,8 @@ constructor(
 
     fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> =
         Optional.ofNullable(ledgerTransaction)
+
+    fun ledgerTransactionId(): Optional<String> = Optional.ofNullable(ledgerTransactionId)
 
     fun lineItems(): Optional<List<LineItemRequest>> = Optional.ofNullable(lineItems)
 
@@ -155,6 +158,7 @@ constructor(
             foreignExchangeContract,
             foreignExchangeIndicator,
             ledgerTransaction,
+            ledgerTransactionId,
             lineItems,
             metadata,
             nsfProtected,
@@ -201,6 +205,7 @@ constructor(
         private val foreignExchangeContract: String?,
         private val foreignExchangeIndicator: ForeignExchangeIndicator?,
         private val ledgerTransaction: LedgerTransactionCreateRequest?,
+        private val ledgerTransactionId: String?,
         private val lineItems: List<LineItemRequest>?,
         private val metadata: Metadata?,
         private val nsfProtected: Boolean?,
@@ -322,6 +327,14 @@ constructor(
          */
         @JsonProperty("ledger_transaction")
         fun ledgerTransaction(): LedgerTransactionCreateRequest? = ledgerTransaction
+
+        /**
+         * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending ledger
+         * transaction can be attached upon payment order creation. Once the payment order is
+         * created, the status of the ledger transaction tracks the payment order automatically.
+         */
+        @JsonProperty("ledger_transaction_id")
+        fun ledgerTransactionId(): String? = ledgerTransactionId
 
         /** An array of line items that must sum up to the amount of the payment order. */
         @JsonProperty("line_items") fun lineItems(): List<LineItemRequest>? = lineItems
@@ -459,6 +472,7 @@ constructor(
                 this.foreignExchangeContract == other.foreignExchangeContract &&
                 this.foreignExchangeIndicator == other.foreignExchangeIndicator &&
                 this.ledgerTransaction == other.ledgerTransaction &&
+                this.ledgerTransactionId == other.ledgerTransactionId &&
                 this.lineItems == other.lineItems &&
                 this.metadata == other.metadata &&
                 this.nsfProtected == other.nsfProtected &&
@@ -501,6 +515,7 @@ constructor(
                         foreignExchangeContract,
                         foreignExchangeIndicator,
                         ledgerTransaction,
+                        ledgerTransactionId,
                         lineItems,
                         metadata,
                         nsfProtected,
@@ -525,7 +540,7 @@ constructor(
         }
 
         override fun toString() =
-            "PaymentOrderCreateBody{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateBody{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -551,6 +566,7 @@ constructor(
             private var foreignExchangeContract: String? = null
             private var foreignExchangeIndicator: ForeignExchangeIndicator? = null
             private var ledgerTransaction: LedgerTransactionCreateRequest? = null
+            private var ledgerTransactionId: String? = null
             private var lineItems: List<LineItemRequest>? = null
             private var metadata: Metadata? = null
             private var nsfProtected: Boolean? = null
@@ -589,6 +605,7 @@ constructor(
                 this.foreignExchangeContract = paymentOrderCreateBody.foreignExchangeContract
                 this.foreignExchangeIndicator = paymentOrderCreateBody.foreignExchangeIndicator
                 this.ledgerTransaction = paymentOrderCreateBody.ledgerTransaction
+                this.ledgerTransactionId = paymentOrderCreateBody.ledgerTransactionId
                 this.lineItems = paymentOrderCreateBody.lineItems
                 this.metadata = paymentOrderCreateBody.metadata
                 this.nsfProtected = paymentOrderCreateBody.nsfProtected
@@ -741,6 +758,17 @@ constructor(
             @JsonProperty("ledger_transaction")
             fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
                 this.ledgerTransaction = ledgerTransaction
+            }
+
+            /**
+             * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending
+             * ledger transaction can be attached upon payment order creation. Once the payment
+             * order is created, the status of the ledger transaction tracks the payment order
+             * automatically.
+             */
+            @JsonProperty("ledger_transaction_id")
+            fun ledgerTransactionId(ledgerTransactionId: String) = apply {
+                this.ledgerTransactionId = ledgerTransactionId
             }
 
             /** An array of line items that must sum up to the amount of the payment order. */
@@ -916,6 +944,7 @@ constructor(
                     foreignExchangeContract,
                     foreignExchangeIndicator,
                     ledgerTransaction,
+                    ledgerTransactionId,
                     lineItems?.toUnmodifiable(),
                     metadata,
                     nsfProtected,
@@ -967,6 +996,7 @@ constructor(
             this.foreignExchangeContract == other.foreignExchangeContract &&
             this.foreignExchangeIndicator == other.foreignExchangeIndicator &&
             this.ledgerTransaction == other.ledgerTransaction &&
+            this.ledgerTransactionId == other.ledgerTransactionId &&
             this.lineItems == other.lineItems &&
             this.metadata == other.metadata &&
             this.nsfProtected == other.nsfProtected &&
@@ -1008,6 +1038,7 @@ constructor(
             foreignExchangeContract,
             foreignExchangeIndicator,
             ledgerTransaction,
+            ledgerTransactionId,
             lineItems,
             metadata,
             nsfProtected,
@@ -1032,7 +1063,7 @@ constructor(
     }
 
     override fun toString() =
-        "PaymentOrderCreateParams{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "PaymentOrderCreateParams{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -1061,6 +1092,7 @@ constructor(
         private var foreignExchangeContract: String? = null
         private var foreignExchangeIndicator: ForeignExchangeIndicator? = null
         private var ledgerTransaction: LedgerTransactionCreateRequest? = null
+        private var ledgerTransactionId: String? = null
         private var lineItems: MutableList<LineItemRequest> = mutableListOf()
         private var metadata: Metadata? = null
         private var nsfProtected: Boolean? = null
@@ -1101,6 +1133,7 @@ constructor(
             this.foreignExchangeContract = paymentOrderCreateParams.foreignExchangeContract
             this.foreignExchangeIndicator = paymentOrderCreateParams.foreignExchangeIndicator
             this.ledgerTransaction = paymentOrderCreateParams.ledgerTransaction
+            this.ledgerTransactionId = paymentOrderCreateParams.ledgerTransactionId
             this.lineItems(paymentOrderCreateParams.lineItems ?: listOf())
             this.metadata = paymentOrderCreateParams.metadata
             this.nsfProtected = paymentOrderCreateParams.nsfProtected
@@ -1240,6 +1273,15 @@ constructor(
          */
         fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
             this.ledgerTransaction = ledgerTransaction
+        }
+
+        /**
+         * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending ledger
+         * transaction can be attached upon payment order creation. Once the payment order is
+         * created, the status of the ledger transaction tracks the payment order automatically.
+         */
+        fun ledgerTransactionId(ledgerTransactionId: String) = apply {
+            this.ledgerTransactionId = ledgerTransactionId
         }
 
         /** An array of line items that must sum up to the amount of the payment order. */
@@ -1442,6 +1484,7 @@ constructor(
                 foreignExchangeContract,
                 foreignExchangeIndicator,
                 ledgerTransaction,
+                ledgerTransactionId,
                 if (lineItems.size == 0) null else lineItems.toUnmodifiable(),
                 metadata,
                 nsfProtected,
@@ -4977,6 +5020,8 @@ constructor(
 
                     @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
+                    @JvmField val SG_GIRO = PaymentType(JsonField.of("sg_giro"))
+
                     @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
 
                     @JvmField val SEN = PaymentType(JsonField.of("sen"))
@@ -5011,6 +5056,7 @@ constructor(
                     NZ_BECS,
                     PROVXCHANGE,
                     RTP,
+                    SG_GIRO,
                     SE_BANKGIROT,
                     SEN,
                     SEPA,
@@ -5037,6 +5083,7 @@ constructor(
                     NZ_BECS,
                     PROVXCHANGE,
                     RTP,
+                    SG_GIRO,
                     SE_BANKGIROT,
                     SEN,
                     SEPA,
@@ -5065,6 +5112,7 @@ constructor(
                         NZ_BECS -> Value.NZ_BECS
                         PROVXCHANGE -> Value.PROVXCHANGE
                         RTP -> Value.RTP
+                        SG_GIRO -> Value.SG_GIRO
                         SE_BANKGIROT -> Value.SE_BANKGIROT
                         SEN -> Value.SEN
                         SEPA -> Value.SEPA
@@ -5093,6 +5141,7 @@ constructor(
                         NZ_BECS -> Known.NZ_BECS
                         PROVXCHANGE -> Known.PROVXCHANGE
                         RTP -> Known.RTP
+                        SG_GIRO -> Known.SG_GIRO
                         SE_BANKGIROT -> Known.SE_BANKGIROT
                         SEN -> Known.SEN
                         SEPA -> Known.SEPA
