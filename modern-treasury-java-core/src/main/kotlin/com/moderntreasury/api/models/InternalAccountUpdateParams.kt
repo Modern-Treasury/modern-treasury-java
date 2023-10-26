@@ -18,6 +18,7 @@ class InternalAccountUpdateParams
 constructor(
     private val id: String,
     private val counterpartyId: String?,
+    private val ledgerAccountId: String?,
     private val metadata: Metadata?,
     private val name: String?,
     private val parentAccountId: String?,
@@ -30,6 +31,8 @@ constructor(
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
+
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun name(): Optional<String> = Optional.ofNullable(name)
@@ -40,6 +43,7 @@ constructor(
     internal fun getBody(): InternalAccountUpdateBody {
         return InternalAccountUpdateBody(
             counterpartyId,
+            ledgerAccountId,
             metadata,
             name,
             parentAccountId,
@@ -63,6 +67,7 @@ constructor(
     class InternalAccountUpdateBody
     internal constructor(
         private val counterpartyId: String?,
+        private val ledgerAccountId: String?,
         private val metadata: Metadata?,
         private val name: String?,
         private val parentAccountId: String?,
@@ -73,6 +78,9 @@ constructor(
 
         /** The Counterparty associated to this account. */
         @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+
+        /** The Ledger Account associated to this account. */
+        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
@@ -99,6 +107,7 @@ constructor(
 
             return other is InternalAccountUpdateBody &&
                 this.counterpartyId == other.counterpartyId &&
+                this.ledgerAccountId == other.ledgerAccountId &&
                 this.metadata == other.metadata &&
                 this.name == other.name &&
                 this.parentAccountId == other.parentAccountId &&
@@ -110,6 +119,7 @@ constructor(
                 hashCode =
                     Objects.hash(
                         counterpartyId,
+                        ledgerAccountId,
                         metadata,
                         name,
                         parentAccountId,
@@ -120,7 +130,7 @@ constructor(
         }
 
         override fun toString() =
-            "InternalAccountUpdateBody{counterpartyId=$counterpartyId, metadata=$metadata, name=$name, parentAccountId=$parentAccountId, additionalProperties=$additionalProperties}"
+            "InternalAccountUpdateBody{counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, parentAccountId=$parentAccountId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -130,6 +140,7 @@ constructor(
         class Builder {
 
             private var counterpartyId: String? = null
+            private var ledgerAccountId: String? = null
             private var metadata: Metadata? = null
             private var name: String? = null
             private var parentAccountId: String? = null
@@ -138,6 +149,7 @@ constructor(
             @JvmSynthetic
             internal fun from(internalAccountUpdateBody: InternalAccountUpdateBody) = apply {
                 this.counterpartyId = internalAccountUpdateBody.counterpartyId
+                this.ledgerAccountId = internalAccountUpdateBody.ledgerAccountId
                 this.metadata = internalAccountUpdateBody.metadata
                 this.name = internalAccountUpdateBody.name
                 this.parentAccountId = internalAccountUpdateBody.parentAccountId
@@ -148,6 +160,12 @@ constructor(
             @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
                 this.counterpartyId = counterpartyId
+            }
+
+            /** The Ledger Account associated to this account. */
+            @JsonProperty("ledger_account_id")
+            fun ledgerAccountId(ledgerAccountId: String) = apply {
+                this.ledgerAccountId = ledgerAccountId
             }
 
             /**
@@ -183,6 +201,7 @@ constructor(
             fun build(): InternalAccountUpdateBody =
                 InternalAccountUpdateBody(
                     counterpartyId,
+                    ledgerAccountId,
                     metadata,
                     name,
                     parentAccountId,
@@ -205,6 +224,7 @@ constructor(
         return other is InternalAccountUpdateParams &&
             this.id == other.id &&
             this.counterpartyId == other.counterpartyId &&
+            this.ledgerAccountId == other.ledgerAccountId &&
             this.metadata == other.metadata &&
             this.name == other.name &&
             this.parentAccountId == other.parentAccountId &&
@@ -217,6 +237,7 @@ constructor(
         return Objects.hash(
             id,
             counterpartyId,
+            ledgerAccountId,
             metadata,
             name,
             parentAccountId,
@@ -227,7 +248,7 @@ constructor(
     }
 
     override fun toString() =
-        "InternalAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, metadata=$metadata, name=$name, parentAccountId=$parentAccountId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InternalAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, parentAccountId=$parentAccountId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -241,6 +262,7 @@ constructor(
 
         private var id: String? = null
         private var counterpartyId: String? = null
+        private var ledgerAccountId: String? = null
         private var metadata: Metadata? = null
         private var name: String? = null
         private var parentAccountId: String? = null
@@ -252,6 +274,7 @@ constructor(
         internal fun from(internalAccountUpdateParams: InternalAccountUpdateParams) = apply {
             this.id = internalAccountUpdateParams.id
             this.counterpartyId = internalAccountUpdateParams.counterpartyId
+            this.ledgerAccountId = internalAccountUpdateParams.ledgerAccountId
             this.metadata = internalAccountUpdateParams.metadata
             this.name = internalAccountUpdateParams.name
             this.parentAccountId = internalAccountUpdateParams.parentAccountId
@@ -264,6 +287,11 @@ constructor(
 
         /** The Counterparty associated to this account. */
         fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+
+        /** The Ledger Account associated to this account. */
+        fun ledgerAccountId(ledgerAccountId: String) = apply {
+            this.ledgerAccountId = ledgerAccountId
+        }
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
@@ -337,6 +365,7 @@ constructor(
             InternalAccountUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 counterpartyId,
+                ledgerAccountId,
                 metadata,
                 name,
                 parentAccountId,

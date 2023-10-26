@@ -453,6 +453,8 @@ constructor(
 
             @JvmField val SEPA = Type(JsonField.of("sepa"))
 
+            @JvmField val SG_GIRO = Type(JsonField.of("sg_giro"))
+
             @JvmField val SIC = Type(JsonField.of("sic"))
 
             @JvmField val SIGNET = Type(JsonField.of("signet"))
@@ -484,6 +486,7 @@ constructor(
             SE_BANKGIROT,
             SEN,
             SEPA,
+            SG_GIRO,
             SIC,
             SIGNET,
             WIRE,
@@ -510,6 +513,7 @@ constructor(
             SE_BANKGIROT,
             SEN,
             SEPA,
+            SG_GIRO,
             SIC,
             SIGNET,
             WIRE,
@@ -538,6 +542,7 @@ constructor(
                 SE_BANKGIROT -> Value.SE_BANKGIROT
                 SEN -> Value.SEN
                 SEPA -> Value.SEPA
+                SG_GIRO -> Value.SG_GIRO
                 SIC -> Value.SIC
                 SIGNET -> Value.SIGNET
                 WIRE -> Value.WIRE
@@ -566,6 +571,7 @@ constructor(
                 SE_BANKGIROT -> Known.SE_BANKGIROT
                 SEN -> Known.SEN
                 SEPA -> Known.SEPA
+                SG_GIRO -> Known.SG_GIRO
                 SIC -> Known.SIC
                 SIGNET -> Known.SIGNET
                 WIRE -> Known.WIRE
