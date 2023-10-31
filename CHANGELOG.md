@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0 (2023-10-31)
+
+Full Changelog: [v2.0.0...v2.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.0.0...v2.1.0)
+
+### Features
+
+* **api:** updates ([#82](https://github.com/Modern-Treasury/modern-treasury-java/issues/82)) ([70acb16](https://github.com/Modern-Treasury/modern-treasury-java/commit/70acb16ca2245bfea7cb047c6f38b1080cd484e2))
+* **github:** include a devcontainer setup ([#84](https://github.com/Modern-Treasury/modern-treasury-java/issues/84)) ([4dcfc0c](https://github.com/Modern-Treasury/modern-treasury-java/commit/4dcfc0c46569012f7bc6557e3f1b45d0f0637233))
+
 ## 2.0.0 (2023-10-24)
 
 Full Changelog: [v1.5.1...v2.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v1.5.1...v2.0.0)
