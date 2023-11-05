@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.2.0 (2023-11-05)
+
+Full Changelog: [v2.1.0...v2.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.1.0...v2.2.0)
+
+### Features
+
+* **client:** allow binary returns ([#85](https://github.com/Modern-Treasury/modern-treasury-java/issues/85)) ([07465e2](https://github.com/Modern-Treasury/modern-treasury-java/commit/07465e24a3a3b077b1fef76e40be1c439fbb8d88))
+
+
+### Chores
+
+* remove bad tests ([#87](https://github.com/Modern-Treasury/modern-treasury-java/issues/87)) ([c1e20bd](https://github.com/Modern-Treasury/modern-treasury-java/commit/c1e20bd75bbd16afcc929b52761669e12293a3fb))
+
 ## 2.1.0 (2023-10-31)
 
 Full Changelog: [v2.0.0...v2.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.0.0...v2.1.0)
