@@ -23,6 +23,7 @@ constructor(
     private val name: String?,
     private val quantity: Long?,
     private val unitAmount: Long?,
+    private val unitAmountDecimal: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -42,6 +43,8 @@ constructor(
 
     fun unitAmount(): Optional<Long> = Optional.ofNullable(unitAmount)
 
+    fun unitAmountDecimal(): Optional<String> = Optional.ofNullable(unitAmountDecimal)
+
     @JvmSynthetic
     internal fun getBody(): InvoiceLineItemUpdateBody {
         return InvoiceLineItemUpdateBody(
@@ -50,6 +53,7 @@ constructor(
             name,
             quantity,
             unitAmount,
+            unitAmountDecimal,
             additionalBodyProperties,
         )
     }
@@ -75,6 +79,7 @@ constructor(
         private val name: String?,
         private val quantity: Long?,
         private val unitAmount: Long?,
+        private val unitAmountDecimal: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -105,6 +110,12 @@ constructor(
          */
         @JsonProperty("unit_amount") fun unitAmount(): Long? = unitAmount
 
+        /**
+         * The cost per unit of the product or service that this line item is for, specified in the
+         * invoice currency's smallest unit. Accepts decimal strings with up to 12 decimals
+         */
+        @JsonProperty("unit_amount_decimal") fun unitAmountDecimal(): String? = unitAmountDecimal
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -122,6 +133,7 @@ constructor(
                 this.name == other.name &&
                 this.quantity == other.quantity &&
                 this.unitAmount == other.unitAmount &&
+                this.unitAmountDecimal == other.unitAmountDecimal &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -134,6 +146,7 @@ constructor(
                         name,
                         quantity,
                         unitAmount,
+                        unitAmountDecimal,
                         additionalProperties,
                     )
             }
@@ -141,7 +154,7 @@ constructor(
         }
 
         override fun toString() =
-            "InvoiceLineItemUpdateBody{description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+            "InvoiceLineItemUpdateBody{description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -155,6 +168,7 @@ constructor(
             private var name: String? = null
             private var quantity: Long? = null
             private var unitAmount: Long? = null
+            private var unitAmountDecimal: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -164,6 +178,7 @@ constructor(
                 this.name = invoiceLineItemUpdateBody.name
                 this.quantity = invoiceLineItemUpdateBody.quantity
                 this.unitAmount = invoiceLineItemUpdateBody.unitAmount
+                this.unitAmountDecimal = invoiceLineItemUpdateBody.unitAmountDecimal
                 additionalProperties(invoiceLineItemUpdateBody.additionalProperties)
             }
 
@@ -196,6 +211,15 @@ constructor(
             @JsonProperty("unit_amount")
             fun unitAmount(unitAmount: Long) = apply { this.unitAmount = unitAmount }
 
+            /**
+             * The cost per unit of the product or service that this line item is for, specified in
+             * the invoice currency's smallest unit. Accepts decimal strings with up to 12 decimals
+             */
+            @JsonProperty("unit_amount_decimal")
+            fun unitAmountDecimal(unitAmountDecimal: String) = apply {
+                this.unitAmountDecimal = unitAmountDecimal
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -217,6 +241,7 @@ constructor(
                     name,
                     quantity,
                     unitAmount,
+                    unitAmountDecimal,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -241,6 +266,7 @@ constructor(
             this.name == other.name &&
             this.quantity == other.quantity &&
             this.unitAmount == other.unitAmount &&
+            this.unitAmountDecimal == other.unitAmountDecimal &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -255,6 +281,7 @@ constructor(
             name,
             quantity,
             unitAmount,
+            unitAmountDecimal,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -262,7 +289,7 @@ constructor(
     }
 
     override fun toString() =
-        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -281,6 +308,7 @@ constructor(
         private var name: String? = null
         private var quantity: Long? = null
         private var unitAmount: Long? = null
+        private var unitAmountDecimal: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -294,6 +322,7 @@ constructor(
             this.name = invoiceLineItemUpdateParams.name
             this.quantity = invoiceLineItemUpdateParams.quantity
             this.unitAmount = invoiceLineItemUpdateParams.unitAmount
+            this.unitAmountDecimal = invoiceLineItemUpdateParams.unitAmountDecimal
             additionalQueryParams(invoiceLineItemUpdateParams.additionalQueryParams)
             additionalHeaders(invoiceLineItemUpdateParams.additionalHeaders)
             additionalBodyProperties(invoiceLineItemUpdateParams.additionalBodyProperties)
@@ -327,6 +356,14 @@ constructor(
          * invoice currency's smallest unit.
          */
         fun unitAmount(unitAmount: Long) = apply { this.unitAmount = unitAmount }
+
+        /**
+         * The cost per unit of the product or service that this line item is for, specified in the
+         * invoice currency's smallest unit. Accepts decimal strings with up to 12 decimals
+         */
+        fun unitAmountDecimal(unitAmountDecimal: String) = apply {
+            this.unitAmountDecimal = unitAmountDecimal
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -391,6 +428,7 @@ constructor(
                 name,
                 quantity,
                 unitAmount,
+                unitAmountDecimal,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
