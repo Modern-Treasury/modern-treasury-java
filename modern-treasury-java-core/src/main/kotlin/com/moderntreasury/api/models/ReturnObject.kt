@@ -1421,6 +1421,16 @@ private constructor(
                 val SILVERGATE_PAYMENT_ID =
                     ReferenceNumberType(JsonField.of("silvergate_payment_id"))
 
+                @JvmField
+                val SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW =
+                    ReferenceNumberType(
+                        JsonField.of("svb_transaction_cleared_for_sanctions_review")
+                    )
+
+                @JvmField
+                val SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW =
+                    ReferenceNumberType(JsonField.of("svb_transaction_held_for_sanctions_review"))
+
                 @JvmField val SWIFT_MIR = ReferenceNumberType(JsonField.of("swift_mir"))
 
                 @JvmField val SWIFT_UETR = ReferenceNumberType(JsonField.of("swift_uetr"))
@@ -1490,6 +1500,8 @@ private constructor(
                 SIGNET_CONFIRMATION_ID,
                 SIGNET_REQUEST_ID,
                 SILVERGATE_PAYMENT_ID,
+                SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW,
+                SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW,
                 SWIFT_MIR,
                 SWIFT_UETR,
                 USBANK_PAYMENT_ID,
@@ -1548,6 +1560,8 @@ private constructor(
                 SIGNET_CONFIRMATION_ID,
                 SIGNET_REQUEST_ID,
                 SILVERGATE_PAYMENT_ID,
+                SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW,
+                SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW,
                 SWIFT_MIR,
                 SWIFT_UETR,
                 USBANK_PAYMENT_ID,
@@ -1608,6 +1622,10 @@ private constructor(
                     SIGNET_CONFIRMATION_ID -> Value.SIGNET_CONFIRMATION_ID
                     SIGNET_REQUEST_ID -> Value.SIGNET_REQUEST_ID
                     SILVERGATE_PAYMENT_ID -> Value.SILVERGATE_PAYMENT_ID
+                    SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW ->
+                        Value.SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW
+                    SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW ->
+                        Value.SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW
                     SWIFT_MIR -> Value.SWIFT_MIR
                     SWIFT_UETR -> Value.SWIFT_UETR
                     USBANK_PAYMENT_ID -> Value.USBANK_PAYMENT_ID
@@ -1668,6 +1686,10 @@ private constructor(
                     SIGNET_CONFIRMATION_ID -> Known.SIGNET_CONFIRMATION_ID
                     SIGNET_REQUEST_ID -> Known.SIGNET_REQUEST_ID
                     SILVERGATE_PAYMENT_ID -> Known.SILVERGATE_PAYMENT_ID
+                    SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW ->
+                        Known.SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW
+                    SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW ->
+                        Known.SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW
                     SWIFT_MIR -> Known.SWIFT_MIR
                     SWIFT_UETR -> Known.SWIFT_UETR
                     USBANK_PAYMENT_ID -> Known.USBANK_PAYMENT_ID
