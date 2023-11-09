@@ -1609,6 +1609,8 @@ constructor(
 
             @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
 
+            @JvmField val DK_NETS = PaymentType(JsonField.of("dk_nets"))
+
             @JvmField val EFT = PaymentType(JsonField.of("eft"))
 
             @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
@@ -1653,6 +1655,7 @@ constructor(
             CHATS,
             CHECK,
             CROSS_BORDER,
+            DK_NETS,
             EFT,
             INTERAC,
             MASAV,
@@ -1680,6 +1683,7 @@ constructor(
             CHATS,
             CHECK,
             CROSS_BORDER,
+            DK_NETS,
             EFT,
             INTERAC,
             MASAV,
@@ -1709,6 +1713,7 @@ constructor(
                 CHATS -> Value.CHATS
                 CHECK -> Value.CHECK
                 CROSS_BORDER -> Value.CROSS_BORDER
+                DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
@@ -1738,6 +1743,7 @@ constructor(
                 CHATS -> Known.CHATS
                 CHECK -> Known.CHECK
                 CROSS_BORDER -> Known.CROSS_BORDER
+                DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
