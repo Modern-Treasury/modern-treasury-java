@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.3.0 (2023-11-10)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* **api:** add dk_interbank_clearing_code and dk_nets enum members ([#90](https://github.com/Modern-Treasury/modern-treasury-java/issues/90)) ([173b9b7](https://github.com/Modern-Treasury/modern-treasury-java/commit/173b9b7d244c80942448dca09871ff7b0f910d4a))
+* **api:** updates ([#88](https://github.com/Modern-Treasury/modern-treasury-java/issues/88)) ([182f78c](https://github.com/Modern-Treasury/modern-treasury-java/commit/182f78c8f84bc46f9d5226832638ccab70363706))
+
+
+### Chores
+
+* **internal:** skip bulk requests tests ([#91](https://github.com/Modern-Treasury/modern-treasury-java/issues/91)) ([c55ffca](https://github.com/Modern-Treasury/modern-treasury-java/commit/c55ffcae3b008ccedfc0687d87b8c5272ed94b50))
+
 ## 2.2.0 (2023-11-05)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.1.0...v2.2.0)
