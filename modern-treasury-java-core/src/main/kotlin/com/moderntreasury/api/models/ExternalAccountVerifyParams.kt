@@ -370,6 +370,8 @@ constructor(
 
             @JvmField val EFT = PaymentType(JsonField.of("eft"))
 
+            @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+
             @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
 
             @JvmField val MASAV = PaymentType(JsonField.of("masav"))
@@ -381,6 +383,8 @@ constructor(
             @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
 
             @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+
+            @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
 
             @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
@@ -414,12 +418,14 @@ constructor(
             CROSS_BORDER,
             DK_NETS,
             EFT,
+            HU_ICS,
             INTERAC,
             MASAV,
             NEFT,
             NICS,
             NZ_BECS,
             PROVXCHANGE,
+            RO_SENT,
             RTP,
             SE_BANKGIROT,
             SEN,
@@ -442,12 +448,14 @@ constructor(
             CROSS_BORDER,
             DK_NETS,
             EFT,
+            HU_ICS,
             INTERAC,
             MASAV,
             NEFT,
             NICS,
             NZ_BECS,
             PROVXCHANGE,
+            RO_SENT,
             RTP,
             SE_BANKGIROT,
             SEN,
@@ -472,12 +480,14 @@ constructor(
                 CROSS_BORDER -> Value.CROSS_BORDER
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
+                HU_ICS -> Value.HU_ICS
                 INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
                 NZ_BECS -> Value.NZ_BECS
                 PROVXCHANGE -> Value.PROVXCHANGE
+                RO_SENT -> Value.RO_SENT
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
                 SEN -> Value.SEN
@@ -502,12 +512,14 @@ constructor(
                 CROSS_BORDER -> Known.CROSS_BORDER
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
+                HU_ICS -> Known.HU_ICS
                 INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
                 NZ_BECS -> Known.NZ_BECS
                 PROVXCHANGE -> Known.PROVXCHANGE
+                RO_SENT -> Known.RO_SENT
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
                 SEN -> Known.SEN
