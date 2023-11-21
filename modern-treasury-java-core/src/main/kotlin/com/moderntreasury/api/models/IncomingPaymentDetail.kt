@@ -992,6 +992,10 @@ private constructor(
             val HK_INTERBANK_CLEARING_CODE =
                 OriginatingRoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
 
+            @JvmField
+            val HU_INTERBANK_CLEARING_CODE =
+                OriginatingRoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
+
             @JvmField val IN_IFSC = OriginatingRoutingNumberType(JsonField.of("in_ifsc"))
 
             @JvmField
@@ -1023,6 +1027,7 @@ private constructor(
             DK_INTERBANK_CLEARING_CODE,
             GB_SORT_CODE,
             HK_INTERBANK_CLEARING_CODE,
+            HU_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
@@ -1041,6 +1046,7 @@ private constructor(
             DK_INTERBANK_CLEARING_CODE,
             GB_SORT_CODE,
             HK_INTERBANK_CLEARING_CODE,
+            HU_INTERBANK_CLEARING_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
@@ -1061,6 +1067,7 @@ private constructor(
                 DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                 GB_SORT_CODE -> Value.GB_SORT_CODE
                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Value.IN_IFSC
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
@@ -1081,6 +1088,7 @@ private constructor(
                 DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                 GB_SORT_CODE -> Known.GB_SORT_CODE
                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                 IN_IFSC -> Known.IN_IFSC
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
