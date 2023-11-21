@@ -483,7 +483,7 @@ constructor(
     @JsonSerialize(using = Resource.Serializer::class)
     class Resource
     private constructor(
-        private val paymentOrderCreateRequest: PaymentOrderCreateRequest? = null,
+        private val paymentOrderAsyncCreateRequest: PaymentOrderAsyncCreateRequest? = null,
         private val expectedPaymentCreateRequest: ExpectedPaymentCreateRequest? = null,
         private val ledgerTransactionCreateRequest: LedgerTransactionCreateRequest? = null,
         private val paymentOrderUpdateRequestWithId: PaymentOrderUpdateRequestWithId? = null,
@@ -495,8 +495,8 @@ constructor(
 
         private var validated: Boolean = false
 
-        fun paymentOrderCreateRequest(): Optional<PaymentOrderCreateRequest> =
-            Optional.ofNullable(paymentOrderCreateRequest)
+        fun paymentOrderAsyncCreateRequest(): Optional<PaymentOrderAsyncCreateRequest> =
+            Optional.ofNullable(paymentOrderAsyncCreateRequest)
         fun expectedPaymentCreateRequest(): Optional<ExpectedPaymentCreateRequest> =
             Optional.ofNullable(expectedPaymentCreateRequest)
         fun ledgerTransactionCreateRequest(): Optional<LedgerTransactionCreateRequest> =
@@ -508,7 +508,7 @@ constructor(
         fun ledgerTransactionUpdateRequestWithId(): Optional<LedgerTransactionUpdateRequestWithId> =
             Optional.ofNullable(ledgerTransactionUpdateRequestWithId)
 
-        fun isPaymentOrderCreateRequest(): Boolean = paymentOrderCreateRequest != null
+        fun isPaymentOrderAsyncCreateRequest(): Boolean = paymentOrderAsyncCreateRequest != null
         fun isExpectedPaymentCreateRequest(): Boolean = expectedPaymentCreateRequest != null
         fun isLedgerTransactionCreateRequest(): Boolean = ledgerTransactionCreateRequest != null
         fun isPaymentOrderUpdateRequestWithId(): Boolean = paymentOrderUpdateRequestWithId != null
@@ -517,8 +517,8 @@ constructor(
         fun isLedgerTransactionUpdateRequestWithId(): Boolean =
             ledgerTransactionUpdateRequestWithId != null
 
-        fun asPaymentOrderCreateRequest(): PaymentOrderCreateRequest =
-            paymentOrderCreateRequest.getOrThrow("paymentOrderCreateRequest")
+        fun asPaymentOrderAsyncCreateRequest(): PaymentOrderAsyncCreateRequest =
+            paymentOrderAsyncCreateRequest.getOrThrow("paymentOrderAsyncCreateRequest")
         fun asExpectedPaymentCreateRequest(): ExpectedPaymentCreateRequest =
             expectedPaymentCreateRequest.getOrThrow("expectedPaymentCreateRequest")
         fun asLedgerTransactionCreateRequest(): LedgerTransactionCreateRequest =
@@ -534,8 +534,8 @@ constructor(
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                paymentOrderCreateRequest != null ->
-                    visitor.visitPaymentOrderCreateRequest(paymentOrderCreateRequest)
+                paymentOrderAsyncCreateRequest != null ->
+                    visitor.visitPaymentOrderAsyncCreateRequest(paymentOrderAsyncCreateRequest)
                 expectedPaymentCreateRequest != null ->
                     visitor.visitExpectedPaymentCreateRequest(expectedPaymentCreateRequest)
                 ledgerTransactionCreateRequest != null ->
@@ -557,7 +557,7 @@ constructor(
         fun validate(): Resource = apply {
             if (!validated) {
                 if (
-                    paymentOrderCreateRequest == null &&
+                    paymentOrderAsyncCreateRequest == null &&
                         expectedPaymentCreateRequest == null &&
                         ledgerTransactionCreateRequest == null &&
                         paymentOrderUpdateRequestWithId == null &&
@@ -566,7 +566,7 @@ constructor(
                 ) {
                     throw ModernTreasuryInvalidDataException("Unknown Resource: $_json")
                 }
-                paymentOrderCreateRequest?.validate()
+                paymentOrderAsyncCreateRequest?.validate()
                 expectedPaymentCreateRequest?.validate()
                 ledgerTransactionCreateRequest?.validate()
                 paymentOrderUpdateRequestWithId?.validate()
@@ -582,7 +582,7 @@ constructor(
             }
 
             return other is Resource &&
-                this.paymentOrderCreateRequest == other.paymentOrderCreateRequest &&
+                this.paymentOrderAsyncCreateRequest == other.paymentOrderAsyncCreateRequest &&
                 this.expectedPaymentCreateRequest == other.expectedPaymentCreateRequest &&
                 this.ledgerTransactionCreateRequest == other.ledgerTransactionCreateRequest &&
                 this.paymentOrderUpdateRequestWithId == other.paymentOrderUpdateRequestWithId &&
@@ -594,7 +594,7 @@ constructor(
 
         override fun hashCode(): Int {
             return Objects.hash(
-                paymentOrderCreateRequest,
+                paymentOrderAsyncCreateRequest,
                 expectedPaymentCreateRequest,
                 ledgerTransactionCreateRequest,
                 paymentOrderUpdateRequestWithId,
@@ -605,8 +605,8 @@ constructor(
 
         override fun toString(): String {
             return when {
-                paymentOrderCreateRequest != null ->
-                    "Resource{paymentOrderCreateRequest=$paymentOrderCreateRequest}"
+                paymentOrderAsyncCreateRequest != null ->
+                    "Resource{paymentOrderAsyncCreateRequest=$paymentOrderAsyncCreateRequest}"
                 expectedPaymentCreateRequest != null ->
                     "Resource{expectedPaymentCreateRequest=$expectedPaymentCreateRequest}"
                 ledgerTransactionCreateRequest != null ->
@@ -625,8 +625,9 @@ constructor(
         companion object {
 
             @JvmStatic
-            fun ofPaymentOrderCreateRequest(paymentOrderCreateRequest: PaymentOrderCreateRequest) =
-                Resource(paymentOrderCreateRequest = paymentOrderCreateRequest)
+            fun ofPaymentOrderAsyncCreateRequest(
+                paymentOrderAsyncCreateRequest: PaymentOrderAsyncCreateRequest
+            ) = Resource(paymentOrderAsyncCreateRequest = paymentOrderAsyncCreateRequest)
 
             @JvmStatic
             fun ofExpectedPaymentCreateRequest(
@@ -659,8 +660,8 @@ constructor(
 
         interface Visitor<out T> {
 
-            fun visitPaymentOrderCreateRequest(
-                paymentOrderCreateRequest: PaymentOrderCreateRequest
+            fun visitPaymentOrderAsyncCreateRequest(
+                paymentOrderAsyncCreateRequest: PaymentOrderAsyncCreateRequest
             ): T
 
             fun visitExpectedPaymentCreateRequest(
@@ -692,9 +693,11 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): Resource {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<PaymentOrderCreateRequest>()) { it.validate() }
+                tryDeserialize(node, jacksonTypeRef<PaymentOrderAsyncCreateRequest>()) {
+                        it.validate()
+                    }
                     ?.let {
-                        return Resource(paymentOrderCreateRequest = it, _json = json)
+                        return Resource(paymentOrderAsyncCreateRequest = it, _json = json)
                     }
                 tryDeserialize(node, jacksonTypeRef<ExpectedPaymentCreateRequest>()) {
                         it.validate()
@@ -739,8 +742,8 @@ constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.paymentOrderCreateRequest != null ->
-                        generator.writeObject(value.paymentOrderCreateRequest)
+                    value.paymentOrderAsyncCreateRequest != null ->
+                        generator.writeObject(value.paymentOrderAsyncCreateRequest)
                     value.expectedPaymentCreateRequest != null ->
                         generator.writeObject(value.expectedPaymentCreateRequest)
                     value.ledgerTransactionCreateRequest != null ->
@@ -757,9 +760,9 @@ constructor(
             }
         }
 
-        @JsonDeserialize(builder = PaymentOrderCreateRequest.Builder::class)
+        @JsonDeserialize(builder = PaymentOrderAsyncCreateRequest.Builder::class)
         @NoAutoDetect
-        class PaymentOrderCreateRequest
+        class PaymentOrderAsyncCreateRequest
         private constructor(
             private val type: JsonField<PaymentOrderType>,
             private val subtype: JsonField<PaymentOrderSubtype>,
@@ -795,7 +798,6 @@ constructor(
             private val ledgerTransactionId: JsonField<String>,
             private val lineItems: JsonField<List<LineItemRequest>>,
             private val transactionMonitoringEnabled: JsonField<Boolean>,
-            private val documents: JsonField<List<DocumentCreateRequest>>,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
@@ -1049,13 +1051,6 @@ constructor(
                 )
 
             /**
-             * An array of documents to be attached to the payment order. Note that if you attach
-             * documents, the request's content type must be `multipart/form-data`.
-             */
-            fun documents(): Optional<List<DocumentCreateRequest>> =
-                Optional.ofNullable(documents.getNullable("documents"))
-
-            /**
              * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
@@ -1286,17 +1281,11 @@ constructor(
             @ExcludeMissing
             fun _transactionMonitoringEnabled() = transactionMonitoringEnabled
 
-            /**
-             * An array of documents to be attached to the payment order. Note that if you attach
-             * documents, the request's content type must be `multipart/form-data`.
-             */
-            @JsonProperty("documents") @ExcludeMissing fun _documents() = documents
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-            fun validate(): PaymentOrderCreateRequest = apply {
+            fun validate(): PaymentOrderAsyncCreateRequest = apply {
                 if (!validated) {
                     type()
                     subtype()
@@ -1332,7 +1321,6 @@ constructor(
                     ledgerTransactionId()
                     lineItems().map { it.forEach { it.validate() } }
                     transactionMonitoringEnabled()
-                    documents().map { it.forEach { it.validate() } }
                     validated = true
                 }
             }
@@ -1344,7 +1332,7 @@ constructor(
                     return true
                 }
 
-                return other is PaymentOrderCreateRequest &&
+                return other is PaymentOrderAsyncCreateRequest &&
                     this.type == other.type &&
                     this.subtype == other.subtype &&
                     this.amount == other.amount &&
@@ -1381,7 +1369,6 @@ constructor(
                     this.ledgerTransactionId == other.ledgerTransactionId &&
                     this.lineItems == other.lineItems &&
                     this.transactionMonitoringEnabled == other.transactionMonitoringEnabled &&
-                    this.documents == other.documents &&
                     this.additionalProperties == other.additionalProperties
             }
 
@@ -1423,7 +1410,6 @@ constructor(
                             ledgerTransactionId,
                             lineItems,
                             transactionMonitoringEnabled,
-                            documents,
                             additionalProperties,
                         )
                 }
@@ -1431,7 +1417,7 @@ constructor(
             }
 
             override fun toString() =
-                "PaymentOrderCreateRequest{type=$type, subtype=$subtype, amount=$amount, direction=$direction, priority=$priority, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, currency=$currency, effectiveDate=$effectiveDate, description=$description, statementDescriptor=$statementDescriptor, remittanceInformation=$remittanceInformation, purpose=$purpose, metadata=$metadata, chargeBearer=$chargeBearer, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeContract=$foreignExchangeContract, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, sendRemittanceAdvice=$sendRemittanceAdvice, expiresAt=$expiresAt, fallbackType=$fallbackType, receivingAccount=$receivingAccount, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, transactionMonitoringEnabled=$transactionMonitoringEnabled, documents=$documents, additionalProperties=$additionalProperties}"
+                "PaymentOrderAsyncCreateRequest{type=$type, subtype=$subtype, amount=$amount, direction=$direction, priority=$priority, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, currency=$currency, effectiveDate=$effectiveDate, description=$description, statementDescriptor=$statementDescriptor, remittanceInformation=$remittanceInformation, purpose=$purpose, metadata=$metadata, chargeBearer=$chargeBearer, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeContract=$foreignExchangeContract, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, sendRemittanceAdvice=$sendRemittanceAdvice, expiresAt=$expiresAt, fallbackType=$fallbackType, receivingAccount=$receivingAccount, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, transactionMonitoringEnabled=$transactionMonitoringEnabled, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1476,54 +1462,62 @@ constructor(
                 private var ledgerTransactionId: JsonField<String> = JsonMissing.of()
                 private var lineItems: JsonField<List<LineItemRequest>> = JsonMissing.of()
                 private var transactionMonitoringEnabled: JsonField<Boolean> = JsonMissing.of()
-                private var documents: JsonField<List<DocumentCreateRequest>> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
-                internal fun from(paymentOrderCreateRequest: PaymentOrderCreateRequest) = apply {
-                    this.type = paymentOrderCreateRequest.type
-                    this.subtype = paymentOrderCreateRequest.subtype
-                    this.amount = paymentOrderCreateRequest.amount
-                    this.direction = paymentOrderCreateRequest.direction
-                    this.priority = paymentOrderCreateRequest.priority
-                    this.originatingAccountId = paymentOrderCreateRequest.originatingAccountId
-                    this.receivingAccountId = paymentOrderCreateRequest.receivingAccountId
-                    this.accounting = paymentOrderCreateRequest.accounting
-                    this.accountingCategoryId = paymentOrderCreateRequest.accountingCategoryId
-                    this.accountingLedgerClassId = paymentOrderCreateRequest.accountingLedgerClassId
-                    this.currency = paymentOrderCreateRequest.currency
-                    this.effectiveDate = paymentOrderCreateRequest.effectiveDate
-                    this.description = paymentOrderCreateRequest.description
-                    this.statementDescriptor = paymentOrderCreateRequest.statementDescriptor
-                    this.remittanceInformation = paymentOrderCreateRequest.remittanceInformation
-                    this.purpose = paymentOrderCreateRequest.purpose
-                    this.metadata = paymentOrderCreateRequest.metadata
-                    this.chargeBearer = paymentOrderCreateRequest.chargeBearer
-                    this.foreignExchangeIndicator =
-                        paymentOrderCreateRequest.foreignExchangeIndicator
-                    this.foreignExchangeContract = paymentOrderCreateRequest.foreignExchangeContract
-                    this.nsfProtected = paymentOrderCreateRequest.nsfProtected
-                    this.originatingPartyName = paymentOrderCreateRequest.originatingPartyName
-                    this.ultimateOriginatingPartyName =
-                        paymentOrderCreateRequest.ultimateOriginatingPartyName
-                    this.ultimateOriginatingPartyIdentifier =
-                        paymentOrderCreateRequest.ultimateOriginatingPartyIdentifier
-                    this.ultimateReceivingPartyName =
-                        paymentOrderCreateRequest.ultimateReceivingPartyName
-                    this.ultimateReceivingPartyIdentifier =
-                        paymentOrderCreateRequest.ultimateReceivingPartyIdentifier
-                    this.sendRemittanceAdvice = paymentOrderCreateRequest.sendRemittanceAdvice
-                    this.expiresAt = paymentOrderCreateRequest.expiresAt
-                    this.fallbackType = paymentOrderCreateRequest.fallbackType
-                    this.receivingAccount = paymentOrderCreateRequest.receivingAccount
-                    this.ledgerTransaction = paymentOrderCreateRequest.ledgerTransaction
-                    this.ledgerTransactionId = paymentOrderCreateRequest.ledgerTransactionId
-                    this.lineItems = paymentOrderCreateRequest.lineItems
-                    this.transactionMonitoringEnabled =
-                        paymentOrderCreateRequest.transactionMonitoringEnabled
-                    this.documents = paymentOrderCreateRequest.documents
-                    additionalProperties(paymentOrderCreateRequest.additionalProperties)
-                }
+                internal fun from(paymentOrderAsyncCreateRequest: PaymentOrderAsyncCreateRequest) =
+                    apply {
+                        this.type = paymentOrderAsyncCreateRequest.type
+                        this.subtype = paymentOrderAsyncCreateRequest.subtype
+                        this.amount = paymentOrderAsyncCreateRequest.amount
+                        this.direction = paymentOrderAsyncCreateRequest.direction
+                        this.priority = paymentOrderAsyncCreateRequest.priority
+                        this.originatingAccountId =
+                            paymentOrderAsyncCreateRequest.originatingAccountId
+                        this.receivingAccountId = paymentOrderAsyncCreateRequest.receivingAccountId
+                        this.accounting = paymentOrderAsyncCreateRequest.accounting
+                        this.accountingCategoryId =
+                            paymentOrderAsyncCreateRequest.accountingCategoryId
+                        this.accountingLedgerClassId =
+                            paymentOrderAsyncCreateRequest.accountingLedgerClassId
+                        this.currency = paymentOrderAsyncCreateRequest.currency
+                        this.effectiveDate = paymentOrderAsyncCreateRequest.effectiveDate
+                        this.description = paymentOrderAsyncCreateRequest.description
+                        this.statementDescriptor =
+                            paymentOrderAsyncCreateRequest.statementDescriptor
+                        this.remittanceInformation =
+                            paymentOrderAsyncCreateRequest.remittanceInformation
+                        this.purpose = paymentOrderAsyncCreateRequest.purpose
+                        this.metadata = paymentOrderAsyncCreateRequest.metadata
+                        this.chargeBearer = paymentOrderAsyncCreateRequest.chargeBearer
+                        this.foreignExchangeIndicator =
+                            paymentOrderAsyncCreateRequest.foreignExchangeIndicator
+                        this.foreignExchangeContract =
+                            paymentOrderAsyncCreateRequest.foreignExchangeContract
+                        this.nsfProtected = paymentOrderAsyncCreateRequest.nsfProtected
+                        this.originatingPartyName =
+                            paymentOrderAsyncCreateRequest.originatingPartyName
+                        this.ultimateOriginatingPartyName =
+                            paymentOrderAsyncCreateRequest.ultimateOriginatingPartyName
+                        this.ultimateOriginatingPartyIdentifier =
+                            paymentOrderAsyncCreateRequest.ultimateOriginatingPartyIdentifier
+                        this.ultimateReceivingPartyName =
+                            paymentOrderAsyncCreateRequest.ultimateReceivingPartyName
+                        this.ultimateReceivingPartyIdentifier =
+                            paymentOrderAsyncCreateRequest.ultimateReceivingPartyIdentifier
+                        this.sendRemittanceAdvice =
+                            paymentOrderAsyncCreateRequest.sendRemittanceAdvice
+                        this.expiresAt = paymentOrderAsyncCreateRequest.expiresAt
+                        this.fallbackType = paymentOrderAsyncCreateRequest.fallbackType
+                        this.receivingAccount = paymentOrderAsyncCreateRequest.receivingAccount
+                        this.ledgerTransaction = paymentOrderAsyncCreateRequest.ledgerTransaction
+                        this.ledgerTransactionId =
+                            paymentOrderAsyncCreateRequest.ledgerTransactionId
+                        this.lineItems = paymentOrderAsyncCreateRequest.lineItems
+                        this.transactionMonitoringEnabled =
+                            paymentOrderAsyncCreateRequest.transactionMonitoringEnabled
+                        additionalProperties(paymentOrderAsyncCreateRequest.additionalProperties)
+                    }
 
                 /**
                  * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
@@ -2077,23 +2071,6 @@ constructor(
                         this.transactionMonitoringEnabled = transactionMonitoringEnabled
                     }
 
-                /**
-                 * An array of documents to be attached to the payment order. Note that if you
-                 * attach documents, the request's content type must be `multipart/form-data`.
-                 */
-                fun documents(documents: List<DocumentCreateRequest>) =
-                    documents(JsonField.of(documents))
-
-                /**
-                 * An array of documents to be attached to the payment order. Note that if you
-                 * attach documents, the request's content type must be `multipart/form-data`.
-                 */
-                @JsonProperty("documents")
-                @ExcludeMissing
-                fun documents(documents: JsonField<List<DocumentCreateRequest>>) = apply {
-                    this.documents = documents
-                }
-
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     this.additionalProperties.putAll(additionalProperties)
@@ -2109,8 +2086,8 @@ constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): PaymentOrderCreateRequest =
-                    PaymentOrderCreateRequest(
+                fun build(): PaymentOrderAsyncCreateRequest =
+                    PaymentOrderAsyncCreateRequest(
                         type,
                         subtype,
                         amount,
@@ -2145,7 +2122,6 @@ constructor(
                         ledgerTransactionId,
                         lineItems.map { it.toUnmodifiable() },
                         transactionMonitoringEnabled,
-                        documents.map { it.toUnmodifiable() },
                         additionalProperties.toUnmodifiable(),
                     )
             }
@@ -2425,307 +2401,6 @@ constructor(
                     }
 
                 fun asString(): String = _value().asStringOrThrow()
-            }
-
-            @JsonDeserialize(builder = DocumentCreateRequest.Builder::class)
-            @NoAutoDetect
-            class DocumentCreateRequest
-            private constructor(
-                private val documentableId: JsonField<String>,
-                private val documentableType: JsonField<DocumentableType>,
-                private val documentType: JsonField<String>,
-                private val file: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
-            ) {
-
-                private var validated: Boolean = false
-
-                private var hashCode: Int = 0
-
-                /** The unique identifier for the associated object. */
-                fun documentableId(): String = documentableId.getRequired("documentable_id")
-
-                fun documentableType(): DocumentableType =
-                    documentableType.getRequired("documentable_type")
-
-                /** A category given to the document, can be `null`. */
-                fun documentType(): Optional<String> =
-                    Optional.ofNullable(documentType.getNullable("document_type"))
-
-                fun file(): String = file.getRequired("file")
-
-                /** The unique identifier for the associated object. */
-                @JsonProperty("documentable_id")
-                @ExcludeMissing
-                fun _documentableId() = documentableId
-
-                @JsonProperty("documentable_type")
-                @ExcludeMissing
-                fun _documentableType() = documentableType
-
-                /** A category given to the document, can be `null`. */
-                @JsonProperty("document_type") @ExcludeMissing fun _documentType() = documentType
-
-                @JsonProperty("file") @ExcludeMissing fun _file() = file
-
-                @JsonAnyGetter
-                @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                fun validate(): DocumentCreateRequest = apply {
-                    if (!validated) {
-                        documentableId()
-                        documentableType()
-                        documentType()
-                        file()
-                        validated = true
-                    }
-                }
-
-                fun toBuilder() = Builder().from(this)
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is DocumentCreateRequest &&
-                        this.documentableId == other.documentableId &&
-                        this.documentableType == other.documentableType &&
-                        this.documentType == other.documentType &&
-                        this.file == other.file &&
-                        this.additionalProperties == other.additionalProperties
-                }
-
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode =
-                            Objects.hash(
-                                documentableId,
-                                documentableType,
-                                documentType,
-                                file,
-                                additionalProperties,
-                            )
-                    }
-                    return hashCode
-                }
-
-                override fun toString() =
-                    "DocumentCreateRequest{documentableId=$documentableId, documentableType=$documentableType, documentType=$documentType, file=$file, additionalProperties=$additionalProperties}"
-
-                companion object {
-
-                    @JvmStatic fun builder() = Builder()
-                }
-
-                class Builder {
-
-                    private var documentableId: JsonField<String> = JsonMissing.of()
-                    private var documentableType: JsonField<DocumentableType> = JsonMissing.of()
-                    private var documentType: JsonField<String> = JsonMissing.of()
-                    private var file: JsonField<String> = JsonMissing.of()
-                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                    @JvmSynthetic
-                    internal fun from(documentCreateRequest: DocumentCreateRequest) = apply {
-                        this.documentableId = documentCreateRequest.documentableId
-                        this.documentableType = documentCreateRequest.documentableType
-                        this.documentType = documentCreateRequest.documentType
-                        this.file = documentCreateRequest.file
-                        additionalProperties(documentCreateRequest.additionalProperties)
-                    }
-
-                    /** The unique identifier for the associated object. */
-                    fun documentableId(documentableId: String) =
-                        documentableId(JsonField.of(documentableId))
-
-                    /** The unique identifier for the associated object. */
-                    @JsonProperty("documentable_id")
-                    @ExcludeMissing
-                    fun documentableId(documentableId: JsonField<String>) = apply {
-                        this.documentableId = documentableId
-                    }
-
-                    fun documentableType(documentableType: DocumentableType) =
-                        documentableType(JsonField.of(documentableType))
-
-                    @JsonProperty("documentable_type")
-                    @ExcludeMissing
-                    fun documentableType(documentableType: JsonField<DocumentableType>) = apply {
-                        this.documentableType = documentableType
-                    }
-
-                    /** A category given to the document, can be `null`. */
-                    fun documentType(documentType: String) =
-                        documentType(JsonField.of(documentType))
-
-                    /** A category given to the document, can be `null`. */
-                    @JsonProperty("document_type")
-                    @ExcludeMissing
-                    fun documentType(documentType: JsonField<String>) = apply {
-                        this.documentType = documentType
-                    }
-
-                    fun file(file: String) = file(JsonField.of(file))
-
-                    @JsonProperty("file")
-                    @ExcludeMissing
-                    fun file(file: JsonField<String>) = apply { this.file = file }
-
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                        this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                    @JsonAnySetter
-                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
-                    }
-
-                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.putAll(additionalProperties)
-                        }
-
-                    fun build(): DocumentCreateRequest =
-                        DocumentCreateRequest(
-                            documentableId,
-                            documentableType,
-                            documentType,
-                            file,
-                            additionalProperties.toUnmodifiable(),
-                        )
-                }
-
-                class DocumentableType
-                @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) {
-
-                    @com.fasterxml.jackson.annotation.JsonValue
-                    fun _value(): JsonField<String> = value
-
-                    override fun equals(other: Any?): Boolean {
-                        if (this === other) {
-                            return true
-                        }
-
-                        return other is DocumentableType && this.value == other.value
-                    }
-
-                    override fun hashCode() = value.hashCode()
-
-                    override fun toString() = value.toString()
-
-                    companion object {
-
-                        @JvmField val CASES = DocumentableType(JsonField.of("cases"))
-
-                        @JvmField
-                        val COUNTERPARTIES = DocumentableType(JsonField.of("counterparties"))
-
-                        @JvmField
-                        val EXPECTED_PAYMENTS = DocumentableType(JsonField.of("expected_payments"))
-
-                        @JvmField
-                        val EXTERNAL_ACCOUNTS = DocumentableType(JsonField.of("external_accounts"))
-
-                        @JvmField
-                        val INCOMING_PAYMENT_DETAILS =
-                            DocumentableType(JsonField.of("incoming_payment_details"))
-
-                        @JvmField
-                        val INTERNAL_ACCOUNTS = DocumentableType(JsonField.of("internal_accounts"))
-
-                        @JvmField
-                        val ORGANIZATIONS = DocumentableType(JsonField.of("organizations"))
-
-                        @JvmField val PAPER_ITEMS = DocumentableType(JsonField.of("paper_items"))
-
-                        @JvmField
-                        val PAYMENT_ORDERS = DocumentableType(JsonField.of("payment_orders"))
-
-                        @JvmField val TRANSACTIONS = DocumentableType(JsonField.of("transactions"))
-
-                        @JvmField val DECISIONS = DocumentableType(JsonField.of("decisions"))
-
-                        @JvmField val CONNECTIONS = DocumentableType(JsonField.of("connections"))
-
-                        @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
-                    }
-
-                    enum class Known {
-                        CASES,
-                        COUNTERPARTIES,
-                        EXPECTED_PAYMENTS,
-                        EXTERNAL_ACCOUNTS,
-                        INCOMING_PAYMENT_DETAILS,
-                        INTERNAL_ACCOUNTS,
-                        ORGANIZATIONS,
-                        PAPER_ITEMS,
-                        PAYMENT_ORDERS,
-                        TRANSACTIONS,
-                        DECISIONS,
-                        CONNECTIONS,
-                    }
-
-                    enum class Value {
-                        CASES,
-                        COUNTERPARTIES,
-                        EXPECTED_PAYMENTS,
-                        EXTERNAL_ACCOUNTS,
-                        INCOMING_PAYMENT_DETAILS,
-                        INTERNAL_ACCOUNTS,
-                        ORGANIZATIONS,
-                        PAPER_ITEMS,
-                        PAYMENT_ORDERS,
-                        TRANSACTIONS,
-                        DECISIONS,
-                        CONNECTIONS,
-                        _UNKNOWN,
-                    }
-
-                    fun value(): Value =
-                        when (this) {
-                            CASES -> Value.CASES
-                            COUNTERPARTIES -> Value.COUNTERPARTIES
-                            EXPECTED_PAYMENTS -> Value.EXPECTED_PAYMENTS
-                            EXTERNAL_ACCOUNTS -> Value.EXTERNAL_ACCOUNTS
-                            INCOMING_PAYMENT_DETAILS -> Value.INCOMING_PAYMENT_DETAILS
-                            INTERNAL_ACCOUNTS -> Value.INTERNAL_ACCOUNTS
-                            ORGANIZATIONS -> Value.ORGANIZATIONS
-                            PAPER_ITEMS -> Value.PAPER_ITEMS
-                            PAYMENT_ORDERS -> Value.PAYMENT_ORDERS
-                            TRANSACTIONS -> Value.TRANSACTIONS
-                            DECISIONS -> Value.DECISIONS
-                            CONNECTIONS -> Value.CONNECTIONS
-                            else -> Value._UNKNOWN
-                        }
-
-                    fun known(): Known =
-                        when (this) {
-                            CASES -> Known.CASES
-                            COUNTERPARTIES -> Known.COUNTERPARTIES
-                            EXPECTED_PAYMENTS -> Known.EXPECTED_PAYMENTS
-                            EXTERNAL_ACCOUNTS -> Known.EXTERNAL_ACCOUNTS
-                            INCOMING_PAYMENT_DETAILS -> Known.INCOMING_PAYMENT_DETAILS
-                            INTERNAL_ACCOUNTS -> Known.INTERNAL_ACCOUNTS
-                            ORGANIZATIONS -> Known.ORGANIZATIONS
-                            PAPER_ITEMS -> Known.PAPER_ITEMS
-                            PAYMENT_ORDERS -> Known.PAYMENT_ORDERS
-                            TRANSACTIONS -> Known.TRANSACTIONS
-                            DECISIONS -> Known.DECISIONS
-                            CONNECTIONS -> Known.CONNECTIONS
-                            else ->
-                                throw ModernTreasuryInvalidDataException(
-                                    "Unknown DocumentableType: $value"
-                                )
-                        }
-
-                    fun asString(): String = _value().asStringOrThrow()
-                }
             }
 
             class FallbackType
@@ -6592,10 +6267,6 @@ constructor(
 
                             @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
 
-                            @JvmField
-                            val SE_BANKGIRO_CLEARING_CODE =
-                                RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
-
                             @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
 
                             @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
@@ -6615,7 +6286,14 @@ constructor(
                             val HK_INTERBANK_CLEARING_CODE =
                                 RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
 
+                            @JvmField
+                            val HU_INTERBANK_CLEARING_CODE =
+                                RoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
+
                             @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
+
+                            @JvmField
+                            val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
 
                             @JvmField
                             val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
@@ -6624,10 +6302,11 @@ constructor(
                             val NZ_NATIONAL_CLEARING_CODE =
                                 RoutingNumberType(JsonField.of("nz_national_clearing_code"))
 
-                            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
-
                             @JvmField
-                            val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
+                            val SE_BANKGIRO_CLEARING_CODE =
+                                RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
+
+                            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
 
                             @JvmStatic
                             fun of(value: String) = RoutingNumberType(JsonField.of(value))
@@ -6636,7 +6315,6 @@ constructor(
                         enum class Known {
                             ABA,
                             AU_BSB,
-                            SE_BANKGIRO_CLEARING_CODE,
                             BR_CODIGO,
                             CA_CPA,
                             CHIPS,
@@ -6644,17 +6322,18 @@ constructor(
                             DK_INTERBANK_CLEARING_CODE,
                             GB_SORT_CODE,
                             HK_INTERBANK_CLEARING_CODE,
+                            HU_INTERBANK_CLEARING_CODE,
                             IN_IFSC,
+                            JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
                             NZ_NATIONAL_CLEARING_CODE,
+                            SE_BANKGIRO_CLEARING_CODE,
                             SWIFT,
-                            JP_ZENGIN_CODE,
                         }
 
                         enum class Value {
                             ABA,
                             AU_BSB,
-                            SE_BANKGIRO_CLEARING_CODE,
                             BR_CODIGO,
                             CA_CPA,
                             CHIPS,
@@ -6662,11 +6341,13 @@ constructor(
                             DK_INTERBANK_CLEARING_CODE,
                             GB_SORT_CODE,
                             HK_INTERBANK_CLEARING_CODE,
+                            HU_INTERBANK_CLEARING_CODE,
                             IN_IFSC,
+                            JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
                             NZ_NATIONAL_CLEARING_CODE,
+                            SE_BANKGIRO_CLEARING_CODE,
                             SWIFT,
-                            JP_ZENGIN_CODE,
                             _UNKNOWN,
                         }
 
@@ -6674,7 +6355,6 @@ constructor(
                             when (this) {
                                 ABA -> Value.ABA
                                 AU_BSB -> Value.AU_BSB
-                                SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                                 BR_CODIGO -> Value.BR_CODIGO
                                 CA_CPA -> Value.CA_CPA
                                 CHIPS -> Value.CHIPS
@@ -6682,11 +6362,13 @@ constructor(
                                 DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                                 GB_SORT_CODE -> Value.GB_SORT_CODE
                                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                                HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                                 IN_IFSC -> Value.IN_IFSC
+                                JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
                                 NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
+                                SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                                 SWIFT -> Value.SWIFT
-                                JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 else -> Value._UNKNOWN
                             }
 
@@ -6694,7 +6376,6 @@ constructor(
                             when (this) {
                                 ABA -> Known.ABA
                                 AU_BSB -> Known.AU_BSB
-                                SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                                 BR_CODIGO -> Known.BR_CODIGO
                                 CA_CPA -> Known.CA_CPA
                                 CHIPS -> Known.CHIPS
@@ -6702,11 +6383,13 @@ constructor(
                                 DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                                 GB_SORT_CODE -> Known.GB_SORT_CODE
                                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                                HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                                 IN_IFSC -> Known.IN_IFSC
+                                JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
                                 NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
+                                SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                                 SWIFT -> Known.SWIFT
-                                JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 else ->
                                     throw ModernTreasuryInvalidDataException(
                                         "Unknown RoutingNumberType: $value"
@@ -6759,6 +6442,8 @@ constructor(
 
                             @JvmField val EFT = PaymentType(JsonField.of("eft"))
 
+                            @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+
                             @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
 
                             @JvmField val MASAV = PaymentType(JsonField.of("masav"))
@@ -6770,6 +6455,8 @@ constructor(
                             @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
 
                             @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+
+                            @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
 
                             @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
@@ -6803,12 +6490,14 @@ constructor(
                             CROSS_BORDER,
                             DK_NETS,
                             EFT,
+                            HU_ICS,
                             INTERAC,
                             MASAV,
                             NEFT,
                             NICS,
                             NZ_BECS,
                             PROVXCHANGE,
+                            RO_SENT,
                             RTP,
                             SG_GIRO,
                             SE_BANKGIROT,
@@ -6831,12 +6520,14 @@ constructor(
                             CROSS_BORDER,
                             DK_NETS,
                             EFT,
+                            HU_ICS,
                             INTERAC,
                             MASAV,
                             NEFT,
                             NICS,
                             NZ_BECS,
                             PROVXCHANGE,
+                            RO_SENT,
                             RTP,
                             SG_GIRO,
                             SE_BANKGIROT,
@@ -6861,12 +6552,14 @@ constructor(
                                 CROSS_BORDER -> Value.CROSS_BORDER
                                 DK_NETS -> Value.DK_NETS
                                 EFT -> Value.EFT
+                                HU_ICS -> Value.HU_ICS
                                 INTERAC -> Value.INTERAC
                                 MASAV -> Value.MASAV
                                 NEFT -> Value.NEFT
                                 NICS -> Value.NICS
                                 NZ_BECS -> Value.NZ_BECS
                                 PROVXCHANGE -> Value.PROVXCHANGE
+                                RO_SENT -> Value.RO_SENT
                                 RTP -> Value.RTP
                                 SG_GIRO -> Value.SG_GIRO
                                 SE_BANKGIROT -> Value.SE_BANKGIROT
@@ -6891,12 +6584,14 @@ constructor(
                                 CROSS_BORDER -> Known.CROSS_BORDER
                                 DK_NETS -> Known.DK_NETS
                                 EFT -> Known.EFT
+                                HU_ICS -> Known.HU_ICS
                                 INTERAC -> Known.INTERAC
                                 MASAV -> Known.MASAV
                                 NEFT -> Known.NEFT
                                 NICS -> Known.NICS
                                 NZ_BECS -> Known.NZ_BECS
                                 PROVXCHANGE -> Known.PROVXCHANGE
+                                RO_SENT -> Known.RO_SENT
                                 RTP -> Known.RTP
                                 SG_GIRO -> Known.SG_GIRO
                                 SE_BANKGIROT -> Known.SE_BANKGIROT
@@ -13347,10 +13042,6 @@ constructor(
 
                             @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
 
-                            @JvmField
-                            val SE_BANKGIRO_CLEARING_CODE =
-                                RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
-
                             @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
 
                             @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
@@ -13370,7 +13061,14 @@ constructor(
                             val HK_INTERBANK_CLEARING_CODE =
                                 RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
 
+                            @JvmField
+                            val HU_INTERBANK_CLEARING_CODE =
+                                RoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
+
                             @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
+
+                            @JvmField
+                            val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
 
                             @JvmField
                             val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
@@ -13379,10 +13077,11 @@ constructor(
                             val NZ_NATIONAL_CLEARING_CODE =
                                 RoutingNumberType(JsonField.of("nz_national_clearing_code"))
 
-                            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
-
                             @JvmField
-                            val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
+                            val SE_BANKGIRO_CLEARING_CODE =
+                                RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
+
+                            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
 
                             @JvmStatic
                             fun of(value: String) = RoutingNumberType(JsonField.of(value))
@@ -13391,7 +13090,6 @@ constructor(
                         enum class Known {
                             ABA,
                             AU_BSB,
-                            SE_BANKGIRO_CLEARING_CODE,
                             BR_CODIGO,
                             CA_CPA,
                             CHIPS,
@@ -13399,17 +13097,18 @@ constructor(
                             DK_INTERBANK_CLEARING_CODE,
                             GB_SORT_CODE,
                             HK_INTERBANK_CLEARING_CODE,
+                            HU_INTERBANK_CLEARING_CODE,
                             IN_IFSC,
+                            JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
                             NZ_NATIONAL_CLEARING_CODE,
+                            SE_BANKGIRO_CLEARING_CODE,
                             SWIFT,
-                            JP_ZENGIN_CODE,
                         }
 
                         enum class Value {
                             ABA,
                             AU_BSB,
-                            SE_BANKGIRO_CLEARING_CODE,
                             BR_CODIGO,
                             CA_CPA,
                             CHIPS,
@@ -13417,11 +13116,13 @@ constructor(
                             DK_INTERBANK_CLEARING_CODE,
                             GB_SORT_CODE,
                             HK_INTERBANK_CLEARING_CODE,
+                            HU_INTERBANK_CLEARING_CODE,
                             IN_IFSC,
+                            JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
                             NZ_NATIONAL_CLEARING_CODE,
+                            SE_BANKGIRO_CLEARING_CODE,
                             SWIFT,
-                            JP_ZENGIN_CODE,
                             _UNKNOWN,
                         }
 
@@ -13429,7 +13130,6 @@ constructor(
                             when (this) {
                                 ABA -> Value.ABA
                                 AU_BSB -> Value.AU_BSB
-                                SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                                 BR_CODIGO -> Value.BR_CODIGO
                                 CA_CPA -> Value.CA_CPA
                                 CHIPS -> Value.CHIPS
@@ -13437,11 +13137,13 @@ constructor(
                                 DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                                 GB_SORT_CODE -> Value.GB_SORT_CODE
                                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                                HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                                 IN_IFSC -> Value.IN_IFSC
+                                JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
                                 NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
+                                SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                                 SWIFT -> Value.SWIFT
-                                JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 else -> Value._UNKNOWN
                             }
 
@@ -13449,7 +13151,6 @@ constructor(
                             when (this) {
                                 ABA -> Known.ABA
                                 AU_BSB -> Known.AU_BSB
-                                SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                                 BR_CODIGO -> Known.BR_CODIGO
                                 CA_CPA -> Known.CA_CPA
                                 CHIPS -> Known.CHIPS
@@ -13457,11 +13158,13 @@ constructor(
                                 DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                                 GB_SORT_CODE -> Known.GB_SORT_CODE
                                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                                HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                                 IN_IFSC -> Known.IN_IFSC
+                                JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
                                 NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
+                                SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                                 SWIFT -> Known.SWIFT
-                                JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 else ->
                                     throw ModernTreasuryInvalidDataException(
                                         "Unknown RoutingNumberType: $value"
@@ -13514,6 +13217,8 @@ constructor(
 
                             @JvmField val EFT = PaymentType(JsonField.of("eft"))
 
+                            @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+
                             @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
 
                             @JvmField val MASAV = PaymentType(JsonField.of("masav"))
@@ -13525,6 +13230,8 @@ constructor(
                             @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
 
                             @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+
+                            @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
 
                             @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
@@ -13558,12 +13265,14 @@ constructor(
                             CROSS_BORDER,
                             DK_NETS,
                             EFT,
+                            HU_ICS,
                             INTERAC,
                             MASAV,
                             NEFT,
                             NICS,
                             NZ_BECS,
                             PROVXCHANGE,
+                            RO_SENT,
                             RTP,
                             SG_GIRO,
                             SE_BANKGIROT,
@@ -13586,12 +13295,14 @@ constructor(
                             CROSS_BORDER,
                             DK_NETS,
                             EFT,
+                            HU_ICS,
                             INTERAC,
                             MASAV,
                             NEFT,
                             NICS,
                             NZ_BECS,
                             PROVXCHANGE,
+                            RO_SENT,
                             RTP,
                             SG_GIRO,
                             SE_BANKGIROT,
@@ -13616,12 +13327,14 @@ constructor(
                                 CROSS_BORDER -> Value.CROSS_BORDER
                                 DK_NETS -> Value.DK_NETS
                                 EFT -> Value.EFT
+                                HU_ICS -> Value.HU_ICS
                                 INTERAC -> Value.INTERAC
                                 MASAV -> Value.MASAV
                                 NEFT -> Value.NEFT
                                 NICS -> Value.NICS
                                 NZ_BECS -> Value.NZ_BECS
                                 PROVXCHANGE -> Value.PROVXCHANGE
+                                RO_SENT -> Value.RO_SENT
                                 RTP -> Value.RTP
                                 SG_GIRO -> Value.SG_GIRO
                                 SE_BANKGIROT -> Value.SE_BANKGIROT
@@ -13646,12 +13359,14 @@ constructor(
                                 CROSS_BORDER -> Known.CROSS_BORDER
                                 DK_NETS -> Known.DK_NETS
                                 EFT -> Known.EFT
+                                HU_ICS -> Known.HU_ICS
                                 INTERAC -> Known.INTERAC
                                 MASAV -> Known.MASAV
                                 NEFT -> Known.NEFT
                                 NICS -> Known.NICS
                                 NZ_BECS -> Known.NZ_BECS
                                 PROVXCHANGE -> Known.PROVXCHANGE
+                                RO_SENT -> Known.RO_SENT
                                 RTP -> Known.RTP
                                 SG_GIRO -> Known.SG_GIRO
                                 SE_BANKGIROT -> Known.SE_BANKGIROT

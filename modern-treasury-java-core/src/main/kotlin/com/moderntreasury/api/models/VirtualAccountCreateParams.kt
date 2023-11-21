@@ -940,6 +940,10 @@ constructor(
                 val HK_INTERBANK_CLEARING_CODE =
                     RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
 
+                @JvmField
+                val HU_INTERBANK_CLEARING_CODE =
+                    RoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
+
                 @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
 
                 @JvmField val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
@@ -969,6 +973,7 @@ constructor(
                 DK_INTERBANK_CLEARING_CODE,
                 GB_SORT_CODE,
                 HK_INTERBANK_CLEARING_CODE,
+                HU_INTERBANK_CLEARING_CODE,
                 IN_IFSC,
                 JP_ZENGIN_CODE,
                 MY_BRANCH_CODE,
@@ -987,6 +992,7 @@ constructor(
                 DK_INTERBANK_CLEARING_CODE,
                 GB_SORT_CODE,
                 HK_INTERBANK_CLEARING_CODE,
+                HU_INTERBANK_CLEARING_CODE,
                 IN_IFSC,
                 JP_ZENGIN_CODE,
                 MY_BRANCH_CODE,
@@ -1007,6 +1013,7 @@ constructor(
                     DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                     GB_SORT_CODE -> Value.GB_SORT_CODE
                     HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                    HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                     IN_IFSC -> Value.IN_IFSC
                     JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                     MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
@@ -1027,6 +1034,7 @@ constructor(
                     DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                     GB_SORT_CODE -> Known.GB_SORT_CODE
                     HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                    HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                     IN_IFSC -> Known.IN_IFSC
                     JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                     MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
@@ -1084,6 +1092,8 @@ constructor(
 
                 @JvmField val EFT = PaymentType(JsonField.of("eft"))
 
+                @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+
                 @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
 
                 @JvmField val MASAV = PaymentType(JsonField.of("masav"))
@@ -1095,6 +1105,8 @@ constructor(
                 @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
 
                 @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+
+                @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
 
                 @JvmField val RTP = PaymentType(JsonField.of("rtp"))
 
@@ -1128,12 +1140,14 @@ constructor(
                 CROSS_BORDER,
                 DK_NETS,
                 EFT,
+                HU_ICS,
                 INTERAC,
                 MASAV,
                 NEFT,
                 NICS,
                 NZ_BECS,
                 PROVXCHANGE,
+                RO_SENT,
                 RTP,
                 SE_BANKGIROT,
                 SEN,
@@ -1156,12 +1170,14 @@ constructor(
                 CROSS_BORDER,
                 DK_NETS,
                 EFT,
+                HU_ICS,
                 INTERAC,
                 MASAV,
                 NEFT,
                 NICS,
                 NZ_BECS,
                 PROVXCHANGE,
+                RO_SENT,
                 RTP,
                 SE_BANKGIROT,
                 SEN,
@@ -1186,12 +1202,14 @@ constructor(
                     CROSS_BORDER -> Value.CROSS_BORDER
                     DK_NETS -> Value.DK_NETS
                     EFT -> Value.EFT
+                    HU_ICS -> Value.HU_ICS
                     INTERAC -> Value.INTERAC
                     MASAV -> Value.MASAV
                     NEFT -> Value.NEFT
                     NICS -> Value.NICS
                     NZ_BECS -> Value.NZ_BECS
                     PROVXCHANGE -> Value.PROVXCHANGE
+                    RO_SENT -> Value.RO_SENT
                     RTP -> Value.RTP
                     SE_BANKGIROT -> Value.SE_BANKGIROT
                     SEN -> Value.SEN
@@ -1216,12 +1234,14 @@ constructor(
                     CROSS_BORDER -> Known.CROSS_BORDER
                     DK_NETS -> Known.DK_NETS
                     EFT -> Known.EFT
+                    HU_ICS -> Known.HU_ICS
                     INTERAC -> Known.INTERAC
                     MASAV -> Known.MASAV
                     NEFT -> Known.NEFT
                     NICS -> Known.NICS
                     NZ_BECS -> Known.NZ_BECS
                     PROVXCHANGE -> Known.PROVXCHANGE
+                    RO_SENT -> Known.RO_SENT
                     RTP -> Known.RTP
                     SE_BANKGIROT -> Known.SE_BANKGIROT
                     SEN -> Known.SEN
