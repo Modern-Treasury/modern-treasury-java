@@ -893,6 +893,8 @@ private constructor(
 
             @JvmField val CLABE = OriginatingAccountNumberType(JsonField.of("clabe"))
 
+            @JvmField val HK_NUMBER = OriginatingAccountNumberType(JsonField.of("hk_number"))
+
             @JvmField val IBAN = OriginatingAccountNumberType(JsonField.of("iban"))
 
             @JvmField val OTHER = OriginatingAccountNumberType(JsonField.of("other"))
@@ -907,6 +909,7 @@ private constructor(
 
         enum class Known {
             CLABE,
+            HK_NUMBER,
             IBAN,
             OTHER,
             PAN,
@@ -915,6 +918,7 @@ private constructor(
 
         enum class Value {
             CLABE,
+            HK_NUMBER,
             IBAN,
             OTHER,
             PAN,
@@ -925,6 +929,7 @@ private constructor(
         fun value(): Value =
             when (this) {
                 CLABE -> Value.CLABE
+                HK_NUMBER -> Value.HK_NUMBER
                 IBAN -> Value.IBAN
                 OTHER -> Value.OTHER
                 PAN -> Value.PAN
@@ -935,6 +940,7 @@ private constructor(
         fun known(): Known =
             when (this) {
                 CLABE -> Known.CLABE
+                HK_NUMBER -> Known.HK_NUMBER
                 IBAN -> Known.IBAN
                 OTHER -> Known.OTHER
                 PAN -> Known.PAN
@@ -996,6 +1002,9 @@ private constructor(
             val HU_INTERBANK_CLEARING_CODE =
                 OriginatingRoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
 
+            @JvmField
+            val ID_SKNBI_CODE = OriginatingRoutingNumberType(JsonField.of("id_sknbi_code"))
+
             @JvmField val IN_IFSC = OriginatingRoutingNumberType(JsonField.of("in_ifsc"))
 
             @JvmField
@@ -1007,6 +1016,10 @@ private constructor(
             @JvmField
             val NZ_NATIONAL_CLEARING_CODE =
                 OriginatingRoutingNumberType(JsonField.of("nz_national_clearing_code"))
+
+            @JvmField
+            val PL_NATIONAL_CLEARING_CODE =
+                OriginatingRoutingNumberType(JsonField.of("pl_national_clearing_code"))
 
             @JvmField
             val SE_BANKGIRO_CLEARING_CODE =
@@ -1028,10 +1041,12 @@ private constructor(
             GB_SORT_CODE,
             HK_INTERBANK_CLEARING_CODE,
             HU_INTERBANK_CLEARING_CODE,
+            ID_SKNBI_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
             NZ_NATIONAL_CLEARING_CODE,
+            PL_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
         }
@@ -1047,10 +1062,12 @@ private constructor(
             GB_SORT_CODE,
             HK_INTERBANK_CLEARING_CODE,
             HU_INTERBANK_CLEARING_CODE,
+            ID_SKNBI_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MY_BRANCH_CODE,
             NZ_NATIONAL_CLEARING_CODE,
+            PL_NATIONAL_CLEARING_CODE,
             SE_BANKGIRO_CLEARING_CODE,
             SWIFT,
             _UNKNOWN,
@@ -1068,10 +1085,12 @@ private constructor(
                 GB_SORT_CODE -> Value.GB_SORT_CODE
                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                 HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
+                ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
                 IN_IFSC -> Value.IN_IFSC
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
                 NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
+                PL_NATIONAL_CLEARING_CODE -> Value.PL_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Value.SWIFT
                 else -> Value._UNKNOWN
@@ -1089,10 +1108,12 @@ private constructor(
                 GB_SORT_CODE -> Known.GB_SORT_CODE
                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                 HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
+                ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
                 IN_IFSC -> Known.IN_IFSC
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
                 NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
+                PL_NATIONAL_CLEARING_CODE -> Known.PL_NATIONAL_CLEARING_CODE
                 SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                 SWIFT -> Known.SWIFT
                 else ->

@@ -9,6 +9,7 @@ import com.moderntreasury.api.models.LedgerEntry
 import com.moderntreasury.api.models.LedgerEntryListPage
 import com.moderntreasury.api.models.LedgerEntryListParams
 import com.moderntreasury.api.models.LedgerEntryRetrieveParams
+import com.moderntreasury.api.models.LedgerEntryUpdateParams
 
 interface LedgerEntryService {
 
@@ -16,6 +17,13 @@ interface LedgerEntryService {
     @JvmOverloads
     fun retrieve(
         params: LedgerEntryRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): LedgerEntry
+
+    /** Update the details of a ledger entry. */
+    @JvmOverloads
+    fun update(
+        params: LedgerEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): LedgerEntry
 
