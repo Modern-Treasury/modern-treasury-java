@@ -8,36 +8,68 @@ import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.errors.ModernTreasuryError
-import com.moderntreasury.api.models.LedgerEntry
-import com.moderntreasury.api.models.LedgerEntryListPageAsync
-import com.moderntreasury.api.models.LedgerEntryListParams
-import com.moderntreasury.api.models.LedgerEntryRetrieveParams
-import com.moderntreasury.api.models.LedgerEntryUpdateParams
+import com.moderntreasury.api.models.LedgerAccountSettlement
+import com.moderntreasury.api.models.LedgerAccountSettlementCreateParams
+import com.moderntreasury.api.models.LedgerAccountSettlementListPageAsync
+import com.moderntreasury.api.models.LedgerAccountSettlementListParams
+import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
+import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import com.moderntreasury.api.services.errorHandler
 import com.moderntreasury.api.services.json
 import com.moderntreasury.api.services.jsonHandler
 import com.moderntreasury.api.services.withErrorHandler
 import java.util.concurrent.CompletableFuture
 
-class LedgerEntryServiceAsyncImpl
+class LedgerAccountSettlementServiceAsyncImpl
 constructor(
     private val clientOptions: ClientOptions,
-) : LedgerEntryServiceAsync {
+) : LedgerAccountSettlementServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
-    private val retrieveHandler: Handler<LedgerEntry> =
-        jsonHandler<LedgerEntry>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<LedgerAccountSettlement> =
+        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
-    /** Get details on a single ledger entry. */
-    override fun retrieve(
-        params: LedgerEntryRetrieveParams,
+    /** Create a ledger account settlement. */
+    override fun create(
+        params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEntry> {
+    ): CompletableFuture<LedgerAccountSettlement> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments("api", "ledger_account_settlements")
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
+            ->
+            response
+                .use { createHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val retrieveHandler: Handler<LedgerAccountSettlement> =
+        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /** Get details on a single ledger account settlement. */
+    override fun retrieve(
+        params: LedgerAccountSettlementRetrieveParams,
+        requestOptions: RequestOptions
+    ): CompletableFuture<LedgerAccountSettlement> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
-                .addPathSegments("api", "ledger_entries", params.getPathParam(0))
+                .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -54,18 +86,19 @@ constructor(
         }
     }
 
-    private val updateHandler: Handler<LedgerEntry> =
-        jsonHandler<LedgerEntry>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateHandler: Handler<LedgerAccountSettlement> =
+        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
-    /** Update the details of a ledger entry. */
+    /** Update the details of a ledger account settlement. */
     override fun update(
-        params: LedgerEntryUpdateParams,
+        params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEntry> {
+    ): CompletableFuture<LedgerAccountSettlement> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.PATCH)
-                .addPathSegments("api", "ledger_entries", params.getPathParam(0))
+                .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -83,18 +116,19 @@ constructor(
         }
     }
 
-    private val listHandler: Handler<List<LedgerEntry>> =
-        jsonHandler<List<LedgerEntry>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<List<LedgerAccountSettlement>> =
+        jsonHandler<List<LedgerAccountSettlement>>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
-    /** Get a list of all ledger entries. */
+    /** Get a list of ledger account settlements. */
     override fun list(
-        params: LedgerEntryListParams,
+        params: LedgerAccountSettlementListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<LedgerEntryListPageAsync> {
+    ): CompletableFuture<LedgerAccountSettlementListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
-                .addPathSegments("api", "ledger_entries")
+                .addPathSegments("api", "ledger_account_settlements")
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -109,13 +143,13 @@ constructor(
                     }
                 }
                 .let {
-                    LedgerEntryListPageAsync.Response.Builder()
+                    LedgerAccountSettlementListPageAsync.Response.Builder()
                         .items(it)
                         .perPage(response.headers()["X-Per-Page"].getOrNull(0) ?: "")
                         .afterCursor(response.headers()["X-After-Cursor"].getOrNull(0) ?: "")
                         .build()
                 }
-                .let { LedgerEntryListPageAsync.of(this, params, it) }
+                .let { LedgerAccountSettlementListPageAsync.of(this, params, it) }
         }
     }
 }

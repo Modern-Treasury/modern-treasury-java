@@ -9,6 +9,7 @@ import com.moderntreasury.api.models.LedgerEntry
 import com.moderntreasury.api.models.LedgerEntryListPageAsync
 import com.moderntreasury.api.models.LedgerEntryListParams
 import com.moderntreasury.api.models.LedgerEntryRetrieveParams
+import com.moderntreasury.api.models.LedgerEntryUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface LedgerEntryServiceAsync {
@@ -17,6 +18,13 @@ interface LedgerEntryServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: LedgerEntryRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<LedgerEntry>
+
+    /** Update the details of a ledger entry. */
+    @JvmOverloads
+    fun update(
+        params: LedgerEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<LedgerEntry>
 
