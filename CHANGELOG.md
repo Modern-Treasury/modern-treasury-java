@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.5.0 (2024-01-02)
+
+Full Changelog: [v2.4.1...v2.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.4.1...v2.5.0)
+
+### Features
+
+* **api:** remove reversed and reversing ledger account status type ([#100](https://github.com/Modern-Treasury/modern-treasury-java/issues/100)) ([a2f1741](https://github.com/Modern-Treasury/modern-treasury-java/commit/a2f17417def36960ca1fe764548bfd8735793be4))
+* **api:** updates ([#98](https://github.com/Modern-Treasury/modern-treasury-java/issues/98)) ([73a5e98](https://github.com/Modern-Treasury/modern-treasury-java/commit/73a5e984d8f0aa2b49a1d82b1ac5fe83488ccd38))
+
+
+### Chores
+
+* **ci:** run release workflow once per day ([#99](https://github.com/Modern-Treasury/modern-treasury-java/issues/99)) ([b28ec42](https://github.com/Modern-Treasury/modern-treasury-java/commit/b28ec42120cc2b11c2827e34226cb36c45211ca5))
+* **internal:** bump license ([#101](https://github.com/Modern-Treasury/modern-treasury-java/issues/101)) ([9b3ad31](https://github.com/Modern-Treasury/modern-treasury-java/commit/9b3ad3139042c09c85898e4d6b4504e0f269e151))
+
 ## 2.4.1 (2023-12-04)
 
 Full Changelog: [v2.4.0...v2.4.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.4.0...v2.4.1)
