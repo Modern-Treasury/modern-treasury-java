@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.0 (2024-01-08)
+
+Full Changelog: [v2.5.0...v2.6.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.5.0...v2.6.0)
+
+### Features
+
+* **api:** add `ledger_transactions` to expected payment request ([#102](https://github.com/Modern-Treasury/modern-treasury-java/issues/102)) ([2b419a8](https://github.com/Modern-Treasury/modern-treasury-java/commit/2b419a8402eaab4cd37e59c382f4df3a33cfb0e3))
+
 ## 2.5.0 (2024-01-02)
 
 Full Changelog: [v2.4.1...v2.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.4.1...v2.5.0)
