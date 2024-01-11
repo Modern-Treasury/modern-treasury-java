@@ -30,7 +30,9 @@ constructor(
     private val description: String?,
     private val dueDate: OffsetDateTime?,
     private val fallbackPaymentMethod: String?,
+    private val ingestLedgerEntries: Boolean?,
     private val invoicerAddress: InvoicerAddress?,
+    private val ledgerAccountSettlementId: String?,
     private val notificationEmailAddresses: List<String>?,
     private val notificationsEnabled: Boolean?,
     private val originatingAccountId: String?,
@@ -67,7 +69,12 @@ constructor(
 
     fun fallbackPaymentMethod(): Optional<String> = Optional.ofNullable(fallbackPaymentMethod)
 
+    fun ingestLedgerEntries(): Optional<Boolean> = Optional.ofNullable(ingestLedgerEntries)
+
     fun invoicerAddress(): Optional<InvoicerAddress> = Optional.ofNullable(invoicerAddress)
+
+    fun ledgerAccountSettlementId(): Optional<String> =
+        Optional.ofNullable(ledgerAccountSettlementId)
 
     fun notificationEmailAddresses(): Optional<List<String>> =
         Optional.ofNullable(notificationEmailAddresses)
@@ -103,7 +110,9 @@ constructor(
             description,
             dueDate,
             fallbackPaymentMethod,
+            ingestLedgerEntries,
             invoicerAddress,
+            ledgerAccountSettlementId,
             notificationEmailAddresses,
             notificationsEnabled,
             originatingAccountId,
@@ -142,7 +151,9 @@ constructor(
         private val description: String?,
         private val dueDate: OffsetDateTime?,
         private val fallbackPaymentMethod: String?,
+        private val ingestLedgerEntries: Boolean?,
         private val invoicerAddress: InvoicerAddress?,
+        private val ledgerAccountSettlementId: String?,
         private val notificationEmailAddresses: List<String>?,
         private val notificationsEnabled: Boolean?,
         private val originatingAccountId: String?,
@@ -190,8 +201,20 @@ constructor(
         @JsonProperty("fallback_payment_method")
         fun fallbackPaymentMethod(): String? = fallbackPaymentMethod
 
+        /**
+         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
+         * false, then a line item must be provided. If this is true, line_items must be empty.
+         * Ignored if ledger_account_settlement_id is empty.
+         */
+        @JsonProperty("ingest_ledger_entries")
+        fun ingestLedgerEntries(): Boolean? = ingestLedgerEntries
+
         /** The invoice issuer's business address. */
         @JsonProperty("invoicer_address") fun invoicerAddress(): InvoicerAddress? = invoicerAddress
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        @JsonProperty("ledger_account_settlement_id")
+        fun ledgerAccountSettlementId(): String? = ledgerAccountSettlementId
 
         /**
          * Emails in addition to the counterparty email to send invoice status notifications to. At
@@ -282,7 +305,9 @@ constructor(
                 this.description == other.description &&
                 this.dueDate == other.dueDate &&
                 this.fallbackPaymentMethod == other.fallbackPaymentMethod &&
+                this.ingestLedgerEntries == other.ingestLedgerEntries &&
                 this.invoicerAddress == other.invoicerAddress &&
+                this.ledgerAccountSettlementId == other.ledgerAccountSettlementId &&
                 this.notificationEmailAddresses == other.notificationEmailAddresses &&
                 this.notificationsEnabled == other.notificationsEnabled &&
                 this.originatingAccountId == other.originatingAccountId &&
@@ -309,7 +334,9 @@ constructor(
                         description,
                         dueDate,
                         fallbackPaymentMethod,
+                        ingestLedgerEntries,
                         invoicerAddress,
+                        ledgerAccountSettlementId,
                         notificationEmailAddresses,
                         notificationsEnabled,
                         originatingAccountId,
@@ -328,7 +355,7 @@ constructor(
         }
 
         override fun toString() =
-            "InvoiceUpdateBody{contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyId=$counterpartyId, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, fallbackPaymentMethod=$fallbackPaymentMethod, invoicerAddress=$invoicerAddress, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, originatingAccountId=$originatingAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, status=$status, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "InvoiceUpdateBody{contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyId=$counterpartyId, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, fallbackPaymentMethod=$fallbackPaymentMethod, ingestLedgerEntries=$ingestLedgerEntries, invoicerAddress=$invoicerAddress, ledgerAccountSettlementId=$ledgerAccountSettlementId, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, originatingAccountId=$originatingAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, status=$status, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -345,7 +372,9 @@ constructor(
             private var description: String? = null
             private var dueDate: OffsetDateTime? = null
             private var fallbackPaymentMethod: String? = null
+            private var ingestLedgerEntries: Boolean? = null
             private var invoicerAddress: InvoicerAddress? = null
+            private var ledgerAccountSettlementId: String? = null
             private var notificationEmailAddresses: List<String>? = null
             private var notificationsEnabled: Boolean? = null
             private var originatingAccountId: String? = null
@@ -369,7 +398,9 @@ constructor(
                 this.description = invoiceUpdateBody.description
                 this.dueDate = invoiceUpdateBody.dueDate
                 this.fallbackPaymentMethod = invoiceUpdateBody.fallbackPaymentMethod
+                this.ingestLedgerEntries = invoiceUpdateBody.ingestLedgerEntries
                 this.invoicerAddress = invoiceUpdateBody.invoicerAddress
+                this.ledgerAccountSettlementId = invoiceUpdateBody.ledgerAccountSettlementId
                 this.notificationEmailAddresses = invoiceUpdateBody.notificationEmailAddresses
                 this.notificationsEnabled = invoiceUpdateBody.notificationsEnabled
                 this.originatingAccountId = invoiceUpdateBody.originatingAccountId
@@ -430,10 +461,26 @@ constructor(
                 this.fallbackPaymentMethod = fallbackPaymentMethod
             }
 
+            /**
+             * Whether to ingest the ledger_entries to populate the invoice line items. If this is
+             * false, then a line item must be provided. If this is true, line_items must be empty.
+             * Ignored if ledger_account_settlement_id is empty.
+             */
+            @JsonProperty("ingest_ledger_entries")
+            fun ingestLedgerEntries(ingestLedgerEntries: Boolean) = apply {
+                this.ingestLedgerEntries = ingestLedgerEntries
+            }
+
             /** The invoice issuer's business address. */
             @JsonProperty("invoicer_address")
             fun invoicerAddress(invoicerAddress: InvoicerAddress) = apply {
                 this.invoicerAddress = invoicerAddress
+            }
+
+            /** The ID of the virtual account the invoice should be paid to. */
+            @JsonProperty("ledger_account_settlement_id")
+            fun ledgerAccountSettlementId(ledgerAccountSettlementId: String) = apply {
+                this.ledgerAccountSettlementId = ledgerAccountSettlementId
             }
 
             /**
@@ -551,7 +598,9 @@ constructor(
                     description,
                     dueDate,
                     fallbackPaymentMethod,
+                    ingestLedgerEntries,
                     invoicerAddress,
+                    ledgerAccountSettlementId,
                     notificationEmailAddresses?.toUnmodifiable(),
                     notificationsEnabled,
                     originatingAccountId,
@@ -589,7 +638,9 @@ constructor(
             this.description == other.description &&
             this.dueDate == other.dueDate &&
             this.fallbackPaymentMethod == other.fallbackPaymentMethod &&
+            this.ingestLedgerEntries == other.ingestLedgerEntries &&
             this.invoicerAddress == other.invoicerAddress &&
+            this.ledgerAccountSettlementId == other.ledgerAccountSettlementId &&
             this.notificationEmailAddresses == other.notificationEmailAddresses &&
             this.notificationsEnabled == other.notificationsEnabled &&
             this.originatingAccountId == other.originatingAccountId &&
@@ -617,7 +668,9 @@ constructor(
             description,
             dueDate,
             fallbackPaymentMethod,
+            ingestLedgerEntries,
             invoicerAddress,
+            ledgerAccountSettlementId,
             notificationEmailAddresses,
             notificationsEnabled,
             originatingAccountId,
@@ -636,7 +689,7 @@ constructor(
     }
 
     override fun toString() =
-        "InvoiceUpdateParams{id=$id, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyId=$counterpartyId, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, fallbackPaymentMethod=$fallbackPaymentMethod, invoicerAddress=$invoicerAddress, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, originatingAccountId=$originatingAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, status=$status, virtualAccountId=$virtualAccountId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceUpdateParams{id=$id, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyId=$counterpartyId, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, fallbackPaymentMethod=$fallbackPaymentMethod, ingestLedgerEntries=$ingestLedgerEntries, invoicerAddress=$invoicerAddress, ledgerAccountSettlementId=$ledgerAccountSettlementId, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, originatingAccountId=$originatingAccountId, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, status=$status, virtualAccountId=$virtualAccountId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -657,7 +710,9 @@ constructor(
         private var description: String? = null
         private var dueDate: OffsetDateTime? = null
         private var fallbackPaymentMethod: String? = null
+        private var ingestLedgerEntries: Boolean? = null
         private var invoicerAddress: InvoicerAddress? = null
+        private var ledgerAccountSettlementId: String? = null
         private var notificationEmailAddresses: MutableList<String> = mutableListOf()
         private var notificationsEnabled: Boolean? = null
         private var originatingAccountId: String? = null
@@ -684,7 +739,9 @@ constructor(
             this.description = invoiceUpdateParams.description
             this.dueDate = invoiceUpdateParams.dueDate
             this.fallbackPaymentMethod = invoiceUpdateParams.fallbackPaymentMethod
+            this.ingestLedgerEntries = invoiceUpdateParams.ingestLedgerEntries
             this.invoicerAddress = invoiceUpdateParams.invoicerAddress
+            this.ledgerAccountSettlementId = invoiceUpdateParams.ledgerAccountSettlementId
             this.notificationEmailAddresses(
                 invoiceUpdateParams.notificationEmailAddresses ?: listOf()
             )
@@ -748,9 +805,23 @@ constructor(
             this.fallbackPaymentMethod = fallbackPaymentMethod
         }
 
+        /**
+         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
+         * false, then a line item must be provided. If this is true, line_items must be empty.
+         * Ignored if ledger_account_settlement_id is empty.
+         */
+        fun ingestLedgerEntries(ingestLedgerEntries: Boolean) = apply {
+            this.ingestLedgerEntries = ingestLedgerEntries
+        }
+
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: InvoicerAddress) = apply {
             this.invoicerAddress = invoicerAddress
+        }
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        fun ledgerAccountSettlementId(ledgerAccountSettlementId: String) = apply {
+            this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
 
         /**
@@ -907,7 +978,9 @@ constructor(
                 description,
                 dueDate,
                 fallbackPaymentMethod,
+                ingestLedgerEntries,
                 invoicerAddress,
+                ledgerAccountSettlementId,
                 if (notificationEmailAddresses.size == 0) null
                 else notificationEmailAddresses.toUnmodifiable(),
                 notificationsEnabled,
