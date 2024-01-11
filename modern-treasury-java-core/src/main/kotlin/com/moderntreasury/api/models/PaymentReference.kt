@@ -516,6 +516,10 @@ private constructor(
 
             @JvmField val SWIFT_UETR = ReferenceNumberType(JsonField.of("swift_uetr"))
 
+            @JvmField
+            val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER =
+                ReferenceNumberType(JsonField.of("umb_product_partner_account_number"))
+
             @JvmField val USBANK_PAYMENT_ID = ReferenceNumberType(JsonField.of("usbank_payment_id"))
 
             @JvmField
@@ -586,6 +590,7 @@ private constructor(
             SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW,
             SWIFT_MIR,
             SWIFT_UETR,
+            UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_ID,
             WELLS_FARGO_PAYMENT_ID,
             WELLS_FARGO_TRACE_NUMBER,
@@ -649,6 +654,7 @@ private constructor(
             SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW,
             SWIFT_MIR,
             SWIFT_UETR,
+            UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_ID,
             WELLS_FARGO_PAYMENT_ID,
             WELLS_FARGO_TRACE_NUMBER,
@@ -716,6 +722,7 @@ private constructor(
                     Value.SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW
                 SWIFT_MIR -> Value.SWIFT_MIR
                 SWIFT_UETR -> Value.SWIFT_UETR
+                UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Value.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_ID -> Value.USBANK_PAYMENT_ID
                 WELLS_FARGO_PAYMENT_ID -> Value.WELLS_FARGO_PAYMENT_ID
                 WELLS_FARGO_TRACE_NUMBER -> Value.WELLS_FARGO_TRACE_NUMBER
@@ -783,6 +790,7 @@ private constructor(
                     Known.SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW
                 SWIFT_MIR -> Known.SWIFT_MIR
                 SWIFT_UETR -> Known.SWIFT_UETR
+                UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Known.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_ID -> Known.USBANK_PAYMENT_ID
                 WELLS_FARGO_PAYMENT_ID -> Known.WELLS_FARGO_PAYMENT_ID
                 WELLS_FARGO_TRACE_NUMBER -> Known.WELLS_FARGO_TRACE_NUMBER
