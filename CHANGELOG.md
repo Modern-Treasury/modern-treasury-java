@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.6.0 (2024-01-16)
+
+Full Changelog: [v2.5.0...v2.6.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.5.0...v2.6.0)
+
+### Features
+
+* **api:** add `ledger_transactions` to expected payment request ([#102](https://github.com/Modern-Treasury/modern-treasury-java/issues/102)) ([2b419a8](https://github.com/Modern-Treasury/modern-treasury-java/commit/2b419a8402eaab4cd37e59c382f4df3a33cfb0e3))
+* **api:** add create and delete operations for internal accounts balance reports ([#106](https://github.com/Modern-Treasury/modern-treasury-java/issues/106)) ([d5997e0](https://github.com/Modern-Treasury/modern-treasury-java/commit/d5997e07f0bd3f7482f24b69b50d01ffd8a68280))
+
+
+### Chores
+
+* add .keep files for examples and custom code directories ([#104](https://github.com/Modern-Treasury/modern-treasury-java/issues/104)) ([c6759ef](https://github.com/Modern-Treasury/modern-treasury-java/commit/c6759ef6c296e19b95f74e94f87c629e0caa6214))
+* **internal:** minor improvements to auth code ([#105](https://github.com/Modern-Treasury/modern-treasury-java/issues/105)) ([7642412](https://github.com/Modern-Treasury/modern-treasury-java/commit/7642412d3d6cf768afdd3195259efddc4c6995dc))
+
+
+### Documentation
+
+* **readme:** improve api reference ([#107](https://github.com/Modern-Treasury/modern-treasury-java/issues/107)) ([1079356](https://github.com/Modern-Treasury/modern-treasury-java/commit/10793565733219b1a5d4336b32255fdfeddda410))
+
 ## 2.5.0 (2024-01-02)
 
 Full Changelog: [v2.4.1...v2.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.4.1...v2.5.0)
