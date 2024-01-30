@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.6.1 (2024-01-30)
+
+Full Changelog: [v2.6.0...v2.6.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.6.0...v2.6.1)
+
+### Bug Fixes
+
+* **ci:** ignore stainless-app edits to release PR title ([#110](https://github.com/Modern-Treasury/modern-treasury-java/issues/110)) ([717eac6](https://github.com/Modern-Treasury/modern-treasury-java/commit/717eac65e03c696c9a8418800d9f73b6eb701ace))
+
+
+### Chores
+
+* **internal:** speculative retry-after-ms support ([#108](https://github.com/Modern-Treasury/modern-treasury-java/issues/108)) ([c6b393e](https://github.com/Modern-Treasury/modern-treasury-java/commit/c6b393eab1e075af3ad673c968c4db5ca9eb766e))
+
 ## 2.6.0 (2024-01-16)
 
 Full Changelog: [v2.5.0...v2.6.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.5.0...v2.6.0)
