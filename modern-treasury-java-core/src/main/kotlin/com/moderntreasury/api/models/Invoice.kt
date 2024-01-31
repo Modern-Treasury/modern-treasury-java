@@ -134,7 +134,7 @@ private constructor(
     fun virtualAccountId(): Optional<String> =
         Optional.ofNullable(virtualAccountId.getNullable("virtual_account_id"))
 
-    /** The ledger account settlment object linked to the invoice. */
+    /** The ledger account settlement object linked to the invoice. */
     fun ledgerAccountSettlementId(): Optional<String> =
         Optional.ofNullable(ledgerAccountSettlementId.getNullable("ledger_account_settlement_id"))
 
@@ -289,7 +289,7 @@ private constructor(
     /** The ID of the virtual account the invoice should be paid to. */
     @JsonProperty("virtual_account_id") @ExcludeMissing fun _virtualAccountId() = virtualAccountId
 
-    /** The ledger account settlment object linked to the invoice. */
+    /** The ledger account settlement object linked to the invoice. */
     @JsonProperty("ledger_account_settlement_id")
     @ExcludeMissing
     fun _ledgerAccountSettlementId() = ledgerAccountSettlementId
@@ -790,11 +790,11 @@ private constructor(
             this.virtualAccountId = virtualAccountId
         }
 
-        /** The ledger account settlment object linked to the invoice. */
+        /** The ledger account settlement object linked to the invoice. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: String) =
             ledgerAccountSettlementId(JsonField.of(ledgerAccountSettlementId))
 
-        /** The ledger account settlment object linked to the invoice. */
+        /** The ledger account settlement object linked to the invoice. */
         @JsonProperty("ledger_account_settlement_id")
         @ExcludeMissing
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {

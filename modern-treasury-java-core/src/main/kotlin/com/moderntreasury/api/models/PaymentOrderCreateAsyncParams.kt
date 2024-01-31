@@ -43,6 +43,7 @@ constructor(
     private val nsfProtected: Boolean?,
     private val originatingPartyName: String?,
     private val priority: Priority?,
+    private val processAfter: OffsetDateTime?,
     private val purpose: String?,
     private val receivingAccount: ReceivingAccount?,
     private val receivingAccountId: String?,
@@ -106,6 +107,8 @@ constructor(
 
     fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
+    fun processAfter(): Optional<OffsetDateTime> = Optional.ofNullable(processAfter)
+
     fun purpose(): Optional<String> = Optional.ofNullable(purpose)
 
     fun receivingAccount(): Optional<ReceivingAccount> = Optional.ofNullable(receivingAccount)
@@ -160,6 +163,7 @@ constructor(
             nsfProtected,
             originatingPartyName,
             priority,
+            processAfter,
             purpose,
             receivingAccount,
             receivingAccountId,
@@ -206,6 +210,7 @@ constructor(
         private val nsfProtected: Boolean?,
         private val originatingPartyName: String?,
         private val priority: Priority?,
+        private val processAfter: OffsetDateTime?,
         private val purpose: String?,
         private val receivingAccount: ReceivingAccount?,
         private val receivingAccountId: String?,
@@ -355,6 +360,12 @@ constructor(
         @JsonProperty("priority") fun priority(): Priority? = priority
 
         /**
+         * If present, the time until which the payment may not be processed. Format is ISO8601
+         * timestamp.
+         */
+        @JsonProperty("process_after") fun processAfter(): OffsetDateTime? = processAfter
+
+        /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
          * field in the ISO20022 file. If you are using Currencycloud, this is the
          * `payment.purpose_code` field. For `eft`, this field is the 3 digit CPA Code that will be
@@ -466,6 +477,7 @@ constructor(
                 this.nsfProtected == other.nsfProtected &&
                 this.originatingPartyName == other.originatingPartyName &&
                 this.priority == other.priority &&
+                this.processAfter == other.processAfter &&
                 this.purpose == other.purpose &&
                 this.receivingAccount == other.receivingAccount &&
                 this.receivingAccountId == other.receivingAccountId &&
@@ -508,6 +520,7 @@ constructor(
                         nsfProtected,
                         originatingPartyName,
                         priority,
+                        processAfter,
                         purpose,
                         receivingAccount,
                         receivingAccountId,
@@ -527,7 +540,7 @@ constructor(
         }
 
         override fun toString() =
-            "PaymentOrderCreateAsyncBody{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateAsyncBody{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -558,6 +571,7 @@ constructor(
             private var nsfProtected: Boolean? = null
             private var originatingPartyName: String? = null
             private var priority: Priority? = null
+            private var processAfter: OffsetDateTime? = null
             private var purpose: String? = null
             private var receivingAccount: ReceivingAccount? = null
             private var receivingAccountId: String? = null
@@ -596,6 +610,7 @@ constructor(
                 this.nsfProtected = paymentOrderCreateAsyncBody.nsfProtected
                 this.originatingPartyName = paymentOrderCreateAsyncBody.originatingPartyName
                 this.priority = paymentOrderCreateAsyncBody.priority
+                this.processAfter = paymentOrderCreateAsyncBody.processAfter
                 this.purpose = paymentOrderCreateAsyncBody.purpose
                 this.receivingAccount = paymentOrderCreateAsyncBody.receivingAccount
                 this.receivingAccountId = paymentOrderCreateAsyncBody.receivingAccountId
@@ -785,6 +800,15 @@ constructor(
             fun priority(priority: Priority) = apply { this.priority = priority }
 
             /**
+             * If present, the time until which the payment may not be processed. Format is ISO8601
+             * timestamp.
+             */
+            @JsonProperty("process_after")
+            fun processAfter(processAfter: OffsetDateTime) = apply {
+                this.processAfter = processAfter
+            }
+
+            /**
              * For `wire`, this is usually the purpose which is transmitted via the
              * "InstrForDbtrAgt" field in the ISO20022 file. If you are using Currencycloud, this is
              * the `payment.purpose_code` field. For `eft`, this field is the 3 digit CPA Code that
@@ -926,6 +950,7 @@ constructor(
                     nsfProtected,
                     originatingPartyName,
                     priority,
+                    processAfter,
                     purpose,
                     receivingAccount,
                     receivingAccountId,
@@ -977,6 +1002,7 @@ constructor(
             this.nsfProtected == other.nsfProtected &&
             this.originatingPartyName == other.originatingPartyName &&
             this.priority == other.priority &&
+            this.processAfter == other.processAfter &&
             this.purpose == other.purpose &&
             this.receivingAccount == other.receivingAccount &&
             this.receivingAccountId == other.receivingAccountId &&
@@ -1018,6 +1044,7 @@ constructor(
             nsfProtected,
             originatingPartyName,
             priority,
+            processAfter,
             purpose,
             receivingAccount,
             receivingAccountId,
@@ -1037,7 +1064,7 @@ constructor(
     }
 
     override fun toString() =
-        "PaymentOrderCreateAsyncParams{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "PaymentOrderCreateAsyncParams{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -1071,6 +1098,7 @@ constructor(
         private var nsfProtected: Boolean? = null
         private var originatingPartyName: String? = null
         private var priority: Priority? = null
+        private var processAfter: OffsetDateTime? = null
         private var purpose: String? = null
         private var receivingAccount: ReceivingAccount? = null
         private var receivingAccountId: String? = null
@@ -1111,6 +1139,7 @@ constructor(
             this.nsfProtected = paymentOrderCreateAsyncParams.nsfProtected
             this.originatingPartyName = paymentOrderCreateAsyncParams.originatingPartyName
             this.priority = paymentOrderCreateAsyncParams.priority
+            this.processAfter = paymentOrderCreateAsyncParams.processAfter
             this.purpose = paymentOrderCreateAsyncParams.purpose
             this.receivingAccount = paymentOrderCreateAsyncParams.receivingAccount
             this.receivingAccountId = paymentOrderCreateAsyncParams.receivingAccountId
@@ -1277,6 +1306,12 @@ constructor(
          * than standard mail.
          */
         fun priority(priority: Priority) = apply { this.priority = priority }
+
+        /**
+         * If present, the time until which the payment may not be processed. Format is ISO8601
+         * timestamp.
+         */
+        fun processAfter(processAfter: OffsetDateTime) = apply { this.processAfter = processAfter }
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
@@ -1447,6 +1482,7 @@ constructor(
                 nsfProtected,
                 originatingPartyName,
                 priority,
+                processAfter,
                 purpose,
                 receivingAccount,
                 receivingAccountId,
@@ -3818,6 +3854,7 @@ constructor(
             private val ledgerId: String?,
             private val currency: String?,
             private val currencyExponent: Long?,
+            private val ledgerAccountCategoryIds: List<String>?,
             private val ledgerableId: String?,
             private val ledgerableType: LedgerableType?,
             private val metadata: Metadata?,
@@ -3844,6 +3881,13 @@ constructor(
 
             /** The currency exponent of the ledger account. */
             @JsonProperty("currency_exponent") fun currencyExponent(): Long? = currencyExponent
+
+            /**
+             * The array of ledger account category ids that this ledger account should be a child
+             * of.
+             */
+            @JsonProperty("ledger_account_category_ids")
+            fun ledgerAccountCategoryIds(): List<String>? = ledgerAccountCategoryIds
 
             /**
              * If the ledger account links to another object in Modern Treasury, the id will be
@@ -3882,6 +3926,7 @@ constructor(
                     this.ledgerId == other.ledgerId &&
                     this.currency == other.currency &&
                     this.currencyExponent == other.currencyExponent &&
+                    this.ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
                     this.ledgerableId == other.ledgerableId &&
                     this.ledgerableType == other.ledgerableType &&
                     this.metadata == other.metadata &&
@@ -3898,6 +3943,7 @@ constructor(
                             ledgerId,
                             currency,
                             currencyExponent,
+                            ledgerAccountCategoryIds,
                             ledgerableId,
                             ledgerableType,
                             metadata,
@@ -3908,7 +3954,7 @@ constructor(
             }
 
             override fun toString() =
-                "LedgerAccountCreateRequest{name=$name, description=$description, normalBalance=$normalBalance, ledgerId=$ledgerId, currency=$currency, currencyExponent=$currencyExponent, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "LedgerAccountCreateRequest{name=$name, description=$description, normalBalance=$normalBalance, ledgerId=$ledgerId, currency=$currency, currencyExponent=$currencyExponent, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -3923,6 +3969,7 @@ constructor(
                 private var ledgerId: String? = null
                 private var currency: String? = null
                 private var currencyExponent: Long? = null
+                private var ledgerAccountCategoryIds: List<String>? = null
                 private var ledgerableId: String? = null
                 private var ledgerableType: LedgerableType? = null
                 private var metadata: Metadata? = null
@@ -3936,6 +3983,8 @@ constructor(
                     this.ledgerId = ledgerAccountCreateRequest.ledgerId
                     this.currency = ledgerAccountCreateRequest.currency
                     this.currencyExponent = ledgerAccountCreateRequest.currencyExponent
+                    this.ledgerAccountCategoryIds =
+                        ledgerAccountCreateRequest.ledgerAccountCategoryIds
                     this.ledgerableId = ledgerAccountCreateRequest.ledgerableId
                     this.ledgerableType = ledgerAccountCreateRequest.ledgerableType
                     this.metadata = ledgerAccountCreateRequest.metadata
@@ -3967,6 +4016,15 @@ constructor(
                 @JsonProperty("currency_exponent")
                 fun currencyExponent(currencyExponent: Long) = apply {
                     this.currencyExponent = currencyExponent
+                }
+
+                /**
+                 * The array of ledger account category ids that this ledger account should be a
+                 * child of.
+                 */
+                @JsonProperty("ledger_account_category_ids")
+                fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
+                    this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
                 }
 
                 /**
@@ -4018,6 +4076,7 @@ constructor(
                         checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
                         checkNotNull(currency) { "`currency` is required but was not set" },
                         currencyExponent,
+                        ledgerAccountCategoryIds?.toUnmodifiable(),
                         ledgerableId,
                         ledgerableType,
                         metadata,
@@ -4599,6 +4658,9 @@ constructor(
                     @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
 
                     @JvmField
+                    val MX_BANK_IDENTIFIER = RoutingNumberType(JsonField.of("mx_bank_identifier"))
+
+                    @JvmField
                     val NZ_NATIONAL_CLEARING_CODE =
                         RoutingNumberType(JsonField.of("nz_national_clearing_code"))
 
@@ -4630,6 +4692,7 @@ constructor(
                     IN_IFSC,
                     JP_ZENGIN_CODE,
                     MY_BRANCH_CODE,
+                    MX_BANK_IDENTIFIER,
                     NZ_NATIONAL_CLEARING_CODE,
                     PL_NATIONAL_CLEARING_CODE,
                     SE_BANKGIRO_CLEARING_CODE,
@@ -4651,6 +4714,7 @@ constructor(
                     IN_IFSC,
                     JP_ZENGIN_CODE,
                     MY_BRANCH_CODE,
+                    MX_BANK_IDENTIFIER,
                     NZ_NATIONAL_CLEARING_CODE,
                     PL_NATIONAL_CLEARING_CODE,
                     SE_BANKGIRO_CLEARING_CODE,
@@ -4674,6 +4738,7 @@ constructor(
                         IN_IFSC -> Value.IN_IFSC
                         JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                         MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
+                        MX_BANK_IDENTIFIER -> Value.MX_BANK_IDENTIFIER
                         NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
                         PL_NATIONAL_CLEARING_CODE -> Value.PL_NATIONAL_CLEARING_CODE
                         SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
@@ -4697,6 +4762,7 @@ constructor(
                         IN_IFSC -> Known.IN_IFSC
                         JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                         MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
+                        MX_BANK_IDENTIFIER -> Known.MX_BANK_IDENTIFIER
                         NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
                         PL_NATIONAL_CLEARING_CODE -> Known.PL_NATIONAL_CLEARING_CODE
                         SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
