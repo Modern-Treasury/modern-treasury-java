@@ -25,6 +25,7 @@ constructor(
     private val normalBalance: TransactionDirection,
     private val currencyExponent: Long?,
     private val description: String?,
+    private val ledgerAccountCategoryIds: List<String>?,
     private val ledgerableId: String?,
     private val ledgerableType: LedgerableType?,
     private val metadata: Metadata?,
@@ -45,6 +46,9 @@ constructor(
 
     fun description(): Optional<String> = Optional.ofNullable(description)
 
+    fun ledgerAccountCategoryIds(): Optional<List<String>> =
+        Optional.ofNullable(ledgerAccountCategoryIds)
+
     fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
     fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
@@ -60,6 +64,7 @@ constructor(
             normalBalance,
             currencyExponent,
             description,
+            ledgerAccountCategoryIds,
             ledgerableId,
             ledgerableType,
             metadata,
@@ -81,6 +86,7 @@ constructor(
         private val normalBalance: TransactionDirection?,
         private val currencyExponent: Long?,
         private val description: String?,
+        private val ledgerAccountCategoryIds: List<String>?,
         private val ledgerableId: String?,
         private val ledgerableType: LedgerableType?,
         private val metadata: Metadata?,
@@ -106,6 +112,12 @@ constructor(
 
         /** The description of the ledger account. */
         @JsonProperty("description") fun description(): String? = description
+
+        /**
+         * The array of ledger account category ids that this ledger account should be a child of.
+         */
+        @JsonProperty("ledger_account_category_ids")
+        fun ledgerAccountCategoryIds(): List<String>? = ledgerAccountCategoryIds
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
@@ -142,6 +154,7 @@ constructor(
                 this.normalBalance == other.normalBalance &&
                 this.currencyExponent == other.currencyExponent &&
                 this.description == other.description &&
+                this.ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
                 this.ledgerableId == other.ledgerableId &&
                 this.ledgerableType == other.ledgerableType &&
                 this.metadata == other.metadata &&
@@ -158,6 +171,7 @@ constructor(
                         normalBalance,
                         currencyExponent,
                         description,
+                        ledgerAccountCategoryIds,
                         ledgerableId,
                         ledgerableType,
                         metadata,
@@ -168,7 +182,7 @@ constructor(
         }
 
         override fun toString() =
-            "LedgerAccountCreateBody{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerAccountCreateBody{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -183,6 +197,7 @@ constructor(
             private var normalBalance: TransactionDirection? = null
             private var currencyExponent: Long? = null
             private var description: String? = null
+            private var ledgerAccountCategoryIds: List<String>? = null
             private var ledgerableId: String? = null
             private var ledgerableType: LedgerableType? = null
             private var metadata: Metadata? = null
@@ -196,6 +211,7 @@ constructor(
                 this.normalBalance = ledgerAccountCreateBody.normalBalance
                 this.currencyExponent = ledgerAccountCreateBody.currencyExponent
                 this.description = ledgerAccountCreateBody.description
+                this.ledgerAccountCategoryIds = ledgerAccountCreateBody.ledgerAccountCategoryIds
                 this.ledgerableId = ledgerAccountCreateBody.ledgerableId
                 this.ledgerableType = ledgerAccountCreateBody.ledgerableType
                 this.metadata = ledgerAccountCreateBody.metadata
@@ -228,6 +244,15 @@ constructor(
             /** The description of the ledger account. */
             @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
+
+            /**
+             * The array of ledger account category ids that this ledger account should be a child
+             * of.
+             */
+            @JsonProperty("ledger_account_category_ids")
+            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
+                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
+            }
 
             /**
              * If the ledger account links to another object in Modern Treasury, the id will be
@@ -275,6 +300,7 @@ constructor(
                     checkNotNull(normalBalance) { "`normalBalance` is required but was not set" },
                     currencyExponent,
                     description,
+                    ledgerAccountCategoryIds?.toUnmodifiable(),
                     ledgerableId,
                     ledgerableType,
                     metadata,
@@ -301,6 +327,7 @@ constructor(
             this.normalBalance == other.normalBalance &&
             this.currencyExponent == other.currencyExponent &&
             this.description == other.description &&
+            this.ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
             this.ledgerableId == other.ledgerableId &&
             this.ledgerableType == other.ledgerableType &&
             this.metadata == other.metadata &&
@@ -317,6 +344,7 @@ constructor(
             normalBalance,
             currencyExponent,
             description,
+            ledgerAccountCategoryIds,
             ledgerableId,
             ledgerableType,
             metadata,
@@ -327,7 +355,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerAccountCreateParams{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerAccountCreateParams{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -345,6 +373,7 @@ constructor(
         private var normalBalance: TransactionDirection? = null
         private var currencyExponent: Long? = null
         private var description: String? = null
+        private var ledgerAccountCategoryIds: MutableList<String> = mutableListOf()
         private var ledgerableId: String? = null
         private var ledgerableType: LedgerableType? = null
         private var metadata: Metadata? = null
@@ -360,6 +389,9 @@ constructor(
             this.normalBalance = ledgerAccountCreateParams.normalBalance
             this.currencyExponent = ledgerAccountCreateParams.currencyExponent
             this.description = ledgerAccountCreateParams.description
+            this.ledgerAccountCategoryIds(
+                ledgerAccountCreateParams.ledgerAccountCategoryIds ?: listOf()
+            )
             this.ledgerableId = ledgerAccountCreateParams.ledgerableId
             this.ledgerableType = ledgerAccountCreateParams.ledgerableType
             this.metadata = ledgerAccountCreateParams.metadata
@@ -389,6 +421,21 @@ constructor(
 
         /** The description of the ledger account. */
         fun description(description: String) = apply { this.description = description }
+
+        /**
+         * The array of ledger account category ids that this ledger account should be a child of.
+         */
+        fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
+            this.ledgerAccountCategoryIds.clear()
+            this.ledgerAccountCategoryIds.addAll(ledgerAccountCategoryIds)
+        }
+
+        /**
+         * The array of ledger account category ids that this ledger account should be a child of.
+         */
+        fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+            this.ledgerAccountCategoryIds.add(ledgerAccountCategoryId)
+        }
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
@@ -471,6 +518,8 @@ constructor(
                 checkNotNull(normalBalance) { "`normalBalance` is required but was not set" },
                 currencyExponent,
                 description,
+                if (ledgerAccountCategoryIds.size == 0) null
+                else ledgerAccountCategoryIds.toUnmodifiable(),
                 ledgerableId,
                 ledgerableType,
                 metadata,
