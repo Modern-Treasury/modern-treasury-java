@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.toUnmodifiable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
@@ -27,6 +28,8 @@ constructor(
     private val originatingAccountId: String?,
     private val perPage: Long?,
     private val priority: Priority?,
+    private val processAfterEnd: OffsetDateTime?,
+    private val processAfterStart: OffsetDateTime?,
     private val referenceNumber: String?,
     private val status: Status?,
     private val transactionId: String?,
@@ -57,6 +60,10 @@ constructor(
 
     fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
+    fun processAfterEnd(): Optional<OffsetDateTime> = Optional.ofNullable(processAfterEnd)
+
+    fun processAfterStart(): Optional<OffsetDateTime> = Optional.ofNullable(processAfterStart)
+
     fun referenceNumber(): Optional<String> = Optional.ofNullable(referenceNumber)
 
     fun status(): Optional<Status> = Optional.ofNullable(status)
@@ -81,6 +88,8 @@ constructor(
         }
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.priority?.let { params.put("priority", listOf(it.toString())) }
+        this.processAfterEnd?.let { params.put("process_after_end", listOf(it.toString())) }
+        this.processAfterStart?.let { params.put("process_after_start", listOf(it.toString())) }
         this.referenceNumber?.let { params.put("reference_number", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
         this.transactionId?.let { params.put("transaction_id", listOf(it.toString())) }
@@ -112,6 +121,8 @@ constructor(
             this.originatingAccountId == other.originatingAccountId &&
             this.perPage == other.perPage &&
             this.priority == other.priority &&
+            this.processAfterEnd == other.processAfterEnd &&
+            this.processAfterStart == other.processAfterStart &&
             this.referenceNumber == other.referenceNumber &&
             this.status == other.status &&
             this.transactionId == other.transactionId &&
@@ -133,6 +144,8 @@ constructor(
             originatingAccountId,
             perPage,
             priority,
+            processAfterEnd,
+            processAfterStart,
             referenceNumber,
             status,
             transactionId,
@@ -143,7 +156,7 @@ constructor(
     }
 
     override fun toString() =
-        "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, processAfterEnd=$processAfterEnd, processAfterStart=$processAfterStart, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -166,6 +179,8 @@ constructor(
         private var originatingAccountId: String? = null
         private var perPage: Long? = null
         private var priority: Priority? = null
+        private var processAfterEnd: OffsetDateTime? = null
+        private var processAfterStart: OffsetDateTime? = null
         private var referenceNumber: String? = null
         private var status: Status? = null
         private var transactionId: String? = null
@@ -186,6 +201,8 @@ constructor(
             this.originatingAccountId = paymentOrderListParams.originatingAccountId
             this.perPage = paymentOrderListParams.perPage
             this.priority = paymentOrderListParams.priority
+            this.processAfterEnd = paymentOrderListParams.processAfterEnd
+            this.processAfterStart = paymentOrderListParams.processAfterStart
             this.referenceNumber = paymentOrderListParams.referenceNumber
             this.status = paymentOrderListParams.status
             this.transactionId = paymentOrderListParams.transactionId
@@ -236,6 +253,16 @@ constructor(
          * than standard mail.
          */
         fun priority(priority: Priority) = apply { this.priority = priority }
+
+        /** An inclusive upper bound for searching process_after */
+        fun processAfterEnd(processAfterEnd: OffsetDateTime) = apply {
+            this.processAfterEnd = processAfterEnd
+        }
+
+        /** An inclusive lower bound for searching process_after */
+        fun processAfterStart(processAfterStart: OffsetDateTime) = apply {
+            this.processAfterStart = processAfterStart
+        }
 
         /** Query for records with the provided reference number */
         fun referenceNumber(referenceNumber: String) = apply {
@@ -302,6 +329,8 @@ constructor(
                 originatingAccountId,
                 perPage,
                 priority,
+                processAfterEnd,
+                processAfterStart,
                 referenceNumber,
                 status,
                 transactionId,
