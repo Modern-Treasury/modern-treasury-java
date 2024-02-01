@@ -57,11 +57,7 @@ private constructor(
         "PaperItemListPageAsync{paperItemsService=$paperItemsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
-
-        return true
+        return !items().isEmpty()
     }
 
     fun getNextPageParams(): Optional<PaperItemListParams> {
