@@ -56,11 +56,7 @@ private constructor(
         "ExpectedPaymentListPage{expectedPaymentsService=$expectedPaymentsService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        if (items().isEmpty()) {
-            return false
-        }
-
-        return true
+        return !items().isEmpty()
     }
 
     fun getNextPageParams(): Optional<ExpectedPaymentListParams> {
