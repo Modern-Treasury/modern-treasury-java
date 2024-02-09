@@ -534,6 +534,8 @@ private constructor(
 
             @JvmField val CHECKING = AccountType(JsonField.of("checking"))
 
+            @JvmField val GENERAL_LEDGER = AccountType(JsonField.of("general_ledger"))
+
             @JvmField val LOAN = AccountType(JsonField.of("loan"))
 
             @JvmField val NON_RESIDENT = AccountType(JsonField.of("non_resident"))
@@ -550,6 +552,7 @@ private constructor(
         enum class Known {
             CASH,
             CHECKING,
+            GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
@@ -560,6 +563,7 @@ private constructor(
         enum class Value {
             CASH,
             CHECKING,
+            GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
@@ -572,6 +576,7 @@ private constructor(
             when (this) {
                 CASH -> Value.CASH
                 CHECKING -> Value.CHECKING
+                GENERAL_LEDGER -> Value.GENERAL_LEDGER
                 LOAN -> Value.LOAN
                 NON_RESIDENT -> Value.NON_RESIDENT
                 OTHER -> Value.OTHER
@@ -584,6 +589,7 @@ private constructor(
             when (this) {
                 CASH -> Known.CASH
                 CHECKING -> Known.CHECKING
+                GENERAL_LEDGER -> Known.GENERAL_LEDGER
                 LOAN -> Known.LOAN
                 NON_RESIDENT -> Known.NON_RESIDENT
                 OTHER -> Known.OTHER

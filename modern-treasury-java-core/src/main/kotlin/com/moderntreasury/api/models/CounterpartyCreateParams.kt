@@ -1515,17 +1515,21 @@ constructor(
                     @JvmField
                     val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
 
+                    @JvmField val VIRTUAL_ACCOUNT = LedgerableType(JsonField.of("virtual_account"))
+
                     @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
                 }
 
                 enum class Known {
                     EXTERNAL_ACCOUNT,
                     INTERNAL_ACCOUNT,
+                    VIRTUAL_ACCOUNT,
                 }
 
                 enum class Value {
                     EXTERNAL_ACCOUNT,
                     INTERNAL_ACCOUNT,
+                    VIRTUAL_ACCOUNT,
                     _UNKNOWN,
                 }
 
@@ -1533,6 +1537,7 @@ constructor(
                     when (this) {
                         EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                         INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
+                        VIRTUAL_ACCOUNT -> Value.VIRTUAL_ACCOUNT
                         else -> Value._UNKNOWN
                     }
 
@@ -1540,6 +1545,7 @@ constructor(
                     when (this) {
                         EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                         INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
+                        VIRTUAL_ACCOUNT -> Known.VIRTUAL_ACCOUNT
                         else ->
                             throw ModernTreasuryInvalidDataException(
                                 "Unknown LedgerableType: $value"
