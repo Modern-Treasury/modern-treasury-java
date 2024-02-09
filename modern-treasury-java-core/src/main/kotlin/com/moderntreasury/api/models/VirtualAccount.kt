@@ -34,6 +34,7 @@ private constructor(
     private val routingDetails: JsonField<List<RoutingDetail>>,
     private val debitLedgerAccountId: JsonField<String>,
     private val creditLedgerAccountId: JsonField<String>,
+    private val ledgerAccountId: JsonField<String>,
     private val metadata: JsonField<Metadata>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
@@ -96,6 +97,13 @@ private constructor(
     fun creditLedgerAccountId(): Optional<String> =
         Optional.ofNullable(creditLedgerAccountId.getNullable("credit_ledger_account_id"))
 
+    /**
+     * If the virtual account links to a ledger account in Modern Treasury, the id of the ledger
+     * account will be populated here.
+     */
+    fun ledgerAccountId(): Optional<String> =
+        Optional.ofNullable(ledgerAccountId.getNullable("ledger_account_id"))
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
@@ -154,6 +162,12 @@ private constructor(
     @ExcludeMissing
     fun _creditLedgerAccountId() = creditLedgerAccountId
 
+    /**
+     * If the virtual account links to a ledger account in Modern Treasury, the id of the ledger
+     * account will be populated here.
+     */
+    @JsonProperty("ledger_account_id") @ExcludeMissing fun _ledgerAccountId() = ledgerAccountId
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
@@ -177,6 +191,7 @@ private constructor(
             routingDetails().forEach { it.validate() }
             debitLedgerAccountId()
             creditLedgerAccountId()
+            ledgerAccountId()
             metadata().validate()
             validated = true
         }
@@ -204,6 +219,7 @@ private constructor(
             this.routingDetails == other.routingDetails &&
             this.debitLedgerAccountId == other.debitLedgerAccountId &&
             this.creditLedgerAccountId == other.creditLedgerAccountId &&
+            this.ledgerAccountId == other.ledgerAccountId &&
             this.metadata == other.metadata &&
             this.additionalProperties == other.additionalProperties
     }
@@ -226,6 +242,7 @@ private constructor(
                     routingDetails,
                     debitLedgerAccountId,
                     creditLedgerAccountId,
+                    ledgerAccountId,
                     metadata,
                     additionalProperties,
                 )
@@ -234,7 +251,7 @@ private constructor(
     }
 
     override fun toString() =
-        "VirtualAccount{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, name=$name, description=$description, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, accountDetails=$accountDetails, routingDetails=$routingDetails, debitLedgerAccountId=$debitLedgerAccountId, creditLedgerAccountId=$creditLedgerAccountId, metadata=$metadata, additionalProperties=$additionalProperties}"
+        "VirtualAccount{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, name=$name, description=$description, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, accountDetails=$accountDetails, routingDetails=$routingDetails, debitLedgerAccountId=$debitLedgerAccountId, creditLedgerAccountId=$creditLedgerAccountId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -257,6 +274,7 @@ private constructor(
         private var routingDetails: JsonField<List<RoutingDetail>> = JsonMissing.of()
         private var debitLedgerAccountId: JsonField<String> = JsonMissing.of()
         private var creditLedgerAccountId: JsonField<String> = JsonMissing.of()
+        private var ledgerAccountId: JsonField<String> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -276,6 +294,7 @@ private constructor(
             this.routingDetails = virtualAccount.routingDetails
             this.debitLedgerAccountId = virtualAccount.debitLedgerAccountId
             this.creditLedgerAccountId = virtualAccount.creditLedgerAccountId
+            this.ledgerAccountId = virtualAccount.ledgerAccountId
             this.metadata = virtualAccount.metadata
             additionalProperties(virtualAccount.additionalProperties)
         }
@@ -428,6 +447,23 @@ private constructor(
         }
 
         /**
+         * If the virtual account links to a ledger account in Modern Treasury, the id of the ledger
+         * account will be populated here.
+         */
+        fun ledgerAccountId(ledgerAccountId: String) =
+            ledgerAccountId(JsonField.of(ledgerAccountId))
+
+        /**
+         * If the virtual account links to a ledger account in Modern Treasury, the id of the ledger
+         * account will be populated here.
+         */
+        @JsonProperty("ledger_account_id")
+        @ExcludeMissing
+        fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
+            this.ledgerAccountId = ledgerAccountId
+        }
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
@@ -469,6 +505,7 @@ private constructor(
                 routingDetails.map { it.toUnmodifiable() },
                 debitLedgerAccountId,
                 creditLedgerAccountId,
+                ledgerAccountId,
                 metadata,
                 additionalProperties.toUnmodifiable(),
             )

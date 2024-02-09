@@ -18,6 +18,7 @@ class VirtualAccountUpdateParams
 constructor(
     private val id: String,
     private val counterpartyId: String?,
+    private val ledgerAccountId: String?,
     private val metadata: Metadata?,
     private val name: String?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -29,6 +30,8 @@ constructor(
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
+
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun name(): Optional<String> = Optional.ofNullable(name)
@@ -37,6 +40,7 @@ constructor(
     internal fun getBody(): VirtualAccountUpdateBody {
         return VirtualAccountUpdateBody(
             counterpartyId,
+            ledgerAccountId,
             metadata,
             name,
             additionalBodyProperties,
@@ -59,6 +63,7 @@ constructor(
     class VirtualAccountUpdateBody
     internal constructor(
         private val counterpartyId: String?,
+        private val ledgerAccountId: String?,
         private val metadata: Metadata?,
         private val name: String?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -67,6 +72,9 @@ constructor(
         private var hashCode: Int = 0
 
         @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+
+        /** The ledger account that you'd like to link to the virtual account. */
+        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
 
         @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
@@ -85,6 +93,7 @@ constructor(
 
             return other is VirtualAccountUpdateBody &&
                 this.counterpartyId == other.counterpartyId &&
+                this.ledgerAccountId == other.ledgerAccountId &&
                 this.metadata == other.metadata &&
                 this.name == other.name &&
                 this.additionalProperties == other.additionalProperties
@@ -95,6 +104,7 @@ constructor(
                 hashCode =
                     Objects.hash(
                         counterpartyId,
+                        ledgerAccountId,
                         metadata,
                         name,
                         additionalProperties,
@@ -104,7 +114,7 @@ constructor(
         }
 
         override fun toString() =
-            "VirtualAccountUpdateBody{counterpartyId=$counterpartyId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+            "VirtualAccountUpdateBody{counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -114,6 +124,7 @@ constructor(
         class Builder {
 
             private var counterpartyId: String? = null
+            private var ledgerAccountId: String? = null
             private var metadata: Metadata? = null
             private var name: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -121,6 +132,7 @@ constructor(
             @JvmSynthetic
             internal fun from(virtualAccountUpdateBody: VirtualAccountUpdateBody) = apply {
                 this.counterpartyId = virtualAccountUpdateBody.counterpartyId
+                this.ledgerAccountId = virtualAccountUpdateBody.ledgerAccountId
                 this.metadata = virtualAccountUpdateBody.metadata
                 this.name = virtualAccountUpdateBody.name
                 additionalProperties(virtualAccountUpdateBody.additionalProperties)
@@ -129,6 +141,12 @@ constructor(
             @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
                 this.counterpartyId = counterpartyId
+            }
+
+            /** The ledger account that you'd like to link to the virtual account. */
+            @JsonProperty("ledger_account_id")
+            fun ledgerAccountId(ledgerAccountId: String) = apply {
+                this.ledgerAccountId = ledgerAccountId
             }
 
             @JsonProperty("metadata")
@@ -153,6 +171,7 @@ constructor(
             fun build(): VirtualAccountUpdateBody =
                 VirtualAccountUpdateBody(
                     counterpartyId,
+                    ledgerAccountId,
                     metadata,
                     name,
                     additionalProperties.toUnmodifiable(),
@@ -174,6 +193,7 @@ constructor(
         return other is VirtualAccountUpdateParams &&
             this.id == other.id &&
             this.counterpartyId == other.counterpartyId &&
+            this.ledgerAccountId == other.ledgerAccountId &&
             this.metadata == other.metadata &&
             this.name == other.name &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -185,6 +205,7 @@ constructor(
         return Objects.hash(
             id,
             counterpartyId,
+            ledgerAccountId,
             metadata,
             name,
             additionalQueryParams,
@@ -194,7 +215,7 @@ constructor(
     }
 
     override fun toString() =
-        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, metadata=$metadata, name=$name, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -208,6 +229,7 @@ constructor(
 
         private var id: String? = null
         private var counterpartyId: String? = null
+        private var ledgerAccountId: String? = null
         private var metadata: Metadata? = null
         private var name: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -218,6 +240,7 @@ constructor(
         internal fun from(virtualAccountUpdateParams: VirtualAccountUpdateParams) = apply {
             this.id = virtualAccountUpdateParams.id
             this.counterpartyId = virtualAccountUpdateParams.counterpartyId
+            this.ledgerAccountId = virtualAccountUpdateParams.ledgerAccountId
             this.metadata = virtualAccountUpdateParams.metadata
             this.name = virtualAccountUpdateParams.name
             additionalQueryParams(virtualAccountUpdateParams.additionalQueryParams)
@@ -228,6 +251,11 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+
+        /** The ledger account that you'd like to link to the virtual account. */
+        fun ledgerAccountId(ledgerAccountId: String) = apply {
+            this.ledgerAccountId = ledgerAccountId
+        }
 
         fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
@@ -291,6 +319,7 @@ constructor(
             VirtualAccountUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 counterpartyId,
+                ledgerAccountId,
                 metadata,
                 name,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

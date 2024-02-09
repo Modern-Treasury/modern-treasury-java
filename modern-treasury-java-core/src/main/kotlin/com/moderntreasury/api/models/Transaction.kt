@@ -833,6 +833,8 @@ private constructor(
 
             @JvmField val ZENGIN = Type(JsonField.of("zengin"))
 
+            @JvmField val OTHER = Type(JsonField.of("other"))
+
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -867,6 +869,7 @@ private constructor(
             SKNBI,
             WIRE,
             ZENGIN,
+            OTHER,
         }
 
         enum class Value {
@@ -900,6 +903,7 @@ private constructor(
             SKNBI,
             WIRE,
             ZENGIN,
+            OTHER,
             _UNKNOWN,
         }
 
@@ -935,6 +939,7 @@ private constructor(
                 SKNBI -> Value.SKNBI
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
+                OTHER -> Value.OTHER
                 else -> Value._UNKNOWN
             }
 
@@ -970,6 +975,7 @@ private constructor(
                 SKNBI -> Known.SKNBI
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
+                OTHER -> Known.OTHER
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
             }
 
