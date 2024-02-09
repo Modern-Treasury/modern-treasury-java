@@ -910,8 +910,10 @@ constructor(
                 Optional.ofNullable(remittanceInformation.getNullable("remittance_information"))
 
             /**
-             * If present, the time until which the payment may not be processed. Format is ISO8601
-             * timestamp.
+             * If present, Modern Treasury will not process the payment until after this time. If
+             * `process_after` is past the cutoff for `effective_date`, `process_after` will take
+             * precedence and `effective_date` will automatically update to reflect the earliest
+             * possible sending date after `process_after`. Format is ISO8601 timestamp.
              */
             fun processAfter(): Optional<OffsetDateTime> =
                 Optional.ofNullable(processAfter.getNullable("process_after"))
@@ -1160,8 +1162,10 @@ constructor(
             fun _remittanceInformation() = remittanceInformation
 
             /**
-             * If present, the time until which the payment may not be processed. Format is ISO8601
-             * timestamp.
+             * If present, Modern Treasury will not process the payment until after this time. If
+             * `process_after` is past the cutoff for `effective_date`, `process_after` will take
+             * precedence and `effective_date` will automatically update to reflect the earliest
+             * possible sending date after `process_after`. Format is ISO8601 timestamp.
              */
             @JsonProperty("process_after") @ExcludeMissing fun _processAfter() = processAfter
 
@@ -1776,15 +1780,21 @@ constructor(
                 }
 
                 /**
-                 * If present, the time until which the payment may not be processed. Format is
-                 * ISO8601 timestamp.
+                 * If present, Modern Treasury will not process the payment until after this time.
+                 * If `process_after` is past the cutoff for `effective_date`, `process_after` will
+                 * take precedence and `effective_date` will automatically update to reflect the
+                 * earliest possible sending date after `process_after`. Format is ISO8601
+                 * timestamp.
                  */
                 fun processAfter(processAfter: OffsetDateTime) =
                     processAfter(JsonField.of(processAfter))
 
                 /**
-                 * If present, the time until which the payment may not be processed. Format is
-                 * ISO8601 timestamp.
+                 * If present, Modern Treasury will not process the payment until after this time.
+                 * If `process_after` is past the cutoff for `effective_date`, `process_after` will
+                 * take precedence and `effective_date` will automatically update to reflect the
+                 * earliest possible sending date after `process_after`. Format is ISO8601
+                 * timestamp.
                  */
                 @JsonProperty("process_after")
                 @ExcludeMissing
@@ -5713,17 +5723,22 @@ constructor(
                             @JvmField
                             val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
 
+                            @JvmField
+                            val VIRTUAL_ACCOUNT = LedgerableType(JsonField.of("virtual_account"))
+
                             @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
                         }
 
                         enum class Known {
                             EXTERNAL_ACCOUNT,
                             INTERNAL_ACCOUNT,
+                            VIRTUAL_ACCOUNT,
                         }
 
                         enum class Value {
                             EXTERNAL_ACCOUNT,
                             INTERNAL_ACCOUNT,
+                            VIRTUAL_ACCOUNT,
                             _UNKNOWN,
                         }
 
@@ -5731,6 +5746,7 @@ constructor(
                             when (this) {
                                 EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
+                                VIRTUAL_ACCOUNT -> Value.VIRTUAL_ACCOUNT
                                 else -> Value._UNKNOWN
                             }
 
@@ -5738,6 +5754,7 @@ constructor(
                             when (this) {
                                 EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
+                                VIRTUAL_ACCOUNT -> Known.VIRTUAL_ACCOUNT
                                 else ->
                                     throw ModernTreasuryInvalidDataException(
                                         "Unknown LedgerableType: $value"
@@ -10786,8 +10803,10 @@ constructor(
                 Optional.ofNullable(remittanceInformation.getNullable("remittance_information"))
 
             /**
-             * If present, the time until which the payment may not be processed. Format is ISO8601
-             * timestamp.
+             * If present, Modern Treasury will not process the payment until after this time. If
+             * `process_after` is past the cutoff for `effective_date`, `process_after` will take
+             * precedence and `effective_date` will automatically update to reflect the earliest
+             * possible sending date after `process_after`. Format is ISO8601 timestamp.
              */
             fun processAfter(): Optional<OffsetDateTime> =
                 Optional.ofNullable(processAfter.getNullable("process_after"))
@@ -11039,8 +11058,10 @@ constructor(
             fun _remittanceInformation() = remittanceInformation
 
             /**
-             * If present, the time until which the payment may not be processed. Format is ISO8601
-             * timestamp.
+             * If present, Modern Treasury will not process the payment until after this time. If
+             * `process_after` is past the cutoff for `effective_date`, `process_after` will take
+             * precedence and `effective_date` will automatically update to reflect the earliest
+             * possible sending date after `process_after`. Format is ISO8601 timestamp.
              */
             @JsonProperty("process_after") @ExcludeMissing fun _processAfter() = processAfter
 
@@ -11649,15 +11670,21 @@ constructor(
                 }
 
                 /**
-                 * If present, the time until which the payment may not be processed. Format is
-                 * ISO8601 timestamp.
+                 * If present, Modern Treasury will not process the payment until after this time.
+                 * If `process_after` is past the cutoff for `effective_date`, `process_after` will
+                 * take precedence and `effective_date` will automatically update to reflect the
+                 * earliest possible sending date after `process_after`. Format is ISO8601
+                 * timestamp.
                  */
                 fun processAfter(processAfter: OffsetDateTime) =
                     processAfter(JsonField.of(processAfter))
 
                 /**
-                 * If present, the time until which the payment may not be processed. Format is
-                 * ISO8601 timestamp.
+                 * If present, Modern Treasury will not process the payment until after this time.
+                 * If `process_after` is past the cutoff for `effective_date`, `process_after` will
+                 * take precedence and `effective_date` will automatically update to reflect the
+                 * earliest possible sending date after `process_after`. Format is ISO8601
+                 * timestamp.
                  */
                 @JsonProperty("process_after")
                 @ExcludeMissing
@@ -14151,17 +14178,22 @@ constructor(
                             @JvmField
                             val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
 
+                            @JvmField
+                            val VIRTUAL_ACCOUNT = LedgerableType(JsonField.of("virtual_account"))
+
                             @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
                         }
 
                         enum class Known {
                             EXTERNAL_ACCOUNT,
                             INTERNAL_ACCOUNT,
+                            VIRTUAL_ACCOUNT,
                         }
 
                         enum class Value {
                             EXTERNAL_ACCOUNT,
                             INTERNAL_ACCOUNT,
+                            VIRTUAL_ACCOUNT,
                             _UNKNOWN,
                         }
 
@@ -14169,6 +14201,7 @@ constructor(
                             when (this) {
                                 EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
+                                VIRTUAL_ACCOUNT -> Value.VIRTUAL_ACCOUNT
                                 else -> Value._UNKNOWN
                             }
 
@@ -14176,6 +14209,7 @@ constructor(
                             when (this) {
                                 EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
+                                VIRTUAL_ACCOUNT -> Known.VIRTUAL_ACCOUNT
                                 else ->
                                     throw ModernTreasuryInvalidDataException(
                                         "Unknown LedgerableType: $value"

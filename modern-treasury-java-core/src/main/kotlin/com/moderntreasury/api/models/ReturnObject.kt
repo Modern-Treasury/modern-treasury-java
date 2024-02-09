@@ -738,6 +738,26 @@ private constructor(
 
             @JvmField val _914 = Code(JsonField.of("914"))
 
+            @JvmField val C01 = Code(JsonField.of("C01"))
+
+            @JvmField val C02 = Code(JsonField.of("C02"))
+
+            @JvmField val C03 = Code(JsonField.of("C03"))
+
+            @JvmField val C05 = Code(JsonField.of("C05"))
+
+            @JvmField val C06 = Code(JsonField.of("C06"))
+
+            @JvmField val C07 = Code(JsonField.of("C07"))
+
+            @JvmField val C08 = Code(JsonField.of("C08"))
+
+            @JvmField val C09 = Code(JsonField.of("C09"))
+
+            @JvmField val C13 = Code(JsonField.of("C13"))
+
+            @JvmField val C14 = Code(JsonField.of("C14"))
+
             @JvmField val R01 = Code(JsonField.of("R01"))
 
             @JvmField val R02 = Code(JsonField.of("R02"))
@@ -816,6 +836,16 @@ private constructor(
             _911,
             _912,
             _914,
+            C01,
+            C02,
+            C03,
+            C05,
+            C06,
+            C07,
+            C08,
+            C09,
+            C13,
+            C14,
             R01,
             R02,
             R03,
@@ -862,6 +892,16 @@ private constructor(
             _911,
             _912,
             _914,
+            C01,
+            C02,
+            C03,
+            C05,
+            C06,
+            C07,
+            C08,
+            C09,
+            C13,
+            C14,
             R01,
             R02,
             R03,
@@ -910,6 +950,16 @@ private constructor(
                 _911 -> Value._911
                 _912 -> Value._912
                 _914 -> Value._914
+                C01 -> Value.C01
+                C02 -> Value.C02
+                C03 -> Value.C03
+                C05 -> Value.C05
+                C06 -> Value.C06
+                C07 -> Value.C07
+                C08 -> Value.C08
+                C09 -> Value.C09
+                C13 -> Value.C13
+                C14 -> Value.C14
                 R01 -> Value.R01
                 R02 -> Value.R02
                 R03 -> Value.R03
@@ -958,6 +1008,16 @@ private constructor(
                 _911 -> Known._911
                 _912 -> Known._912
                 _914 -> Known._914
+                C01 -> Known.C01
+                C02 -> Known.C02
+                C03 -> Known.C03
+                C05 -> Known.C05
+                C06 -> Known.C06
+                C07 -> Known.C07
+                C08 -> Known.C08
+                C09 -> Known.C09
+                C13 -> Known.C13
+                C14 -> Known.C14
                 R01 -> Known.R01
                 R02 -> Known.R02
                 R03 -> Known.R03
@@ -1982,6 +2042,8 @@ private constructor(
 
             @JvmField val CHECK = Type(JsonField.of("check"))
 
+            @JvmField val CROSS_BORDER = Type(JsonField.of("cross_border"))
+
             @JvmField val EFT = Type(JsonField.of("eft"))
 
             @JvmField val INTERAC = Type(JsonField.of("interac"))
@@ -2004,6 +2066,7 @@ private constructor(
             BACS,
             BOOK,
             CHECK,
+            CROSS_BORDER,
             EFT,
             INTERAC,
             MANUAL,
@@ -2019,6 +2082,7 @@ private constructor(
             BACS,
             BOOK,
             CHECK,
+            CROSS_BORDER,
             EFT,
             INTERAC,
             MANUAL,
@@ -2036,6 +2100,7 @@ private constructor(
                 BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CHECK -> Value.CHECK
+                CROSS_BORDER -> Value.CROSS_BORDER
                 EFT -> Value.EFT
                 INTERAC -> Value.INTERAC
                 MANUAL -> Value.MANUAL
@@ -2053,6 +2118,7 @@ private constructor(
                 BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CHECK -> Known.CHECK
+                CROSS_BORDER -> Known.CROSS_BORDER
                 EFT -> Known.EFT
                 INTERAC -> Known.INTERAC
                 MANUAL -> Known.MANUAL
