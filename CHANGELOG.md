@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.7.0 (2024-02-13)
+
+Full Changelog: [v2.6.1...v2.7.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.6.1...v2.7.0)
+
+### Features
+
+* **api:** updates ([#116](https://github.com/Modern-Treasury/modern-treasury-java/issues/116)) ([f4f553f](https://github.com/Modern-Treasury/modern-treasury-java/commit/f4f553fdba77865f161c2ae7a75045ece19e9e85))
+* **api:** updates parameters, error codes ([#113](https://github.com/Modern-Treasury/modern-treasury-java/issues/113)) ([43d7974](https://github.com/Modern-Treasury/modern-treasury-java/commit/43d7974eca0e33bebfb01f52a94a743b6b0998f1))
+
+
+### Bug Fixes
+
+* **docs:** wrong client import in readme usage example ([#117](https://github.com/Modern-Treasury/modern-treasury-java/issues/117)) ([1f8695a](https://github.com/Modern-Treasury/modern-treasury-java/commit/1f8695aef8d3803defea9abac4f7a9760b6dd588))
+* **pagination:** correct hasNextPage check ([#114](https://github.com/Modern-Treasury/modern-treasury-java/issues/114)) ([7f97334](https://github.com/Modern-Treasury/modern-treasury-java/commit/7f97334b10cb4d7fd8ad5941bb018a5a81d76ad4))
+
+
+### Chores
+
+* **interal:** make link to api.md relative ([#115](https://github.com/Modern-Treasury/modern-treasury-java/issues/115)) ([0111dcc](https://github.com/Modern-Treasury/modern-treasury-java/commit/0111dccffa308f6cab145570752d1f90fba38c35))
+* **internal:** support pre-release versioning ([#111](https://github.com/Modern-Treasury/modern-treasury-java/issues/111)) ([6eb780e](https://github.com/Modern-Treasury/modern-treasury-java/commit/6eb780ea4c2323329ad9d02d2bbbae82ae181655))
+
 ## 2.6.1 (2024-01-30)
 
 Full Changelog: [v2.6.0...v2.6.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.6.0...v2.6.1)
