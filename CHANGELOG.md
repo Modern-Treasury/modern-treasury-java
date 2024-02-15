@@ -1,5 +1,63 @@
 # Changelog
 
+## 0.0.1 (2024-02-15)
+
+Full Changelog: [...abc-v0.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/...abc-v0.0.1)
+
+### ⚠ BREAKING CHANGES
+
+* **types:** consolidate direction enums into a shared TransactionDirection type ([#74](https://github.com/Modern-Treasury/modern-treasury-java/issues/74))
+* **types:** rename account connection flow to account collection flow
+* **api:** update parameters for virtual account create request ([#6](https://github.com/Modern-Treasury/modern-treasury-java/issues/6))
+
+### Features
+
+* **api:** add `ledger_transactions` to expected payment request ([#102](https://github.com/Modern-Treasury/modern-treasury-java/issues/102)) ([d818421](https://github.com/Modern-Treasury/modern-treasury-java/commit/d81842170e8470d444ec08bbc253609f0f8cdd57))
+* **api:** add `metadata` in several places it was missing; add `description` ([#34](https://github.com/Modern-Treasury/modern-treasury-java/issues/34)) ([e3b4fd9](https://github.com/Modern-Treasury/modern-treasury-java/commit/e3b4fd9539d48a42083bb87789cf0e1a1df621b3))
+* **api:** add create and delete operations for internal accounts balance reports ([#106](https://github.com/Modern-Treasury/modern-treasury-java/issues/106)) ([63c3d6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/63c3d6da9b29a6ce0772324504d686e071b3453b))
+* **api:** add dk_interbank_clearing_code and dk_nets enum members ([#90](https://github.com/Modern-Treasury/modern-treasury-java/issues/90)) ([45bfc09](https://github.com/Modern-Treasury/modern-treasury-java/commit/45bfc09e84fb5ee7cbb629804f8fea16a5edb261))
+* **api:** remove reversed and reversing ledger account status type ([#100](https://github.com/Modern-Treasury/modern-treasury-java/issues/100)) ([141f3ca](https://github.com/Modern-Treasury/modern-treasury-java/commit/141f3ca05fb8b0952bcf694d7b6048045191109b))
+* **api:** support multiple `id`s in `ledger` `retrieve`/`list` endpoints ([#45](https://github.com/Modern-Treasury/modern-treasury-java/issues/45)) ([f397b5d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f397b5dfb18aae18d84d0e3ae9f7f0c2d6429e99))
+* **api:** update parameters for virtual account create request ([#6](https://github.com/Modern-Treasury/modern-treasury-java/issues/6)) ([3980968](https://github.com/Modern-Treasury/modern-treasury-java/commit/3980968e9af5e9b27ea9ecb859018cd1361284dd))
+* **api:** updates ([#116](https://github.com/Modern-Treasury/modern-treasury-java/issues/116)) ([561bf34](https://github.com/Modern-Treasury/modern-treasury-java/commit/561bf34b3257d0155ba14147415005965281fe37))
+* **api:** updates ([#25](https://github.com/Modern-Treasury/modern-treasury-java/issues/25)) ([07feb05](https://github.com/Modern-Treasury/modern-treasury-java/commit/07feb05e82a4c9b1d1582ed500ae53342c5b9f44))
+* **api:** updates ([#27](https://github.com/Modern-Treasury/modern-treasury-java/issues/27)) ([80e252c](https://github.com/Modern-Treasury/modern-treasury-java/commit/80e252ccdd782a3634c66e2fd3ceae4d9b8c2ae5))
+* **api:** updates ([#39](https://github.com/Modern-Treasury/modern-treasury-java/issues/39)) ([1f5ce52](https://github.com/Modern-Treasury/modern-treasury-java/commit/1f5ce5299e9ec462ce6e25a2c4c2a7b51aa31b71))
+* **api:** updates ([#62](https://github.com/Modern-Treasury/modern-treasury-java/issues/62)) ([832067a](https://github.com/Modern-Treasury/modern-treasury-java/commit/832067a3d9100c4eb5dada921507544dfd6d42ca))
+* **api:** updates ([#78](https://github.com/Modern-Treasury/modern-treasury-java/issues/78)) ([8763627](https://github.com/Modern-Treasury/modern-treasury-java/commit/8763627b74f8137539f08ac7965589cfb2670a42))
+* **api:** updates ([#82](https://github.com/Modern-Treasury/modern-treasury-java/issues/82)) ([66aaceb](https://github.com/Modern-Treasury/modern-treasury-java/commit/66aaceb8d83017378e6ea41c5e6f3b16cb8a21b8))
+* **api:** updates ([#88](https://github.com/Modern-Treasury/modern-treasury-java/issues/88)) ([5182244](https://github.com/Modern-Treasury/modern-treasury-java/commit/51822444862af5720441bce0900d8af0996ca429))
+* **api:** updates ([#92](https://github.com/Modern-Treasury/modern-treasury-java/issues/92)) ([495fb76](https://github.com/Modern-Treasury/modern-treasury-java/commit/495fb768d7826b0c2fbc0a13042f5f4e3bb82dee))
+* **api:** updates ([#98](https://github.com/Modern-Treasury/modern-treasury-java/issues/98)) ([5aae4a6](https://github.com/Modern-Treasury/modern-treasury-java/commit/5aae4a63d3ecaf62ccb367b993dbaa30916c8b2a))
+* **api:** updates parameters, error codes ([#113](https://github.com/Modern-Treasury/modern-treasury-java/issues/113)) ([a0e9d5d](https://github.com/Modern-Treasury/modern-treasury-java/commit/a0e9d5d87d4dee49d8798f4d161a9bc22ddd6cd3))
+* **ci:** add a publish-sonatype workflow for manual running ([#26](https://github.com/Modern-Treasury/modern-treasury-java/issues/26)) ([1d96ffc](https://github.com/Modern-Treasury/modern-treasury-java/commit/1d96ffc2716d89111cd11eb44febfefdc20c5663))
+* **client:** adjust retry behavior ([#79](https://github.com/Modern-Treasury/modern-treasury-java/issues/79)) ([73c033e](https://github.com/Modern-Treasury/modern-treasury-java/commit/73c033e9b4c4092821e7b69ddf3478e60283d2bc))
+* **client:** allow binary returns ([#85](https://github.com/Modern-Treasury/modern-treasury-java/issues/85)) ([fbc9be2](https://github.com/Modern-Treasury/modern-treasury-java/commit/fbc9be29ae9d493a2fe21fc24631624e1e55f27f))
+* **client:** retry on 408 Request Timeout ([#58](https://github.com/Modern-Treasury/modern-treasury-java/issues/58)) ([57b6355](https://github.com/Modern-Treasury/modern-treasury-java/commit/57b635532b296e586ac3ce28d5c6d51920c34a47))
+* default timeout is set for java clients ([#46](https://github.com/Modern-Treasury/modern-treasury-java/issues/46)) ([a1763d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/a1763d5e2ebe66ca1a87a0185fc67431516aaab8))
+* generate addXxx methods for array types ([#48](https://github.com/Modern-Treasury/modern-treasury-java/issues/48)) ([a29d02b](https://github.com/Modern-Treasury/modern-treasury-java/commit/a29d02b4d6609b2f3b4edf7475907cee9bdd8943))
+* **github:** include a devcontainer setup ([#84](https://github.com/Modern-Treasury/modern-treasury-java/issues/84)) ([d96ac93](https://github.com/Modern-Treasury/modern-treasury-java/commit/d96ac930e3b0a5cc0061ac3d785ca2b9492708e7))
+* make webhook headers case insensitive ([#73](https://github.com/Modern-Treasury/modern-treasury-java/issues/73)) ([4ad3dfc](https://github.com/Modern-Treasury/modern-treasury-java/commit/4ad3dfc87ca5393515ea54b7d28da2bb725c89b0))
+* **test:** unskip file uploads tests ([#31](https://github.com/Modern-Treasury/modern-treasury-java/issues/31)) ([60a9300](https://github.com/Modern-Treasury/modern-treasury-java/commit/60a9300b340ed4f5cd5b0c6c9d74bfdec04198a3))
+* **types:** consolidate direction enums into a shared TransactionDirection type ([#74](https://github.com/Modern-Treasury/modern-treasury-java/issues/74)) ([acce616](https://github.com/Modern-Treasury/modern-treasury-java/commit/acce616703676cb67cbea6c19f71fa438f937598))
+
+
+### Bug Fixes
+
+* **api:** add response body to `get /api/virtual_accounts` and update resources ([#3](https://github.com/Modern-Treasury/modern-treasury-java/issues/3)) ([88111f8](https://github.com/Modern-Treasury/modern-treasury-java/commit/88111f85fb6ba4f7a0c0274268d55c7a2839ff5d))
+* **api:** use date-time for effective_at ([#77](https://github.com/Modern-Treasury/modern-treasury-java/issues/77)) ([3d08f9c](https://github.com/Modern-Treasury/modern-treasury-java/commit/3d08f9c31e059ac27910a992ebe30eb15bd2fc86))
+* auto-close responses even if an exception is thrown during deserialization ([3bf86f7](https://github.com/Modern-Treasury/modern-treasury-java/commit/3bf86f7bc17eb556942365d37a533c9fa03bcb57))
+* **ci:** ignore stainless-app edits to release PR title ([#110](https://github.com/Modern-Treasury/modern-treasury-java/issues/110)) ([5b0696c](https://github.com/Modern-Treasury/modern-treasury-java/commit/5b0696c49e921a42d8ffd129b93a782182a9f234))
+* **docs:** wrong client import in readme usage example ([#117](https://github.com/Modern-Treasury/modern-treasury-java/issues/117)) ([8b9f3ae](https://github.com/Modern-Treasury/modern-treasury-java/commit/8b9f3ae1e55a299b552e5e90524ca4d5e2d6b0dc))
+* **pagination:** correct hasNextPage check ([#114](https://github.com/Modern-Treasury/modern-treasury-java/issues/114)) ([5b711a2](https://github.com/Modern-Treasury/modern-treasury-java/commit/5b711a2d9fd784ab9434a18d3e7a9bdb12438a6b))
+* set correct timeouts on okhttp client ([#49](https://github.com/Modern-Treasury/modern-treasury-java/issues/49)) ([f011aa5](https://github.com/Modern-Treasury/modern-treasury-java/commit/f011aa599773e05544f994481ca8ff73aa885c57))
+* update maven group id in README ([#71](https://github.com/Modern-Treasury/modern-treasury-java/issues/71)) ([8df492c](https://github.com/Modern-Treasury/modern-treasury-java/commit/8df492ca2f5d73eb872f4de6319ffad00e5e9778))
+
+
+### Code Refactoring
+
+* **types:** rename account connection flow to account collection flow ([6e9bcc3](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e9bcc386069b783e4428b8a22de122c31ac2227))
+
 ## 2.7.0 (2024-02-13)
 
 Full Changelog: [v2.6.1...v2.7.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.6.1...v2.7.0)
