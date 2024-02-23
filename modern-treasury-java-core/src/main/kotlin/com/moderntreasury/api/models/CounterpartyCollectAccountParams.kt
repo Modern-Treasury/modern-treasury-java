@@ -89,10 +89,10 @@ constructor(
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
-         * will default to [\"nameOnAccount\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\"]. The full list of options is [\"name\",
-         * \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+         * will default to
+         * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+         * The full list of options is
+         * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
          */
         @JsonProperty("fields") fun fields(): List<Field>? = fields
 
@@ -183,10 +183,10 @@ constructor(
 
             /**
              * The list of fields you want on the form. This field is optional and if it is not set,
-             * will default to [\"nameOnAccount\", \"accountType\", \"accountNumber\",
-             * \"routingNumber\", \"address\"]. The full list of options is [\"name\",
-             * \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\",
-             * \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+             * will default to
+             * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+             * The full list of options is
+             * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
              */
             @JsonProperty("fields") fun fields(fields: List<Field>) = apply { this.fields = fields }
 
@@ -311,10 +311,10 @@ constructor(
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
-         * will default to [\"nameOnAccount\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\"]. The full list of options is [\"name\",
-         * \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+         * will default to
+         * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+         * The full list of options is
+         * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
          */
         fun fields(fields: List<Field>) = apply {
             this.fields.clear()
@@ -323,10 +323,10 @@ constructor(
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
-         * will default to [\"nameOnAccount\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\"]. The full list of options is [\"name\",
-         * \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\",
-         * \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+         * will default to
+         * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+         * The full list of options is
+         * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
          */
         fun addField(field: Field) = apply { this.fields.add(field) }
 
