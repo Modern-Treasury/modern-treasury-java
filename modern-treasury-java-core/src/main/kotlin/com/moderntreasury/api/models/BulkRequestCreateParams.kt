@@ -497,36 +497,51 @@ constructor(
 
         fun paymentOrderAsyncCreateRequest(): Optional<PaymentOrderAsyncCreateRequest> =
             Optional.ofNullable(paymentOrderAsyncCreateRequest)
+
         fun expectedPaymentCreateRequest(): Optional<ExpectedPaymentCreateRequest> =
             Optional.ofNullable(expectedPaymentCreateRequest)
+
         fun ledgerTransactionCreateRequest(): Optional<LedgerTransactionCreateRequest> =
             Optional.ofNullable(ledgerTransactionCreateRequest)
+
         fun paymentOrderUpdateRequestWithId(): Optional<PaymentOrderUpdateRequestWithId> =
             Optional.ofNullable(paymentOrderUpdateRequestWithId)
+
         fun expectedPaymentUpdateRequestWithId(): Optional<ExpectedPaymentUpdateRequestWithId> =
             Optional.ofNullable(expectedPaymentUpdateRequestWithId)
+
         fun ledgerTransactionUpdateRequestWithId(): Optional<LedgerTransactionUpdateRequestWithId> =
             Optional.ofNullable(ledgerTransactionUpdateRequestWithId)
 
         fun isPaymentOrderAsyncCreateRequest(): Boolean = paymentOrderAsyncCreateRequest != null
+
         fun isExpectedPaymentCreateRequest(): Boolean = expectedPaymentCreateRequest != null
+
         fun isLedgerTransactionCreateRequest(): Boolean = ledgerTransactionCreateRequest != null
+
         fun isPaymentOrderUpdateRequestWithId(): Boolean = paymentOrderUpdateRequestWithId != null
+
         fun isExpectedPaymentUpdateRequestWithId(): Boolean =
             expectedPaymentUpdateRequestWithId != null
+
         fun isLedgerTransactionUpdateRequestWithId(): Boolean =
             ledgerTransactionUpdateRequestWithId != null
 
         fun asPaymentOrderAsyncCreateRequest(): PaymentOrderAsyncCreateRequest =
             paymentOrderAsyncCreateRequest.getOrThrow("paymentOrderAsyncCreateRequest")
+
         fun asExpectedPaymentCreateRequest(): ExpectedPaymentCreateRequest =
             expectedPaymentCreateRequest.getOrThrow("expectedPaymentCreateRequest")
+
         fun asLedgerTransactionCreateRequest(): LedgerTransactionCreateRequest =
             ledgerTransactionCreateRequest.getOrThrow("ledgerTransactionCreateRequest")
+
         fun asPaymentOrderUpdateRequestWithId(): PaymentOrderUpdateRequestWithId =
             paymentOrderUpdateRequestWithId.getOrThrow("paymentOrderUpdateRequestWithId")
+
         fun asExpectedPaymentUpdateRequestWithId(): ExpectedPaymentUpdateRequestWithId =
             expectedPaymentUpdateRequestWithId.getOrThrow("expectedPaymentUpdateRequestWithId")
+
         fun asLedgerTransactionUpdateRequestWithId(): LedgerTransactionUpdateRequestWithId =
             ledgerTransactionUpdateRequestWithId.getOrThrow("ledgerTransactionUpdateRequestWithId")
 
@@ -2972,8 +2987,8 @@ constructor(
                     private var hashCode: Int = 0
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     fun amount(): Long = amount.getRequired("amount")
 
@@ -3046,8 +3061,8 @@ constructor(
                         Optional.ofNullable(metadata.getNullable("metadata"))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -4022,8 +4037,8 @@ constructor(
                 private var hashCode: Int = 0
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 fun amount(): Long = amount.getRequired("amount")
 
@@ -4046,8 +4061,8 @@ constructor(
                     Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -4137,14 +4152,14 @@ constructor(
                     }
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     @JsonProperty("amount")
                     @ExcludeMissing
@@ -7844,8 +7859,8 @@ constructor(
                     private var hashCode: Int = 0
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     fun amount(): Long = amount.getRequired("amount")
 
@@ -7918,8 +7933,8 @@ constructor(
                         Optional.ofNullable(metadata.getNullable("metadata"))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -8894,8 +8909,8 @@ constructor(
                 private var hashCode: Int = 0
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 fun amount(): Long = amount.getRequired("amount")
 
@@ -8918,8 +8933,8 @@ constructor(
                     Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -9009,14 +9024,14 @@ constructor(
                     }
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     @JsonProperty("amount")
                     @ExcludeMissing
@@ -9642,8 +9657,8 @@ constructor(
                 private var hashCode: Int = 0
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000. Can be any integer up to 36 digits.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000. Can be any integer up to 36 digits.
                  */
                 fun amount(): Long = amount.getRequired("amount")
 
@@ -9712,8 +9727,8 @@ constructor(
                     Optional.ofNullable(metadata.getNullable("metadata"))
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000. Can be any integer up to 36 digits.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000. Can be any integer up to 36 digits.
                  */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -9880,14 +9895,14 @@ constructor(
                     }
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     @JsonProperty("amount")
                     @ExcludeMissing
@@ -12477,8 +12492,8 @@ constructor(
                 private var hashCode: Int = 0
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 fun amount(): Long = amount.getRequired("amount")
 
@@ -12501,8 +12516,8 @@ constructor(
                     Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
                  */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -12592,14 +12607,14 @@ constructor(
                     }
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000.
                      */
                     @JsonProperty("amount")
                     @ExcludeMissing
@@ -16253,8 +16268,8 @@ constructor(
                 private var hashCode: Int = 0
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000. Can be any integer up to 36 digits.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000. Can be any integer up to 36 digits.
                  */
                 fun amount(): Long = amount.getRequired("amount")
 
@@ -16323,8 +16338,8 @@ constructor(
                     Optional.ofNullable(metadata.getNullable("metadata"))
 
                 /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                 * 1000. Can be any integer up to 36 digits.
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000. Can be any integer up to 36 digits.
                  */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
@@ -16491,14 +16506,14 @@ constructor(
                     }
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
                     /**
-                     * Value in specified currency's smallest unit. e.g. $10 would be represented as
-                     * 1000. Can be any integer up to 36 digits.
+                     * Value in specified currency's smallest unit. e.g. $10 would be represented
+                     * as 1000. Can be any integer up to 36 digits.
                      */
                     @JsonProperty("amount")
                     @ExcludeMissing

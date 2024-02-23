@@ -76,8 +76,8 @@ constructor(
         private var hashCode: Int = 0
 
         /**
-         * Required. Value in specified currency's smallest unit. e.g. $10 would be represented as
-         * 1000. Can be any integer up to 36 digits.
+         * Required. Value in specified currency's smallest unit. e.g. $10 would be represented
+         * as 1000. Can be any integer up to 36 digits.
          */
         @JsonProperty("amount") fun amount(): Long? = amount
 
@@ -316,8 +316,8 @@ constructor(
         }
 
         /**
-         * Required. Value in specified currency's smallest unit. e.g. $10 would be represented as
-         * 1000. Can be any integer up to 36 digits.
+         * Required. Value in specified currency's smallest unit. e.g. $10 would be represented
+         * as 1000. Can be any integer up to 36 digits.
          */
         fun amount(amount: Long) = apply { this.amount = amount }
 
