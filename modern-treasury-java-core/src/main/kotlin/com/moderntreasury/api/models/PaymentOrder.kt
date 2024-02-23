@@ -3406,12 +3406,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun virtualAccount(): Optional<VirtualAccount> = Optional.ofNullable(virtualAccount)
+
         fun internalAccount(): Optional<InternalAccount> = Optional.ofNullable(internalAccount)
 
         fun isVirtualAccount(): Boolean = virtualAccount != null
+
         fun isInternalAccount(): Boolean = internalAccount != null
 
         fun asVirtualAccount(): VirtualAccount = virtualAccount.getOrThrow("virtualAccount")
+
         fun asInternalAccount(): InternalAccount = internalAccount.getOrThrow("internalAccount")
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
