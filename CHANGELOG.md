@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.8.0 (2024-02-29)
+
+Full Changelog: [v2.7.0...v2.8.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.7.0...v2.8.0)
+
+### Features
+
+* **api:** add legal_entities resource ([#134](https://github.com/Modern-Treasury/modern-treasury-java/issues/134)) ([a106765](https://github.com/Modern-Treasury/modern-treasury-java/commit/a10676509346d590ed808a62f145ef1757672bc2))
+* **api:** added foreign exchange rate information ([#122](https://github.com/Modern-Treasury/modern-treasury-java/issues/122)) ([68da407](https://github.com/Modern-Treasury/modern-treasury-java/commit/68da4073e99d01ad3d9292327e3541c24c89cb42))
+
+
+### Chores
+
+* **ci:** update actions/setup-java action to v4 ([#128](https://github.com/Modern-Treasury/modern-treasury-java/issues/128)) ([4771044](https://github.com/Modern-Treasury/modern-treasury-java/commit/477104450ec616d9a603c1d8a439d2c4b8b64080))
+* **ci:** uses Stainless GitHub App for releases ([#118](https://github.com/Modern-Treasury/modern-treasury-java/issues/118)) ([674309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/674309fdd0b884a97f0f2622e8f3548f6a558087))
+* **internal:** refactor release environment script ([#120](https://github.com/Modern-Treasury/modern-treasury-java/issues/120)) ([50d3f7c](https://github.com/Modern-Treasury/modern-treasury-java/commit/50d3f7c4c731cc38475d8747e4e466f7c9cc662c))
+* **internal:** update deps ([#126](https://github.com/Modern-Treasury/modern-treasury-java/issues/126)) ([99fcfee](https://github.com/Modern-Treasury/modern-treasury-java/commit/99fcfeee8f35e92370eaea642d661b0c7d638a40))
+* update dependency com.diffplug.spotless:spotless-plugin-gradle to v6.25.0 ([#130](https://github.com/Modern-Treasury/modern-treasury-java/issues/130)) ([4fdbf49](https://github.com/Modern-Treasury/modern-treasury-java/commit/4fdbf49489ea337873960d74f86b96b2592d3643))
+* update dependency com.github.tomakehurst:wiremock-jre8 to v2.35.2 ([#133](https://github.com/Modern-Treasury/modern-treasury-java/issues/133)) ([dbfece1](https://github.com/Modern-Treasury/modern-treasury-java/commit/dbfece1544333374905b0e4ec842b03d35b13c1f))
+* update dependency com.google.guava:guava to v33 ([#131](https://github.com/Modern-Treasury/modern-treasury-java/issues/131)) ([882a517](https://github.com/Modern-Treasury/modern-treasury-java/commit/882a517d05041b448362f18e72f71caf365a6770))
+* update dependency com.squareup.okhttp3:okhttp to v4.12.0 ([#129](https://github.com/Modern-Treasury/modern-treasury-java/issues/129)) ([c125035](https://github.com/Modern-Treasury/modern-treasury-java/commit/c125035ccb39fe271b1be0dd024e01f368816680))
+* update dependency org.apache.httpcomponents.client5:httpclient5 to v5.3.1 ([#127](https://github.com/Modern-Treasury/modern-treasury-java/issues/127)) ([fc9f3b2](https://github.com/Modern-Treasury/modern-treasury-java/commit/fc9f3b2f1cb2075a9eb7c8b62a61be646801c765))
+* update dependency org.apache.httpcomponents.core5:httpcore5 to v5.2.4 ([#123](https://github.com/Modern-Treasury/modern-treasury-java/issues/123)) ([230966b](https://github.com/Modern-Treasury/modern-treasury-java/commit/230966ba4fc0f295eaf83b1a4580872ae2f63edf))
+* update dependency org.assertj:assertj-guava to v3.25.3 ([#125](https://github.com/Modern-Treasury/modern-treasury-java/issues/125)) ([a7cfddd](https://github.com/Modern-Treasury/modern-treasury-java/commit/a7cfddd65a0c6d873087c3e238897d881c0186a2))
+* update dependency org.slf4j:slf4j-simple to v1.7.36 ([#124](https://github.com/Modern-Treasury/modern-treasury-java/issues/124)) ([f757576](https://github.com/Modern-Treasury/modern-treasury-java/commit/f7575763ad03e9f207f6b3fbe0f9b40410940382))
+* update dependency org.slf4j:slf4j-simple to v2 ([#132](https://github.com/Modern-Treasury/modern-treasury-java/issues/132)) ([7c13f9b](https://github.com/Modern-Treasury/modern-treasury-java/commit/7c13f9b95a14302f104e04d673cf18132e523e3e))
+
 ## 2.7.0 (2024-02-13)
 
 Full Changelog: [v2.6.1...v2.7.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.6.1...v2.7.0)
