@@ -20,7 +20,6 @@ import java.util.Objects
 class BalanceReportCreateParams
 constructor(
     private val internalAccountId: String,
-    private val amount: Long,
     private val asOfDate: LocalDate,
     private val asOfTime: String,
     private val balanceReportType: BalanceReportType,
@@ -31,8 +30,6 @@ constructor(
 ) {
 
     fun internalAccountId(): String = internalAccountId
-
-    fun amount(): Long = amount
 
     fun asOfDate(): LocalDate = asOfDate
 
@@ -45,7 +42,6 @@ constructor(
     @JvmSynthetic
     internal fun getBody(): BalanceReportCreateBody {
         return BalanceReportCreateBody(
-            amount,
             asOfDate,
             asOfTime,
             balanceReportType,
@@ -69,7 +65,6 @@ constructor(
     @NoAutoDetect
     class BalanceReportCreateBody
     internal constructor(
-        private val amount: Long?,
         private val asOfDate: LocalDate?,
         private val asOfTime: String?,
         private val balanceReportType: BalanceReportType?,
@@ -78,9 +73,6 @@ constructor(
     ) {
 
         private var hashCode: Int = 0
-
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long? = amount
 
         /** The date of the balance report in local time. */
         @JsonProperty("as_of_date") fun asOfDate(): LocalDate? = asOfDate
@@ -110,7 +102,6 @@ constructor(
             }
 
             return other is BalanceReportCreateBody &&
-                this.amount == other.amount &&
                 this.asOfDate == other.asOfDate &&
                 this.asOfTime == other.asOfTime &&
                 this.balanceReportType == other.balanceReportType &&
@@ -122,7 +113,6 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        amount,
                         asOfDate,
                         asOfTime,
                         balanceReportType,
@@ -134,7 +124,7 @@ constructor(
         }
 
         override fun toString() =
-            "BalanceReportCreateBody{amount=$amount, asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalProperties=$additionalProperties}"
+            "BalanceReportCreateBody{asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -143,7 +133,6 @@ constructor(
 
         class Builder {
 
-            private var amount: Long? = null
             private var asOfDate: LocalDate? = null
             private var asOfTime: String? = null
             private var balanceReportType: BalanceReportType? = null
@@ -152,18 +141,12 @@ constructor(
 
             @JvmSynthetic
             internal fun from(balanceReportCreateBody: BalanceReportCreateBody) = apply {
-                this.amount = balanceReportCreateBody.amount
                 this.asOfDate = balanceReportCreateBody.asOfDate
                 this.asOfTime = balanceReportCreateBody.asOfTime
                 this.balanceReportType = balanceReportCreateBody.balanceReportType
                 this.balances = balanceReportCreateBody.balances
                 additionalProperties(balanceReportCreateBody.additionalProperties)
             }
-
-            /**
-             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-             */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
 
             /** The date of the balance report in local time. */
             @JsonProperty("as_of_date")
@@ -202,7 +185,6 @@ constructor(
 
             fun build(): BalanceReportCreateBody =
                 BalanceReportCreateBody(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(asOfDate) { "`asOfDate` is required but was not set" },
                     checkNotNull(asOfTime) { "`asOfTime` is required but was not set" },
                     checkNotNull(balanceReportType) {
@@ -228,7 +210,6 @@ constructor(
 
         return other is BalanceReportCreateParams &&
             this.internalAccountId == other.internalAccountId &&
-            this.amount == other.amount &&
             this.asOfDate == other.asOfDate &&
             this.asOfTime == other.asOfTime &&
             this.balanceReportType == other.balanceReportType &&
@@ -241,7 +222,6 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             internalAccountId,
-            amount,
             asOfDate,
             asOfTime,
             balanceReportType,
@@ -253,7 +233,7 @@ constructor(
     }
 
     override fun toString() =
-        "BalanceReportCreateParams{internalAccountId=$internalAccountId, amount=$amount, asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "BalanceReportCreateParams{internalAccountId=$internalAccountId, asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -266,7 +246,6 @@ constructor(
     class Builder {
 
         private var internalAccountId: String? = null
-        private var amount: Long? = null
         private var asOfDate: LocalDate? = null
         private var asOfTime: String? = null
         private var balanceReportType: BalanceReportType? = null
@@ -278,7 +257,6 @@ constructor(
         @JvmSynthetic
         internal fun from(balanceReportCreateParams: BalanceReportCreateParams) = apply {
             this.internalAccountId = balanceReportCreateParams.internalAccountId
-            this.amount = balanceReportCreateParams.amount
             this.asOfDate = balanceReportCreateParams.asOfDate
             this.asOfTime = balanceReportCreateParams.asOfTime
             this.balanceReportType = balanceReportCreateParams.balanceReportType
@@ -291,9 +269,6 @@ constructor(
         fun internalAccountId(internalAccountId: String) = apply {
             this.internalAccountId = internalAccountId
         }
-
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        fun amount(amount: Long) = apply { this.amount = amount }
 
         /** The date of the balance report in local time. */
         fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
@@ -377,7 +352,6 @@ constructor(
                 checkNotNull(internalAccountId) {
                     "`internalAccountId` is required but was not set"
                 },
-                checkNotNull(amount) { "`amount` is required but was not set" },
                 checkNotNull(asOfDate) { "`asOfDate` is required but was not set" },
                 checkNotNull(asOfTime) { "`asOfTime` is required but was not set" },
                 checkNotNull(balanceReportType) {
