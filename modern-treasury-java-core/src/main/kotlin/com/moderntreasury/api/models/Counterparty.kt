@@ -31,6 +31,7 @@ private constructor(
     private val name: JsonField<String>,
     private val accounts: JsonField<List<Account>>,
     private val email: JsonField<String>,
+    private val legalEntityId: JsonField<String>,
     private val metadata: JsonField<Metadata>,
     private val sendRemittanceAdvice: JsonField<Boolean>,
     private val verificationStatus: JsonField<VerificationStatus>,
@@ -66,6 +67,10 @@ private constructor(
 
     /** The counterparty's email. */
     fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
+
+    /** The id of the legal entity. */
+    fun legalEntityId(): Optional<String> =
+        Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     fun metadata(): Metadata = metadata.getRequired("metadata")
@@ -104,6 +109,9 @@ private constructor(
     /** The counterparty's email. */
     @JsonProperty("email") @ExcludeMissing fun _email() = email
 
+    /** The id of the legal entity. */
+    @JsonProperty("legal_entity_id") @ExcludeMissing fun _legalEntityId() = legalEntityId
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
@@ -134,6 +142,7 @@ private constructor(
             name()
             accounts().forEach { it.validate() }
             email()
+            legalEntityId()
             metadata().validate()
             sendRemittanceAdvice()
             verificationStatus()
@@ -158,6 +167,7 @@ private constructor(
             this.name == other.name &&
             this.accounts == other.accounts &&
             this.email == other.email &&
+            this.legalEntityId == other.legalEntityId &&
             this.metadata == other.metadata &&
             this.sendRemittanceAdvice == other.sendRemittanceAdvice &&
             this.verificationStatus == other.verificationStatus &&
@@ -177,6 +187,7 @@ private constructor(
                     name,
                     accounts,
                     email,
+                    legalEntityId,
                     metadata,
                     sendRemittanceAdvice,
                     verificationStatus,
@@ -187,7 +198,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Counterparty{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, name=$name, accounts=$accounts, email=$email, metadata=$metadata, sendRemittanceAdvice=$sendRemittanceAdvice, verificationStatus=$verificationStatus, additionalProperties=$additionalProperties}"
+        "Counterparty{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, name=$name, accounts=$accounts, email=$email, legalEntityId=$legalEntityId, metadata=$metadata, sendRemittanceAdvice=$sendRemittanceAdvice, verificationStatus=$verificationStatus, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -205,6 +216,7 @@ private constructor(
         private var name: JsonField<String> = JsonMissing.of()
         private var accounts: JsonField<List<Account>> = JsonMissing.of()
         private var email: JsonField<String> = JsonMissing.of()
+        private var legalEntityId: JsonField<String> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var sendRemittanceAdvice: JsonField<Boolean> = JsonMissing.of()
         private var verificationStatus: JsonField<VerificationStatus> = JsonMissing.of()
@@ -221,6 +233,7 @@ private constructor(
             this.name = counterparty.name
             this.accounts = counterparty.accounts
             this.email = counterparty.email
+            this.legalEntityId = counterparty.legalEntityId
             this.metadata = counterparty.metadata
             this.sendRemittanceAdvice = counterparty.sendRemittanceAdvice
             this.verificationStatus = counterparty.verificationStatus
@@ -295,6 +308,16 @@ private constructor(
         @ExcludeMissing
         fun email(email: JsonField<String>) = apply { this.email = email }
 
+        /** The id of the legal entity. */
+        fun legalEntityId(legalEntityId: String) = legalEntityId(JsonField.of(legalEntityId))
+
+        /** The id of the legal entity. */
+        @JsonProperty("legal_entity_id")
+        @ExcludeMissing
+        fun legalEntityId(legalEntityId: JsonField<String>) = apply {
+            this.legalEntityId = legalEntityId
+        }
+
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
@@ -360,6 +383,7 @@ private constructor(
                 name,
                 accounts.map { it.toUnmodifiable() },
                 email,
+                legalEntityId,
                 metadata,
                 sendRemittanceAdvice,
                 verificationStatus,
