@@ -307,6 +307,7 @@ constructor(
         private val dateOfBirth: LocalDate?,
         private val businessName: String?,
         private val doingBusinessAsNames: List<String>?,
+        private val legalStructure: LegalStructure?,
         private val phoneNumbers: List<PhoneNumber>?,
         private val email: String?,
         private val website: String?,
@@ -335,6 +336,9 @@ constructor(
 
         @JsonProperty("doing_business_as_names")
         fun doingBusinessAsNames(): List<String>? = doingBusinessAsNames
+
+        /** The business's legal structure. */
+        @JsonProperty("legal_structure") fun legalStructure(): LegalStructure? = legalStructure
 
         @JsonProperty("phone_numbers") fun phoneNumbers(): List<PhoneNumber>? = phoneNumbers
 
@@ -375,6 +379,7 @@ constructor(
                 this.dateOfBirth == other.dateOfBirth &&
                 this.businessName == other.businessName &&
                 this.doingBusinessAsNames == other.doingBusinessAsNames &&
+                this.legalStructure == other.legalStructure &&
                 this.phoneNumbers == other.phoneNumbers &&
                 this.email == other.email &&
                 this.website == other.website &&
@@ -394,6 +399,7 @@ constructor(
                         dateOfBirth,
                         businessName,
                         doingBusinessAsNames,
+                        legalStructure,
                         phoneNumbers,
                         email,
                         website,
@@ -407,7 +413,7 @@ constructor(
         }
 
         override fun toString() =
-            "LegalEntity{legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+            "LegalEntity{legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -422,6 +428,7 @@ constructor(
             private var dateOfBirth: LocalDate? = null
             private var businessName: String? = null
             private var doingBusinessAsNames: List<String>? = null
+            private var legalStructure: LegalStructure? = null
             private var phoneNumbers: List<PhoneNumber>? = null
             private var email: String? = null
             private var website: String? = null
@@ -438,6 +445,7 @@ constructor(
                 this.dateOfBirth = legalEntity.dateOfBirth
                 this.businessName = legalEntity.businessName
                 this.doingBusinessAsNames = legalEntity.doingBusinessAsNames
+                this.legalStructure = legalEntity.legalStructure
                 this.phoneNumbers = legalEntity.phoneNumbers
                 this.email = legalEntity.email
                 this.website = legalEntity.website
@@ -472,6 +480,12 @@ constructor(
             @JsonProperty("doing_business_as_names")
             fun doingBusinessAsNames(doingBusinessAsNames: List<String>) = apply {
                 this.doingBusinessAsNames = doingBusinessAsNames
+            }
+
+            /** The business's legal structure. */
+            @JsonProperty("legal_structure")
+            fun legalStructure(legalStructure: LegalStructure) = apply {
+                this.legalStructure = legalStructure
             }
 
             @JsonProperty("phone_numbers")
@@ -526,6 +540,7 @@ constructor(
                     dateOfBirth,
                     businessName,
                     doingBusinessAsNames?.toUnmodifiable(),
+                    legalStructure,
                     phoneNumbers?.toUnmodifiable(),
                     email,
                     website,
@@ -540,7 +555,7 @@ constructor(
         @NoAutoDetect
         class LegalEntityAddressCreateRequest
         private constructor(
-            private val addressTypes: List<String>?,
+            private val addressTypes: List<AddressType>?,
             private val line1: String?,
             private val line2: String?,
             private val locality: String?,
@@ -553,7 +568,7 @@ constructor(
             private var hashCode: Int = 0
 
             /** The types of this address. */
-            @JsonProperty("address_types") fun addressTypes(): List<String>? = addressTypes
+            @JsonProperty("address_types") fun addressTypes(): List<AddressType>? = addressTypes
 
             @JsonProperty("line1") fun line1(): String? = line1
 
@@ -620,7 +635,7 @@ constructor(
 
             class Builder {
 
-                private var addressTypes: List<String>? = null
+                private var addressTypes: List<AddressType>? = null
                 private var line1: String? = null
                 private var line2: String? = null
                 private var locality: String? = null
@@ -645,7 +660,7 @@ constructor(
 
                 /** The types of this address. */
                 @JsonProperty("address_types")
-                fun addressTypes(addressTypes: List<String>) = apply {
+                fun addressTypes(addressTypes: List<AddressType>) = apply {
                     this.addressTypes = addressTypes
                 }
 
@@ -694,6 +709,82 @@ constructor(
                         country,
                         additionalProperties.toUnmodifiable(),
                     )
+            }
+
+            class AddressType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is AddressType && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    @JvmField val BUSINESS = AddressType(JsonField.of("business"))
+
+                    @JvmField val MAILING = AddressType(JsonField.of("mailing"))
+
+                    @JvmField val OTHER = AddressType(JsonField.of("other"))
+
+                    @JvmField val PO_BOX = AddressType(JsonField.of("po_box"))
+
+                    @JvmField val RESIDENTIAL = AddressType(JsonField.of("residential"))
+
+                    @JvmStatic fun of(value: String) = AddressType(JsonField.of(value))
+                }
+
+                enum class Known {
+                    BUSINESS,
+                    MAILING,
+                    OTHER,
+                    PO_BOX,
+                    RESIDENTIAL,
+                }
+
+                enum class Value {
+                    BUSINESS,
+                    MAILING,
+                    OTHER,
+                    PO_BOX,
+                    RESIDENTIAL,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        BUSINESS -> Value.BUSINESS
+                        MAILING -> Value.MAILING
+                        OTHER -> Value.OTHER
+                        PO_BOX -> Value.PO_BOX
+                        RESIDENTIAL -> Value.RESIDENTIAL
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        BUSINESS -> Known.BUSINESS
+                        MAILING -> Known.MAILING
+                        OTHER -> Known.OTHER
+                        PO_BOX -> Known.PO_BOX
+                        RESIDENTIAL -> Known.RESIDENTIAL
+                        else ->
+                            throw ModernTreasuryInvalidDataException("Unknown AddressType: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
         }
 
@@ -989,6 +1080,89 @@ constructor(
                     INDIVIDUAL -> Known.INDIVIDUAL
                     else ->
                         throw ModernTreasuryInvalidDataException("Unknown LegalEntityType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        class LegalStructure
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is LegalStructure && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                @JvmField val CORPORATION = LegalStructure(JsonField.of("corporation"))
+
+                @JvmField val LLC = LegalStructure(JsonField.of("llc"))
+
+                @JvmField val NON_PROFIT = LegalStructure(JsonField.of("non_profit"))
+
+                @JvmField val PARTNERSHIP = LegalStructure(JsonField.of("partnership"))
+
+                @JvmField
+                val SOLE_PROPRIETORSHIP = LegalStructure(JsonField.of("sole_proprietorship"))
+
+                @JvmField val TRUST = LegalStructure(JsonField.of("trust"))
+
+                @JvmStatic fun of(value: String) = LegalStructure(JsonField.of(value))
+            }
+
+            enum class Known {
+                CORPORATION,
+                LLC,
+                NON_PROFIT,
+                PARTNERSHIP,
+                SOLE_PROPRIETORSHIP,
+                TRUST,
+            }
+
+            enum class Value {
+                CORPORATION,
+                LLC,
+                NON_PROFIT,
+                PARTNERSHIP,
+                SOLE_PROPRIETORSHIP,
+                TRUST,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    CORPORATION -> Value.CORPORATION
+                    LLC -> Value.LLC
+                    NON_PROFIT -> Value.NON_PROFIT
+                    PARTNERSHIP -> Value.PARTNERSHIP
+                    SOLE_PROPRIETORSHIP -> Value.SOLE_PROPRIETORSHIP
+                    TRUST -> Value.TRUST
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    CORPORATION -> Known.CORPORATION
+                    LLC -> Known.LLC
+                    NON_PROFIT -> Known.NON_PROFIT
+                    PARTNERSHIP -> Known.PARTNERSHIP
+                    SOLE_PROPRIETORSHIP -> Known.SOLE_PROPRIETORSHIP
+                    TRUST -> Known.TRUST
+                    else ->
+                        throw ModernTreasuryInvalidDataException("Unknown LegalStructure: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()
