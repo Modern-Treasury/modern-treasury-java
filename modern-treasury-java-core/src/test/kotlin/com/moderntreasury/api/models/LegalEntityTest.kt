@@ -18,7 +18,9 @@ class LegalEntityTest {
                     listOf(
                         LegalEntity.LegalEntityAddress.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .addressTypes(listOf("string"))
+                            .addressTypes(
+                                listOf(LegalEntity.LegalEntityAddress.AddressType.BUSINESS)
+                            )
                             .country("string")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -56,6 +58,7 @@ class LegalEntityTest {
                 )
                 .lastName("string")
                 .legalEntityType(LegalEntity.LegalEntityType.BUSINESS)
+                .legalStructure(LegalEntity.LegalStructure.CORPORATION)
                 .liveMode(true)
                 .metadata(LegalEntity.Metadata.builder().build())
                 .object_("string")
@@ -71,7 +74,7 @@ class LegalEntityTest {
             .containsExactly(
                 LegalEntity.LegalEntityAddress.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .addressTypes(listOf("string"))
+                    .addressTypes(listOf(LegalEntity.LegalEntityAddress.AddressType.BUSINESS))
                     .country("string")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -109,6 +112,7 @@ class LegalEntityTest {
             )
         assertThat(legalEntity.lastName()).contains("string")
         assertThat(legalEntity.legalEntityType()).contains(LegalEntity.LegalEntityType.BUSINESS)
+        assertThat(legalEntity.legalStructure()).contains(LegalEntity.LegalStructure.CORPORATION)
         assertThat(legalEntity.liveMode()).contains(true)
         assertThat(legalEntity.metadata()).contains(LegalEntity.Metadata.builder().build())
         assertThat(legalEntity.object_()).contains("string")
