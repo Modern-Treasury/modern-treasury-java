@@ -359,6 +359,7 @@ private constructor(
         private val dateOfBirth: JsonField<LocalDate>,
         private val businessName: JsonField<String>,
         private val doingBusinessAsNames: JsonField<List<String>>,
+        private val legalStructure: JsonField<LegalStructure>,
         private val phoneNumbers: JsonField<List<PhoneNumber>>,
         private val email: JsonField<String>,
         private val website: JsonField<String>,
@@ -411,6 +412,10 @@ private constructor(
 
         fun doingBusinessAsNames(): Optional<List<String>> =
             Optional.ofNullable(doingBusinessAsNames.getNullable("doing_business_as_names"))
+
+        /** The business's legal structure. */
+        fun legalStructure(): Optional<LegalStructure> =
+            Optional.ofNullable(legalStructure.getNullable("legal_structure"))
 
         fun phoneNumbers(): Optional<List<PhoneNumber>> =
             Optional.ofNullable(phoneNumbers.getNullable("phone_numbers"))
@@ -469,6 +474,9 @@ private constructor(
         @ExcludeMissing
         fun _doingBusinessAsNames() = doingBusinessAsNames
 
+        /** The business's legal structure. */
+        @JsonProperty("legal_structure") @ExcludeMissing fun _legalStructure() = legalStructure
+
         @JsonProperty("phone_numbers") @ExcludeMissing fun _phoneNumbers() = phoneNumbers
 
         /** The entity's primary email. */
@@ -506,6 +514,7 @@ private constructor(
                 dateOfBirth()
                 businessName()
                 doingBusinessAsNames()
+                legalStructure()
                 phoneNumbers().map { it.forEach { it.validate() } }
                 email()
                 website()
@@ -536,6 +545,7 @@ private constructor(
                 this.dateOfBirth == other.dateOfBirth &&
                 this.businessName == other.businessName &&
                 this.doingBusinessAsNames == other.doingBusinessAsNames &&
+                this.legalStructure == other.legalStructure &&
                 this.phoneNumbers == other.phoneNumbers &&
                 this.email == other.email &&
                 this.website == other.website &&
@@ -561,6 +571,7 @@ private constructor(
                         dateOfBirth,
                         businessName,
                         doingBusinessAsNames,
+                        legalStructure,
                         phoneNumbers,
                         email,
                         website,
@@ -574,7 +585,7 @@ private constructor(
         }
 
         override fun toString() =
-            "AssociatedLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+            "AssociatedLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -595,6 +606,7 @@ private constructor(
             private var dateOfBirth: JsonField<LocalDate> = JsonMissing.of()
             private var businessName: JsonField<String> = JsonMissing.of()
             private var doingBusinessAsNames: JsonField<List<String>> = JsonMissing.of()
+            private var legalStructure: JsonField<LegalStructure> = JsonMissing.of()
             private var phoneNumbers: JsonField<List<PhoneNumber>> = JsonMissing.of()
             private var email: JsonField<String> = JsonMissing.of()
             private var website: JsonField<String> = JsonMissing.of()
@@ -617,6 +629,7 @@ private constructor(
                 this.dateOfBirth = associatedLegalEntity.dateOfBirth
                 this.businessName = associatedLegalEntity.businessName
                 this.doingBusinessAsNames = associatedLegalEntity.doingBusinessAsNames
+                this.legalStructure = associatedLegalEntity.legalStructure
                 this.phoneNumbers = associatedLegalEntity.phoneNumbers
                 this.email = associatedLegalEntity.email
                 this.website = associatedLegalEntity.website
@@ -732,6 +745,17 @@ private constructor(
                 this.doingBusinessAsNames = doingBusinessAsNames
             }
 
+            /** The business's legal structure. */
+            fun legalStructure(legalStructure: LegalStructure) =
+                legalStructure(JsonField.of(legalStructure))
+
+            /** The business's legal structure. */
+            @JsonProperty("legal_structure")
+            @ExcludeMissing
+            fun legalStructure(legalStructure: JsonField<LegalStructure>) = apply {
+                this.legalStructure = legalStructure
+            }
+
             fun phoneNumbers(phoneNumbers: List<PhoneNumber>) =
                 phoneNumbers(JsonField.of(phoneNumbers))
 
@@ -820,6 +844,7 @@ private constructor(
                     dateOfBirth,
                     businessName,
                     doingBusinessAsNames.map { it.toUnmodifiable() },
+                    legalStructure,
                     phoneNumbers.map { it.toUnmodifiable() },
                     email,
                     website,
@@ -840,7 +865,7 @@ private constructor(
             private val createdAt: JsonField<OffsetDateTime>,
             private val updatedAt: JsonField<OffsetDateTime>,
             private val discardedAt: JsonField<OffsetDateTime>,
-            private val addressTypes: JsonField<List<String>>,
+            private val addressTypes: JsonField<List<AddressType>>,
             private val line1: JsonField<String>,
             private val line2: JsonField<String>,
             private val locality: JsonField<String>,
@@ -872,7 +897,7 @@ private constructor(
                 Optional.ofNullable(discardedAt.getNullable("discarded_at"))
 
             /** The types of this address. */
-            fun addressTypes(): List<String> = addressTypes.getRequired("address_types")
+            fun addressTypes(): List<AddressType> = addressTypes.getRequired("address_types")
 
             fun line1(): Optional<String> = Optional.ofNullable(line1.getNullable("line1"))
 
@@ -1012,7 +1037,7 @@ private constructor(
                 private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var discardedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-                private var addressTypes: JsonField<List<String>> = JsonMissing.of()
+                private var addressTypes: JsonField<List<AddressType>> = JsonMissing.of()
                 private var line1: JsonField<String> = JsonMissing.of()
                 private var line2: JsonField<String> = JsonMissing.of()
                 private var locality: JsonField<String> = JsonMissing.of()
@@ -1091,13 +1116,13 @@ private constructor(
                 }
 
                 /** The types of this address. */
-                fun addressTypes(addressTypes: List<String>) =
+                fun addressTypes(addressTypes: List<AddressType>) =
                     addressTypes(JsonField.of(addressTypes))
 
                 /** The types of this address. */
                 @JsonProperty("address_types")
                 @ExcludeMissing
-                fun addressTypes(addressTypes: JsonField<List<String>>) = apply {
+                fun addressTypes(addressTypes: JsonField<List<AddressType>>) = apply {
                     this.addressTypes = addressTypes
                 }
 
@@ -1179,6 +1204,82 @@ private constructor(
                         country,
                         additionalProperties.toUnmodifiable(),
                     )
+            }
+
+            class AddressType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is AddressType && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    @JvmField val BUSINESS = AddressType(JsonField.of("business"))
+
+                    @JvmField val MAILING = AddressType(JsonField.of("mailing"))
+
+                    @JvmField val OTHER = AddressType(JsonField.of("other"))
+
+                    @JvmField val PO_BOX = AddressType(JsonField.of("po_box"))
+
+                    @JvmField val RESIDENTIAL = AddressType(JsonField.of("residential"))
+
+                    @JvmStatic fun of(value: String) = AddressType(JsonField.of(value))
+                }
+
+                enum class Known {
+                    BUSINESS,
+                    MAILING,
+                    OTHER,
+                    PO_BOX,
+                    RESIDENTIAL,
+                }
+
+                enum class Value {
+                    BUSINESS,
+                    MAILING,
+                    OTHER,
+                    PO_BOX,
+                    RESIDENTIAL,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        BUSINESS -> Value.BUSINESS
+                        MAILING -> Value.MAILING
+                        OTHER -> Value.OTHER
+                        PO_BOX -> Value.PO_BOX
+                        RESIDENTIAL -> Value.RESIDENTIAL
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        BUSINESS -> Known.BUSINESS
+                        MAILING -> Known.MAILING
+                        OTHER -> Known.OTHER
+                        PO_BOX -> Known.PO_BOX
+                        RESIDENTIAL -> Known.RESIDENTIAL
+                        else ->
+                            throw ModernTreasuryInvalidDataException("Unknown AddressType: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
         }
 
@@ -1621,6 +1722,89 @@ private constructor(
                     JOINT -> Known.JOINT
                     else ->
                         throw ModernTreasuryInvalidDataException("Unknown LegalEntityType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        class LegalStructure
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is LegalStructure && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                @JvmField val CORPORATION = LegalStructure(JsonField.of("corporation"))
+
+                @JvmField val LLC = LegalStructure(JsonField.of("llc"))
+
+                @JvmField val NON_PROFIT = LegalStructure(JsonField.of("non_profit"))
+
+                @JvmField val PARTNERSHIP = LegalStructure(JsonField.of("partnership"))
+
+                @JvmField
+                val SOLE_PROPRIETORSHIP = LegalStructure(JsonField.of("sole_proprietorship"))
+
+                @JvmField val TRUST = LegalStructure(JsonField.of("trust"))
+
+                @JvmStatic fun of(value: String) = LegalStructure(JsonField.of(value))
+            }
+
+            enum class Known {
+                CORPORATION,
+                LLC,
+                NON_PROFIT,
+                PARTNERSHIP,
+                SOLE_PROPRIETORSHIP,
+                TRUST,
+            }
+
+            enum class Value {
+                CORPORATION,
+                LLC,
+                NON_PROFIT,
+                PARTNERSHIP,
+                SOLE_PROPRIETORSHIP,
+                TRUST,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    CORPORATION -> Value.CORPORATION
+                    LLC -> Value.LLC
+                    NON_PROFIT -> Value.NON_PROFIT
+                    PARTNERSHIP -> Value.PARTNERSHIP
+                    SOLE_PROPRIETORSHIP -> Value.SOLE_PROPRIETORSHIP
+                    TRUST -> Value.TRUST
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    CORPORATION -> Known.CORPORATION
+                    LLC -> Known.LLC
+                    NON_PROFIT -> Known.NON_PROFIT
+                    PARTNERSHIP -> Known.PARTNERSHIP
+                    SOLE_PROPRIETORSHIP -> Known.SOLE_PROPRIETORSHIP
+                    TRUST -> Known.TRUST
+                    else ->
+                        throw ModernTreasuryInvalidDataException("Unknown LegalStructure: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()
