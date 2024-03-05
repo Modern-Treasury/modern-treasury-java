@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.9.0 (2024-03-05)
+
+Full Changelog: [v2.8.0...v2.9.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.8.0...v2.9.0)
+
+### Features
+
+* **api:** add legal_structure enum member ([#135](https://github.com/Modern-Treasury/modern-treasury-java/issues/135)) ([1157816](https://github.com/Modern-Treasury/modern-treasury-java/commit/1157816801d2d427a2d04c31d3196e8954673c5b))
+
+
+### Chores
+
+* add api.md ([#137](https://github.com/Modern-Treasury/modern-treasury-java/issues/137)) ([3b9a808](https://github.com/Modern-Treasury/modern-treasury-java/commit/3b9a808af1ae8015593c9fba925ac99d794f7d5f))
+
 ## 2.8.0 (2024-02-29)
 
 Full Changelog: [v2.7.0...v2.8.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.7.0...v2.8.0)
