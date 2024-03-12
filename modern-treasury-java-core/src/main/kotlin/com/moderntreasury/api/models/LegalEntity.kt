@@ -33,6 +33,7 @@ private constructor(
     private val firstName: JsonField<String>,
     private val lastName: JsonField<String>,
     private val dateOfBirth: JsonField<LocalDate>,
+    private val dateFormed: JsonField<LocalDate>,
     private val businessName: JsonField<String>,
     private val doingBusinessAsNames: JsonField<List<String>>,
     private val legalStructure: JsonField<LegalStructure>,
@@ -78,9 +79,13 @@ private constructor(
     /** An individual's last name. */
     fun lastName(): Optional<String> = Optional.ofNullable(lastName.getNullable("last_name"))
 
-    /** An individual's data of birth (YYYY-MM-DD). */
+    /** An individual's date of birth (YYYY-MM-DD). */
     fun dateOfBirth(): Optional<LocalDate> =
         Optional.ofNullable(dateOfBirth.getNullable("date_of_birth"))
+
+    /** A business's formation date (YYYY-MM-DD). */
+    fun dateFormed(): Optional<LocalDate> =
+        Optional.ofNullable(dateFormed.getNullable("date_formed"))
 
     /** The business's legal business name. */
     fun businessName(): Optional<String> =
@@ -138,8 +143,11 @@ private constructor(
     /** An individual's last name. */
     @JsonProperty("last_name") @ExcludeMissing fun _lastName() = lastName
 
-    /** An individual's data of birth (YYYY-MM-DD). */
+    /** An individual's date of birth (YYYY-MM-DD). */
     @JsonProperty("date_of_birth") @ExcludeMissing fun _dateOfBirth() = dateOfBirth
+
+    /** A business's formation date (YYYY-MM-DD). */
+    @JsonProperty("date_formed") @ExcludeMissing fun _dateFormed() = dateFormed
 
     /** The business's legal business name. */
     @JsonProperty("business_name") @ExcludeMissing fun _businessName() = businessName
@@ -184,6 +192,7 @@ private constructor(
             firstName()
             lastName()
             dateOfBirth()
+            dateFormed()
             businessName()
             doingBusinessAsNames()
             legalStructure()
@@ -215,6 +224,7 @@ private constructor(
             this.firstName == other.firstName &&
             this.lastName == other.lastName &&
             this.dateOfBirth == other.dateOfBirth &&
+            this.dateFormed == other.dateFormed &&
             this.businessName == other.businessName &&
             this.doingBusinessAsNames == other.doingBusinessAsNames &&
             this.legalStructure == other.legalStructure &&
@@ -241,6 +251,7 @@ private constructor(
                     firstName,
                     lastName,
                     dateOfBirth,
+                    dateFormed,
                     businessName,
                     doingBusinessAsNames,
                     legalStructure,
@@ -257,7 +268,7 @@ private constructor(
     }
 
     override fun toString() =
-        "LegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+        "LegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -276,6 +287,7 @@ private constructor(
         private var firstName: JsonField<String> = JsonMissing.of()
         private var lastName: JsonField<String> = JsonMissing.of()
         private var dateOfBirth: JsonField<LocalDate> = JsonMissing.of()
+        private var dateFormed: JsonField<LocalDate> = JsonMissing.of()
         private var businessName: JsonField<String> = JsonMissing.of()
         private var doingBusinessAsNames: JsonField<List<String>> = JsonMissing.of()
         private var legalStructure: JsonField<LegalStructure> = JsonMissing.of()
@@ -299,6 +311,7 @@ private constructor(
             this.firstName = legalEntity.firstName
             this.lastName = legalEntity.lastName
             this.dateOfBirth = legalEntity.dateOfBirth
+            this.dateFormed = legalEntity.dateFormed
             this.businessName = legalEntity.businessName
             this.doingBusinessAsNames = legalEntity.doingBusinessAsNames
             this.legalStructure = legalEntity.legalStructure
@@ -382,15 +395,23 @@ private constructor(
         @ExcludeMissing
         fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
-        /** An individual's data of birth (YYYY-MM-DD). */
+        /** An individual's date of birth (YYYY-MM-DD). */
         fun dateOfBirth(dateOfBirth: LocalDate) = dateOfBirth(JsonField.of(dateOfBirth))
 
-        /** An individual's data of birth (YYYY-MM-DD). */
+        /** An individual's date of birth (YYYY-MM-DD). */
         @JsonProperty("date_of_birth")
         @ExcludeMissing
         fun dateOfBirth(dateOfBirth: JsonField<LocalDate>) = apply {
             this.dateOfBirth = dateOfBirth
         }
+
+        /** A business's formation date (YYYY-MM-DD). */
+        fun dateFormed(dateFormed: LocalDate) = dateFormed(JsonField.of(dateFormed))
+
+        /** A business's formation date (YYYY-MM-DD). */
+        @JsonProperty("date_formed")
+        @ExcludeMissing
+        fun dateFormed(dateFormed: JsonField<LocalDate>) = apply { this.dateFormed = dateFormed }
 
         /** The business's legal business name. */
         fun businessName(businessName: String) = businessName(JsonField.of(businessName))
@@ -505,6 +526,7 @@ private constructor(
                 firstName,
                 lastName,
                 dateOfBirth,
+                dateFormed,
                 businessName,
                 doingBusinessAsNames.map { it.toUnmodifiable() },
                 legalStructure,
