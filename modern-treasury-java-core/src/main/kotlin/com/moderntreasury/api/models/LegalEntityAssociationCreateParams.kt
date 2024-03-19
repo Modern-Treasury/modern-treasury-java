@@ -21,10 +21,10 @@ import java.util.Optional
 class LegalEntityAssociationCreateParams
 constructor(
     private val relationshipTypes: List<RelationshipType>,
-    private val associatedLegalEntity: AssociatedLegalEntityCreate?,
-    private val associatedLegalEntityId: String?,
-    private val associatorLegalEntityId: String?,
+    private val childLegalEntity: ChildLegalEntityCreate?,
+    private val childLegalEntityId: String?,
     private val ownershipPercentage: Long?,
+    private val parentLegalEntityId: String?,
     private val title: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -33,14 +33,13 @@ constructor(
 
     fun relationshipTypes(): List<RelationshipType> = relationshipTypes
 
-    fun associatedLegalEntity(): Optional<AssociatedLegalEntityCreate> =
-        Optional.ofNullable(associatedLegalEntity)
+    fun childLegalEntity(): Optional<ChildLegalEntityCreate> = Optional.ofNullable(childLegalEntity)
 
-    fun associatedLegalEntityId(): Optional<String> = Optional.ofNullable(associatedLegalEntityId)
-
-    fun associatorLegalEntityId(): Optional<String> = Optional.ofNullable(associatorLegalEntityId)
+    fun childLegalEntityId(): Optional<String> = Optional.ofNullable(childLegalEntityId)
 
     fun ownershipPercentage(): Optional<Long> = Optional.ofNullable(ownershipPercentage)
+
+    fun parentLegalEntityId(): Optional<String> = Optional.ofNullable(parentLegalEntityId)
 
     fun title(): Optional<String> = Optional.ofNullable(title)
 
@@ -48,10 +47,10 @@ constructor(
     internal fun getBody(): LegalEntityAssociationCreateBody {
         return LegalEntityAssociationCreateBody(
             relationshipTypes,
-            associatedLegalEntity,
-            associatedLegalEntityId,
-            associatorLegalEntityId,
+            childLegalEntity,
+            childLegalEntityId,
             ownershipPercentage,
+            parentLegalEntityId,
             title,
             additionalBodyProperties,
         )
@@ -66,10 +65,10 @@ constructor(
     class LegalEntityAssociationCreateBody
     internal constructor(
         private val relationshipTypes: List<RelationshipType>?,
-        private val associatedLegalEntity: AssociatedLegalEntityCreate?,
-        private val associatedLegalEntityId: String?,
-        private val associatorLegalEntityId: String?,
+        private val childLegalEntity: ChildLegalEntityCreate?,
+        private val childLegalEntityId: String?,
         private val ownershipPercentage: Long?,
+        private val parentLegalEntityId: String?,
         private val title: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -79,22 +78,22 @@ constructor(
         @JsonProperty("relationship_types")
         fun relationshipTypes(): List<RelationshipType>? = relationshipTypes
 
-        /** The associated legal entity. */
-        @JsonProperty("associated_legal_entity")
-        fun associatedLegalEntity(): AssociatedLegalEntityCreate? = associatedLegalEntity
+        /** The child legal entity. */
+        @JsonProperty("child_legal_entity")
+        fun childLegalEntity(): ChildLegalEntityCreate? = childLegalEntity
 
-        /** The ID of the associated legal entity. */
-        @JsonProperty("associated_legal_entity_id")
-        fun associatedLegalEntityId(): String? = associatedLegalEntityId
+        /** The ID of the child legal entity. */
+        @JsonProperty("child_legal_entity_id")
+        fun childLegalEntityId(): String? = childLegalEntityId
 
-        /** The ID of the associator legal entity. This must be a business or joint legal entity. */
-        @JsonProperty("associator_legal_entity_id")
-        fun associatorLegalEntityId(): String? = associatorLegalEntityId
-
-        /** The associated entity's ownership percentage iff they are a beneficial owner. */
+        /** The child entity's ownership percentage iff they are a beneficial owner. */
         @JsonProperty("ownership_percentage") fun ownershipPercentage(): Long? = ownershipPercentage
 
-        /** The job title of the associated entity at the associator entity. */
+        /** The ID of the parent legal entity. This must be a business or joint legal entity. */
+        @JsonProperty("parent_legal_entity_id")
+        fun parentLegalEntityId(): String? = parentLegalEntityId
+
+        /** The job title of the child entity at the parent entity. */
         @JsonProperty("title") fun title(): String? = title
 
         @JsonAnyGetter
@@ -110,10 +109,10 @@ constructor(
 
             return other is LegalEntityAssociationCreateBody &&
                 this.relationshipTypes == other.relationshipTypes &&
-                this.associatedLegalEntity == other.associatedLegalEntity &&
-                this.associatedLegalEntityId == other.associatedLegalEntityId &&
-                this.associatorLegalEntityId == other.associatorLegalEntityId &&
+                this.childLegalEntity == other.childLegalEntity &&
+                this.childLegalEntityId == other.childLegalEntityId &&
                 this.ownershipPercentage == other.ownershipPercentage &&
+                this.parentLegalEntityId == other.parentLegalEntityId &&
                 this.title == other.title &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -123,10 +122,10 @@ constructor(
                 hashCode =
                     Objects.hash(
                         relationshipTypes,
-                        associatedLegalEntity,
-                        associatedLegalEntityId,
-                        associatorLegalEntityId,
+                        childLegalEntity,
+                        childLegalEntityId,
                         ownershipPercentage,
+                        parentLegalEntityId,
                         title,
                         additionalProperties,
                     )
@@ -135,7 +134,7 @@ constructor(
         }
 
         override fun toString() =
-            "LegalEntityAssociationCreateBody{relationshipTypes=$relationshipTypes, associatedLegalEntity=$associatedLegalEntity, associatedLegalEntityId=$associatedLegalEntityId, associatorLegalEntityId=$associatorLegalEntityId, ownershipPercentage=$ownershipPercentage, title=$title, additionalProperties=$additionalProperties}"
+            "LegalEntityAssociationCreateBody{relationshipTypes=$relationshipTypes, childLegalEntity=$childLegalEntity, childLegalEntityId=$childLegalEntityId, ownershipPercentage=$ownershipPercentage, parentLegalEntityId=$parentLegalEntityId, title=$title, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -145,10 +144,10 @@ constructor(
         class Builder {
 
             private var relationshipTypes: List<RelationshipType>? = null
-            private var associatedLegalEntity: AssociatedLegalEntityCreate? = null
-            private var associatedLegalEntityId: String? = null
-            private var associatorLegalEntityId: String? = null
+            private var childLegalEntity: ChildLegalEntityCreate? = null
+            private var childLegalEntityId: String? = null
             private var ownershipPercentage: Long? = null
+            private var parentLegalEntityId: String? = null
             private var title: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -156,13 +155,10 @@ constructor(
             internal fun from(legalEntityAssociationCreateBody: LegalEntityAssociationCreateBody) =
                 apply {
                     this.relationshipTypes = legalEntityAssociationCreateBody.relationshipTypes
-                    this.associatedLegalEntity =
-                        legalEntityAssociationCreateBody.associatedLegalEntity
-                    this.associatedLegalEntityId =
-                        legalEntityAssociationCreateBody.associatedLegalEntityId
-                    this.associatorLegalEntityId =
-                        legalEntityAssociationCreateBody.associatorLegalEntityId
+                    this.childLegalEntity = legalEntityAssociationCreateBody.childLegalEntity
+                    this.childLegalEntityId = legalEntityAssociationCreateBody.childLegalEntityId
                     this.ownershipPercentage = legalEntityAssociationCreateBody.ownershipPercentage
+                    this.parentLegalEntityId = legalEntityAssociationCreateBody.parentLegalEntityId
                     this.title = legalEntityAssociationCreateBody.title
                     additionalProperties(legalEntityAssociationCreateBody.additionalProperties)
                 }
@@ -172,33 +168,31 @@ constructor(
                 this.relationshipTypes = relationshipTypes
             }
 
-            /** The associated legal entity. */
-            @JsonProperty("associated_legal_entity")
-            fun associatedLegalEntity(associatedLegalEntity: AssociatedLegalEntityCreate) = apply {
-                this.associatedLegalEntity = associatedLegalEntity
+            /** The child legal entity. */
+            @JsonProperty("child_legal_entity")
+            fun childLegalEntity(childLegalEntity: ChildLegalEntityCreate) = apply {
+                this.childLegalEntity = childLegalEntity
             }
 
-            /** The ID of the associated legal entity. */
-            @JsonProperty("associated_legal_entity_id")
-            fun associatedLegalEntityId(associatedLegalEntityId: String) = apply {
-                this.associatedLegalEntityId = associatedLegalEntityId
+            /** The ID of the child legal entity. */
+            @JsonProperty("child_legal_entity_id")
+            fun childLegalEntityId(childLegalEntityId: String) = apply {
+                this.childLegalEntityId = childLegalEntityId
             }
 
-            /**
-             * The ID of the associator legal entity. This must be a business or joint legal entity.
-             */
-            @JsonProperty("associator_legal_entity_id")
-            fun associatorLegalEntityId(associatorLegalEntityId: String) = apply {
-                this.associatorLegalEntityId = associatorLegalEntityId
-            }
-
-            /** The associated entity's ownership percentage iff they are a beneficial owner. */
+            /** The child entity's ownership percentage iff they are a beneficial owner. */
             @JsonProperty("ownership_percentage")
             fun ownershipPercentage(ownershipPercentage: Long) = apply {
                 this.ownershipPercentage = ownershipPercentage
             }
 
-            /** The job title of the associated entity at the associator entity. */
+            /** The ID of the parent legal entity. This must be a business or joint legal entity. */
+            @JsonProperty("parent_legal_entity_id")
+            fun parentLegalEntityId(parentLegalEntityId: String) = apply {
+                this.parentLegalEntityId = parentLegalEntityId
+            }
+
+            /** The job title of the child entity at the parent entity. */
             @JsonProperty("title") fun title(title: String) = apply { this.title = title }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -221,10 +215,10 @@ constructor(
                             "`relationshipTypes` is required but was not set"
                         }
                         .toUnmodifiable(),
-                    associatedLegalEntity,
-                    associatedLegalEntityId,
-                    associatorLegalEntityId,
+                    childLegalEntity,
+                    childLegalEntityId,
                     ownershipPercentage,
+                    parentLegalEntityId,
                     title,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -244,10 +238,10 @@ constructor(
 
         return other is LegalEntityAssociationCreateParams &&
             this.relationshipTypes == other.relationshipTypes &&
-            this.associatedLegalEntity == other.associatedLegalEntity &&
-            this.associatedLegalEntityId == other.associatedLegalEntityId &&
-            this.associatorLegalEntityId == other.associatorLegalEntityId &&
+            this.childLegalEntity == other.childLegalEntity &&
+            this.childLegalEntityId == other.childLegalEntityId &&
             this.ownershipPercentage == other.ownershipPercentage &&
+            this.parentLegalEntityId == other.parentLegalEntityId &&
             this.title == other.title &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -257,10 +251,10 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             relationshipTypes,
-            associatedLegalEntity,
-            associatedLegalEntityId,
-            associatorLegalEntityId,
+            childLegalEntity,
+            childLegalEntityId,
             ownershipPercentage,
+            parentLegalEntityId,
             title,
             additionalQueryParams,
             additionalHeaders,
@@ -269,7 +263,7 @@ constructor(
     }
 
     override fun toString() =
-        "LegalEntityAssociationCreateParams{relationshipTypes=$relationshipTypes, associatedLegalEntity=$associatedLegalEntity, associatedLegalEntityId=$associatedLegalEntityId, associatorLegalEntityId=$associatorLegalEntityId, ownershipPercentage=$ownershipPercentage, title=$title, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LegalEntityAssociationCreateParams{relationshipTypes=$relationshipTypes, childLegalEntity=$childLegalEntity, childLegalEntityId=$childLegalEntityId, ownershipPercentage=$ownershipPercentage, parentLegalEntityId=$parentLegalEntityId, title=$title, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -282,10 +276,10 @@ constructor(
     class Builder {
 
         private var relationshipTypes: MutableList<RelationshipType> = mutableListOf()
-        private var associatedLegalEntity: AssociatedLegalEntityCreate? = null
-        private var associatedLegalEntityId: String? = null
-        private var associatorLegalEntityId: String? = null
+        private var childLegalEntity: ChildLegalEntityCreate? = null
+        private var childLegalEntityId: String? = null
         private var ownershipPercentage: Long? = null
+        private var parentLegalEntityId: String? = null
         private var title: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -295,13 +289,10 @@ constructor(
         internal fun from(legalEntityAssociationCreateParams: LegalEntityAssociationCreateParams) =
             apply {
                 this.relationshipTypes(legalEntityAssociationCreateParams.relationshipTypes)
-                this.associatedLegalEntity =
-                    legalEntityAssociationCreateParams.associatedLegalEntity
-                this.associatedLegalEntityId =
-                    legalEntityAssociationCreateParams.associatedLegalEntityId
-                this.associatorLegalEntityId =
-                    legalEntityAssociationCreateParams.associatorLegalEntityId
+                this.childLegalEntity = legalEntityAssociationCreateParams.childLegalEntity
+                this.childLegalEntityId = legalEntityAssociationCreateParams.childLegalEntityId
                 this.ownershipPercentage = legalEntityAssociationCreateParams.ownershipPercentage
+                this.parentLegalEntityId = legalEntityAssociationCreateParams.parentLegalEntityId
                 this.title = legalEntityAssociationCreateParams.title
                 additionalQueryParams(legalEntityAssociationCreateParams.additionalQueryParams)
                 additionalHeaders(legalEntityAssociationCreateParams.additionalHeaders)
@@ -319,27 +310,27 @@ constructor(
             this.relationshipTypes.add(relationshipType)
         }
 
-        /** The associated legal entity. */
-        fun associatedLegalEntity(associatedLegalEntity: AssociatedLegalEntityCreate) = apply {
-            this.associatedLegalEntity = associatedLegalEntity
+        /** The child legal entity. */
+        fun childLegalEntity(childLegalEntity: ChildLegalEntityCreate) = apply {
+            this.childLegalEntity = childLegalEntity
         }
 
-        /** The ID of the associated legal entity. */
-        fun associatedLegalEntityId(associatedLegalEntityId: String) = apply {
-            this.associatedLegalEntityId = associatedLegalEntityId
+        /** The ID of the child legal entity. */
+        fun childLegalEntityId(childLegalEntityId: String) = apply {
+            this.childLegalEntityId = childLegalEntityId
         }
 
-        /** The ID of the associator legal entity. This must be a business or joint legal entity. */
-        fun associatorLegalEntityId(associatorLegalEntityId: String) = apply {
-            this.associatorLegalEntityId = associatorLegalEntityId
-        }
-
-        /** The associated entity's ownership percentage iff they are a beneficial owner. */
+        /** The child entity's ownership percentage iff they are a beneficial owner. */
         fun ownershipPercentage(ownershipPercentage: Long) = apply {
             this.ownershipPercentage = ownershipPercentage
         }
 
-        /** The job title of the associated entity at the associator entity. */
+        /** The ID of the parent legal entity. This must be a business or joint legal entity. */
+        fun parentLegalEntityId(parentLegalEntityId: String) = apply {
+            this.parentLegalEntityId = parentLegalEntityId
+        }
+
+        /** The job title of the child entity at the parent entity. */
         fun title(title: String) = apply { this.title = title }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -402,10 +393,10 @@ constructor(
                         "`relationshipTypes` is required but was not set"
                     }
                     .toUnmodifiable(),
-                associatedLegalEntity,
-                associatedLegalEntityId,
-                associatorLegalEntityId,
+                childLegalEntity,
+                childLegalEntityId,
                 ownershipPercentage,
+                parentLegalEntityId,
                 title,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
@@ -470,10 +461,10 @@ constructor(
         fun asString(): String = _value().asStringOrThrow()
     }
 
-    /** The associated legal entity. */
-    @JsonDeserialize(builder = AssociatedLegalEntityCreate.Builder::class)
+    /** The child legal entity. */
+    @JsonDeserialize(builder = ChildLegalEntityCreate.Builder::class)
     @NoAutoDetect
-    class AssociatedLegalEntityCreate
+    class ChildLegalEntityCreate
     private constructor(
         private val legalEntityType: LegalEntityType?,
         private val firstName: String?,
@@ -550,7 +541,7 @@ constructor(
                 return true
             }
 
-            return other is AssociatedLegalEntityCreate &&
+            return other is ChildLegalEntityCreate &&
                 this.legalEntityType == other.legalEntityType &&
                 this.firstName == other.firstName &&
                 this.lastName == other.lastName &&
@@ -593,7 +584,7 @@ constructor(
         }
 
         override fun toString() =
-            "AssociatedLegalEntityCreate{legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+            "ChildLegalEntityCreate{legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -619,22 +610,22 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(associatedLegalEntityCreate: AssociatedLegalEntityCreate) = apply {
-                this.legalEntityType = associatedLegalEntityCreate.legalEntityType
-                this.firstName = associatedLegalEntityCreate.firstName
-                this.lastName = associatedLegalEntityCreate.lastName
-                this.dateOfBirth = associatedLegalEntityCreate.dateOfBirth
-                this.dateFormed = associatedLegalEntityCreate.dateFormed
-                this.businessName = associatedLegalEntityCreate.businessName
-                this.doingBusinessAsNames = associatedLegalEntityCreate.doingBusinessAsNames
-                this.legalStructure = associatedLegalEntityCreate.legalStructure
-                this.phoneNumbers = associatedLegalEntityCreate.phoneNumbers
-                this.email = associatedLegalEntityCreate.email
-                this.website = associatedLegalEntityCreate.website
-                this.metadata = associatedLegalEntityCreate.metadata
-                this.addresses = associatedLegalEntityCreate.addresses
-                this.identifications = associatedLegalEntityCreate.identifications
-                additionalProperties(associatedLegalEntityCreate.additionalProperties)
+            internal fun from(childLegalEntityCreate: ChildLegalEntityCreate) = apply {
+                this.legalEntityType = childLegalEntityCreate.legalEntityType
+                this.firstName = childLegalEntityCreate.firstName
+                this.lastName = childLegalEntityCreate.lastName
+                this.dateOfBirth = childLegalEntityCreate.dateOfBirth
+                this.dateFormed = childLegalEntityCreate.dateFormed
+                this.businessName = childLegalEntityCreate.businessName
+                this.doingBusinessAsNames = childLegalEntityCreate.doingBusinessAsNames
+                this.legalStructure = childLegalEntityCreate.legalStructure
+                this.phoneNumbers = childLegalEntityCreate.phoneNumbers
+                this.email = childLegalEntityCreate.email
+                this.website = childLegalEntityCreate.website
+                this.metadata = childLegalEntityCreate.metadata
+                this.addresses = childLegalEntityCreate.addresses
+                this.identifications = childLegalEntityCreate.identifications
+                additionalProperties(childLegalEntityCreate.additionalProperties)
             }
 
             /** The type of legal entity. */
@@ -718,8 +709,8 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): AssociatedLegalEntityCreate =
-                AssociatedLegalEntityCreate(
+            fun build(): ChildLegalEntityCreate =
+                ChildLegalEntityCreate(
                     legalEntityType,
                     firstName,
                     lastName,
@@ -1120,7 +1111,7 @@ constructor(
 
                     @JvmField val BR_CPF = IdType(JsonField.of("br_cpf"))
 
-                    @JvmField val CL_NUT = IdType(JsonField.of("cl_nut"))
+                    @JvmField val CL_RUT = IdType(JsonField.of("cl_rut"))
 
                     @JvmField val CO_CEDULAS = IdType(JsonField.of("co_cedulas"))
 
@@ -1146,7 +1137,7 @@ constructor(
                     AR_CUIT,
                     BR_CNPJ,
                     BR_CPF,
-                    CL_NUT,
+                    CL_RUT,
                     CO_CEDULAS,
                     CO_NIT,
                     HN_ID,
@@ -1162,7 +1153,7 @@ constructor(
                     AR_CUIT,
                     BR_CNPJ,
                     BR_CPF,
-                    CL_NUT,
+                    CL_RUT,
                     CO_CEDULAS,
                     CO_NIT,
                     HN_ID,
@@ -1180,7 +1171,7 @@ constructor(
                         AR_CUIT -> Value.AR_CUIT
                         BR_CNPJ -> Value.BR_CNPJ
                         BR_CPF -> Value.BR_CPF
-                        CL_NUT -> Value.CL_NUT
+                        CL_RUT -> Value.CL_RUT
                         CO_CEDULAS -> Value.CO_CEDULAS
                         CO_NIT -> Value.CO_NIT
                         HN_ID -> Value.HN_ID
@@ -1198,7 +1189,7 @@ constructor(
                         AR_CUIT -> Known.AR_CUIT
                         BR_CNPJ -> Known.BR_CNPJ
                         BR_CPF -> Known.BR_CPF
-                        CL_NUT -> Known.CL_NUT
+                        CL_RUT -> Known.CL_RUT
                         CO_CEDULAS -> Known.CO_CEDULAS
                         CO_NIT -> Known.CO_NIT
                         HN_ID -> Known.HN_ID
