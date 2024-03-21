@@ -21,6 +21,7 @@ constructor(
     private val unitAmount: Long,
     private val description: String?,
     private val direction: String?,
+    private val metadata: Metadata?,
     private val quantity: Long?,
     private val unitAmountDecimal: String?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -38,6 +39,8 @@ constructor(
 
     fun direction(): Optional<String> = Optional.ofNullable(direction)
 
+    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
     fun quantity(): Optional<Long> = Optional.ofNullable(quantity)
 
     fun unitAmountDecimal(): Optional<String> = Optional.ofNullable(unitAmountDecimal)
@@ -49,6 +52,7 @@ constructor(
             unitAmount,
             description,
             direction,
+            metadata,
             quantity,
             unitAmountDecimal,
             additionalBodyProperties,
@@ -74,6 +78,7 @@ constructor(
         private val unitAmount: Long?,
         private val description: String?,
         private val direction: String?,
+        private val metadata: Metadata?,
         private val quantity: Long?,
         private val unitAmountDecimal: String?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -99,6 +104,11 @@ constructor(
          * effect.
          */
         @JsonProperty("direction") fun direction(): String? = direction
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -128,6 +138,7 @@ constructor(
                 this.unitAmount == other.unitAmount &&
                 this.description == other.description &&
                 this.direction == other.direction &&
+                this.metadata == other.metadata &&
                 this.quantity == other.quantity &&
                 this.unitAmountDecimal == other.unitAmountDecimal &&
                 this.additionalProperties == other.additionalProperties
@@ -141,6 +152,7 @@ constructor(
                         unitAmount,
                         description,
                         direction,
+                        metadata,
                         quantity,
                         unitAmountDecimal,
                         additionalProperties,
@@ -150,7 +162,7 @@ constructor(
         }
 
         override fun toString() =
-            "InvoiceLineItemCreateBody{name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
+            "InvoiceLineItemCreateBody{name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, metadata=$metadata, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -163,6 +175,7 @@ constructor(
             private var unitAmount: Long? = null
             private var description: String? = null
             private var direction: String? = null
+            private var metadata: Metadata? = null
             private var quantity: Long? = null
             private var unitAmountDecimal: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -173,6 +186,7 @@ constructor(
                 this.unitAmount = invoiceLineItemCreateBody.unitAmount
                 this.description = invoiceLineItemCreateBody.description
                 this.direction = invoiceLineItemCreateBody.direction
+                this.metadata = invoiceLineItemCreateBody.metadata
                 this.quantity = invoiceLineItemCreateBody.quantity
                 this.unitAmountDecimal = invoiceLineItemCreateBody.unitAmountDecimal
                 additionalProperties(invoiceLineItemCreateBody.additionalProperties)
@@ -199,6 +213,13 @@ constructor(
              */
             @JsonProperty("direction")
             fun direction(direction: String) = apply { this.direction = direction }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonProperty("metadata")
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The number of units of a product or service that this line item is for. Must be a
@@ -236,6 +257,7 @@ constructor(
                     checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
                     description,
                     direction,
+                    metadata,
                     quantity,
                     unitAmountDecimal,
                     additionalProperties.toUnmodifiable(),
@@ -260,6 +282,7 @@ constructor(
             this.unitAmount == other.unitAmount &&
             this.description == other.description &&
             this.direction == other.direction &&
+            this.metadata == other.metadata &&
             this.quantity == other.quantity &&
             this.unitAmountDecimal == other.unitAmountDecimal &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -274,6 +297,7 @@ constructor(
             unitAmount,
             description,
             direction,
+            metadata,
             quantity,
             unitAmountDecimal,
             additionalQueryParams,
@@ -283,7 +307,7 @@ constructor(
     }
 
     override fun toString() =
-        "InvoiceLineItemCreateParams{invoiceId=$invoiceId, name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceLineItemCreateParams{invoiceId=$invoiceId, name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, metadata=$metadata, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -300,6 +324,7 @@ constructor(
         private var unitAmount: Long? = null
         private var description: String? = null
         private var direction: String? = null
+        private var metadata: Metadata? = null
         private var quantity: Long? = null
         private var unitAmountDecimal: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -313,6 +338,7 @@ constructor(
             this.unitAmount = invoiceLineItemCreateParams.unitAmount
             this.description = invoiceLineItemCreateParams.description
             this.direction = invoiceLineItemCreateParams.direction
+            this.metadata = invoiceLineItemCreateParams.metadata
             this.quantity = invoiceLineItemCreateParams.quantity
             this.unitAmountDecimal = invoiceLineItemCreateParams.unitAmountDecimal
             additionalQueryParams(invoiceLineItemCreateParams.additionalQueryParams)
@@ -340,6 +366,11 @@ constructor(
          * effect.
          */
         fun direction(direction: String) = apply { this.direction = direction }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -416,11 +447,77 @@ constructor(
                 checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
                 description,
                 direction,
+                metadata,
                 quantity,
                 unitAmountDecimal,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
             )
+    }
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    @JsonDeserialize(builder = Metadata.Builder::class)
+    @NoAutoDetect
+    class Metadata
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            @JvmStatic fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(metadata: Metadata) = apply {
+                additionalProperties(metadata.additionalProperties)
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+        }
     }
 }
