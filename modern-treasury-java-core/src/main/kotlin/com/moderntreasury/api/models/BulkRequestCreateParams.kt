@@ -442,6 +442,8 @@ constructor(
 
             @JvmField val LEDGER_TRANSACTION = ResourceType(JsonField.of("ledger_transaction"))
 
+            @JvmField val TRANSACTION = ResourceType(JsonField.of("transaction"))
+
             @JvmField val EXPECTED_PAYMENT = ResourceType(JsonField.of("expected_payment"))
 
             @JvmStatic fun of(value: String) = ResourceType(JsonField.of(value))
@@ -450,12 +452,14 @@ constructor(
         enum class Known {
             PAYMENT_ORDER,
             LEDGER_TRANSACTION,
+            TRANSACTION,
             EXPECTED_PAYMENT,
         }
 
         enum class Value {
             PAYMENT_ORDER,
             LEDGER_TRANSACTION,
+            TRANSACTION,
             EXPECTED_PAYMENT,
             _UNKNOWN,
         }
@@ -464,6 +468,7 @@ constructor(
             when (this) {
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
+                TRANSACTION -> Value.TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 else -> Value._UNKNOWN
             }
@@ -472,6 +477,7 @@ constructor(
             when (this) {
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
+                TRANSACTION -> Known.TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 else -> throw ModernTreasuryInvalidDataException("Unknown ResourceType: $value")
             }
@@ -486,6 +492,7 @@ constructor(
         private val paymentOrderAsyncCreateRequest: PaymentOrderAsyncCreateRequest? = null,
         private val expectedPaymentCreateRequest: ExpectedPaymentCreateRequest? = null,
         private val ledgerTransactionCreateRequest: LedgerTransactionCreateRequest? = null,
+        private val transactionCreateRequest: TransactionCreateRequest? = null,
         private val paymentOrderUpdateRequestWithId: PaymentOrderUpdateRequestWithId? = null,
         private val expectedPaymentUpdateRequestWithId: ExpectedPaymentUpdateRequestWithId? = null,
         private val ledgerTransactionUpdateRequestWithId: LedgerTransactionUpdateRequestWithId? =
@@ -504,6 +511,9 @@ constructor(
         fun ledgerTransactionCreateRequest(): Optional<LedgerTransactionCreateRequest> =
             Optional.ofNullable(ledgerTransactionCreateRequest)
 
+        fun transactionCreateRequest(): Optional<TransactionCreateRequest> =
+            Optional.ofNullable(transactionCreateRequest)
+
         fun paymentOrderUpdateRequestWithId(): Optional<PaymentOrderUpdateRequestWithId> =
             Optional.ofNullable(paymentOrderUpdateRequestWithId)
 
@@ -518,6 +528,8 @@ constructor(
         fun isExpectedPaymentCreateRequest(): Boolean = expectedPaymentCreateRequest != null
 
         fun isLedgerTransactionCreateRequest(): Boolean = ledgerTransactionCreateRequest != null
+
+        fun isTransactionCreateRequest(): Boolean = transactionCreateRequest != null
 
         fun isPaymentOrderUpdateRequestWithId(): Boolean = paymentOrderUpdateRequestWithId != null
 
@@ -535,6 +547,9 @@ constructor(
 
         fun asLedgerTransactionCreateRequest(): LedgerTransactionCreateRequest =
             ledgerTransactionCreateRequest.getOrThrow("ledgerTransactionCreateRequest")
+
+        fun asTransactionCreateRequest(): TransactionCreateRequest =
+            transactionCreateRequest.getOrThrow("transactionCreateRequest")
 
         fun asPaymentOrderUpdateRequestWithId(): PaymentOrderUpdateRequestWithId =
             paymentOrderUpdateRequestWithId.getOrThrow("paymentOrderUpdateRequestWithId")
@@ -555,6 +570,8 @@ constructor(
                     visitor.visitExpectedPaymentCreateRequest(expectedPaymentCreateRequest)
                 ledgerTransactionCreateRequest != null ->
                     visitor.visitLedgerTransactionCreateRequest(ledgerTransactionCreateRequest)
+                transactionCreateRequest != null ->
+                    visitor.visitTransactionCreateRequest(transactionCreateRequest)
                 paymentOrderUpdateRequestWithId != null ->
                     visitor.visitPaymentOrderUpdateRequestWithId(paymentOrderUpdateRequestWithId)
                 expectedPaymentUpdateRequestWithId != null ->
@@ -575,6 +592,7 @@ constructor(
                     paymentOrderAsyncCreateRequest == null &&
                         expectedPaymentCreateRequest == null &&
                         ledgerTransactionCreateRequest == null &&
+                        transactionCreateRequest == null &&
                         paymentOrderUpdateRequestWithId == null &&
                         expectedPaymentUpdateRequestWithId == null &&
                         ledgerTransactionUpdateRequestWithId == null
@@ -584,6 +602,7 @@ constructor(
                 paymentOrderAsyncCreateRequest?.validate()
                 expectedPaymentCreateRequest?.validate()
                 ledgerTransactionCreateRequest?.validate()
+                transactionCreateRequest?.validate()
                 paymentOrderUpdateRequestWithId?.validate()
                 expectedPaymentUpdateRequestWithId?.validate()
                 ledgerTransactionUpdateRequestWithId?.validate()
@@ -600,6 +619,7 @@ constructor(
                 this.paymentOrderAsyncCreateRequest == other.paymentOrderAsyncCreateRequest &&
                 this.expectedPaymentCreateRequest == other.expectedPaymentCreateRequest &&
                 this.ledgerTransactionCreateRequest == other.ledgerTransactionCreateRequest &&
+                this.transactionCreateRequest == other.transactionCreateRequest &&
                 this.paymentOrderUpdateRequestWithId == other.paymentOrderUpdateRequestWithId &&
                 this.expectedPaymentUpdateRequestWithId ==
                     other.expectedPaymentUpdateRequestWithId &&
@@ -612,6 +632,7 @@ constructor(
                 paymentOrderAsyncCreateRequest,
                 expectedPaymentCreateRequest,
                 ledgerTransactionCreateRequest,
+                transactionCreateRequest,
                 paymentOrderUpdateRequestWithId,
                 expectedPaymentUpdateRequestWithId,
                 ledgerTransactionUpdateRequestWithId,
@@ -626,6 +647,8 @@ constructor(
                     "Resource{expectedPaymentCreateRequest=$expectedPaymentCreateRequest}"
                 ledgerTransactionCreateRequest != null ->
                     "Resource{ledgerTransactionCreateRequest=$ledgerTransactionCreateRequest}"
+                transactionCreateRequest != null ->
+                    "Resource{transactionCreateRequest=$transactionCreateRequest}"
                 paymentOrderUpdateRequestWithId != null ->
                     "Resource{paymentOrderUpdateRequestWithId=$paymentOrderUpdateRequestWithId}"
                 expectedPaymentUpdateRequestWithId != null ->
@@ -653,6 +676,10 @@ constructor(
             fun ofLedgerTransactionCreateRequest(
                 ledgerTransactionCreateRequest: LedgerTransactionCreateRequest
             ) = Resource(ledgerTransactionCreateRequest = ledgerTransactionCreateRequest)
+
+            @JvmStatic
+            fun ofTransactionCreateRequest(transactionCreateRequest: TransactionCreateRequest) =
+                Resource(transactionCreateRequest = transactionCreateRequest)
 
             @JvmStatic
             fun ofPaymentOrderUpdateRequestWithId(
@@ -686,6 +713,8 @@ constructor(
             fun visitLedgerTransactionCreateRequest(
                 ledgerTransactionCreateRequest: LedgerTransactionCreateRequest
             ): T
+
+            fun visitTransactionCreateRequest(transactionCreateRequest: TransactionCreateRequest): T
 
             fun visitPaymentOrderUpdateRequestWithId(
                 paymentOrderUpdateRequestWithId: PaymentOrderUpdateRequestWithId
@@ -726,6 +755,10 @@ constructor(
                     ?.let {
                         return Resource(ledgerTransactionCreateRequest = it, _json = json)
                     }
+                tryDeserialize(node, jacksonTypeRef<TransactionCreateRequest>()) { it.validate() }
+                    ?.let {
+                        return Resource(transactionCreateRequest = it, _json = json)
+                    }
                 tryDeserialize(node, jacksonTypeRef<PaymentOrderUpdateRequestWithId>()) {
                         it.validate()
                     }
@@ -763,6 +796,8 @@ constructor(
                         generator.writeObject(value.expectedPaymentCreateRequest)
                     value.ledgerTransactionCreateRequest != null ->
                         generator.writeObject(value.ledgerTransactionCreateRequest)
+                    value.transactionCreateRequest != null ->
+                        generator.writeObject(value.transactionCreateRequest)
                     value.paymentOrderUpdateRequestWithId != null ->
                         generator.writeObject(value.paymentOrderUpdateRequestWithId)
                     value.expectedPaymentUpdateRequestWithId != null ->
@@ -10750,6 +10785,438 @@ constructor(
                     }
 
                 fun asString(): String = _value().asStringOrThrow()
+            }
+        }
+
+        @JsonDeserialize(builder = TransactionCreateRequest.Builder::class)
+        @NoAutoDetect
+        class TransactionCreateRequest
+        private constructor(
+            private val amount: JsonField<Long>,
+            private val direction: JsonField<String>,
+            private val vendorDescription: JsonField<String>,
+            private val vendorCode: JsonField<String>,
+            private val vendorCodeType: JsonField<String>,
+            private val asOfDate: JsonField<LocalDate>,
+            private val internalAccountId: JsonField<String>,
+            private val metadata: JsonField<Metadata>,
+            private val posted: JsonField<Boolean>,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var validated: Boolean = false
+
+            private var hashCode: Int = 0
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amount(): Long = amount.getRequired("amount")
+
+            /** Either `credit` or `debit`. */
+            fun direction(): String = direction.getRequired("direction")
+
+            /**
+             * The transaction detail text that often appears in on your bank statement and in your
+             * banking portal.
+             */
+            fun vendorDescription(): Optional<String> =
+                Optional.ofNullable(vendorDescription.getNullable("vendor_description"))
+
+            /**
+             * When applicable, the bank-given code that determines the transaction's category. For
+             * most banks this is the BAI2/BTRS transaction code.
+             */
+            fun vendorCode(): String = vendorCode.getRequired("vendor_code")
+
+            /**
+             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * `us_bank`, or others.
+             */
+            fun vendorCodeType(): String = vendorCodeType.getRequired("vendor_code_type")
+
+            /** The date on which the transaction occurred. */
+            fun asOfDate(): Optional<LocalDate> =
+                Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+
+            /** The ID of the relevant Internal Account. */
+            fun internalAccountId(): String = internalAccountId.getRequired("internal_account_id")
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(): Optional<Metadata> =
+                Optional.ofNullable(metadata.getNullable("metadata"))
+
+            /** This field will be `true` if the transaction has posted to the account. */
+            fun posted(): Optional<Boolean> = Optional.ofNullable(posted.getNullable("posted"))
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
+            /** Either `credit` or `debit`. */
+            @JsonProperty("direction") @ExcludeMissing fun _direction() = direction
+
+            /**
+             * The transaction detail text that often appears in on your bank statement and in your
+             * banking portal.
+             */
+            @JsonProperty("vendor_description")
+            @ExcludeMissing
+            fun _vendorDescription() = vendorDescription
+
+            /**
+             * When applicable, the bank-given code that determines the transaction's category. For
+             * most banks this is the BAI2/BTRS transaction code.
+             */
+            @JsonProperty("vendor_code") @ExcludeMissing fun _vendorCode() = vendorCode
+
+            /**
+             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * `us_bank`, or others.
+             */
+            @JsonProperty("vendor_code_type") @ExcludeMissing fun _vendorCodeType() = vendorCodeType
+
+            /** The date on which the transaction occurred. */
+            @JsonProperty("as_of_date") @ExcludeMissing fun _asOfDate() = asOfDate
+
+            /** The ID of the relevant Internal Account. */
+            @JsonProperty("internal_account_id")
+            @ExcludeMissing
+            fun _internalAccountId() = internalAccountId
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
+            /** This field will be `true` if the transaction has posted to the account. */
+            @JsonProperty("posted") @ExcludeMissing fun _posted() = posted
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun validate(): TransactionCreateRequest = apply {
+                if (!validated) {
+                    amount()
+                    direction()
+                    vendorDescription()
+                    vendorCode()
+                    vendorCodeType()
+                    asOfDate()
+                    internalAccountId()
+                    metadata().map { it.validate() }
+                    posted()
+                    validated = true
+                }
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is TransactionCreateRequest &&
+                    this.amount == other.amount &&
+                    this.direction == other.direction &&
+                    this.vendorDescription == other.vendorDescription &&
+                    this.vendorCode == other.vendorCode &&
+                    this.vendorCodeType == other.vendorCodeType &&
+                    this.asOfDate == other.asOfDate &&
+                    this.internalAccountId == other.internalAccountId &&
+                    this.metadata == other.metadata &&
+                    this.posted == other.posted &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            amount,
+                            direction,
+                            vendorDescription,
+                            vendorCode,
+                            vendorCodeType,
+                            asOfDate,
+                            internalAccountId,
+                            metadata,
+                            posted,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "TransactionCreateRequest{amount=$amount, direction=$direction, vendorDescription=$vendorDescription, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, asOfDate=$asOfDate, internalAccountId=$internalAccountId, metadata=$metadata, posted=$posted, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                @JvmStatic fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var amount: JsonField<Long> = JsonMissing.of()
+                private var direction: JsonField<String> = JsonMissing.of()
+                private var vendorDescription: JsonField<String> = JsonMissing.of()
+                private var vendorCode: JsonField<String> = JsonMissing.of()
+                private var vendorCodeType: JsonField<String> = JsonMissing.of()
+                private var asOfDate: JsonField<LocalDate> = JsonMissing.of()
+                private var internalAccountId: JsonField<String> = JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var posted: JsonField<Boolean> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(transactionCreateRequest: TransactionCreateRequest) = apply {
+                    this.amount = transactionCreateRequest.amount
+                    this.direction = transactionCreateRequest.direction
+                    this.vendorDescription = transactionCreateRequest.vendorDescription
+                    this.vendorCode = transactionCreateRequest.vendorCode
+                    this.vendorCodeType = transactionCreateRequest.vendorCodeType
+                    this.asOfDate = transactionCreateRequest.asOfDate
+                    this.internalAccountId = transactionCreateRequest.internalAccountId
+                    this.metadata = transactionCreateRequest.metadata
+                    this.posted = transactionCreateRequest.posted
+                    additionalProperties(transactionCreateRequest.additionalProperties)
+                }
+
+                /**
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
+                 */
+                fun amount(amount: Long) = amount(JsonField.of(amount))
+
+                /**
+                 * Value in specified currency's smallest unit. e.g. $10 would be represented
+                 * as 1000.
+                 */
+                @JsonProperty("amount")
+                @ExcludeMissing
+                fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+                /** Either `credit` or `debit`. */
+                fun direction(direction: String) = direction(JsonField.of(direction))
+
+                /** Either `credit` or `debit`. */
+                @JsonProperty("direction")
+                @ExcludeMissing
+                fun direction(direction: JsonField<String>) = apply { this.direction = direction }
+
+                /**
+                 * The transaction detail text that often appears in on your bank statement and in
+                 * your banking portal.
+                 */
+                fun vendorDescription(vendorDescription: String) =
+                    vendorDescription(JsonField.of(vendorDescription))
+
+                /**
+                 * The transaction detail text that often appears in on your bank statement and in
+                 * your banking portal.
+                 */
+                @JsonProperty("vendor_description")
+                @ExcludeMissing
+                fun vendorDescription(vendorDescription: JsonField<String>) = apply {
+                    this.vendorDescription = vendorDescription
+                }
+
+                /**
+                 * When applicable, the bank-given code that determines the transaction's category.
+                 * For most banks this is the BAI2/BTRS transaction code.
+                 */
+                fun vendorCode(vendorCode: String) = vendorCode(JsonField.of(vendorCode))
+
+                /**
+                 * When applicable, the bank-given code that determines the transaction's category.
+                 * For most banks this is the BAI2/BTRS transaction code.
+                 */
+                @JsonProperty("vendor_code")
+                @ExcludeMissing
+                fun vendorCode(vendorCode: JsonField<String>) = apply {
+                    this.vendorCode = vendorCode
+                }
+
+                /**
+                 * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+                 * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+                 * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`,
+                 * `swift`, `us_bank`, or others.
+                 */
+                fun vendorCodeType(vendorCodeType: String) =
+                    vendorCodeType(JsonField.of(vendorCodeType))
+
+                /**
+                 * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+                 * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+                 * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`,
+                 * `swift`, `us_bank`, or others.
+                 */
+                @JsonProperty("vendor_code_type")
+                @ExcludeMissing
+                fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
+                    this.vendorCodeType = vendorCodeType
+                }
+
+                /** The date on which the transaction occurred. */
+                fun asOfDate(asOfDate: LocalDate) = asOfDate(JsonField.of(asOfDate))
+
+                /** The date on which the transaction occurred. */
+                @JsonProperty("as_of_date")
+                @ExcludeMissing
+                fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
+
+                /** The ID of the relevant Internal Account. */
+                fun internalAccountId(internalAccountId: String) =
+                    internalAccountId(JsonField.of(internalAccountId))
+
+                /** The ID of the relevant Internal Account. */
+                @JsonProperty("internal_account_id")
+                @ExcludeMissing
+                fun internalAccountId(internalAccountId: JsonField<String>) = apply {
+                    this.internalAccountId = internalAccountId
+                }
+
+                /**
+                 * Additional data represented as key-value pairs. Both the key and value must be
+                 * strings.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * Additional data represented as key-value pairs. Both the key and value must be
+                 * strings.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                /** This field will be `true` if the transaction has posted to the account. */
+                fun posted(posted: Boolean) = posted(JsonField.of(posted))
+
+                /** This field will be `true` if the transaction has posted to the account. */
+                @JsonProperty("posted")
+                @ExcludeMissing
+                fun posted(posted: JsonField<Boolean>) = apply { this.posted = posted }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): TransactionCreateRequest =
+                    TransactionCreateRequest(
+                        amount,
+                        direction,
+                        vendorDescription,
+                        vendorCode,
+                        vendorCodeType,
+                        asOfDate,
+                        internalAccountId,
+                        metadata,
+                        posted,
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    @JvmStatic fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    @JvmSynthetic
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
             }
         }
 
