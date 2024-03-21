@@ -20,6 +20,7 @@ constructor(
     private val id: String,
     private val description: String?,
     private val direction: String?,
+    private val metadata: Metadata?,
     private val name: String?,
     private val quantity: Long?,
     private val unitAmount: Long?,
@@ -37,6 +38,8 @@ constructor(
 
     fun direction(): Optional<String> = Optional.ofNullable(direction)
 
+    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
     fun name(): Optional<String> = Optional.ofNullable(name)
 
     fun quantity(): Optional<Long> = Optional.ofNullable(quantity)
@@ -50,6 +53,7 @@ constructor(
         return InvoiceLineItemUpdateBody(
             description,
             direction,
+            metadata,
             name,
             quantity,
             unitAmount,
@@ -76,6 +80,7 @@ constructor(
     internal constructor(
         private val description: String?,
         private val direction: String?,
+        private val metadata: Metadata?,
         private val name: String?,
         private val quantity: Long?,
         private val unitAmount: Long?,
@@ -94,6 +99,11 @@ constructor(
          * effect.
          */
         @JsonProperty("direction") fun direction(): String? = direction
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
         /** The name of the line item, typically a product or SKU name. */
         @JsonProperty("name") fun name(): String? = name
@@ -130,6 +140,7 @@ constructor(
             return other is InvoiceLineItemUpdateBody &&
                 this.description == other.description &&
                 this.direction == other.direction &&
+                this.metadata == other.metadata &&
                 this.name == other.name &&
                 this.quantity == other.quantity &&
                 this.unitAmount == other.unitAmount &&
@@ -143,6 +154,7 @@ constructor(
                     Objects.hash(
                         description,
                         direction,
+                        metadata,
                         name,
                         quantity,
                         unitAmount,
@@ -154,7 +166,7 @@ constructor(
         }
 
         override fun toString() =
-            "InvoiceLineItemUpdateBody{description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
+            "InvoiceLineItemUpdateBody{description=$description, direction=$direction, metadata=$metadata, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -165,6 +177,7 @@ constructor(
 
             private var description: String? = null
             private var direction: String? = null
+            private var metadata: Metadata? = null
             private var name: String? = null
             private var quantity: Long? = null
             private var unitAmount: Long? = null
@@ -175,6 +188,7 @@ constructor(
             internal fun from(invoiceLineItemUpdateBody: InvoiceLineItemUpdateBody) = apply {
                 this.description = invoiceLineItemUpdateBody.description
                 this.direction = invoiceLineItemUpdateBody.direction
+                this.metadata = invoiceLineItemUpdateBody.metadata
                 this.name = invoiceLineItemUpdateBody.name
                 this.quantity = invoiceLineItemUpdateBody.quantity
                 this.unitAmount = invoiceLineItemUpdateBody.unitAmount
@@ -193,6 +207,13 @@ constructor(
              */
             @JsonProperty("direction")
             fun direction(direction: String) = apply { this.direction = direction }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonProperty("metadata")
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** The name of the line item, typically a product or SKU name. */
             @JsonProperty("name") fun name(name: String) = apply { this.name = name }
@@ -238,6 +259,7 @@ constructor(
                 InvoiceLineItemUpdateBody(
                     description,
                     direction,
+                    metadata,
                     name,
                     quantity,
                     unitAmount,
@@ -263,6 +285,7 @@ constructor(
             this.id == other.id &&
             this.description == other.description &&
             this.direction == other.direction &&
+            this.metadata == other.metadata &&
             this.name == other.name &&
             this.quantity == other.quantity &&
             this.unitAmount == other.unitAmount &&
@@ -278,6 +301,7 @@ constructor(
             id,
             description,
             direction,
+            metadata,
             name,
             quantity,
             unitAmount,
@@ -289,7 +313,7 @@ constructor(
     }
 
     override fun toString() =
-        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, description=$description, direction=$direction, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceLineItemUpdateParams{invoiceId=$invoiceId, id=$id, description=$description, direction=$direction, metadata=$metadata, name=$name, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -305,6 +329,7 @@ constructor(
         private var id: String? = null
         private var description: String? = null
         private var direction: String? = null
+        private var metadata: Metadata? = null
         private var name: String? = null
         private var quantity: Long? = null
         private var unitAmount: Long? = null
@@ -319,6 +344,7 @@ constructor(
             this.id = invoiceLineItemUpdateParams.id
             this.description = invoiceLineItemUpdateParams.description
             this.direction = invoiceLineItemUpdateParams.direction
+            this.metadata = invoiceLineItemUpdateParams.metadata
             this.name = invoiceLineItemUpdateParams.name
             this.quantity = invoiceLineItemUpdateParams.quantity
             this.unitAmount = invoiceLineItemUpdateParams.unitAmount
@@ -341,6 +367,11 @@ constructor(
          * effect.
          */
         fun direction(direction: String) = apply { this.direction = direction }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         /** The name of the line item, typically a product or SKU name. */
         fun name(name: String) = apply { this.name = name }
@@ -425,6 +456,7 @@ constructor(
                 checkNotNull(id) { "`id` is required but was not set" },
                 description,
                 direction,
+                metadata,
                 name,
                 quantity,
                 unitAmount,
@@ -433,5 +465,70 @@ constructor(
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
             )
+    }
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    @JsonDeserialize(builder = Metadata.Builder::class)
+    @NoAutoDetect
+    class Metadata
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            @JvmStatic fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(metadata: Metadata) = apply {
+                additionalProperties(metadata.additionalProperties)
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+        }
     }
 }

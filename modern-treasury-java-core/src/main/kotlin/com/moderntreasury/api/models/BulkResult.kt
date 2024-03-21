@@ -426,6 +426,7 @@ private constructor(
         private val paymentOrder: PaymentOrder? = null,
         private val expectedPayment: ExpectedPayment? = null,
         private val ledgerTransaction: LedgerTransaction? = null,
+        private val transaction: Transaction? = null,
         private val bulkError: BulkError? = null,
         private val _json: JsonValue? = null,
     ) {
@@ -439,6 +440,8 @@ private constructor(
         fun ledgerTransaction(): Optional<LedgerTransaction> =
             Optional.ofNullable(ledgerTransaction)
 
+        fun transaction(): Optional<Transaction> = Optional.ofNullable(transaction)
+
         fun bulkError(): Optional<BulkError> = Optional.ofNullable(bulkError)
 
         fun isPaymentOrder(): Boolean = paymentOrder != null
@@ -446,6 +449,8 @@ private constructor(
         fun isExpectedPayment(): Boolean = expectedPayment != null
 
         fun isLedgerTransaction(): Boolean = ledgerTransaction != null
+
+        fun isTransaction(): Boolean = transaction != null
 
         fun isBulkError(): Boolean = bulkError != null
 
@@ -456,6 +461,8 @@ private constructor(
         fun asLedgerTransaction(): LedgerTransaction =
             ledgerTransaction.getOrThrow("ledgerTransaction")
 
+        fun asTransaction(): Transaction = transaction.getOrThrow("transaction")
+
         fun asBulkError(): BulkError = bulkError.getOrThrow("bulkError")
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
@@ -465,6 +472,7 @@ private constructor(
                 paymentOrder != null -> visitor.visitPaymentOrder(paymentOrder)
                 expectedPayment != null -> visitor.visitExpectedPayment(expectedPayment)
                 ledgerTransaction != null -> visitor.visitLedgerTransaction(ledgerTransaction)
+                transaction != null -> visitor.visitTransaction(transaction)
                 bulkError != null -> visitor.visitBulkError(bulkError)
                 else -> visitor.unknown(_json)
             }
@@ -476,6 +484,7 @@ private constructor(
                     paymentOrder == null &&
                         expectedPayment == null &&
                         ledgerTransaction == null &&
+                        transaction == null &&
                         bulkError == null
                 ) {
                     throw ModernTreasuryInvalidDataException("Unknown Entity: $_json")
@@ -483,6 +492,7 @@ private constructor(
                 paymentOrder?.validate()
                 expectedPayment?.validate()
                 ledgerTransaction?.validate()
+                transaction?.validate()
                 bulkError?.validate()
                 validated = true
             }
@@ -497,6 +507,7 @@ private constructor(
                 this.paymentOrder == other.paymentOrder &&
                 this.expectedPayment == other.expectedPayment &&
                 this.ledgerTransaction == other.ledgerTransaction &&
+                this.transaction == other.transaction &&
                 this.bulkError == other.bulkError
         }
 
@@ -505,6 +516,7 @@ private constructor(
                 paymentOrder,
                 expectedPayment,
                 ledgerTransaction,
+                transaction,
                 bulkError,
             )
         }
@@ -514,6 +526,7 @@ private constructor(
                 paymentOrder != null -> "Entity{paymentOrder=$paymentOrder}"
                 expectedPayment != null -> "Entity{expectedPayment=$expectedPayment}"
                 ledgerTransaction != null -> "Entity{ledgerTransaction=$ledgerTransaction}"
+                transaction != null -> "Entity{transaction=$transaction}"
                 bulkError != null -> "Entity{bulkError=$bulkError}"
                 _json != null -> "Entity{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Entity")
@@ -533,6 +546,9 @@ private constructor(
             fun ofLedgerTransaction(ledgerTransaction: LedgerTransaction) =
                 Entity(ledgerTransaction = ledgerTransaction)
 
+            @JvmStatic
+            fun ofTransaction(transaction: Transaction) = Entity(transaction = transaction)
+
             @JvmStatic fun ofBulkError(bulkError: BulkError) = Entity(bulkError = bulkError)
         }
 
@@ -543,6 +559,8 @@ private constructor(
             fun visitExpectedPayment(expectedPayment: ExpectedPayment): T
 
             fun visitLedgerTransaction(ledgerTransaction: LedgerTransaction): T
+
+            fun visitTransaction(transaction: Transaction): T
 
             fun visitBulkError(bulkError: BulkError): T
 
@@ -567,6 +585,10 @@ private constructor(
                     ?.let {
                         return Entity(ledgerTransaction = it, _json = json)
                     }
+                tryDeserialize(node, jacksonTypeRef<Transaction>()) { it.validate() }
+                    ?.let {
+                        return Entity(transaction = it, _json = json)
+                    }
                 tryDeserialize(node, jacksonTypeRef<BulkError>()) { it.validate() }
                     ?.let {
                         return Entity(bulkError = it, _json = json)
@@ -588,6 +610,7 @@ private constructor(
                     value.expectedPayment != null -> generator.writeObject(value.expectedPayment)
                     value.ledgerTransaction != null ->
                         generator.writeObject(value.ledgerTransaction)
+                    value.transaction != null -> generator.writeObject(value.transaction)
                     value.bulkError != null -> generator.writeObject(value.bulkError)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Entity")
@@ -964,6 +987,8 @@ private constructor(
 
             @JvmField val LEDGER_TRANSACTION = EntityType(JsonField.of("ledger_transaction"))
 
+            @JvmField val TRANSACTION = EntityType(JsonField.of("transaction"))
+
             @JvmField val EXPECTED_PAYMENT = EntityType(JsonField.of("expected_payment"))
 
             @JvmField val BULK_ERROR = EntityType(JsonField.of("bulk_error"))
@@ -974,6 +999,7 @@ private constructor(
         enum class Known {
             PAYMENT_ORDER,
             LEDGER_TRANSACTION,
+            TRANSACTION,
             EXPECTED_PAYMENT,
             BULK_ERROR,
         }
@@ -981,6 +1007,7 @@ private constructor(
         enum class Value {
             PAYMENT_ORDER,
             LEDGER_TRANSACTION,
+            TRANSACTION,
             EXPECTED_PAYMENT,
             BULK_ERROR,
             _UNKNOWN,
@@ -990,6 +1017,7 @@ private constructor(
             when (this) {
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
+                TRANSACTION -> Value.TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 BULK_ERROR -> Value.BULK_ERROR
                 else -> Value._UNKNOWN
@@ -999,6 +1027,7 @@ private constructor(
             when (this) {
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
+                TRANSACTION -> Known.TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 BULK_ERROR -> Known.BULK_ERROR
                 else -> throw ModernTreasuryInvalidDataException("Unknown EntityType: $value")
