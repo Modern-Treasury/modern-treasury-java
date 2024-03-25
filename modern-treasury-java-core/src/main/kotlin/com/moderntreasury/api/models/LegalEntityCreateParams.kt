@@ -1108,11 +1108,17 @@ constructor(
 
                 @JvmField val PASSPORT = IdType(JsonField.of("passport"))
 
+                @JvmField val SA_TIN = IdType(JsonField.of("sa_tin"))
+
+                @JvmField val SA_VAT = IdType(JsonField.of("sa_vat"))
+
                 @JvmField val US_EIN = IdType(JsonField.of("us_ein"))
 
                 @JvmField val US_ITIN = IdType(JsonField.of("us_itin"))
 
                 @JvmField val US_SSN = IdType(JsonField.of("us_ssn"))
+
+                @JvmField val VN_TIN = IdType(JsonField.of("vn_tin"))
 
                 @JvmStatic fun of(value: String) = IdType(JsonField.of(value))
             }
@@ -1128,9 +1134,12 @@ constructor(
                 HN_ID,
                 HN_RTN,
                 PASSPORT,
+                SA_TIN,
+                SA_VAT,
                 US_EIN,
                 US_ITIN,
                 US_SSN,
+                VN_TIN,
             }
 
             enum class Value {
@@ -1144,9 +1153,12 @@ constructor(
                 HN_ID,
                 HN_RTN,
                 PASSPORT,
+                SA_TIN,
+                SA_VAT,
                 US_EIN,
                 US_ITIN,
                 US_SSN,
+                VN_TIN,
                 _UNKNOWN,
             }
 
@@ -1162,9 +1174,12 @@ constructor(
                     HN_ID -> Value.HN_ID
                     HN_RTN -> Value.HN_RTN
                     PASSPORT -> Value.PASSPORT
+                    SA_TIN -> Value.SA_TIN
+                    SA_VAT -> Value.SA_VAT
                     US_EIN -> Value.US_EIN
                     US_ITIN -> Value.US_ITIN
                     US_SSN -> Value.US_SSN
+                    VN_TIN -> Value.VN_TIN
                     else -> Value._UNKNOWN
                 }
 
@@ -1180,9 +1195,12 @@ constructor(
                     HN_ID -> Known.HN_ID
                     HN_RTN -> Known.HN_RTN
                     PASSPORT -> Known.PASSPORT
+                    SA_TIN -> Known.SA_TIN
+                    SA_VAT -> Known.SA_VAT
                     US_EIN -> Known.US_EIN
                     US_ITIN -> Known.US_ITIN
                     US_SSN -> Known.US_SSN
+                    VN_TIN -> Known.VN_TIN
                     else -> throw ModernTreasuryInvalidDataException("Unknown IdType: $value")
                 }
 
@@ -2074,11 +2092,17 @@ constructor(
 
                         @JvmField val PASSPORT = IdType(JsonField.of("passport"))
 
+                        @JvmField val SA_TIN = IdType(JsonField.of("sa_tin"))
+
+                        @JvmField val SA_VAT = IdType(JsonField.of("sa_vat"))
+
                         @JvmField val US_EIN = IdType(JsonField.of("us_ein"))
 
                         @JvmField val US_ITIN = IdType(JsonField.of("us_itin"))
 
                         @JvmField val US_SSN = IdType(JsonField.of("us_ssn"))
+
+                        @JvmField val VN_TIN = IdType(JsonField.of("vn_tin"))
 
                         @JvmStatic fun of(value: String) = IdType(JsonField.of(value))
                     }
@@ -2094,9 +2118,12 @@ constructor(
                         HN_ID,
                         HN_RTN,
                         PASSPORT,
+                        SA_TIN,
+                        SA_VAT,
                         US_EIN,
                         US_ITIN,
                         US_SSN,
+                        VN_TIN,
                     }
 
                     enum class Value {
@@ -2110,9 +2137,12 @@ constructor(
                         HN_ID,
                         HN_RTN,
                         PASSPORT,
+                        SA_TIN,
+                        SA_VAT,
                         US_EIN,
                         US_ITIN,
                         US_SSN,
+                        VN_TIN,
                         _UNKNOWN,
                     }
 
@@ -2128,9 +2158,12 @@ constructor(
                             HN_ID -> Value.HN_ID
                             HN_RTN -> Value.HN_RTN
                             PASSPORT -> Value.PASSPORT
+                            SA_TIN -> Value.SA_TIN
+                            SA_VAT -> Value.SA_VAT
                             US_EIN -> Value.US_EIN
                             US_ITIN -> Value.US_ITIN
                             US_SSN -> Value.US_SSN
+                            VN_TIN -> Value.VN_TIN
                             else -> Value._UNKNOWN
                         }
 
@@ -2146,9 +2179,12 @@ constructor(
                             HN_ID -> Known.HN_ID
                             HN_RTN -> Known.HN_RTN
                             PASSPORT -> Known.PASSPORT
+                            SA_TIN -> Known.SA_TIN
+                            SA_VAT -> Known.SA_VAT
                             US_EIN -> Known.US_EIN
                             US_ITIN -> Known.US_ITIN
                             US_SSN -> Known.US_SSN
+                            VN_TIN -> Known.VN_TIN
                             else ->
                                 throw ModernTreasuryInvalidDataException("Unknown IdType: $value")
                         }
