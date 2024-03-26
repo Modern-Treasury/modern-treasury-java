@@ -2831,6 +2831,16 @@ private constructor(
                 @JvmField val CHECK_NUMBER = ReferenceNumberType(JsonField.of("check_number"))
 
                 @JvmField
+                val CITIBANK_REFERENCE_NUMBER =
+                    ReferenceNumberType(JsonField.of("citibank_reference_number"))
+
+                @JvmField
+                val CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER =
+                    ReferenceNumberType(
+                        JsonField.of("citibank_worldlink_clearing_system_reference_number")
+                    )
+
+                @JvmField
                 val COLUMN_FX_QUOTE_ID = ReferenceNumberType(JsonField.of("column_fx_quote_id"))
 
                 @JvmField
@@ -3025,6 +3035,8 @@ private constructor(
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 CHECK_NUMBER,
+                CITIBANK_REFERENCE_NUMBER,
+                CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
                 COLUMN_FX_QUOTE_ID,
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID,
                 COLUMN_TRANSFER_ID,
@@ -3090,6 +3102,8 @@ private constructor(
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 CHECK_NUMBER,
+                CITIBANK_REFERENCE_NUMBER,
+                CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
                 COLUMN_FX_QUOTE_ID,
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID,
                 COLUMN_TRANSFER_ID,
@@ -3157,6 +3171,9 @@ private constructor(
                     BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
                     CHECK_NUMBER -> Value.CHECK_NUMBER
+                    CITIBANK_REFERENCE_NUMBER -> Value.CITIBANK_REFERENCE_NUMBER
+                    CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
+                        Value.CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER
                     COLUMN_FX_QUOTE_ID -> Value.COLUMN_FX_QUOTE_ID
                     COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Value.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                     COLUMN_TRANSFER_ID -> Value.COLUMN_TRANSFER_ID
@@ -3226,6 +3243,9 @@ private constructor(
                     BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
                     CHECK_NUMBER -> Known.CHECK_NUMBER
+                    CITIBANK_REFERENCE_NUMBER -> Known.CITIBANK_REFERENCE_NUMBER
+                    CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
+                        Known.CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER
                     COLUMN_FX_QUOTE_ID -> Known.COLUMN_FX_QUOTE_ID
                     COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Known.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                     COLUMN_TRANSFER_ID -> Known.COLUMN_TRANSFER_ID
