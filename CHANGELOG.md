@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.10.0 (2024-03-26)
+
+Full Changelog: [v2.9.0...v2.10.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.9.0...v2.10.0)
+
+### Features
+
+* add HttpRequestBody.contentLength() ([#140](https://github.com/Modern-Treasury/modern-treasury-java/issues/140)) ([6609b5d](https://github.com/Modern-Treasury/modern-treasury-java/commit/6609b5de5885f0de74baef482823cf9856144f1d))
+* **api:** add citibank enums ([#146](https://github.com/Modern-Treasury/modern-treasury-java/issues/146)) ([f96598c](https://github.com/Modern-Treasury/modern-treasury-java/commit/f96598c9ff6c53029acbda6232f3efe088bb5a8f))
+* **api:** add date_formed property to legal entities ([#138](https://github.com/Modern-Treasury/modern-treasury-java/issues/138)) ([fa2d892](https://github.com/Modern-Treasury/modern-treasury-java/commit/fa2d89282f9e3e6a60b501a2618646e1f4c6b15b))
+* **api:** add line item metadata ([6e09a9c](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e09a9cea4da7aec679d52e8f6e06e3755a159b1))
+* **api:** extend list invoices query params ([#141](https://github.com/Modern-Treasury/modern-treasury-java/issues/141)) ([743f9e3](https://github.com/Modern-Treasury/modern-treasury-java/commit/743f9e3d39a3e34d8161ec31bd65fab02989bd34))
+* **api:** introduce bulk transaction create ([#144](https://github.com/Modern-Treasury/modern-treasury-java/issues/144)) ([6e09a9c](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e09a9cea4da7aec679d52e8f6e06e3755a159b1))
+* **api:** rename `associated_legal_entity` to `child_legal_entity` ([#142](https://github.com/Modern-Treasury/modern-treasury-java/issues/142)) ([f2ddf6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f2ddf6d22447f43843f845205a8a87e9c02c7104))
+* **api:** rename `id_type` enum from `cl_nut` to `cl_rut` ([f2ddf6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f2ddf6d22447f43843f845205a8a87e9c02c7104))
+* **api:** updates ([#145](https://github.com/Modern-Treasury/modern-treasury-java/issues/145)) ([1008c88](https://github.com/Modern-Treasury/modern-treasury-java/commit/1008c880c58ae5f6dba6377a381dbd0f574ca077))
+
+
+### Chores
+
+* add back removed code ([9dce503](https://github.com/Modern-Treasury/modern-treasury-java/commit/9dce503c340f9670b619aed641725fa689b6c885))
+* **internal:** temporary commit ([#147](https://github.com/Modern-Treasury/modern-treasury-java/issues/147)) ([57a07f0](https://github.com/Modern-Treasury/modern-treasury-java/commit/57a07f0bc55d8d21050e2e4a204be8c9b13f1c1f))
+
+
+### Documentation
+
+* **readme:** consistent use of sentence case in headings ([#143](https://github.com/Modern-Treasury/modern-treasury-java/issues/143)) ([60f5e84](https://github.com/Modern-Treasury/modern-treasury-java/commit/60f5e84181eb9a2c0ffda4d9ade81eb5d3f4af68))
+
 ## 2.9.0 (2024-03-05)
 
 Full Changelog: [v2.8.0...v2.9.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.8.0...v2.9.0)
