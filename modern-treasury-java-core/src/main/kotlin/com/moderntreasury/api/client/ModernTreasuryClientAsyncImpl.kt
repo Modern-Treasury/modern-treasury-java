@@ -132,8 +132,6 @@ constructor(
         PaperItemServiceAsyncImpl(clientOptions)
     }
 
-    private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
-
     private val virtualAccounts: VirtualAccountServiceAsync by lazy {
         VirtualAccountServiceAsyncImpl(clientOptions)
     }
@@ -232,8 +230,6 @@ constructor(
     override fun validations(): ValidationServiceAsync = validations
 
     override fun paperItems(): PaperItemServiceAsync = paperItems
-
-    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun virtualAccounts(): VirtualAccountServiceAsync = virtualAccounts
 
