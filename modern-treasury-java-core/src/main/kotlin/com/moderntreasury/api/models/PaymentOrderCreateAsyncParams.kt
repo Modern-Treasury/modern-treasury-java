@@ -3620,6 +3620,8 @@ constructor(
 
                     @JvmField val CLABE = AccountNumberType(JsonField.of("clabe"))
 
+                    @JvmField val NZ_NUMBER = AccountNumberType(JsonField.of("nz_number"))
+
                     @JvmField val WALLET_ADDRESS = AccountNumberType(JsonField.of("wallet_address"))
 
                     @JvmField val PAN = AccountNumberType(JsonField.of("pan"))
@@ -3633,6 +3635,7 @@ constructor(
                     IBAN,
                     HK_NUMBER,
                     CLABE,
+                    NZ_NUMBER,
                     WALLET_ADDRESS,
                     PAN,
                     OTHER,
@@ -3642,6 +3645,7 @@ constructor(
                     IBAN,
                     HK_NUMBER,
                     CLABE,
+                    NZ_NUMBER,
                     WALLET_ADDRESS,
                     PAN,
                     OTHER,
@@ -3653,6 +3657,7 @@ constructor(
                         IBAN -> Value.IBAN
                         HK_NUMBER -> Value.HK_NUMBER
                         CLABE -> Value.CLABE
+                        NZ_NUMBER -> Value.NZ_NUMBER
                         WALLET_ADDRESS -> Value.WALLET_ADDRESS
                         PAN -> Value.PAN
                         OTHER -> Value.OTHER
@@ -3664,6 +3669,7 @@ constructor(
                         IBAN -> Known.IBAN
                         HK_NUMBER -> Known.HK_NUMBER
                         CLABE -> Known.CLABE
+                        NZ_NUMBER -> Known.NZ_NUMBER
                         WALLET_ADDRESS -> Known.WALLET_ADDRESS
                         PAN -> Known.PAN
                         OTHER -> Known.OTHER
