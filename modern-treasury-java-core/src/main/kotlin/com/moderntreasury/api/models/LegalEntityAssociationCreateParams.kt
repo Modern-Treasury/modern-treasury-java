@@ -1121,6 +1121,8 @@ constructor(
 
                     @JvmField val HN_RTN = IdType(JsonField.of("hn_rtn"))
 
+                    @JvmField val IN_LEI = IdType(JsonField.of("in_lei"))
+
                     @JvmField val PASSPORT = IdType(JsonField.of("passport"))
 
                     @JvmField val SA_TIN = IdType(JsonField.of("sa_tin"))
@@ -1148,6 +1150,7 @@ constructor(
                     CO_NIT,
                     HN_ID,
                     HN_RTN,
+                    IN_LEI,
                     PASSPORT,
                     SA_TIN,
                     SA_VAT,
@@ -1167,6 +1170,7 @@ constructor(
                     CO_NIT,
                     HN_ID,
                     HN_RTN,
+                    IN_LEI,
                     PASSPORT,
                     SA_TIN,
                     SA_VAT,
@@ -1188,6 +1192,7 @@ constructor(
                         CO_NIT -> Value.CO_NIT
                         HN_ID -> Value.HN_ID
                         HN_RTN -> Value.HN_RTN
+                        IN_LEI -> Value.IN_LEI
                         PASSPORT -> Value.PASSPORT
                         SA_TIN -> Value.SA_TIN
                         SA_VAT -> Value.SA_VAT
@@ -1209,6 +1214,7 @@ constructor(
                         CO_NIT -> Known.CO_NIT
                         HN_ID -> Known.HN_ID
                         HN_RTN -> Known.HN_RTN
+                        IN_LEI -> Known.IN_LEI
                         PASSPORT -> Known.PASSPORT
                         SA_TIN -> Known.SA_TIN
                         SA_VAT -> Known.SA_VAT
