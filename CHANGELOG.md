@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.11.0 (2024-04-09)
+
+Full Changelog: [v2.10.0...v2.11.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.10.0...v2.11.0)
+
+### Features
+
+* **api:** add id type in_lei ([#154](https://github.com/Modern-Treasury/modern-treasury-java/issues/154)) ([3e87868](https://github.com/Modern-Treasury/modern-treasury-java/commit/3e87868fe0339314374bde1b7e4ad76dca5bcdac))
+* **api:** update account number type enum ([#148](https://github.com/Modern-Treasury/modern-treasury-java/issues/148)) ([e51b897](https://github.com/Modern-Treasury/modern-treasury-java/commit/e51b897170443fc85c4a5cc923b92446e701f3e1))
+
+
+### Chores
+
+* **deps:** update jackson to v2.14.3 ([#151](https://github.com/Modern-Treasury/modern-treasury-java/issues/151)) ([4cf680d](https://github.com/Modern-Treasury/modern-treasury-java/commit/4cf680d118aabf852a42a7a9550fecff592d626e))
+* **deps:** update junit5 to v5.9.3 ([#153](https://github.com/Modern-Treasury/modern-treasury-java/issues/153)) ([888fc34](https://github.com/Modern-Treasury/modern-treasury-java/commit/888fc34d632b2c61f88b572d3d3bca5be8cbc934))
+* **deps:** update kotlin-gradle-plugin to v1.9.23 ([#152](https://github.com/Modern-Treasury/modern-treasury-java/issues/152)) ([ef91260](https://github.com/Modern-Treasury/modern-treasury-java/commit/ef9126088b969095bba0c51667b98d8be68bf0e4))
+* **tests:** import wiremock.client.WireMock.put ([#155](https://github.com/Modern-Treasury/modern-treasury-java/issues/155)) ([0b42c27](https://github.com/Modern-Treasury/modern-treasury-java/commit/0b42c27e296527462a3e1b56090864f50c3904b4))
+
 ## 2.10.0 (2024-03-26)
 
 Full Changelog: [v2.9.0...v2.10.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.9.0...v2.10.0)
