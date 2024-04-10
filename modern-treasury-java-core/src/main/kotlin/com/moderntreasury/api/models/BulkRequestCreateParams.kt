@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.moderntreasury.api.core.BaseDeserializer
 import com.moderntreasury.api.core.BaseSerializer
+import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
@@ -363,7 +364,7 @@ constructor(
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
-    ) {
+    ) : Enum {
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -420,7 +421,7 @@ constructor(
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
-    ) {
+    ) : Enum {
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -2283,7 +2284,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -2496,7 +2497,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -2560,7 +2561,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -2612,7 +2613,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -3856,7 +3857,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -4050,7 +4051,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -4484,7 +4485,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -5112,7 +5113,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -5341,7 +5342,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -5810,7 +5811,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -6256,7 +6257,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -6466,7 +6467,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -6648,7 +6649,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -8743,7 +8744,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -8937,7 +8938,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -10598,7 +10599,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -10790,7 +10791,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -12946,7 +12947,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -13010,7 +13011,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -13068,7 +13069,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -13120,7 +13121,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -13552,7 +13553,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -14180,7 +14181,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -14409,7 +14410,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -14878,7 +14879,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -15324,7 +15325,7 @@ constructor(
                 @JsonCreator
                 private constructor(
                     private val value: JsonField<String>,
-                ) {
+                ) : Enum {
 
                     @com.fasterxml.jackson.annotation.JsonValue
                     fun _value(): JsonField<String> = value
@@ -15534,7 +15535,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -15716,7 +15717,7 @@ constructor(
                     @JsonCreator
                     private constructor(
                         private val value: JsonField<String>,
-                    ) {
+                    ) : Enum {
 
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
@@ -15947,7 +15948,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
@@ -18111,7 +18112,7 @@ constructor(
             @JsonCreator
             private constructor(
                 private val value: JsonField<String>,
-            ) {
+            ) : Enum {
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 

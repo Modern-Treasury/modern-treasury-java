@@ -2,48 +2,46 @@
 
 package com.moderntreasury.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.moderntreasury.api.core.ExcludeMissing
+import com.moderntreasury.api.core.ContentTypes
+import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonValue
+import com.moderntreasury.api.core.MultipartFormValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toUnmodifiable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
 import java.util.Objects
 import java.util.Optional
+import org.apache.hc.core5.http.ContentType
 
 class DocumentCreateParams
 constructor(
-    private val documentableId: String,
-    private val documentableType: DocumentableType,
-    private val file: String,
-    private val documentType: String?,
+    private val documentableId: MultipartFormValue<String>,
+    private val documentableType: MultipartFormValue<DocumentableType>,
+    private val file: MultipartFormValue<ByteArray>,
+    private val documentType: MultipartFormValue<String>?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun documentableId(): String = documentableId
+    fun documentableId(): MultipartFormValue<String> = documentableId
 
-    fun documentableType(): DocumentableType = documentableType
+    fun documentableType(): MultipartFormValue<DocumentableType> = documentableType
 
-    fun file(): String = file
+    fun file(): MultipartFormValue<ByteArray> = file
 
-    fun documentType(): Optional<String> = Optional.ofNullable(documentType)
+    fun documentType(): Optional<MultipartFormValue<String>> = Optional.ofNullable(documentType)
 
     @JvmSynthetic
-    internal fun getBody(): DocumentCreateBody {
-        return DocumentCreateBody(
+    internal fun getBody(): Array<MultipartFormValue<*>?> {
+        return arrayOf(
             documentableId,
             documentableType,
             file,
             documentType,
-            additionalBodyProperties,
         )
     }
 
@@ -57,27 +55,21 @@ constructor(
     internal constructor(
         private val documentableId: String?,
         private val documentableType: DocumentableType?,
-        private val file: String?,
+        private val file: ByteArray?,
         private val documentType: String?,
-        private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
         /** The unique identifier for the associated object. */
-        @JsonProperty("documentable_id") fun documentableId(): String? = documentableId
+        fun documentableId(): String? = documentableId
 
-        @JsonProperty("documentable_type")
         fun documentableType(): DocumentableType? = documentableType
 
-        @JsonProperty("file") fun file(): String? = file
+        fun file(): ByteArray? = file
 
         /** A category given to the document, can be `null`. */
-        @JsonProperty("document_type") fun documentType(): String? = documentType
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun documentType(): String? = documentType
 
         fun toBuilder() = Builder().from(this)
 
@@ -90,8 +82,7 @@ constructor(
                 this.documentableId == other.documentableId &&
                 this.documentableType == other.documentableType &&
                 this.file == other.file &&
-                this.documentType == other.documentType &&
-                this.additionalProperties == other.additionalProperties
+                this.documentType == other.documentType
         }
 
         override fun hashCode(): Int {
@@ -102,14 +93,13 @@ constructor(
                         documentableType,
                         file,
                         documentType,
-                        additionalProperties,
                     )
             }
             return hashCode
         }
 
         override fun toString() =
-            "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalProperties=$additionalProperties}"
+            "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType}"
 
         companion object {
 
@@ -120,9 +110,8 @@ constructor(
 
             private var documentableId: String? = null
             private var documentableType: DocumentableType? = null
-            private var file: String? = null
+            private var file: ByteArray? = null
             private var documentType: String? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(documentCreateBody: DocumentCreateBody) = apply {
@@ -130,58 +119,27 @@ constructor(
                 this.documentableType = documentCreateBody.documentableType
                 this.file = documentCreateBody.file
                 this.documentType = documentCreateBody.documentType
-                additionalProperties(documentCreateBody.additionalProperties)
             }
 
             /** The unique identifier for the associated object. */
-            @JsonProperty("documentable_id")
             fun documentableId(documentableId: String) = apply {
                 this.documentableId = documentableId
             }
 
-            @JsonProperty("documentable_type")
             fun documentableType(documentableType: DocumentableType) = apply {
                 this.documentableType = documentableType
             }
 
-            @JsonProperty("file") fun file(file: String) = apply { this.file = file }
+            fun file(file: ByteArray) = apply { this.file = file }
 
             /** A category given to the document, can be `null`. */
-            @JsonProperty("document_type")
             fun documentType(documentType: String) = apply { this.documentType = documentType }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            @JsonAnySetter
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun build(): DocumentCreateBody =
-                DocumentCreateBody(
-                    checkNotNull(documentableId) { "`documentableId` is required but was not set" },
-                    checkNotNull(documentableType) {
-                        "`documentableType` is required but was not set"
-                    },
-                    checkNotNull(file) { "`file` is required but was not set" },
-                    documentType,
-                    additionalProperties.toUnmodifiable(),
-                )
         }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -194,8 +152,7 @@ constructor(
             this.file == other.file &&
             this.documentType == other.documentType &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
@@ -206,12 +163,11 @@ constructor(
             documentType,
             additionalQueryParams,
             additionalHeaders,
-            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -223,13 +179,12 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var documentableId: String? = null
-        private var documentableType: DocumentableType? = null
-        private var file: String? = null
-        private var documentType: String? = null
+        private var documentableId: MultipartFormValue<String>? = null
+        private var documentableType: MultipartFormValue<DocumentableType>? = null
+        private var file: MultipartFormValue<ByteArray>? = null
+        private var documentType: MultipartFormValue<String>? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(documentCreateParams: DocumentCreateParams) = apply {
@@ -239,20 +194,41 @@ constructor(
             this.documentType = documentCreateParams.documentType
             additionalQueryParams(documentCreateParams.additionalQueryParams)
             additionalHeaders(documentCreateParams.additionalHeaders)
-            additionalBodyProperties(documentCreateParams.additionalBodyProperties)
         }
 
         /** The unique identifier for the associated object. */
-        fun documentableId(documentableId: String) = apply { this.documentableId = documentableId }
-
-        fun documentableType(documentableType: DocumentableType) = apply {
-            this.documentableType = documentableType
+        fun documentableId(
+            documentableId: String,
+            contentType: ContentType = ContentTypes.DefaultText
+        ) = apply {
+            this.documentableId =
+                MultipartFormValue.fromString("documentableId", documentableId, contentType)
         }
 
-        fun file(file: String) = apply { this.file = file }
+        fun documentableType(
+            documentableType: DocumentableType,
+            contentType: ContentType = ContentTypes.DefaultText
+        ) = apply {
+            this.documentableType =
+                MultipartFormValue.fromEnum("documentableType", documentableType, contentType)
+        }
+
+        fun file(
+            content: ByteArray,
+            filename: String? = null,
+            contentType: ContentType = ContentTypes.DefaultBinary
+        ) = apply {
+            this.file = MultipartFormValue.fromByteArray("file", content, contentType, filename)
+        }
 
         /** A category given to the document, can be `null`. */
-        fun documentType(documentType: String) = apply { this.documentType = documentType }
+        fun documentType(
+            documentType: String,
+            contentType: ContentType = ContentTypes.DefaultText
+        ) = apply {
+            this.documentType =
+                MultipartFormValue.fromString("documentType", documentType, contentType)
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -294,20 +270,6 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
         fun build(): DocumentCreateParams =
             DocumentCreateParams(
                 checkNotNull(documentableId) { "`documentableId` is required but was not set" },
@@ -316,7 +278,6 @@ constructor(
                 documentType,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
             )
     }
 
@@ -324,7 +285,7 @@ constructor(
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
-    ) {
+    ) : Enum {
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
