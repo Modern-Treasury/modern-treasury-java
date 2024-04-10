@@ -87,32 +87,31 @@ example with:
 
 ### Example: creating a resource
 
-To create a new external account, first use the `ExternalAccountCreateParams` builder to specify attributes,
-then pass that to the `create` method of the `externalAccounts` service.
+To create a new counterparty, first use the `CounterpartyCreateParams` builder to specify attributes,
+then pass that to the `create` method of the `counterparties` service.
 
 ```java
-import com.moderntreasury.api.models.ExternalAccount;
-import com.moderntreasury.api.models.ExternalAccountCreateParams;
+import com.moderntreasury.api.models.Counterparty;
+import com.moderntreasury.api.models.CounterpartyCreateParams;
 
-ExternalAccountCreateParams params = ExternalAccountCreateParams.builder()
-    .counterpartyId("9eba513a-53fd-4d6d-ad52-ccce122ab92a")
-    .name("my bank")
+CounterpartyCreateParams params = CounterpartyCreateParams.builder()
+    .name("my first counterparty")
     .build();
-ExternalAccount externalAccount = client.externalAccounts().create(params);
+Counterparty counterparty = client.counterparties().create(params);
 ```
 
 ### Example: listing resources
 
-The Modern Treasury API provides a `list` method to get a paginated list of external accounts.
+The Modern Treasury API provides a `list` method to get a paginated list of counterparties.
 You can retrieve the first page by:
 
 ```java
-import com.moderntreasury.api.models.ExternalAccount;
+import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.Page;
 
-ExternalAccountListPage page = client.externalAccounts().list();
-for (ExternalAccount externalAccount : page.items()) {
-    System.out.println(externalAccount);
+CounterpartyListPage page = client.counterparties().list();
+for (Counterparty counterparty : page.items()) {
+    System.out.println(counterparty);
 }
 ```
 
@@ -126,14 +125,14 @@ See [Pagination](#pagination) below for more information on transparently workin
 
 To make a request to the Modern Treasury API, you generally build an instance of the appropriate `Params` class.
 
-In [Example: creating a resource](#example-creating-a-resource) above, we used the `ExternalAccountCreateParams.builder()` to pass to
-the `create` method of the `externalAccounts` service.
+In [Example: creating a resource](#example-creating-a-resource) above, we used the `CounterpartyCreateParams.builder()` to pass to
+the `create` method of the `counterparties` service.
 
 Sometimes, the API may support other properties that are not yet supported in the Java SDK types. In that case,
 you can attach them using the `putAdditionalProperty` method.
 
 ```java
-ExternalAccountCreateParams params = ExternalAccountCreateParams.builder()
+CounterpartyCreateParams params = CounterpartyCreateParams.builder()
     // ... normal properties
     .putAdditionalProperty("secret_param", "4242")
     .build();
@@ -146,7 +145,7 @@ ExternalAccountCreateParams params = ExternalAccountCreateParams.builder()
 When receiving a response, the Modern Treasury Java SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Java type. If you directly access the mistaken property, the SDK will throw an unchecked `ModernTreasuryInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
 
 ```java
-ExternalAccount externalAccount = client.externalAccounts().create().validate();
+Counterparty counterparty = client.counterparties().create().validate();
 ```
 
 ### Response properties as JSON
@@ -176,7 +175,7 @@ if (field.isMissing()) {
 Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
 
 ```java
-JsonValue secret = externalAccount._additionalProperties().get("secret_field");
+JsonValue secret = counterparty._additionalProperties().get("secret_field");
 ```
 
 ---
@@ -195,23 +194,23 @@ which automatically handles fetching more pages for you:
 
 ```java
 // As an Iterable:
-ExternalAccountListPage page = client.externalAccounts().list(params);
-for (ExternalAccount externalAccount : page.autoPager()) {
-    System.out.println(externalAccount);
+CounterpartyListPage page = client.counterparties().list(params);
+for (Counterparty counterparty : page.autoPager()) {
+    System.out.println(counterparty);
 };
 
 // As a Stream:
-client.externalAccounts().list(params).autoPager().stream()
+client.counterparties().list(params).autoPager().stream()
     .limit(50)
-    .forEach(externalAccount -> System.out.println(externalAccount));
+    .forEach(counterparty -> System.out.println(counterparty));
 ```
 
 ### Asynchronous
 
 ```java
 // Using forEach, which returns CompletableFuture<Void>:
-asyncClient.externalAccounts().list(params).autoPager()
-    .forEach(externalAccount -> System.out.println(externalAccount), executor);
+asyncClient.counterparties().list(params).autoPager()
+    .forEach(counterparty -> System.out.println(counterparty), executor);
 ```
 
 ### Manual pagination
@@ -222,10 +221,10 @@ A page of results has a `data()` method to fetch the list of objects, as well as
 `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```java
-ExternalAccountListPage page = client.externalAccounts().list(params);
+CounterpartyListPage page = client.counterparties().list(params);
 while (page != null) {
-    for (ExternalAccount externalAccount : page.items()) {
-        System.out.println(externalAccount);
+    for (Counterparty counterparty : page.items()) {
+        System.out.println(counterparty);
     }
 
     page = page.getNextPage().orElse(null);
