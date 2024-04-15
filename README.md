@@ -76,15 +76,6 @@ Read the documentation for more configuration options.
 
 ---
 
-## Example project
-
-There's an example project in `modern-treasury-java-example`. You can run the
-example with:
-
-```
-./gradlew :modern-treasury-java-example:run
-```
-
 ### Example: creating a resource
 
 To create a new counterparty, first use the `CounterpartyCreateParams` builder to specify attributes,
