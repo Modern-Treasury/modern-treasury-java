@@ -1,5 +1,35 @@
 # Changelog
 
+## 2.12.0 (2024-04-21)
+
+Full Changelog: [v2.11.0...v2.12.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.11.0...v2.12.0)
+
+### Features
+
+* **api:** add ledger_transaction_id field to reversal ([#162](https://github.com/Modern-Treasury/modern-treasury-java/issues/162)) ([1e9df09](https://github.com/Modern-Treasury/modern-treasury-java/commit/1e9df097428f95c80f69e91a3543ae6186444b5c))
+* **client:** implement support for multipart/form-data body requests ([#158](https://github.com/Modern-Treasury/modern-treasury-java/issues/158)) ([1fc8479](https://github.com/Modern-Treasury/modern-treasury-java/commit/1fc84793a3b24450492918ee49e305e45cf813e5))
+
+
+### Bug Fixes
+
+* [tmp] remove generated commit ([#160](https://github.com/Modern-Treasury/modern-treasury-java/issues/160)) ([11d7235](https://github.com/Modern-Treasury/modern-treasury-java/commit/11d7235ab9a306c255b6ad2fe818a3e27fbc367c))
+
+
+### Chores
+
+* **ci:** validate Gradle wrapper ([#163](https://github.com/Modern-Treasury/modern-treasury-java/issues/163)) ([7253967](https://github.com/Modern-Treasury/modern-treasury-java/commit/72539678dbfb867d5eaa7014d166aa0873b008fb))
+* **internal:** formatting ([#159](https://github.com/Modern-Treasury/modern-treasury-java/issues/159)) ([a73a2e7](https://github.com/Modern-Treasury/modern-treasury-java/commit/a73a2e797130450635e88c8c71d0a5f3848a453f))
+
+
+### Documentation
+
+* **examples:** use counterparties in snippets ([#156](https://github.com/Modern-Treasury/modern-treasury-java/issues/156)) ([2eab171](https://github.com/Modern-Treasury/modern-treasury-java/commit/2eab1716b34699bf70e0a594fa31ad7910f47622))
+
+
+### Build System
+
+* configure UTF-8 locale in devcontainer ([#161](https://github.com/Modern-Treasury/modern-treasury-java/issues/161)) ([d6e97f0](https://github.com/Modern-Treasury/modern-treasury-java/commit/d6e97f0019997538912a74a72c673cbd68de6cf5))
+
 ## 2.11.0 (2024-04-09)
 
 Full Changelog: [v2.10.0...v2.11.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.10.0...v2.11.0)
