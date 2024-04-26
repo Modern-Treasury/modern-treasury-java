@@ -6,12 +6,21 @@ package com.moderntreasury.api.services.async.transactions
 
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.models.TransactionLineItem
+import com.moderntreasury.api.models.TransactionLineItemCreateParams
+import com.moderntreasury.api.models.TransactionLineItemDeleteParams
 import com.moderntreasury.api.models.TransactionLineItemListPageAsync
 import com.moderntreasury.api.models.TransactionLineItemListParams
 import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface LineItemServiceAsync {
+
+    /** create transaction line items */
+    @JvmOverloads
+    fun create(
+        params: TransactionLineItemCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<TransactionLineItem>
 
     /** get transaction line item */
     @JvmOverloads
@@ -26,4 +35,11 @@ interface LineItemServiceAsync {
         params: TransactionLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<TransactionLineItemListPageAsync>
+
+    /** delete transaction line item */
+    @JvmOverloads
+    fun delete(
+        params: TransactionLineItemDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<Void>
 }

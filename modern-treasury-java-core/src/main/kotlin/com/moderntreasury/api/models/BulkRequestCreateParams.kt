@@ -2740,7 +2740,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 fun ledgerableType(): Optional<LedgerableType> =
                     Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
@@ -2788,7 +2789,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 @JsonProperty("ledgerable_type")
                 @ExcludeMissing
@@ -2993,8 +2995,8 @@ constructor(
                     /**
                      * If the ledger transaction can be reconciled to another object in Modern
                      * Treasury, the type will be populated here, otherwise null. This can be one of
-                     * payment_order, incoming_payment_detail, expected_payment, return, or
-                     * reversal.
+                     * payment_order, incoming_payment_detail, expected_payment, return, paper_item,
+                     * or reversal.
                      */
                     fun ledgerableType(ledgerableType: LedgerableType) =
                         ledgerableType(JsonField.of(ledgerableType))
@@ -3002,8 +3004,8 @@ constructor(
                     /**
                      * If the ledger transaction can be reconciled to another object in Modern
                      * Treasury, the type will be populated here, otherwise null. This can be one of
-                     * payment_order, incoming_payment_detail, expected_payment, return, or
-                     * reversal.
+                     * payment_order, incoming_payment_detail, expected_payment, return, paper_item,
+                     * or reversal.
                      */
                     @JsonProperty("ledgerable_type")
                     @ExcludeMissing
@@ -3876,8 +3878,6 @@ constructor(
 
                     companion object {
 
-                        @JvmField val COUNTERPARTY = LedgerableType(JsonField.of("counterparty"))
-
                         @JvmField
                         val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
 
@@ -3885,18 +3885,9 @@ constructor(
                         val INCOMING_PAYMENT_DETAIL =
                             LedgerableType(JsonField.of("incoming_payment_detail"))
 
-                        @JvmField
-                        val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
-
-                        @JvmField val LINE_ITEM = LedgerableType(JsonField.of("line_item"))
-
                         @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
 
                         @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
-
-                        @JvmField
-                        val PAYMENT_ORDER_ATTEMPT =
-                            LedgerableType(JsonField.of("payment_order_attempt"))
 
                         @JvmField val RETURN = LedgerableType(JsonField.of("return"))
 
@@ -3906,27 +3897,19 @@ constructor(
                     }
 
                     enum class Known {
-                        COUNTERPARTY,
                         EXPECTED_PAYMENT,
                         INCOMING_PAYMENT_DETAIL,
-                        INTERNAL_ACCOUNT,
-                        LINE_ITEM,
                         PAPER_ITEM,
                         PAYMENT_ORDER,
-                        PAYMENT_ORDER_ATTEMPT,
                         RETURN,
                         REVERSAL,
                     }
 
                     enum class Value {
-                        COUNTERPARTY,
                         EXPECTED_PAYMENT,
                         INCOMING_PAYMENT_DETAIL,
-                        INTERNAL_ACCOUNT,
-                        LINE_ITEM,
                         PAPER_ITEM,
                         PAYMENT_ORDER,
-                        PAYMENT_ORDER_ATTEMPT,
                         RETURN,
                         REVERSAL,
                         _UNKNOWN,
@@ -3934,14 +3917,10 @@ constructor(
 
                     fun value(): Value =
                         when (this) {
-                            COUNTERPARTY -> Value.COUNTERPARTY
                             EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                             INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                            INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
-                            LINE_ITEM -> Value.LINE_ITEM
                             PAPER_ITEM -> Value.PAPER_ITEM
                             PAYMENT_ORDER -> Value.PAYMENT_ORDER
-                            PAYMENT_ORDER_ATTEMPT -> Value.PAYMENT_ORDER_ATTEMPT
                             RETURN -> Value.RETURN
                             REVERSAL -> Value.REVERSAL
                             else -> Value._UNKNOWN
@@ -3949,14 +3928,10 @@ constructor(
 
                     fun known(): Known =
                         when (this) {
-                            COUNTERPARTY -> Known.COUNTERPARTY
                             EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                             INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                            INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
-                            LINE_ITEM -> Known.LINE_ITEM
                             PAPER_ITEM -> Known.PAPER_ITEM
                             PAYMENT_ORDER -> Known.PAYMENT_ORDER
-                            PAYMENT_ORDER_ATTEMPT -> Known.PAYMENT_ORDER_ATTEMPT
                             RETURN -> Known.RETURN
                             REVERSAL -> Known.REVERSAL
                             else ->
@@ -7627,7 +7602,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 fun ledgerableType(): Optional<LedgerableType> =
                     Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
@@ -7675,7 +7651,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 @JsonProperty("ledgerable_type")
                 @ExcludeMissing
@@ -7880,8 +7857,8 @@ constructor(
                     /**
                      * If the ledger transaction can be reconciled to another object in Modern
                      * Treasury, the type will be populated here, otherwise null. This can be one of
-                     * payment_order, incoming_payment_detail, expected_payment, return, or
-                     * reversal.
+                     * payment_order, incoming_payment_detail, expected_payment, return, paper_item,
+                     * or reversal.
                      */
                     fun ledgerableType(ledgerableType: LedgerableType) =
                         ledgerableType(JsonField.of(ledgerableType))
@@ -7889,8 +7866,8 @@ constructor(
                     /**
                      * If the ledger transaction can be reconciled to another object in Modern
                      * Treasury, the type will be populated here, otherwise null. This can be one of
-                     * payment_order, incoming_payment_detail, expected_payment, return, or
-                     * reversal.
+                     * payment_order, incoming_payment_detail, expected_payment, return, paper_item,
+                     * or reversal.
                      */
                     @JsonProperty("ledgerable_type")
                     @ExcludeMissing
@@ -8763,8 +8740,6 @@ constructor(
 
                     companion object {
 
-                        @JvmField val COUNTERPARTY = LedgerableType(JsonField.of("counterparty"))
-
                         @JvmField
                         val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
 
@@ -8772,18 +8747,9 @@ constructor(
                         val INCOMING_PAYMENT_DETAIL =
                             LedgerableType(JsonField.of("incoming_payment_detail"))
 
-                        @JvmField
-                        val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
-
-                        @JvmField val LINE_ITEM = LedgerableType(JsonField.of("line_item"))
-
                         @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
 
                         @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
-
-                        @JvmField
-                        val PAYMENT_ORDER_ATTEMPT =
-                            LedgerableType(JsonField.of("payment_order_attempt"))
 
                         @JvmField val RETURN = LedgerableType(JsonField.of("return"))
 
@@ -8793,27 +8759,19 @@ constructor(
                     }
 
                     enum class Known {
-                        COUNTERPARTY,
                         EXPECTED_PAYMENT,
                         INCOMING_PAYMENT_DETAIL,
-                        INTERNAL_ACCOUNT,
-                        LINE_ITEM,
                         PAPER_ITEM,
                         PAYMENT_ORDER,
-                        PAYMENT_ORDER_ATTEMPT,
                         RETURN,
                         REVERSAL,
                     }
 
                     enum class Value {
-                        COUNTERPARTY,
                         EXPECTED_PAYMENT,
                         INCOMING_PAYMENT_DETAIL,
-                        INTERNAL_ACCOUNT,
-                        LINE_ITEM,
                         PAPER_ITEM,
                         PAYMENT_ORDER,
-                        PAYMENT_ORDER_ATTEMPT,
                         RETURN,
                         REVERSAL,
                         _UNKNOWN,
@@ -8821,14 +8779,10 @@ constructor(
 
                     fun value(): Value =
                         when (this) {
-                            COUNTERPARTY -> Value.COUNTERPARTY
                             EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                             INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                            INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
-                            LINE_ITEM -> Value.LINE_ITEM
                             PAPER_ITEM -> Value.PAPER_ITEM
                             PAYMENT_ORDER -> Value.PAYMENT_ORDER
-                            PAYMENT_ORDER_ATTEMPT -> Value.PAYMENT_ORDER_ATTEMPT
                             RETURN -> Value.RETURN
                             REVERSAL -> Value.REVERSAL
                             else -> Value._UNKNOWN
@@ -8836,14 +8790,10 @@ constructor(
 
                     fun known(): Known =
                         when (this) {
-                            COUNTERPARTY -> Known.COUNTERPARTY
                             EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                             INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                            INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
-                            LINE_ITEM -> Known.LINE_ITEM
                             PAPER_ITEM -> Known.PAPER_ITEM
                             PAYMENT_ORDER -> Known.PAYMENT_ORDER
-                            PAYMENT_ORDER_ATTEMPT -> Known.PAYMENT_ORDER_ATTEMPT
                             RETURN -> Known.RETURN
                             REVERSAL -> Known.REVERSAL
                             else ->
@@ -9508,7 +9458,7 @@ constructor(
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * type will be populated here, otherwise null. This can be one of payment_order,
-             * incoming_payment_detail, expected_payment, return, or reversal.
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
              */
             fun ledgerableType(): Optional<LedgerableType> =
                 Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
@@ -9556,7 +9506,7 @@ constructor(
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * type will be populated here, otherwise null. This can be one of payment_order,
-             * incoming_payment_detail, expected_payment, return, or reversal.
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
              */
             @JsonProperty("ledgerable_type") @ExcludeMissing fun _ledgerableType() = ledgerableType
 
@@ -9758,7 +9708,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 fun ledgerableType(ledgerableType: LedgerableType) =
                     ledgerableType(JsonField.of(ledgerableType))
@@ -9766,7 +9717,8 @@ constructor(
                 /**
                  * If the ledger transaction can be reconciled to another object in Modern Treasury,
                  * the type will be populated here, otherwise null. This can be one of
-                 * payment_order, incoming_payment_detail, expected_payment, return, or reversal.
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
                  */
                 @JsonProperty("ledgerable_type")
                 @ExcludeMissing
@@ -10617,8 +10569,6 @@ constructor(
 
                 companion object {
 
-                    @JvmField val COUNTERPARTY = LedgerableType(JsonField.of("counterparty"))
-
                     @JvmField
                     val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
 
@@ -10626,18 +10576,9 @@ constructor(
                     val INCOMING_PAYMENT_DETAIL =
                         LedgerableType(JsonField.of("incoming_payment_detail"))
 
-                    @JvmField
-                    val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
-
-                    @JvmField val LINE_ITEM = LedgerableType(JsonField.of("line_item"))
-
                     @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
 
                     @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
-
-                    @JvmField
-                    val PAYMENT_ORDER_ATTEMPT =
-                        LedgerableType(JsonField.of("payment_order_attempt"))
 
                     @JvmField val RETURN = LedgerableType(JsonField.of("return"))
 
@@ -10647,27 +10588,19 @@ constructor(
                 }
 
                 enum class Known {
-                    COUNTERPARTY,
                     EXPECTED_PAYMENT,
                     INCOMING_PAYMENT_DETAIL,
-                    INTERNAL_ACCOUNT,
-                    LINE_ITEM,
                     PAPER_ITEM,
                     PAYMENT_ORDER,
-                    PAYMENT_ORDER_ATTEMPT,
                     RETURN,
                     REVERSAL,
                 }
 
                 enum class Value {
-                    COUNTERPARTY,
                     EXPECTED_PAYMENT,
                     INCOMING_PAYMENT_DETAIL,
-                    INTERNAL_ACCOUNT,
-                    LINE_ITEM,
                     PAPER_ITEM,
                     PAYMENT_ORDER,
-                    PAYMENT_ORDER_ATTEMPT,
                     RETURN,
                     REVERSAL,
                     _UNKNOWN,
@@ -10675,14 +10608,10 @@ constructor(
 
                 fun value(): Value =
                     when (this) {
-                        COUNTERPARTY -> Value.COUNTERPARTY
                         EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                         INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                        INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
-                        LINE_ITEM -> Value.LINE_ITEM
                         PAPER_ITEM -> Value.PAPER_ITEM
                         PAYMENT_ORDER -> Value.PAYMENT_ORDER
-                        PAYMENT_ORDER_ATTEMPT -> Value.PAYMENT_ORDER_ATTEMPT
                         RETURN -> Value.RETURN
                         REVERSAL -> Value.REVERSAL
                         else -> Value._UNKNOWN
@@ -10690,14 +10619,10 @@ constructor(
 
                 fun known(): Known =
                     when (this) {
-                        COUNTERPARTY -> Known.COUNTERPARTY
                         EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                         INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                        INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
-                        LINE_ITEM -> Known.LINE_ITEM
                         PAPER_ITEM -> Known.PAPER_ITEM
                         PAYMENT_ORDER -> Known.PAYMENT_ORDER
-                        PAYMENT_ORDER_ATTEMPT -> Known.PAYMENT_ORDER_ATTEMPT
                         RETURN -> Known.RETURN
                         REVERSAL -> Known.REVERSAL
                         else ->
@@ -10864,6 +10789,7 @@ constructor(
             private val internalAccountId: JsonField<String>,
             private val metadata: JsonField<Metadata>,
             private val posted: JsonField<Boolean>,
+            private val type: JsonField<Type>,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
@@ -10890,7 +10816,8 @@ constructor(
              * When applicable, the bank-given code that determines the transaction's category. For
              * most banks this is the BAI2/BTRS transaction code.
              */
-            fun vendorCode(): String = vendorCode.getRequired("vendor_code")
+            fun vendorCode(): Optional<String> =
+                Optional.ofNullable(vendorCode.getNullable("vendor_code"))
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
@@ -10898,7 +10825,8 @@ constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * `us_bank`, or others.
              */
-            fun vendorCodeType(): String = vendorCodeType.getRequired("vendor_code_type")
+            fun vendorCodeType(): Optional<String> =
+                Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
 
             /** The date on which the transaction occurred. */
             fun asOfDate(): Optional<LocalDate> =
@@ -10916,6 +10844,12 @@ constructor(
 
             /** This field will be `true` if the transaction has posted to the account. */
             fun posted(): Optional<Boolean> = Optional.ofNullable(posted.getNullable("posted"))
+
+            /**
+             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+             * `book`, or `sen`.
+             */
+            fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
 
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -10964,6 +10898,12 @@ constructor(
             /** This field will be `true` if the transaction has posted to the account. */
             @JsonProperty("posted") @ExcludeMissing fun _posted() = posted
 
+            /**
+             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+             * `book`, or `sen`.
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type() = type
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -10979,6 +10919,7 @@ constructor(
                     internalAccountId()
                     metadata().map { it.validate() }
                     posted()
+                    type()
                     validated = true
                 }
             }
@@ -11000,6 +10941,7 @@ constructor(
                     this.internalAccountId == other.internalAccountId &&
                     this.metadata == other.metadata &&
                     this.posted == other.posted &&
+                    this.type == other.type &&
                     this.additionalProperties == other.additionalProperties
             }
 
@@ -11016,6 +10958,7 @@ constructor(
                             internalAccountId,
                             metadata,
                             posted,
+                            type,
                             additionalProperties,
                         )
                 }
@@ -11023,7 +10966,7 @@ constructor(
             }
 
             override fun toString() =
-                "TransactionCreateRequest{amount=$amount, direction=$direction, vendorDescription=$vendorDescription, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, asOfDate=$asOfDate, internalAccountId=$internalAccountId, metadata=$metadata, posted=$posted, additionalProperties=$additionalProperties}"
+                "TransactionCreateRequest{amount=$amount, direction=$direction, vendorDescription=$vendorDescription, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, asOfDate=$asOfDate, internalAccountId=$internalAccountId, metadata=$metadata, posted=$posted, type=$type, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -11041,6 +10984,7 @@ constructor(
                 private var internalAccountId: JsonField<String> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var posted: JsonField<Boolean> = JsonMissing.of()
+                private var type: JsonField<Type> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
@@ -11054,6 +10998,7 @@ constructor(
                     this.internalAccountId = transactionCreateRequest.internalAccountId
                     this.metadata = transactionCreateRequest.metadata
                     this.posted = transactionCreateRequest.posted
+                    this.type = transactionCreateRequest.type
                     additionalProperties(transactionCreateRequest.additionalProperties)
                 }
 
@@ -11174,6 +11119,20 @@ constructor(
                 @ExcludeMissing
                 fun posted(posted: JsonField<Boolean>) = apply { this.posted = posted }
 
+                /**
+                 * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`,
+                 * `rtp`, `book`, or `sen`.
+                 */
+                fun type(type: Type) = type(JsonField.of(type))
+
+                /**
+                 * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`,
+                 * `rtp`, `book`, or `sen`.
+                 */
+                @JsonProperty("type")
+                @ExcludeMissing
+                fun type(type: JsonField<Type>) = apply { this.type = type }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     this.additionalProperties.putAll(additionalProperties)
@@ -11200,6 +11159,7 @@ constructor(
                         internalAccountId,
                         metadata,
                         posted,
+                        type,
                         additionalProperties.toUnmodifiable(),
                     )
             }
@@ -11280,6 +11240,237 @@ constructor(
 
                     fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
                 }
+            }
+
+            class Type
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Type && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    @JvmField val ACH = Type(JsonField.of("ach"))
+
+                    @JvmField val AU_BECS = Type(JsonField.of("au_becs"))
+
+                    @JvmField val BACS = Type(JsonField.of("bacs"))
+
+                    @JvmField val BOOK = Type(JsonField.of("book"))
+
+                    @JvmField val CARD = Type(JsonField.of("card"))
+
+                    @JvmField val CHATS = Type(JsonField.of("chats"))
+
+                    @JvmField val CHECK = Type(JsonField.of("check"))
+
+                    @JvmField val CROSS_BORDER = Type(JsonField.of("cross_border"))
+
+                    @JvmField val DK_NETS = Type(JsonField.of("dk_nets"))
+
+                    @JvmField val EFT = Type(JsonField.of("eft"))
+
+                    @JvmField val HU_ICS = Type(JsonField.of("hu_ics"))
+
+                    @JvmField val INTERAC = Type(JsonField.of("interac"))
+
+                    @JvmField val MASAV = Type(JsonField.of("masav"))
+
+                    @JvmField val MX_CCEN = Type(JsonField.of("mx_ccen"))
+
+                    @JvmField val NEFT = Type(JsonField.of("neft"))
+
+                    @JvmField val NICS = Type(JsonField.of("nics"))
+
+                    @JvmField val NZ_BECS = Type(JsonField.of("nz_becs"))
+
+                    @JvmField val PL_ELIXIR = Type(JsonField.of("pl_elixir"))
+
+                    @JvmField val PROVXCHANGE = Type(JsonField.of("provxchange"))
+
+                    @JvmField val RO_SENT = Type(JsonField.of("ro_sent"))
+
+                    @JvmField val RTP = Type(JsonField.of("rtp"))
+
+                    @JvmField val SE_BANKGIROT = Type(JsonField.of("se_bankgirot"))
+
+                    @JvmField val SEN = Type(JsonField.of("sen"))
+
+                    @JvmField val SEPA = Type(JsonField.of("sepa"))
+
+                    @JvmField val SG_GIRO = Type(JsonField.of("sg_giro"))
+
+                    @JvmField val SIC = Type(JsonField.of("sic"))
+
+                    @JvmField val SIGNET = Type(JsonField.of("signet"))
+
+                    @JvmField val SKNBI = Type(JsonField.of("sknbi"))
+
+                    @JvmField val WIRE = Type(JsonField.of("wire"))
+
+                    @JvmField val ZENGIN = Type(JsonField.of("zengin"))
+
+                    @JvmField val OTHER = Type(JsonField.of("other"))
+
+                    @JvmStatic fun of(value: String) = Type(JsonField.of(value))
+                }
+
+                enum class Known {
+                    ACH,
+                    AU_BECS,
+                    BACS,
+                    BOOK,
+                    CARD,
+                    CHATS,
+                    CHECK,
+                    CROSS_BORDER,
+                    DK_NETS,
+                    EFT,
+                    HU_ICS,
+                    INTERAC,
+                    MASAV,
+                    MX_CCEN,
+                    NEFT,
+                    NICS,
+                    NZ_BECS,
+                    PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
+                    RTP,
+                    SE_BANKGIROT,
+                    SEN,
+                    SEPA,
+                    SG_GIRO,
+                    SIC,
+                    SIGNET,
+                    SKNBI,
+                    WIRE,
+                    ZENGIN,
+                    OTHER,
+                }
+
+                enum class Value {
+                    ACH,
+                    AU_BECS,
+                    BACS,
+                    BOOK,
+                    CARD,
+                    CHATS,
+                    CHECK,
+                    CROSS_BORDER,
+                    DK_NETS,
+                    EFT,
+                    HU_ICS,
+                    INTERAC,
+                    MASAV,
+                    MX_CCEN,
+                    NEFT,
+                    NICS,
+                    NZ_BECS,
+                    PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
+                    RTP,
+                    SE_BANKGIROT,
+                    SEN,
+                    SEPA,
+                    SG_GIRO,
+                    SIC,
+                    SIGNET,
+                    SKNBI,
+                    WIRE,
+                    ZENGIN,
+                    OTHER,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        ACH -> Value.ACH
+                        AU_BECS -> Value.AU_BECS
+                        BACS -> Value.BACS
+                        BOOK -> Value.BOOK
+                        CARD -> Value.CARD
+                        CHATS -> Value.CHATS
+                        CHECK -> Value.CHECK
+                        CROSS_BORDER -> Value.CROSS_BORDER
+                        DK_NETS -> Value.DK_NETS
+                        EFT -> Value.EFT
+                        HU_ICS -> Value.HU_ICS
+                        INTERAC -> Value.INTERAC
+                        MASAV -> Value.MASAV
+                        MX_CCEN -> Value.MX_CCEN
+                        NEFT -> Value.NEFT
+                        NICS -> Value.NICS
+                        NZ_BECS -> Value.NZ_BECS
+                        PL_ELIXIR -> Value.PL_ELIXIR
+                        PROVXCHANGE -> Value.PROVXCHANGE
+                        RO_SENT -> Value.RO_SENT
+                        RTP -> Value.RTP
+                        SE_BANKGIROT -> Value.SE_BANKGIROT
+                        SEN -> Value.SEN
+                        SEPA -> Value.SEPA
+                        SG_GIRO -> Value.SG_GIRO
+                        SIC -> Value.SIC
+                        SIGNET -> Value.SIGNET
+                        SKNBI -> Value.SKNBI
+                        WIRE -> Value.WIRE
+                        ZENGIN -> Value.ZENGIN
+                        OTHER -> Value.OTHER
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        ACH -> Known.ACH
+                        AU_BECS -> Known.AU_BECS
+                        BACS -> Known.BACS
+                        BOOK -> Known.BOOK
+                        CARD -> Known.CARD
+                        CHATS -> Known.CHATS
+                        CHECK -> Known.CHECK
+                        CROSS_BORDER -> Known.CROSS_BORDER
+                        DK_NETS -> Known.DK_NETS
+                        EFT -> Known.EFT
+                        HU_ICS -> Known.HU_ICS
+                        INTERAC -> Known.INTERAC
+                        MASAV -> Known.MASAV
+                        MX_CCEN -> Known.MX_CCEN
+                        NEFT -> Known.NEFT
+                        NICS -> Known.NICS
+                        NZ_BECS -> Known.NZ_BECS
+                        PL_ELIXIR -> Known.PL_ELIXIR
+                        PROVXCHANGE -> Known.PROVXCHANGE
+                        RO_SENT -> Known.RO_SENT
+                        RTP -> Known.RTP
+                        SE_BANKGIROT -> Known.SE_BANKGIROT
+                        SEN -> Known.SEN
+                        SEPA -> Known.SEPA
+                        SG_GIRO -> Known.SG_GIRO
+                        SIC -> Known.SIC
+                        SIGNET -> Known.SIGNET
+                        SKNBI -> Known.SKNBI
+                        WIRE -> Known.WIRE
+                        ZENGIN -> Known.ZENGIN
+                        OTHER -> Known.OTHER
+                        else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
         }
 
@@ -16076,6 +16267,7 @@ constructor(
             private val reconciliationGroups: JsonValue,
             private val reconciliationFilters: JsonValue,
             private val reconciliationRuleVariables: JsonField<List<ReconciliationRuleVariable>>,
+            private val status: JsonField<Status>,
             private val id: JsonField<String>,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
@@ -16164,6 +16356,11 @@ constructor(
                 Optional.ofNullable(
                     reconciliationRuleVariables.getNullable("reconciliation_rule_variables")
                 )
+
+            /**
+             * The Expected Payment's status can be updated from partially_reconciled to reconciled.
+             */
+            fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
 
             fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
@@ -16254,6 +16451,11 @@ constructor(
             @ExcludeMissing
             fun _reconciliationRuleVariables() = reconciliationRuleVariables
 
+            /**
+             * The Expected Payment's status can be updated from partially_reconciled to reconciled.
+             */
+            @JsonProperty("status") @ExcludeMissing fun _status() = status
+
             @JsonProperty("id") @ExcludeMissing fun _id() = id
 
             @JsonAnyGetter
@@ -16276,6 +16478,7 @@ constructor(
                     counterpartyId()
                     remittanceInformation()
                     reconciliationRuleVariables().map { it.forEach { it.validate() } }
+                    status()
                     id()
                     validated = true
                 }
@@ -16305,6 +16508,7 @@ constructor(
                     this.reconciliationGroups == other.reconciliationGroups &&
                     this.reconciliationFilters == other.reconciliationFilters &&
                     this.reconciliationRuleVariables == other.reconciliationRuleVariables &&
+                    this.status == other.status &&
                     this.id == other.id &&
                     this.additionalProperties == other.additionalProperties
             }
@@ -16329,6 +16533,7 @@ constructor(
                             reconciliationGroups,
                             reconciliationFilters,
                             reconciliationRuleVariables,
+                            status,
                             id,
                             additionalProperties,
                         )
@@ -16337,7 +16542,7 @@ constructor(
             }
 
             override fun toString() =
-                "ExpectedPaymentUpdateRequestWithId{amountUpperBound=$amountUpperBound, amountLowerBound=$amountLowerBound, direction=$direction, internalAccountId=$internalAccountId, type=$type, currency=$currency, dateUpperBound=$dateUpperBound, dateLowerBound=$dateLowerBound, description=$description, statementDescriptor=$statementDescriptor, metadata=$metadata, counterpartyId=$counterpartyId, remittanceInformation=$remittanceInformation, reconciliationGroups=$reconciliationGroups, reconciliationFilters=$reconciliationFilters, reconciliationRuleVariables=$reconciliationRuleVariables, id=$id, additionalProperties=$additionalProperties}"
+                "ExpectedPaymentUpdateRequestWithId{amountUpperBound=$amountUpperBound, amountLowerBound=$amountLowerBound, direction=$direction, internalAccountId=$internalAccountId, type=$type, currency=$currency, dateUpperBound=$dateUpperBound, dateLowerBound=$dateLowerBound, description=$description, statementDescriptor=$statementDescriptor, metadata=$metadata, counterpartyId=$counterpartyId, remittanceInformation=$remittanceInformation, reconciliationGroups=$reconciliationGroups, reconciliationFilters=$reconciliationFilters, reconciliationRuleVariables=$reconciliationRuleVariables, status=$status, id=$id, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -16364,6 +16569,7 @@ constructor(
                 private var reconciliationRuleVariables:
                     JsonField<List<ReconciliationRuleVariable>> =
                     JsonMissing.of()
+                private var status: JsonField<Status> = JsonMissing.of()
                 private var id: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -16392,6 +16598,7 @@ constructor(
                         expectedPaymentUpdateRequestWithId.reconciliationFilters
                     this.reconciliationRuleVariables =
                         expectedPaymentUpdateRequestWithId.reconciliationRuleVariables
+                    this.status = expectedPaymentUpdateRequestWithId.status
                     this.id = expectedPaymentUpdateRequestWithId.id
                     additionalProperties(expectedPaymentUpdateRequestWithId.additionalProperties)
                 }
@@ -16602,6 +16809,20 @@ constructor(
                     reconciliationRuleVariables: JsonField<List<ReconciliationRuleVariable>>
                 ) = apply { this.reconciliationRuleVariables = reconciliationRuleVariables }
 
+                /**
+                 * The Expected Payment's status can be updated from partially_reconciled to
+                 * reconciled.
+                 */
+                fun status(status: Status) = status(JsonField.of(status))
+
+                /**
+                 * The Expected Payment's status can be updated from partially_reconciled to
+                 * reconciled.
+                 */
+                @JsonProperty("status")
+                @ExcludeMissing
+                fun status(status: JsonField<Status>) = apply { this.status = status }
+
                 fun id(id: String) = id(JsonField.of(id))
 
                 @JsonProperty("id")
@@ -16641,6 +16862,7 @@ constructor(
                         reconciliationGroups,
                         reconciliationFilters,
                         reconciliationRuleVariables.map { it.toUnmodifiable() },
+                        status,
                         id,
                         additionalProperties.toUnmodifiable(),
                     )
@@ -16799,6 +17021,57 @@ constructor(
                     fun build(): ReconciliationRuleVariable =
                         ReconciliationRuleVariable(additionalProperties.toUnmodifiable())
                 }
+            }
+
+            class Status
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Status && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    @JvmField val RECONCILED = Status(JsonField.of("reconciled"))
+
+                    @JvmStatic fun of(value: String) = Status(JsonField.of(value))
+                }
+
+                enum class Known {
+                    RECONCILED,
+                }
+
+                enum class Value {
+                    RECONCILED,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        RECONCILED -> Value.RECONCILED
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        RECONCILED -> Known.RECONCILED
+                        else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
         }
 
@@ -17022,6 +17295,8 @@ constructor(
             private val metadata: JsonField<Metadata>,
             private val effectiveAt: JsonField<OffsetDateTime>,
             private val ledgerEntries: JsonField<List<LedgerEntryCreateRequest>>,
+            private val ledgerableType: JsonField<LedgerableType>,
+            private val ledgerableId: JsonField<String>,
             private val id: JsonField<String>,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
@@ -17055,6 +17330,21 @@ constructor(
             fun ledgerEntries(): Optional<List<LedgerEntryCreateRequest>> =
                 Optional.ofNullable(ledgerEntries.getNullable("ledger_entries"))
 
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * type will be populated here, otherwise null. This can be one of payment_order,
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+             */
+            fun ledgerableType(): Optional<LedgerableType> =
+                Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * id will be populated here, otherwise null.
+             */
+            fun ledgerableId(): Optional<String> =
+                Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+
             fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
             /** An optional description for internal use. */
@@ -17078,6 +17368,19 @@ constructor(
             /** An array of ledger entry objects. */
             @JsonProperty("ledger_entries") @ExcludeMissing fun _ledgerEntries() = ledgerEntries
 
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * type will be populated here, otherwise null. This can be one of payment_order,
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+             */
+            @JsonProperty("ledgerable_type") @ExcludeMissing fun _ledgerableType() = ledgerableType
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * id will be populated here, otherwise null.
+             */
+            @JsonProperty("ledgerable_id") @ExcludeMissing fun _ledgerableId() = ledgerableId
+
             @JsonProperty("id") @ExcludeMissing fun _id() = id
 
             @JsonAnyGetter
@@ -17091,6 +17394,8 @@ constructor(
                     metadata().map { it.validate() }
                     effectiveAt()
                     ledgerEntries().map { it.forEach { it.validate() } }
+                    ledgerableType()
+                    ledgerableId()
                     id()
                     validated = true
                 }
@@ -17109,6 +17414,8 @@ constructor(
                     this.metadata == other.metadata &&
                     this.effectiveAt == other.effectiveAt &&
                     this.ledgerEntries == other.ledgerEntries &&
+                    this.ledgerableType == other.ledgerableType &&
+                    this.ledgerableId == other.ledgerableId &&
                     this.id == other.id &&
                     this.additionalProperties == other.additionalProperties
             }
@@ -17122,6 +17429,8 @@ constructor(
                             metadata,
                             effectiveAt,
                             ledgerEntries,
+                            ledgerableType,
+                            ledgerableId,
                             id,
                             additionalProperties,
                         )
@@ -17130,7 +17439,7 @@ constructor(
             }
 
             override fun toString() =
-                "LedgerTransactionUpdateRequestWithId{description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, id=$id, additionalProperties=$additionalProperties}"
+                "LedgerTransactionUpdateRequestWithId{description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, id=$id, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -17145,6 +17454,8 @@ constructor(
                 private var effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var ledgerEntries: JsonField<List<LedgerEntryCreateRequest>> =
                     JsonMissing.of()
+                private var ledgerableType: JsonField<LedgerableType> = JsonMissing.of()
+                private var ledgerableId: JsonField<String> = JsonMissing.of()
                 private var id: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -17157,6 +17468,8 @@ constructor(
                     this.metadata = ledgerTransactionUpdateRequestWithId.metadata
                     this.effectiveAt = ledgerTransactionUpdateRequestWithId.effectiveAt
                     this.ledgerEntries = ledgerTransactionUpdateRequestWithId.ledgerEntries
+                    this.ledgerableType = ledgerTransactionUpdateRequestWithId.ledgerableType
+                    this.ledgerableId = ledgerTransactionUpdateRequestWithId.ledgerableId
                     this.id = ledgerTransactionUpdateRequestWithId.id
                     additionalProperties(ledgerTransactionUpdateRequestWithId.additionalProperties)
                 }
@@ -17222,6 +17535,43 @@ constructor(
                         this.ledgerEntries = ledgerEntries
                     }
 
+                /**
+                 * If the ledger transaction can be reconciled to another object in Modern Treasury,
+                 * the type will be populated here, otherwise null. This can be one of
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
+                 */
+                fun ledgerableType(ledgerableType: LedgerableType) =
+                    ledgerableType(JsonField.of(ledgerableType))
+
+                /**
+                 * If the ledger transaction can be reconciled to another object in Modern Treasury,
+                 * the type will be populated here, otherwise null. This can be one of
+                 * payment_order, incoming_payment_detail, expected_payment, return, paper_item, or
+                 * reversal.
+                 */
+                @JsonProperty("ledgerable_type")
+                @ExcludeMissing
+                fun ledgerableType(ledgerableType: JsonField<LedgerableType>) = apply {
+                    this.ledgerableType = ledgerableType
+                }
+
+                /**
+                 * If the ledger transaction can be reconciled to another object in Modern Treasury,
+                 * the id will be populated here, otherwise null.
+                 */
+                fun ledgerableId(ledgerableId: String) = ledgerableId(JsonField.of(ledgerableId))
+
+                /**
+                 * If the ledger transaction can be reconciled to another object in Modern Treasury,
+                 * the id will be populated here, otherwise null.
+                 */
+                @JsonProperty("ledgerable_id")
+                @ExcludeMissing
+                fun ledgerableId(ledgerableId: JsonField<String>) = apply {
+                    this.ledgerableId = ledgerableId
+                }
+
                 fun id(id: String) = id(JsonField.of(id))
 
                 @JsonProperty("id")
@@ -17250,6 +17600,8 @@ constructor(
                         metadata,
                         effectiveAt,
                         ledgerEntries.map { it.toUnmodifiable() },
+                        ledgerableType,
+                        ledgerableId,
                         id,
                         additionalProperties.toUnmodifiable(),
                     )
@@ -18028,6 +18380,93 @@ constructor(
                             PostedBalanceAmount(additionalProperties.toUnmodifiable())
                     }
                 }
+            }
+
+            class LedgerableType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is LedgerableType && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    @JvmField
+                    val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
+
+                    @JvmField
+                    val INCOMING_PAYMENT_DETAIL =
+                        LedgerableType(JsonField.of("incoming_payment_detail"))
+
+                    @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
+
+                    @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
+
+                    @JvmField val RETURN = LedgerableType(JsonField.of("return"))
+
+                    @JvmField val REVERSAL = LedgerableType(JsonField.of("reversal"))
+
+                    @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
+                }
+
+                enum class Known {
+                    EXPECTED_PAYMENT,
+                    INCOMING_PAYMENT_DETAIL,
+                    PAPER_ITEM,
+                    PAYMENT_ORDER,
+                    RETURN,
+                    REVERSAL,
+                }
+
+                enum class Value {
+                    EXPECTED_PAYMENT,
+                    INCOMING_PAYMENT_DETAIL,
+                    PAPER_ITEM,
+                    PAYMENT_ORDER,
+                    RETURN,
+                    REVERSAL,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
+                        INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
+                        PAPER_ITEM -> Value.PAPER_ITEM
+                        PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                        RETURN -> Value.RETURN
+                        REVERSAL -> Value.REVERSAL
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
+                        INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
+                        PAPER_ITEM -> Known.PAPER_ITEM
+                        PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                        RETURN -> Known.RETURN
+                        REVERSAL -> Known.REVERSAL
+                        else ->
+                            throw ModernTreasuryInvalidDataException(
+                                "Unknown LedgerableType: $value"
+                            )
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
 
             /**
