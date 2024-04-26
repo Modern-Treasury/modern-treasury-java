@@ -486,7 +486,7 @@ constructor(
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
          * type will be populated here, otherwise null. This can be one of payment_order,
-         * incoming_payment_detail, expected_payment, return, or reversal.
+         * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
          */
         @JsonProperty("ledgerable_type") fun ledgerableType(): LedgerableType? = ledgerableType
 
@@ -621,7 +621,7 @@ constructor(
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * type will be populated here, otherwise null. This can be one of payment_order,
-             * incoming_payment_detail, expected_payment, return, or reversal.
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
              */
             @JsonProperty("ledgerable_type")
             fun ledgerableType(ledgerableType: LedgerableType) = apply {
@@ -1249,24 +1249,15 @@ constructor(
 
             companion object {
 
-                @JvmField val COUNTERPARTY = LedgerableType(JsonField.of("counterparty"))
-
                 @JvmField val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
 
                 @JvmField
                 val INCOMING_PAYMENT_DETAIL =
                     LedgerableType(JsonField.of("incoming_payment_detail"))
 
-                @JvmField val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
-
-                @JvmField val LINE_ITEM = LedgerableType(JsonField.of("line_item"))
-
                 @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
 
                 @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
-
-                @JvmField
-                val PAYMENT_ORDER_ATTEMPT = LedgerableType(JsonField.of("payment_order_attempt"))
 
                 @JvmField val RETURN = LedgerableType(JsonField.of("return"))
 
@@ -1276,27 +1267,19 @@ constructor(
             }
 
             enum class Known {
-                COUNTERPARTY,
                 EXPECTED_PAYMENT,
                 INCOMING_PAYMENT_DETAIL,
-                INTERNAL_ACCOUNT,
-                LINE_ITEM,
                 PAPER_ITEM,
                 PAYMENT_ORDER,
-                PAYMENT_ORDER_ATTEMPT,
                 RETURN,
                 REVERSAL,
             }
 
             enum class Value {
-                COUNTERPARTY,
                 EXPECTED_PAYMENT,
                 INCOMING_PAYMENT_DETAIL,
-                INTERNAL_ACCOUNT,
-                LINE_ITEM,
                 PAPER_ITEM,
                 PAYMENT_ORDER,
-                PAYMENT_ORDER_ATTEMPT,
                 RETURN,
                 REVERSAL,
                 _UNKNOWN,
@@ -1304,14 +1287,10 @@ constructor(
 
             fun value(): Value =
                 when (this) {
-                    COUNTERPARTY -> Value.COUNTERPARTY
                     EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                     INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                    INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
-                    LINE_ITEM -> Value.LINE_ITEM
                     PAPER_ITEM -> Value.PAPER_ITEM
                     PAYMENT_ORDER -> Value.PAYMENT_ORDER
-                    PAYMENT_ORDER_ATTEMPT -> Value.PAYMENT_ORDER_ATTEMPT
                     RETURN -> Value.RETURN
                     REVERSAL -> Value.REVERSAL
                     else -> Value._UNKNOWN
@@ -1319,14 +1298,10 @@ constructor(
 
             fun known(): Known =
                 when (this) {
-                    COUNTERPARTY -> Known.COUNTERPARTY
                     EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                     INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                    INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
-                    LINE_ITEM -> Known.LINE_ITEM
                     PAPER_ITEM -> Known.PAPER_ITEM
                     PAYMENT_ORDER -> Known.PAYMENT_ORDER
-                    PAYMENT_ORDER_ATTEMPT -> Known.PAYMENT_ORDER_ATTEMPT
                     RETURN -> Known.RETURN
                     REVERSAL -> Known.REVERSAL
                     else ->
