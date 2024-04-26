@@ -4,12 +4,16 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
+import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
 import java.time.LocalDate
 import java.util.Objects
@@ -33,6 +37,7 @@ constructor(
     private val reconciliationRuleVariables: List<ReconciliationRuleVariable>?,
     private val remittanceInformation: String?,
     private val statementDescriptor: String?,
+    private val status: Status?,
     private val type: ExpectedPaymentType?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -72,6 +77,8 @@ constructor(
 
     fun statementDescriptor(): Optional<String> = Optional.ofNullable(statementDescriptor)
 
+    fun status(): Optional<Status> = Optional.ofNullable(status)
+
     fun type(): Optional<ExpectedPaymentType> = Optional.ofNullable(type)
 
     @JvmSynthetic
@@ -92,6 +99,7 @@ constructor(
             reconciliationRuleVariables,
             remittanceInformation,
             statementDescriptor,
+            status,
             type,
             additionalBodyProperties,
         )
@@ -127,6 +135,7 @@ constructor(
         private val reconciliationRuleVariables: List<ReconciliationRuleVariable>?,
         private val remittanceInformation: String?,
         private val statementDescriptor: String?,
+        private val status: Status?,
         private val type: ExpectedPaymentType?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -203,6 +212,9 @@ constructor(
         @JsonProperty("statement_descriptor")
         fun statementDescriptor(): String? = statementDescriptor
 
+        /** The Expected Payment's status can be updated from partially_reconciled to reconciled. */
+        @JsonProperty("status") fun status(): Status? = status
+
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
          * signet, wire.
@@ -236,6 +248,7 @@ constructor(
                 this.reconciliationRuleVariables == other.reconciliationRuleVariables &&
                 this.remittanceInformation == other.remittanceInformation &&
                 this.statementDescriptor == other.statementDescriptor &&
+                this.status == other.status &&
                 this.type == other.type &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -259,6 +272,7 @@ constructor(
                         reconciliationRuleVariables,
                         remittanceInformation,
                         statementDescriptor,
+                        status,
                         type,
                         additionalProperties,
                     )
@@ -267,7 +281,7 @@ constructor(
         }
 
         override fun toString() =
-            "ExpectedPaymentUpdateBody{amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, type=$type, additionalProperties=$additionalProperties}"
+            "ExpectedPaymentUpdateBody{amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, status=$status, type=$type, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -291,6 +305,7 @@ constructor(
             private var reconciliationRuleVariables: List<ReconciliationRuleVariable>? = null
             private var remittanceInformation: String? = null
             private var statementDescriptor: String? = null
+            private var status: Status? = null
             private var type: ExpectedPaymentType? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -312,6 +327,7 @@ constructor(
                     expectedPaymentUpdateBody.reconciliationRuleVariables
                 this.remittanceInformation = expectedPaymentUpdateBody.remittanceInformation
                 this.statementDescriptor = expectedPaymentUpdateBody.statementDescriptor
+                this.status = expectedPaymentUpdateBody.status
                 this.type = expectedPaymentUpdateBody.type
                 additionalProperties(expectedPaymentUpdateBody.additionalProperties)
             }
@@ -419,6 +435,11 @@ constructor(
             }
 
             /**
+             * The Expected Payment's status can be updated from partially_reconciled to reconciled.
+             */
+            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
+
+            /**
              * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
              * signet, wire.
              */
@@ -455,6 +476,7 @@ constructor(
                     reconciliationRuleVariables?.toUnmodifiable(),
                     remittanceInformation,
                     statementDescriptor,
+                    status,
                     type,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -489,6 +511,7 @@ constructor(
             this.reconciliationRuleVariables == other.reconciliationRuleVariables &&
             this.remittanceInformation == other.remittanceInformation &&
             this.statementDescriptor == other.statementDescriptor &&
+            this.status == other.status &&
             this.type == other.type &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -513,6 +536,7 @@ constructor(
             reconciliationRuleVariables,
             remittanceInformation,
             statementDescriptor,
+            status,
             type,
             additionalQueryParams,
             additionalHeaders,
@@ -521,7 +545,7 @@ constructor(
     }
 
     override fun toString() =
-        "ExpectedPaymentUpdateParams{id=$id, amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ExpectedPaymentUpdateParams{id=$id, amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, status=$status, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -550,6 +574,7 @@ constructor(
             mutableListOf()
         private var remittanceInformation: String? = null
         private var statementDescriptor: String? = null
+        private var status: Status? = null
         private var type: ExpectedPaymentType? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -575,6 +600,7 @@ constructor(
             )
             this.remittanceInformation = expectedPaymentUpdateParams.remittanceInformation
             this.statementDescriptor = expectedPaymentUpdateParams.statementDescriptor
+            this.status = expectedPaymentUpdateParams.status
             this.type = expectedPaymentUpdateParams.type
             additionalQueryParams(expectedPaymentUpdateParams.additionalQueryParams)
             additionalHeaders(expectedPaymentUpdateParams.additionalHeaders)
@@ -676,6 +702,9 @@ constructor(
             this.statementDescriptor = statementDescriptor
         }
 
+        /** The Expected Payment's status can be updated from partially_reconciled to reconciled. */
+        fun status(status: Status) = apply { this.status = status }
+
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
          * signet, wire.
@@ -755,6 +784,7 @@ constructor(
                 else reconciliationRuleVariables.toUnmodifiable(),
                 remittanceInformation,
                 statementDescriptor,
+                status,
                 type,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
@@ -892,5 +922,56 @@ constructor(
             fun build(): ReconciliationRuleVariable =
                 ReconciliationRuleVariable(additionalProperties.toUnmodifiable())
         }
+    }
+
+    class Status
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Status && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val RECONCILED = Status(JsonField.of("reconciled"))
+
+            @JvmStatic fun of(value: String) = Status(JsonField.of(value))
+        }
+
+        enum class Known {
+            RECONCILED,
+        }
+
+        enum class Value {
+            RECONCILED,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                RECONCILED -> Value.RECONCILED
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                RECONCILED -> Known.RECONCILED
+                else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }
