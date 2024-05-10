@@ -370,8 +370,7 @@ constructor(
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
-         * field in the ISO20022 file. If you are using Currencycloud, this is the
-         * `payment.purpose_code` field. For `eft`, this field is the 3 digit CPA Code that will be
+         * field in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be
          * attached to the payment.
          */
         @JsonProperty("purpose") fun purpose(): String? = purpose
@@ -815,9 +814,8 @@ constructor(
 
             /**
              * For `wire`, this is usually the purpose which is transmitted via the
-             * "InstrForDbtrAgt" field in the ISO20022 file. If you are using Currencycloud, this is
-             * the `payment.purpose_code` field. For `eft`, this field is the 3 digit CPA Code that
-             * will be attached to the payment.
+             * "InstrForDbtrAgt" field in the ISO20022 file. For `eft`, this field is the 3 digit
+             * CPA Code that will be attached to the payment.
              */
             @JsonProperty("purpose") fun purpose(purpose: String) = apply { this.purpose = purpose }
 
@@ -1322,8 +1320,7 @@ constructor(
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
-         * field in the ISO20022 file. If you are using Currencycloud, this is the
-         * `payment.purpose_code` field. For `eft`, this field is the 3 digit CPA Code that will be
+         * field in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be
          * attached to the payment.
          */
         fun purpose(purpose: String) = apply { this.purpose = purpose }
