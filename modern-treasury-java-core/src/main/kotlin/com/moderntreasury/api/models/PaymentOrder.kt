@@ -82,6 +82,7 @@ private constructor(
     private val vendorFailureReason: JsonField<String>,
     private val decisionId: JsonField<String>,
     private val foreignExchangeRate: JsonField<ForeignExchangeRate>,
+    private val vendorAttributes: JsonValue,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -632,6 +633,12 @@ private constructor(
     @ExcludeMissing
     fun _foreignExchangeRate() = foreignExchangeRate
 
+    /**
+     * Additional vendor specific fields for this payment. Data must be represented as key-value
+     * pairs.
+     */
+    @JsonProperty("vendor_attributes") @ExcludeMissing fun _vendorAttributes() = vendorAttributes
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -748,6 +755,7 @@ private constructor(
             this.vendorFailureReason == other.vendorFailureReason &&
             this.decisionId == other.decisionId &&
             this.foreignExchangeRate == other.foreignExchangeRate &&
+            this.vendorAttributes == other.vendorAttributes &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -804,6 +812,7 @@ private constructor(
                     vendorFailureReason,
                     decisionId,
                     foreignExchangeRate,
+                    vendorAttributes,
                     additionalProperties,
                 )
         }
@@ -811,7 +820,7 @@ private constructor(
     }
 
     override fun toString() =
-        "PaymentOrder{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, type=$type, subtype=$subtype, amount=$amount, direction=$direction, priority=$priority, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, currency=$currency, effectiveDate=$effectiveDate, description=$description, statementDescriptor=$statementDescriptor, remittanceInformation=$remittanceInformation, processAfter=$processAfter, purpose=$purpose, metadata=$metadata, chargeBearer=$chargeBearer, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeContract=$foreignExchangeContract, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, sendRemittanceAdvice=$sendRemittanceAdvice, expiresAt=$expiresAt, status=$status, receivingAccountType=$receivingAccountType, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, counterpartyId=$counterpartyId, transactionIds=$transactionIds, ledgerTransactionId=$ledgerTransactionId, currentReturn=$currentReturn, transactionMonitoringEnabled=$transactionMonitoringEnabled, complianceRuleMetadata=$complianceRuleMetadata, referenceNumbers=$referenceNumbers, vendorFailureReason=$vendorFailureReason, decisionId=$decisionId, foreignExchangeRate=$foreignExchangeRate, additionalProperties=$additionalProperties}"
+        "PaymentOrder{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, type=$type, subtype=$subtype, amount=$amount, direction=$direction, priority=$priority, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, currency=$currency, effectiveDate=$effectiveDate, description=$description, statementDescriptor=$statementDescriptor, remittanceInformation=$remittanceInformation, processAfter=$processAfter, purpose=$purpose, metadata=$metadata, chargeBearer=$chargeBearer, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeContract=$foreignExchangeContract, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, sendRemittanceAdvice=$sendRemittanceAdvice, expiresAt=$expiresAt, status=$status, receivingAccountType=$receivingAccountType, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, counterpartyId=$counterpartyId, transactionIds=$transactionIds, ledgerTransactionId=$ledgerTransactionId, currentReturn=$currentReturn, transactionMonitoringEnabled=$transactionMonitoringEnabled, complianceRuleMetadata=$complianceRuleMetadata, referenceNumbers=$referenceNumbers, vendorFailureReason=$vendorFailureReason, decisionId=$decisionId, foreignExchangeRate=$foreignExchangeRate, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -871,6 +880,7 @@ private constructor(
         private var vendorFailureReason: JsonField<String> = JsonMissing.of()
         private var decisionId: JsonField<String> = JsonMissing.of()
         private var foreignExchangeRate: JsonField<ForeignExchangeRate> = JsonMissing.of()
+        private var vendorAttributes: JsonValue = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -925,6 +935,7 @@ private constructor(
             this.vendorFailureReason = paymentOrder.vendorFailureReason
             this.decisionId = paymentOrder.decisionId
             this.foreignExchangeRate = paymentOrder.foreignExchangeRate
+            this.vendorAttributes = paymentOrder.vendorAttributes
             additionalProperties(paymentOrder.additionalProperties)
         }
 
@@ -1590,6 +1601,16 @@ private constructor(
             this.foreignExchangeRate = foreignExchangeRate
         }
 
+        /**
+         * Additional vendor specific fields for this payment. Data must be represented as key-value
+         * pairs.
+         */
+        @JsonProperty("vendor_attributes")
+        @ExcludeMissing
+        fun vendorAttributes(vendorAttributes: JsonValue) = apply {
+            this.vendorAttributes = vendorAttributes
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -1655,6 +1676,7 @@ private constructor(
                 vendorFailureReason,
                 decisionId,
                 foreignExchangeRate,
+                vendorAttributes,
                 additionalProperties.toUnmodifiable(),
             )
     }
