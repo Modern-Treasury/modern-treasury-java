@@ -16,6 +16,7 @@ constructor(
     private val id: List<String>?,
     private val afterCursor: String?,
     private val balances: Balances?,
+    private val currency: String?,
     private val ledgerAccountId: String?,
     private val ledgerId: String?,
     private val metadata: Metadata?,
@@ -32,6 +33,8 @@ constructor(
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
+
+    fun currency(): Optional<String> = Optional.ofNullable(currency)
 
     fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
@@ -52,6 +55,7 @@ constructor(
         this.id?.let { params.put("id[]", it.map(Any::toString)) }
         this.afterCursor?.let { params.put("after_cursor", listOf(it.toString())) }
         this.balances?.forEachQueryParam { key, values -> params.put("balances[$key]", values) }
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
         this.ledgerAccountId?.let { params.put("ledger_account_id", listOf(it.toString())) }
         this.ledgerId?.let { params.put("ledger_id", listOf(it.toString())) }
         this.metadata?.forEachQueryParam { key, values -> params.put("metadata[$key]", values) }
@@ -81,6 +85,7 @@ constructor(
             this.id == other.id &&
             this.afterCursor == other.afterCursor &&
             this.balances == other.balances &&
+            this.currency == other.currency &&
             this.ledgerAccountId == other.ledgerAccountId &&
             this.ledgerId == other.ledgerId &&
             this.metadata == other.metadata &&
@@ -97,6 +102,7 @@ constructor(
             id,
             afterCursor,
             balances,
+            currency,
             ledgerAccountId,
             ledgerId,
             metadata,
@@ -110,7 +116,7 @@ constructor(
     }
 
     override fun toString() =
-        "LedgerAccountCategoryListParams{id=$id, afterCursor=$afterCursor, balances=$balances, ledgerAccountId=$ledgerAccountId, ledgerId=$ledgerId, metadata=$metadata, name=$name, parentLedgerAccountCategoryId=$parentLedgerAccountCategoryId, perPage=$perPage, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerAccountCategoryListParams{id=$id, afterCursor=$afterCursor, balances=$balances, currency=$currency, ledgerAccountId=$ledgerAccountId, ledgerId=$ledgerId, metadata=$metadata, name=$name, parentLedgerAccountCategoryId=$parentLedgerAccountCategoryId, perPage=$perPage, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -125,6 +131,7 @@ constructor(
         private var id: MutableList<String> = mutableListOf()
         private var afterCursor: String? = null
         private var balances: Balances? = null
+        private var currency: String? = null
         private var ledgerAccountId: String? = null
         private var ledgerId: String? = null
         private var metadata: Metadata? = null
@@ -141,6 +148,7 @@ constructor(
                 this.id(ledgerAccountCategoryListParams.id ?: listOf())
                 this.afterCursor = ledgerAccountCategoryListParams.afterCursor
                 this.balances = ledgerAccountCategoryListParams.balances
+                this.currency = ledgerAccountCategoryListParams.currency
                 this.ledgerAccountId = ledgerAccountCategoryListParams.ledgerAccountId
                 this.ledgerId = ledgerAccountCategoryListParams.ledgerId
                 this.metadata = ledgerAccountCategoryListParams.metadata
@@ -176,6 +184,8 @@ constructor(
          * of a time are inclusive of entries with that exact time.
          */
         fun balances(balances: Balances) = apply { this.balances = balances }
+
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /** Query categories which contain a ledger account directly or through child categories. */
         fun ledgerAccountId(ledgerAccountId: String) = apply {
@@ -258,6 +268,7 @@ constructor(
                 if (id.size == 0) null else id.toUnmodifiable(),
                 afterCursor,
                 balances,
+                currency,
                 ledgerAccountId,
                 ledgerId,
                 metadata,
