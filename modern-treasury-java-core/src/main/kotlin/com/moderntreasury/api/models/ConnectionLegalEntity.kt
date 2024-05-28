@@ -39,35 +39,31 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
 
-    fun object_(): Optional<String> = Optional.ofNullable(object_.getNullable("object"))
+    fun object_(): String = object_.getRequired("object")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
      * in the test environment.
      */
-    fun liveMode(): Optional<Boolean> = Optional.ofNullable(liveMode.getNullable("live_mode"))
+    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
-    fun createdAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(createdAt.getNullable("created_at"))
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    fun updatedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(updatedAt.getNullable("updated_at"))
+    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     fun discardedAt(): Optional<OffsetDateTime> =
         Optional.ofNullable(discardedAt.getNullable("discarded_at"))
 
     /** The ID of the connection. */
-    fun connectionId(): Optional<String> =
-        Optional.ofNullable(connectionId.getNullable("connection_id"))
+    fun connectionId(): String = connectionId.getRequired("connection_id")
 
     /** The ID of the legal entity. */
-    fun legalEntityId(): Optional<String> =
-        Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
+    fun legalEntityId(): String = legalEntityId.getRequired("legal_entity_id")
 
     /** The status of the connection legal entity. */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Status = status.getRequired("status")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 

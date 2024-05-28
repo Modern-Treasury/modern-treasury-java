@@ -24,6 +24,8 @@ constructor(
     private val originatingAccountId: String,
     private val paymentType: PaymentType,
     private val currency: Currency?,
+    private val fallbackType: FallbackType?,
+    private val priority: Priority?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -37,12 +39,18 @@ constructor(
 
     fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
+    fun fallbackType(): Optional<FallbackType> = Optional.ofNullable(fallbackType)
+
+    fun priority(): Optional<Priority> = Optional.ofNullable(priority)
+
     @JvmSynthetic
     internal fun getBody(): ExternalAccountVerifyBody {
         return ExternalAccountVerifyBody(
             originatingAccountId,
             paymentType,
             currency,
+            fallbackType,
+            priority,
             additionalBodyProperties,
         )
     }
@@ -65,6 +73,8 @@ constructor(
         private val originatingAccountId: String?,
         private val paymentType: PaymentType?,
         private val currency: Currency?,
+        private val fallbackType: FallbackType?,
+        private val priority: Priority?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -77,11 +87,24 @@ constructor(
         @JsonProperty("originating_account_id")
         fun originatingAccountId(): String? = originatingAccountId
 
-        /** Both ach and eft are supported payment types. */
+        /** Can be `ach`, `eft`, or `rtp`. */
         @JsonProperty("payment_type") fun paymentType(): PaymentType? = paymentType
 
         /** Defaults to the currency of the originating account. */
         @JsonProperty("currency") fun currency(): Currency? = currency
+
+        /**
+         * A payment type to fallback to if the original type is not valid for the receiving
+         * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
+         * fallback_type=ach)
+         */
+        @JsonProperty("fallback_type") fun fallbackType(): FallbackType? = fallbackType
+
+        /**
+         * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
+         * This will apply to both `payment_type` and `fallback_type`.
+         */
+        @JsonProperty("priority") fun priority(): Priority? = priority
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -98,6 +121,8 @@ constructor(
                 this.originatingAccountId == other.originatingAccountId &&
                 this.paymentType == other.paymentType &&
                 this.currency == other.currency &&
+                this.fallbackType == other.fallbackType &&
+                this.priority == other.priority &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -108,6 +133,8 @@ constructor(
                         originatingAccountId,
                         paymentType,
                         currency,
+                        fallbackType,
+                        priority,
                         additionalProperties,
                     )
             }
@@ -115,7 +142,7 @@ constructor(
         }
 
         override fun toString() =
-            "ExternalAccountVerifyBody{originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, additionalProperties=$additionalProperties}"
+            "ExternalAccountVerifyBody{originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, fallbackType=$fallbackType, priority=$priority, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -127,6 +154,8 @@ constructor(
             private var originatingAccountId: String? = null
             private var paymentType: PaymentType? = null
             private var currency: Currency? = null
+            private var fallbackType: FallbackType? = null
+            private var priority: Priority? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -134,6 +163,8 @@ constructor(
                 this.originatingAccountId = externalAccountVerifyBody.originatingAccountId
                 this.paymentType = externalAccountVerifyBody.paymentType
                 this.currency = externalAccountVerifyBody.currency
+                this.fallbackType = externalAccountVerifyBody.fallbackType
+                this.priority = externalAccountVerifyBody.priority
                 additionalProperties(externalAccountVerifyBody.additionalProperties)
             }
 
@@ -146,13 +177,30 @@ constructor(
                 this.originatingAccountId = originatingAccountId
             }
 
-            /** Both ach and eft are supported payment types. */
+            /** Can be `ach`, `eft`, or `rtp`. */
             @JsonProperty("payment_type")
             fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
 
             /** Defaults to the currency of the originating account. */
             @JsonProperty("currency")
             fun currency(currency: Currency) = apply { this.currency = currency }
+
+            /**
+             * A payment type to fallback to if the original type is not valid for the receiving
+             * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp
+             * and fallback_type=ach)
+             */
+            @JsonProperty("fallback_type")
+            fun fallbackType(fallbackType: FallbackType) = apply {
+                this.fallbackType = fallbackType
+            }
+
+            /**
+             * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH
+             * transfer. This will apply to both `payment_type` and `fallback_type`.
+             */
+            @JsonProperty("priority")
+            fun priority(priority: Priority) = apply { this.priority = priority }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -175,6 +223,8 @@ constructor(
                     },
                     checkNotNull(paymentType) { "`paymentType` is required but was not set" },
                     currency,
+                    fallbackType,
+                    priority,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -196,6 +246,8 @@ constructor(
             this.originatingAccountId == other.originatingAccountId &&
             this.paymentType == other.paymentType &&
             this.currency == other.currency &&
+            this.fallbackType == other.fallbackType &&
+            this.priority == other.priority &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -207,6 +259,8 @@ constructor(
             originatingAccountId,
             paymentType,
             currency,
+            fallbackType,
+            priority,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -214,7 +268,7 @@ constructor(
     }
 
     override fun toString() =
-        "ExternalAccountVerifyParams{id=$id, originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalAccountVerifyParams{id=$id, originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, fallbackType=$fallbackType, priority=$priority, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -230,6 +284,8 @@ constructor(
         private var originatingAccountId: String? = null
         private var paymentType: PaymentType? = null
         private var currency: Currency? = null
+        private var fallbackType: FallbackType? = null
+        private var priority: Priority? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -240,6 +296,8 @@ constructor(
             this.originatingAccountId = externalAccountVerifyParams.originatingAccountId
             this.paymentType = externalAccountVerifyParams.paymentType
             this.currency = externalAccountVerifyParams.currency
+            this.fallbackType = externalAccountVerifyParams.fallbackType
+            this.priority = externalAccountVerifyParams.priority
             additionalQueryParams(externalAccountVerifyParams.additionalQueryParams)
             additionalHeaders(externalAccountVerifyParams.additionalHeaders)
             additionalBodyProperties(externalAccountVerifyParams.additionalBodyProperties)
@@ -255,11 +313,24 @@ constructor(
             this.originatingAccountId = originatingAccountId
         }
 
-        /** Both ach and eft are supported payment types. */
+        /** Can be `ach`, `eft`, or `rtp`. */
         fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
 
         /** Defaults to the currency of the originating account. */
         fun currency(currency: Currency) = apply { this.currency = currency }
+
+        /**
+         * A payment type to fallback to if the original type is not valid for the receiving
+         * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
+         * fallback_type=ach)
+         */
+        fun fallbackType(fallbackType: FallbackType) = apply { this.fallbackType = fallbackType }
+
+        /**
+         * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
+         * This will apply to both `payment_type` and `fallback_type`.
+         */
+        fun priority(priority: Priority) = apply { this.priority = priority }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -323,6 +394,8 @@ constructor(
                 },
                 checkNotNull(paymentType) { "`paymentType` is required but was not set" },
                 currency,
+                fallbackType,
+                priority,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -549,6 +622,114 @@ constructor(
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
                 else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
+    class FallbackType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is FallbackType && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val ACH = FallbackType(JsonField.of("ach"))
+
+            @JvmStatic fun of(value: String) = FallbackType(JsonField.of(value))
+        }
+
+        enum class Known {
+            ACH,
+        }
+
+        enum class Value {
+            ACH,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                ACH -> Value.ACH
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                ACH -> Known.ACH
+                else -> throw ModernTreasuryInvalidDataException("Unknown FallbackType: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
+    class Priority
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Priority && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val HIGH = Priority(JsonField.of("high"))
+
+            @JvmField val NORMAL = Priority(JsonField.of("normal"))
+
+            @JvmStatic fun of(value: String) = Priority(JsonField.of(value))
+        }
+
+        enum class Known {
+            HIGH,
+            NORMAL,
+        }
+
+        enum class Value {
+            HIGH,
+            NORMAL,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                HIGH -> Value.HIGH
+                NORMAL -> Value.NORMAL
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                HIGH -> Known.HIGH
+                NORMAL -> Known.NORMAL
+                else -> throw ModernTreasuryInvalidDataException("Unknown Priority: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()

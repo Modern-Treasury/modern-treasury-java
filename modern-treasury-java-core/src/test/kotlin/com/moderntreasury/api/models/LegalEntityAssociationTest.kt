@@ -103,9 +103,9 @@ class LegalEntityAssociationTest {
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(legalEntityAssociation).isNotNull
-        assertThat(legalEntityAssociation.id()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(legalEntityAssociation.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(legalEntityAssociation.childLegalEntity())
-            .contains(
+            .isEqualTo(
                 LegalEntityAssociation.ChildLegalEntity.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .addresses(
@@ -180,17 +180,17 @@ class LegalEntityAssociationTest {
                     .build()
             )
         assertThat(legalEntityAssociation.createdAt())
-            .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(legalEntityAssociation.discardedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(legalEntityAssociation.liveMode()).contains(true)
-        assertThat(legalEntityAssociation.object_()).contains("string")
+        assertThat(legalEntityAssociation.liveMode()).isEqualTo(true)
+        assertThat(legalEntityAssociation.object_()).isEqualTo("string")
         assertThat(legalEntityAssociation.ownershipPercentage()).contains(123L)
-        assertThat(legalEntityAssociation.parentLegalEntityId()).contains("string")
-        assertThat(legalEntityAssociation.relationshipTypes().get())
+        assertThat(legalEntityAssociation.parentLegalEntityId()).isEqualTo("string")
+        assertThat(legalEntityAssociation.relationshipTypes())
             .containsExactly(LegalEntityAssociation.RelationshipType.BENEFICIAL_OWNER)
         assertThat(legalEntityAssociation.title()).contains("string")
         assertThat(legalEntityAssociation.updatedAt())
-            .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }
