@@ -52,28 +52,25 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
 
-    fun object_(): Optional<String> = Optional.ofNullable(object_.getNullable("object"))
+    fun object_(): String = object_.getRequired("object")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
      * in the test environment.
      */
-    fun liveMode(): Optional<Boolean> = Optional.ofNullable(liveMode.getNullable("live_mode"))
+    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
-    fun createdAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(createdAt.getNullable("created_at"))
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    fun updatedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(updatedAt.getNullable("updated_at"))
+    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     fun discardedAt(): Optional<OffsetDateTime> =
         Optional.ofNullable(discardedAt.getNullable("discarded_at"))
 
     /** The type of legal entity. */
-    fun legalEntityType(): Optional<LegalEntityType> =
-        Optional.ofNullable(legalEntityType.getNullable("legal_entity_type"))
+    fun legalEntityType(): LegalEntityType = legalEntityType.getRequired("legal_entity_type")
 
     /** An individual's first name. */
     fun firstName(): Optional<String> = Optional.ofNullable(firstName.getNullable("first_name"))
@@ -93,15 +90,14 @@ private constructor(
     fun businessName(): Optional<String> =
         Optional.ofNullable(businessName.getNullable("business_name"))
 
-    fun doingBusinessAsNames(): Optional<List<String>> =
-        Optional.ofNullable(doingBusinessAsNames.getNullable("doing_business_as_names"))
+    fun doingBusinessAsNames(): List<String> =
+        doingBusinessAsNames.getRequired("doing_business_as_names")
 
     /** The business's legal structure. */
     fun legalStructure(): Optional<LegalStructure> =
         Optional.ofNullable(legalStructure.getNullable("legal_structure"))
 
-    fun phoneNumbers(): Optional<List<PhoneNumber>> =
-        Optional.ofNullable(phoneNumbers.getNullable("phone_numbers"))
+    fun phoneNumbers(): List<PhoneNumber> = phoneNumbers.getRequired("phone_numbers")
 
     /** The entity's primary email. */
     fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
@@ -110,15 +106,13 @@ private constructor(
     fun website(): Optional<String> = Optional.ofNullable(website.getNullable("website"))
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+    fun metadata(): Metadata = metadata.getRequired("metadata")
 
     /** A list of addresses for the entity. */
-    fun addresses(): Optional<List<LegalEntityAddress>> =
-        Optional.ofNullable(addresses.getNullable("addresses"))
+    fun addresses(): List<LegalEntityAddress> = addresses.getRequired("addresses")
 
     /** A list of identifications for the legal entity. */
-    fun identifications(): Optional<List<Identification>> =
-        Optional.ofNullable(identifications.getNullable("identifications"))
+    fun identifications(): List<Identification> = identifications.getRequired("identifications")
 
     /** The legal entity associations and its child legal entities. */
     fun legalEntityAssociations(): Optional<List<LegalEntityAssociation>> =
@@ -207,12 +201,12 @@ private constructor(
             businessName()
             doingBusinessAsNames()
             legalStructure()
-            phoneNumbers().map { it.forEach { it.validate() } }
+            phoneNumbers().forEach { it.validate() }
             email()
             website()
-            metadata().map { it.validate() }
-            addresses().map { it.forEach { it.validate() } }
-            identifications().map { it.forEach { it.validate() } }
+            metadata().validate()
+            addresses().forEach { it.validate() }
+            identifications().forEach { it.validate() }
             legalEntityAssociations().map { it.forEach { it.validate() } }
             validated = true
         }
