@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.13.0 (2024-05-28)
+
+Full Changelog: [v2.12.0...v2.13.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.12.0...v2.13.0)
+
+### Features
+
+* **api:** add currency to ledger account categories ([#178](https://github.com/Modern-Treasury/modern-treasury-java/issues/178)) ([45abf25](https://github.com/Modern-Treasury/modern-treasury-java/commit/45abf253c076a79e0708c8385d7368c85bf38213))
+* **api:** invoice overdue reminders ([3dcdd16](https://github.com/Modern-Treasury/modern-treasury-java/commit/3dcdd1670e47f4550073cb3cfd8821fea2faf784))
+* **api:** mark ConnectionLegalEntity response properties as required ([#180](https://github.com/Modern-Treasury/modern-treasury-java/issues/180)) ([7a1bcbb](https://github.com/Modern-Treasury/modern-treasury-java/commit/7a1bcbb7f94d85639df9350692216766e6033bd7))
+* **api:** remove deprecated ledger account payouts ([#179](https://github.com/Modern-Treasury/modern-treasury-java/issues/179)) ([3dcdd16](https://github.com/Modern-Treasury/modern-treasury-java/commit/3dcdd1670e47f4550073cb3cfd8821fea2faf784))
+* **api:** updates ([#172](https://github.com/Modern-Treasury/modern-treasury-java/issues/172)) ([de228f6](https://github.com/Modern-Treasury/modern-treasury-java/commit/de228f6a5e3f8fdf124d5052cf140a10da80f89e))
+* **api:** various API updates ([#167](https://github.com/Modern-Treasury/modern-treasury-java/issues/167)) ([b696845](https://github.com/Modern-Treasury/modern-treasury-java/commit/b696845997d41b757113c184cee3b1ded7236c43))
+* propagate resource description field from stainless config to SDK docs ([#174](https://github.com/Modern-Treasury/modern-treasury-java/issues/174)) ([de98031](https://github.com/Modern-Treasury/modern-treasury-java/commit/de980319a9b28afd577589d708aa91e9eb6ec8d6))
+
+
+### Bug Fixes
+
+* **client:** do not strip date-time 00 seconds when getQueryParams() is called ([#168](https://github.com/Modern-Treasury/modern-treasury-java/issues/168)) ([a1b1549](https://github.com/Modern-Treasury/modern-treasury-java/commit/a1b1549482dc8cf164d40b146866acd89e5559fa))
+
+
+### Chores
+
+* **docs:** add SECURITY.md ([#175](https://github.com/Modern-Treasury/modern-treasury-java/issues/175)) ([4259d65](https://github.com/Modern-Treasury/modern-treasury-java/commit/4259d65872e085a84519cdfb194014177ce5ecec))
+* **docs:** streamline payment purpose and vendor failure handling ([#176](https://github.com/Modern-Treasury/modern-treasury-java/issues/176)) ([42a805b](https://github.com/Modern-Treasury/modern-treasury-java/commit/42a805b2b395e0cb1be7a454b9395c04b327ecf2))
+* **internal:** add link to openapi spec ([#169](https://github.com/Modern-Treasury/modern-treasury-java/issues/169)) ([03cf96d](https://github.com/Modern-Treasury/modern-treasury-java/commit/03cf96d876ad1c9c5b16ce7303f08e36a09177a5))
+* **internal:** add scripts-to-rule-them-all ([#177](https://github.com/Modern-Treasury/modern-treasury-java/issues/177)) ([8fc1267](https://github.com/Modern-Treasury/modern-treasury-java/commit/8fc1267534254280ab53a860dc4bfbea3bd6ef98))
+* **internal:** add scripts/mock ([#170](https://github.com/Modern-Treasury/modern-treasury-java/issues/170)) ([8ef7fdf](https://github.com/Modern-Treasury/modern-treasury-java/commit/8ef7fdf246d52750e41705d5214fe6f7ffa8bf13))
+* **internal:** bump mock server version to ~5.8.0 ([#171](https://github.com/Modern-Treasury/modern-treasury-java/issues/171)) ([9194f3f](https://github.com/Modern-Treasury/modern-treasury-java/commit/9194f3f2a43b7ef2a03825361eed1171680bb523))
+* **internal:** gradlew v8.7, use gradle task config avoidance APIs ([#164](https://github.com/Modern-Treasury/modern-treasury-java/issues/164)) ([a793e89](https://github.com/Modern-Treasury/modern-treasury-java/commit/a793e89084967bc2a4c7bb03f156b83ea1686984))
+* **internal:** use actions/checkout@v4 for codeflow ([#166](https://github.com/Modern-Treasury/modern-treasury-java/issues/166)) ([0c92c28](https://github.com/Modern-Treasury/modern-treasury-java/commit/0c92c28cd2929be8dcfe2c597c36800a1e496ea7))
+
 ## 2.12.0 (2024-04-21)
 
 Full Changelog: [v2.11.0...v2.12.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.11.0...v2.12.0)
