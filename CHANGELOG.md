@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.13.1 (2024-05-30)
+
+Full Changelog: [v2.13.0...v2.13.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.13.0...v2.13.1)
+
+### Chores
+
+* **internal:** add code reviewer ([#181](https://github.com/Modern-Treasury/modern-treasury-java/issues/181)) ([3bd36f7](https://github.com/Modern-Treasury/modern-treasury-java/commit/3bd36f7f020e42925f995711304fa7affc9f7ed5))
+
 ## 2.13.0 (2024-05-28)
 
 Full Changelog: [v2.12.0...v2.13.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.12.0...v2.13.0)
