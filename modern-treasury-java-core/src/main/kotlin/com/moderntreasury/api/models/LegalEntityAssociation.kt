@@ -349,6 +349,7 @@ private constructor(
         private val updatedAt: JsonField<OffsetDateTime>,
         private val discardedAt: JsonField<OffsetDateTime>,
         private val legalEntityType: JsonField<LegalEntityType>,
+        private val riskRating: JsonField<RiskRating>,
         private val firstName: JsonField<String>,
         private val lastName: JsonField<String>,
         private val dateOfBirth: JsonField<LocalDate>,
@@ -388,6 +389,10 @@ private constructor(
 
         /** The type of legal entity. */
         fun legalEntityType(): LegalEntityType = legalEntityType.getRequired("legal_entity_type")
+
+        /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+        fun riskRating(): Optional<RiskRating> =
+            Optional.ofNullable(riskRating.getNullable("risk_rating"))
 
         /** An individual's first name. */
         fun firstName(): Optional<String> = Optional.ofNullable(firstName.getNullable("first_name"))
@@ -452,6 +457,9 @@ private constructor(
         /** The type of legal entity. */
         @JsonProperty("legal_entity_type") @ExcludeMissing fun _legalEntityType() = legalEntityType
 
+        /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+        @JsonProperty("risk_rating") @ExcludeMissing fun _riskRating() = riskRating
+
         /** An individual's first name. */
         @JsonProperty("first_name") @ExcludeMissing fun _firstName() = firstName
 
@@ -506,6 +514,7 @@ private constructor(
                 updatedAt()
                 discardedAt()
                 legalEntityType()
+                riskRating()
                 firstName()
                 lastName()
                 dateOfBirth()
@@ -538,6 +547,7 @@ private constructor(
                 this.updatedAt == other.updatedAt &&
                 this.discardedAt == other.discardedAt &&
                 this.legalEntityType == other.legalEntityType &&
+                this.riskRating == other.riskRating &&
                 this.firstName == other.firstName &&
                 this.lastName == other.lastName &&
                 this.dateOfBirth == other.dateOfBirth &&
@@ -565,6 +575,7 @@ private constructor(
                         updatedAt,
                         discardedAt,
                         legalEntityType,
+                        riskRating,
                         firstName,
                         lastName,
                         dateOfBirth,
@@ -585,7 +596,7 @@ private constructor(
         }
 
         override fun toString() =
-            "ChildLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+            "ChildLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, legalEntityType=$legalEntityType, riskRating=$riskRating, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -601,6 +612,7 @@ private constructor(
             private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
             private var discardedAt: JsonField<OffsetDateTime> = JsonMissing.of()
             private var legalEntityType: JsonField<LegalEntityType> = JsonMissing.of()
+            private var riskRating: JsonField<RiskRating> = JsonMissing.of()
             private var firstName: JsonField<String> = JsonMissing.of()
             private var lastName: JsonField<String> = JsonMissing.of()
             private var dateOfBirth: JsonField<LocalDate> = JsonMissing.of()
@@ -625,6 +637,7 @@ private constructor(
                 this.updatedAt = childLegalEntity.updatedAt
                 this.discardedAt = childLegalEntity.discardedAt
                 this.legalEntityType = childLegalEntity.legalEntityType
+                this.riskRating = childLegalEntity.riskRating
                 this.firstName = childLegalEntity.firstName
                 this.lastName = childLegalEntity.lastName
                 this.dateOfBirth = childLegalEntity.dateOfBirth
@@ -700,6 +713,16 @@ private constructor(
             @ExcludeMissing
             fun legalEntityType(legalEntityType: JsonField<LegalEntityType>) = apply {
                 this.legalEntityType = legalEntityType
+            }
+
+            /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+            fun riskRating(riskRating: RiskRating) = riskRating(JsonField.of(riskRating))
+
+            /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+            @JsonProperty("risk_rating")
+            @ExcludeMissing
+            fun riskRating(riskRating: JsonField<RiskRating>) = apply {
+                this.riskRating = riskRating
             }
 
             /** An individual's first name. */
@@ -851,6 +874,7 @@ private constructor(
                     updatedAt,
                     discardedAt,
                     legalEntityType,
+                    riskRating,
                     firstName,
                     lastName,
                     dateOfBirth,
@@ -2034,6 +2058,69 @@ private constructor(
                 fun build(): PhoneNumber =
                     PhoneNumber(phoneNumber, additionalProperties.toUnmodifiable())
             }
+        }
+
+        class RiskRating
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is RiskRating && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                @JvmField val LOW = RiskRating(JsonField.of("low"))
+
+                @JvmField val MEDIUM = RiskRating(JsonField.of("medium"))
+
+                @JvmField val HIGH = RiskRating(JsonField.of("high"))
+
+                @JvmStatic fun of(value: String) = RiskRating(JsonField.of(value))
+            }
+
+            enum class Known {
+                LOW,
+                MEDIUM,
+                HIGH,
+            }
+
+            enum class Value {
+                LOW,
+                MEDIUM,
+                HIGH,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    LOW -> Value.LOW
+                    MEDIUM -> Value.MEDIUM
+                    HIGH -> Value.HIGH
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    LOW -> Known.LOW
+                    MEDIUM -> Known.MEDIUM
+                    HIGH -> Known.HIGH
+                    else -> throw ModernTreasuryInvalidDataException("Unknown RiskRating: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
         }
     }
 
