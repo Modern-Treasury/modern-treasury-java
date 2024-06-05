@@ -98,7 +98,7 @@ class ReturnObjectTest {
         assertThat(returnObject.code()).contains(ReturnObject.Code._901)
         assertThat(returnObject.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(returnObject.currency()).contains(Currency.AED)
+        assertThat(returnObject.currency()).isEqualTo(Currency.AED)
         assertThat(returnObject.currentReturn())
             .contains(
                 ReturnObject.builder()
