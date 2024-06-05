@@ -113,7 +113,7 @@ private constructor(
         )
 
     /** Currency that the invoice is denominated in. Defaults to `USD` if not provided. */
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Currency = currency.getRequired("currency")
 
     /** A free-form description of the invoice. */
     fun description(): String = description.getRequired("description")

@@ -137,7 +137,7 @@ class InternalAccountTest {
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(internalAccount.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(internalAccount.currency()).contains(Currency.AED)
+        assertThat(internalAccount.currency()).isEqualTo(Currency.AED)
         assertThat(internalAccount.ledgerAccountId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(internalAccount.legalEntityId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
