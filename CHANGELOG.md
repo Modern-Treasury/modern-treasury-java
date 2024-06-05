@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.14.0 (2024-06-05)
+
+Full Changelog: [v2.13.1...v2.14.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.13.1...v2.14.0)
+
+### Features
+
+* **api:** add kr_brn kr_crn kr_rrn enum values ([#183](https://github.com/Modern-Treasury/modern-treasury-java/issues/183)) ([4ec6e56](https://github.com/Modern-Treasury/modern-treasury-java/commit/4ec6e5686e520717205f99f56e2e3a9eb95393dc))
+* **api:** add risk rating field ([#185](https://github.com/Modern-Treasury/modern-treasury-java/issues/185)) ([f9748d1](https://github.com/Modern-Treasury/modern-treasury-java/commit/f9748d114681c888d7d7b12735089692cbbad326))
+
+
+### Bug Fixes
+
+* fix enum type to be non nullable ([#187](https://github.com/Modern-Treasury/modern-treasury-java/issues/187)) ([08a4389](https://github.com/Modern-Treasury/modern-treasury-java/commit/08a438974ab41c1cad8f1c7a82425c3039fbdc1d))
+
+
+### Chores
+
+* **internal:** sync urls ([#186](https://github.com/Modern-Treasury/modern-treasury-java/issues/186)) ([cd6e6aa](https://github.com/Modern-Treasury/modern-treasury-java/commit/cd6e6aa8a0cfeac1875388606a5ca57031f136c9))
+
 ## 2.13.1 (2024-05-30)
 
 Full Changelog: [v2.13.0...v2.13.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.13.0...v2.13.1)
