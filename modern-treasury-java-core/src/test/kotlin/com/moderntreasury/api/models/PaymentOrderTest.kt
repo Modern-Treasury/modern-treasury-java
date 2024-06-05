@@ -275,7 +275,7 @@ class PaymentOrderTest {
         assertThat(paymentOrder.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(paymentOrder.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(paymentOrder.currency()).contains(Currency.AED)
+        assertThat(paymentOrder.currency()).isEqualTo(Currency.AED)
         assertThat(paymentOrder.currentReturn())
             .contains(
                 ReturnObject.builder()

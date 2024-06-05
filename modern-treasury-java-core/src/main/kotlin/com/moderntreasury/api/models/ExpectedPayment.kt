@@ -99,7 +99,7 @@ private constructor(
     fun type(): Optional<ExpectedPaymentType> = Optional.ofNullable(type.getNullable("type"))
 
     /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Currency = currency.getRequired("currency")
 
     /** The latest date the payment may come in. Format: yyyy-mm-dd */
     fun dateUpperBound(): Optional<LocalDate> =

@@ -163,7 +163,7 @@ private constructor(
         Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
 
     /** Defaults to the currency of the originating account. */
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Currency = currency.getRequired("currency")
 
     /**
      * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -2118,8 +2118,7 @@ private constructor(
         fun baseAmount(): Long = baseAmount.getRequired("base_amount")
 
         /** Currency to convert, often called the "sell" currency. */
-        fun baseCurrency(): Optional<Currency> =
-            Optional.ofNullable(baseCurrency.getNullable("base_currency"))
+        fun baseCurrency(): Currency = baseCurrency.getRequired("base_currency")
 
         /**
          * The exponent component of the rate. The decimal is calculated as `value` / (10 ^
@@ -2137,8 +2136,7 @@ private constructor(
         fun targetAmount(): Long = targetAmount.getRequired("target_amount")
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
-        fun targetCurrency(): Optional<Currency> =
-            Optional.ofNullable(targetCurrency.getNullable("target_currency"))
+        fun targetCurrency(): Currency = targetCurrency.getRequired("target_currency")
 
         /**
          * The whole number component of the rate. The decimal is calculated as `value` / (10 ^
