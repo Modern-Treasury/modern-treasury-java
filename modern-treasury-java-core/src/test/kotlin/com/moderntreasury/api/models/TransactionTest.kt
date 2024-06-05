@@ -54,7 +54,7 @@ class TransactionTest {
         assertThat(transaction.asOfTime()).contains("string")
         assertThat(transaction.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(transaction.currency()).contains(Currency.AED)
+        assertThat(transaction.currency()).isEqualTo(Currency.AED)
         assertThat(transaction.direction()).isEqualTo("string")
         assertThat(transaction.discardedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

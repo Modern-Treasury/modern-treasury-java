@@ -40,7 +40,7 @@ class PaperItemTest {
         assertThat(paperItem.checkNumber()).contains("string")
         assertThat(paperItem.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(paperItem.currency()).contains(Currency.AED)
+        assertThat(paperItem.currency()).isEqualTo(Currency.AED)
         assertThat(paperItem.depositDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(paperItem.liveMode()).isEqualTo(true)
         assertThat(paperItem.lockboxNumber()).isEqualTo("string")

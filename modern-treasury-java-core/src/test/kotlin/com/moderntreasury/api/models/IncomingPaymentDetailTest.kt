@@ -116,7 +116,7 @@ class IncomingPaymentDetailTest {
         assertThat(incomingPaymentDetail.asOfDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(incomingPaymentDetail.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(incomingPaymentDetail.currency()).contains(Currency.AED)
+        assertThat(incomingPaymentDetail.currency()).isEqualTo(Currency.AED)
         assertThat(incomingPaymentDetail.data())
             .isEqualTo(IncomingPaymentDetail.Data.builder().build())
         assertThat(incomingPaymentDetail.direction()).isEqualTo(TransactionDirection.CREDIT)

@@ -18,7 +18,7 @@ import java.util.Optional
 class ForeignExchangeQuoteCreateParams
 constructor(
     private val internalAccountId: String,
-    private val targetCurrency: Currency?,
+    private val targetCurrency: Currency,
     private val baseAmount: Long?,
     private val baseCurrency: Currency?,
     private val effectiveAt: OffsetDateTime?,
@@ -30,7 +30,7 @@ constructor(
 
     fun internalAccountId(): String = internalAccountId
 
-    fun targetCurrency(): Optional<Currency> = Optional.ofNullable(targetCurrency)
+    fun targetCurrency(): Currency = targetCurrency
 
     fun baseAmount(): Optional<Long> = Optional.ofNullable(baseAmount)
 
@@ -216,7 +216,7 @@ constructor(
                     checkNotNull(internalAccountId) {
                         "`internalAccountId` is required but was not set"
                     },
-                    targetCurrency,
+                    checkNotNull(targetCurrency) { "`targetCurrency` is required but was not set" },
                     baseAmount,
                     baseCurrency,
                     effectiveAt,
@@ -387,7 +387,7 @@ constructor(
                 checkNotNull(internalAccountId) {
                     "`internalAccountId` is required but was not set"
                 },
-                targetCurrency,
+                checkNotNull(targetCurrency) { "`targetCurrency` is required but was not set" },
                 baseAmount,
                 baseCurrency,
                 effectiveAt,

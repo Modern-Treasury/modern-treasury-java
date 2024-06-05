@@ -479,7 +479,7 @@ class InvoiceTest {
                     .build()
             )
         assertThat(invoice.createdAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(invoice.currency()).contains(Currency.AED)
+        assertThat(invoice.currency()).isEqualTo(Currency.AED)
         assertThat(invoice.description()).isEqualTo("string")
         assertThat(invoice.dueDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoice.expectedPayments())
