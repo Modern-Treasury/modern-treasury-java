@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.15.0 (2024-06-17)
+
+Full Changelog: [v2.14.0...v2.15.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.14.0...v2.15.0)
+
+### Features
+
+* **client:** add support for `putQueryParam` on `ClientOptions` ([#188](https://github.com/Modern-Treasury/modern-treasury-java/issues/188)) ([6aea9ba](https://github.com/Modern-Treasury/modern-treasury-java/commit/6aea9baa3e7f3b5a5d212c431f7a8f4ec13776e7))
+
 ## 2.14.0 (2024-06-05)
 
 Full Changelog: [v2.13.1...v2.14.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.13.1...v2.14.0)

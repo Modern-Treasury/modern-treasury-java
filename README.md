@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/2.14.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/2.15.0)
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ The REST API documentation can be found [on docs.moderntreasury.com](https://do
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:2.14.0")
+implementation("com.moderntreasury:modern-treasury-java:2.15.0")
 ```
 
 #### Maven
@@ -34,7 +34,7 @@ implementation("com.moderntreasury:modern-treasury-java:2.14.0")
 <dependency>
     <groupId>com.moderntreasury</groupId>
     <artifactId>modern-treasury-java</artifactId>
-    <version>2.14.0</version>
+    <version>2.15.0</version>
 </dependency>
 ```
 
