@@ -45,6 +45,7 @@ constructor(
                     params.getPathParam(1),
                     "account_details"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -80,6 +81,7 @@ constructor(
                     "account_details",
                     params.getPathParam(2)
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -113,6 +115,7 @@ constructor(
                     params.getPathParam(1),
                     "account_details"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -154,6 +157,7 @@ constructor(
                     "account_details",
                     params.getPathParam(2)
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())

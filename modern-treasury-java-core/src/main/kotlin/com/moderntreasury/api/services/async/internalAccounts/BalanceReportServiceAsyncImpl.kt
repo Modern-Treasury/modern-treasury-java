@@ -45,6 +45,7 @@ constructor(
                     params.getPathParam(0),
                     "balance_reports"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -80,6 +81,7 @@ constructor(
                     "balance_reports",
                     params.getPathParam(1)
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -113,6 +115,7 @@ constructor(
                     params.getPathParam(0),
                     "balance_reports"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -154,6 +157,7 @@ constructor(
                     "balance_reports",
                     params.getPathParam(1)
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
