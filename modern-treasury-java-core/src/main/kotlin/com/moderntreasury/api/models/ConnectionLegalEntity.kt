@@ -32,6 +32,7 @@ private constructor(
     private val connectionId: JsonField<String>,
     private val legalEntityId: JsonField<String>,
     private val status: JsonField<Status>,
+    private val vendorId: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -65,6 +66,9 @@ private constructor(
     /** The status of the connection legal entity. */
     fun status(): Status = status.getRequired("status")
 
+    /** The ID of the legal entity at the vendor. */
+    fun vendorId(): String = vendorId.getRequired("vendor_id")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     @JsonProperty("object") @ExcludeMissing fun _object_() = object_
@@ -90,6 +94,9 @@ private constructor(
     /** The status of the connection legal entity. */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
 
+    /** The ID of the legal entity at the vendor. */
+    @JsonProperty("vendor_id") @ExcludeMissing fun _vendorId() = vendorId
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -105,6 +112,7 @@ private constructor(
             connectionId()
             legalEntityId()
             status()
+            vendorId()
             validated = true
         }
     }
@@ -126,6 +134,7 @@ private constructor(
             this.connectionId == other.connectionId &&
             this.legalEntityId == other.legalEntityId &&
             this.status == other.status &&
+            this.vendorId == other.vendorId &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -142,6 +151,7 @@ private constructor(
                     connectionId,
                     legalEntityId,
                     status,
+                    vendorId,
                     additionalProperties,
                 )
         }
@@ -149,7 +159,7 @@ private constructor(
     }
 
     override fun toString() =
-        "ConnectionLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, connectionId=$connectionId, legalEntityId=$legalEntityId, status=$status, additionalProperties=$additionalProperties}"
+        "ConnectionLegalEntity{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, connectionId=$connectionId, legalEntityId=$legalEntityId, status=$status, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -167,6 +177,7 @@ private constructor(
         private var connectionId: JsonField<String> = JsonMissing.of()
         private var legalEntityId: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
+        private var vendorId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -180,6 +191,7 @@ private constructor(
             this.connectionId = connectionLegalEntity.connectionId
             this.legalEntityId = connectionLegalEntity.legalEntityId
             this.status = connectionLegalEntity.status
+            this.vendorId = connectionLegalEntity.vendorId
             additionalProperties(connectionLegalEntity.additionalProperties)
         }
 
@@ -255,6 +267,14 @@ private constructor(
         @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        /** The ID of the legal entity at the vendor. */
+        fun vendorId(vendorId: String) = vendorId(JsonField.of(vendorId))
+
+        /** The ID of the legal entity at the vendor. */
+        @JsonProperty("vendor_id")
+        @ExcludeMissing
+        fun vendorId(vendorId: JsonField<String>) = apply { this.vendorId = vendorId }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -280,6 +300,7 @@ private constructor(
                 connectionId,
                 legalEntityId,
                 status,
+                vendorId,
                 additionalProperties.toUnmodifiable(),
             )
     }

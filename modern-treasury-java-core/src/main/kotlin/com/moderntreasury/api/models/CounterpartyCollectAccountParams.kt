@@ -470,24 +470,22 @@ constructor(
 
             @JvmField val ADDRESS = Field(JsonField.of("address"))
 
-            @JvmField val JP_ZENGIN_CODE = Field(JsonField.of("jp_zengin_code"))
+            @JvmField val JP_ZENGIN_CODE = Field(JsonField.of("jpZenginCode"))
+
+            @JvmField val SE_BANKGIRO_CLEARING_CODE = Field(JsonField.of("seBankgiroClearingCode"))
+
+            @JvmField val NZ_NATIONAL_CLEARING_CODE = Field(JsonField.of("nzNationalClearingCode"))
 
             @JvmField
-            val SE_BANKGIRO_CLEARING_CODE = Field(JsonField.of("se_bankgiro_clearing_code"))
+            val HK_INTERBANK_CLEARING_CODE = Field(JsonField.of("hkInterbankClearingCode"))
 
             @JvmField
-            val NZ_NATIONAL_CLEARING_CODE = Field(JsonField.of("nz_national_clearing_code"))
+            val HU_INTERBANK_CLEARING_CODE = Field(JsonField.of("huInterbankClearingCode"))
 
             @JvmField
-            val HK_INTERBANK_CLEARING_CODE = Field(JsonField.of("hk_interbank_clearing_code"))
+            val DK_INTERBANK_CLEARING_CODE = Field(JsonField.of("dkInterbankClearingCode"))
 
-            @JvmField
-            val HU_INTERBANK_CLEARING_CODE = Field(JsonField.of("hu_interbank_clearing_code"))
-
-            @JvmField
-            val DK_INTERBANK_CLEARING_CODE = Field(JsonField.of("dk_interbank_clearing_code"))
-
-            @JvmField val ID_SKNBI_CODE = Field(JsonField.of("id_sknbi_code"))
+            @JvmField val ID_SKNBI_CODE = Field(JsonField.of("idSknbiCode"))
 
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
