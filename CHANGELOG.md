@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.16.0 (2024-07-01)
+
+Full Changelog: [v2.15.0...v2.16.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.15.0...v2.16.0)
+
+### Features
+
+* **api:** updates ([#192](https://github.com/Modern-Treasury/modern-treasury-java/issues/192)) ([efdd580](https://github.com/Modern-Treasury/modern-treasury-java/commit/efdd580458502a88c20692a7c7a46a38cc89d5b0))
+
+
+### Chores
+
+* gitignore test server logs ([#190](https://github.com/Modern-Treasury/modern-treasury-java/issues/190)) ([326108c](https://github.com/Modern-Treasury/modern-treasury-java/commit/326108c18fc0d27921733d24727cebb386638f2b))
+
 ## 2.15.0 (2024-06-17)
 
 Full Changelog: [v2.14.0...v2.15.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.14.0...v2.15.0)
