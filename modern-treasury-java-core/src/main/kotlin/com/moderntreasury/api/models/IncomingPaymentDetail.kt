@@ -892,17 +892,23 @@ private constructor(
 
         companion object {
 
+            @JvmField val AU_NUMBER = OriginatingAccountNumberType(JsonField.of("au_number"))
+
             @JvmField val CLABE = OriginatingAccountNumberType(JsonField.of("clabe"))
 
             @JvmField val HK_NUMBER = OriginatingAccountNumberType(JsonField.of("hk_number"))
 
             @JvmField val IBAN = OriginatingAccountNumberType(JsonField.of("iban"))
 
+            @JvmField val ID_NUMBER = OriginatingAccountNumberType(JsonField.of("id_number"))
+
             @JvmField val NZ_NUMBER = OriginatingAccountNumberType(JsonField.of("nz_number"))
 
             @JvmField val OTHER = OriginatingAccountNumberType(JsonField.of("other"))
 
             @JvmField val PAN = OriginatingAccountNumberType(JsonField.of("pan"))
+
+            @JvmField val SG_NUMBER = OriginatingAccountNumberType(JsonField.of("sg_number"))
 
             @JvmField
             val WALLET_ADDRESS = OriginatingAccountNumberType(JsonField.of("wallet_address"))
@@ -911,46 +917,58 @@ private constructor(
         }
 
         enum class Known {
+            AU_NUMBER,
             CLABE,
             HK_NUMBER,
             IBAN,
+            ID_NUMBER,
             NZ_NUMBER,
             OTHER,
             PAN,
+            SG_NUMBER,
             WALLET_ADDRESS,
         }
 
         enum class Value {
+            AU_NUMBER,
             CLABE,
             HK_NUMBER,
             IBAN,
+            ID_NUMBER,
             NZ_NUMBER,
             OTHER,
             PAN,
+            SG_NUMBER,
             WALLET_ADDRESS,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
+                AU_NUMBER -> Value.AU_NUMBER
                 CLABE -> Value.CLABE
                 HK_NUMBER -> Value.HK_NUMBER
                 IBAN -> Value.IBAN
+                ID_NUMBER -> Value.ID_NUMBER
                 NZ_NUMBER -> Value.NZ_NUMBER
                 OTHER -> Value.OTHER
                 PAN -> Value.PAN
+                SG_NUMBER -> Value.SG_NUMBER
                 WALLET_ADDRESS -> Value.WALLET_ADDRESS
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
+                AU_NUMBER -> Known.AU_NUMBER
                 CLABE -> Known.CLABE
                 HK_NUMBER -> Known.HK_NUMBER
                 IBAN -> Known.IBAN
+                ID_NUMBER -> Known.ID_NUMBER
                 NZ_NUMBER -> Known.NZ_NUMBER
                 OTHER -> Known.OTHER
                 PAN -> Known.PAN
+                SG_NUMBER -> Known.SG_NUMBER
                 WALLET_ADDRESS -> Known.WALLET_ADDRESS
                 else ->
                     throw ModernTreasuryInvalidDataException(

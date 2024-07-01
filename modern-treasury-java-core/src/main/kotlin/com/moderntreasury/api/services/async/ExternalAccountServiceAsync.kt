@@ -14,6 +14,7 @@ import com.moderntreasury.api.models.ExternalAccountListParams
 import com.moderntreasury.api.models.ExternalAccountRetrieveParams
 import com.moderntreasury.api.models.ExternalAccountUpdateParams
 import com.moderntreasury.api.models.ExternalAccountVerifyParams
+import com.moderntreasury.api.models.ExternalAccountVerifyResponse
 import java.util.concurrent.CompletableFuture
 
 interface ExternalAccountServiceAsync {
@@ -65,5 +66,5 @@ interface ExternalAccountServiceAsync {
     fun verify(
         params: ExternalAccountVerifyParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<ExternalAccount>
+    ): CompletableFuture<ExternalAccountVerifyResponse>
 }
