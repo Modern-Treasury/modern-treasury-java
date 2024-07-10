@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.16.1 (2024-07-10)
+
+Full Changelog: [v2.16.0...v2.16.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.16.0...v2.16.1)
+
+### Chores
+
+* **docs:** document minimum Java version (Java 8) in README ([#193](https://github.com/Modern-Treasury/modern-treasury-java/issues/193)) ([e309db9](https://github.com/Modern-Treasury/modern-treasury-java/commit/e309db915fbb0624deda9caf4df2c1259fb36ccb))
+
 ## 2.16.0 (2024-07-01)
 
 Full Changelog: [v2.15.0...v2.16.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.15.0...v2.16.0)
