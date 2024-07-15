@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.17.0 (2024-07-15)
+
+Full Changelog: [v2.16.1...v2.17.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.16.1...v2.17.0)
+
+### Features
+
+* **api:** updates ([#198](https://github.com/Modern-Treasury/modern-treasury-java/issues/198)) ([8917ff9](https://github.com/Modern-Treasury/modern-treasury-java/commit/8917ff96b2693e1c563822bda96ed1d24a989b19))
+
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#195](https://github.com/Modern-Treasury/modern-treasury-java/issues/195)) ([ac71d1b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ac71d1ba2c0bd7f96686ef1696a5692cc078eac6))
+* **docs:** minor update to formatting of API link in README ([#199](https://github.com/Modern-Treasury/modern-treasury-java/issues/199)) ([826ffbe](https://github.com/Modern-Treasury/modern-treasury-java/commit/826ffbedb22e2e6eea33e01a5956c68beba210de))
+
+
+### Documentation
+
+* **examples:** update example values ([#197](https://github.com/Modern-Treasury/modern-treasury-java/issues/197)) ([66da405](https://github.com/Modern-Treasury/modern-treasury-java/commit/66da4050feb7174083f750b726d4b6fb18eda186))
+
 ## 2.16.1 (2024-07-10)
 
 Full Changelog: [v2.16.0...v2.16.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.16.0...v2.16.1)
