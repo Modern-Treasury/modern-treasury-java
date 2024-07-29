@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.UnexpectedStatusCodeException
 import com.moderntreasury.api.errors.UnprocessableEntityException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.Optional
 
 @JvmSynthetic internal fun emptyHandler(): Handler<Void?> = EmptyHandler
 
@@ -38,7 +39,18 @@ private object StringHandler : Handler<String> {
 
 private object BinaryHandler : Handler<BinaryResponseContent> {
     override fun handle(response: HttpResponse): BinaryResponseContent {
-        return BinaryResponseContentImpl(response)
+        return object : BinaryResponseContent {
+            override fun contentType(): Optional<String> =
+                Optional.ofNullable(response.headers().get("Content-Type").firstOrNull())
+
+            override fun body(): InputStream = response.body()
+
+            override fun close() = response.close()
+
+            override fun writeTo(outputStream: OutputStream) {
+                response.body().copyTo(outputStream)
+            }
+        }
     }
 }
 
@@ -107,26 +119,5 @@ internal fun <T> Handler<T>.withErrorHandler(
                     )
             }
         }
-    }
-}
-
-class BinaryResponseContentImpl
-constructor(
-    private val response: HttpResponse,
-) : BinaryResponseContent {
-    override fun contentType(): String? {
-        return response.headers().get("Content-Type").firstOrNull()
-    }
-
-    override fun body(): InputStream {
-        return response.body()
-    }
-
-    override fun writeTo(outputStream: OutputStream) {
-        response.body().copyTo(outputStream)
-    }
-
-    override fun close() {
-        response.body().close()
     }
 }
