@@ -47,6 +47,7 @@ private constructor(
     private val details: JsonField<Details>,
     private val type: JsonField<Type>,
     private val foreignExchangeRate: JsonField<ForeignExchangeRate>,
+    private val customIdentifiers: JsonField<CustomIdentifiers>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -152,6 +153,12 @@ private constructor(
     fun foreignExchangeRate(): Optional<ForeignExchangeRate> =
         Optional.ofNullable(foreignExchangeRate.getNullable("foreign_exchange_rate"))
 
+    /**
+     * An object containing key-value pairs, each with a custom identifier as the key and a string
+     * value.
+     */
+    fun customIdentifiers(): CustomIdentifiers = customIdentifiers.getRequired("custom_identifiers")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     @JsonProperty("object") @ExcludeMissing fun _object_() = object_
@@ -249,6 +256,12 @@ private constructor(
     @ExcludeMissing
     fun _foreignExchangeRate() = foreignExchangeRate
 
+    /**
+     * An object containing key-value pairs, each with a custom identifier as the key and a string
+     * value.
+     */
+    @JsonProperty("custom_identifiers") @ExcludeMissing fun _customIdentifiers() = customIdentifiers
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -278,6 +291,7 @@ private constructor(
             details().map { it.validate() }
             type()
             foreignExchangeRate().map { it.validate() }
+            customIdentifiers().validate()
             validated = true
         }
     }
@@ -313,6 +327,7 @@ private constructor(
             this.details == other.details &&
             this.type == other.type &&
             this.foreignExchangeRate == other.foreignExchangeRate &&
+            this.customIdentifiers == other.customIdentifiers &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -343,6 +358,7 @@ private constructor(
                     details,
                     type,
                     foreignExchangeRate,
+                    customIdentifiers,
                     additionalProperties,
                 )
         }
@@ -350,7 +366,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Transaction{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, amount=$amount, currency=$currency, direction=$direction, vendorDescription=$vendorDescription, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, vendorId=$vendorId, asOfDate=$asOfDate, asOfTime=$asOfTime, internalAccountId=$internalAccountId, metadata=$metadata, posted=$posted, vendorCustomerId=$vendorCustomerId, reconciled=$reconciled, details=$details, type=$type, foreignExchangeRate=$foreignExchangeRate, additionalProperties=$additionalProperties}"
+        "Transaction{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, amount=$amount, currency=$currency, direction=$direction, vendorDescription=$vendorDescription, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, vendorId=$vendorId, asOfDate=$asOfDate, asOfTime=$asOfTime, internalAccountId=$internalAccountId, metadata=$metadata, posted=$posted, vendorCustomerId=$vendorCustomerId, reconciled=$reconciled, details=$details, type=$type, foreignExchangeRate=$foreignExchangeRate, customIdentifiers=$customIdentifiers, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -382,6 +398,7 @@ private constructor(
         private var details: JsonField<Details> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
         private var foreignExchangeRate: JsonField<ForeignExchangeRate> = JsonMissing.of()
+        private var customIdentifiers: JsonField<CustomIdentifiers> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -409,6 +426,7 @@ private constructor(
             this.details = transaction.details
             this.type = transaction.type
             this.foreignExchangeRate = transaction.foreignExchangeRate
+            this.customIdentifiers = transaction.customIdentifiers
             additionalProperties(transaction.additionalProperties)
         }
 
@@ -665,6 +683,23 @@ private constructor(
             this.foreignExchangeRate = foreignExchangeRate
         }
 
+        /**
+         * An object containing key-value pairs, each with a custom identifier as the key and a
+         * string value.
+         */
+        fun customIdentifiers(customIdentifiers: CustomIdentifiers) =
+            customIdentifiers(JsonField.of(customIdentifiers))
+
+        /**
+         * An object containing key-value pairs, each with a custom identifier as the key and a
+         * string value.
+         */
+        @JsonProperty("custom_identifiers")
+        @ExcludeMissing
+        fun customIdentifiers(customIdentifiers: JsonField<CustomIdentifiers>) = apply {
+            this.customIdentifiers = customIdentifiers
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -704,8 +739,87 @@ private constructor(
                 details,
                 type,
                 foreignExchangeRate,
+                customIdentifiers,
                 additionalProperties.toUnmodifiable(),
             )
+    }
+
+    /**
+     * An object containing key-value pairs, each with a custom identifier as the key and a string
+     * value.
+     */
+    @JsonDeserialize(builder = CustomIdentifiers.Builder::class)
+    @NoAutoDetect
+    class CustomIdentifiers
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        private var hashCode: Int = 0
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): CustomIdentifiers = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is CustomIdentifiers &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "CustomIdentifiers{additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            @JvmStatic fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(customIdentifiers: CustomIdentifiers) = apply {
+                additionalProperties(customIdentifiers.additionalProperties)
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): CustomIdentifiers =
+                CustomIdentifiers(additionalProperties.toUnmodifiable())
+        }
     }
 
     /** Associated serialized foreign exchange rate information. */
