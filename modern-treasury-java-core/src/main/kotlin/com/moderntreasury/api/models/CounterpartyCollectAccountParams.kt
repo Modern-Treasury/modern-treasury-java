@@ -487,6 +487,9 @@ constructor(
 
             @JvmField val ID_SKNBI_CODE = Field(JsonField.of("idSknbiCode"))
 
+            @JvmField
+            val ZA_NATIONAL_CLEARING_CODE = Field(JsonField.of("za_national_clearing_code"))
+
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
 
@@ -519,6 +522,7 @@ constructor(
             HU_INTERBANK_CLEARING_CODE,
             DK_INTERBANK_CLEARING_CODE,
             ID_SKNBI_CODE,
+            ZA_NATIONAL_CLEARING_CODE,
         }
 
         enum class Value {
@@ -550,6 +554,7 @@ constructor(
             HU_INTERBANK_CLEARING_CODE,
             DK_INTERBANK_CLEARING_CODE,
             ID_SKNBI_CODE,
+            ZA_NATIONAL_CLEARING_CODE,
             _UNKNOWN,
         }
 
@@ -583,6 +588,7 @@ constructor(
                 HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                 DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                 ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
+                ZA_NATIONAL_CLEARING_CODE -> Value.ZA_NATIONAL_CLEARING_CODE
                 else -> Value._UNKNOWN
             }
 
@@ -616,6 +622,7 @@ constructor(
                 HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                 DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                 ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
+                ZA_NATIONAL_CLEARING_CODE -> Known.ZA_NATIONAL_CLEARING_CODE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Field: $value")
             }
 
