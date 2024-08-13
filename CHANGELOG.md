@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.18.0 (2024-08-13)
+
+Full Changelog: [v2.17.0...v2.18.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.17.0...v2.18.0)
+
+### Features
+
+* **api:** add pagination params 'created at' and 'updated at' ([#206](https://github.com/Modern-Treasury/modern-treasury-java/issues/206)) ([9007f13](https://github.com/Modern-Treasury/modern-treasury-java/commit/9007f13c45de7f58f67697e8fb37e79e6ba4681f))
+* **api:** updates ([#208](https://github.com/Modern-Treasury/modern-treasury-java/issues/208)) ([988eb52](https://github.com/Modern-Treasury/modern-treasury-java/commit/988eb529701e4d1caf3d9d35ab9b903b7b0d1689))
+* **client:** improve binary return values ([#204](https://github.com/Modern-Treasury/modern-treasury-java/issues/204)) ([c1a2ac0](https://github.com/Modern-Treasury/modern-treasury-java/commit/c1a2ac049c416340af6e11a40ee30ec58e0dd24e))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#207](https://github.com/Modern-Treasury/modern-treasury-java/issues/207)) ([109efdd](https://github.com/Modern-Treasury/modern-treasury-java/commit/109efdd68be1a1ce53806d4fa5eb50de8cf72098))
+* **ci:** limit release doctor target branches ([#200](https://github.com/Modern-Treasury/modern-treasury-java/issues/200)) ([9de3b1f](https://github.com/Modern-Treasury/modern-treasury-java/commit/9de3b1faee4f008e0d98f827370b895faa64f294))
+* **ci:** run tests in CI ([#205](https://github.com/Modern-Treasury/modern-treasury-java/issues/205)) ([1f0c7c4](https://github.com/Modern-Treasury/modern-treasury-java/commit/1f0c7c4e0c60622fd459ba9de96d201055c833c0))
+* **internal:** remove unused test file ([#203](https://github.com/Modern-Treasury/modern-treasury-java/issues/203)) ([817b99f](https://github.com/Modern-Treasury/modern-treasury-java/commit/817b99ff5dfdbf2f734ff99d31b4ad4f89628453))
+* **tests:** update prism version ([#202](https://github.com/Modern-Treasury/modern-treasury-java/issues/202)) ([2855ef0](https://github.com/Modern-Treasury/modern-treasury-java/commit/2855ef0fdb6fcf7aa5f551ae7df3bed57013f959))
+
 ## 2.17.0 (2024-07-15)
 
 Full Changelog: [v2.16.1...v2.17.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.16.1...v2.17.0)
