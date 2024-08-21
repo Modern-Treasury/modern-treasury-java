@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.19.0 (2024-08-21)
+
+Full Changelog: [v2.18.0...v2.19.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.18.0...v2.19.0)
+
+### Features
+
+* **api:** add wells fargo reference number types ([#209](https://github.com/Modern-Treasury/modern-treasury-java/issues/209)) ([c657284](https://github.com/Modern-Treasury/modern-treasury-java/commit/c65728407f005517efb075f493a8103a629d4415))
+
+
+### Bug Fixes
+
+* **docs:** use correct putAdditionalProperty value ([#211](https://github.com/Modern-Treasury/modern-treasury-java/issues/211)) ([61380dd](https://github.com/Modern-Treasury/modern-treasury-java/commit/61380dde00e1d6cd6293cd3ab0c7a9539c754057))
+
 ## 2.18.0 (2024-08-13)
 
 Full Changelog: [v2.17.0...v2.18.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.17.0...v2.18.0)
