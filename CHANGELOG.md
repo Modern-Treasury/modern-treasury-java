@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.19.1 (2024-08-22)
+
+Full Changelog: [v2.19.0...v2.19.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.19.0...v2.19.1)
+
+### Bug Fixes
+
+* remove additionalBodyProperties from methods that don't support request bodies ([#212](https://github.com/Modern-Treasury/modern-treasury-java/issues/212)) ([71672f0](https://github.com/Modern-Treasury/modern-treasury-java/commit/71672f056d93f6c8918dc032cc245a79129e0fc3))
+
 ## 2.19.0 (2024-08-21)
 
 Full Changelog: [v2.18.0...v2.19.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.18.0...v2.19.0)
