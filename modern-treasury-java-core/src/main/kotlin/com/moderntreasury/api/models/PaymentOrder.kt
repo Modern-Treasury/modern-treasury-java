@@ -3036,6 +3036,14 @@ private constructor(
                 val USBANK_PAYMENT_ID = ReferenceNumberType(JsonField.of("usbank_payment_id"))
 
                 @JvmField
+                val USBANK_PENDING_RTP_PAYMENT_ID =
+                    ReferenceNumberType(JsonField.of("usbank_pending_rtp_payment_id"))
+
+                @JvmField
+                val USBANK_POSTED_RTP_PAYMENT_ID =
+                    ReferenceNumberType(JsonField.of("usbank_posted_rtp_payment_id"))
+
+                @JvmField
                 val WELLS_FARGO_END_TO_END_ID =
                     ReferenceNumberType(JsonField.of("wells_fargo_end_to_end_id"))
 
@@ -3117,6 +3125,8 @@ private constructor(
                 SWIFT_UETR,
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
                 USBANK_PAYMENT_ID,
+                USBANK_PENDING_RTP_PAYMENT_ID,
+                USBANK_POSTED_RTP_PAYMENT_ID,
                 WELLS_FARGO_END_TO_END_ID,
                 WELLS_FARGO_PAYMENT_ID,
                 WELLS_FARGO_TRACE_NUMBER,
@@ -3187,6 +3197,8 @@ private constructor(
                 SWIFT_UETR,
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
                 USBANK_PAYMENT_ID,
+                USBANK_PENDING_RTP_PAYMENT_ID,
+                USBANK_POSTED_RTP_PAYMENT_ID,
                 WELLS_FARGO_END_TO_END_ID,
                 WELLS_FARGO_PAYMENT_ID,
                 WELLS_FARGO_TRACE_NUMBER,
@@ -3262,6 +3274,8 @@ private constructor(
                     SWIFT_UETR -> Value.SWIFT_UETR
                     UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Value.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                     USBANK_PAYMENT_ID -> Value.USBANK_PAYMENT_ID
+                    USBANK_PENDING_RTP_PAYMENT_ID -> Value.USBANK_PENDING_RTP_PAYMENT_ID
+                    USBANK_POSTED_RTP_PAYMENT_ID -> Value.USBANK_POSTED_RTP_PAYMENT_ID
                     WELLS_FARGO_END_TO_END_ID -> Value.WELLS_FARGO_END_TO_END_ID
                     WELLS_FARGO_PAYMENT_ID -> Value.WELLS_FARGO_PAYMENT_ID
                     WELLS_FARGO_TRACE_NUMBER -> Value.WELLS_FARGO_TRACE_NUMBER
@@ -3337,6 +3351,8 @@ private constructor(
                     SWIFT_UETR -> Known.SWIFT_UETR
                     UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Known.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                     USBANK_PAYMENT_ID -> Known.USBANK_PAYMENT_ID
+                    USBANK_PENDING_RTP_PAYMENT_ID -> Known.USBANK_PENDING_RTP_PAYMENT_ID
+                    USBANK_POSTED_RTP_PAYMENT_ID -> Known.USBANK_POSTED_RTP_PAYMENT_ID
                     WELLS_FARGO_END_TO_END_ID -> Known.WELLS_FARGO_END_TO_END_ID
                     WELLS_FARGO_PAYMENT_ID -> Known.WELLS_FARGO_PAYMENT_ID
                     WELLS_FARGO_TRACE_NUMBER -> Known.WELLS_FARGO_TRACE_NUMBER
