@@ -105,7 +105,7 @@ private constructor(
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /**
-     * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
      * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
      * `provexchange`, `zengin`.
      */
@@ -373,7 +373,7 @@ private constructor(
     @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
     /**
-     * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
      * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
      * `provexchange`, `zengin`.
      */
@@ -976,16 +976,16 @@ private constructor(
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /**
-         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
-         * `provexchange`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          */
         fun type(type: PaymentOrderType) = type(JsonField.of(type))
 
         /**
-         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
-         * `provexchange`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          */
         @JsonProperty("type")
         @ExcludeMissing

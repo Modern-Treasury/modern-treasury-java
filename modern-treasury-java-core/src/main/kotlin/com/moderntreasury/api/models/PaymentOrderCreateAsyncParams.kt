@@ -248,9 +248,9 @@ constructor(
         fun originatingAccountId(): String? = originatingAccountId
 
         /**
-         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
-         * `provexchange`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          */
         @JsonProperty("type") fun type(): PaymentOrderType? = type
 
@@ -655,7 +655,7 @@ constructor(
             }
 
             /**
-             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
@@ -1185,9 +1185,9 @@ constructor(
         }
 
         /**
-         * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
-         * `provexchange`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          */
         fun type(type: PaymentOrderType) = apply { this.type = type }
 

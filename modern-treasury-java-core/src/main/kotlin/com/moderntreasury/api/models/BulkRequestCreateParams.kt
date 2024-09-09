@@ -914,7 +914,7 @@ constructor(
             private var hashCode: Int = 0
 
             /**
-             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
@@ -1167,7 +1167,7 @@ constructor(
                 )
 
             /**
-             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
@@ -1648,16 +1648,16 @@ constructor(
                     }
 
                 /**
-                 * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-                 * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
-                 * `signet`, `provexchange`, `zengin`.
+                 * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`,
+                 * `sepa`, `bacs`, `au_becs`, `interac`, `neft`, `nics`,
+                 * `nz_national_clearing_code`, `sic`, `signet`, `provexchange`, `zengin`.
                  */
                 fun type(type: PaymentOrderType) = type(JsonField.of(type))
 
                 /**
-                 * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-                 * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
-                 * `signet`, `provexchange`, `zengin`.
+                 * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`,
+                 * `sepa`, `bacs`, `au_becs`, `interac`, `neft`, `nics`,
+                 * `nz_national_clearing_code`, `sic`, `signet`, `provexchange`, `zengin`.
                  */
                 @JsonProperty("type")
                 @ExcludeMissing
@@ -11632,7 +11632,7 @@ constructor(
             private var hashCode: Int = 0
 
             /**
-             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
@@ -11889,7 +11889,7 @@ constructor(
             fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
             /**
-             * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
@@ -12364,16 +12364,16 @@ constructor(
                 }
 
                 /**
-                 * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-                 * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
-                 * `signet`, `provexchange`, `zengin`.
+                 * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`,
+                 * `sepa`, `bacs`, `au_becs`, `interac`, `neft`, `nics`,
+                 * `nz_national_clearing_code`, `sic`, `signet`, `provexchange`, `zengin`.
                  */
                 fun type(type: PaymentOrderType) = type(JsonField.of(type))
 
                 /**
-                 * One of `ach`, `bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-                 * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
-                 * `signet`, `provexchange`, `zengin`.
+                 * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`,
+                 * `sepa`, `bacs`, `au_becs`, `interac`, `neft`, `nics`,
+                 * `nz_national_clearing_code`, `sic`, `signet`, `provexchange`, `zengin`.
                  */
                 @JsonProperty("type")
                 @ExcludeMissing
