@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.20.0 (2024-09-09)
+
+Full Changelog: [v2.19.1...v2.20.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.19.1...v2.20.0)
+
+### Features
+
+* **api:** add us_bank RTP ID's as reference_number_type ([#216](https://github.com/Modern-Treasury/modern-treasury-java/issues/216)) ([6b00b30](https://github.com/Modern-Treasury/modern-treasury-java/commit/6b00b30c66d5595a07e575e8a6fad3c077654068))
+
+
+### Chores
+
+* **docs:** update description of `bankgirot` to `se_bankgirot` ([#217](https://github.com/Modern-Treasury/modern-treasury-java/issues/217)) ([171457c](https://github.com/Modern-Treasury/modern-treasury-java/commit/171457c7b4bf923ad3ce8163a0598ec117f2c189))
+* use headless jdk for containers ([#214](https://github.com/Modern-Treasury/modern-treasury-java/issues/214)) ([c85baed](https://github.com/Modern-Treasury/modern-treasury-java/commit/c85baed75d47d2a24dd591b1d95925a941963674))
+
 ## 2.19.1 (2024-08-22)
 
 Full Changelog: [v2.19.0...v2.19.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.19.0...v2.19.1)
