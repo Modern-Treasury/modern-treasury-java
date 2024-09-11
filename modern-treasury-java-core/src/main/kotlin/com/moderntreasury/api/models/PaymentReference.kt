@@ -537,6 +537,10 @@ private constructor(
             val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER =
                 ReferenceNumberType(JsonField.of("umb_product_partner_account_number"))
 
+            @JvmField
+            val USBANK_PAYMENT_APPLICATION_REFERENCE_ID =
+                ReferenceNumberType(JsonField.of("usbank_payment_application_reference_id"))
+
             @JvmField val USBANK_PAYMENT_ID = ReferenceNumberType(JsonField.of("usbank_payment_id"))
 
             @JvmField
@@ -626,6 +630,7 @@ private constructor(
             SWIFT_MIR,
             SWIFT_UETR,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
+            USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
             USBANK_PENDING_RTP_PAYMENT_ID,
             USBANK_POSTED_RTP_PAYMENT_ID,
@@ -698,6 +703,7 @@ private constructor(
             SWIFT_MIR,
             SWIFT_UETR,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
+            USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
             USBANK_PENDING_RTP_PAYMENT_ID,
             USBANK_POSTED_RTP_PAYMENT_ID,
@@ -775,6 +781,8 @@ private constructor(
                 SWIFT_MIR -> Value.SWIFT_MIR
                 SWIFT_UETR -> Value.SWIFT_UETR
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Value.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
+                USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
+                    Value.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
                 USBANK_PAYMENT_ID -> Value.USBANK_PAYMENT_ID
                 USBANK_PENDING_RTP_PAYMENT_ID -> Value.USBANK_PENDING_RTP_PAYMENT_ID
                 USBANK_POSTED_RTP_PAYMENT_ID -> Value.USBANK_POSTED_RTP_PAYMENT_ID
@@ -852,6 +860,8 @@ private constructor(
                 SWIFT_MIR -> Known.SWIFT_MIR
                 SWIFT_UETR -> Known.SWIFT_UETR
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Known.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
+                USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
+                    Known.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
                 USBANK_PAYMENT_ID -> Known.USBANK_PAYMENT_ID
                 USBANK_PENDING_RTP_PAYMENT_ID -> Known.USBANK_PENDING_RTP_PAYMENT_ID
                 USBANK_POSTED_RTP_PAYMENT_ID -> Known.USBANK_POSTED_RTP_PAYMENT_ID
