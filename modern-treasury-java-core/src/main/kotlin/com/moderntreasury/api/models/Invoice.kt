@@ -50,6 +50,7 @@ private constructor(
     private val notificationsEnabled: JsonField<Boolean>,
     private val notificationEmailAddresses: JsonField<List<String>>,
     private val remindAfterOverdueDays: JsonField<List<Long>>,
+    private val metadata: JsonField<Metadata>,
     private val hostedUrl: JsonField<String>,
     private val number: JsonField<String>,
     private val paymentOrders: JsonField<List<PaymentOrder>>,
@@ -60,7 +61,6 @@ private constructor(
     private val amountRemaining: JsonField<Long>,
     private val amountPaid: JsonField<Long>,
     private val transactionLineItemIds: JsonField<List<String>>,
-    private val metadata: JsonField<Metadata>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -187,6 +187,9 @@ private constructor(
     fun remindAfterOverdueDays(): Optional<List<Long>> =
         Optional.ofNullable(remindAfterOverdueDays.getNullable("remind_after_overdue_days"))
 
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+
     /** The URL of the hosted web UI where the invoice can be viewed. */
     fun hostedUrl(): String = hostedUrl.getRequired("hosted_url")
 
@@ -227,9 +230,6 @@ private constructor(
     /** IDs of transaction line items associated with an invoice. */
     fun transactionLineItemIds(): List<String> =
         transactionLineItemIds.getRequired("transaction_line_item_ids")
-
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    fun metadata(): Metadata = metadata.getRequired("metadata")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
@@ -354,6 +354,9 @@ private constructor(
     @ExcludeMissing
     fun _remindAfterOverdueDays() = remindAfterOverdueDays
 
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
     /** The URL of the hosted web UI where the invoice can be viewed. */
     @JsonProperty("hosted_url") @ExcludeMissing fun _hostedUrl() = hostedUrl
 
@@ -395,9 +398,6 @@ private constructor(
     @ExcludeMissing
     fun _transactionLineItemIds() = transactionLineItemIds
 
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -430,6 +430,7 @@ private constructor(
             notificationsEnabled()
             notificationEmailAddresses()
             remindAfterOverdueDays()
+            metadata().map { it.validate() }
             hostedUrl()
             number()
             paymentOrders().forEach { it.validate() }
@@ -440,7 +441,6 @@ private constructor(
             amountRemaining()
             amountPaid()
             transactionLineItemIds()
-            metadata().validate()
             validated = true
         }
     }
@@ -479,6 +479,7 @@ private constructor(
             this.notificationsEnabled == other.notificationsEnabled &&
             this.notificationEmailAddresses == other.notificationEmailAddresses &&
             this.remindAfterOverdueDays == other.remindAfterOverdueDays &&
+            this.metadata == other.metadata &&
             this.hostedUrl == other.hostedUrl &&
             this.number == other.number &&
             this.paymentOrders == other.paymentOrders &&
@@ -489,7 +490,6 @@ private constructor(
             this.amountRemaining == other.amountRemaining &&
             this.amountPaid == other.amountPaid &&
             this.transactionLineItemIds == other.transactionLineItemIds &&
-            this.metadata == other.metadata &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -523,6 +523,7 @@ private constructor(
                     notificationsEnabled,
                     notificationEmailAddresses,
                     remindAfterOverdueDays,
+                    metadata,
                     hostedUrl,
                     number,
                     paymentOrders,
@@ -533,7 +534,6 @@ private constructor(
                     amountRemaining,
                     amountPaid,
                     transactionLineItemIds,
-                    metadata,
                     additionalProperties,
                 )
         }
@@ -541,7 +541,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Invoice{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, contactDetails=$contactDetails, recipientEmail=$recipientEmail, recipientName=$recipientName, counterpartyId=$counterpartyId, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, invoicerAddress=$invoicerAddress, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, virtualAccountId=$virtualAccountId, ledgerAccountSettlementId=$ledgerAccountSettlementId, paymentEffectiveDate=$paymentEffectiveDate, paymentType=$paymentType, paymentMethod=$paymentMethod, fallbackPaymentMethod=$fallbackPaymentMethod, notificationsEnabled=$notificationsEnabled, notificationEmailAddresses=$notificationEmailAddresses, remindAfterOverdueDays=$remindAfterOverdueDays, hostedUrl=$hostedUrl, number=$number, paymentOrders=$paymentOrders, expectedPayments=$expectedPayments, pdfUrl=$pdfUrl, status=$status, totalAmount=$totalAmount, amountRemaining=$amountRemaining, amountPaid=$amountPaid, transactionLineItemIds=$transactionLineItemIds, metadata=$metadata, additionalProperties=$additionalProperties}"
+        "Invoice{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, contactDetails=$contactDetails, recipientEmail=$recipientEmail, recipientName=$recipientName, counterpartyId=$counterpartyId, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, dueDate=$dueDate, invoicerAddress=$invoicerAddress, originatingAccountId=$originatingAccountId, receivingAccountId=$receivingAccountId, virtualAccountId=$virtualAccountId, ledgerAccountSettlementId=$ledgerAccountSettlementId, paymentEffectiveDate=$paymentEffectiveDate, paymentType=$paymentType, paymentMethod=$paymentMethod, fallbackPaymentMethod=$fallbackPaymentMethod, notificationsEnabled=$notificationsEnabled, notificationEmailAddresses=$notificationEmailAddresses, remindAfterOverdueDays=$remindAfterOverdueDays, metadata=$metadata, hostedUrl=$hostedUrl, number=$number, paymentOrders=$paymentOrders, expectedPayments=$expectedPayments, pdfUrl=$pdfUrl, status=$status, totalAmount=$totalAmount, amountRemaining=$amountRemaining, amountPaid=$amountPaid, transactionLineItemIds=$transactionLineItemIds, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -578,6 +578,7 @@ private constructor(
         private var notificationsEnabled: JsonField<Boolean> = JsonMissing.of()
         private var notificationEmailAddresses: JsonField<List<String>> = JsonMissing.of()
         private var remindAfterOverdueDays: JsonField<List<Long>> = JsonMissing.of()
+        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var hostedUrl: JsonField<String> = JsonMissing.of()
         private var number: JsonField<String> = JsonMissing.of()
         private var paymentOrders: JsonField<List<PaymentOrder>> = JsonMissing.of()
@@ -588,7 +589,6 @@ private constructor(
         private var amountRemaining: JsonField<Long> = JsonMissing.of()
         private var amountPaid: JsonField<Long> = JsonMissing.of()
         private var transactionLineItemIds: JsonField<List<String>> = JsonMissing.of()
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -619,6 +619,7 @@ private constructor(
             this.notificationsEnabled = invoice.notificationsEnabled
             this.notificationEmailAddresses = invoice.notificationEmailAddresses
             this.remindAfterOverdueDays = invoice.remindAfterOverdueDays
+            this.metadata = invoice.metadata
             this.hostedUrl = invoice.hostedUrl
             this.number = invoice.number
             this.paymentOrders = invoice.paymentOrders
@@ -629,7 +630,6 @@ private constructor(
             this.amountRemaining = invoice.amountRemaining
             this.amountPaid = invoice.amountPaid
             this.transactionLineItemIds = invoice.transactionLineItemIds
-            this.metadata = invoice.metadata
             additionalProperties(invoice.additionalProperties)
         }
 
@@ -939,6 +939,18 @@ private constructor(
             this.remindAfterOverdueDays = remindAfterOverdueDays
         }
 
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
         /** The URL of the hosted web UI where the invoice can be viewed. */
         fun hostedUrl(hostedUrl: String) = hostedUrl(JsonField.of(hostedUrl))
 
@@ -1048,18 +1060,6 @@ private constructor(
             this.transactionLineItemIds = transactionLineItemIds
         }
 
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -1102,6 +1102,7 @@ private constructor(
                 notificationsEnabled,
                 notificationEmailAddresses.map { it.toUnmodifiable() },
                 remindAfterOverdueDays.map { it.toUnmodifiable() },
+                metadata,
                 hostedUrl,
                 number,
                 paymentOrders.map { it.toUnmodifiable() },
@@ -1112,7 +1113,6 @@ private constructor(
                 amountRemaining,
                 amountPaid,
                 transactionLineItemIds.map { it.toUnmodifiable() },
-                metadata,
                 additionalProperties.toUnmodifiable(),
             )
     }

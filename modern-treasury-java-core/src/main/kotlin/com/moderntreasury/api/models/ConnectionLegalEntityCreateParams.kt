@@ -326,7 +326,7 @@ constructor(
         /** The type of legal entity. */
         @JsonProperty("legal_entity_type") fun legalEntityType(): LegalEntityType? = legalEntityType
 
-        /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+        /** The risk rating of the legal entity. One of low, medium, high. */
         @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
 
         /** An individual's first name. */
@@ -489,7 +489,7 @@ constructor(
                 this.legalEntityType = legalEntityType
             }
 
-            /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+            /** The risk rating of the legal entity. One of low, medium, high. */
             @JsonProperty("risk_rating")
             fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
 
@@ -978,6 +978,8 @@ constructor(
 
                     @JvmField val BR_CPF = IdType(JsonField.of("br_cpf"))
 
+                    @JvmField val CL_RUN = IdType(JsonField.of("cl_run"))
+
                     @JvmField val CL_RUT = IdType(JsonField.of("cl_rut"))
 
                     @JvmField val CO_CEDULAS = IdType(JsonField.of("co_cedulas"))
@@ -1018,6 +1020,7 @@ constructor(
                     AR_CUIT,
                     BR_CNPJ,
                     BR_CPF,
+                    CL_RUN,
                     CL_RUT,
                     CO_CEDULAS,
                     CO_NIT,
@@ -1041,6 +1044,7 @@ constructor(
                     AR_CUIT,
                     BR_CNPJ,
                     BR_CPF,
+                    CL_RUN,
                     CL_RUT,
                     CO_CEDULAS,
                     CO_NIT,
@@ -1066,6 +1070,7 @@ constructor(
                         AR_CUIT -> Value.AR_CUIT
                         BR_CNPJ -> Value.BR_CNPJ
                         BR_CPF -> Value.BR_CPF
+                        CL_RUN -> Value.CL_RUN
                         CL_RUT -> Value.CL_RUT
                         CO_CEDULAS -> Value.CO_CEDULAS
                         CO_NIT -> Value.CO_NIT
@@ -1091,6 +1096,7 @@ constructor(
                         AR_CUIT -> Known.AR_CUIT
                         BR_CNPJ -> Known.BR_CNPJ
                         BR_CPF -> Known.BR_CPF
+                        CL_RUN -> Known.CL_RUN
                         CL_RUT -> Known.CL_RUT
                         CO_CEDULAS -> Known.CO_CEDULAS
                         CO_NIT -> Known.CO_NIT
@@ -1362,7 +1368,7 @@ constructor(
                 @JsonProperty("legal_entity_type")
                 fun legalEntityType(): LegalEntityType? = legalEntityType
 
-                /** Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating */
+                /** The risk rating of the legal entity. One of low, medium, high. */
                 @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
 
                 /** An individual's first name. */
@@ -1517,9 +1523,7 @@ constructor(
                         this.legalEntityType = legalEntityType
                     }
 
-                    /**
-                     * Translation missing: en.openapi.descriptions.legal_entity.schema.risk_rating
-                     */
+                    /** The risk rating of the legal entity. One of low, medium, high. */
                     @JsonProperty("risk_rating")
                     fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
 
@@ -2026,6 +2030,8 @@ constructor(
 
                             @JvmField val BR_CPF = IdType(JsonField.of("br_cpf"))
 
+                            @JvmField val CL_RUN = IdType(JsonField.of("cl_run"))
+
                             @JvmField val CL_RUT = IdType(JsonField.of("cl_rut"))
 
                             @JvmField val CO_CEDULAS = IdType(JsonField.of("co_cedulas"))
@@ -2066,6 +2072,7 @@ constructor(
                             AR_CUIT,
                             BR_CNPJ,
                             BR_CPF,
+                            CL_RUN,
                             CL_RUT,
                             CO_CEDULAS,
                             CO_NIT,
@@ -2089,6 +2096,7 @@ constructor(
                             AR_CUIT,
                             BR_CNPJ,
                             BR_CPF,
+                            CL_RUN,
                             CL_RUT,
                             CO_CEDULAS,
                             CO_NIT,
@@ -2114,6 +2122,7 @@ constructor(
                                 AR_CUIT -> Value.AR_CUIT
                                 BR_CNPJ -> Value.BR_CNPJ
                                 BR_CPF -> Value.BR_CPF
+                                CL_RUN -> Value.CL_RUN
                                 CL_RUT -> Value.CL_RUT
                                 CO_CEDULAS -> Value.CO_CEDULAS
                                 CO_NIT -> Value.CO_NIT
@@ -2139,6 +2148,7 @@ constructor(
                                 AR_CUIT -> Known.AR_CUIT
                                 BR_CNPJ -> Known.BR_CNPJ
                                 BR_CPF -> Known.BR_CPF
+                                CL_RUN -> Known.CL_RUN
                                 CL_RUT -> Known.CL_RUT
                                 CO_CEDULAS -> Known.CO_CEDULAS
                                 CO_NIT -> Known.CO_NIT
