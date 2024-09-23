@@ -533,7 +533,7 @@ class InvoiceTest {
         assertThat(invoice.ledgerAccountSettlementId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(invoice.liveMode()).isEqualTo(true)
-        assertThat(invoice.metadata()).isEqualTo(Invoice.Metadata.builder().build())
+        assertThat(invoice.metadata()).contains(Invoice.Metadata.builder().build())
         assertThat(invoice.notificationEmailAddresses().get()).containsExactly("string")
         assertThat(invoice.notificationsEnabled()).isEqualTo(true)
         assertThat(invoice.number()).isEqualTo("number")
