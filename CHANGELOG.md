@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.21.0 (2024-09-24)
+
+Full Changelog: [v2.20.0...v2.21.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.20.0...v2.21.0)
+
+### Features
+
+* **api:** add `usbank_payment_application_reference_id` to `reference_number_type` ([#218](https://github.com/Modern-Treasury/modern-treasury-java/issues/218)) ([9f7b3bb](https://github.com/Modern-Treasury/modern-treasury-java/commit/9f7b3bb55adbe3822f7522fcabd9909d9a792e9b))
+* **client:** added structured fields to errors ([#221](https://github.com/Modern-Treasury/modern-treasury-java/issues/221)) ([62eec30](https://github.com/Modern-Treasury/modern-treasury-java/commit/62eec30287daf391349e859f171c3d42bd7874fd))
+* **client:** send retry count header ([#223](https://github.com/Modern-Treasury/modern-treasury-java/issues/223)) ([9db4779](https://github.com/Modern-Treasury/modern-treasury-java/commit/9db47798786c17fdc2e67e3989b56a0a1d03dfbc))
+
+
+### Chores
+
+* **api:** fields and parameters added to bulk actions, transactions and invoice creation ([#222](https://github.com/Modern-Treasury/modern-treasury-java/issues/222)) ([c647f7f](https://github.com/Modern-Treasury/modern-treasury-java/commit/c647f7f7d126072cb817459e1e1e08c746e686a0))
+
+
+### Documentation
+
+* adjust additional properties example ([#220](https://github.com/Modern-Treasury/modern-treasury-java/issues/220)) ([e0caec1](https://github.com/Modern-Treasury/modern-treasury-java/commit/e0caec165efb278002da382f971aba06fd14d060))
+
 ## 2.20.0 (2024-09-09)
 
 Full Changelog: [v2.19.1...v2.20.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.19.1...v2.20.0)
