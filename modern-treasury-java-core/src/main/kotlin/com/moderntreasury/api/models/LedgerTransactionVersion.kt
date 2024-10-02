@@ -48,8 +48,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -243,66 +241,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is LedgerTransactionVersion &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
-            this.description == other.description &&
-            this.status == other.status &&
-            this.metadata == other.metadata &&
-            this.effectiveAt == other.effectiveAt &&
-            this.effectiveDate == other.effectiveDate &&
-            this.ledgerEntries == other.ledgerEntries &&
-            this.postedAt == other.postedAt &&
-            this.ledgerId == other.ledgerId &&
-            this.ledgerableType == other.ledgerableType &&
-            this.ledgerableId == other.ledgerableId &&
-            this.externalId == other.externalId &&
-            this.version == other.version &&
-            this.reversesLedgerTransactionId == other.reversesLedgerTransactionId &&
-            this.reversedByLedgerTransactionId == other.reversedByLedgerTransactionId &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    ledgerTransactionId,
-                    description,
-                    status,
-                    metadata,
-                    effectiveAt,
-                    effectiveDate,
-                    ledgerEntries,
-                    postedAt,
-                    ledgerId,
-                    ledgerableType,
-                    ledgerableId,
-                    externalId,
-                    version,
-                    reversesLedgerTransactionId,
-                    reversedByLedgerTransactionId,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "LedgerTransactionVersion{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, ledgerTransactionId=$ledgerTransactionId, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, ledgerEntries=$ledgerEntries, postedAt=$postedAt, ledgerId=$ledgerId, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, externalId=$externalId, version=$version, reversesLedgerTransactionId=$reversesLedgerTransactionId, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -632,8 +570,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         fun id(): String = id.getRequired("id")
 
         fun object_(): String = object_.getRequired("object")
@@ -807,56 +743,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is LedgerEntryOfTransactionVersion &&
-                this.id == other.id &&
-                this.object_ == other.object_ &&
-                this.liveMode == other.liveMode &&
-                this.createdAt == other.createdAt &&
-                this.amount == other.amount &&
-                this.direction == other.direction &&
-                this.status == other.status &&
-                this.ledgerAccountId == other.ledgerAccountId &&
-                this.ledgerAccountLockVersion == other.ledgerAccountLockVersion &&
-                this.ledgerAccountCurrency == other.ledgerAccountCurrency &&
-                this.ledgerAccountCurrencyExponent == other.ledgerAccountCurrencyExponent &&
-                this.ledgerTransactionId == other.ledgerTransactionId &&
-                this.metadata == other.metadata &&
-                this.resultingLedgerAccountBalances == other.resultingLedgerAccountBalances &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        id,
-                        object_,
-                        liveMode,
-                        createdAt,
-                        amount,
-                        direction,
-                        status,
-                        ledgerAccountId,
-                        ledgerAccountLockVersion,
-                        ledgerAccountCurrency,
-                        ledgerAccountCurrencyExponent,
-                        ledgerTransactionId,
-                        metadata,
-                        resultingLedgerAccountBalances,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "LedgerEntryOfTransactionVersion{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, amount=$amount, direction=$direction, status=$status, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerTransactionId=$ledgerTransactionId, metadata=$metadata, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1140,8 +1026,6 @@ private constructor(
 
             private var validated: Boolean = false
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -1153,23 +1037,6 @@ private constructor(
             }
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1202,6 +1069,25 @@ private constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Metadata && this.additionalProperties == other.additionalProperties
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = Objects.hash(additionalProperties)
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
         /**
@@ -1223,8 +1109,6 @@ private constructor(
         ) {
 
             private var validated: Boolean = false
-
-            private var hashCode: Int = 0
 
             /** The pending_balance is the sum of all pending and posted entries. */
             fun pendingBalance(): LedgerBalance = pendingBalance.getRequired("pending_balance")
@@ -1269,34 +1153,6 @@ private constructor(
             }
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is LedgerBalances &&
-                    this.pendingBalance == other.pendingBalance &&
-                    this.postedBalance == other.postedBalance &&
-                    this.availableBalance == other.availableBalance &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            pendingBalance,
-                            postedBalance,
-                            availableBalance,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "LedgerBalances{pendingBalance=$pendingBalance, postedBalance=$postedBalance, availableBalance=$availableBalance, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1404,8 +1260,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                private var hashCode: Int = 0
-
                 fun credits(): Long = credits.getRequired("credits")
 
                 fun debits(): Long = debits.getRequired("debits")
@@ -1448,38 +1302,6 @@ private constructor(
                 }
 
                 fun toBuilder() = Builder().from(this)
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is LedgerBalance &&
-                        this.credits == other.credits &&
-                        this.debits == other.debits &&
-                        this.amount == other.amount &&
-                        this.currency == other.currency &&
-                        this.currencyExponent == other.currencyExponent &&
-                        this.additionalProperties == other.additionalProperties
-                }
-
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode =
-                            Objects.hash(
-                                credits,
-                                debits,
-                                amount,
-                                currency,
-                                currencyExponent,
-                                additionalProperties,
-                            )
-                    }
-                    return hashCode
-                }
-
-                override fun toString() =
-                    "LedgerBalance{credits=$credits, debits=$debits, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -1567,7 +1389,71 @@ private constructor(
                             additionalProperties.toUnmodifiable(),
                         )
                 }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is LedgerBalance &&
+                        this.credits == other.credits &&
+                        this.debits == other.debits &&
+                        this.amount == other.amount &&
+                        this.currency == other.currency &&
+                        this.currencyExponent == other.currencyExponent &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                private var hashCode: Int = 0
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                credits,
+                                debits,
+                                amount,
+                                currency,
+                                currencyExponent,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "LedgerBalance{credits=$credits, debits=$debits, amount=$amount, currency=$currency, currencyExponent=$currencyExponent, additionalProperties=$additionalProperties}"
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is LedgerBalances &&
+                    this.pendingBalance == other.pendingBalance &&
+                    this.postedBalance == other.postedBalance &&
+                    this.availableBalance == other.availableBalance &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            pendingBalance,
+                            postedBalance,
+                            availableBalance,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "LedgerBalances{pendingBalance=$pendingBalance, postedBalance=$postedBalance, availableBalance=$availableBalance, additionalProperties=$additionalProperties}"
         }
 
         class Status
@@ -1632,6 +1518,58 @@ private constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is LedgerEntryOfTransactionVersion &&
+                this.id == other.id &&
+                this.object_ == other.object_ &&
+                this.liveMode == other.liveMode &&
+                this.createdAt == other.createdAt &&
+                this.amount == other.amount &&
+                this.direction == other.direction &&
+                this.status == other.status &&
+                this.ledgerAccountId == other.ledgerAccountId &&
+                this.ledgerAccountLockVersion == other.ledgerAccountLockVersion &&
+                this.ledgerAccountCurrency == other.ledgerAccountCurrency &&
+                this.ledgerAccountCurrencyExponent == other.ledgerAccountCurrencyExponent &&
+                this.ledgerTransactionId == other.ledgerTransactionId &&
+                this.metadata == other.metadata &&
+                this.resultingLedgerAccountBalances == other.resultingLedgerAccountBalances &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        id,
+                        object_,
+                        liveMode,
+                        createdAt,
+                        amount,
+                        direction,
+                        status,
+                        ledgerAccountId,
+                        ledgerAccountLockVersion,
+                        ledgerAccountCurrency,
+                        ledgerAccountCurrencyExponent,
+                        ledgerTransactionId,
+                        metadata,
+                        resultingLedgerAccountBalances,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "LedgerEntryOfTransactionVersion{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, amount=$amount, direction=$direction, status=$status, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerTransactionId=$ledgerTransactionId, metadata=$metadata, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
     }
 
     class LedgerableType
@@ -1726,8 +1664,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -1739,23 +1675,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1787,6 +1706,25 @@ private constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
     class Status
@@ -1851,4 +1789,66 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is LedgerTransactionVersion &&
+            this.id == other.id &&
+            this.object_ == other.object_ &&
+            this.liveMode == other.liveMode &&
+            this.createdAt == other.createdAt &&
+            this.ledgerTransactionId == other.ledgerTransactionId &&
+            this.description == other.description &&
+            this.status == other.status &&
+            this.metadata == other.metadata &&
+            this.effectiveAt == other.effectiveAt &&
+            this.effectiveDate == other.effectiveDate &&
+            this.ledgerEntries == other.ledgerEntries &&
+            this.postedAt == other.postedAt &&
+            this.ledgerId == other.ledgerId &&
+            this.ledgerableType == other.ledgerableType &&
+            this.ledgerableId == other.ledgerableId &&
+            this.externalId == other.externalId &&
+            this.version == other.version &&
+            this.reversesLedgerTransactionId == other.reversesLedgerTransactionId &&
+            this.reversedByLedgerTransactionId == other.reversedByLedgerTransactionId &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    object_,
+                    liveMode,
+                    createdAt,
+                    ledgerTransactionId,
+                    description,
+                    status,
+                    metadata,
+                    effectiveAt,
+                    effectiveDate,
+                    ledgerEntries,
+                    postedAt,
+                    ledgerId,
+                    ledgerableType,
+                    ledgerableId,
+                    externalId,
+                    version,
+                    reversesLedgerTransactionId,
+                    reversedByLedgerTransactionId,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "LedgerTransactionVersion{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, ledgerTransactionId=$ledgerTransactionId, description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, ledgerEntries=$ledgerEntries, postedAt=$postedAt, ledgerId=$ledgerId, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, externalId=$externalId, version=$version, reversesLedgerTransactionId=$reversesLedgerTransactionId, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, additionalProperties=$additionalProperties}"
 }
