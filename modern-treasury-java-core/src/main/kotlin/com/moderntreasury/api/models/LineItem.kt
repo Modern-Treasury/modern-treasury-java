@@ -41,8 +41,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -162,54 +160,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is LineItem &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.itemizableId == other.itemizableId &&
-            this.itemizableType == other.itemizableType &&
-            this.amount == other.amount &&
-            this.description == other.description &&
-            this.metadata == other.metadata &&
-            this.accounting == other.accounting &&
-            this.accountingCategoryId == other.accountingCategoryId &&
-            this.accountingLedgerClassId == other.accountingLedgerClassId &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    itemizableId,
-                    itemizableType,
-                    amount,
-                    description,
-                    metadata,
-                    accounting,
-                    accountingCategoryId,
-                    accountingLedgerClassId,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "LineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, itemizableId=$itemizableId, itemizableType=$itemizableType, amount=$amount, description=$description, metadata=$metadata, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -422,8 +372,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
@@ -463,32 +411,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Accounting &&
-                this.accountId == other.accountId &&
-                this.classId == other.classId &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        accountId,
-                        classId,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Accounting{accountId=$accountId, classId=$classId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -559,6 +481,34 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Accounting &&
+                this.accountId == other.accountId &&
+                this.classId == other.classId &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        accountId,
+                        classId,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Accounting{accountId=$accountId, classId=$classId, additionalProperties=$additionalProperties}"
     }
 
     class ItemizableType
@@ -628,8 +578,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -641,23 +589,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -689,5 +620,74 @@ private constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is LineItem &&
+            this.id == other.id &&
+            this.object_ == other.object_ &&
+            this.liveMode == other.liveMode &&
+            this.createdAt == other.createdAt &&
+            this.updatedAt == other.updatedAt &&
+            this.itemizableId == other.itemizableId &&
+            this.itemizableType == other.itemizableType &&
+            this.amount == other.amount &&
+            this.description == other.description &&
+            this.metadata == other.metadata &&
+            this.accounting == other.accounting &&
+            this.accountingCategoryId == other.accountingCategoryId &&
+            this.accountingLedgerClassId == other.accountingLedgerClassId &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    object_,
+                    liveMode,
+                    createdAt,
+                    updatedAt,
+                    itemizableId,
+                    itemizableType,
+                    amount,
+                    description,
+                    metadata,
+                    accounting,
+                    accountingCategoryId,
+                    accountingLedgerClassId,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "LineItem{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, itemizableId=$itemizableId, itemizableType=$itemizableType, amount=$amount, description=$description, metadata=$metadata, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, additionalProperties=$additionalProperties}"
 }
