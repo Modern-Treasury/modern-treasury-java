@@ -47,8 +47,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -203,66 +201,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is InternalAccount &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.accountType == other.accountType &&
-            this.partyName == other.partyName &&
-            this.partyType == other.partyType &&
-            this.partyAddress == other.partyAddress &&
-            this.name == other.name &&
-            this.accountDetails == other.accountDetails &&
-            this.routingDetails == other.routingDetails &&
-            this.connection == other.connection &&
-            this.currency == other.currency &&
-            this.metadata == other.metadata &&
-            this.parentAccountId == other.parentAccountId &&
-            this.counterpartyId == other.counterpartyId &&
-            this.legalEntityId == other.legalEntityId &&
-            this.ledgerAccountId == other.ledgerAccountId &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    accountType,
-                    partyName,
-                    partyType,
-                    partyAddress,
-                    name,
-                    accountDetails,
-                    routingDetails,
-                    connection,
-                    currency,
-                    metadata,
-                    parentAccountId,
-                    counterpartyId,
-                    legalEntityId,
-                    ledgerAccountId,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "InternalAccount{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, accountType=$accountType, partyName=$partyName, partyType=$partyType, partyAddress=$partyAddress, name=$name, accountDetails=$accountDetails, routingDetails=$routingDetails, connection=$connection, currency=$currency, metadata=$metadata, parentAccountId=$parentAccountId, counterpartyId=$counterpartyId, legalEntityId=$legalEntityId, ledgerAccountId=$ledgerAccountId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -636,8 +574,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -649,23 +585,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -697,6 +616,25 @@ private constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
     /** The address associated with the owner or null. */
@@ -719,8 +657,6 @@ private constructor(
     ) {
 
         private var validated: Boolean = false
-
-        private var hashCode: Int = 0
 
         fun id(): String = id.getRequired("id")
 
@@ -805,50 +741,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Address &&
-                this.id == other.id &&
-                this.object_ == other.object_ &&
-                this.liveMode == other.liveMode &&
-                this.createdAt == other.createdAt &&
-                this.updatedAt == other.updatedAt &&
-                this.line1 == other.line1 &&
-                this.line2 == other.line2 &&
-                this.locality == other.locality &&
-                this.region == other.region &&
-                this.postalCode == other.postalCode &&
-                this.country == other.country &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        id,
-                        object_,
-                        liveMode,
-                        createdAt,
-                        updatedAt,
-                        line1,
-                        line2,
-                        locality,
-                        region,
-                        postalCode,
-                        country,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Address{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, line1=$line1, line2=$line2, locality=$locality, region=$region, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1002,6 +894,52 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Address &&
+                this.id == other.id &&
+                this.object_ == other.object_ &&
+                this.liveMode == other.liveMode &&
+                this.createdAt == other.createdAt &&
+                this.updatedAt == other.updatedAt &&
+                this.line1 == other.line1 &&
+                this.line2 == other.line2 &&
+                this.locality == other.locality &&
+                this.region == other.region &&
+                this.postalCode == other.postalCode &&
+                this.country == other.country &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        id,
+                        object_,
+                        liveMode,
+                        createdAt,
+                        updatedAt,
+                        line1,
+                        line2,
+                        locality,
+                        region,
+                        postalCode,
+                        country,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Address{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, line1=$line1, line2=$line2, locality=$locality, region=$region, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
     }
 
     class PartyType
@@ -1060,4 +998,66 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is InternalAccount &&
+            this.id == other.id &&
+            this.object_ == other.object_ &&
+            this.liveMode == other.liveMode &&
+            this.createdAt == other.createdAt &&
+            this.updatedAt == other.updatedAt &&
+            this.accountType == other.accountType &&
+            this.partyName == other.partyName &&
+            this.partyType == other.partyType &&
+            this.partyAddress == other.partyAddress &&
+            this.name == other.name &&
+            this.accountDetails == other.accountDetails &&
+            this.routingDetails == other.routingDetails &&
+            this.connection == other.connection &&
+            this.currency == other.currency &&
+            this.metadata == other.metadata &&
+            this.parentAccountId == other.parentAccountId &&
+            this.counterpartyId == other.counterpartyId &&
+            this.legalEntityId == other.legalEntityId &&
+            this.ledgerAccountId == other.ledgerAccountId &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    object_,
+                    liveMode,
+                    createdAt,
+                    updatedAt,
+                    accountType,
+                    partyName,
+                    partyType,
+                    partyAddress,
+                    name,
+                    accountDetails,
+                    routingDetails,
+                    connection,
+                    currency,
+                    metadata,
+                    parentAccountId,
+                    counterpartyId,
+                    legalEntityId,
+                    ledgerAccountId,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "InternalAccount{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, accountType=$accountType, partyName=$partyName, partyType=$partyType, partyAddress=$partyAddress, name=$name, accountDetails=$accountDetails, routingDetails=$routingDetails, connection=$connection, currency=$currency, metadata=$metadata, parentAccountId=$parentAccountId, counterpartyId=$counterpartyId, legalEntityId=$legalEntityId, ledgerAccountId=$ledgerAccountId, additionalProperties=$additionalProperties}"
 }

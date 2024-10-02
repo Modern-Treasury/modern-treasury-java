@@ -95,8 +95,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The ID of the internal account that this virtual account is associated with. */
         @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
 
@@ -150,48 +148,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is VirtualAccountCreateBody &&
-                this.internalAccountId == other.internalAccountId &&
-                this.name == other.name &&
-                this.accountDetails == other.accountDetails &&
-                this.counterpartyId == other.counterpartyId &&
-                this.creditLedgerAccountId == other.creditLedgerAccountId &&
-                this.debitLedgerAccountId == other.debitLedgerAccountId &&
-                this.description == other.description &&
-                this.ledgerAccount == other.ledgerAccount &&
-                this.metadata == other.metadata &&
-                this.routingDetails == other.routingDetails &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        internalAccountId,
-                        name,
-                        accountDetails,
-                        counterpartyId,
-                        creditLedgerAccountId,
-                        debitLedgerAccountId,
-                        description,
-                        ledgerAccount,
-                        metadata,
-                        routingDetails,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "VirtualAccountCreateBody{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, metadata=$metadata, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -325,6 +281,50 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is VirtualAccountCreateBody &&
+                this.internalAccountId == other.internalAccountId &&
+                this.name == other.name &&
+                this.accountDetails == other.accountDetails &&
+                this.counterpartyId == other.counterpartyId &&
+                this.creditLedgerAccountId == other.creditLedgerAccountId &&
+                this.debitLedgerAccountId == other.debitLedgerAccountId &&
+                this.description == other.description &&
+                this.ledgerAccount == other.ledgerAccount &&
+                this.metadata == other.metadata &&
+                this.routingDetails == other.routingDetails &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        internalAccountId,
+                        name,
+                        accountDetails,
+                        counterpartyId,
+                        creditLedgerAccountId,
+                        debitLedgerAccountId,
+                        description,
+                        ledgerAccount,
+                        metadata,
+                        routingDetails,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "VirtualAccountCreateBody{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, metadata=$metadata, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -566,8 +566,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The account number for the bank account. */
         @JsonProperty("account_number") fun accountNumber(): String? = accountNumber
 
@@ -583,32 +581,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AccountDetailCreateRequest &&
-                this.accountNumber == other.accountNumber &&
-                this.accountNumberType == other.accountNumberType &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        accountNumber,
-                        accountNumberType,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AccountDetailCreateRequest{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -770,6 +742,34 @@ constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AccountDetailCreateRequest &&
+                this.accountNumber == other.accountNumber &&
+                this.accountNumberType == other.accountNumberType &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        accountNumber,
+                        accountNumberType,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AccountDetailCreateRequest{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -792,8 +792,6 @@ constructor(
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /** The name of the ledger account. */
         @JsonProperty("name") fun name(): String? = name
@@ -841,48 +839,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is LedgerAccountCreateRequest &&
-                this.name == other.name &&
-                this.description == other.description &&
-                this.normalBalance == other.normalBalance &&
-                this.ledgerId == other.ledgerId &&
-                this.currency == other.currency &&
-                this.currencyExponent == other.currencyExponent &&
-                this.ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
-                this.ledgerableId == other.ledgerableId &&
-                this.ledgerableType == other.ledgerableType &&
-                this.metadata == other.metadata &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        name,
-                        description,
-                        normalBalance,
-                        ledgerId,
-                        currency,
-                        currencyExponent,
-                        ledgerAccountCategoryIds,
-                        ledgerableId,
-                        ledgerableType,
-                        metadata,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "LedgerAccountCreateRequest{name=$name, description=$description, normalBalance=$normalBalance, ledgerId=$ledgerId, currency=$currency, currencyExponent=$currencyExponent, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1088,30 +1044,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1144,7 +1081,70 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Metadata && this.additionalProperties == other.additionalProperties
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = Objects.hash(additionalProperties)
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is LedgerAccountCreateRequest &&
+                this.name == other.name &&
+                this.description == other.description &&
+                this.normalBalance == other.normalBalance &&
+                this.ledgerId == other.ledgerId &&
+                this.currency == other.currency &&
+                this.currencyExponent == other.currencyExponent &&
+                this.ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
+                this.ledgerableId == other.ledgerableId &&
+                this.ledgerableType == other.ledgerableType &&
+                this.metadata == other.metadata &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        name,
+                        description,
+                        normalBalance,
+                        ledgerId,
+                        currency,
+                        currencyExponent,
+                        ledgerAccountCategoryIds,
+                        ledgerableId,
+                        ledgerableType,
+                        metadata,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "LedgerAccountCreateRequest{name=$name, description=$description, normalBalance=$normalBalance, ledgerId=$ledgerId, currency=$currency, currencyExponent=$currencyExponent, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
@@ -1155,30 +1155,11 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1210,6 +1191,25 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = RoutingDetailCreateRequest.Builder::class)
@@ -1221,8 +1221,6 @@ constructor(
         private val paymentType: PaymentType?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /** The routing number of the bank. */
         @JsonProperty("routing_number") fun routingNumber(): String? = routingNumber
@@ -1246,34 +1244,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is RoutingDetailCreateRequest &&
-                this.routingNumber == other.routingNumber &&
-                this.routingNumberType == other.routingNumberType &&
-                this.paymentType == other.paymentType &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        routingNumber,
-                        routingNumberType,
-                        paymentType,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "RoutingDetailCreateRequest{routingNumber=$routingNumber, routingNumberType=$routingNumberType, paymentType=$paymentType, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1748,5 +1718,35 @@ constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is RoutingDetailCreateRequest &&
+                this.routingNumber == other.routingNumber &&
+                this.routingNumberType == other.routingNumberType &&
+                this.paymentType == other.paymentType &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        routingNumber,
+                        routingNumberType,
+                        paymentType,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "RoutingDetailCreateRequest{routingNumber=$routingNumber, routingNumberType=$routingNumberType, paymentType=$paymentType, additionalProperties=$additionalProperties}"
     }
 }

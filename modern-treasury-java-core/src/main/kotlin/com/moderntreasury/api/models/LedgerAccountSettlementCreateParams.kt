@@ -86,8 +86,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * The id of the contra ledger account that sends to or receives funds from the settled
          * ledger account.
@@ -143,44 +141,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is LedgerAccountSettlementCreateBody &&
-                this.contraLedgerAccountId == other.contraLedgerAccountId &&
-                this.settledLedgerAccountId == other.settledLedgerAccountId &&
-                this.allowEitherDirection == other.allowEitherDirection &&
-                this.description == other.description &&
-                this.effectiveAtUpperBound == other.effectiveAtUpperBound &&
-                this.metadata == other.metadata &&
-                this.skipSettlementLedgerTransaction == other.skipSettlementLedgerTransaction &&
-                this.status == other.status &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        contraLedgerAccountId,
-                        settledLedgerAccountId,
-                        allowEitherDirection,
-                        description,
-                        effectiveAtUpperBound,
-                        metadata,
-                        skipSettlementLedgerTransaction,
-                        status,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "LedgerAccountSettlementCreateBody{contraLedgerAccountId=$contraLedgerAccountId, settledLedgerAccountId=$settledLedgerAccountId, allowEitherDirection=$allowEitherDirection, description=$description, effectiveAtUpperBound=$effectiveAtUpperBound, metadata=$metadata, skipSettlementLedgerTransaction=$skipSettlementLedgerTransaction, status=$status, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -310,6 +270,46 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is LedgerAccountSettlementCreateBody &&
+                this.contraLedgerAccountId == other.contraLedgerAccountId &&
+                this.settledLedgerAccountId == other.settledLedgerAccountId &&
+                this.allowEitherDirection == other.allowEitherDirection &&
+                this.description == other.description &&
+                this.effectiveAtUpperBound == other.effectiveAtUpperBound &&
+                this.metadata == other.metadata &&
+                this.skipSettlementLedgerTransaction == other.skipSettlementLedgerTransaction &&
+                this.status == other.status &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        contraLedgerAccountId,
+                        settledLedgerAccountId,
+                        allowEitherDirection,
+                        description,
+                        effectiveAtUpperBound,
+                        metadata,
+                        skipSettlementLedgerTransaction,
+                        status,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "LedgerAccountSettlementCreateBody{contraLedgerAccountId=$contraLedgerAccountId, settledLedgerAccountId=$settledLedgerAccountId, allowEitherDirection=$allowEitherDirection, description=$description, effectiveAtUpperBound=$effectiveAtUpperBound, metadata=$metadata, skipSettlementLedgerTransaction=$skipSettlementLedgerTransaction, status=$status, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -533,30 +533,11 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -588,6 +569,25 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
     class Status

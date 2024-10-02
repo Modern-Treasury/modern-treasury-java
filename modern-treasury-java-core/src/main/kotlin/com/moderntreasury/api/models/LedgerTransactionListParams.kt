@@ -395,8 +395,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun _additionalProperties(): Map<String, List<String>> = additionalProperties
 
         @JvmSynthetic
@@ -405,23 +403,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is EffectiveAt && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "EffectiveAt{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -453,6 +434,25 @@ constructor(
 
             fun build(): EffectiveAt = EffectiveAt(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is EffectiveAt && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "EffectiveAt{additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -466,8 +466,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun _additionalProperties(): Map<String, List<String>> = additionalProperties
 
         @JvmSynthetic
@@ -476,23 +474,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is EffectiveDate && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "EffectiveDate{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -524,6 +505,25 @@ constructor(
 
             fun build(): EffectiveDate = EffectiveDate(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is EffectiveDate && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "EffectiveDate{additionalProperties=$additionalProperties}"
     }
 
     class LedgerableType
@@ -619,8 +619,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun _additionalProperties(): Map<String, List<String>> = additionalProperties
 
         @JvmSynthetic
@@ -629,23 +627,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -677,6 +658,25 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -693,8 +693,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun createdAt(): CreatedAt? = createdAt
 
         fun effectiveAt(): EffectiveAt? = effectiveAt
@@ -709,32 +707,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is OrderBy &&
-                this.createdAt == other.createdAt &&
-                this.effectiveAt == other.effectiveAt &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        createdAt,
-                        effectiveAt,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "OrderBy{createdAt=$createdAt, effectiveAt=$effectiveAt, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -893,6 +865,34 @@ constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is OrderBy &&
+                this.createdAt == other.createdAt &&
+                this.effectiveAt == other.effectiveAt &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        createdAt,
+                        effectiveAt,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "OrderBy{createdAt=$createdAt, effectiveAt=$effectiveAt, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -907,8 +907,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun _additionalProperties(): Map<String, List<String>> = additionalProperties
 
         @JvmSynthetic
@@ -917,23 +915,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PostedAt && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "PostedAt{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -965,6 +946,25 @@ constructor(
 
             fun build(): PostedAt = PostedAt(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PostedAt && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "PostedAt{additionalProperties=$additionalProperties}"
     }
 
     class Status
@@ -1042,8 +1042,6 @@ constructor(
         private val additionalProperties: Map<String, List<String>>,
     ) {
 
-        private var hashCode: Int = 0
-
         fun _additionalProperties(): Map<String, List<String>> = additionalProperties
 
         @JvmSynthetic
@@ -1052,23 +1050,6 @@ constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is UpdatedAt && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "UpdatedAt{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1100,5 +1081,24 @@ constructor(
 
             fun build(): UpdatedAt = UpdatedAt(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is UpdatedAt && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "UpdatedAt{additionalProperties=$additionalProperties}"
     }
 }
