@@ -49,8 +49,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -175,52 +173,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is BulkResult &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.requestId == other.requestId &&
-            this.requestType == other.requestType &&
-            this.status == other.status &&
-            this.requestParams == other.requestParams &&
-            this.entityId == other.entityId &&
-            this.entityType == other.entityType &&
-            this.entity == other.entity &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    requestId,
-                    requestType,
-                    status,
-                    requestParams,
-                    entityId,
-                    entityType,
-                    entity,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "BulkResult{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, requestId=$requestId, requestType=$requestType, status=$status, requestParams=$requestParams, entityId=$entityId, entityType=$entityType, entity=$entity, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -634,8 +586,6 @@ private constructor(
 
             private var validated: Boolean = false
 
-            private var hashCode: Int = 0
-
             fun id(): String = id.getRequired("id")
 
             fun object_(): String = object_.getRequired("object")
@@ -685,40 +635,6 @@ private constructor(
             }
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is BulkError &&
-                    this.id == other.id &&
-                    this.object_ == other.object_ &&
-                    this.liveMode == other.liveMode &&
-                    this.createdAt == other.createdAt &&
-                    this.updatedAt == other.updatedAt &&
-                    this.requestErrors == other.requestErrors &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            id,
-                            object_,
-                            liveMode,
-                            createdAt,
-                            updatedAt,
-                            requestErrors,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "BulkError{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, requestErrors=$requestErrors, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -836,8 +752,6 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                private var hashCode: Int = 0
-
                 fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
                 fun message(): Optional<String> =
@@ -866,34 +780,6 @@ private constructor(
                 }
 
                 fun toBuilder() = Builder().from(this)
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is RequestError &&
-                        this.code == other.code &&
-                        this.message == other.message &&
-                        this.parameter == other.parameter &&
-                        this.additionalProperties == other.additionalProperties
-                }
-
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode =
-                            Objects.hash(
-                                code,
-                                message,
-                                parameter,
-                                additionalProperties,
-                            )
-                    }
-                    return hashCode
-                }
-
-                override fun toString() =
-                    "RequestError{code=$code, message=$message, parameter=$parameter, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -958,7 +844,73 @@ private constructor(
                             additionalProperties.toUnmodifiable(),
                         )
                 }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is RequestError &&
+                        this.code == other.code &&
+                        this.message == other.message &&
+                        this.parameter == other.parameter &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                private var hashCode: Int = 0
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                code,
+                                message,
+                                parameter,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "RequestError{code=$code, message=$message, parameter=$parameter, additionalProperties=$additionalProperties}"
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BulkError &&
+                    this.id == other.id &&
+                    this.object_ == other.object_ &&
+                    this.liveMode == other.liveMode &&
+                    this.createdAt == other.createdAt &&
+                    this.updatedAt == other.updatedAt &&
+                    this.requestErrors == other.requestErrors &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            id,
+                            object_,
+                            liveMode,
+                            createdAt,
+                            updatedAt,
+                            requestErrors,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "BulkError{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, requestErrors=$requestErrors, additionalProperties=$additionalProperties}"
         }
     }
 
@@ -1050,8 +1002,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -1063,23 +1013,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is RequestParams && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "RequestParams{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1111,6 +1044,25 @@ private constructor(
 
             fun build(): RequestParams = RequestParams(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is RequestParams && this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() = "RequestParams{additionalProperties=$additionalProperties}"
     }
 
     class RequestType
@@ -1226,4 +1178,52 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is BulkResult &&
+            this.id == other.id &&
+            this.object_ == other.object_ &&
+            this.liveMode == other.liveMode &&
+            this.createdAt == other.createdAt &&
+            this.updatedAt == other.updatedAt &&
+            this.requestId == other.requestId &&
+            this.requestType == other.requestType &&
+            this.status == other.status &&
+            this.requestParams == other.requestParams &&
+            this.entityId == other.entityId &&
+            this.entityType == other.entityType &&
+            this.entity == other.entity &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    object_,
+                    liveMode,
+                    createdAt,
+                    updatedAt,
+                    requestId,
+                    requestType,
+                    status,
+                    requestParams,
+                    entityId,
+                    entityType,
+                    entity,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "BulkResult{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, requestId=$requestId, requestType=$requestType, status=$status, requestParams=$requestParams, entityId=$entityId, entityType=$entityType, entity=$entity, additionalProperties=$additionalProperties}"
 }
