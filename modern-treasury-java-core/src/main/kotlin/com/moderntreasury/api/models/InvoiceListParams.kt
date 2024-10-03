@@ -85,38 +85,11 @@ constructor(
             return true
         }
 
-        return other is InvoiceListParams &&
-            this.afterCursor == other.afterCursor &&
-            this.counterpartyId == other.counterpartyId &&
-            this.dueDateEnd == other.dueDateEnd &&
-            this.dueDateStart == other.dueDateStart &&
-            this.expectedPaymentId == other.expectedPaymentId &&
-            this.metadata == other.metadata &&
-            this.number == other.number &&
-            this.originatingAccountId == other.originatingAccountId &&
-            this.paymentOrderId == other.paymentOrderId &&
-            this.perPage == other.perPage &&
-            this.status == other.status &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is InvoiceListParams && this.afterCursor == other.afterCursor && this.counterpartyId == other.counterpartyId && this.dueDateEnd == other.dueDateEnd && this.dueDateStart == other.dueDateStart && this.expectedPaymentId == other.expectedPaymentId && this.metadata == other.metadata && this.number == other.number && this.originatingAccountId == other.originatingAccountId && this.paymentOrderId == other.paymentOrderId && this.perPage == other.perPage && this.status == other.status && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            afterCursor,
-            counterpartyId,
-            dueDateEnd,
-            dueDateStart,
-            expectedPaymentId,
-            metadata,
-            number,
-            originatingAccountId,
-            paymentOrderId,
-            perPage,
-            status,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(afterCursor, counterpartyId, dueDateEnd, dueDateStart, expectedPaymentId, metadata, number, originatingAccountId, paymentOrderId, perPage, status, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -310,14 +283,14 @@ constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -338,7 +311,7 @@ constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

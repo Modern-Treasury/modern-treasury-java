@@ -779,14 +779,14 @@ private constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -807,7 +807,7 @@ private constructor(
                 return true
             }
 
-            return other is ReconciliationMethod && this.value == other.value
+            return /* spotless:off */ other is ReconciliationMethod && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -910,15 +910,14 @@ private constructor(
                 return true
             }
 
-            return other is ReconciliationRuleVariable &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is ReconciliationRuleVariable && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -940,7 +939,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1001,70 +1000,14 @@ private constructor(
             return true
         }
 
-        return other is ExpectedPayment &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.amountUpperBound == other.amountUpperBound &&
-            this.amountLowerBound == other.amountLowerBound &&
-            this.direction == other.direction &&
-            this.internalAccountId == other.internalAccountId &&
-            this.type == other.type &&
-            this.currency == other.currency &&
-            this.dateUpperBound == other.dateUpperBound &&
-            this.dateLowerBound == other.dateLowerBound &&
-            this.description == other.description &&
-            this.statementDescriptor == other.statementDescriptor &&
-            this.metadata == other.metadata &&
-            this.counterpartyId == other.counterpartyId &&
-            this.remittanceInformation == other.remittanceInformation &&
-            this.reconciliationGroups == other.reconciliationGroups &&
-            this.reconciliationFilters == other.reconciliationFilters &&
-            this.reconciliationRuleVariables == other.reconciliationRuleVariables &&
-            this.transactionId == other.transactionId &&
-            this.transactionLineItemId == other.transactionLineItemId &&
-            this.status == other.status &&
-            this.reconciliationMethod == other.reconciliationMethod &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is ExpectedPayment && this.id == other.id && this.object_ == other.object_ && this.liveMode == other.liveMode && this.createdAt == other.createdAt && this.updatedAt == other.updatedAt && this.amountUpperBound == other.amountUpperBound && this.amountLowerBound == other.amountLowerBound && this.direction == other.direction && this.internalAccountId == other.internalAccountId && this.type == other.type && this.currency == other.currency && this.dateUpperBound == other.dateUpperBound && this.dateLowerBound == other.dateLowerBound && this.description == other.description && this.statementDescriptor == other.statementDescriptor && this.metadata == other.metadata && this.counterpartyId == other.counterpartyId && this.remittanceInformation == other.remittanceInformation && this.reconciliationGroups == other.reconciliationGroups && this.reconciliationFilters == other.reconciliationFilters && this.reconciliationRuleVariables == other.reconciliationRuleVariables && this.transactionId == other.transactionId && this.transactionLineItemId == other.transactionLineItemId && this.status == other.status && this.reconciliationMethod == other.reconciliationMethod && this.ledgerTransactionId == other.ledgerTransactionId && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    amountUpperBound,
-                    amountLowerBound,
-                    direction,
-                    internalAccountId,
-                    type,
-                    currency,
-                    dateUpperBound,
-                    dateLowerBound,
-                    description,
-                    statementDescriptor,
-                    metadata,
-                    counterpartyId,
-                    remittanceInformation,
-                    reconciliationGroups,
-                    reconciliationFilters,
-                    reconciliationRuleVariables,
-                    transactionId,
-                    transactionLineItemId,
-                    status,
-                    reconciliationMethod,
-                    ledgerTransactionId,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(id, object_, liveMode, createdAt, updatedAt, amountUpperBound, amountLowerBound, direction, internalAccountId, type, currency, dateUpperBound, dateLowerBound, description, statementDescriptor, metadata, counterpartyId, remittanceInformation, reconciliationGroups, reconciliationFilters, reconciliationRuleVariables, transactionId, transactionLineItemId, status, reconciliationMethod, ledgerTransactionId, additionalProperties) /* spotless:on */
         }
         return hashCode
     }

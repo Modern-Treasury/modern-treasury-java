@@ -53,24 +53,11 @@ constructor(
             return true
         }
 
-        return other is DocumentListParams &&
-            this.afterCursor == other.afterCursor &&
-            this.documentableId == other.documentableId &&
-            this.documentableType == other.documentableType &&
-            this.perPage == other.perPage &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is DocumentListParams && this.afterCursor == other.afterCursor && this.documentableId == other.documentableId && this.documentableType == other.documentableType && this.perPage == other.perPage && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            afterCursor,
-            documentableId,
-            documentableType,
-            perPage,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(afterCursor, documentableId, documentableType, perPage, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -183,7 +170,7 @@ constructor(
                 return true
             }
 
-            return other is DocumentableType && this.value == other.value
+            return /* spotless:off */ other is DocumentableType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

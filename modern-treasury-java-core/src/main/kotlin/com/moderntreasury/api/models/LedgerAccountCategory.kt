@@ -619,28 +619,14 @@ private constructor(
                     return true
                 }
 
-                return other is LedgerBalance &&
-                    this.credits == other.credits &&
-                    this.debits == other.debits &&
-                    this.amount == other.amount &&
-                    this.currency == other.currency &&
-                    this.currencyExponent == other.currencyExponent &&
-                    this.additionalProperties == other.additionalProperties
+                return /* spotless:off */ other is LedgerBalance && this.credits == other.credits && this.debits == other.debits && this.amount == other.amount && this.currency == other.currency && this.currencyExponent == other.currencyExponent && this.additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             private var hashCode: Int = 0
 
             override fun hashCode(): Int {
                 if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            credits,
-                            debits,
-                            amount,
-                            currency,
-                            currencyExponent,
-                            additionalProperties,
-                        )
+                    hashCode = /* spotless:off */ Objects.hash(credits, debits, amount, currency, currencyExponent, additionalProperties) /* spotless:on */
                 }
                 return hashCode
             }
@@ -654,24 +640,14 @@ private constructor(
                 return true
             }
 
-            return other is LedgerBalances &&
-                this.pendingBalance == other.pendingBalance &&
-                this.postedBalance == other.postedBalance &&
-                this.availableBalance == other.availableBalance &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is LedgerBalances && this.pendingBalance == other.pendingBalance && this.postedBalance == other.postedBalance && this.availableBalance == other.availableBalance && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        pendingBalance,
-                        postedBalance,
-                        availableBalance,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(pendingBalance, postedBalance, availableBalance, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -738,14 +714,14 @@ private constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -758,42 +734,14 @@ private constructor(
             return true
         }
 
-        return other is LedgerAccountCategory &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.discardedAt == other.discardedAt &&
-            this.name == other.name &&
-            this.description == other.description &&
-            this.metadata == other.metadata &&
-            this.ledgerId == other.ledgerId &&
-            this.normalBalance == other.normalBalance &&
-            this.balances == other.balances &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is LedgerAccountCategory && this.id == other.id && this.object_ == other.object_ && this.liveMode == other.liveMode && this.createdAt == other.createdAt && this.updatedAt == other.updatedAt && this.discardedAt == other.discardedAt && this.name == other.name && this.description == other.description && this.metadata == other.metadata && this.ledgerId == other.ledgerId && this.normalBalance == other.normalBalance && this.balances == other.balances && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    discardedAt,
-                    name,
-                    description,
-                    metadata,
-                    ledgerId,
-                    normalBalance,
-                    balances,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(id, object_, liveMode, createdAt, updatedAt, discardedAt, name, description, metadata, ledgerId, normalBalance, balances, additionalProperties) /* spotless:on */
         }
         return hashCode
     }

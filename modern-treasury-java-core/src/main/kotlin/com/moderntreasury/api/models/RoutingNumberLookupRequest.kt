@@ -422,30 +422,14 @@ private constructor(
                 return true
             }
 
-            return other is AddressRequest &&
-                this.line1 == other.line1 &&
-                this.line2 == other.line2 &&
-                this.locality == other.locality &&
-                this.region == other.region &&
-                this.postalCode == other.postalCode &&
-                this.country == other.country &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is AddressRequest && this.line1 == other.line1 && this.line2 == other.line2 && this.locality == other.locality && this.region == other.region && this.postalCode == other.postalCode && this.country == other.country && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        line1,
-                        line2,
-                        locality,
-                        region,
-                        postalCode,
-                        country,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(line1, line2, locality, region, postalCode, country, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -467,7 +451,7 @@ private constructor(
                 return true
             }
 
-            return other is RoutingNumberType && this.value == other.value
+            return /* spotless:off */ other is RoutingNumberType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -614,14 +598,14 @@ private constructor(
                 return true
             }
 
-            return other is Sanctions && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Sanctions && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -642,7 +626,7 @@ private constructor(
                 return true
             }
 
-            return other is SupportedPaymentType && this.value == other.value
+            return /* spotless:off */ other is SupportedPaymentType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -860,30 +844,14 @@ private constructor(
             return true
         }
 
-        return other is RoutingNumberLookupRequest &&
-            this.routingNumber == other.routingNumber &&
-            this.routingNumberType == other.routingNumberType &&
-            this.supportedPaymentTypes == other.supportedPaymentTypes &&
-            this.bankName == other.bankName &&
-            this.bankAddress == other.bankAddress &&
-            this.sanctions == other.sanctions &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is RoutingNumberLookupRequest && this.routingNumber == other.routingNumber && this.routingNumberType == other.routingNumberType && this.supportedPaymentTypes == other.supportedPaymentTypes && this.bankName == other.bankName && this.bankAddress == other.bankAddress && this.sanctions == other.sanctions && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    routingNumber,
-                    routingNumberType,
-                    supportedPaymentTypes,
-                    bankName,
-                    bankAddress,
-                    sanctions,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(routingNumber, routingNumberType, supportedPaymentTypes, bankName, bankAddress, sanctions, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
