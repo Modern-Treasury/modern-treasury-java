@@ -216,32 +216,14 @@ constructor(
                 return true
             }
 
-            return other is ExternalAccountUpdateBody &&
-                this.accountType == other.accountType &&
-                this.counterpartyId == other.counterpartyId &&
-                this.metadata == other.metadata &&
-                this.name == other.name &&
-                this.partyAddress == other.partyAddress &&
-                this.partyName == other.partyName &&
-                this.partyType == other.partyType &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is ExternalAccountUpdateBody && this.accountType == other.accountType && this.counterpartyId == other.counterpartyId && this.metadata == other.metadata && this.name == other.name && this.partyAddress == other.partyAddress && this.partyName == other.partyName && this.partyType == other.partyType && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        accountType,
-                        counterpartyId,
-                        metadata,
-                        name,
-                        partyAddress,
-                        partyName,
-                        partyType,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(accountType, counterpartyId, metadata, name, partyAddress, partyName, partyType, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -261,34 +243,11 @@ constructor(
             return true
         }
 
-        return other is ExternalAccountUpdateParams &&
-            this.id == other.id &&
-            this.accountType == other.accountType &&
-            this.counterpartyId == other.counterpartyId &&
-            this.metadata == other.metadata &&
-            this.name == other.name &&
-            this.partyAddress == other.partyAddress &&
-            this.partyName == other.partyName &&
-            this.partyType == other.partyType &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is ExternalAccountUpdateParams && this.id == other.id && this.accountType == other.accountType && this.counterpartyId == other.counterpartyId && this.metadata == other.metadata && this.name == other.name && this.partyAddress == other.partyAddress && this.partyName == other.partyName && this.partyType == other.partyType && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            id,
-            accountType,
-            counterpartyId,
-            metadata,
-            name,
-            partyAddress,
-            partyName,
-            partyType,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(id, accountType, counterpartyId, metadata, name, partyAddress, partyName, partyType, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -481,14 +440,14 @@ constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -606,30 +565,14 @@ constructor(
                 return true
             }
 
-            return other is AddressRequest &&
-                this.line1 == other.line1 &&
-                this.line2 == other.line2 &&
-                this.locality == other.locality &&
-                this.region == other.region &&
-                this.postalCode == other.postalCode &&
-                this.country == other.country &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is AddressRequest && this.line1 == other.line1 && this.line2 == other.line2 && this.locality == other.locality && this.region == other.region && this.postalCode == other.postalCode && this.country == other.country && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        line1,
-                        line2,
-                        locality,
-                        region,
-                        postalCode,
-                        country,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(line1, line2, locality, region, postalCode, country, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -651,7 +594,7 @@ constructor(
                 return true
             }
 
-            return other is PartyType && this.value == other.value
+            return /* spotless:off */ other is PartyType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

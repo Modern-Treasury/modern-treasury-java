@@ -636,7 +636,7 @@ private constructor(
                 return true
             }
 
-            return other is Code && this.value == other.value
+            return /* spotless:off */ other is Code && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1196,7 +1196,7 @@ private constructor(
                     return true
                 }
 
-                return other is ReferenceNumberType && this.value == other.value
+                return /* spotless:off */ other is ReferenceNumberType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1766,32 +1766,14 @@ private constructor(
                 return true
             }
 
-            return other is PaymentReference &&
-                this.id == other.id &&
-                this.object_ == other.object_ &&
-                this.liveMode == other.liveMode &&
-                this.createdAt == other.createdAt &&
-                this.updatedAt == other.updatedAt &&
-                this.referenceNumber == other.referenceNumber &&
-                this.referenceNumberType == other.referenceNumberType &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is PaymentReference && this.id == other.id && this.object_ == other.object_ && this.liveMode == other.liveMode && this.createdAt == other.createdAt && this.updatedAt == other.updatedAt && this.referenceNumber == other.referenceNumber && this.referenceNumberType == other.referenceNumberType && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        id,
-                        object_,
-                        liveMode,
-                        createdAt,
-                        updatedAt,
-                        referenceNumber,
-                        referenceNumberType,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(id, object_, liveMode, createdAt, updatedAt, referenceNumber, referenceNumberType, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -1813,7 +1795,7 @@ private constructor(
                 return true
             }
 
-            return other is ReturnableType && this.value == other.value
+            return /* spotless:off */ other is ReturnableType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1889,7 +1871,7 @@ private constructor(
                 return true
             }
 
-            return other is Role && this.value == other.value
+            return /* spotless:off */ other is Role && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1946,7 +1928,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -2027,7 +2009,7 @@ private constructor(
                 return true
             }
 
-            return other is Type && this.value == other.value
+            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -2142,64 +2124,14 @@ private constructor(
             return true
         }
 
-        return other is ReturnObject &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.returnableId == other.returnableId &&
-            this.returnableType == other.returnableType &&
-            this.code == other.code &&
-            this.reason == other.reason &&
-            this.dateOfDeath == other.dateOfDeath &&
-            this.additionalInformation == other.additionalInformation &&
-            this.status == other.status &&
-            this.transactionLineItemId == other.transactionLineItemId &&
-            this.transactionId == other.transactionId &&
-            this.internalAccountId == other.internalAccountId &&
-            this.type == other.type &&
-            this.amount == other.amount &&
-            this.currency == other.currency &&
-            this.failureReason == other.failureReason &&
-            this.role == other.role &&
-            this.currentReturn == other.currentReturn &&
-            this.referenceNumbers == other.referenceNumbers &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is ReturnObject && this.id == other.id && this.object_ == other.object_ && this.liveMode == other.liveMode && this.createdAt == other.createdAt && this.updatedAt == other.updatedAt && this.returnableId == other.returnableId && this.returnableType == other.returnableType && this.code == other.code && this.reason == other.reason && this.dateOfDeath == other.dateOfDeath && this.additionalInformation == other.additionalInformation && this.status == other.status && this.transactionLineItemId == other.transactionLineItemId && this.transactionId == other.transactionId && this.internalAccountId == other.internalAccountId && this.type == other.type && this.amount == other.amount && this.currency == other.currency && this.failureReason == other.failureReason && this.role == other.role && this.currentReturn == other.currentReturn && this.referenceNumbers == other.referenceNumbers && this.ledgerTransactionId == other.ledgerTransactionId && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    returnableId,
-                    returnableType,
-                    code,
-                    reason,
-                    dateOfDeath,
-                    additionalInformation,
-                    status,
-                    transactionLineItemId,
-                    transactionId,
-                    internalAccountId,
-                    type,
-                    amount,
-                    currency,
-                    failureReason,
-                    role,
-                    currentReturn,
-                    referenceNumbers,
-                    ledgerTransactionId,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(id, object_, liveMode, createdAt, updatedAt, returnableId, returnableType, code, reason, dateOfDeath, additionalInformation, status, transactionLineItemId, transactionId, internalAccountId, type, amount, currency, failureReason, role, currentReturn, referenceNumbers, ledgerTransactionId, additionalProperties) /* spotless:on */
         }
         return hashCode
     }

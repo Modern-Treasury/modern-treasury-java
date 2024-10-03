@@ -285,42 +285,14 @@ constructor(
                 return true
             }
 
-            return other is LegalEntityUpdateBody &&
-                this.businessName == other.businessName &&
-                this.dateFormed == other.dateFormed &&
-                this.dateOfBirth == other.dateOfBirth &&
-                this.doingBusinessAsNames == other.doingBusinessAsNames &&
-                this.email == other.email &&
-                this.firstName == other.firstName &&
-                this.lastName == other.lastName &&
-                this.legalStructure == other.legalStructure &&
-                this.metadata == other.metadata &&
-                this.phoneNumbers == other.phoneNumbers &&
-                this.riskRating == other.riskRating &&
-                this.website == other.website &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is LegalEntityUpdateBody && this.businessName == other.businessName && this.dateFormed == other.dateFormed && this.dateOfBirth == other.dateOfBirth && this.doingBusinessAsNames == other.doingBusinessAsNames && this.email == other.email && this.firstName == other.firstName && this.lastName == other.lastName && this.legalStructure == other.legalStructure && this.metadata == other.metadata && this.phoneNumbers == other.phoneNumbers && this.riskRating == other.riskRating && this.website == other.website && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        businessName,
-                        dateFormed,
-                        dateOfBirth,
-                        doingBusinessAsNames,
-                        email,
-                        firstName,
-                        lastName,
-                        legalStructure,
-                        metadata,
-                        phoneNumbers,
-                        riskRating,
-                        website,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(businessName, dateFormed, dateOfBirth, doingBusinessAsNames, email, firstName, lastName, legalStructure, metadata, phoneNumbers, riskRating, website, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -340,44 +312,11 @@ constructor(
             return true
         }
 
-        return other is LegalEntityUpdateParams &&
-            this.id == other.id &&
-            this.businessName == other.businessName &&
-            this.dateFormed == other.dateFormed &&
-            this.dateOfBirth == other.dateOfBirth &&
-            this.doingBusinessAsNames == other.doingBusinessAsNames &&
-            this.email == other.email &&
-            this.firstName == other.firstName &&
-            this.lastName == other.lastName &&
-            this.legalStructure == other.legalStructure &&
-            this.metadata == other.metadata &&
-            this.phoneNumbers == other.phoneNumbers &&
-            this.riskRating == other.riskRating &&
-            this.website == other.website &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is LegalEntityUpdateParams && this.id == other.id && this.businessName == other.businessName && this.dateFormed == other.dateFormed && this.dateOfBirth == other.dateOfBirth && this.doingBusinessAsNames == other.doingBusinessAsNames && this.email == other.email && this.firstName == other.firstName && this.lastName == other.lastName && this.legalStructure == other.legalStructure && this.metadata == other.metadata && this.phoneNumbers == other.phoneNumbers && this.riskRating == other.riskRating && this.website == other.website && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            id,
-            businessName,
-            dateFormed,
-            dateOfBirth,
-            doingBusinessAsNames,
-            email,
-            firstName,
-            lastName,
-            legalStructure,
-            metadata,
-            phoneNumbers,
-            riskRating,
-            website,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(id, businessName, dateFormed, dateOfBirth, doingBusinessAsNames, email, firstName, lastName, legalStructure, metadata, phoneNumbers, riskRating, website, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -570,7 +509,7 @@ constructor(
                 return true
             }
 
-            return other is LegalStructure && this.value == other.value
+            return /* spotless:off */ other is LegalStructure && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -688,14 +627,14 @@ constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -762,16 +701,14 @@ constructor(
                 return true
             }
 
-            return other is PhoneNumber &&
-                this.phoneNumber == other.phoneNumber &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is PhoneNumber && this.phoneNumber == other.phoneNumber && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(phoneNumber, additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(phoneNumber, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -793,7 +730,7 @@ constructor(
                 return true
             }
 
-            return other is RiskRating && this.value == other.value
+            return /* spotless:off */ other is RiskRating && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
