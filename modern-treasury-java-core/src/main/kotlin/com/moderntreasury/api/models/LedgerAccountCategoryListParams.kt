@@ -77,36 +77,11 @@ constructor(
             return true
         }
 
-        return other is LedgerAccountCategoryListParams &&
-            this.id == other.id &&
-            this.afterCursor == other.afterCursor &&
-            this.balances == other.balances &&
-            this.currency == other.currency &&
-            this.ledgerAccountId == other.ledgerAccountId &&
-            this.ledgerId == other.ledgerId &&
-            this.metadata == other.metadata &&
-            this.name == other.name &&
-            this.parentLedgerAccountCategoryId == other.parentLedgerAccountCategoryId &&
-            this.perPage == other.perPage &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is LedgerAccountCategoryListParams && this.id == other.id && this.afterCursor == other.afterCursor && this.balances == other.balances && this.currency == other.currency && this.ledgerAccountId == other.ledgerAccountId && this.ledgerId == other.ledgerId && this.metadata == other.metadata && this.name == other.name && this.parentLedgerAccountCategoryId == other.parentLedgerAccountCategoryId && this.perPage == other.perPage && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            id,
-            afterCursor,
-            balances,
-            currency,
-            ledgerAccountId,
-            ledgerId,
-            metadata,
-            name,
-            parentLedgerAccountCategoryId,
-            perPage,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(id, afterCursor, balances, currency, ledgerAccountId, ledgerId, metadata, name, parentLedgerAccountCategoryId, perPage, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -323,16 +298,14 @@ constructor(
                 return true
             }
 
-            return other is Balances &&
-                this.effectiveAt == other.effectiveAt &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Balances && this.effectiveAt == other.effectiveAt && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(effectiveAt, additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(effectiveAt, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -397,14 +370,14 @@ constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }

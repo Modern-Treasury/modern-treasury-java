@@ -341,7 +341,7 @@ private constructor(
                 return true
             }
 
-            return other is ActionType && this.value == other.value
+            return /* spotless:off */ other is ActionType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -449,14 +449,14 @@ private constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -477,7 +477,7 @@ private constructor(
                 return true
             }
 
-            return other is ResourceType && this.value == other.value
+            return /* spotless:off */ other is ResourceType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -546,7 +546,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -601,42 +601,14 @@ private constructor(
             return true
         }
 
-        return other is BulkRequest &&
-            this.id == other.id &&
-            this.object_ == other.object_ &&
-            this.liveMode == other.liveMode &&
-            this.createdAt == other.createdAt &&
-            this.updatedAt == other.updatedAt &&
-            this.actionType == other.actionType &&
-            this.resourceType == other.resourceType &&
-            this.status == other.status &&
-            this.totalResourceCount == other.totalResourceCount &&
-            this.successResultCount == other.successResultCount &&
-            this.failedResultCount == other.failedResultCount &&
-            this.metadata == other.metadata &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is BulkRequest && this.id == other.id && this.object_ == other.object_ && this.liveMode == other.liveMode && this.createdAt == other.createdAt && this.updatedAt == other.updatedAt && this.actionType == other.actionType && this.resourceType == other.resourceType && this.status == other.status && this.totalResourceCount == other.totalResourceCount && this.successResultCount == other.successResultCount && this.failedResultCount == other.failedResultCount && this.metadata == other.metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    object_,
-                    liveMode,
-                    createdAt,
-                    updatedAt,
-                    actionType,
-                    resourceType,
-                    status,
-                    totalResourceCount,
-                    successResultCount,
-                    failedResultCount,
-                    metadata,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(id, object_, liveMode, createdAt, updatedAt, actionType, resourceType, status, totalResourceCount, successResultCount, failedResultCount, metadata, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
