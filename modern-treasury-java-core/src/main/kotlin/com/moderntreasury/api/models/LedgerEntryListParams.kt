@@ -134,56 +134,11 @@ constructor(
             return true
         }
 
-        return other is LedgerEntryListParams &&
-            this.id == other.id &&
-            this.afterCursor == other.afterCursor &&
-            this.asOfLockVersion == other.asOfLockVersion &&
-            this.direction == other.direction &&
-            this.effectiveAt == other.effectiveAt &&
-            this.effectiveDate == other.effectiveDate &&
-            this.ledgerAccountCategoryId == other.ledgerAccountCategoryId &&
-            this.ledgerAccountId == other.ledgerAccountId &&
-            this.ledgerAccountLockVersion == other.ledgerAccountLockVersion &&
-            this.ledgerAccountPayoutId == other.ledgerAccountPayoutId &&
-            this.ledgerAccountSettlementId == other.ledgerAccountSettlementId &&
-            this.ledgerAccountStatementId == other.ledgerAccountStatementId &&
-            this.ledgerTransactionId == other.ledgerTransactionId &&
-            this.metadata == other.metadata &&
-            this.orderBy == other.orderBy &&
-            this.perPage == other.perPage &&
-            this.showBalances == other.showBalances &&
-            this.showDeleted == other.showDeleted &&
-            this.status == other.status &&
-            this.updatedAt == other.updatedAt &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is LedgerEntryListParams && this.id == other.id && this.afterCursor == other.afterCursor && this.asOfLockVersion == other.asOfLockVersion && this.direction == other.direction && this.effectiveAt == other.effectiveAt && this.effectiveDate == other.effectiveDate && this.ledgerAccountCategoryId == other.ledgerAccountCategoryId && this.ledgerAccountId == other.ledgerAccountId && this.ledgerAccountLockVersion == other.ledgerAccountLockVersion && this.ledgerAccountPayoutId == other.ledgerAccountPayoutId && this.ledgerAccountSettlementId == other.ledgerAccountSettlementId && this.ledgerAccountStatementId == other.ledgerAccountStatementId && this.ledgerTransactionId == other.ledgerTransactionId && this.metadata == other.metadata && this.orderBy == other.orderBy && this.perPage == other.perPage && this.showBalances == other.showBalances && this.showDeleted == other.showDeleted && this.status == other.status && this.updatedAt == other.updatedAt && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            id,
-            afterCursor,
-            asOfLockVersion,
-            direction,
-            effectiveAt,
-            effectiveDate,
-            ledgerAccountCategoryId,
-            ledgerAccountId,
-            ledgerAccountLockVersion,
-            ledgerAccountPayoutId,
-            ledgerAccountSettlementId,
-            ledgerAccountStatementId,
-            ledgerTransactionId,
-            metadata,
-            orderBy,
-            perPage,
-            showBalances,
-            showDeleted,
-            status,
-            updatedAt,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(id, afterCursor, asOfLockVersion, direction, effectiveAt, effectiveDate, ledgerAccountCategoryId, ledgerAccountId, ledgerAccountLockVersion, ledgerAccountPayoutId, ledgerAccountSettlementId, ledgerAccountStatementId, ledgerTransactionId, metadata, orderBy, perPage, showBalances, showDeleted, status, updatedAt, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -491,14 +446,14 @@ constructor(
                 return true
             }
 
-            return other is EffectiveAt && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is EffectiveAt && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -562,14 +517,14 @@ constructor(
                 return true
             }
 
-            return other is EffectiveDate && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is EffectiveDate && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -635,15 +590,14 @@ constructor(
                 return true
             }
 
-            return other is LedgerAccountLockVersion &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is LedgerAccountLockVersion && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -708,14 +662,14 @@ constructor(
                 return true
             }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -809,7 +763,7 @@ constructor(
                     return true
                 }
 
-                return other is CreatedAt && this.value == other.value
+                return /* spotless:off */ other is CreatedAt && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -866,7 +820,7 @@ constructor(
                     return true
                 }
 
-                return other is EffectiveAt && this.value == other.value
+                return /* spotless:off */ other is EffectiveAt && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -915,22 +869,14 @@ constructor(
                 return true
             }
 
-            return other is OrderBy &&
-                this.createdAt == other.createdAt &&
-                this.effectiveAt == other.effectiveAt &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is OrderBy && this.createdAt == other.createdAt && this.effectiveAt == other.effectiveAt && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        createdAt,
-                        effectiveAt,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(createdAt, effectiveAt, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -952,7 +898,7 @@ constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1059,14 +1005,14 @@ constructor(
                 return true
             }
 
-            return other is UpdatedAt && this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is UpdatedAt && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
             }
             return hashCode
         }
