@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.21.1 (2024-10-03)
+
+Full Changelog: [v2.21.0...v2.21.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.21.0...v2.21.1)
+
+### Styles
+
+* **client:** disable formatting for java boilerplate ([#226](https://github.com/Modern-Treasury/modern-treasury-java/issues/226)) ([221a74e](https://github.com/Modern-Treasury/modern-treasury-java/commit/221a74eb2cc36595efed21078f0c0149c87ab631))
+* **client:** move equals, hashCode, and toString to the bottom of entity files ([#224](https://github.com/Modern-Treasury/modern-treasury-java/issues/224)) ([ae9dcc0](https://github.com/Modern-Treasury/modern-treasury-java/commit/ae9dcc0309e3385bee34fbd4ad242af3b9b3f3d6))
+
 ## 2.21.0 (2024-09-24)
 
 Full Changelog: [v2.20.0...v2.21.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.20.0...v2.21.0)
