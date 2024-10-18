@@ -3425,6 +3425,7 @@ private constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): UltimateOriginatingAccount {
                 val json = JsonValue.fromJsonNode(node)
+
                 tryDeserialize(node, jacksonTypeRef<VirtualAccount>()) { it.validate() }
                     ?.let {
                         return UltimateOriginatingAccount(virtualAccount = it, _json = json)

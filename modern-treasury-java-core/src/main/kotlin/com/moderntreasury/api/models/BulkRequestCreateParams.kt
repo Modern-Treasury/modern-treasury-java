@@ -739,6 +739,7 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): Resource {
                 val json = JsonValue.fromJsonNode(node)
+
                 tryDeserialize(node, jacksonTypeRef<PaymentOrderAsyncCreateRequest>()) {
                         it.validate()
                     }
