@@ -133,6 +133,7 @@ private constructor(
 
         override fun ObjectCodec.deserialize(node: JsonNode): ExternalAccountVerifyResponse {
             val json = JsonValue.fromJsonNode(node)
+
             tryDeserialize(node, jacksonTypeRef<ExternalAccount>()) { it.validate() }
                 ?.let {
                     return ExternalAccountVerifyResponse(externalAccount = it, _json = json)

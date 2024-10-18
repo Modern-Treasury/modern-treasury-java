@@ -29,12 +29,12 @@ constructor(
     private val dateLowerBound: LocalDate?,
     private val dateUpperBound: LocalDate?,
     private val description: String?,
-    private val direction: TransactionDirection?,
+    private val direction: Direction?,
     private val internalAccountId: String?,
     private val metadata: Metadata?,
     private val reconciliationFilters: JsonValue?,
     private val reconciliationGroups: JsonValue?,
-    private val reconciliationRuleVariables: List<ReconciliationRuleVariable>?,
+    private val reconciliationRuleVariables: List<ReconciliationRule>?,
     private val remittanceInformation: String?,
     private val statementDescriptor: String?,
     private val status: Status?,
@@ -60,7 +60,7 @@ constructor(
 
     fun description(): Optional<String> = Optional.ofNullable(description)
 
-    fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
+    fun direction(): Optional<Direction> = Optional.ofNullable(direction)
 
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
@@ -70,7 +70,7 @@ constructor(
 
     fun reconciliationGroups(): Optional<JsonValue> = Optional.ofNullable(reconciliationGroups)
 
-    fun reconciliationRuleVariables(): Optional<List<ReconciliationRuleVariable>> =
+    fun reconciliationRuleVariables(): Optional<List<ReconciliationRule>> =
         Optional.ofNullable(reconciliationRuleVariables)
 
     fun remittanceInformation(): Optional<String> = Optional.ofNullable(remittanceInformation)
@@ -127,12 +127,12 @@ constructor(
         private val dateLowerBound: LocalDate?,
         private val dateUpperBound: LocalDate?,
         private val description: String?,
-        private val direction: TransactionDirection?,
+        private val direction: Direction?,
         private val internalAccountId: String?,
         private val metadata: Metadata?,
         private val reconciliationFilters: JsonValue?,
         private val reconciliationGroups: JsonValue?,
-        private val reconciliationRuleVariables: List<ReconciliationRuleVariable>?,
+        private val reconciliationRuleVariables: List<ReconciliationRule>?,
         private val remittanceInformation: String?,
         private val statementDescriptor: String?,
         private val status: Status?,
@@ -171,7 +171,7 @@ constructor(
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        @JsonProperty("direction") fun direction(): TransactionDirection? = direction
+        @JsonProperty("direction") fun direction(): Direction? = direction
 
         /** The ID of the Internal Account for the expected payment. */
         @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
@@ -191,8 +191,7 @@ constructor(
 
         /** An array of reconciliation rule variables for this payment. */
         @JsonProperty("reconciliation_rule_variables")
-        fun reconciliationRuleVariables(): List<ReconciliationRuleVariable>? =
-            reconciliationRuleVariables
+        fun reconciliationRuleVariables(): List<ReconciliationRule>? = reconciliationRuleVariables
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -239,12 +238,12 @@ constructor(
             private var dateLowerBound: LocalDate? = null
             private var dateUpperBound: LocalDate? = null
             private var description: String? = null
-            private var direction: TransactionDirection? = null
+            private var direction: Direction? = null
             private var internalAccountId: String? = null
             private var metadata: Metadata? = null
             private var reconciliationFilters: JsonValue? = null
             private var reconciliationGroups: JsonValue? = null
-            private var reconciliationRuleVariables: List<ReconciliationRuleVariable>? = null
+            private var reconciliationRuleVariables: List<ReconciliationRule>? = null
             private var remittanceInformation: String? = null
             private var statementDescriptor: String? = null
             private var status: Status? = null
@@ -323,7 +322,7 @@ constructor(
              * charged, use debit.
              */
             @JsonProperty("direction")
-            fun direction(direction: TransactionDirection) = apply { this.direction = direction }
+            fun direction(direction: Direction) = apply { this.direction = direction }
 
             /** The ID of the Internal Account for the expected payment. */
             @JsonProperty("internal_account_id")
@@ -352,9 +351,10 @@ constructor(
 
             /** An array of reconciliation rule variables for this payment. */
             @JsonProperty("reconciliation_rule_variables")
-            fun reconciliationRuleVariables(
-                reconciliationRuleVariables: List<ReconciliationRuleVariable>
-            ) = apply { this.reconciliationRuleVariables = reconciliationRuleVariables }
+            fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>) =
+                apply {
+                    this.reconciliationRuleVariables = reconciliationRuleVariables
+                }
 
             /**
              * For `ach`, this field will be passed through on an addenda record. For `wire`
@@ -484,13 +484,12 @@ constructor(
         private var dateLowerBound: LocalDate? = null
         private var dateUpperBound: LocalDate? = null
         private var description: String? = null
-        private var direction: TransactionDirection? = null
+        private var direction: Direction? = null
         private var internalAccountId: String? = null
         private var metadata: Metadata? = null
         private var reconciliationFilters: JsonValue? = null
         private var reconciliationGroups: JsonValue? = null
-        private var reconciliationRuleVariables: MutableList<ReconciliationRuleVariable> =
-            mutableListOf()
+        private var reconciliationRuleVariables: MutableList<ReconciliationRule> = mutableListOf()
         private var remittanceInformation: String? = null
         private var statementDescriptor: String? = null
         private var status: Status? = null
@@ -567,7 +566,7 @@ constructor(
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        fun direction(direction: TransactionDirection) = apply { this.direction = direction }
+        fun direction(direction: Direction) = apply { this.direction = direction }
 
         /** The ID of the Internal Account for the expected payment. */
         fun internalAccountId(internalAccountId: String) = apply {
@@ -590,18 +589,16 @@ constructor(
         }
 
         /** An array of reconciliation rule variables for this payment. */
-        fun reconciliationRuleVariables(
-            reconciliationRuleVariables: List<ReconciliationRuleVariable>
-        ) = apply {
-            this.reconciliationRuleVariables.clear()
-            this.reconciliationRuleVariables.addAll(reconciliationRuleVariables)
-        }
+        fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>) =
+            apply {
+                this.reconciliationRuleVariables.clear()
+                this.reconciliationRuleVariables.addAll(reconciliationRuleVariables)
+            }
 
         /** An array of reconciliation rule variables for this payment. */
-        fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRuleVariable) =
-            apply {
-                this.reconciliationRuleVariables.add(reconciliationRuleVariable)
-            }
+        fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRule) = apply {
+            this.reconciliationRuleVariables.add(reconciliationRuleVariable)
+        }
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -711,6 +708,63 @@ constructor(
             )
     }
 
+    class Direction
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Direction && this.value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+
+            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+
+            @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
+        }
+
+        enum class Known {
+            CREDIT,
+            DEBIT,
+        }
+
+        enum class Value {
+            CREDIT,
+            DEBIT,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                CREDIT -> Value.CREDIT
+                DEBIT -> Value.DEBIT
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                CREDIT -> Known.CREDIT
+                DEBIT -> Known.DEBIT
+                else -> throw ModernTreasuryInvalidDataException("Unknown Direction: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
@@ -774,72 +828,6 @@ constructor(
         }
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
-    }
-
-    @JsonDeserialize(builder = ReconciliationRuleVariable.Builder::class)
-    @NoAutoDetect
-    class ReconciliationRuleVariable
-    private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(reconciliationRuleVariable: ReconciliationRuleVariable) = apply {
-                additionalProperties(reconciliationRuleVariable.additionalProperties)
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            @JsonAnySetter
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun build(): ReconciliationRuleVariable =
-                ReconciliationRuleVariable(additionalProperties.toUnmodifiable())
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ReconciliationRuleVariable && this.additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        private var hashCode: Int = 0
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "ReconciliationRuleVariable{additionalProperties=$additionalProperties}"
     }
 
     class Status
