@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package com.moderntreasury.api.core.http
 
 import com.google.common.util.concurrent.MoreExecutors
