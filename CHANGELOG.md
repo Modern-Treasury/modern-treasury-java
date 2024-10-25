@@ -1,5 +1,42 @@
 # Changelog
 
+## 2.22.0 (2024-10-25)
+
+Full Changelog: [v2.21.1...v2.22.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.21.1...v2.22.0)
+
+### Features
+
+* **api:** updates to required fields for ExpectedPayments ([#233](https://github.com/Modern-Treasury/modern-treasury-java/issues/233)) ([fcdf85e](https://github.com/Modern-Treasury/modern-treasury-java/commit/fcdf85e1b902fc931cf7ca81586bfbf7f8bc2796))
+* **client:** add `User-Agent` header ([#244](https://github.com/Modern-Treasury/modern-treasury-java/issues/244)) ([f6aaede](https://github.com/Modern-Treasury/modern-treasury-java/commit/f6aaedef54499764b537746dabff56b566d920a9))
+* **client:** set `X-Stainless-Runtime` header ([#243](https://github.com/Modern-Treasury/modern-treasury-java/issues/243)) ([caf71d1](https://github.com/Modern-Treasury/modern-treasury-java/commit/caf71d14286c80c379be14f88e7b3e90d691a3d4))
+
+
+### Bug Fixes
+
+* **client:** accidental double-wrapping with `RetryingHttpClient` ([#245](https://github.com/Modern-Treasury/modern-treasury-java/issues/245)) ([242f7e0](https://github.com/Modern-Treasury/modern-treasury-java/commit/242f7e0c64005fa7634b6616aca1e9ac7572d799))
+* **client:** add `@JvmOverloads` to `HttpClient` methods ([#240](https://github.com/Modern-Treasury/modern-treasury-java/issues/240)) ([945b426](https://github.com/Modern-Treasury/modern-treasury-java/commit/945b426ea9de83cd7233928f107618dd5a6ee2c8))
+* **client:** implement `hashCode` for `IsMissing` ([#242](https://github.com/Modern-Treasury/modern-treasury-java/issues/242)) ([8de5967](https://github.com/Modern-Treasury/modern-treasury-java/commit/8de59673aeb4e28591ffb49b73334402b6a2405e))
+* use date time serialization for query parameters ([#227](https://github.com/Modern-Treasury/modern-treasury-java/issues/227)) ([506d60a](https://github.com/Modern-Treasury/modern-treasury-java/commit/506d60af59637a60f5028d6d32ecd7f3f5d854c0))
+
+
+### Chores
+
+* **internal:** omit unnecessary code ([c119c31](https://github.com/Modern-Treasury/modern-treasury-java/commit/c119c319ff9c92db9c8f30d6a4050b189f8f3531))
+* **internal:** remove useless `[@file](https://github.com/file):JvmSynthetic` ([#239](https://github.com/Modern-Treasury/modern-treasury-java/issues/239)) ([ab76d6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab76d6d61f718d46d8bfb4951f0a58626e5518a4))
+
+
+### Styles
+
+* **client:** make toString methods consistent ([#235](https://github.com/Modern-Treasury/modern-treasury-java/issues/235)) ([03ef20f](https://github.com/Modern-Treasury/modern-treasury-java/commit/03ef20f84cf07c54bbeaa849c08061053d620a52))
+* **internal:** improve `OkHttpClient` formatting ([#237](https://github.com/Modern-Treasury/modern-treasury-java/issues/237)) ([937b1d7](https://github.com/Modern-Treasury/modern-treasury-java/commit/937b1d76c0912a9ac0bab71e75bc8d9f9804b842))
+* **internal:** improve `RetryingHttpClient` formatting ([#241](https://github.com/Modern-Treasury/modern-treasury-java/issues/241)) ([e0826fa](https://github.com/Modern-Treasury/modern-treasury-java/commit/e0826fac47772881fe85f3c1219459b56624f184))
+* **internal:** improve terseness of handlers ([#229](https://github.com/Modern-Treasury/modern-treasury-java/issues/229)) ([1683a50](https://github.com/Modern-Treasury/modern-treasury-java/commit/1683a501ecf4cd4550987df78ebf21c788184884))
+* **internal:** improve terseness of Properties.kt ([#230](https://github.com/Modern-Treasury/modern-treasury-java/issues/230)) ([214a6a3](https://github.com/Modern-Treasury/modern-treasury-java/commit/214a6a314b0a79c1372b24916a149272e9a19596))
+* **internal:** move Handlers.kt and HttpRequestBodies.kt to core ([07b9d4c](https://github.com/Modern-Treasury/modern-treasury-java/commit/07b9d4cee568c64221f669c4dafc9cf8ffed5bf7))
+* **internal:** simplify client build method ([#238](https://github.com/Modern-Treasury/modern-treasury-java/issues/238)) ([6448357](https://github.com/Modern-Treasury/modern-treasury-java/commit/6448357162d7737ba527c9907a5230d9b2b94846))
+* **internal:** update comment formatting ([#236](https://github.com/Modern-Treasury/modern-treasury-java/issues/236)) ([bf1c259](https://github.com/Modern-Treasury/modern-treasury-java/commit/bf1c2593b922fb5752f87ef8087a23dfae3181cc))
+* **internal:** update some spacing ([#234](https://github.com/Modern-Treasury/modern-treasury-java/issues/234)) ([76e2c69](https://github.com/Modern-Treasury/modern-treasury-java/commit/76e2c698fae170d076aaeddef6330257b3be0383))
+
 ## 2.21.1 (2024-10-03)
 
 Full Changelog: [v2.21.0...v2.21.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.21.0...v2.21.1)
