@@ -1,6 +1,5 @@
 package com.moderntreasury.api.core.http
 
-import com.google.common.util.concurrent.MoreExecutors
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.errors.ModernTreasuryIoException
 import java.io.IOException
@@ -116,8 +115,10 @@ private constructor(
                             executeWithRetries(request, requestOptions)
                         }
                     },
-                    MoreExecutors.directExecutor()
-                )
+                ) {
+                    // Run in the same thread.
+                    it.run()
+                }
                 .thenCompose(Function.identity())
         }
 
