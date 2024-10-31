@@ -4,7 +4,7 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.models.*
 import java.util.Objects
 import java.util.Optional
@@ -39,7 +39,7 @@ constructor(
         this.perPage?.let { params.put("per_page", listOf(it.toString())) }
         this.updatedAt?.forEachQueryParam { key, values -> params.put("updated_at[$key]", values) }
         params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        return params.toImmutable()
     }
 
     @JvmSynthetic internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -166,13 +166,13 @@ constructor(
 
         fun build(): LedgerListParams =
             LedgerListParams(
-                if (id.size == 0) null else id.toUnmodifiable(),
+                if (id.size == 0) null else id.toImmutable(),
                 afterCursor,
                 metadata,
                 perPage,
                 updatedAt,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 
@@ -224,7 +224,7 @@ constructor(
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -296,7 +296,7 @@ constructor(
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun build(): UpdatedAt = UpdatedAt(additionalProperties.toUnmodifiable())
+            fun build(): UpdatedAt = UpdatedAt(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

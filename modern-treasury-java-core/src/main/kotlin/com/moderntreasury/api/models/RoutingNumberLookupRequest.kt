@@ -13,7 +13,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
@@ -246,11 +246,11 @@ private constructor(
             RoutingNumberLookupRequest(
                 routingNumber,
                 routingNumberType,
-                supportedPaymentTypes.map { it.toUnmodifiable() },
+                supportedPaymentTypes.map { it.toImmutable() },
                 bankName,
                 bankAddress,
                 sanctions,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -413,7 +413,7 @@ private constructor(
                     region,
                     postalCode,
                     country,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -598,7 +598,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Sanctions = Sanctions(additionalProperties.toUnmodifiable())
+            fun build(): Sanctions = Sanctions(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

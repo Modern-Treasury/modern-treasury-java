@@ -11,7 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = LedgerEventHandlerVariable.Builder::class)
@@ -99,7 +99,7 @@ private constructor(
             LedgerEventHandlerVariable(
                 type,
                 query,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -211,7 +211,7 @@ private constructor(
                     field,
                     operator,
                     value,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
