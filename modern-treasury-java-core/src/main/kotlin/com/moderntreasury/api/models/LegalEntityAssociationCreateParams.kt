@@ -12,7 +12,7 @@ import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
 import java.time.LocalDate
@@ -182,12 +182,12 @@ constructor(
                     checkNotNull(relationshipTypes) {
                             "`relationshipTypes` is required but was not set"
                         }
-                        .toUnmodifiable(),
+                        .toImmutable(),
                     childLegalEntity,
                     childLegalEntityId,
                     ownershipPercentage,
                     title,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -363,14 +363,14 @@ constructor(
                 checkNotNull(relationshipTypes) {
                         "`relationshipTypes` is required but was not set"
                     }
-                    .toUnmodifiable(),
+                    .toImmutable(),
                 childLegalEntity,
                 childLegalEntityId,
                 ownershipPercentage,
                 title,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -646,15 +646,15 @@ constructor(
                     dateOfBirth,
                     dateFormed,
                     businessName,
-                    doingBusinessAsNames?.toUnmodifiable(),
+                    doingBusinessAsNames?.toImmutable(),
                     legalStructure,
-                    phoneNumbers?.toUnmodifiable(),
+                    phoneNumbers?.toImmutable(),
                     email,
                     website,
                     metadata,
-                    addresses?.toUnmodifiable(),
-                    identifications?.toUnmodifiable(),
-                    additionalProperties.toUnmodifiable(),
+                    addresses?.toImmutable(),
+                    identifications?.toImmutable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -769,14 +769,14 @@ constructor(
 
                 fun build(): LegalEntityAddressCreateRequest =
                     LegalEntityAddressCreateRequest(
-                        addressTypes?.toUnmodifiable(),
+                        addressTypes?.toImmutable(),
                         line1,
                         line2,
                         locality,
                         region,
                         postalCode,
                         country,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -958,7 +958,7 @@ constructor(
                         checkNotNull(idNumber) { "`idNumber` is required but was not set" },
                         checkNotNull(idType) { "`idType` is required but was not set" },
                         issuingCountry,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1340,7 +1340,7 @@ constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1415,7 +1415,7 @@ constructor(
                     }
 
                 fun build(): PhoneNumber =
-                    PhoneNumber(phoneNumber, additionalProperties.toUnmodifiable())
+                    PhoneNumber(phoneNumber, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
