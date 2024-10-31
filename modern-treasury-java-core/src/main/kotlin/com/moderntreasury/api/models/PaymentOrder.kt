@@ -22,7 +22,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.getOrThrow
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -1543,17 +1543,17 @@ private constructor(
                 ultimateOriginatingAccountId,
                 ultimateOriginatingAccountType,
                 counterpartyId,
-                transactionIds.map { it.toUnmodifiable() },
+                transactionIds.map { it.toImmutable() },
                 ledgerTransactionId,
                 currentReturn,
                 transactionMonitoringEnabled,
                 complianceRuleMetadata,
-                referenceNumbers.map { it.toUnmodifiable() },
+                referenceNumbers.map { it.toImmutable() },
                 vendorFailureReason,
                 decisionId,
                 foreignExchangeRate,
                 vendorAttributes,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -1674,7 +1674,7 @@ private constructor(
                 Accounting(
                     accountId,
                     classId,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1816,7 +1816,7 @@ private constructor(
             }
 
             fun build(): ComplianceRuleMetadata =
-                ComplianceRuleMetadata(additionalProperties.toUnmodifiable())
+                ComplianceRuleMetadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2199,7 +2199,7 @@ private constructor(
                     targetAmount,
                     targetCurrency,
                     value,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -2274,7 +2274,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2605,7 +2605,7 @@ private constructor(
                     updatedAt,
                     referenceNumber,
                     referenceNumberType,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

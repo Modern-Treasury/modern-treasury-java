@@ -12,7 +12,7 @@ import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.*
 import java.time.LocalDate
@@ -592,7 +592,7 @@ constructor(
 
             fun build(): InvoiceUpdateBody =
                 InvoiceUpdateBody(
-                    contactDetails?.toUnmodifiable(),
+                    contactDetails?.toImmutable(),
                     counterpartyBillingAddress,
                     counterpartyId,
                     counterpartyShippingAddress,
@@ -601,11 +601,11 @@ constructor(
                     dueDate,
                     fallbackPaymentMethod,
                     ingestLedgerEntries,
-                    invoiceLineItems?.toUnmodifiable(),
+                    invoiceLineItems?.toImmutable(),
                     invoicerAddress,
                     ledgerAccountSettlementId,
                     metadata,
-                    notificationEmailAddresses?.toUnmodifiable(),
+                    notificationEmailAddresses?.toImmutable(),
                     notificationsEnabled,
                     originatingAccountId,
                     paymentEffectiveDate,
@@ -614,10 +614,10 @@ constructor(
                     receivingAccountId,
                     recipientEmail,
                     recipientName,
-                    remindAfterOverdueDays?.toUnmodifiable(),
+                    remindAfterOverdueDays?.toImmutable(),
                     status,
                     virtualAccountId,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -987,7 +987,7 @@ constructor(
         fun build(): InvoiceUpdateParams =
             InvoiceUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                if (contactDetails.size == 0) null else contactDetails.toUnmodifiable(),
+                if (contactDetails.size == 0) null else contactDetails.toImmutable(),
                 counterpartyBillingAddress,
                 counterpartyId,
                 counterpartyShippingAddress,
@@ -996,12 +996,12 @@ constructor(
                 dueDate,
                 fallbackPaymentMethod,
                 ingestLedgerEntries,
-                if (invoiceLineItems.size == 0) null else invoiceLineItems.toUnmodifiable(),
+                if (invoiceLineItems.size == 0) null else invoiceLineItems.toImmutable(),
                 invoicerAddress,
                 ledgerAccountSettlementId,
                 metadata,
                 if (notificationEmailAddresses.size == 0) null
-                else notificationEmailAddresses.toUnmodifiable(),
+                else notificationEmailAddresses.toImmutable(),
                 notificationsEnabled,
                 originatingAccountId,
                 paymentEffectiveDate,
@@ -1011,12 +1011,12 @@ constructor(
                 recipientEmail,
                 recipientName,
                 if (remindAfterOverdueDays.size == 0) null
-                else remindAfterOverdueDays.toUnmodifiable(),
+                else remindAfterOverdueDays.toImmutable(),
                 status,
                 virtualAccountId,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -1150,7 +1150,7 @@ constructor(
                     checkNotNull(contactIdentifierType) {
                         "`contactIdentifierType` is required but was not set"
                     },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1343,7 +1343,7 @@ constructor(
                     checkNotNull(region) { "`region` is required but was not set" },
                     checkNotNull(postalCode) { "`postalCode` is required but was not set" },
                     checkNotNull(country) { "`country` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1470,7 +1470,7 @@ constructor(
                     checkNotNull(region) { "`region` is required but was not set" },
                     checkNotNull(postalCode) { "`postalCode` is required but was not set" },
                     checkNotNull(country) { "`country` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1647,7 +1647,7 @@ constructor(
                     unitAmountDecimal,
                     direction,
                     metadata,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1696,7 +1696,7 @@ constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1842,7 +1842,7 @@ constructor(
                     checkNotNull(region) { "`region` is required but was not set" },
                     checkNotNull(postalCode) { "`postalCode` is required but was not set" },
                     checkNotNull(country) { "`country` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1909,7 +1909,7 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

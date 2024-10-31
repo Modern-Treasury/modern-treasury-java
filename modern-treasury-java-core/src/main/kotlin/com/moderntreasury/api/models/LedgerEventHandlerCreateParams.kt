@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.models.*
 import java.util.Objects
 import java.util.Optional
@@ -191,7 +191,7 @@ constructor(
                     ledgerId,
                     metadata,
                     variables,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -362,9 +362,9 @@ constructor(
                 ledgerId,
                 metadata,
                 variables,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -468,8 +468,8 @@ constructor(
                     effectiveAt,
                     status,
                     checkNotNull(ledgerEntries) { "`ledgerEntries` is required but was not set" }
-                        .toUnmodifiable(),
-                    additionalProperties.toUnmodifiable(),
+                        .toImmutable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -555,7 +555,7 @@ constructor(
                         checkNotNull(ledgerAccountId) {
                             "`ledgerAccountId` is required but was not set"
                         },
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -675,7 +675,7 @@ constructor(
                     checkNotNull(field) { "`field` is required but was not set" },
                     checkNotNull(operator) { "`operator` is required but was not set" },
                     checkNotNull(value) { "`value` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -742,7 +742,7 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -807,7 +807,7 @@ constructor(
             }
 
             fun build(): LedgerEventHandlerVariables =
-                LedgerEventHandlerVariables(additionalProperties.toUnmodifiable())
+                LedgerEventHandlerVariables(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

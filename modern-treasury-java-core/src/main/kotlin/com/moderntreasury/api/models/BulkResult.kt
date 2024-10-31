@@ -22,7 +22,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.getOrThrow
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -368,7 +368,7 @@ private constructor(
                 entityId,
                 entityType,
                 entity,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -725,8 +725,8 @@ private constructor(
                         liveMode,
                         createdAt,
                         updatedAt,
-                        requestErrors.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        requestErrors.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -831,7 +831,7 @@ private constructor(
                             code,
                             message,
                             parameter,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -1006,7 +1006,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): RequestParams = RequestParams(additionalProperties.toUnmodifiable())
+            fun build(): RequestParams = RequestParams(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

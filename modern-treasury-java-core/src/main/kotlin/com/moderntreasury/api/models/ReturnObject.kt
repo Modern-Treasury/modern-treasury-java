@@ -13,7 +13,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -617,9 +617,9 @@ private constructor(
                 failureReason,
                 role,
                 currentReturn,
-                referenceNumbers.map { it.toUnmodifiable() },
+                referenceNumbers.map { it.toImmutable() },
                 ledgerTransactionId,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -1179,7 +1179,7 @@ private constructor(
                     updatedAt,
                     referenceNumber,
                     referenceNumberType,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

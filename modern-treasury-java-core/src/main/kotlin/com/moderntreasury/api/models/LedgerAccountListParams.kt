@@ -4,7 +4,7 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.NoAutoDetect
-import com.moderntreasury.api.core.toUnmodifiable
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.models.*
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -89,7 +89,7 @@ constructor(
         }
         this.updatedAt?.forEachQueryParam { key, values -> params.put("updated_at[$key]", values) }
         params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        return params.toImmutable()
     }
 
     @JvmSynthetic internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -296,7 +296,7 @@ constructor(
 
         fun build(): LedgerAccountListParams =
             LedgerAccountListParams(
-                if (id.size == 0) null else id.toUnmodifiable(),
+                if (id.size == 0) null else id.toImmutable(),
                 afterCursor,
                 availableBalanceAmount,
                 balances,
@@ -305,13 +305,13 @@ constructor(
                 ledgerAccountCategoryId,
                 ledgerId,
                 metadata,
-                if (name.size == 0) null else name.toUnmodifiable(),
+                if (name.size == 0) null else name.toImmutable(),
                 pendingBalanceAmount,
                 perPage,
                 postedBalanceAmount,
                 updatedAt,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 
@@ -419,7 +419,7 @@ constructor(
                     lte,
                     eq,
                     notEq,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -548,7 +548,7 @@ constructor(
                     effectiveAt,
                     effectiveAtLowerBound,
                     effectiveAtUpperBound,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -622,7 +622,7 @@ constructor(
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun build(): CreatedAt = CreatedAt(additionalProperties.toUnmodifiable())
+            fun build(): CreatedAt = CreatedAt(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -693,7 +693,7 @@ constructor(
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -820,7 +820,7 @@ constructor(
                     lte,
                     eq,
                     notEq,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -949,7 +949,7 @@ constructor(
                     lte,
                     eq,
                     notEq,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1023,7 +1023,7 @@ constructor(
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun build(): UpdatedAt = UpdatedAt(additionalProperties.toUnmodifiable())
+            fun build(): UpdatedAt = UpdatedAt(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
