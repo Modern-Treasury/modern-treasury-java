@@ -3,6 +3,8 @@
 package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.google.common.collect.ArrayListMultimap
+import com.google.common.collect.ListMultimap
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonValue
@@ -21,8 +23,8 @@ constructor(
     private val perPage: Long?,
     private val returnableId: String?,
     private val returnableType: ReturnableType?,
-    private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
+    private val additionalQueryParams: Map<String, List<String>>,
 ) {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
@@ -37,6 +39,8 @@ constructor(
 
     fun returnableType(): Optional<ReturnableType> = Optional.ofNullable(returnableType)
 
+    @JvmSynthetic internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
+
     @JvmSynthetic
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
@@ -50,26 +54,24 @@ constructor(
         return params.toImmutable()
     }
 
-    @JvmSynthetic internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
+    fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
-
-    fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is ReturnListParams && this.afterCursor == other.afterCursor && this.counterpartyId == other.counterpartyId && this.internalAccountId == other.internalAccountId && this.perPage == other.perPage && this.returnableId == other.returnableId && this.returnableType == other.returnableType && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
+        return /* spotless:off */ other is ReturnListParams && this.afterCursor == other.afterCursor && this.counterpartyId == other.counterpartyId && this.internalAccountId == other.internalAccountId && this.perPage == other.perPage && this.returnableId == other.returnableId && this.returnableType == other.returnableType && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(afterCursor, counterpartyId, internalAccountId, perPage, returnableId, returnableType, additionalQueryParams, additionalHeaders) /* spotless:on */
+        return /* spotless:off */ Objects.hash(afterCursor, counterpartyId, internalAccountId, perPage, returnableId, returnableType, additionalHeaders, additionalQueryParams) /* spotless:on */
     }
 
     override fun toString() =
-        "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -87,8 +89,8 @@ constructor(
         private var perPage: Long? = null
         private var returnableId: String? = null
         private var returnableType: ReturnableType? = null
-        private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
+        private var additionalHeaders: ListMultimap<String, String> = ArrayListMultimap.create()
+        private var additionalQueryParams: ListMultimap<String, String> = ArrayListMultimap.create()
 
         @JvmSynthetic
         internal fun from(returnListParams: ReturnListParams) = apply {
@@ -98,8 +100,8 @@ constructor(
             this.perPage = returnListParams.perPage
             this.returnableId = returnListParams.returnableId
             this.returnableType = returnListParams.returnableType
-            additionalQueryParams(returnListParams.additionalQueryParams)
             additionalHeaders(returnListParams.additionalHeaders)
+            additionalQueryParams(returnListParams.additionalQueryParams)
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -128,45 +130,44 @@ constructor(
             this.returnableType = returnableType
         }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllQueryParams(additionalQueryParams)
-        }
-
-        fun putQueryParam(name: String, value: String) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.add(value)
-        }
-
-        fun putQueryParams(name: String, values: Iterable<String>) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.addAll(values)
-        }
-
-        fun putAllQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            additionalQueryParams.forEach(this::putQueryParams)
-        }
-
-        fun removeQueryParam(name: String) = apply {
-            this.additionalQueryParams.put(name, mutableListOf())
-        }
-
         fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
             this.additionalHeaders.clear()
-            putAllHeaders(additionalHeaders)
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
-        fun putHeader(name: String, value: String) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.add(value)
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
         }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.addAll(values)
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.putAll(name, values)
         }
 
-        fun putAllHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            additionalHeaders.forEach(this::putHeaders)
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            additionalHeaders.forEach(::putAdditionalHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeAdditionalHeader(name: String) = apply { additionalHeaders.removeAll(name) }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.putAll(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                additionalQueryParams.forEach(::putAdditionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParam(key: String) = apply { additionalQueryParams.removeAll(key) }
 
         fun build(): ReturnListParams =
             ReturnListParams(
@@ -176,8 +177,14 @@ constructor(
                 perPage,
                 returnableId,
                 returnableType,
-                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
-                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders
+                    .asMap()
+                    .mapValues { it.value.toList().toImmutable() }
+                    .toImmutable(),
+                additionalQueryParams
+                    .asMap()
+                    .mapValues { it.value.toList().toImmutable() }
+                    .toImmutable(),
             )
     }
 
