@@ -38,10 +38,10 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("api", "payment_orders", params.getPathParam(0), "reversals")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
@@ -74,10 +74,10 @@ constructor(
                     "reversals",
                     params.getPathParam(1)
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
@@ -103,10 +103,10 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("api", "payment_orders", params.getPathParam(0), "reversals")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
             ->
