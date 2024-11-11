@@ -1,5 +1,50 @@
 # Changelog
 
+## 3.0.0 (2024-11-11)
+
+Full Changelog: [v2.22.0...v3.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.22.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** replace multimaps with custom types ([#259](https://github.com/Modern-Treasury/modern-treasury-java/issues/259))
+* **client:** add/rename methods for headers/query params ([#257](https://github.com/Modern-Treasury/modern-treasury-java/issues/257))
+* **client:** rename header and query params builder methods ([#256](https://github.com/Modern-Treasury/modern-treasury-java/issues/256))
+
+### Features
+
+* **client:** add `Headers` class ([#253](https://github.com/Modern-Treasury/modern-treasury-java/issues/253)) ([9ae3cb0](https://github.com/Modern-Treasury/modern-treasury-java/commit/9ae3cb0fd30d7bfecac0aff5923a88e4662e97c2))
+* **client:** add `QueryParams` class ([#254](https://github.com/Modern-Treasury/modern-treasury-java/issues/254)) ([601fe61](https://github.com/Modern-Treasury/modern-treasury-java/commit/601fe619287a1f67c242c67fcc1e0efd2c9b8982))
+* **client:** add/rename methods for headers/query params ([#257](https://github.com/Modern-Treasury/modern-treasury-java/issues/257)) ([9f958bf](https://github.com/Modern-Treasury/modern-treasury-java/commit/9f958bf851ece25e97928672280ed03beff615c2))
+* **client:** additional builder setters for error class ([c031a23](https://github.com/Modern-Treasury/modern-treasury-java/commit/c031a23a39703bd4bbb0f00bbc6c81b112f9d1e7))
+* **client:** clean up resource leaks when the resource becomes phantom reachable ([#246](https://github.com/Modern-Treasury/modern-treasury-java/issues/246)) ([29fe5a2](https://github.com/Modern-Treasury/modern-treasury-java/commit/29fe5a2c1c10c5bd2c67cf595d2f97e3c8ed3514))
+* **client:** more additional body param setters ([#261](https://github.com/Modern-Treasury/modern-treasury-java/issues/261)) ([f004588](https://github.com/Modern-Treasury/modern-treasury-java/commit/f004588231341c4d25d7f70046c6521af6de35b6))
+* **client:** propagate headers/query params methods to client builders ([#255](https://github.com/Modern-Treasury/modern-treasury-java/issues/255)) ([ad29c09](https://github.com/Modern-Treasury/modern-treasury-java/commit/ad29c0990945140ca0ca47414f845ee183ca460f))
+* **client:** replace multimaps with custom types ([#259](https://github.com/Modern-Treasury/modern-treasury-java/issues/259)) ([02ca0bf](https://github.com/Modern-Treasury/modern-treasury-java/commit/02ca0bf0d8e3ccef8366fb3dbf4a4815271c0f9f))
+
+
+### Bug Fixes
+
+* **client:** ensure constructed objects are immutable ([#251](https://github.com/Modern-Treasury/modern-treasury-java/issues/251)) ([36f41da](https://github.com/Modern-Treasury/modern-treasury-java/commit/36f41da5ad8229377b4bef7fe4d4a69b05666771))
+* **client:** error class `toBuilder` not copying fields ([#262](https://github.com/Modern-Treasury/modern-treasury-java/issues/262)) ([c031a23](https://github.com/Modern-Treasury/modern-treasury-java/commit/c031a23a39703bd4bbb0f00bbc6c81b112f9d1e7))
+
+
+### Performance Improvements
+
+* **tests:** remove unused dependencies ([#263](https://github.com/Modern-Treasury/modern-treasury-java/issues/263)) ([e3077fc](https://github.com/Modern-Treasury/modern-treasury-java/commit/e3077fc6befa01a62030e05fcaac9a541ebcb612))
+
+
+### Styles
+
+* **internal:** make `getOrThrow` terse and consistent ([#248](https://github.com/Modern-Treasury/modern-treasury-java/issues/248)) ([f285344](https://github.com/Modern-Treasury/modern-treasury-java/commit/f285344a8d9b20fa9f99897ee205ecd5c34039e4))
+
+
+### Refactors
+
+* **client:** http request methods ([#258](https://github.com/Modern-Treasury/modern-treasury-java/issues/258)) ([1b773c6](https://github.com/Modern-Treasury/modern-treasury-java/commit/1b773c6390d47c68b6211d165aaa92b5bc9b2c97))
+* **client:** rename header and query params builder methods ([#256](https://github.com/Modern-Treasury/modern-treasury-java/issues/256)) ([3d636ab](https://github.com/Modern-Treasury/modern-treasury-java/commit/3d636ab107098a47e9d33ce10dd238dacc489640))
+* **internal:** inline `MoreExecutors` usage ([#250](https://github.com/Modern-Treasury/modern-treasury-java/issues/250)) ([345de16](https://github.com/Modern-Treasury/modern-treasury-java/commit/345de16deae1f3810e2f758a8a5f163ba6d32c32))
+* **internal:** polish `ClientOptions` ([#252](https://github.com/Modern-Treasury/modern-treasury-java/issues/252)) ([43a21da](https://github.com/Modern-Treasury/modern-treasury-java/commit/43a21da1d9ada7f691b0d1f8ccfd357a52071d2b))
+
 ## 2.22.0 (2024-10-25)
 
 Full Changelog: [v2.21.1...v2.22.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.21.1...v2.22.0)
