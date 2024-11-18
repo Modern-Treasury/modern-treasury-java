@@ -2483,8 +2483,14 @@ constructor(
     private constructor(
         private val legalEntityType: LegalEntityType?,
         private val riskRating: RiskRating?,
+        private val prefix: String?,
         private val firstName: String?,
+        private val middleName: String?,
         private val lastName: String?,
+        private val suffix: String?,
+        private val preferredName: String?,
+        private val citizenshipCountry: String?,
+        private val politicallyExposedPerson: Boolean?,
         private val dateOfBirth: LocalDate?,
         private val dateFormed: LocalDate?,
         private val businessName: String?,
@@ -2494,6 +2500,8 @@ constructor(
         private val email: String?,
         private val website: String?,
         private val metadata: Metadata?,
+        private val bankSettings: BankSettings?,
+        private val wealthAndEmploymentDetails: WealthAndEmploymentDetails?,
         private val addresses: List<LegalEntityAddressCreateRequest>?,
         private val identifications: List<IdentificationCreateRequest>?,
         private val legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>?,
@@ -2506,11 +2514,30 @@ constructor(
         /** The risk rating of the legal entity. One of low, medium, high. */
         @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
 
+        /** An individual's prefix. */
+        @JsonProperty("prefix") fun prefix(): String? = prefix
+
         /** An individual's first name. */
         @JsonProperty("first_name") fun firstName(): String? = firstName
 
+        /** An individual's middle name. */
+        @JsonProperty("middle_name") fun middleName(): String? = middleName
+
         /** An individual's last name. */
         @JsonProperty("last_name") fun lastName(): String? = lastName
+
+        /** An individual's suffix. */
+        @JsonProperty("suffix") fun suffix(): String? = suffix
+
+        /** An individual's preferred name. */
+        @JsonProperty("preferred_name") fun preferredName(): String? = preferredName
+
+        /** The country of citizenship for an individual. */
+        @JsonProperty("citizenship_country") fun citizenshipCountry(): String? = citizenshipCountry
+
+        /** Whether the individual is a politically exposed person. */
+        @JsonProperty("politically_exposed_person")
+        fun politicallyExposedPerson(): Boolean? = politicallyExposedPerson
 
         /** An individual's date of birth (YYYY-MM-DD). */
         @JsonProperty("date_of_birth") fun dateOfBirth(): LocalDate? = dateOfBirth
@@ -2540,6 +2567,11 @@ constructor(
          */
         @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
+        @JsonProperty("bank_settings") fun bankSettings(): BankSettings? = bankSettings
+
+        @JsonProperty("wealth_and_employment_details")
+        fun wealthAndEmploymentDetails(): WealthAndEmploymentDetails? = wealthAndEmploymentDetails
+
         /** A list of addresses for the entity. */
         @JsonProperty("addresses")
         fun addresses(): List<LegalEntityAddressCreateRequest>? = addresses
@@ -2568,8 +2600,14 @@ constructor(
 
             private var legalEntityType: LegalEntityType? = null
             private var riskRating: RiskRating? = null
+            private var prefix: String? = null
             private var firstName: String? = null
+            private var middleName: String? = null
             private var lastName: String? = null
+            private var suffix: String? = null
+            private var preferredName: String? = null
+            private var citizenshipCountry: String? = null
+            private var politicallyExposedPerson: Boolean? = null
             private var dateOfBirth: LocalDate? = null
             private var dateFormed: LocalDate? = null
             private var businessName: String? = null
@@ -2579,6 +2617,8 @@ constructor(
             private var email: String? = null
             private var website: String? = null
             private var metadata: Metadata? = null
+            private var bankSettings: BankSettings? = null
+            private var wealthAndEmploymentDetails: WealthAndEmploymentDetails? = null
             private var addresses: List<LegalEntityAddressCreateRequest>? = null
             private var identifications: List<IdentificationCreateRequest>? = null
             private var legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>? =
@@ -2589,8 +2629,14 @@ constructor(
             internal fun from(legalEntityCreateRequest: LegalEntityCreateRequest) = apply {
                 this.legalEntityType = legalEntityCreateRequest.legalEntityType
                 this.riskRating = legalEntityCreateRequest.riskRating
+                this.prefix = legalEntityCreateRequest.prefix
                 this.firstName = legalEntityCreateRequest.firstName
+                this.middleName = legalEntityCreateRequest.middleName
                 this.lastName = legalEntityCreateRequest.lastName
+                this.suffix = legalEntityCreateRequest.suffix
+                this.preferredName = legalEntityCreateRequest.preferredName
+                this.citizenshipCountry = legalEntityCreateRequest.citizenshipCountry
+                this.politicallyExposedPerson = legalEntityCreateRequest.politicallyExposedPerson
                 this.dateOfBirth = legalEntityCreateRequest.dateOfBirth
                 this.dateFormed = legalEntityCreateRequest.dateFormed
                 this.businessName = legalEntityCreateRequest.businessName
@@ -2600,6 +2646,9 @@ constructor(
                 this.email = legalEntityCreateRequest.email
                 this.website = legalEntityCreateRequest.website
                 this.metadata = legalEntityCreateRequest.metadata
+                this.bankSettings = legalEntityCreateRequest.bankSettings
+                this.wealthAndEmploymentDetails =
+                    legalEntityCreateRequest.wealthAndEmploymentDetails
                 this.addresses = legalEntityCreateRequest.addresses
                 this.identifications = legalEntityCreateRequest.identifications
                 this.legalEntityAssociations = legalEntityCreateRequest.legalEntityAssociations
@@ -2616,13 +2665,39 @@ constructor(
             @JsonProperty("risk_rating")
             fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
 
+            /** An individual's prefix. */
+            @JsonProperty("prefix") fun prefix(prefix: String) = apply { this.prefix = prefix }
+
             /** An individual's first name. */
             @JsonProperty("first_name")
             fun firstName(firstName: String) = apply { this.firstName = firstName }
 
+            /** An individual's middle name. */
+            @JsonProperty("middle_name")
+            fun middleName(middleName: String) = apply { this.middleName = middleName }
+
             /** An individual's last name. */
             @JsonProperty("last_name")
             fun lastName(lastName: String) = apply { this.lastName = lastName }
+
+            /** An individual's suffix. */
+            @JsonProperty("suffix") fun suffix(suffix: String) = apply { this.suffix = suffix }
+
+            /** An individual's preferred name. */
+            @JsonProperty("preferred_name")
+            fun preferredName(preferredName: String) = apply { this.preferredName = preferredName }
+
+            /** The country of citizenship for an individual. */
+            @JsonProperty("citizenship_country")
+            fun citizenshipCountry(citizenshipCountry: String) = apply {
+                this.citizenshipCountry = citizenshipCountry
+            }
+
+            /** Whether the individual is a politically exposed person. */
+            @JsonProperty("politically_exposed_person")
+            fun politicallyExposedPerson(politicallyExposedPerson: Boolean) = apply {
+                this.politicallyExposedPerson = politicallyExposedPerson
+            }
 
             /** An individual's date of birth (YYYY-MM-DD). */
             @JsonProperty("date_of_birth")
@@ -2665,6 +2740,17 @@ constructor(
             @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
+            @JsonProperty("bank_settings")
+            fun bankSettings(bankSettings: BankSettings) = apply {
+                this.bankSettings = bankSettings
+            }
+
+            @JsonProperty("wealth_and_employment_details")
+            fun wealthAndEmploymentDetails(wealthAndEmploymentDetails: WealthAndEmploymentDetails) =
+                apply {
+                    this.wealthAndEmploymentDetails = wealthAndEmploymentDetails
+                }
+
             /** A list of addresses for the entity. */
             @JsonProperty("addresses")
             fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
@@ -2703,8 +2789,14 @@ constructor(
                         "`legalEntityType` is required but was not set"
                     },
                     riskRating,
+                    prefix,
                     firstName,
+                    middleName,
                     lastName,
+                    suffix,
+                    preferredName,
+                    citizenshipCountry,
+                    politicallyExposedPerson,
                     dateOfBirth,
                     dateFormed,
                     businessName,
@@ -2714,6 +2806,8 @@ constructor(
                     email,
                     website,
                     metadata,
+                    bankSettings,
+                    wealthAndEmploymentDetails,
                     addresses?.toImmutable(),
                     identifications?.toImmutable(),
                     legalEntityAssociations?.toImmutable(),
@@ -3467,8 +3561,14 @@ constructor(
             private constructor(
                 private val legalEntityType: LegalEntityType?,
                 private val riskRating: RiskRating?,
+                private val prefix: String?,
                 private val firstName: String?,
+                private val middleName: String?,
                 private val lastName: String?,
+                private val suffix: String?,
+                private val preferredName: String?,
+                private val citizenshipCountry: String?,
+                private val politicallyExposedPerson: Boolean?,
                 private val dateOfBirth: LocalDate?,
                 private val dateFormed: LocalDate?,
                 private val businessName: String?,
@@ -3478,6 +3578,8 @@ constructor(
                 private val email: String?,
                 private val website: String?,
                 private val metadata: Metadata?,
+                private val bankSettings: BankSettings?,
+                private val wealthAndEmploymentDetails: WealthAndEmploymentDetails?,
                 private val addresses: List<LegalEntityAddressCreateRequest>?,
                 private val identifications: List<IdentificationCreateRequest>?,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -3490,11 +3592,31 @@ constructor(
                 /** The risk rating of the legal entity. One of low, medium, high. */
                 @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
 
+                /** An individual's prefix. */
+                @JsonProperty("prefix") fun prefix(): String? = prefix
+
                 /** An individual's first name. */
                 @JsonProperty("first_name") fun firstName(): String? = firstName
 
+                /** An individual's middle name. */
+                @JsonProperty("middle_name") fun middleName(): String? = middleName
+
                 /** An individual's last name. */
                 @JsonProperty("last_name") fun lastName(): String? = lastName
+
+                /** An individual's suffix. */
+                @JsonProperty("suffix") fun suffix(): String? = suffix
+
+                /** An individual's preferred name. */
+                @JsonProperty("preferred_name") fun preferredName(): String? = preferredName
+
+                /** The country of citizenship for an individual. */
+                @JsonProperty("citizenship_country")
+                fun citizenshipCountry(): String? = citizenshipCountry
+
+                /** Whether the individual is a politically exposed person. */
+                @JsonProperty("politically_exposed_person")
+                fun politicallyExposedPerson(): Boolean? = politicallyExposedPerson
 
                 /** An individual's date of birth (YYYY-MM-DD). */
                 @JsonProperty("date_of_birth") fun dateOfBirth(): LocalDate? = dateOfBirth
@@ -3526,6 +3648,12 @@ constructor(
                  */
                 @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
+                @JsonProperty("bank_settings") fun bankSettings(): BankSettings? = bankSettings
+
+                @JsonProperty("wealth_and_employment_details")
+                fun wealthAndEmploymentDetails(): WealthAndEmploymentDetails? =
+                    wealthAndEmploymentDetails
+
                 /** A list of addresses for the entity. */
                 @JsonProperty("addresses")
                 fun addresses(): List<LegalEntityAddressCreateRequest>? = addresses
@@ -3549,8 +3677,14 @@ constructor(
 
                     private var legalEntityType: LegalEntityType? = null
                     private var riskRating: RiskRating? = null
+                    private var prefix: String? = null
                     private var firstName: String? = null
+                    private var middleName: String? = null
                     private var lastName: String? = null
+                    private var suffix: String? = null
+                    private var preferredName: String? = null
+                    private var citizenshipCountry: String? = null
+                    private var politicallyExposedPerson: Boolean? = null
                     private var dateOfBirth: LocalDate? = null
                     private var dateFormed: LocalDate? = null
                     private var businessName: String? = null
@@ -3560,6 +3694,8 @@ constructor(
                     private var email: String? = null
                     private var website: String? = null
                     private var metadata: Metadata? = null
+                    private var bankSettings: BankSettings? = null
+                    private var wealthAndEmploymentDetails: WealthAndEmploymentDetails? = null
                     private var addresses: List<LegalEntityAddressCreateRequest>? = null
                     private var identifications: List<IdentificationCreateRequest>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -3568,8 +3704,15 @@ constructor(
                     internal fun from(childLegalEntityCreate: ChildLegalEntityCreate) = apply {
                         this.legalEntityType = childLegalEntityCreate.legalEntityType
                         this.riskRating = childLegalEntityCreate.riskRating
+                        this.prefix = childLegalEntityCreate.prefix
                         this.firstName = childLegalEntityCreate.firstName
+                        this.middleName = childLegalEntityCreate.middleName
                         this.lastName = childLegalEntityCreate.lastName
+                        this.suffix = childLegalEntityCreate.suffix
+                        this.preferredName = childLegalEntityCreate.preferredName
+                        this.citizenshipCountry = childLegalEntityCreate.citizenshipCountry
+                        this.politicallyExposedPerson =
+                            childLegalEntityCreate.politicallyExposedPerson
                         this.dateOfBirth = childLegalEntityCreate.dateOfBirth
                         this.dateFormed = childLegalEntityCreate.dateFormed
                         this.businessName = childLegalEntityCreate.businessName
@@ -3579,6 +3722,9 @@ constructor(
                         this.email = childLegalEntityCreate.email
                         this.website = childLegalEntityCreate.website
                         this.metadata = childLegalEntityCreate.metadata
+                        this.bankSettings = childLegalEntityCreate.bankSettings
+                        this.wealthAndEmploymentDetails =
+                            childLegalEntityCreate.wealthAndEmploymentDetails
                         this.addresses = childLegalEntityCreate.addresses
                         this.identifications = childLegalEntityCreate.identifications
                         additionalProperties(childLegalEntityCreate.additionalProperties)
@@ -3594,13 +3740,43 @@ constructor(
                     @JsonProperty("risk_rating")
                     fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
 
+                    /** An individual's prefix. */
+                    @JsonProperty("prefix")
+                    fun prefix(prefix: String) = apply { this.prefix = prefix }
+
                     /** An individual's first name. */
                     @JsonProperty("first_name")
                     fun firstName(firstName: String) = apply { this.firstName = firstName }
 
+                    /** An individual's middle name. */
+                    @JsonProperty("middle_name")
+                    fun middleName(middleName: String) = apply { this.middleName = middleName }
+
                     /** An individual's last name. */
                     @JsonProperty("last_name")
                     fun lastName(lastName: String) = apply { this.lastName = lastName }
+
+                    /** An individual's suffix. */
+                    @JsonProperty("suffix")
+                    fun suffix(suffix: String) = apply { this.suffix = suffix }
+
+                    /** An individual's preferred name. */
+                    @JsonProperty("preferred_name")
+                    fun preferredName(preferredName: String) = apply {
+                        this.preferredName = preferredName
+                    }
+
+                    /** The country of citizenship for an individual. */
+                    @JsonProperty("citizenship_country")
+                    fun citizenshipCountry(citizenshipCountry: String) = apply {
+                        this.citizenshipCountry = citizenshipCountry
+                    }
+
+                    /** Whether the individual is a politically exposed person. */
+                    @JsonProperty("politically_exposed_person")
+                    fun politicallyExposedPerson(politicallyExposedPerson: Boolean) = apply {
+                        this.politicallyExposedPerson = politicallyExposedPerson
+                    }
 
                     /** An individual's date of birth (YYYY-MM-DD). */
                     @JsonProperty("date_of_birth")
@@ -3648,6 +3824,16 @@ constructor(
                     @JsonProperty("metadata")
                     fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
+                    @JsonProperty("bank_settings")
+                    fun bankSettings(bankSettings: BankSettings) = apply {
+                        this.bankSettings = bankSettings
+                    }
+
+                    @JsonProperty("wealth_and_employment_details")
+                    fun wealthAndEmploymentDetails(
+                        wealthAndEmploymentDetails: WealthAndEmploymentDetails
+                    ) = apply { this.wealthAndEmploymentDetails = wealthAndEmploymentDetails }
+
                     /** A list of addresses for the entity. */
                     @JsonProperty("addresses")
                     fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
@@ -3680,8 +3866,14 @@ constructor(
                         ChildLegalEntityCreate(
                             legalEntityType,
                             riskRating,
+                            prefix,
                             firstName,
+                            middleName,
                             lastName,
+                            suffix,
+                            preferredName,
+                            citizenshipCountry,
+                            politicallyExposedPerson,
                             dateOfBirth,
                             dateFormed,
                             businessName,
@@ -3691,6 +3883,8 @@ constructor(
                             email,
                             website,
                             metadata,
+                            bankSettings,
+                            wealthAndEmploymentDetails,
                             addresses?.toImmutable(),
                             identifications?.toImmutable(),
                             additionalProperties.toImmutable(),
@@ -4583,20 +4777,20 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ChildLegalEntityCreate && this.legalEntityType == other.legalEntityType && this.riskRating == other.riskRating && this.firstName == other.firstName && this.lastName == other.lastName && this.dateOfBirth == other.dateOfBirth && this.dateFormed == other.dateFormed && this.businessName == other.businessName && this.doingBusinessAsNames == other.doingBusinessAsNames && this.legalStructure == other.legalStructure && this.phoneNumbers == other.phoneNumbers && this.email == other.email && this.website == other.website && this.metadata == other.metadata && this.addresses == other.addresses && this.identifications == other.identifications && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ChildLegalEntityCreate && this.legalEntityType == other.legalEntityType && this.riskRating == other.riskRating && this.prefix == other.prefix && this.firstName == other.firstName && this.middleName == other.middleName && this.lastName == other.lastName && this.suffix == other.suffix && this.preferredName == other.preferredName && this.citizenshipCountry == other.citizenshipCountry && this.politicallyExposedPerson == other.politicallyExposedPerson && this.dateOfBirth == other.dateOfBirth && this.dateFormed == other.dateFormed && this.businessName == other.businessName && this.doingBusinessAsNames == other.doingBusinessAsNames && this.legalStructure == other.legalStructure && this.phoneNumbers == other.phoneNumbers && this.email == other.email && this.website == other.website && this.metadata == other.metadata && this.bankSettings == other.bankSettings && this.wealthAndEmploymentDetails == other.wealthAndEmploymentDetails && this.addresses == other.addresses && this.identifications == other.identifications && this.additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 private var hashCode: Int = 0
 
                 override fun hashCode(): Int {
                     if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(legalEntityType, riskRating, firstName, lastName, dateOfBirth, dateFormed, businessName, doingBusinessAsNames, legalStructure, phoneNumbers, email, website, metadata, addresses, identifications, additionalProperties) /* spotless:on */
+                        hashCode = /* spotless:off */ Objects.hash(legalEntityType, riskRating, prefix, firstName, middleName, lastName, suffix, preferredName, citizenshipCountry, politicallyExposedPerson, dateOfBirth, dateFormed, businessName, doingBusinessAsNames, legalStructure, phoneNumbers, email, website, metadata, bankSettings, wealthAndEmploymentDetails, addresses, identifications, additionalProperties) /* spotless:on */
                     }
                     return hashCode
                 }
 
                 override fun toString() =
-                    "ChildLegalEntityCreate{legalEntityType=$legalEntityType, riskRating=$riskRating, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
+                    "ChildLegalEntityCreate{legalEntityType=$legalEntityType, riskRating=$riskRating, prefix=$prefix, firstName=$firstName, middleName=$middleName, lastName=$lastName, suffix=$suffix, preferredName=$preferredName, citizenshipCountry=$citizenshipCountry, politicallyExposedPerson=$politicallyExposedPerson, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, bankSettings=$bankSettings, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, addresses=$addresses, identifications=$identifications, additionalProperties=$additionalProperties}"
             }
 
             override fun equals(other: Any?): Boolean {
@@ -4915,20 +5109,20 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LegalEntityCreateRequest && this.legalEntityType == other.legalEntityType && this.riskRating == other.riskRating && this.firstName == other.firstName && this.lastName == other.lastName && this.dateOfBirth == other.dateOfBirth && this.dateFormed == other.dateFormed && this.businessName == other.businessName && this.doingBusinessAsNames == other.doingBusinessAsNames && this.legalStructure == other.legalStructure && this.phoneNumbers == other.phoneNumbers && this.email == other.email && this.website == other.website && this.metadata == other.metadata && this.addresses == other.addresses && this.identifications == other.identifications && this.legalEntityAssociations == other.legalEntityAssociations && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LegalEntityCreateRequest && this.legalEntityType == other.legalEntityType && this.riskRating == other.riskRating && this.prefix == other.prefix && this.firstName == other.firstName && this.middleName == other.middleName && this.lastName == other.lastName && this.suffix == other.suffix && this.preferredName == other.preferredName && this.citizenshipCountry == other.citizenshipCountry && this.politicallyExposedPerson == other.politicallyExposedPerson && this.dateOfBirth == other.dateOfBirth && this.dateFormed == other.dateFormed && this.businessName == other.businessName && this.doingBusinessAsNames == other.doingBusinessAsNames && this.legalStructure == other.legalStructure && this.phoneNumbers == other.phoneNumbers && this.email == other.email && this.website == other.website && this.metadata == other.metadata && this.bankSettings == other.bankSettings && this.wealthAndEmploymentDetails == other.wealthAndEmploymentDetails && this.addresses == other.addresses && this.identifications == other.identifications && this.legalEntityAssociations == other.legalEntityAssociations && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(legalEntityType, riskRating, firstName, lastName, dateOfBirth, dateFormed, businessName, doingBusinessAsNames, legalStructure, phoneNumbers, email, website, metadata, addresses, identifications, legalEntityAssociations, additionalProperties) /* spotless:on */
+                hashCode = /* spotless:off */ Objects.hash(legalEntityType, riskRating, prefix, firstName, middleName, lastName, suffix, preferredName, citizenshipCountry, politicallyExposedPerson, dateOfBirth, dateFormed, businessName, doingBusinessAsNames, legalStructure, phoneNumbers, email, website, metadata, bankSettings, wealthAndEmploymentDetails, addresses, identifications, legalEntityAssociations, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
 
         override fun toString() =
-            "LegalEntityCreateRequest{legalEntityType=$legalEntityType, riskRating=$riskRating, firstName=$firstName, lastName=$lastName, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, addresses=$addresses, identifications=$identifications, legalEntityAssociations=$legalEntityAssociations, additionalProperties=$additionalProperties}"
+            "LegalEntityCreateRequest{legalEntityType=$legalEntityType, riskRating=$riskRating, prefix=$prefix, firstName=$firstName, middleName=$middleName, lastName=$lastName, suffix=$suffix, preferredName=$preferredName, citizenshipCountry=$citizenshipCountry, politicallyExposedPerson=$politicallyExposedPerson, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, bankSettings=$bankSettings, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, addresses=$addresses, identifications=$identifications, legalEntityAssociations=$legalEntityAssociations, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
