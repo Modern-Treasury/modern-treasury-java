@@ -581,6 +581,8 @@ private constructor(
 
             @JvmField val ARCHIVING = Status(JsonField.of("archiving"))
 
+            @JvmField val DRAFTING = Status(JsonField.of("drafting"))
+
             @JvmField val PENDING = Status(JsonField.of("pending"))
 
             @JvmField val POSTED = Status(JsonField.of("posted"))
@@ -593,6 +595,7 @@ private constructor(
         enum class Known {
             ARCHIVED,
             ARCHIVING,
+            DRAFTING,
             PENDING,
             POSTED,
             PROCESSING,
@@ -601,6 +604,7 @@ private constructor(
         enum class Value {
             ARCHIVED,
             ARCHIVING,
+            DRAFTING,
             PENDING,
             POSTED,
             PROCESSING,
@@ -611,6 +615,7 @@ private constructor(
             when (this) {
                 ARCHIVED -> Value.ARCHIVED
                 ARCHIVING -> Value.ARCHIVING
+                DRAFTING -> Value.DRAFTING
                 PENDING -> Value.PENDING
                 POSTED -> Value.POSTED
                 PROCESSING -> Value.PROCESSING
@@ -621,6 +626,7 @@ private constructor(
             when (this) {
                 ARCHIVED -> Known.ARCHIVED
                 ARCHIVING -> Known.ARCHIVING
+                DRAFTING -> Known.DRAFTING
                 PENDING -> Known.PENDING
                 POSTED -> Known.POSTED
                 PROCESSING -> Known.PROCESSING
