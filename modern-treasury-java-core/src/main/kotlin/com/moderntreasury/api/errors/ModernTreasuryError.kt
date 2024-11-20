@@ -19,18 +19,6 @@ private constructor(
     val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ModernTreasuryError && additionalProperties == other.additionalProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-
-    override fun toString() = "ModernTreasuryError{additionalProperties=$additionalProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -69,4 +57,16 @@ private constructor(
 
         fun build(): ModernTreasuryError = ModernTreasuryError(additionalProperties.toImmutable())
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ModernTreasuryError && additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+
+    override fun toString() = "ModernTreasuryError{additionalProperties=$additionalProperties}"
 }
