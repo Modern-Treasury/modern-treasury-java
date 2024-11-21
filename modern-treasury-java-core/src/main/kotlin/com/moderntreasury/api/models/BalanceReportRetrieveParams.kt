@@ -20,6 +20,10 @@ constructor(
 
     fun id(): String = id
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -31,23 +35,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BalanceReportRetrieveParams && internalAccountId == other.internalAccountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "BalanceReportRetrieveParams{internalAccountId=$internalAccountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -66,10 +53,10 @@ constructor(
 
         @JvmSynthetic
         internal fun from(balanceReportRetrieveParams: BalanceReportRetrieveParams) = apply {
-            this.internalAccountId = balanceReportRetrieveParams.internalAccountId
-            this.id = balanceReportRetrieveParams.id
-            additionalHeaders(balanceReportRetrieveParams.additionalHeaders)
-            additionalQueryParams(balanceReportRetrieveParams.additionalQueryParams)
+            internalAccountId = balanceReportRetrieveParams.internalAccountId
+            id = balanceReportRetrieveParams.id
+            additionalHeaders = balanceReportRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams = balanceReportRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         fun internalAccountId(internalAccountId: String) = apply {
@@ -186,4 +173,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BalanceReportRetrieveParams && internalAccountId == other.internalAccountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "BalanceReportRetrieveParams{internalAccountId=$internalAccountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

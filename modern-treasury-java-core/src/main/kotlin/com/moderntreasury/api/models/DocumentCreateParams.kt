@@ -36,6 +36,10 @@ constructor(
 
     fun documentType(): Optional<MultipartFormValue<String>> = Optional.ofNullable(documentType)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic
     internal fun getBody(): Array<MultipartFormValue<*>?> {
         return arrayOf(
@@ -125,23 +129,6 @@ constructor(
             "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DocumentCreateParams && documentableId == other.documentableId && documentableType == other.documentableType && file == other.file && documentType == other.documentType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(documentableId, documentableType, file, documentType, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -161,12 +148,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(documentCreateParams: DocumentCreateParams) = apply {
-            this.documentableId = documentCreateParams.documentableId
-            this.documentableType = documentCreateParams.documentableType
-            this.file = documentCreateParams.file
-            this.documentType = documentCreateParams.documentType
-            additionalHeaders(documentCreateParams.additionalHeaders)
-            additionalQueryParams(documentCreateParams.additionalQueryParams)
+            documentableId = documentCreateParams.documentableId
+            documentableType = documentCreateParams.documentableType
+            file = documentCreateParams.file
+            documentType = documentCreateParams.documentType
+            additionalHeaders = documentCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = documentCreateParams.additionalQueryParams.toBuilder()
         }
 
         /** The unique identifier for the associated object. */
@@ -430,4 +417,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DocumentCreateParams && documentableId == other.documentableId && documentableType == other.documentableType && file == other.file && documentType == other.documentType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(documentableId, documentableType, file, documentType, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "DocumentCreateParams{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

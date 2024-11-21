@@ -37,6 +37,12 @@ constructor(
 
     fun legalEntityId(): Optional<String> = Optional.ofNullable(legalEntityId)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): ConnectionLegalEntityCreateBody {
         return ConnectionLegalEntityCreateBody(
@@ -150,25 +156,6 @@ constructor(
             "ConnectionLegalEntityCreateBody{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ConnectionLegalEntityCreateParams && connectionId == other.connectionId && legalEntity == other.legalEntity && legalEntityId == other.legalEntityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(connectionId, legalEntity, legalEntityId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ConnectionLegalEntityCreateParams{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -189,12 +176,14 @@ constructor(
         @JvmSynthetic
         internal fun from(connectionLegalEntityCreateParams: ConnectionLegalEntityCreateParams) =
             apply {
-                this.connectionId = connectionLegalEntityCreateParams.connectionId
-                this.legalEntity = connectionLegalEntityCreateParams.legalEntity
-                this.legalEntityId = connectionLegalEntityCreateParams.legalEntityId
-                additionalHeaders(connectionLegalEntityCreateParams.additionalHeaders)
-                additionalQueryParams(connectionLegalEntityCreateParams.additionalQueryParams)
-                additionalBodyProperties(connectionLegalEntityCreateParams.additionalBodyProperties)
+                connectionId = connectionLegalEntityCreateParams.connectionId
+                legalEntity = connectionLegalEntityCreateParams.legalEntity
+                legalEntityId = connectionLegalEntityCreateParams.legalEntityId
+                additionalHeaders = connectionLegalEntityCreateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    connectionLegalEntityCreateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    connectionLegalEntityCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The ID of the connection. */
@@ -2949,4 +2938,17 @@ constructor(
         override fun toString() =
             "LegalEntity{legalEntityType=$legalEntityType, riskRating=$riskRating, prefix=$prefix, firstName=$firstName, middleName=$middleName, lastName=$lastName, suffix=$suffix, preferredName=$preferredName, citizenshipCountry=$citizenshipCountry, politicallyExposedPerson=$politicallyExposedPerson, dateOfBirth=$dateOfBirth, dateFormed=$dateFormed, businessName=$businessName, doingBusinessAsNames=$doingBusinessAsNames, legalStructure=$legalStructure, phoneNumbers=$phoneNumbers, email=$email, website=$website, metadata=$metadata, bankSettings=$bankSettings, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, addresses=$addresses, identifications=$identifications, legalEntityAssociations=$legalEntityAssociations, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ConnectionLegalEntityCreateParams && connectionId == other.connectionId && legalEntity == other.legalEntity && legalEntityId == other.legalEntityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(connectionId, legalEntity, legalEntityId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ConnectionLegalEntityCreateParams{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

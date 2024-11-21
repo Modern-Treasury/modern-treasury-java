@@ -65,6 +65,10 @@ constructor(
 
     fun updatedAt(): Optional<UpdatedAt> = Optional.ofNullable(updatedAt)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -104,23 +108,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, ledgerAccountCategoryId, ledgerId, metadata, name, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -150,22 +137,22 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerAccountListParams: LedgerAccountListParams) = apply {
-            this.id(ledgerAccountListParams.id ?: listOf())
-            this.afterCursor = ledgerAccountListParams.afterCursor
-            this.availableBalanceAmount = ledgerAccountListParams.availableBalanceAmount
-            this.balances = ledgerAccountListParams.balances
-            this.createdAt = ledgerAccountListParams.createdAt
-            this.currency = ledgerAccountListParams.currency
-            this.ledgerAccountCategoryId = ledgerAccountListParams.ledgerAccountCategoryId
-            this.ledgerId = ledgerAccountListParams.ledgerId
-            this.metadata = ledgerAccountListParams.metadata
-            this.name(ledgerAccountListParams.name ?: listOf())
-            this.pendingBalanceAmount = ledgerAccountListParams.pendingBalanceAmount
-            this.perPage = ledgerAccountListParams.perPage
-            this.postedBalanceAmount = ledgerAccountListParams.postedBalanceAmount
-            this.updatedAt = ledgerAccountListParams.updatedAt
-            additionalHeaders(ledgerAccountListParams.additionalHeaders)
-            additionalQueryParams(ledgerAccountListParams.additionalQueryParams)
+            id = ledgerAccountListParams.id?.toMutableList() ?: mutableListOf()
+            afterCursor = ledgerAccountListParams.afterCursor
+            availableBalanceAmount = ledgerAccountListParams.availableBalanceAmount
+            balances = ledgerAccountListParams.balances
+            createdAt = ledgerAccountListParams.createdAt
+            currency = ledgerAccountListParams.currency
+            ledgerAccountCategoryId = ledgerAccountListParams.ledgerAccountCategoryId
+            ledgerId = ledgerAccountListParams.ledgerId
+            metadata = ledgerAccountListParams.metadata
+            name = ledgerAccountListParams.name?.toMutableList() ?: mutableListOf()
+            pendingBalanceAmount = ledgerAccountListParams.pendingBalanceAmount
+            perPage = ledgerAccountListParams.perPage
+            postedBalanceAmount = ledgerAccountListParams.postedBalanceAmount
+            updatedAt = ledgerAccountListParams.updatedAt
+            additionalHeaders = ledgerAccountListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = ledgerAccountListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -362,7 +349,7 @@ constructor(
 
         fun build(): LedgerAccountListParams =
             LedgerAccountListParams(
-                if (id.size == 0) null else id.toImmutable(),
+                id.toImmutable().ifEmpty { null },
                 afterCursor,
                 availableBalanceAmount,
                 balances,
@@ -371,7 +358,7 @@ constructor(
                 ledgerAccountCategoryId,
                 ledgerId,
                 metadata,
-                if (name.size == 0) null else name.toImmutable(),
+                name.toImmutable().ifEmpty { null },
                 pendingBalanceAmount,
                 perPage,
                 postedBalanceAmount,
@@ -1090,4 +1077,17 @@ constructor(
 
         override fun toString() = "UpdatedAt{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, ledgerAccountCategoryId, ledgerId, metadata, name, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
