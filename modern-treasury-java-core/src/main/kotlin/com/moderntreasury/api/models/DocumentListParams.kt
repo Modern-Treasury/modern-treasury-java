@@ -32,6 +32,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -44,23 +48,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DocumentListParams && afterCursor == other.afterCursor && documentableId == other.documentableId && documentableType == other.documentableType && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, documentableId, documentableType, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "DocumentListParams{afterCursor=$afterCursor, documentableId=$documentableId, documentableType=$documentableType, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -81,12 +68,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(documentListParams: DocumentListParams) = apply {
-            this.afterCursor = documentListParams.afterCursor
-            this.documentableId = documentListParams.documentableId
-            this.documentableType = documentListParams.documentableType
-            this.perPage = documentListParams.perPage
-            additionalHeaders(documentListParams.additionalHeaders)
-            additionalQueryParams(documentListParams.additionalQueryParams)
+            afterCursor = documentListParams.afterCursor
+            documentableId = documentListParams.documentableId
+            documentableType = documentListParams.documentableType
+            perPage = documentListParams.perPage
+            additionalHeaders = documentListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = documentListParams.additionalQueryParams.toBuilder()
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -332,4 +319,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DocumentListParams && afterCursor == other.afterCursor && documentableId == other.documentableId && documentableType == other.documentableType && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, documentableId, documentableType, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "DocumentListParams{afterCursor=$afterCursor, documentableId=$documentableId, documentableType=$documentableType, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

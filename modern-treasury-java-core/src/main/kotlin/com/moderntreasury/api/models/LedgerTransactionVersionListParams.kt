@@ -35,6 +35,10 @@ constructor(
 
     fun version(): Optional<Version> = Optional.ofNullable(version)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -55,23 +59,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerTransactionVersionListParams && afterCursor == other.afterCursor && createdAt == other.createdAt && ledgerAccountStatementId == other.ledgerAccountStatementId && ledgerTransactionId == other.ledgerTransactionId && perPage == other.perPage && version == other.version && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, createdAt, ledgerAccountStatementId, ledgerTransactionId, perPage, version, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "LedgerTransactionVersionListParams{afterCursor=$afterCursor, createdAt=$createdAt, ledgerAccountStatementId=$ledgerAccountStatementId, ledgerTransactionId=$ledgerTransactionId, perPage=$perPage, version=$version, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -95,15 +82,16 @@ constructor(
         @JvmSynthetic
         internal fun from(ledgerTransactionVersionListParams: LedgerTransactionVersionListParams) =
             apply {
-                this.afterCursor = ledgerTransactionVersionListParams.afterCursor
-                this.createdAt = ledgerTransactionVersionListParams.createdAt
-                this.ledgerAccountStatementId =
+                afterCursor = ledgerTransactionVersionListParams.afterCursor
+                createdAt = ledgerTransactionVersionListParams.createdAt
+                ledgerAccountStatementId =
                     ledgerTransactionVersionListParams.ledgerAccountStatementId
-                this.ledgerTransactionId = ledgerTransactionVersionListParams.ledgerTransactionId
-                this.perPage = ledgerTransactionVersionListParams.perPage
-                this.version = ledgerTransactionVersionListParams.version
-                additionalHeaders(ledgerTransactionVersionListParams.additionalHeaders)
-                additionalQueryParams(ledgerTransactionVersionListParams.additionalQueryParams)
+                ledgerTransactionId = ledgerTransactionVersionListParams.ledgerTransactionId
+                perPage = ledgerTransactionVersionListParams.perPage
+                version = ledgerTransactionVersionListParams.version
+                additionalHeaders = ledgerTransactionVersionListParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    ledgerTransactionVersionListParams.additionalQueryParams.toBuilder()
             }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -384,4 +372,17 @@ constructor(
 
         override fun toString() = "Version{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerTransactionVersionListParams && afterCursor == other.afterCursor && createdAt == other.createdAt && ledgerAccountStatementId == other.ledgerAccountStatementId && ledgerTransactionId == other.ledgerTransactionId && perPage == other.perPage && version == other.version && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, createdAt, ledgerAccountStatementId, ledgerTransactionId, perPage, version, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "LedgerTransactionVersionListParams{afterCursor=$afterCursor, createdAt=$createdAt, ledgerAccountStatementId=$ledgerAccountStatementId, ledgerTransactionId=$ledgerTransactionId, perPage=$perPage, version=$version, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

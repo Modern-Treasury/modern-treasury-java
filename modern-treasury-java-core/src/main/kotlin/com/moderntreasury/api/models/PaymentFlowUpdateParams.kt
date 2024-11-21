@@ -32,6 +32,12 @@ constructor(
 
     fun status(): Status = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): PaymentFlowUpdateBody {
         return PaymentFlowUpdateBody(status, additionalBodyProperties)
@@ -129,25 +135,6 @@ constructor(
             "PaymentFlowUpdateBody{status=$status, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentFlowUpdateParams && id == other.id && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, status, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "PaymentFlowUpdateParams{id=$id, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -166,11 +153,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(paymentFlowUpdateParams: PaymentFlowUpdateParams) = apply {
-            this.id = paymentFlowUpdateParams.id
-            this.status = paymentFlowUpdateParams.status
-            additionalHeaders(paymentFlowUpdateParams.additionalHeaders)
-            additionalQueryParams(paymentFlowUpdateParams.additionalQueryParams)
-            additionalBodyProperties(paymentFlowUpdateParams.additionalBodyProperties)
+            id = paymentFlowUpdateParams.id
+            status = paymentFlowUpdateParams.status
+            additionalHeaders = paymentFlowUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentFlowUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                paymentFlowUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -361,4 +349,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentFlowUpdateParams && id == other.id && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, status, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "PaymentFlowUpdateParams{id=$id, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

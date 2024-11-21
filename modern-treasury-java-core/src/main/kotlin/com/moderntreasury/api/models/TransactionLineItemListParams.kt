@@ -37,6 +37,10 @@ constructor(
 
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -50,23 +54,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TransactionLineItemListParams && id == other.id && afterCursor == other.afterCursor && perPage == other.perPage && transactionId == other.transactionId && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, perPage, transactionId, type, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "TransactionLineItemListParams{id=$id, afterCursor=$afterCursor, perPage=$perPage, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -88,13 +75,13 @@ constructor(
 
         @JvmSynthetic
         internal fun from(transactionLineItemListParams: TransactionLineItemListParams) = apply {
-            this.id = transactionLineItemListParams.id
-            this.afterCursor = transactionLineItemListParams.afterCursor
-            this.perPage = transactionLineItemListParams.perPage
-            this.transactionId = transactionLineItemListParams.transactionId
-            this.type = transactionLineItemListParams.type
-            additionalHeaders(transactionLineItemListParams.additionalHeaders)
-            additionalQueryParams(transactionLineItemListParams.additionalQueryParams)
+            id = transactionLineItemListParams.id
+            afterCursor = transactionLineItemListParams.afterCursor
+            perPage = transactionLineItemListParams.perPage
+            transactionId = transactionLineItemListParams.transactionId
+            type = transactionLineItemListParams.type
+            additionalHeaders = transactionLineItemListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = transactionLineItemListParams.additionalQueryParams.toBuilder()
         }
 
         fun id(id: Id) = apply { this.id = id }
@@ -335,4 +322,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TransactionLineItemListParams && id == other.id && afterCursor == other.afterCursor && perPage == other.perPage && transactionId == other.transactionId && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, perPage, transactionId, type, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "TransactionLineItemListParams{id=$id, afterCursor=$afterCursor, perPage=$perPage, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

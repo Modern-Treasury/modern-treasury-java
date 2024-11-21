@@ -42,6 +42,12 @@ constructor(
 
     fun targetAmount(): Optional<Long> = Optional.ofNullable(targetAmount)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): ForeignExchangeQuoteCreateBody {
         return ForeignExchangeQuoteCreateBody(
@@ -209,25 +215,6 @@ constructor(
             "ForeignExchangeQuoteCreateBody{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ForeignExchangeQuoteCreateParams && internalAccountId == other.internalAccountId && targetCurrency == other.targetCurrency && baseAmount == other.baseAmount && baseCurrency == other.baseCurrency && effectiveAt == other.effectiveAt && targetAmount == other.targetAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, targetCurrency, baseAmount, baseCurrency, effectiveAt, targetAmount, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ForeignExchangeQuoteCreateParams{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -251,15 +238,17 @@ constructor(
         @JvmSynthetic
         internal fun from(foreignExchangeQuoteCreateParams: ForeignExchangeQuoteCreateParams) =
             apply {
-                this.internalAccountId = foreignExchangeQuoteCreateParams.internalAccountId
-                this.targetCurrency = foreignExchangeQuoteCreateParams.targetCurrency
-                this.baseAmount = foreignExchangeQuoteCreateParams.baseAmount
-                this.baseCurrency = foreignExchangeQuoteCreateParams.baseCurrency
-                this.effectiveAt = foreignExchangeQuoteCreateParams.effectiveAt
-                this.targetAmount = foreignExchangeQuoteCreateParams.targetAmount
-                additionalHeaders(foreignExchangeQuoteCreateParams.additionalHeaders)
-                additionalQueryParams(foreignExchangeQuoteCreateParams.additionalQueryParams)
-                additionalBodyProperties(foreignExchangeQuoteCreateParams.additionalBodyProperties)
+                internalAccountId = foreignExchangeQuoteCreateParams.internalAccountId
+                targetCurrency = foreignExchangeQuoteCreateParams.targetCurrency
+                baseAmount = foreignExchangeQuoteCreateParams.baseAmount
+                baseCurrency = foreignExchangeQuoteCreateParams.baseCurrency
+                effectiveAt = foreignExchangeQuoteCreateParams.effectiveAt
+                targetAmount = foreignExchangeQuoteCreateParams.targetAmount
+                additionalHeaders = foreignExchangeQuoteCreateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    foreignExchangeQuoteCreateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    foreignExchangeQuoteCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The ID for the `InternalAccount` this quote is associated with. */
@@ -425,4 +414,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ForeignExchangeQuoteCreateParams && internalAccountId == other.internalAccountId && targetCurrency == other.targetCurrency && baseAmount == other.baseAmount && baseCurrency == other.baseCurrency && effectiveAt == other.effectiveAt && targetAmount == other.targetAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, targetCurrency, baseAmount, baseCurrency, effectiveAt, targetAmount, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ForeignExchangeQuoteCreateParams{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
