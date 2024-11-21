@@ -46,6 +46,12 @@ constructor(
 
     fun reason(): Optional<String> = Optional.ofNullable(reason)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): ReturnCreateBody {
         return ReturnCreateBody(
@@ -220,25 +226,6 @@ constructor(
             "ReturnCreateBody{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReturnCreateParams && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(returnableId, returnableType, additionalInformation, code, dateOfDeath, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ReturnCreateParams{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -261,15 +248,15 @@ constructor(
 
         @JvmSynthetic
         internal fun from(returnCreateParams: ReturnCreateParams) = apply {
-            this.returnableId = returnCreateParams.returnableId
-            this.returnableType = returnCreateParams.returnableType
-            this.additionalInformation = returnCreateParams.additionalInformation
-            this.code = returnCreateParams.code
-            this.dateOfDeath = returnCreateParams.dateOfDeath
-            this.reason = returnCreateParams.reason
-            additionalHeaders(returnCreateParams.additionalHeaders)
-            additionalQueryParams(returnCreateParams.additionalQueryParams)
-            additionalBodyProperties(returnCreateParams.additionalBodyProperties)
+            returnableId = returnCreateParams.returnableId
+            returnableType = returnCreateParams.returnableType
+            additionalInformation = returnCreateParams.additionalInformation
+            code = returnCreateParams.code
+            dateOfDeath = returnCreateParams.dateOfDeath
+            reason = returnCreateParams.reason
+            additionalHeaders = returnCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = returnCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = returnCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The ID of the object being returned or `null`. */
@@ -853,4 +840,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReturnCreateParams && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(returnableId, returnableType, additionalInformation, code, dateOfDeath, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ReturnCreateParams{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

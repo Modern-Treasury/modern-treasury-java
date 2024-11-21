@@ -29,6 +29,12 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): IncomingPaymentDetailUpdateBody {
         return IncomingPaymentDetailUpdateBody(metadata, additionalBodyProperties)
@@ -125,25 +131,6 @@ constructor(
             "IncomingPaymentDetailUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is IncomingPaymentDetailUpdateParams && id == other.id && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "IncomingPaymentDetailUpdateParams{id=$id, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -163,11 +150,13 @@ constructor(
         @JvmSynthetic
         internal fun from(incomingPaymentDetailUpdateParams: IncomingPaymentDetailUpdateParams) =
             apply {
-                this.id = incomingPaymentDetailUpdateParams.id
-                this.metadata = incomingPaymentDetailUpdateParams.metadata
-                additionalHeaders(incomingPaymentDetailUpdateParams.additionalHeaders)
-                additionalQueryParams(incomingPaymentDetailUpdateParams.additionalQueryParams)
-                additionalBodyProperties(incomingPaymentDetailUpdateParams.additionalBodyProperties)
+                id = incomingPaymentDetailUpdateParams.id
+                metadata = incomingPaymentDetailUpdateParams.metadata
+                additionalHeaders = incomingPaymentDetailUpdateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    incomingPaymentDetailUpdateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    incomingPaymentDetailUpdateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun id(id: String) = apply { this.id = id }
@@ -372,4 +361,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is IncomingPaymentDetailUpdateParams && id == other.id && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "IncomingPaymentDetailUpdateParams{id=$id, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

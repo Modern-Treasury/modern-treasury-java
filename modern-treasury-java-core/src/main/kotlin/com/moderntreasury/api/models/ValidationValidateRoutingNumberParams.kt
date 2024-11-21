@@ -25,6 +25,10 @@ constructor(
 
     fun routingNumberType(): RoutingNumberType = routingNumberType
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -35,23 +39,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ValidationValidateRoutingNumberParams && routingNumber == other.routingNumber && routingNumberType == other.routingNumberType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(routingNumber, routingNumberType, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "ValidationValidateRoutingNumberParams{routingNumber=$routingNumber, routingNumberType=$routingNumberType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -72,10 +59,11 @@ constructor(
         internal fun from(
             validationValidateRoutingNumberParams: ValidationValidateRoutingNumberParams
         ) = apply {
-            this.routingNumber = validationValidateRoutingNumberParams.routingNumber
-            this.routingNumberType = validationValidateRoutingNumberParams.routingNumberType
-            additionalHeaders(validationValidateRoutingNumberParams.additionalHeaders)
-            additionalQueryParams(validationValidateRoutingNumberParams.additionalQueryParams)
+            routingNumber = validationValidateRoutingNumberParams.routingNumber
+            routingNumberType = validationValidateRoutingNumberParams.routingNumberType
+            additionalHeaders = validationValidateRoutingNumberParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                validationValidateRoutingNumberParams.additionalQueryParams.toBuilder()
         }
 
         /** The routing number that is being validated. */
@@ -379,4 +367,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ValidationValidateRoutingNumberParams && routingNumber == other.routingNumber && routingNumberType == other.routingNumberType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(routingNumber, routingNumberType, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ValidationValidateRoutingNumberParams{routingNumber=$routingNumber, routingNumberType=$routingNumberType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

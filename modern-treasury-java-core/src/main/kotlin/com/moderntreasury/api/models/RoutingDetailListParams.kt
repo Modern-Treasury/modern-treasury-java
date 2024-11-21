@@ -27,6 +27,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -45,23 +49,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is RoutingDetailListParams && accountsType == other.accountsType && accountId == other.accountId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "RoutingDetailListParams{accountsType=$accountsType, accountId=$accountId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -82,12 +69,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(routingDetailListParams: RoutingDetailListParams) = apply {
-            this.accountsType = routingDetailListParams.accountsType
-            this.accountId = routingDetailListParams.accountId
-            this.afterCursor = routingDetailListParams.afterCursor
-            this.perPage = routingDetailListParams.perPage
-            additionalHeaders(routingDetailListParams.additionalHeaders)
-            additionalQueryParams(routingDetailListParams.additionalQueryParams)
+            accountsType = routingDetailListParams.accountsType
+            accountId = routingDetailListParams.accountId
+            afterCursor = routingDetailListParams.afterCursor
+            perPage = routingDetailListParams.perPage
+            additionalHeaders = routingDetailListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = routingDetailListParams.additionalQueryParams.toBuilder()
         }
 
         fun accountsType(accountsType: AccountsType) = apply { this.accountsType = accountsType }
@@ -206,4 +193,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is RoutingDetailListParams && accountsType == other.accountsType && accountId == other.accountId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "RoutingDetailListParams{accountsType=$accountsType, accountId=$accountId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

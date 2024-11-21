@@ -24,6 +24,12 @@ constructor(
 
     fun id(): String = id
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): Optional<Map<String, JsonValue>> {
         return Optional.ofNullable(additionalBodyProperties.ifEmpty { null })
@@ -40,25 +46,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is InvoiceLineItemDeleteParams && invoiceId == other.invoiceId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "InvoiceLineItemDeleteParams{invoiceId=$invoiceId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -78,11 +65,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(invoiceLineItemDeleteParams: InvoiceLineItemDeleteParams) = apply {
-            this.invoiceId = invoiceLineItemDeleteParams.invoiceId
-            this.id = invoiceLineItemDeleteParams.id
-            additionalHeaders(invoiceLineItemDeleteParams.additionalHeaders)
-            additionalQueryParams(invoiceLineItemDeleteParams.additionalQueryParams)
-            additionalBodyProperties(invoiceLineItemDeleteParams.additionalBodyProperties)
+            invoiceId = invoiceLineItemDeleteParams.invoiceId
+            id = invoiceLineItemDeleteParams.id
+            additionalHeaders = invoiceLineItemDeleteParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceLineItemDeleteParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                invoiceLineItemDeleteParams.additionalBodyProperties.toMutableMap()
         }
 
         fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
@@ -218,4 +206,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is InvoiceLineItemDeleteParams && invoiceId == other.invoiceId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "InvoiceLineItemDeleteParams{invoiceId=$invoiceId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

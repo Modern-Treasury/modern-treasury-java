@@ -32,6 +32,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -50,23 +54,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LineItemListParams && itemizableType == other.itemizableType && itemizableId == other.itemizableId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemizableType, itemizableId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "LineItemListParams{itemizableType=$itemizableType, itemizableId=$itemizableId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -87,12 +74,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(lineItemListParams: LineItemListParams) = apply {
-            this.itemizableType = lineItemListParams.itemizableType
-            this.itemizableId = lineItemListParams.itemizableId
-            this.afterCursor = lineItemListParams.afterCursor
-            this.perPage = lineItemListParams.perPage
-            additionalHeaders(lineItemListParams.additionalHeaders)
-            additionalQueryParams(lineItemListParams.additionalQueryParams)
+            itemizableType = lineItemListParams.itemizableType
+            itemizableId = lineItemListParams.itemizableId
+            afterCursor = lineItemListParams.afterCursor
+            perPage = lineItemListParams.perPage
+            additionalHeaders = lineItemListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = lineItemListParams.additionalQueryParams.toBuilder()
         }
 
         fun itemizableType(itemizableType: ItemizableType) = apply {
@@ -270,4 +257,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LineItemListParams && itemizableType == other.itemizableType && itemizableId == other.itemizableId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemizableType, itemizableId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "LineItemListParams{itemizableType=$itemizableType, itemizableId=$itemizableId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
