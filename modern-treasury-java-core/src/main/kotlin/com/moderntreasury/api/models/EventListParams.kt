@@ -38,6 +38,10 @@ constructor(
 
     fun resource(): Optional<String> = Optional.ofNullable(resource)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -64,23 +68,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventListParams && afterCursor == other.afterCursor && entityId == other.entityId && eventName == other.eventName && eventTimeEnd == other.eventTimeEnd && eventTimeStart == other.eventTimeStart && perPage == other.perPage && resource == other.resource && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, entityId, eventName, eventTimeEnd, eventTimeStart, perPage, resource, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "EventListParams{afterCursor=$afterCursor, entityId=$entityId, eventName=$eventName, eventTimeEnd=$eventTimeEnd, eventTimeStart=$eventTimeStart, perPage=$perPage, resource=$resource, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -103,15 +90,15 @@ constructor(
 
         @JvmSynthetic
         internal fun from(eventListParams: EventListParams) = apply {
-            this.afterCursor = eventListParams.afterCursor
-            this.entityId = eventListParams.entityId
-            this.eventName = eventListParams.eventName
-            this.eventTimeEnd = eventListParams.eventTimeEnd
-            this.eventTimeStart = eventListParams.eventTimeStart
-            this.perPage = eventListParams.perPage
-            this.resource = eventListParams.resource
-            additionalHeaders(eventListParams.additionalHeaders)
-            additionalQueryParams(eventListParams.additionalQueryParams)
+            afterCursor = eventListParams.afterCursor
+            entityId = eventListParams.entityId
+            eventName = eventListParams.eventName
+            eventTimeEnd = eventListParams.eventTimeEnd
+            eventTimeStart = eventListParams.eventTimeStart
+            perPage = eventListParams.perPage
+            resource = eventListParams.resource
+            additionalHeaders = eventListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventListParams.additionalQueryParams.toBuilder()
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -243,4 +230,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventListParams && afterCursor == other.afterCursor && entityId == other.entityId && eventName == other.eventName && eventTimeEnd == other.eventTimeEnd && eventTimeStart == other.eventTimeStart && perPage == other.perPage && resource == other.resource && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, entityId, eventName, eventTimeEnd, eventTimeStart, perPage, resource, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventListParams{afterCursor=$afterCursor, entityId=$entityId, eventName=$eventName, eventTimeEnd=$eventTimeEnd, eventTimeStart=$eventTimeStart, perPage=$perPage, resource=$resource, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

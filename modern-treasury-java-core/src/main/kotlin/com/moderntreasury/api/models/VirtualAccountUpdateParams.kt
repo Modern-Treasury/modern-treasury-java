@@ -38,6 +38,12 @@ constructor(
 
     fun name(): Optional<String> = Optional.ofNullable(name)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): VirtualAccountUpdateBody {
         return VirtualAccountUpdateBody(
@@ -166,25 +172,6 @@ constructor(
             "VirtualAccountUpdateBody{counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is VirtualAccountUpdateParams && id == other.id && counterpartyId == other.counterpartyId && ledgerAccountId == other.ledgerAccountId && metadata == other.metadata && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, counterpartyId, ledgerAccountId, metadata, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -206,14 +193,15 @@ constructor(
 
         @JvmSynthetic
         internal fun from(virtualAccountUpdateParams: VirtualAccountUpdateParams) = apply {
-            this.id = virtualAccountUpdateParams.id
-            this.counterpartyId = virtualAccountUpdateParams.counterpartyId
-            this.ledgerAccountId = virtualAccountUpdateParams.ledgerAccountId
-            this.metadata = virtualAccountUpdateParams.metadata
-            this.name = virtualAccountUpdateParams.name
-            additionalHeaders(virtualAccountUpdateParams.additionalHeaders)
-            additionalQueryParams(virtualAccountUpdateParams.additionalQueryParams)
-            additionalBodyProperties(virtualAccountUpdateParams.additionalBodyProperties)
+            id = virtualAccountUpdateParams.id
+            counterpartyId = virtualAccountUpdateParams.counterpartyId
+            ledgerAccountId = virtualAccountUpdateParams.ledgerAccountId
+            metadata = virtualAccountUpdateParams.metadata
+            name = virtualAccountUpdateParams.name
+            additionalHeaders = virtualAccountUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = virtualAccountUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                virtualAccountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -422,4 +410,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is VirtualAccountUpdateParams && id == other.id && counterpartyId == other.counterpartyId && ledgerAccountId == other.ledgerAccountId && metadata == other.metadata && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, counterpartyId, ledgerAccountId, metadata, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

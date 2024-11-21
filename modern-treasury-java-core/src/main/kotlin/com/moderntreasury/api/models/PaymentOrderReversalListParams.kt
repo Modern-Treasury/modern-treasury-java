@@ -24,6 +24,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -41,23 +45,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentOrderReversalListParams && paymentOrderId == other.paymentOrderId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrderId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "PaymentOrderReversalListParams{paymentOrderId=$paymentOrderId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -77,11 +64,11 @@ constructor(
 
         @JvmSynthetic
         internal fun from(paymentOrderReversalListParams: PaymentOrderReversalListParams) = apply {
-            this.paymentOrderId = paymentOrderReversalListParams.paymentOrderId
-            this.afterCursor = paymentOrderReversalListParams.afterCursor
-            this.perPage = paymentOrderReversalListParams.perPage
-            additionalHeaders(paymentOrderReversalListParams.additionalHeaders)
-            additionalQueryParams(paymentOrderReversalListParams.additionalQueryParams)
+            paymentOrderId = paymentOrderReversalListParams.paymentOrderId
+            afterCursor = paymentOrderReversalListParams.afterCursor
+            perPage = paymentOrderReversalListParams.perPage
+            additionalHeaders = paymentOrderReversalListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentOrderReversalListParams.additionalQueryParams.toBuilder()
         }
 
         fun paymentOrderId(paymentOrderId: String) = apply { this.paymentOrderId = paymentOrderId }
@@ -197,4 +184,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentOrderReversalListParams && paymentOrderId == other.paymentOrderId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrderId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "PaymentOrderReversalListParams{paymentOrderId=$paymentOrderId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

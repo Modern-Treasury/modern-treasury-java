@@ -24,6 +24,12 @@ constructor(
 
     fun subCategoryId(): String = subCategoryId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): Optional<Map<String, JsonValue>> {
         return Optional.ofNullable(additionalBodyProperties.ifEmpty { null })
@@ -40,25 +46,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerAccountCategoryAddNestedCategoryParams && id == other.id && subCategoryId == other.subCategoryId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, subCategoryId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "LedgerAccountCategoryAddNestedCategoryParams{id=$id, subCategoryId=$subCategoryId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -81,15 +68,14 @@ constructor(
             ledgerAccountCategoryAddNestedCategoryParams:
                 LedgerAccountCategoryAddNestedCategoryParams
         ) = apply {
-            this.id = ledgerAccountCategoryAddNestedCategoryParams.id
-            this.subCategoryId = ledgerAccountCategoryAddNestedCategoryParams.subCategoryId
-            additionalHeaders(ledgerAccountCategoryAddNestedCategoryParams.additionalHeaders)
-            additionalQueryParams(
-                ledgerAccountCategoryAddNestedCategoryParams.additionalQueryParams
-            )
-            additionalBodyProperties(
-                ledgerAccountCategoryAddNestedCategoryParams.additionalBodyProperties
-            )
+            id = ledgerAccountCategoryAddNestedCategoryParams.id
+            subCategoryId = ledgerAccountCategoryAddNestedCategoryParams.subCategoryId
+            additionalHeaders =
+                ledgerAccountCategoryAddNestedCategoryParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                ledgerAccountCategoryAddNestedCategoryParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                ledgerAccountCategoryAddNestedCategoryParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -225,4 +211,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerAccountCategoryAddNestedCategoryParams && id == other.id && subCategoryId == other.subCategoryId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, subCategoryId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "LedgerAccountCategoryAddNestedCategoryParams{id=$id, subCategoryId=$subCategoryId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

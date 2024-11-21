@@ -39,6 +39,10 @@ constructor(
 
     fun status(): Optional<String> = Optional.ofNullable(status)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -59,23 +63,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentFlowListParams && afterCursor == other.afterCursor && clientToken == other.clientToken && counterpartyId == other.counterpartyId && originatingAccountId == other.originatingAccountId && paymentOrderId == other.paymentOrderId && perPage == other.perPage && receivingAccountId == other.receivingAccountId && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, clientToken, counterpartyId, originatingAccountId, paymentOrderId, perPage, receivingAccountId, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "PaymentFlowListParams{afterCursor=$afterCursor, clientToken=$clientToken, counterpartyId=$counterpartyId, originatingAccountId=$originatingAccountId, paymentOrderId=$paymentOrderId, perPage=$perPage, receivingAccountId=$receivingAccountId, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -100,16 +87,16 @@ constructor(
 
         @JvmSynthetic
         internal fun from(paymentFlowListParams: PaymentFlowListParams) = apply {
-            this.afterCursor = paymentFlowListParams.afterCursor
-            this.clientToken = paymentFlowListParams.clientToken
-            this.counterpartyId = paymentFlowListParams.counterpartyId
-            this.originatingAccountId = paymentFlowListParams.originatingAccountId
-            this.paymentOrderId = paymentFlowListParams.paymentOrderId
-            this.perPage = paymentFlowListParams.perPage
-            this.receivingAccountId = paymentFlowListParams.receivingAccountId
-            this.status = paymentFlowListParams.status
-            additionalHeaders(paymentFlowListParams.additionalHeaders)
-            additionalQueryParams(paymentFlowListParams.additionalQueryParams)
+            afterCursor = paymentFlowListParams.afterCursor
+            clientToken = paymentFlowListParams.clientToken
+            counterpartyId = paymentFlowListParams.counterpartyId
+            originatingAccountId = paymentFlowListParams.originatingAccountId
+            paymentOrderId = paymentFlowListParams.paymentOrderId
+            perPage = paymentFlowListParams.perPage
+            receivingAccountId = paymentFlowListParams.receivingAccountId
+            status = paymentFlowListParams.status
+            additionalHeaders = paymentFlowListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentFlowListParams.additionalQueryParams.toBuilder()
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -244,4 +231,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentFlowListParams && afterCursor == other.afterCursor && clientToken == other.clientToken && counterpartyId == other.counterpartyId && originatingAccountId == other.originatingAccountId && paymentOrderId == other.paymentOrderId && perPage == other.perPage && receivingAccountId == other.receivingAccountId && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, clientToken, counterpartyId, originatingAccountId, paymentOrderId, perPage, receivingAccountId, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "PaymentFlowListParams{afterCursor=$afterCursor, clientToken=$clientToken, counterpartyId=$counterpartyId, originatingAccountId=$originatingAccountId, paymentOrderId=$paymentOrderId, perPage=$perPage, receivingAccountId=$receivingAccountId, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

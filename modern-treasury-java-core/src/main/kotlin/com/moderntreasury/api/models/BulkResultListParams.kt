@@ -41,6 +41,10 @@ constructor(
 
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -56,23 +60,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BulkResultListParams && afterCursor == other.afterCursor && entityId == other.entityId && entityType == other.entityType && perPage == other.perPage && requestId == other.requestId && requestType == other.requestType && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, entityId, entityType, perPage, requestId, requestType, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "BulkResultListParams{afterCursor=$afterCursor, entityId=$entityId, entityType=$entityType, perPage=$perPage, requestId=$requestId, requestType=$requestType, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -96,15 +83,15 @@ constructor(
 
         @JvmSynthetic
         internal fun from(bulkResultListParams: BulkResultListParams) = apply {
-            this.afterCursor = bulkResultListParams.afterCursor
-            this.entityId = bulkResultListParams.entityId
-            this.entityType = bulkResultListParams.entityType
-            this.perPage = bulkResultListParams.perPage
-            this.requestId = bulkResultListParams.requestId
-            this.requestType = bulkResultListParams.requestType
-            this.status = bulkResultListParams.status
-            additionalHeaders(bulkResultListParams.additionalHeaders)
-            additionalQueryParams(bulkResultListParams.additionalQueryParams)
+            afterCursor = bulkResultListParams.afterCursor
+            entityId = bulkResultListParams.entityId
+            entityType = bulkResultListParams.entityType
+            perPage = bulkResultListParams.perPage
+            requestId = bulkResultListParams.requestId
+            requestType = bulkResultListParams.requestType
+            status = bulkResultListParams.status
+            additionalHeaders = bulkResultListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = bulkResultListParams.additionalQueryParams.toBuilder()
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -435,4 +422,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BulkResultListParams && afterCursor == other.afterCursor && entityId == other.entityId && entityType == other.entityType && perPage == other.perPage && requestId == other.requestId && requestType == other.requestType && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, entityId, entityType, perPage, requestId, requestType, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "BulkResultListParams{afterCursor=$afterCursor, entityId=$entityId, entityType=$entityType, perPage=$perPage, requestId=$requestId, requestType=$requestType, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

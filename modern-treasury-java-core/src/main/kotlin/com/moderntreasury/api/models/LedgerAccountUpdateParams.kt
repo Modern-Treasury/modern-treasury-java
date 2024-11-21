@@ -35,6 +35,12 @@ constructor(
 
     fun name(): Optional<String> = Optional.ofNullable(name)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): LedgerAccountUpdateBody {
         return LedgerAccountUpdateBody(
@@ -158,25 +164,6 @@ constructor(
             "LedgerAccountUpdateBody{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerAccountUpdateParams && id == other.id && description == other.description && metadata == other.metadata && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, description, metadata, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "LedgerAccountUpdateParams{id=$id, description=$description, metadata=$metadata, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -197,13 +184,14 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerAccountUpdateParams: LedgerAccountUpdateParams) = apply {
-            this.id = ledgerAccountUpdateParams.id
-            this.description = ledgerAccountUpdateParams.description
-            this.metadata = ledgerAccountUpdateParams.metadata
-            this.name = ledgerAccountUpdateParams.name
-            additionalHeaders(ledgerAccountUpdateParams.additionalHeaders)
-            additionalQueryParams(ledgerAccountUpdateParams.additionalQueryParams)
-            additionalBodyProperties(ledgerAccountUpdateParams.additionalBodyProperties)
+            id = ledgerAccountUpdateParams.id
+            description = ledgerAccountUpdateParams.description
+            metadata = ledgerAccountUpdateParams.metadata
+            name = ledgerAccountUpdateParams.name
+            additionalHeaders = ledgerAccountUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = ledgerAccountUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                ledgerAccountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -412,4 +400,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerAccountUpdateParams && id == other.id && description == other.description && metadata == other.metadata && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, description, metadata, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "LedgerAccountUpdateParams{id=$id, description=$description, metadata=$metadata, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

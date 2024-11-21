@@ -23,6 +23,10 @@ constructor(
 
     fun id(): String = id
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -35,23 +39,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is RoutingDetailRetrieveParams && accountsType == other.accountsType && accountId == other.accountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "RoutingDetailRetrieveParams{accountsType=$accountsType, accountId=$accountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -71,11 +58,11 @@ constructor(
 
         @JvmSynthetic
         internal fun from(routingDetailRetrieveParams: RoutingDetailRetrieveParams) = apply {
-            this.accountsType = routingDetailRetrieveParams.accountsType
-            this.accountId = routingDetailRetrieveParams.accountId
-            this.id = routingDetailRetrieveParams.id
-            additionalHeaders(routingDetailRetrieveParams.additionalHeaders)
-            additionalQueryParams(routingDetailRetrieveParams.additionalQueryParams)
+            accountsType = routingDetailRetrieveParams.accountsType
+            accountId = routingDetailRetrieveParams.accountId
+            id = routingDetailRetrieveParams.id
+            additionalHeaders = routingDetailRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams = routingDetailRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         fun accountsType(accountsType: AccountsType) = apply { this.accountsType = accountsType }
@@ -191,4 +178,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is RoutingDetailRetrieveParams && accountsType == other.accountsType && accountId == other.accountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "RoutingDetailRetrieveParams{accountsType=$accountsType, accountId=$accountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

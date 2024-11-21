@@ -45,6 +45,12 @@ constructor(
 
     fun variables(): Optional<LedgerEventHandlerVariables> = Optional.ofNullable(variables)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): LedgerEventHandlerCreateBody {
         return LedgerEventHandlerCreateBody(
@@ -215,25 +221,6 @@ constructor(
             "LedgerEventHandlerCreateBody{ledgerTransactionTemplate=$ledgerTransactionTemplate, name=$name, conditions=$conditions, description=$description, ledgerId=$ledgerId, metadata=$metadata, variables=$variables, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerEventHandlerCreateParams && ledgerTransactionTemplate == other.ledgerTransactionTemplate && name == other.name && conditions == other.conditions && description == other.description && ledgerId == other.ledgerId && metadata == other.metadata && variables == other.variables && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ledgerTransactionTemplate, name, conditions, description, ledgerId, metadata, variables, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "LedgerEventHandlerCreateParams{ledgerTransactionTemplate=$ledgerTransactionTemplate, name=$name, conditions=$conditions, description=$description, ledgerId=$ledgerId, metadata=$metadata, variables=$variables, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -257,17 +244,17 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerEventHandlerCreateParams: LedgerEventHandlerCreateParams) = apply {
-            this.ledgerTransactionTemplate =
-                ledgerEventHandlerCreateParams.ledgerTransactionTemplate
-            this.name = ledgerEventHandlerCreateParams.name
-            this.conditions = ledgerEventHandlerCreateParams.conditions
-            this.description = ledgerEventHandlerCreateParams.description
-            this.ledgerId = ledgerEventHandlerCreateParams.ledgerId
-            this.metadata = ledgerEventHandlerCreateParams.metadata
-            this.variables = ledgerEventHandlerCreateParams.variables
-            additionalHeaders(ledgerEventHandlerCreateParams.additionalHeaders)
-            additionalQueryParams(ledgerEventHandlerCreateParams.additionalQueryParams)
-            additionalBodyProperties(ledgerEventHandlerCreateParams.additionalBodyProperties)
+            ledgerTransactionTemplate = ledgerEventHandlerCreateParams.ledgerTransactionTemplate
+            name = ledgerEventHandlerCreateParams.name
+            conditions = ledgerEventHandlerCreateParams.conditions
+            description = ledgerEventHandlerCreateParams.description
+            ledgerId = ledgerEventHandlerCreateParams.ledgerId
+            metadata = ledgerEventHandlerCreateParams.metadata
+            variables = ledgerEventHandlerCreateParams.variables
+            additionalHeaders = ledgerEventHandlerCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = ledgerEventHandlerCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                ledgerEventHandlerCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun ledgerTransactionTemplate(
@@ -878,4 +865,17 @@ constructor(
         override fun toString() =
             "LedgerEventHandlerVariables{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerEventHandlerCreateParams && ledgerTransactionTemplate == other.ledgerTransactionTemplate && name == other.name && conditions == other.conditions && description == other.description && ledgerId == other.ledgerId && metadata == other.metadata && variables == other.variables && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ledgerTransactionTemplate, name, conditions, description, ledgerId, metadata, variables, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "LedgerEventHandlerCreateParams{ledgerTransactionTemplate=$ledgerTransactionTemplate, name=$name, conditions=$conditions, description=$description, ledgerId=$ledgerId, metadata=$metadata, variables=$variables, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

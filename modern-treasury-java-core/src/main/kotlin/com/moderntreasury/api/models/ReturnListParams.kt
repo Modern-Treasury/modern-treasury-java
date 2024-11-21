@@ -38,6 +38,10 @@ constructor(
 
     fun returnableType(): Optional<ReturnableType> = Optional.ofNullable(returnableType)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -54,23 +58,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReturnListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && internalAccountId == other.internalAccountId && perPage == other.perPage && returnableId == other.returnableId && returnableType == other.returnableType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, internalAccountId, perPage, returnableId, returnableType, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -93,14 +80,14 @@ constructor(
 
         @JvmSynthetic
         internal fun from(returnListParams: ReturnListParams) = apply {
-            this.afterCursor = returnListParams.afterCursor
-            this.counterpartyId = returnListParams.counterpartyId
-            this.internalAccountId = returnListParams.internalAccountId
-            this.perPage = returnListParams.perPage
-            this.returnableId = returnListParams.returnableId
-            this.returnableType = returnListParams.returnableType
-            additionalHeaders(returnListParams.additionalHeaders)
-            additionalQueryParams(returnListParams.additionalQueryParams)
+            afterCursor = returnListParams.afterCursor
+            counterpartyId = returnListParams.counterpartyId
+            internalAccountId = returnListParams.internalAccountId
+            perPage = returnListParams.perPage
+            returnableId = returnListParams.returnableId
+            returnableType = returnListParams.returnableType
+            additionalHeaders = returnListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = returnListParams.additionalQueryParams.toBuilder()
         }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -315,4 +302,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReturnListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && internalAccountId == other.internalAccountId && perPage == other.perPage && returnableId == other.returnableId && returnableType == other.returnableType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, internalAccountId, perPage, returnableId, returnableType, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
