@@ -24,6 +24,12 @@ constructor(
 
     fun ledgerAccountId(): String = ledgerAccountId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): Optional<Map<String, JsonValue>> {
         return Optional.ofNullable(additionalBodyProperties.ifEmpty { null })
@@ -40,27 +46,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerAccountCategoryRemoveLedgerAccountParams && this.id == other.id && this.ledgerAccountId == other.ledgerAccountId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(id, ledgerAccountId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "LedgerAccountCategoryRemoveLedgerAccountParams{id=$id, ledgerAccountId=$ledgerAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -83,15 +68,15 @@ constructor(
             ledgerAccountCategoryRemoveLedgerAccountParams:
                 LedgerAccountCategoryRemoveLedgerAccountParams
         ) = apply {
-            this.id = ledgerAccountCategoryRemoveLedgerAccountParams.id
-            this.ledgerAccountId = ledgerAccountCategoryRemoveLedgerAccountParams.ledgerAccountId
-            additionalHeaders(ledgerAccountCategoryRemoveLedgerAccountParams.additionalHeaders)
-            additionalQueryParams(
-                ledgerAccountCategoryRemoveLedgerAccountParams.additionalQueryParams
-            )
-            additionalBodyProperties(
+            id = ledgerAccountCategoryRemoveLedgerAccountParams.id
+            ledgerAccountId = ledgerAccountCategoryRemoveLedgerAccountParams.ledgerAccountId
+            additionalHeaders =
+                ledgerAccountCategoryRemoveLedgerAccountParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                ledgerAccountCategoryRemoveLedgerAccountParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
                 ledgerAccountCategoryRemoveLedgerAccountParams.additionalBodyProperties
-            )
+                    .toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -229,4 +214,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerAccountCategoryRemoveLedgerAccountParams && id == other.id && ledgerAccountId == other.ledgerAccountId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, ledgerAccountId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "LedgerAccountCategoryRemoveLedgerAccountParams{id=$id, ledgerAccountId=$ledgerAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

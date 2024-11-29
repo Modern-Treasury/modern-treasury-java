@@ -35,6 +35,10 @@ constructor(
 
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -48,25 +52,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ConnectionLegalEntityListParams && this.afterCursor == other.afterCursor && this.connectionId == other.connectionId && this.legalEntityId == other.legalEntityId && this.perPage == other.perPage && this.status == other.status && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(afterCursor, connectionId, legalEntityId, perPage, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ConnectionLegalEntityListParams{afterCursor=$afterCursor, connectionId=$connectionId, legalEntityId=$legalEntityId, perPage=$perPage, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -89,13 +74,14 @@ constructor(
         @JvmSynthetic
         internal fun from(connectionLegalEntityListParams: ConnectionLegalEntityListParams) =
             apply {
-                this.afterCursor = connectionLegalEntityListParams.afterCursor
-                this.connectionId = connectionLegalEntityListParams.connectionId
-                this.legalEntityId = connectionLegalEntityListParams.legalEntityId
-                this.perPage = connectionLegalEntityListParams.perPage
-                this.status = connectionLegalEntityListParams.status
-                additionalHeaders(connectionLegalEntityListParams.additionalHeaders)
-                additionalQueryParams(connectionLegalEntityListParams.additionalQueryParams)
+                afterCursor = connectionLegalEntityListParams.afterCursor
+                connectionId = connectionLegalEntityListParams.connectionId
+                legalEntityId = connectionLegalEntityListParams.legalEntityId
+                perPage = connectionLegalEntityListParams.perPage
+                status = connectionLegalEntityListParams.status
+                additionalHeaders = connectionLegalEntityListParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    connectionLegalEntityListParams.additionalQueryParams.toBuilder()
             }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
@@ -231,7 +217,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -286,4 +272,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ConnectionLegalEntityListParams && afterCursor == other.afterCursor && connectionId == other.connectionId && legalEntityId == other.legalEntityId && perPage == other.perPage && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, connectionId, legalEntityId, perPage, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ConnectionLegalEntityListParams{afterCursor=$afterCursor, connectionId=$connectionId, legalEntityId=$legalEntityId, perPage=$perPage, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

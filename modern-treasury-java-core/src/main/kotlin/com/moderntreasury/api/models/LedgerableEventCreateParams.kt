@@ -35,6 +35,12 @@ constructor(
 
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     @JvmSynthetic
     internal fun getBody(): LedgerableEventCreateBody {
         return LedgerableEventCreateBody(
@@ -150,42 +156,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerableEventCreateBody && this.name == other.name && this.customData == other.customData && this.description == other.description && this.metadata == other.metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerableEventCreateBody && name == other.name && customData == other.customData && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(name, customData, description, metadata, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(name, customData, description, metadata, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "LedgerableEventCreateBody{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerableEventCreateParams && this.name == other.name && this.customData == other.customData && this.description == other.description && this.metadata == other.metadata && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(name, customData, description, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "LedgerableEventCreateParams{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -207,13 +189,14 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerableEventCreateParams: LedgerableEventCreateParams) = apply {
-            this.name = ledgerableEventCreateParams.name
-            this.customData = ledgerableEventCreateParams.customData
-            this.description = ledgerableEventCreateParams.description
-            this.metadata = ledgerableEventCreateParams.metadata
-            additionalHeaders(ledgerableEventCreateParams.additionalHeaders)
-            additionalQueryParams(ledgerableEventCreateParams.additionalQueryParams)
-            additionalBodyProperties(ledgerableEventCreateParams.additionalBodyProperties)
+            name = ledgerableEventCreateParams.name
+            customData = ledgerableEventCreateParams.customData
+            description = ledgerableEventCreateParams.description
+            metadata = ledgerableEventCreateParams.metadata
+            additionalHeaders = ledgerableEventCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = ledgerableEventCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                ledgerableEventCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** Name of the ledgerable event. */
@@ -412,18 +395,28 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerableEventCreateParams && name == other.name && customData == other.customData && description == other.description && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(name, customData, description, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "LedgerableEventCreateParams{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

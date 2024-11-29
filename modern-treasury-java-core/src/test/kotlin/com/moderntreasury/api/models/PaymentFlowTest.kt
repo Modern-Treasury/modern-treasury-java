@@ -14,7 +14,7 @@ class PaymentFlowTest {
         val paymentFlow =
             PaymentFlow.builder()
                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .amount(123L)
+                .amount(0L)
                 .clientToken("client_token")
                 .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -35,7 +35,7 @@ class PaymentFlowTest {
                 .build()
         assertThat(paymentFlow).isNotNull
         assertThat(paymentFlow.id()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(paymentFlow.amount()).contains(123L)
+        assertThat(paymentFlow.amount()).contains(0L)
         assertThat(paymentFlow.clientToken()).contains("client_token")
         assertThat(paymentFlow.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(paymentFlow.createdAt())

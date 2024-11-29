@@ -27,6 +27,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -45,25 +49,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountDetailListParams && this.accountsType == other.accountsType && this.accountId == other.accountId && this.afterCursor == other.afterCursor && this.perPage == other.perPage && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountsType, accountId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AccountDetailListParams{accountsType=$accountsType, accountId=$accountId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -84,12 +69,12 @@ constructor(
 
         @JvmSynthetic
         internal fun from(accountDetailListParams: AccountDetailListParams) = apply {
-            this.accountsType = accountDetailListParams.accountsType
-            this.accountId = accountDetailListParams.accountId
-            this.afterCursor = accountDetailListParams.afterCursor
-            this.perPage = accountDetailListParams.perPage
-            additionalHeaders(accountDetailListParams.additionalHeaders)
-            additionalQueryParams(accountDetailListParams.additionalQueryParams)
+            accountsType = accountDetailListParams.accountsType
+            accountId = accountDetailListParams.accountId
+            afterCursor = accountDetailListParams.afterCursor
+            perPage = accountDetailListParams.perPage
+            additionalHeaders = accountDetailListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = accountDetailListParams.additionalQueryParams.toBuilder()
         }
 
         fun accountsType(accountsType: AccountsType) = apply { this.accountsType = accountsType }
@@ -208,4 +193,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountDetailListParams && accountsType == other.accountsType && accountId == other.accountId && afterCursor == other.afterCursor && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, afterCursor, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "AccountDetailListParams{accountsType=$accountsType, accountId=$accountId, afterCursor=$afterCursor, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

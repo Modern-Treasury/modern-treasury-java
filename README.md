@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/3.0.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/3.1.0)
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://do
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:3.0.0")
+implementation("com.moderntreasury:modern-treasury-java:3.1.0")
 ```
 
 #### Maven
@@ -34,7 +34,7 @@ implementation("com.moderntreasury:modern-treasury-java:3.0.0")
 <dependency>
     <groupId>com.moderntreasury</groupId>
     <artifactId>modern-treasury-java</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -285,6 +285,22 @@ ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
         new InetSocketAddress("proxy.com", 8080)
     ))
     .build();
+```
+
+## Logging
+
+We use the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
+
+You can enable logging by setting the environment variable `MODERN_TREASURY_LOG` to `info`.
+
+```sh
+$ export MODERN_TREASURY_LOG=info
+```
+
+Or to `debug` for more verbose logging.
+
+```sh
+$ export MODERN_TREASURY_LOG=debug
 ```
 
 ## Semantic versioning

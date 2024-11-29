@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.1.0 (2024-11-29)
+
+Full Changelog: [v3.0.0...v3.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.0.0...v3.1.0)
+
+### Features
+
+* **client:** add logging when debug env is set ([#272](https://github.com/Modern-Treasury/modern-treasury-java/issues/272)) ([ef7a9c1](https://github.com/Modern-Treasury/modern-treasury-java/commit/ef7a9c17878e623d77884c6e498dd303aa2f61be))
+* derive gpg release key's id via gpg itself ([#276](https://github.com/Modern-Treasury/modern-treasury-java/issues/276)) ([d53a19a](https://github.com/Modern-Treasury/modern-treasury-java/commit/d53a19a9c874d056ae6d8ce111e22521feea5226))
+
+
+### Chores
+
+* **api:** additional fields for requests to get BalanceReports and create LegalEntities ([#265](https://github.com/Modern-Treasury/modern-treasury-java/issues/265)) ([27e70aa](https://github.com/Modern-Treasury/modern-treasury-java/commit/27e70aa92cfa79b6725edb6b752b5c6da9556056))
+* **deps:** bump jackson to 2.18.1 ([#268](https://github.com/Modern-Treasury/modern-treasury-java/issues/268)) ([7c2116f](https://github.com/Modern-Treasury/modern-treasury-java/commit/7c2116fa85135e33d75357968ef7dea877311df7))
+* **internal:** update example values ([#275](https://github.com/Modern-Treasury/modern-treasury-java/issues/275)) ([b10c72e](https://github.com/Modern-Treasury/modern-treasury-java/commit/b10c72e3a37595453fffe2007924793d06945f84))
+* minor refactors ([#277](https://github.com/Modern-Treasury/modern-treasury-java/issues/277)) ([cf97ef4](https://github.com/Modern-Treasury/modern-treasury-java/commit/cf97ef4d04fc3f3c55d1e9fc8b648bf11bd99011))
+* sync openapi spec ([#274](https://github.com/Modern-Treasury/modern-treasury-java/issues/274)) ([548590d](https://github.com/Modern-Treasury/modern-treasury-java/commit/548590d748cb320058c828dc4d014f3c77ceb828))
+
+
+### Styles
+
+* **internal:** move identity methods to bottom of error class ([#270](https://github.com/Modern-Treasury/modern-treasury-java/issues/270)) ([2171f88](https://github.com/Modern-Treasury/modern-treasury-java/commit/2171f88422976d3a741a861f79d81d58ffe69438))
+* **internal:** reduce verbosity of identity methods ([#269](https://github.com/Modern-Treasury/modern-treasury-java/issues/269)) ([a8aa61f](https://github.com/Modern-Treasury/modern-treasury-java/commit/a8aa61f69134e788ecd4ffc9d01783e586cf4ab4))
+* **internal:** reorder some params methods and improve consistency of implementations ([#271](https://github.com/Modern-Treasury/modern-treasury-java/issues/271)) ([3235cab](https://github.com/Modern-Treasury/modern-treasury-java/commit/3235cabc6a46e3ee59ddbb9b8f97fc085553630b))
+
+
+### Refactors
+
+* **internal:** split `closeWhenPhantomReachable` function ([#267](https://github.com/Modern-Treasury/modern-treasury-java/issues/267)) ([0c07297](https://github.com/Modern-Treasury/modern-treasury-java/commit/0c0729726470a0ff8bbfe3fc5a07afd9c9d8a95d))
+
 ## 3.0.0 (2024-11-11)
 
 Full Changelog: [v2.22.0...v3.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v2.22.0...v3.0.0)

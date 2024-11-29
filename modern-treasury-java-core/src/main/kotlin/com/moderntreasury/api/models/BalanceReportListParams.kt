@@ -36,6 +36,10 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic
@@ -58,25 +62,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BalanceReportListParams && this.internalAccountId == other.internalAccountId && this.afterCursor == other.afterCursor && this.asOfDate == other.asOfDate && this.balanceReportType == other.balanceReportType && this.perPage == other.perPage && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(internalAccountId, afterCursor, asOfDate, balanceReportType, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "BalanceReportListParams{internalAccountId=$internalAccountId, afterCursor=$afterCursor, asOfDate=$asOfDate, balanceReportType=$balanceReportType, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -97,13 +82,13 @@ constructor(
 
         @JvmSynthetic
         internal fun from(balanceReportListParams: BalanceReportListParams) = apply {
-            this.internalAccountId = balanceReportListParams.internalAccountId
-            this.afterCursor = balanceReportListParams.afterCursor
-            this.asOfDate = balanceReportListParams.asOfDate
-            this.balanceReportType = balanceReportListParams.balanceReportType
-            this.perPage = balanceReportListParams.perPage
-            additionalHeaders(balanceReportListParams.additionalHeaders)
-            additionalQueryParams(balanceReportListParams.additionalQueryParams)
+            internalAccountId = balanceReportListParams.internalAccountId
+            afterCursor = balanceReportListParams.afterCursor
+            asOfDate = balanceReportListParams.asOfDate
+            balanceReportType = balanceReportListParams.balanceReportType
+            perPage = balanceReportListParams.perPage
+            additionalHeaders = balanceReportListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = balanceReportListParams.additionalQueryParams.toBuilder()
         }
 
         fun internalAccountId(internalAccountId: String) = apply {
@@ -250,7 +235,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceReportType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is BalanceReportType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -306,4 +291,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BalanceReportListParams && internalAccountId == other.internalAccountId && afterCursor == other.afterCursor && asOfDate == other.asOfDate && balanceReportType == other.balanceReportType && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, afterCursor, asOfDate, balanceReportType, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "BalanceReportListParams{internalAccountId=$internalAccountId, afterCursor=$afterCursor, asOfDate=$asOfDate, balanceReportType=$balanceReportType, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
