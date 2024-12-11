@@ -350,11 +350,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val CREATE = ActionType(JsonField.of("create"))
+            @JvmField val CREATE = of("create")
 
-            @JvmField val UPDATE = ActionType(JsonField.of("update"))
+            @JvmField val UPDATE = of("update")
 
-            @JvmField val DELETE = ActionType(JsonField.of("delete"))
+            @JvmField val DELETE = of("delete")
 
             @JvmStatic fun of(value: String) = ActionType(JsonField.of(value))
         }
@@ -483,13 +483,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val PAYMENT_ORDER = ResourceType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField val LEDGER_TRANSACTION = ResourceType(JsonField.of("ledger_transaction"))
+            @JvmField val LEDGER_TRANSACTION = of("ledger_transaction")
 
-            @JvmField val TRANSACTION = ResourceType(JsonField.of("transaction"))
+            @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val EXPECTED_PAYMENT = ResourceType(JsonField.of("expected_payment"))
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
             @JvmStatic fun of(value: String) = ResourceType(JsonField.of(value))
         }
@@ -552,11 +552,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val PROCESSING = Status(JsonField.of("processing"))
+            @JvmField val PROCESSING = of("processing")
 
-            @JvmField val COMPLETED = Status(JsonField.of("completed"))
+            @JvmField val COMPLETED = of("completed")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

@@ -811,9 +811,9 @@ constructor(
 
             companion object {
 
-                @JvmField val ASC = CreatedAt(JsonField.of("asc"))
+                @JvmField val ASC = of("asc")
 
-                @JvmField val DESC = CreatedAt(JsonField.of("desc"))
+                @JvmField val DESC = of("desc")
 
                 @JvmStatic fun of(value: String) = CreatedAt(JsonField.of(value))
             }
@@ -868,9 +868,9 @@ constructor(
 
             companion object {
 
-                @JvmField val ASC = EffectiveAt(JsonField.of("asc"))
+                @JvmField val ASC = of("asc")
 
-                @JvmField val DESC = EffectiveAt(JsonField.of("desc"))
+                @JvmField val DESC = of("desc")
 
                 @JvmStatic fun of(value: String) = EffectiveAt(JsonField.of(value))
             }
@@ -943,11 +943,11 @@ constructor(
 
         companion object {
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val POSTED = Status(JsonField.of("posted"))
+            @JvmField val POSTED = of("posted")
 
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+            @JvmField val ARCHIVED = of("archived")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

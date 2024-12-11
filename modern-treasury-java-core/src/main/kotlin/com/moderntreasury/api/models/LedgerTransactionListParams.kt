@@ -551,18 +551,17 @@ constructor(
 
         companion object {
 
-            @JvmField val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-            @JvmField
-            val INCOMING_PAYMENT_DETAIL = LedgerableType(JsonField.of("incoming_payment_detail"))
+            @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
+            @JvmField val PAPER_ITEM = of("paper_item")
 
-            @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField val RETURN = LedgerableType(JsonField.of("return"))
+            @JvmField val RETURN = of("return")
 
-            @JvmField val REVERSAL = LedgerableType(JsonField.of("reversal"))
+            @JvmField val REVERSAL = of("reversal")
 
             @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
         }
@@ -774,9 +773,9 @@ constructor(
 
             companion object {
 
-                @JvmField val ASC = CreatedAt(JsonField.of("asc"))
+                @JvmField val ASC = of("asc")
 
-                @JvmField val DESC = CreatedAt(JsonField.of("desc"))
+                @JvmField val DESC = of("desc")
 
                 @JvmStatic fun of(value: String) = CreatedAt(JsonField.of(value))
             }
@@ -831,9 +830,9 @@ constructor(
 
             companion object {
 
-                @JvmField val ASC = EffectiveAt(JsonField.of("asc"))
+                @JvmField val ASC = of("asc")
 
-                @JvmField val DESC = EffectiveAt(JsonField.of("desc"))
+                @JvmField val DESC = of("desc")
 
                 @JvmStatic fun of(value: String) = EffectiveAt(JsonField.of(value))
             }
@@ -975,11 +974,11 @@ constructor(
 
         companion object {
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val POSTED = Status(JsonField.of("posted"))
+            @JvmField val POSTED = of("posted")
 
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+            @JvmField val ARCHIVED = of("archived")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

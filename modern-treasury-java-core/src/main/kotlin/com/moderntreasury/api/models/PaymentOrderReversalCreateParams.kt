@@ -399,18 +399,15 @@ constructor(
 
         companion object {
 
-            @JvmField val DUPLICATE = Reason(JsonField.of("duplicate"))
+            @JvmField val DUPLICATE = of("duplicate")
 
-            @JvmField val INCORRECT_AMOUNT = Reason(JsonField.of("incorrect_amount"))
+            @JvmField val INCORRECT_AMOUNT = of("incorrect_amount")
 
-            @JvmField
-            val INCORRECT_RECEIVING_ACCOUNT = Reason(JsonField.of("incorrect_receiving_account"))
+            @JvmField val INCORRECT_RECEIVING_ACCOUNT = of("incorrect_receiving_account")
 
-            @JvmField
-            val DATE_EARLIER_THAN_INTENDED = Reason(JsonField.of("date_earlier_than_intended"))
+            @JvmField val DATE_EARLIER_THAN_INTENDED = of("date_earlier_than_intended")
 
-            @JvmField
-            val DATE_LATER_THAN_INTENDED = Reason(JsonField.of("date_later_than_intended"))
+            @JvmField val DATE_LATER_THAN_INTENDED = of("date_later_than_intended")
 
             @JvmStatic fun of(value: String) = Reason(JsonField.of(value))
         }
@@ -1192,19 +1189,17 @@ constructor(
 
             companion object {
 
-                @JvmField val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
+                @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-                @JvmField
-                val INCOMING_PAYMENT_DETAIL =
-                    LedgerableType(JsonField.of("incoming_payment_detail"))
+                @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-                @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
+                @JvmField val PAPER_ITEM = of("paper_item")
 
-                @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
+                @JvmField val PAYMENT_ORDER = of("payment_order")
 
-                @JvmField val RETURN = LedgerableType(JsonField.of("return"))
+                @JvmField val RETURN = of("return")
 
-                @JvmField val REVERSAL = LedgerableType(JsonField.of("reversal"))
+                @JvmField val REVERSAL = of("reversal")
 
                 @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
             }
@@ -1341,11 +1336,11 @@ constructor(
 
             companion object {
 
-                @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+                @JvmField val ARCHIVED = of("archived")
 
-                @JvmField val PENDING = Status(JsonField.of("pending"))
+                @JvmField val PENDING = of("pending")
 
-                @JvmField val POSTED = Status(JsonField.of("posted"))
+                @JvmField val POSTED = of("posted")
 
                 @JvmStatic fun of(value: String) = Status(JsonField.of(value))
             }

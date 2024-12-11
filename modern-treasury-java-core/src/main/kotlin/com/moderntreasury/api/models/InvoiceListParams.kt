@@ -366,17 +366,17 @@ constructor(
 
         companion object {
 
-            @JvmField val DRAFT = Status(JsonField.of("draft"))
+            @JvmField val DRAFT = of("draft")
 
-            @JvmField val PAID = Status(JsonField.of("paid"))
+            @JvmField val PAID = of("paid")
 
-            @JvmField val PARTIALLY_PAID = Status(JsonField.of("partially_paid"))
+            @JvmField val PARTIALLY_PAID = of("partially_paid")
 
-            @JvmField val PAYMENT_PENDING = Status(JsonField.of("payment_pending"))
+            @JvmField val PAYMENT_PENDING = of("payment_pending")
 
-            @JvmField val UNPAID = Status(JsonField.of("unpaid"))
+            @JvmField val UNPAID = of("unpaid")
 
-            @JvmField val VOIDED = Status(JsonField.of("voided"))
+            @JvmField val VOIDED = of("voided")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

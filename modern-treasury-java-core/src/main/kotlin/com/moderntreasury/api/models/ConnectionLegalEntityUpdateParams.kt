@@ -313,7 +313,7 @@ constructor(
 
         companion object {
 
-            @JvmField val PROCESSING = Status(JsonField.of("processing"))
+            @JvmField val PROCESSING = of("processing")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

@@ -1251,11 +1251,11 @@ private constructor(
 
             companion object {
 
-                @JvmField val EMAIL = ContactIdentifierType(JsonField.of("email"))
+                @JvmField val EMAIL = of("email")
 
-                @JvmField val PHONE_NUMBER = ContactIdentifierType(JsonField.of("phone_number"))
+                @JvmField val PHONE_NUMBER = of("phone_number")
 
-                @JvmField val WEBSITE = ContactIdentifierType(JsonField.of("website"))
+                @JvmField val WEBSITE = of("website")
 
                 @JvmStatic fun of(value: String) = ContactIdentifierType(JsonField.of(value))
             }
@@ -1945,11 +1945,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val UI = PaymentMethod(JsonField.of("ui"))
+            @JvmField val UI = of("ui")
 
-            @JvmField val MANUAL = PaymentMethod(JsonField.of("manual"))
+            @JvmField val MANUAL = of("manual")
 
-            @JvmField val AUTOMATIC = PaymentMethod(JsonField.of("automatic"))
+            @JvmField val AUTOMATIC = of("automatic")
 
             @JvmStatic fun of(value: String) = PaymentMethod(JsonField.of(value))
         }
@@ -2008,9 +2008,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val EFT = PaymentType(JsonField.of("eft"))
+            @JvmField val EFT = of("eft")
 
-            @JvmField val ACH = PaymentType(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
             @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
         }
@@ -2065,17 +2065,17 @@ private constructor(
 
         companion object {
 
-            @JvmField val DRAFT = Status(JsonField.of("draft"))
+            @JvmField val DRAFT = of("draft")
 
-            @JvmField val PAID = Status(JsonField.of("paid"))
+            @JvmField val PAID = of("paid")
 
-            @JvmField val PARTIALLY_PAID = Status(JsonField.of("partially_paid"))
+            @JvmField val PARTIALLY_PAID = of("partially_paid")
 
-            @JvmField val PAYMENT_PENDING = Status(JsonField.of("payment_pending"))
+            @JvmField val PAYMENT_PENDING = of("payment_pending")
 
-            @JvmField val UNPAID = Status(JsonField.of("unpaid"))
+            @JvmField val UNPAID = of("unpaid")
 
-            @JvmField val VOIDED = Status(JsonField.of("voided"))
+            @JvmField val VOIDED = of("voided")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

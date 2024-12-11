@@ -491,9 +491,9 @@ constructor(
 
         companion object {
 
-            @JvmField val USD = Currency(JsonField.of("USD"))
+            @JvmField val USD = of("USD")
 
-            @JvmField val CAD = Currency(JsonField.of("CAD"))
+            @JvmField val CAD = of("CAD")
 
             @JvmStatic fun of(value: String) = Currency(JsonField.of(value))
         }

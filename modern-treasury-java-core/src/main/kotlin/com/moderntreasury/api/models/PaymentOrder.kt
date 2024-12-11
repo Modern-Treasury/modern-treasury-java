@@ -1718,11 +1718,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val SHARED = ChargeBearer(JsonField.of("shared"))
+            @JvmField val SHARED = of("shared")
 
-            @JvmField val SENDER = ChargeBearer(JsonField.of("sender"))
+            @JvmField val SENDER = of("sender")
 
-            @JvmField val RECEIVER = ChargeBearer(JsonField.of("receiver"))
+            @JvmField val RECEIVER = of("receiver")
 
             @JvmStatic fun of(value: String) = ChargeBearer(JsonField.of(value))
         }
@@ -1856,9 +1856,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }
@@ -1913,11 +1913,9 @@ private constructor(
 
         companion object {
 
-            @JvmField
-            val FIXED_TO_VARIABLE = ForeignExchangeIndicator(JsonField.of("fixed_to_variable"))
+            @JvmField val FIXED_TO_VARIABLE = of("fixed_to_variable")
 
-            @JvmField
-            val VARIABLE_TO_FIXED = ForeignExchangeIndicator(JsonField.of("variable_to_fixed"))
+            @JvmField val VARIABLE_TO_FIXED = of("variable_to_fixed")
 
             @JvmStatic fun of(value: String) = ForeignExchangeIndicator(JsonField.of(value))
         }
@@ -2307,9 +2305,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val HIGH = Priority(JsonField.of("high"))
+            @JvmField val HIGH = of("high")
 
-            @JvmField val NORMAL = Priority(JsonField.of("normal"))
+            @JvmField val NORMAL = of("normal")
 
             @JvmStatic fun of(value: String) = Priority(JsonField.of(value))
         }
@@ -2364,9 +2362,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val INTERNAL_ACCOUNT = ReceivingAccountType(JsonField.of("internal_account"))
+            @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
-            @JvmField val EXTERNAL_ACCOUNT = ReceivingAccountType(JsonField.of("external_account"))
+            @JvmField val EXTERNAL_ACCOUNT = of("external_account")
 
             @JvmStatic fun of(value: String) = ReceivingAccountType(JsonField.of(value))
         }
@@ -2619,251 +2617,161 @@ private constructor(
 
             companion object {
 
-                @JvmField
-                val ACH_ORIGINAL_TRACE_NUMBER =
-                    ReferenceNumberType(JsonField.of("ach_original_trace_number"))
+                @JvmField val ACH_ORIGINAL_TRACE_NUMBER = of("ach_original_trace_number")
 
-                @JvmField
-                val ACH_TRACE_NUMBER = ReferenceNumberType(JsonField.of("ach_trace_number"))
+                @JvmField val ACH_TRACE_NUMBER = of("ach_trace_number")
 
-                @JvmField
-                val BANKPROV_PAYMENT_ACTIVITY_DATE =
-                    ReferenceNumberType(JsonField.of("bankprov_payment_activity_date"))
+                @JvmField val BANKPROV_PAYMENT_ACTIVITY_DATE = of("bankprov_payment_activity_date")
 
-                @JvmField
-                val BANKPROV_PAYMENT_ID = ReferenceNumberType(JsonField.of("bankprov_payment_id"))
+                @JvmField val BANKPROV_PAYMENT_ID = of("bankprov_payment_id")
 
-                @JvmField
-                val BNK_DEV_PRENOTIFICATION_ID =
-                    ReferenceNumberType(JsonField.of("bnk_dev_prenotification_id"))
+                @JvmField val BNK_DEV_PRENOTIFICATION_ID = of("bnk_dev_prenotification_id")
 
-                @JvmField
-                val BNK_DEV_TRANSFER_ID = ReferenceNumberType(JsonField.of("bnk_dev_transfer_id"))
+                @JvmField val BNK_DEV_TRANSFER_ID = of("bnk_dev_transfer_id")
 
-                @JvmField
-                val BOFA_END_TO_END_ID = ReferenceNumberType(JsonField.of("bofa_end_to_end_id"))
+                @JvmField val BOFA_END_TO_END_ID = of("bofa_end_to_end_id")
 
-                @JvmField
-                val BOFA_TRANSACTION_ID = ReferenceNumberType(JsonField.of("bofa_transaction_id"))
+                @JvmField val BOFA_TRANSACTION_ID = of("bofa_transaction_id")
 
-                @JvmField val CHECK_NUMBER = ReferenceNumberType(JsonField.of("check_number"))
+                @JvmField val CHECK_NUMBER = of("check_number")
 
-                @JvmField
-                val CITIBANK_REFERENCE_NUMBER =
-                    ReferenceNumberType(JsonField.of("citibank_reference_number"))
+                @JvmField val CITIBANK_REFERENCE_NUMBER = of("citibank_reference_number")
 
                 @JvmField
                 val CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER =
-                    ReferenceNumberType(
-                        JsonField.of("citibank_worldlink_clearing_system_reference_number")
-                    )
+                    of("citibank_worldlink_clearing_system_reference_number")
+
+                @JvmField val COLUMN_FX_QUOTE_ID = of("column_fx_quote_id")
 
                 @JvmField
-                val COLUMN_FX_QUOTE_ID = ReferenceNumberType(JsonField.of("column_fx_quote_id"))
+                val COLUMN_REVERSAL_PAIR_TRANSFER_ID = of("column_reversal_pair_transfer_id")
+
+                @JvmField val COLUMN_TRANSFER_ID = of("column_transfer_id")
+
+                @JvmField val CROSS_RIVER_PAYMENT_ID = of("cross_river_payment_id")
+
+                @JvmField val CROSS_RIVER_SERVICE_MESSAGE = of("cross_river_service_message")
+
+                @JvmField val CROSS_RIVER_TRANSACTION_ID = of("cross_river_transaction_id")
+
+                @JvmField val CURRENCYCLOUD_CONVERSION_ID = of("currencycloud_conversion_id")
+
+                @JvmField val CURRENCYCLOUD_PAYMENT_ID = of("currencycloud_payment_id")
+
+                @JvmField val DC_BANK_TRANSACTION_ID = of("dc_bank_transaction_id")
+
+                @JvmField val DWOLLA_TRANSACTION_ID = of("dwolla_transaction_id")
+
+                @JvmField val EFT_TRACE_NUMBER = of("eft_trace_number")
+
+                @JvmField val EVOLVE_TRANSACTION_ID = of("evolve_transaction_id")
+
+                @JvmField val FEDWIRE_IMAD = of("fedwire_imad")
+
+                @JvmField val FEDWIRE_OMAD = of("fedwire_omad")
+
+                @JvmField val FIRST_REPUBLIC_INTERNAL_ID = of("first_republic_internal_id")
 
                 @JvmField
-                val COLUMN_REVERSAL_PAIR_TRANSFER_ID =
-                    ReferenceNumberType(JsonField.of("column_reversal_pair_transfer_id"))
+                val GOLDMAN_SACHS_COLLECTION_REQUEST_ID = of("goldman_sachs_collection_request_id")
+
+                @JvmField val GOLDMAN_SACHS_END_TO_END_ID = of("goldman_sachs_end_to_end_id")
 
                 @JvmField
-                val COLUMN_TRANSFER_ID = ReferenceNumberType(JsonField.of("column_transfer_id"))
+                val GOLDMAN_SACHS_PAYMENT_REQUEST_ID = of("goldman_sachs_payment_request_id")
+
+                @JvmField val GOLDMAN_SACHS_REQUEST_ID = of("goldman_sachs_request_id")
 
                 @JvmField
-                val CROSS_RIVER_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("cross_river_payment_id"))
+                val GOLDMAN_SACHS_UNIQUE_PAYMENT_ID = of("goldman_sachs_unique_payment_id")
+
+                @JvmField val INTERAC_MESSAGE_ID = of("interac_message_id")
+
+                @JvmField val JPMC_CCN = of("jpmc_ccn")
+
+                @JvmField val JPMC_CLEARING_SYSTEM_REFERENCE = of("jpmc_clearing_system_reference")
+
+                @JvmField val JPMC_CUSTOMER_REFERENCE_ID = of("jpmc_customer_reference_id")
+
+                @JvmField val JPMC_END_TO_END_ID = of("jpmc_end_to_end_id")
+
+                @JvmField val JPMC_FIRM_ROOT_ID = of("jpmc_firm_root_id")
+
+                @JvmField val JPMC_FX_TRN_ID = of("jpmc_fx_trn_id")
+
+                @JvmField val JPMC_P3_ID = of("jpmc_p3_id")
+
+                @JvmField val JPMC_PAYMENT_BATCH_ID = of("jpmc_payment_batch_id")
+
+                @JvmField val JPMC_PAYMENT_INFORMATION_ID = of("jpmc_payment_information_id")
+
+                @JvmField val JPMC_PAYMENT_RETURNED_DATETIME = of("jpmc_payment_returned_datetime")
+
+                @JvmField val LOB_CHECK_ID = of("lob_check_id")
+
+                @JvmField val OTHER = of("other")
+
+                @JvmField val PARTIAL_SWIFT_MIR = of("partial_swift_mir")
+
+                @JvmField val PNC_CLEARING_REFERENCE = of("pnc_clearing_reference")
+
+                @JvmField val PNC_INSTRUCTION_ID = of("pnc_instruction_id")
+
+                @JvmField val PNC_MULTIPAYMENT_ID = of("pnc_multipayment_id")
+
+                @JvmField val PNC_PAYMENT_TRACE_ID = of("pnc_payment_trace_id")
 
                 @JvmField
-                val CROSS_RIVER_SERVICE_MESSAGE =
-                    ReferenceNumberType(JsonField.of("cross_river_service_message"))
+                val PNC_TRANSACTION_REFERENCE_NUMBER = of("pnc_transaction_reference_number")
 
-                @JvmField
-                val CROSS_RIVER_TRANSACTION_ID =
-                    ReferenceNumberType(JsonField.of("cross_river_transaction_id"))
+                @JvmField val RSPEC_VENDOR_PAYMENT_ID = of("rspec_vendor_payment_id")
 
-                @JvmField
-                val CURRENCYCLOUD_CONVERSION_ID =
-                    ReferenceNumberType(JsonField.of("currencycloud_conversion_id"))
+                @JvmField val RTP_INSTRUCTION_ID = of("rtp_instruction_id")
 
-                @JvmField
-                val CURRENCYCLOUD_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("currencycloud_payment_id"))
+                @JvmField val SIGNET_API_REFERENCE_ID = of("signet_api_reference_id")
 
-                @JvmField
-                val DC_BANK_TRANSACTION_ID =
-                    ReferenceNumberType(JsonField.of("dc_bank_transaction_id"))
+                @JvmField val SIGNET_CONFIRMATION_ID = of("signet_confirmation_id")
 
-                @JvmField
-                val DWOLLA_TRANSACTION_ID =
-                    ReferenceNumberType(JsonField.of("dwolla_transaction_id"))
+                @JvmField val SIGNET_REQUEST_ID = of("signet_request_id")
 
-                @JvmField
-                val EFT_TRACE_NUMBER = ReferenceNumberType(JsonField.of("eft_trace_number"))
+                @JvmField val SILVERGATE_PAYMENT_ID = of("silvergate_payment_id")
 
-                @JvmField
-                val EVOLVE_TRANSACTION_ID =
-                    ReferenceNumberType(JsonField.of("evolve_transaction_id"))
+                @JvmField val SVB_END_TO_END_ID = of("svb_end_to_end_id")
 
-                @JvmField val FEDWIRE_IMAD = ReferenceNumberType(JsonField.of("fedwire_imad"))
-
-                @JvmField val FEDWIRE_OMAD = ReferenceNumberType(JsonField.of("fedwire_omad"))
-
-                @JvmField
-                val FIRST_REPUBLIC_INTERNAL_ID =
-                    ReferenceNumberType(JsonField.of("first_republic_internal_id"))
-
-                @JvmField
-                val GOLDMAN_SACHS_COLLECTION_REQUEST_ID =
-                    ReferenceNumberType(JsonField.of("goldman_sachs_collection_request_id"))
-
-                @JvmField
-                val GOLDMAN_SACHS_END_TO_END_ID =
-                    ReferenceNumberType(JsonField.of("goldman_sachs_end_to_end_id"))
-
-                @JvmField
-                val GOLDMAN_SACHS_PAYMENT_REQUEST_ID =
-                    ReferenceNumberType(JsonField.of("goldman_sachs_payment_request_id"))
-
-                @JvmField
-                val GOLDMAN_SACHS_REQUEST_ID =
-                    ReferenceNumberType(JsonField.of("goldman_sachs_request_id"))
-
-                @JvmField
-                val GOLDMAN_SACHS_UNIQUE_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("goldman_sachs_unique_payment_id"))
-
-                @JvmField
-                val INTERAC_MESSAGE_ID = ReferenceNumberType(JsonField.of("interac_message_id"))
-
-                @JvmField val JPMC_CCN = ReferenceNumberType(JsonField.of("jpmc_ccn"))
-
-                @JvmField
-                val JPMC_CLEARING_SYSTEM_REFERENCE =
-                    ReferenceNumberType(JsonField.of("jpmc_clearing_system_reference"))
-
-                @JvmField
-                val JPMC_CUSTOMER_REFERENCE_ID =
-                    ReferenceNumberType(JsonField.of("jpmc_customer_reference_id"))
-
-                @JvmField
-                val JPMC_END_TO_END_ID = ReferenceNumberType(JsonField.of("jpmc_end_to_end_id"))
-
-                @JvmField
-                val JPMC_FIRM_ROOT_ID = ReferenceNumberType(JsonField.of("jpmc_firm_root_id"))
-
-                @JvmField val JPMC_FX_TRN_ID = ReferenceNumberType(JsonField.of("jpmc_fx_trn_id"))
-
-                @JvmField val JPMC_P3_ID = ReferenceNumberType(JsonField.of("jpmc_p3_id"))
-
-                @JvmField
-                val JPMC_PAYMENT_BATCH_ID =
-                    ReferenceNumberType(JsonField.of("jpmc_payment_batch_id"))
-
-                @JvmField
-                val JPMC_PAYMENT_INFORMATION_ID =
-                    ReferenceNumberType(JsonField.of("jpmc_payment_information_id"))
-
-                @JvmField
-                val JPMC_PAYMENT_RETURNED_DATETIME =
-                    ReferenceNumberType(JsonField.of("jpmc_payment_returned_datetime"))
-
-                @JvmField val LOB_CHECK_ID = ReferenceNumberType(JsonField.of("lob_check_id"))
-
-                @JvmField val OTHER = ReferenceNumberType(JsonField.of("other"))
-
-                @JvmField
-                val PARTIAL_SWIFT_MIR = ReferenceNumberType(JsonField.of("partial_swift_mir"))
-
-                @JvmField
-                val PNC_CLEARING_REFERENCE =
-                    ReferenceNumberType(JsonField.of("pnc_clearing_reference"))
-
-                @JvmField
-                val PNC_INSTRUCTION_ID = ReferenceNumberType(JsonField.of("pnc_instruction_id"))
-
-                @JvmField
-                val PNC_MULTIPAYMENT_ID = ReferenceNumberType(JsonField.of("pnc_multipayment_id"))
-
-                @JvmField
-                val PNC_PAYMENT_TRACE_ID = ReferenceNumberType(JsonField.of("pnc_payment_trace_id"))
-
-                @JvmField
-                val PNC_TRANSACTION_REFERENCE_NUMBER =
-                    ReferenceNumberType(JsonField.of("pnc_transaction_reference_number"))
-
-                @JvmField
-                val RSPEC_VENDOR_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("rspec_vendor_payment_id"))
-
-                @JvmField
-                val RTP_INSTRUCTION_ID = ReferenceNumberType(JsonField.of("rtp_instruction_id"))
-
-                @JvmField
-                val SIGNET_API_REFERENCE_ID =
-                    ReferenceNumberType(JsonField.of("signet_api_reference_id"))
-
-                @JvmField
-                val SIGNET_CONFIRMATION_ID =
-                    ReferenceNumberType(JsonField.of("signet_confirmation_id"))
-
-                @JvmField
-                val SIGNET_REQUEST_ID = ReferenceNumberType(JsonField.of("signet_request_id"))
-
-                @JvmField
-                val SILVERGATE_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("silvergate_payment_id"))
-
-                @JvmField
-                val SVB_END_TO_END_ID = ReferenceNumberType(JsonField.of("svb_end_to_end_id"))
-
-                @JvmField val SVB_PAYMENT_ID = ReferenceNumberType(JsonField.of("svb_payment_id"))
+                @JvmField val SVB_PAYMENT_ID = of("svb_payment_id")
 
                 @JvmField
                 val SVB_TRANSACTION_CLEARED_FOR_SANCTIONS_REVIEW =
-                    ReferenceNumberType(
-                        JsonField.of("svb_transaction_cleared_for_sanctions_review")
-                    )
+                    of("svb_transaction_cleared_for_sanctions_review")
 
                 @JvmField
                 val SVB_TRANSACTION_HELD_FOR_SANCTIONS_REVIEW =
-                    ReferenceNumberType(JsonField.of("svb_transaction_held_for_sanctions_review"))
+                    of("svb_transaction_held_for_sanctions_review")
 
-                @JvmField val SWIFT_MIR = ReferenceNumberType(JsonField.of("swift_mir"))
+                @JvmField val SWIFT_MIR = of("swift_mir")
 
-                @JvmField val SWIFT_UETR = ReferenceNumberType(JsonField.of("swift_uetr"))
+                @JvmField val SWIFT_UETR = of("swift_uetr")
 
                 @JvmField
-                val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER =
-                    ReferenceNumberType(JsonField.of("umb_product_partner_account_number"))
+                val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER = of("umb_product_partner_account_number")
 
                 @JvmField
                 val USBANK_PAYMENT_APPLICATION_REFERENCE_ID =
-                    ReferenceNumberType(JsonField.of("usbank_payment_application_reference_id"))
+                    of("usbank_payment_application_reference_id")
 
-                @JvmField
-                val USBANK_PAYMENT_ID = ReferenceNumberType(JsonField.of("usbank_payment_id"))
+                @JvmField val USBANK_PAYMENT_ID = of("usbank_payment_id")
 
-                @JvmField
-                val USBANK_PENDING_RTP_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("usbank_pending_rtp_payment_id"))
+                @JvmField val USBANK_PENDING_RTP_PAYMENT_ID = of("usbank_pending_rtp_payment_id")
 
-                @JvmField
-                val USBANK_POSTED_RTP_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("usbank_posted_rtp_payment_id"))
+                @JvmField val USBANK_POSTED_RTP_PAYMENT_ID = of("usbank_posted_rtp_payment_id")
 
-                @JvmField
-                val WELLS_FARGO_END_TO_END_ID =
-                    ReferenceNumberType(JsonField.of("wells_fargo_end_to_end_id"))
+                @JvmField val WELLS_FARGO_END_TO_END_ID = of("wells_fargo_end_to_end_id")
 
-                @JvmField
-                val WELLS_FARGO_PAYMENT_ID =
-                    ReferenceNumberType(JsonField.of("wells_fargo_payment_id"))
+                @JvmField val WELLS_FARGO_PAYMENT_ID = of("wells_fargo_payment_id")
 
-                @JvmField
-                val WELLS_FARGO_TRACE_NUMBER =
-                    ReferenceNumberType(JsonField.of("wells_fargo_trace_number"))
+                @JvmField val WELLS_FARGO_TRACE_NUMBER = of("wells_fargo_trace_number")
 
-                @JvmField
-                val WELLS_FARGO_UETR = ReferenceNumberType(JsonField.of("wells_fargo_uetr"))
+                @JvmField val WELLS_FARGO_UETR = of("wells_fargo_uetr")
 
                 @JvmStatic fun of(value: String) = ReferenceNumberType(JsonField.of(value))
             }
@@ -3223,27 +3131,27 @@ private constructor(
 
         companion object {
 
-            @JvmField val APPROVED = Status(JsonField.of("approved"))
+            @JvmField val APPROVED = of("approved")
 
-            @JvmField val CANCELLED = Status(JsonField.of("cancelled"))
+            @JvmField val CANCELLED = of("cancelled")
 
-            @JvmField val COMPLETED = Status(JsonField.of("completed"))
+            @JvmField val COMPLETED = of("completed")
 
-            @JvmField val DENIED = Status(JsonField.of("denied"))
+            @JvmField val DENIED = of("denied")
 
-            @JvmField val FAILED = Status(JsonField.of("failed"))
+            @JvmField val FAILED = of("failed")
 
-            @JvmField val NEEDS_APPROVAL = Status(JsonField.of("needs_approval"))
+            @JvmField val NEEDS_APPROVAL = of("needs_approval")
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val PROCESSING = Status(JsonField.of("processing"))
+            @JvmField val PROCESSING = of("processing")
 
-            @JvmField val RETURNED = Status(JsonField.of("returned"))
+            @JvmField val RETURNED = of("returned")
 
-            @JvmField val REVERSED = Status(JsonField.of("reversed"))
+            @JvmField val REVERSED = of("reversed")
 
-            @JvmField val SENT = Status(JsonField.of("sent"))
+            @JvmField val SENT = of("sent")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }
@@ -3461,11 +3369,9 @@ private constructor(
 
         companion object {
 
-            @JvmField
-            val INTERNAL_ACCOUNT = UltimateOriginatingAccountType(JsonField.of("internal_account"))
+            @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
-            @JvmField
-            val VIRTUAL_ACCOUNT = UltimateOriginatingAccountType(JsonField.of("virtual_account"))
+            @JvmField val VIRTUAL_ACCOUNT = of("virtual_account")
 
             @JvmStatic fun of(value: String) = UltimateOriginatingAccountType(JsonField.of(value))
         }

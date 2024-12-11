@@ -1463,9 +1463,9 @@ constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }
@@ -1621,11 +1621,11 @@ constructor(
 
         companion object {
 
-            @JvmField val SHARED = ChargeBearer(JsonField.of("shared"))
+            @JvmField val SHARED = of("shared")
 
-            @JvmField val SENDER = ChargeBearer(JsonField.of("sender"))
+            @JvmField val SENDER = of("sender")
 
-            @JvmField val RECEIVER = ChargeBearer(JsonField.of("receiver"))
+            @JvmField val RECEIVER = of("receiver")
 
             @JvmStatic fun of(value: String) = ChargeBearer(JsonField.of(value))
         }
@@ -1777,34 +1777,29 @@ constructor(
 
             companion object {
 
-                @JvmField val CASES = DocumentableType(JsonField.of("cases"))
+                @JvmField val CASES = of("cases")
 
-                @JvmField val COUNTERPARTIES = DocumentableType(JsonField.of("counterparties"))
+                @JvmField val COUNTERPARTIES = of("counterparties")
 
-                @JvmField
-                val EXPECTED_PAYMENTS = DocumentableType(JsonField.of("expected_payments"))
+                @JvmField val EXPECTED_PAYMENTS = of("expected_payments")
 
-                @JvmField
-                val EXTERNAL_ACCOUNTS = DocumentableType(JsonField.of("external_accounts"))
+                @JvmField val EXTERNAL_ACCOUNTS = of("external_accounts")
 
-                @JvmField
-                val INCOMING_PAYMENT_DETAILS =
-                    DocumentableType(JsonField.of("incoming_payment_details"))
+                @JvmField val INCOMING_PAYMENT_DETAILS = of("incoming_payment_details")
 
-                @JvmField
-                val INTERNAL_ACCOUNTS = DocumentableType(JsonField.of("internal_accounts"))
+                @JvmField val INTERNAL_ACCOUNTS = of("internal_accounts")
 
-                @JvmField val ORGANIZATIONS = DocumentableType(JsonField.of("organizations"))
+                @JvmField val ORGANIZATIONS = of("organizations")
 
-                @JvmField val PAPER_ITEMS = DocumentableType(JsonField.of("paper_items"))
+                @JvmField val PAPER_ITEMS = of("paper_items")
 
-                @JvmField val PAYMENT_ORDERS = DocumentableType(JsonField.of("payment_orders"))
+                @JvmField val PAYMENT_ORDERS = of("payment_orders")
 
-                @JvmField val TRANSACTIONS = DocumentableType(JsonField.of("transactions"))
+                @JvmField val TRANSACTIONS = of("transactions")
 
-                @JvmField val DECISIONS = DocumentableType(JsonField.of("decisions"))
+                @JvmField val DECISIONS = of("decisions")
 
-                @JvmField val CONNECTIONS = DocumentableType(JsonField.of("connections"))
+                @JvmField val CONNECTIONS = of("connections")
 
                 @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
             }
@@ -1918,7 +1913,7 @@ constructor(
 
         companion object {
 
-            @JvmField val ACH = FallbackType(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
             @JvmStatic fun of(value: String) = FallbackType(JsonField.of(value))
         }
@@ -1969,11 +1964,9 @@ constructor(
 
         companion object {
 
-            @JvmField
-            val FIXED_TO_VARIABLE = ForeignExchangeIndicator(JsonField.of("fixed_to_variable"))
+            @JvmField val FIXED_TO_VARIABLE = of("fixed_to_variable")
 
-            @JvmField
-            val VARIABLE_TO_FIXED = ForeignExchangeIndicator(JsonField.of("variable_to_fixed"))
+            @JvmField val VARIABLE_TO_FIXED = of("variable_to_fixed")
 
             @JvmStatic fun of(value: String) = ForeignExchangeIndicator(JsonField.of(value))
         }
@@ -2746,19 +2739,17 @@ constructor(
 
             companion object {
 
-                @JvmField val EXPECTED_PAYMENT = LedgerableType(JsonField.of("expected_payment"))
+                @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-                @JvmField
-                val INCOMING_PAYMENT_DETAIL =
-                    LedgerableType(JsonField.of("incoming_payment_detail"))
+                @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-                @JvmField val PAPER_ITEM = LedgerableType(JsonField.of("paper_item"))
+                @JvmField val PAPER_ITEM = of("paper_item")
 
-                @JvmField val PAYMENT_ORDER = LedgerableType(JsonField.of("payment_order"))
+                @JvmField val PAYMENT_ORDER = of("payment_order")
 
-                @JvmField val RETURN = LedgerableType(JsonField.of("return"))
+                @JvmField val RETURN = of("return")
 
-                @JvmField val REVERSAL = LedgerableType(JsonField.of("reversal"))
+                @JvmField val REVERSAL = of("reversal")
 
                 @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
             }
@@ -2895,11 +2886,11 @@ constructor(
 
             companion object {
 
-                @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+                @JvmField val ARCHIVED = of("archived")
 
-                @JvmField val PENDING = Status(JsonField.of("pending"))
+                @JvmField val PENDING = of("pending")
 
-                @JvmField val POSTED = Status(JsonField.of("posted"))
+                @JvmField val POSTED = of("posted")
 
                 @JvmStatic fun of(value: String) = Status(JsonField.of(value))
             }
@@ -3227,9 +3218,9 @@ constructor(
 
         companion object {
 
-            @JvmField val HIGH = Priority(JsonField.of("high"))
+            @JvmField val HIGH = of("high")
 
-            @JvmField val NORMAL = Priority(JsonField.of("normal"))
+            @JvmField val NORMAL = of("normal")
 
             @JvmStatic fun of(value: String) = Priority(JsonField.of(value))
         }
@@ -3579,25 +3570,25 @@ constructor(
 
                 companion object {
 
-                    @JvmField val AU_NUMBER = AccountNumberType(JsonField.of("au_number"))
+                    @JvmField val AU_NUMBER = of("au_number")
 
-                    @JvmField val CLABE = AccountNumberType(JsonField.of("clabe"))
+                    @JvmField val CLABE = of("clabe")
 
-                    @JvmField val HK_NUMBER = AccountNumberType(JsonField.of("hk_number"))
+                    @JvmField val HK_NUMBER = of("hk_number")
 
-                    @JvmField val IBAN = AccountNumberType(JsonField.of("iban"))
+                    @JvmField val IBAN = of("iban")
 
-                    @JvmField val ID_NUMBER = AccountNumberType(JsonField.of("id_number"))
+                    @JvmField val ID_NUMBER = of("id_number")
 
-                    @JvmField val NZ_NUMBER = AccountNumberType(JsonField.of("nz_number"))
+                    @JvmField val NZ_NUMBER = of("nz_number")
 
-                    @JvmField val OTHER = AccountNumberType(JsonField.of("other"))
+                    @JvmField val OTHER = of("other")
 
-                    @JvmField val PAN = AccountNumberType(JsonField.of("pan"))
+                    @JvmField val PAN = of("pan")
 
-                    @JvmField val SG_NUMBER = AccountNumberType(JsonField.of("sg_number"))
+                    @JvmField val SG_NUMBER = of("sg_number")
 
-                    @JvmField val WALLET_ADDRESS = AccountNumberType(JsonField.of("wallet_address"))
+                    @JvmField val WALLET_ADDRESS = of("wallet_address")
 
                     @JvmStatic fun of(value: String) = AccountNumberType(JsonField.of(value))
                 }
@@ -3776,11 +3767,11 @@ constructor(
 
                 companion object {
 
-                    @JvmField val EMAIL = ContactIdentifierType(JsonField.of("email"))
+                    @JvmField val EMAIL = of("email")
 
-                    @JvmField val PHONE_NUMBER = ContactIdentifierType(JsonField.of("phone_number"))
+                    @JvmField val PHONE_NUMBER = of("phone_number")
 
-                    @JvmField val WEBSITE = ContactIdentifierType(JsonField.of("website"))
+                    @JvmField val WEBSITE = of("website")
 
                     @JvmStatic fun of(value: String) = ContactIdentifierType(JsonField.of(value))
                 }
@@ -4063,15 +4054,13 @@ constructor(
 
                 companion object {
 
-                    @JvmField val COUNTERPARTY = LedgerableType(JsonField.of("counterparty"))
+                    @JvmField val COUNTERPARTY = of("counterparty")
 
-                    @JvmField
-                    val EXTERNAL_ACCOUNT = LedgerableType(JsonField.of("external_account"))
+                    @JvmField val EXTERNAL_ACCOUNT = of("external_account")
 
-                    @JvmField
-                    val INTERNAL_ACCOUNT = LedgerableType(JsonField.of("internal_account"))
+                    @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
-                    @JvmField val VIRTUAL_ACCOUNT = LedgerableType(JsonField.of("virtual_account"))
+                    @JvmField val VIRTUAL_ACCOUNT = of("virtual_account")
 
                     @JvmStatic fun of(value: String) = LedgerableType(JsonField.of(value))
                 }
@@ -4412,9 +4401,9 @@ constructor(
 
             companion object {
 
-                @JvmField val BUSINESS = PartyType(JsonField.of("business"))
+                @JvmField val BUSINESS = of("business")
 
-                @JvmField val INDIVIDUAL = PartyType(JsonField.of("individual"))
+                @JvmField val INDIVIDUAL = of("individual")
 
                 @JvmStatic fun of(value: String) = PartyType(JsonField.of(value))
             }
@@ -4553,60 +4542,45 @@ constructor(
 
                 companion object {
 
-                    @JvmField val ABA = RoutingNumberType(JsonField.of("aba"))
+                    @JvmField val ABA = of("aba")
 
-                    @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
+                    @JvmField val AU_BSB = of("au_bsb")
 
-                    @JvmField val BR_CODIGO = RoutingNumberType(JsonField.of("br_codigo"))
+                    @JvmField val BR_CODIGO = of("br_codigo")
 
-                    @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
+                    @JvmField val CA_CPA = of("ca_cpa")
 
-                    @JvmField val CHIPS = RoutingNumberType(JsonField.of("chips"))
+                    @JvmField val CHIPS = of("chips")
 
-                    @JvmField val CNAPS = RoutingNumberType(JsonField.of("cnaps"))
+                    @JvmField val CNAPS = of("cnaps")
 
-                    @JvmField
-                    val DK_INTERBANK_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("dk_interbank_clearing_code"))
+                    @JvmField val DK_INTERBANK_CLEARING_CODE = of("dk_interbank_clearing_code")
 
-                    @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
+                    @JvmField val GB_SORT_CODE = of("gb_sort_code")
 
-                    @JvmField
-                    val HK_INTERBANK_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("hk_interbank_clearing_code"))
+                    @JvmField val HK_INTERBANK_CLEARING_CODE = of("hk_interbank_clearing_code")
 
-                    @JvmField
-                    val HU_INTERBANK_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("hu_interbank_clearing_code"))
+                    @JvmField val HU_INTERBANK_CLEARING_CODE = of("hu_interbank_clearing_code")
 
-                    @JvmField val ID_SKNBI_CODE = RoutingNumberType(JsonField.of("id_sknbi_code"))
+                    @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
 
-                    @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
+                    @JvmField val IN_IFSC = of("in_ifsc")
 
-                    @JvmField val JP_ZENGIN_CODE = RoutingNumberType(JsonField.of("jp_zengin_code"))
+                    @JvmField val JP_ZENGIN_CODE = of("jp_zengin_code")
 
-                    @JvmField val MY_BRANCH_CODE = RoutingNumberType(JsonField.of("my_branch_code"))
+                    @JvmField val MY_BRANCH_CODE = of("my_branch_code")
 
-                    @JvmField
-                    val MX_BANK_IDENTIFIER = RoutingNumberType(JsonField.of("mx_bank_identifier"))
+                    @JvmField val MX_BANK_IDENTIFIER = of("mx_bank_identifier")
 
-                    @JvmField
-                    val NZ_NATIONAL_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("nz_national_clearing_code"))
+                    @JvmField val NZ_NATIONAL_CLEARING_CODE = of("nz_national_clearing_code")
 
-                    @JvmField
-                    val PL_NATIONAL_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("pl_national_clearing_code"))
+                    @JvmField val PL_NATIONAL_CLEARING_CODE = of("pl_national_clearing_code")
 
-                    @JvmField
-                    val SE_BANKGIRO_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
+                    @JvmField val SE_BANKGIRO_CLEARING_CODE = of("se_bankgiro_clearing_code")
 
-                    @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
+                    @JvmField val SWIFT = of("swift")
 
-                    @JvmField
-                    val ZA_NATIONAL_CLEARING_CODE =
-                        RoutingNumberType(JsonField.of("za_national_clearing_code"))
+                    @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
 
                     @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
                 }
@@ -4736,65 +4710,65 @@ constructor(
 
                 companion object {
 
-                    @JvmField val ACH = PaymentType(JsonField.of("ach"))
+                    @JvmField val ACH = of("ach")
 
-                    @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
+                    @JvmField val AU_BECS = of("au_becs")
 
-                    @JvmField val BACS = PaymentType(JsonField.of("bacs"))
+                    @JvmField val BACS = of("bacs")
 
-                    @JvmField val BOOK = PaymentType(JsonField.of("book"))
+                    @JvmField val BOOK = of("book")
 
-                    @JvmField val CARD = PaymentType(JsonField.of("card"))
+                    @JvmField val CARD = of("card")
 
-                    @JvmField val CHATS = PaymentType(JsonField.of("chats"))
+                    @JvmField val CHATS = of("chats")
 
-                    @JvmField val CHECK = PaymentType(JsonField.of("check"))
+                    @JvmField val CHECK = of("check")
 
-                    @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
+                    @JvmField val CROSS_BORDER = of("cross_border")
 
-                    @JvmField val DK_NETS = PaymentType(JsonField.of("dk_nets"))
+                    @JvmField val DK_NETS = of("dk_nets")
 
-                    @JvmField val EFT = PaymentType(JsonField.of("eft"))
+                    @JvmField val EFT = of("eft")
 
-                    @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+                    @JvmField val HU_ICS = of("hu_ics")
 
-                    @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
+                    @JvmField val INTERAC = of("interac")
 
-                    @JvmField val MASAV = PaymentType(JsonField.of("masav"))
+                    @JvmField val MASAV = of("masav")
 
-                    @JvmField val MX_CCEN = PaymentType(JsonField.of("mx_ccen"))
+                    @JvmField val MX_CCEN = of("mx_ccen")
 
-                    @JvmField val NEFT = PaymentType(JsonField.of("neft"))
+                    @JvmField val NEFT = of("neft")
 
-                    @JvmField val NICS = PaymentType(JsonField.of("nics"))
+                    @JvmField val NICS = of("nics")
 
-                    @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
+                    @JvmField val NZ_BECS = of("nz_becs")
 
-                    @JvmField val PL_ELIXIR = PaymentType(JsonField.of("pl_elixir"))
+                    @JvmField val PL_ELIXIR = of("pl_elixir")
 
-                    @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+                    @JvmField val PROVXCHANGE = of("provxchange")
 
-                    @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
+                    @JvmField val RO_SENT = of("ro_sent")
 
-                    @JvmField val RTP = PaymentType(JsonField.of("rtp"))
+                    @JvmField val RTP = of("rtp")
 
-                    @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
+                    @JvmField val SE_BANKGIROT = of("se_bankgirot")
 
-                    @JvmField val SEN = PaymentType(JsonField.of("sen"))
+                    @JvmField val SEN = of("sen")
 
-                    @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
+                    @JvmField val SEPA = of("sepa")
 
-                    @JvmField val SG_GIRO = PaymentType(JsonField.of("sg_giro"))
+                    @JvmField val SG_GIRO = of("sg_giro")
 
-                    @JvmField val SIC = PaymentType(JsonField.of("sic"))
+                    @JvmField val SIC = of("sic")
 
-                    @JvmField val SIGNET = PaymentType(JsonField.of("signet"))
+                    @JvmField val SIGNET = of("signet")
 
-                    @JvmField val SKNBI = PaymentType(JsonField.of("sknbi"))
+                    @JvmField val SKNBI = of("sknbi")
 
-                    @JvmField val WIRE = PaymentType(JsonField.of("wire"))
+                    @JvmField val WIRE = of("wire")
 
-                    @JvmField val ZENGIN = PaymentType(JsonField.of("zengin"))
+                    @JvmField val ZENGIN = of("zengin")
 
                     @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
                 }
