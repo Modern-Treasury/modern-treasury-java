@@ -30,21 +30,21 @@ private constructor(
 
     companion object {
 
-        @JvmField val CASH = ExternalAccountType(JsonField.of("cash"))
+        @JvmField val CASH = of("cash")
 
-        @JvmField val CHECKING = ExternalAccountType(JsonField.of("checking"))
+        @JvmField val CHECKING = of("checking")
 
-        @JvmField val GENERAL_LEDGER = ExternalAccountType(JsonField.of("general_ledger"))
+        @JvmField val GENERAL_LEDGER = of("general_ledger")
 
-        @JvmField val LOAN = ExternalAccountType(JsonField.of("loan"))
+        @JvmField val LOAN = of("loan")
 
-        @JvmField val NON_RESIDENT = ExternalAccountType(JsonField.of("non_resident"))
+        @JvmField val NON_RESIDENT = of("non_resident")
 
-        @JvmField val OTHER = ExternalAccountType(JsonField.of("other"))
+        @JvmField val OTHER = of("other")
 
-        @JvmField val OVERDRAFT = ExternalAccountType(JsonField.of("overdraft"))
+        @JvmField val OVERDRAFT = of("overdraft")
 
-        @JvmField val SAVINGS = ExternalAccountType(JsonField.of("savings"))
+        @JvmField val SAVINGS = of("savings")
 
         @JvmStatic fun of(value: String) = ExternalAccountType(JsonField.of(value))
     }

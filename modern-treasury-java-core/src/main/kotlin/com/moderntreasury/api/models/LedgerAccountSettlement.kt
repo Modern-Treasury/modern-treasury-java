@@ -574,17 +574,17 @@ private constructor(
 
         companion object {
 
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+            @JvmField val ARCHIVED = of("archived")
 
-            @JvmField val ARCHIVING = Status(JsonField.of("archiving"))
+            @JvmField val ARCHIVING = of("archiving")
 
-            @JvmField val DRAFTING = Status(JsonField.of("drafting"))
+            @JvmField val DRAFTING = of("drafting")
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val POSTED = Status(JsonField.of("posted"))
+            @JvmField val POSTED = of("posted")
 
-            @JvmField val PROCESSING = Status(JsonField.of("processing"))
+            @JvmField val PROCESSING = of("processing")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

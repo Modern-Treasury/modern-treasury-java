@@ -648,9 +648,9 @@ constructor(
 
         companion object {
 
-            @JvmField val BUSINESS = PartyType(JsonField.of("business"))
+            @JvmField val BUSINESS = of("business")
 
-            @JvmField val INDIVIDUAL = PartyType(JsonField.of("individual"))
+            @JvmField val INDIVIDUAL = of("individual")
 
             @JvmStatic fun of(value: String) = PartyType(JsonField.of(value))
         }

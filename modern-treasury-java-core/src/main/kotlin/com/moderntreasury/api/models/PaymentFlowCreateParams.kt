@@ -457,9 +457,9 @@ constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }

@@ -30,9 +30,9 @@ private constructor(
 
     companion object {
 
-        @JvmField val EXTERNAL_ACCOUNTS = AccountsType(JsonField.of("external_accounts"))
+        @JvmField val EXTERNAL_ACCOUNTS = of("external_accounts")
 
-        @JvmField val INTERNAL_ACCOUNTS = AccountsType(JsonField.of("internal_accounts"))
+        @JvmField val INTERNAL_ACCOUNTS = of("internal_accounts")
 
         @JvmStatic fun of(value: String) = AccountsType(JsonField.of(value))
     }

@@ -30,9 +30,9 @@ private constructor(
 
     companion object {
 
-        @JvmField val CREDIT = TransactionDirection(JsonField.of("credit"))
+        @JvmField val CREDIT = of("credit")
 
-        @JvmField val DEBIT = TransactionDirection(JsonField.of("debit"))
+        @JvmField val DEBIT = of("debit")
 
         @JvmStatic fun of(value: String) = TransactionDirection(JsonField.of(value))
     }

@@ -448,8 +448,7 @@ constructor(
 
         companion object {
 
-            @JvmField
-            val INCOMING_PAYMENT_DETAIL = ReturnableType(JsonField.of("incoming_payment_detail"))
+            @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
             @JvmStatic fun of(value: String) = ReturnableType(JsonField.of(value))
         }
@@ -500,111 +499,111 @@ constructor(
 
         companion object {
 
-            @JvmField val _901 = Code(JsonField.of("901"))
+            @JvmField val _901 = of("901")
 
-            @JvmField val _902 = Code(JsonField.of("902"))
+            @JvmField val _902 = of("902")
 
-            @JvmField val _903 = Code(JsonField.of("903"))
+            @JvmField val _903 = of("903")
 
-            @JvmField val _904 = Code(JsonField.of("904"))
+            @JvmField val _904 = of("904")
 
-            @JvmField val _905 = Code(JsonField.of("905"))
+            @JvmField val _905 = of("905")
 
-            @JvmField val _907 = Code(JsonField.of("907"))
+            @JvmField val _907 = of("907")
 
-            @JvmField val _908 = Code(JsonField.of("908"))
+            @JvmField val _908 = of("908")
 
-            @JvmField val _909 = Code(JsonField.of("909"))
+            @JvmField val _909 = of("909")
 
-            @JvmField val _910 = Code(JsonField.of("910"))
+            @JvmField val _910 = of("910")
 
-            @JvmField val _911 = Code(JsonField.of("911"))
+            @JvmField val _911 = of("911")
 
-            @JvmField val _912 = Code(JsonField.of("912"))
+            @JvmField val _912 = of("912")
 
-            @JvmField val _914 = Code(JsonField.of("914"))
+            @JvmField val _914 = of("914")
 
-            @JvmField val C01 = Code(JsonField.of("C01"))
+            @JvmField val C01 = of("C01")
 
-            @JvmField val C02 = Code(JsonField.of("C02"))
+            @JvmField val C02 = of("C02")
 
-            @JvmField val C03 = Code(JsonField.of("C03"))
+            @JvmField val C03 = of("C03")
 
-            @JvmField val C05 = Code(JsonField.of("C05"))
+            @JvmField val C05 = of("C05")
 
-            @JvmField val C06 = Code(JsonField.of("C06"))
+            @JvmField val C06 = of("C06")
 
-            @JvmField val C07 = Code(JsonField.of("C07"))
+            @JvmField val C07 = of("C07")
 
-            @JvmField val C08 = Code(JsonField.of("C08"))
+            @JvmField val C08 = of("C08")
 
-            @JvmField val C09 = Code(JsonField.of("C09"))
+            @JvmField val C09 = of("C09")
 
-            @JvmField val C13 = Code(JsonField.of("C13"))
+            @JvmField val C13 = of("C13")
 
-            @JvmField val C14 = Code(JsonField.of("C14"))
+            @JvmField val C14 = of("C14")
 
-            @JvmField val R01 = Code(JsonField.of("R01"))
+            @JvmField val R01 = of("R01")
 
-            @JvmField val R02 = Code(JsonField.of("R02"))
+            @JvmField val R02 = of("R02")
 
-            @JvmField val R03 = Code(JsonField.of("R03"))
+            @JvmField val R03 = of("R03")
 
-            @JvmField val R04 = Code(JsonField.of("R04"))
+            @JvmField val R04 = of("R04")
 
-            @JvmField val R05 = Code(JsonField.of("R05"))
+            @JvmField val R05 = of("R05")
 
-            @JvmField val R06 = Code(JsonField.of("R06"))
+            @JvmField val R06 = of("R06")
 
-            @JvmField val R07 = Code(JsonField.of("R07"))
+            @JvmField val R07 = of("R07")
 
-            @JvmField val R08 = Code(JsonField.of("R08"))
+            @JvmField val R08 = of("R08")
 
-            @JvmField val R09 = Code(JsonField.of("R09"))
+            @JvmField val R09 = of("R09")
 
-            @JvmField val R10 = Code(JsonField.of("R10"))
+            @JvmField val R10 = of("R10")
 
-            @JvmField val R11 = Code(JsonField.of("R11"))
+            @JvmField val R11 = of("R11")
 
-            @JvmField val R12 = Code(JsonField.of("R12"))
+            @JvmField val R12 = of("R12")
 
-            @JvmField val R14 = Code(JsonField.of("R14"))
+            @JvmField val R14 = of("R14")
 
-            @JvmField val R15 = Code(JsonField.of("R15"))
+            @JvmField val R15 = of("R15")
 
-            @JvmField val R16 = Code(JsonField.of("R16"))
+            @JvmField val R16 = of("R16")
 
-            @JvmField val R17 = Code(JsonField.of("R17"))
+            @JvmField val R17 = of("R17")
 
-            @JvmField val R20 = Code(JsonField.of("R20"))
+            @JvmField val R20 = of("R20")
 
-            @JvmField val R21 = Code(JsonField.of("R21"))
+            @JvmField val R21 = of("R21")
 
-            @JvmField val R22 = Code(JsonField.of("R22"))
+            @JvmField val R22 = of("R22")
 
-            @JvmField val R23 = Code(JsonField.of("R23"))
+            @JvmField val R23 = of("R23")
 
-            @JvmField val R24 = Code(JsonField.of("R24"))
+            @JvmField val R24 = of("R24")
 
-            @JvmField val R29 = Code(JsonField.of("R29"))
+            @JvmField val R29 = of("R29")
 
-            @JvmField val R31 = Code(JsonField.of("R31"))
+            @JvmField val R31 = of("R31")
 
-            @JvmField val R33 = Code(JsonField.of("R33"))
+            @JvmField val R33 = of("R33")
 
-            @JvmField val R37 = Code(JsonField.of("R37"))
+            @JvmField val R37 = of("R37")
 
-            @JvmField val R38 = Code(JsonField.of("R38"))
+            @JvmField val R38 = of("R38")
 
-            @JvmField val R39 = Code(JsonField.of("R39"))
+            @JvmField val R39 = of("R39")
 
-            @JvmField val R51 = Code(JsonField.of("R51"))
+            @JvmField val R51 = of("R51")
 
-            @JvmField val R52 = Code(JsonField.of("R52"))
+            @JvmField val R52 = of("R52")
 
-            @JvmField val R53 = Code(JsonField.of("R53"))
+            @JvmField val R53 = of("R53")
 
-            @JvmField val CURRENCYCLOUD = Code(JsonField.of("currencycloud"))
+            @JvmField val CURRENCYCLOUD = of("currencycloud")
 
             @JvmStatic fun of(value: String) = Code(JsonField.of(value))
         }

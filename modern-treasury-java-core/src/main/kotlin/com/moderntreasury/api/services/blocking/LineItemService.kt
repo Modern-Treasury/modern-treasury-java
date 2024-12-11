@@ -61,9 +61,9 @@ interface LineItemService {
 
         companion object {
 
-            @JvmField val EXPECTED_PAYMENTS = ItemizableType(JsonField.of("expected_payments"))
+            @JvmField val EXPECTED_PAYMENTS = of("expected_payments")
 
-            @JvmField val PAYMENT_ORDERS = ItemizableType(JsonField.of("payment_orders"))
+            @JvmField val PAYMENT_ORDERS = of("payment_orders")
 
             @JvmStatic fun of(value: String) = ItemizableType(JsonField.of(value))
         }

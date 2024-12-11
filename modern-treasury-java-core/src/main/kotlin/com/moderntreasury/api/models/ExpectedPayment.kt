@@ -743,9 +743,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }
@@ -870,9 +870,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val AUTOMATIC = ReconciliationMethod(JsonField.of("automatic"))
+            @JvmField val AUTOMATIC = of("automatic")
 
-            @JvmField val MANUAL = ReconciliationMethod(JsonField.of("manual"))
+            @JvmField val MANUAL = of("manual")
 
             @JvmStatic fun of(value: String) = ReconciliationMethod(JsonField.of(value))
         }
@@ -928,13 +928,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+            @JvmField val ARCHIVED = of("archived")
 
-            @JvmField val PARTIALLY_RECONCILED = Status(JsonField.of("partially_reconciled"))
+            @JvmField val PARTIALLY_RECONCILED = of("partially_reconciled")
 
-            @JvmField val RECONCILED = Status(JsonField.of("reconciled"))
+            @JvmField val RECONCILED = of("reconciled")
 
-            @JvmField val UNRECONCILED = Status(JsonField.of("unreconciled"))
+            @JvmField val UNRECONCILED = of("unreconciled")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

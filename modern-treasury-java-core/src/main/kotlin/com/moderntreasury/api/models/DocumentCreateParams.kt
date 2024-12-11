@@ -321,31 +321,29 @@ constructor(
 
         companion object {
 
-            @JvmField val CASES = DocumentableType(JsonField.of("cases"))
+            @JvmField val CASES = of("cases")
 
-            @JvmField val COUNTERPARTIES = DocumentableType(JsonField.of("counterparties"))
+            @JvmField val COUNTERPARTIES = of("counterparties")
 
-            @JvmField val EXPECTED_PAYMENTS = DocumentableType(JsonField.of("expected_payments"))
+            @JvmField val EXPECTED_PAYMENTS = of("expected_payments")
 
-            @JvmField val EXTERNAL_ACCOUNTS = DocumentableType(JsonField.of("external_accounts"))
+            @JvmField val EXTERNAL_ACCOUNTS = of("external_accounts")
 
-            @JvmField
-            val INCOMING_PAYMENT_DETAILS =
-                DocumentableType(JsonField.of("incoming_payment_details"))
+            @JvmField val INCOMING_PAYMENT_DETAILS = of("incoming_payment_details")
 
-            @JvmField val INTERNAL_ACCOUNTS = DocumentableType(JsonField.of("internal_accounts"))
+            @JvmField val INTERNAL_ACCOUNTS = of("internal_accounts")
 
-            @JvmField val ORGANIZATIONS = DocumentableType(JsonField.of("organizations"))
+            @JvmField val ORGANIZATIONS = of("organizations")
 
-            @JvmField val PAPER_ITEMS = DocumentableType(JsonField.of("paper_items"))
+            @JvmField val PAPER_ITEMS = of("paper_items")
 
-            @JvmField val PAYMENT_ORDERS = DocumentableType(JsonField.of("payment_orders"))
+            @JvmField val PAYMENT_ORDERS = of("payment_orders")
 
-            @JvmField val TRANSACTIONS = DocumentableType(JsonField.of("transactions"))
+            @JvmField val TRANSACTIONS = of("transactions")
 
-            @JvmField val DECISIONS = DocumentableType(JsonField.of("decisions"))
+            @JvmField val DECISIONS = of("decisions")
 
-            @JvmField val CONNECTIONS = DocumentableType(JsonField.of("connections"))
+            @JvmField val CONNECTIONS = of("connections")
 
             @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
         }

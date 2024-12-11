@@ -451,67 +451,63 @@ constructor(
 
         companion object {
 
-            @JvmField val NAME = Field(JsonField.of("name"))
+            @JvmField val NAME = of("name")
 
-            @JvmField val NAME_ON_ACCOUNT = Field(JsonField.of("nameOnAccount"))
+            @JvmField val NAME_ON_ACCOUNT = of("nameOnAccount")
 
-            @JvmField val TAXPAYER_IDENTIFIER = Field(JsonField.of("taxpayerIdentifier"))
+            @JvmField val TAXPAYER_IDENTIFIER = of("taxpayerIdentifier")
 
-            @JvmField val ACCOUNT_TYPE = Field(JsonField.of("accountType"))
+            @JvmField val ACCOUNT_TYPE = of("accountType")
 
-            @JvmField val ACCOUNT_NUMBER = Field(JsonField.of("accountNumber"))
+            @JvmField val ACCOUNT_NUMBER = of("accountNumber")
 
-            @JvmField val IBAN_NUMBER = Field(JsonField.of("ibanNumber"))
+            @JvmField val IBAN_NUMBER = of("ibanNumber")
 
-            @JvmField val CLABE_NUMBER = Field(JsonField.of("clabeNumber"))
+            @JvmField val CLABE_NUMBER = of("clabeNumber")
 
-            @JvmField val WALLET_ADDRESS = Field(JsonField.of("walletAddress"))
+            @JvmField val WALLET_ADDRESS = of("walletAddress")
 
-            @JvmField val PAN_NUMBER = Field(JsonField.of("panNumber"))
+            @JvmField val PAN_NUMBER = of("panNumber")
 
-            @JvmField val ROUTING_NUMBER = Field(JsonField.of("routingNumber"))
+            @JvmField val ROUTING_NUMBER = of("routingNumber")
 
-            @JvmField val ABA_WIRE_ROUTING_NUMBER = Field(JsonField.of("abaWireRoutingNumber"))
+            @JvmField val ABA_WIRE_ROUTING_NUMBER = of("abaWireRoutingNumber")
 
-            @JvmField val SWIFT_CODE = Field(JsonField.of("swiftCode"))
+            @JvmField val SWIFT_CODE = of("swiftCode")
 
-            @JvmField val AU_BSB = Field(JsonField.of("auBsb"))
+            @JvmField val AU_BSB = of("auBsb")
 
-            @JvmField val CA_CPA = Field(JsonField.of("caCpa"))
+            @JvmField val CA_CPA = of("caCpa")
 
-            @JvmField val CNAPS = Field(JsonField.of("cnaps"))
+            @JvmField val CNAPS = of("cnaps")
 
-            @JvmField val GB_SORT_CODE = Field(JsonField.of("gbSortCode"))
+            @JvmField val GB_SORT_CODE = of("gbSortCode")
 
-            @JvmField val IN_IFSC = Field(JsonField.of("inIfsc"))
+            @JvmField val IN_IFSC = of("inIfsc")
 
-            @JvmField val MY_BRANCH_CODE = Field(JsonField.of("myBranchCode"))
+            @JvmField val MY_BRANCH_CODE = of("myBranchCode")
 
-            @JvmField val BR_CODIGO = Field(JsonField.of("brCodigo"))
+            @JvmField val BR_CODIGO = of("brCodigo")
 
-            @JvmField val ROUTING_NUMBER_TYPE = Field(JsonField.of("routingNumberType"))
+            @JvmField val ROUTING_NUMBER_TYPE = of("routingNumberType")
 
-            @JvmField val ADDRESS = Field(JsonField.of("address"))
+            @JvmField val ADDRESS = of("address")
 
-            @JvmField val JP_ZENGIN_CODE = Field(JsonField.of("jpZenginCode"))
+            @JvmField val JP_ZENGIN_CODE = of("jpZenginCode")
 
-            @JvmField val SE_BANKGIRO_CLEARING_CODE = Field(JsonField.of("seBankgiroClearingCode"))
+            @JvmField val SE_BANKGIRO_CLEARING_CODE = of("seBankgiroClearingCode")
 
-            @JvmField val NZ_NATIONAL_CLEARING_CODE = Field(JsonField.of("nzNationalClearingCode"))
+            @JvmField val NZ_NATIONAL_CLEARING_CODE = of("nzNationalClearingCode")
 
-            @JvmField
-            val HK_INTERBANK_CLEARING_CODE = Field(JsonField.of("hkInterbankClearingCode"))
+            @JvmField val HK_INTERBANK_CLEARING_CODE = of("hkInterbankClearingCode")
 
-            @JvmField
-            val HU_INTERBANK_CLEARING_CODE = Field(JsonField.of("huInterbankClearingCode"))
+            @JvmField val HU_INTERBANK_CLEARING_CODE = of("huInterbankClearingCode")
 
-            @JvmField
-            val DK_INTERBANK_CLEARING_CODE = Field(JsonField.of("dkInterbankClearingCode"))
+            @JvmField val DK_INTERBANK_CLEARING_CODE = of("dkInterbankClearingCode")
 
-            @JvmField val ID_SKNBI_CODE = Field(JsonField.of("idSknbiCode"))
+            @JvmField val ID_SKNBI_CODE = of("idSknbiCode")
 
-            @JvmField
-            val ZA_NATIONAL_CLEARING_CODE = Field(JsonField.of("za_national_clearing_code"))
+            @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
 
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }

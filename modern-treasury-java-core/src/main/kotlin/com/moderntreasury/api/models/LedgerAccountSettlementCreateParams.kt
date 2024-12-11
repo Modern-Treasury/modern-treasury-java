@@ -618,9 +618,9 @@ constructor(
 
         companion object {
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val POSTED = Status(JsonField.of("posted"))
+            @JvmField val POSTED = of("posted")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

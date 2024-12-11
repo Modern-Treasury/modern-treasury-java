@@ -30,65 +30,65 @@ private constructor(
 
     companion object {
 
-        @JvmField val ACH = PaymentOrderType(JsonField.of("ach"))
+        @JvmField val ACH = of("ach")
 
-        @JvmField val AU_BECS = PaymentOrderType(JsonField.of("au_becs"))
+        @JvmField val AU_BECS = of("au_becs")
 
-        @JvmField val BACS = PaymentOrderType(JsonField.of("bacs"))
+        @JvmField val BACS = of("bacs")
 
-        @JvmField val BOOK = PaymentOrderType(JsonField.of("book"))
+        @JvmField val BOOK = of("book")
 
-        @JvmField val CARD = PaymentOrderType(JsonField.of("card"))
+        @JvmField val CARD = of("card")
 
-        @JvmField val CHATS = PaymentOrderType(JsonField.of("chats"))
+        @JvmField val CHATS = of("chats")
 
-        @JvmField val CHECK = PaymentOrderType(JsonField.of("check"))
+        @JvmField val CHECK = of("check")
 
-        @JvmField val CROSS_BORDER = PaymentOrderType(JsonField.of("cross_border"))
+        @JvmField val CROSS_BORDER = of("cross_border")
 
-        @JvmField val DK_NETS = PaymentOrderType(JsonField.of("dk_nets"))
+        @JvmField val DK_NETS = of("dk_nets")
 
-        @JvmField val EFT = PaymentOrderType(JsonField.of("eft"))
+        @JvmField val EFT = of("eft")
 
-        @JvmField val HU_ICS = PaymentOrderType(JsonField.of("hu_ics"))
+        @JvmField val HU_ICS = of("hu_ics")
 
-        @JvmField val INTERAC = PaymentOrderType(JsonField.of("interac"))
+        @JvmField val INTERAC = of("interac")
 
-        @JvmField val MASAV = PaymentOrderType(JsonField.of("masav"))
+        @JvmField val MASAV = of("masav")
 
-        @JvmField val MX_CCEN = PaymentOrderType(JsonField.of("mx_ccen"))
+        @JvmField val MX_CCEN = of("mx_ccen")
 
-        @JvmField val NEFT = PaymentOrderType(JsonField.of("neft"))
+        @JvmField val NEFT = of("neft")
 
-        @JvmField val NICS = PaymentOrderType(JsonField.of("nics"))
+        @JvmField val NICS = of("nics")
 
-        @JvmField val NZ_BECS = PaymentOrderType(JsonField.of("nz_becs"))
+        @JvmField val NZ_BECS = of("nz_becs")
 
-        @JvmField val PL_ELIXIR = PaymentOrderType(JsonField.of("pl_elixir"))
+        @JvmField val PL_ELIXIR = of("pl_elixir")
 
-        @JvmField val PROVXCHANGE = PaymentOrderType(JsonField.of("provxchange"))
+        @JvmField val PROVXCHANGE = of("provxchange")
 
-        @JvmField val RO_SENT = PaymentOrderType(JsonField.of("ro_sent"))
+        @JvmField val RO_SENT = of("ro_sent")
 
-        @JvmField val RTP = PaymentOrderType(JsonField.of("rtp"))
+        @JvmField val RTP = of("rtp")
 
-        @JvmField val SE_BANKGIROT = PaymentOrderType(JsonField.of("se_bankgirot"))
+        @JvmField val SE_BANKGIROT = of("se_bankgirot")
 
-        @JvmField val SEN = PaymentOrderType(JsonField.of("sen"))
+        @JvmField val SEN = of("sen")
 
-        @JvmField val SEPA = PaymentOrderType(JsonField.of("sepa"))
+        @JvmField val SEPA = of("sepa")
 
-        @JvmField val SG_GIRO = PaymentOrderType(JsonField.of("sg_giro"))
+        @JvmField val SG_GIRO = of("sg_giro")
 
-        @JvmField val SIC = PaymentOrderType(JsonField.of("sic"))
+        @JvmField val SIC = of("sic")
 
-        @JvmField val SIGNET = PaymentOrderType(JsonField.of("signet"))
+        @JvmField val SIGNET = of("signet")
 
-        @JvmField val SKNBI = PaymentOrderType(JsonField.of("sknbi"))
+        @JvmField val SKNBI = of("sknbi")
 
-        @JvmField val WIRE = PaymentOrderType(JsonField.of("wire"))
+        @JvmField val WIRE = of("wire")
 
-        @JvmField val ZENGIN = PaymentOrderType(JsonField.of("zengin"))
+        @JvmField val ZENGIN = of("zengin")
 
         @JvmStatic fun of(value: String) = PaymentOrderType(JsonField.of(value))
     }

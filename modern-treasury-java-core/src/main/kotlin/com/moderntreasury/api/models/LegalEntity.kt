@@ -1005,15 +1005,15 @@ private constructor(
 
             companion object {
 
-                @JvmField val BUSINESS = AddressType(JsonField.of("business"))
+                @JvmField val BUSINESS = of("business")
 
-                @JvmField val MAILING = AddressType(JsonField.of("mailing"))
+                @JvmField val MAILING = of("mailing")
 
-                @JvmField val OTHER = AddressType(JsonField.of("other"))
+                @JvmField val OTHER = of("other")
 
-                @JvmField val PO_BOX = AddressType(JsonField.of("po_box"))
+                @JvmField val PO_BOX = of("po_box")
 
-                @JvmField val RESIDENTIAL = AddressType(JsonField.of("residential"))
+                @JvmField val RESIDENTIAL = of("residential")
 
                 @JvmStatic fun of(value: String) = AddressType(JsonField.of(value))
             }
@@ -1308,47 +1308,47 @@ private constructor(
 
             companion object {
 
-                @JvmField val AR_CUIL = IdType(JsonField.of("ar_cuil"))
+                @JvmField val AR_CUIL = of("ar_cuil")
 
-                @JvmField val AR_CUIT = IdType(JsonField.of("ar_cuit"))
+                @JvmField val AR_CUIT = of("ar_cuit")
 
-                @JvmField val BR_CNPJ = IdType(JsonField.of("br_cnpj"))
+                @JvmField val BR_CNPJ = of("br_cnpj")
 
-                @JvmField val BR_CPF = IdType(JsonField.of("br_cpf"))
+                @JvmField val BR_CPF = of("br_cpf")
 
-                @JvmField val CL_RUN = IdType(JsonField.of("cl_run"))
+                @JvmField val CL_RUN = of("cl_run")
 
-                @JvmField val CL_RUT = IdType(JsonField.of("cl_rut"))
+                @JvmField val CL_RUT = of("cl_rut")
 
-                @JvmField val CO_CEDULAS = IdType(JsonField.of("co_cedulas"))
+                @JvmField val CO_CEDULAS = of("co_cedulas")
 
-                @JvmField val CO_NIT = IdType(JsonField.of("co_nit"))
+                @JvmField val CO_NIT = of("co_nit")
 
-                @JvmField val HN_ID = IdType(JsonField.of("hn_id"))
+                @JvmField val HN_ID = of("hn_id")
 
-                @JvmField val HN_RTN = IdType(JsonField.of("hn_rtn"))
+                @JvmField val HN_RTN = of("hn_rtn")
 
-                @JvmField val IN_LEI = IdType(JsonField.of("in_lei"))
+                @JvmField val IN_LEI = of("in_lei")
 
-                @JvmField val KR_BRN = IdType(JsonField.of("kr_brn"))
+                @JvmField val KR_BRN = of("kr_brn")
 
-                @JvmField val KR_CRN = IdType(JsonField.of("kr_crn"))
+                @JvmField val KR_CRN = of("kr_crn")
 
-                @JvmField val KR_RRN = IdType(JsonField.of("kr_rrn"))
+                @JvmField val KR_RRN = of("kr_rrn")
 
-                @JvmField val PASSPORT = IdType(JsonField.of("passport"))
+                @JvmField val PASSPORT = of("passport")
 
-                @JvmField val SA_TIN = IdType(JsonField.of("sa_tin"))
+                @JvmField val SA_TIN = of("sa_tin")
 
-                @JvmField val SA_VAT = IdType(JsonField.of("sa_vat"))
+                @JvmField val SA_VAT = of("sa_vat")
 
-                @JvmField val US_EIN = IdType(JsonField.of("us_ein"))
+                @JvmField val US_EIN = of("us_ein")
 
-                @JvmField val US_ITIN = IdType(JsonField.of("us_itin"))
+                @JvmField val US_ITIN = of("us_itin")
 
-                @JvmField val US_SSN = IdType(JsonField.of("us_ssn"))
+                @JvmField val US_SSN = of("us_ssn")
 
-                @JvmField val VN_TIN = IdType(JsonField.of("vn_tin"))
+                @JvmField val VN_TIN = of("vn_tin")
 
                 @JvmStatic fun of(value: String) = IdType(JsonField.of(value))
             }
@@ -1497,11 +1497,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val BUSINESS = LegalEntityType(JsonField.of("business"))
+            @JvmField val BUSINESS = of("business")
 
-            @JvmField val INDIVIDUAL = LegalEntityType(JsonField.of("individual"))
+            @JvmField val INDIVIDUAL = of("individual")
 
-            @JvmField val JOINT = LegalEntityType(JsonField.of("joint"))
+            @JvmField val JOINT = of("joint")
 
             @JvmStatic fun of(value: String) = LegalEntityType(JsonField.of(value))
         }
@@ -1560,17 +1560,17 @@ private constructor(
 
         companion object {
 
-            @JvmField val CORPORATION = LegalStructure(JsonField.of("corporation"))
+            @JvmField val CORPORATION = of("corporation")
 
-            @JvmField val LLC = LegalStructure(JsonField.of("llc"))
+            @JvmField val LLC = of("llc")
 
-            @JvmField val NON_PROFIT = LegalStructure(JsonField.of("non_profit"))
+            @JvmField val NON_PROFIT = of("non_profit")
 
-            @JvmField val PARTNERSHIP = LegalStructure(JsonField.of("partnership"))
+            @JvmField val PARTNERSHIP = of("partnership")
 
-            @JvmField val SOLE_PROPRIETORSHIP = LegalStructure(JsonField.of("sole_proprietorship"))
+            @JvmField val SOLE_PROPRIETORSHIP = of("sole_proprietorship")
 
-            @JvmField val TRUST = LegalStructure(JsonField.of("trust"))
+            @JvmField val TRUST = of("trust")
 
             @JvmStatic fun of(value: String) = LegalStructure(JsonField.of(value))
         }
@@ -1799,11 +1799,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val LOW = RiskRating(JsonField.of("low"))
+            @JvmField val LOW = of("low")
 
-            @JvmField val MEDIUM = RiskRating(JsonField.of("medium"))
+            @JvmField val MEDIUM = of("medium")
 
-            @JvmField val HIGH = RiskRating(JsonField.of("high"))
+            @JvmField val HIGH = of("high")
 
             @JvmStatic fun of(value: String) = RiskRating(JsonField.of(value))
         }
