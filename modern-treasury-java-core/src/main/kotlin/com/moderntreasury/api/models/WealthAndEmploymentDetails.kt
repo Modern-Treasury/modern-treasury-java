@@ -460,15 +460,15 @@ private constructor(
 
         companion object {
 
-            @JvmField val EMPLOYED = EmploymentStatus(JsonField.of("employed"))
+            @JvmField val EMPLOYED = of("employed")
 
-            @JvmField val RETIRED = EmploymentStatus(JsonField.of("retired"))
+            @JvmField val RETIRED = of("retired")
 
-            @JvmField val SELF_EMPLOYED = EmploymentStatus(JsonField.of("self_employed"))
+            @JvmField val SELF_EMPLOYED = of("self_employed")
 
-            @JvmField val STUDENT = EmploymentStatus(JsonField.of("student"))
+            @JvmField val STUDENT = of("student")
 
-            @JvmField val UNEMPLOYED = EmploymentStatus(JsonField.of("unemployed"))
+            @JvmField val UNEMPLOYED = of("unemployed")
 
             @JvmStatic fun of(value: String) = EmploymentStatus(JsonField.of(value))
         }
@@ -535,21 +535,21 @@ private constructor(
 
         companion object {
 
-            @JvmField val FAMILY_SUPPORT = IncomeSource(JsonField.of("family_support"))
+            @JvmField val FAMILY_SUPPORT = of("family_support")
 
-            @JvmField val GOVERNMENT_BENEFITS = IncomeSource(JsonField.of("government_benefits"))
+            @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
 
-            @JvmField val INHERITANCE = IncomeSource(JsonField.of("inheritance"))
+            @JvmField val INHERITANCE = of("inheritance")
 
-            @JvmField val INVESTMENTS = IncomeSource(JsonField.of("investments"))
+            @JvmField val INVESTMENTS = of("investments")
 
-            @JvmField val RENTAL_INCOME = IncomeSource(JsonField.of("rental_income"))
+            @JvmField val RENTAL_INCOME = of("rental_income")
 
-            @JvmField val RETIREMENT = IncomeSource(JsonField.of("retirement"))
+            @JvmField val RETIREMENT = of("retirement")
 
-            @JvmField val SALARY = IncomeSource(JsonField.of("salary"))
+            @JvmField val SALARY = of("salary")
 
-            @JvmField val SELF_EMPLOYED = IncomeSource(JsonField.of("self_employed"))
+            @JvmField val SELF_EMPLOYED = of("self_employed")
 
             @JvmStatic fun of(value: String) = IncomeSource(JsonField.of(value))
         }
@@ -628,71 +628,71 @@ private constructor(
 
         companion object {
 
-            @JvmField val ACCOUNTING = Industry(JsonField.of("accounting"))
+            @JvmField val ACCOUNTING = of("accounting")
 
-            @JvmField val AGRICULTURE = Industry(JsonField.of("agriculture"))
+            @JvmField val AGRICULTURE = of("agriculture")
 
-            @JvmField val AUTOMOTIVE = Industry(JsonField.of("automotive"))
+            @JvmField val AUTOMOTIVE = of("automotive")
 
-            @JvmField val CHEMICAL_MANUFACTURING = Industry(JsonField.of("chemical_manufacturing"))
+            @JvmField val CHEMICAL_MANUFACTURING = of("chemical_manufacturing")
 
-            @JvmField val CONSTRUCTION = Industry(JsonField.of("construction"))
+            @JvmField val CONSTRUCTION = of("construction")
 
-            @JvmField val EDUCATIONAL_MEDICAL = Industry(JsonField.of("educational_medical"))
+            @JvmField val EDUCATIONAL_MEDICAL = of("educational_medical")
 
-            @JvmField val FOOD_SERVICE = Industry(JsonField.of("food_service"))
+            @JvmField val FOOD_SERVICE = of("food_service")
 
-            @JvmField val FINANCE = Industry(JsonField.of("finance"))
+            @JvmField val FINANCE = of("finance")
 
-            @JvmField val GASOLINE = Industry(JsonField.of("gasoline"))
+            @JvmField val GASOLINE = of("gasoline")
 
-            @JvmField val HEALTH_STORES = Industry(JsonField.of("health_stores"))
+            @JvmField val HEALTH_STORES = of("health_stores")
 
-            @JvmField val LAUNDRY = Industry(JsonField.of("laundry"))
+            @JvmField val LAUNDRY = of("laundry")
 
-            @JvmField val MAINTENANCE = Industry(JsonField.of("maintenance"))
+            @JvmField val MAINTENANCE = of("maintenance")
 
-            @JvmField val MANUFACTURING = Industry(JsonField.of("manufacturing"))
+            @JvmField val MANUFACTURING = of("manufacturing")
 
-            @JvmField val MERCHANT_WHOLESALE = Industry(JsonField.of("merchant_wholesale"))
+            @JvmField val MERCHANT_WHOLESALE = of("merchant_wholesale")
 
-            @JvmField val MINING = Industry(JsonField.of("mining"))
+            @JvmField val MINING = of("mining")
 
-            @JvmField val PERFORMING_ARTS = Industry(JsonField.of("performing_arts"))
+            @JvmField val PERFORMING_ARTS = of("performing_arts")
 
-            @JvmField val PROFESSIONAL_NON_LEGAL = Industry(JsonField.of("professional_non_legal"))
+            @JvmField val PROFESSIONAL_NON_LEGAL = of("professional_non_legal")
 
-            @JvmField val PUBLIC_ADMINISTRATION = Industry(JsonField.of("public_administration"))
+            @JvmField val PUBLIC_ADMINISTRATION = of("public_administration")
 
-            @JvmField val PUBLISHING = Industry(JsonField.of("publishing"))
+            @JvmField val PUBLISHING = of("publishing")
 
-            @JvmField val REAL_ESTATE = Industry(JsonField.of("real_estate"))
+            @JvmField val REAL_ESTATE = of("real_estate")
 
-            @JvmField val RECREATION_GAMBLING = Industry(JsonField.of("recreation_gambling"))
+            @JvmField val RECREATION_GAMBLING = of("recreation_gambling")
 
-            @JvmField val RELIGIOUS_CHARITY = Industry(JsonField.of("religious_charity"))
+            @JvmField val RELIGIOUS_CHARITY = of("religious_charity")
 
-            @JvmField val RENTAL_SERVICES = Industry(JsonField.of("rental_services"))
+            @JvmField val RENTAL_SERVICES = of("rental_services")
 
-            @JvmField val RETAIL_CLOTHING = Industry(JsonField.of("retail_clothing"))
+            @JvmField val RETAIL_CLOTHING = of("retail_clothing")
 
-            @JvmField val RETAIL_ELECTRONICS = Industry(JsonField.of("retail_electronics"))
+            @JvmField val RETAIL_ELECTRONICS = of("retail_electronics")
 
-            @JvmField val RETAIL_FOOD = Industry(JsonField.of("retail_food"))
+            @JvmField val RETAIL_FOOD = of("retail_food")
 
-            @JvmField val RETAIL_FURNISHING = Industry(JsonField.of("retail_furnishing"))
+            @JvmField val RETAIL_FURNISHING = of("retail_furnishing")
 
-            @JvmField val RETAIL_HOME = Industry(JsonField.of("retail_home"))
+            @JvmField val RETAIL_HOME = of("retail_home")
 
-            @JvmField val RETAIL_NON_STORE = Industry(JsonField.of("retail_non_store"))
+            @JvmField val RETAIL_NON_STORE = of("retail_non_store")
 
-            @JvmField val RETAIL_SPORTING = Industry(JsonField.of("retail_sporting"))
+            @JvmField val RETAIL_SPORTING = of("retail_sporting")
 
-            @JvmField val TRANSPORTATION = Industry(JsonField.of("transportation"))
+            @JvmField val TRANSPORTATION = of("transportation")
 
-            @JvmField val TRAVEL = Industry(JsonField.of("travel"))
+            @JvmField val TRAVEL = of("travel")
 
-            @JvmField val UTILITIES = Industry(JsonField.of("utilities"))
+            @JvmField val UTILITIES = of("utilities")
 
             @JvmStatic fun of(value: String) = Industry(JsonField.of(value))
         }
@@ -871,29 +871,29 @@ private constructor(
 
         companion object {
 
-            @JvmField val CONSULTING = Occupation(JsonField.of("consulting"))
+            @JvmField val CONSULTING = of("consulting")
 
-            @JvmField val EXECUTIVE = Occupation(JsonField.of("executive"))
+            @JvmField val EXECUTIVE = of("executive")
 
-            @JvmField val FINANCE_ACCOUNTING = Occupation(JsonField.of("finance_accounting"))
+            @JvmField val FINANCE_ACCOUNTING = of("finance_accounting")
 
-            @JvmField val FOOD_SERVICES = Occupation(JsonField.of("food_services"))
+            @JvmField val FOOD_SERVICES = of("food_services")
 
-            @JvmField val GOVERNMENT = Occupation(JsonField.of("government"))
+            @JvmField val GOVERNMENT = of("government")
 
-            @JvmField val HEALTHCARE = Occupation(JsonField.of("healthcare"))
+            @JvmField val HEALTHCARE = of("healthcare")
 
-            @JvmField val LEGAL_SERVICES = Occupation(JsonField.of("legal_services"))
+            @JvmField val LEGAL_SERVICES = of("legal_services")
 
-            @JvmField val MANUFACTURING = Occupation(JsonField.of("manufacturing"))
+            @JvmField val MANUFACTURING = of("manufacturing")
 
-            @JvmField val OTHER = Occupation(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val SALES = Occupation(JsonField.of("sales"))
+            @JvmField val SALES = of("sales")
 
-            @JvmField val SCIENCE_ENGINEERING = Occupation(JsonField.of("science_engineering"))
+            @JvmField val SCIENCE_ENGINEERING = of("science_engineering")
 
-            @JvmField val TECHNOLOGY = Occupation(JsonField.of("technology"))
+            @JvmField val TECHNOLOGY = of("technology")
 
             @JvmStatic fun of(value: String) = Occupation(JsonField.of(value))
         }
@@ -988,39 +988,39 @@ private constructor(
 
         companion object {
 
-            @JvmField val ALIMONY = SourceOfFunds(JsonField.of("alimony"))
+            @JvmField val ALIMONY = of("alimony")
 
-            @JvmField val ANNUITY = SourceOfFunds(JsonField.of("annuity"))
+            @JvmField val ANNUITY = of("annuity")
 
-            @JvmField val BUSINESS_OWNER = SourceOfFunds(JsonField.of("business_owner"))
+            @JvmField val BUSINESS_OWNER = of("business_owner")
 
-            @JvmField val GENERAL_EMPLOYEE = SourceOfFunds(JsonField.of("general_employee"))
+            @JvmField val GENERAL_EMPLOYEE = of("general_employee")
 
-            @JvmField val GOVERNMENT_BENEFITS = SourceOfFunds(JsonField.of("government_benefits"))
+            @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
 
-            @JvmField val HOMEMAKER = SourceOfFunds(JsonField.of("homemaker"))
+            @JvmField val HOMEMAKER = of("homemaker")
 
-            @JvmField val INHERITANCE_GIFT = SourceOfFunds(JsonField.of("inheritance_gift"))
+            @JvmField val INHERITANCE_GIFT = of("inheritance_gift")
 
-            @JvmField val INVESTMENT = SourceOfFunds(JsonField.of("investment"))
+            @JvmField val INVESTMENT = of("investment")
 
-            @JvmField val LEGAL_SETTLEMENT = SourceOfFunds(JsonField.of("legal_settlement"))
+            @JvmField val LEGAL_SETTLEMENT = of("legal_settlement")
 
-            @JvmField val LOTTERY = SourceOfFunds(JsonField.of("lottery"))
+            @JvmField val LOTTERY = of("lottery")
 
-            @JvmField val REAL_ESTATE = SourceOfFunds(JsonField.of("real_estate"))
+            @JvmField val REAL_ESTATE = of("real_estate")
 
-            @JvmField val RETIRED = SourceOfFunds(JsonField.of("retired"))
+            @JvmField val RETIRED = of("retired")
 
-            @JvmField val RETIREMENT = SourceOfFunds(JsonField.of("retirement"))
+            @JvmField val RETIREMENT = of("retirement")
 
-            @JvmField val SALARY = SourceOfFunds(JsonField.of("salary"))
+            @JvmField val SALARY = of("salary")
 
-            @JvmField val SELF_EMPLOYED = SourceOfFunds(JsonField.of("self_employed"))
+            @JvmField val SELF_EMPLOYED = of("self_employed")
 
-            @JvmField val SENIOR_EXECUTIVE = SourceOfFunds(JsonField.of("senior_executive"))
+            @JvmField val SENIOR_EXECUTIVE = of("senior_executive")
 
-            @JvmField val TRUST_INCOME = SourceOfFunds(JsonField.of("trust_income"))
+            @JvmField val TRUST_INCOME = of("trust_income")
 
             @JvmStatic fun of(value: String) = SourceOfFunds(JsonField.of(value))
         }
@@ -1135,25 +1135,25 @@ private constructor(
 
         companion object {
 
-            @JvmField val BUSINESS_SALE = WealthSource(JsonField.of("business_sale"))
+            @JvmField val BUSINESS_SALE = of("business_sale")
 
-            @JvmField val FAMILY_SUPPORT = WealthSource(JsonField.of("family_support"))
+            @JvmField val FAMILY_SUPPORT = of("family_support")
 
-            @JvmField val GOVERNMENT_BENEFITS = WealthSource(JsonField.of("government_benefits"))
+            @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
 
-            @JvmField val INHERITANCE = WealthSource(JsonField.of("inheritance"))
+            @JvmField val INHERITANCE = of("inheritance")
 
-            @JvmField val INVESTMENTS = WealthSource(JsonField.of("investments"))
+            @JvmField val INVESTMENTS = of("investments")
 
-            @JvmField val OTHER = WealthSource(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val RENTAL_INCOME = WealthSource(JsonField.of("rental_income"))
+            @JvmField val RENTAL_INCOME = of("rental_income")
 
-            @JvmField val RETIREMENT = WealthSource(JsonField.of("retirement"))
+            @JvmField val RETIREMENT = of("retirement")
 
-            @JvmField val SALARY = WealthSource(JsonField.of("salary"))
+            @JvmField val SALARY = of("salary")
 
-            @JvmField val SELF_EMPLOYED = WealthSource(JsonField.of("self_employed"))
+            @JvmField val SELF_EMPLOYED = of("self_employed")
 
             @JvmStatic fun of(value: String) = WealthSource(JsonField.of(value))
         }

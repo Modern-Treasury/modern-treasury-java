@@ -364,41 +364,41 @@ constructor(
 
         companion object {
 
-            @JvmField val USA = ReceivingCountry(JsonField.of("USA"))
+            @JvmField val USA = of("USA")
 
-            @JvmField val AUS = ReceivingCountry(JsonField.of("AUS"))
+            @JvmField val AUS = of("AUS")
 
-            @JvmField val BEL = ReceivingCountry(JsonField.of("BEL"))
+            @JvmField val BEL = of("BEL")
 
-            @JvmField val CAN = ReceivingCountry(JsonField.of("CAN"))
+            @JvmField val CAN = of("CAN")
 
-            @JvmField val CHL = ReceivingCountry(JsonField.of("CHL"))
+            @JvmField val CHL = of("CHL")
 
-            @JvmField val CHN = ReceivingCountry(JsonField.of("CHN"))
+            @JvmField val CHN = of("CHN")
 
-            @JvmField val COL = ReceivingCountry(JsonField.of("COL"))
+            @JvmField val COL = of("COL")
 
-            @JvmField val FRA = ReceivingCountry(JsonField.of("FRA"))
+            @JvmField val FRA = of("FRA")
 
-            @JvmField val DEU = ReceivingCountry(JsonField.of("DEU"))
+            @JvmField val DEU = of("DEU")
 
-            @JvmField val HKG = ReceivingCountry(JsonField.of("HKG"))
+            @JvmField val HKG = of("HKG")
 
-            @JvmField val IND = ReceivingCountry(JsonField.of("IND"))
+            @JvmField val IND = of("IND")
 
-            @JvmField val IRL = ReceivingCountry(JsonField.of("IRL"))
+            @JvmField val IRL = of("IRL")
 
-            @JvmField val ITA = ReceivingCountry(JsonField.of("ITA"))
+            @JvmField val ITA = of("ITA")
 
-            @JvmField val MEX = ReceivingCountry(JsonField.of("MEX"))
+            @JvmField val MEX = of("MEX")
 
-            @JvmField val NLD = ReceivingCountry(JsonField.of("NLD"))
+            @JvmField val NLD = of("NLD")
 
-            @JvmField val PER = ReceivingCountry(JsonField.of("PER"))
+            @JvmField val PER = of("PER")
 
-            @JvmField val ESP = ReceivingCountry(JsonField.of("ESP"))
+            @JvmField val ESP = of("ESP")
 
-            @JvmField val GBR = ReceivingCountry(JsonField.of("GBR"))
+            @JvmField val GBR = of("GBR")
 
             @JvmStatic fun of(value: String) = ReceivingCountry(JsonField.of(value))
         }

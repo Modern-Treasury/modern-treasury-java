@@ -361,25 +361,25 @@ constructor(
 
         companion object {
 
-            @JvmField val AU_NUMBER = AccountNumberType(JsonField.of("au_number"))
+            @JvmField val AU_NUMBER = of("au_number")
 
-            @JvmField val CLABE = AccountNumberType(JsonField.of("clabe"))
+            @JvmField val CLABE = of("clabe")
 
-            @JvmField val HK_NUMBER = AccountNumberType(JsonField.of("hk_number"))
+            @JvmField val HK_NUMBER = of("hk_number")
 
-            @JvmField val IBAN = AccountNumberType(JsonField.of("iban"))
+            @JvmField val IBAN = of("iban")
 
-            @JvmField val ID_NUMBER = AccountNumberType(JsonField.of("id_number"))
+            @JvmField val ID_NUMBER = of("id_number")
 
-            @JvmField val NZ_NUMBER = AccountNumberType(JsonField.of("nz_number"))
+            @JvmField val NZ_NUMBER = of("nz_number")
 
-            @JvmField val OTHER = AccountNumberType(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val PAN = AccountNumberType(JsonField.of("pan"))
+            @JvmField val PAN = of("pan")
 
-            @JvmField val SG_NUMBER = AccountNumberType(JsonField.of("sg_number"))
+            @JvmField val SG_NUMBER = of("sg_number")
 
-            @JvmField val WALLET_ADDRESS = AccountNumberType(JsonField.of("wallet_address"))
+            @JvmField val WALLET_ADDRESS = of("wallet_address")
 
             @JvmStatic fun of(value: String) = AccountNumberType(JsonField.of(value))
         }
@@ -467,7 +467,7 @@ constructor(
 
         companion object {
 
-            @JvmField val EXTERNAL_ACCOUNTS = AccountsType(JsonField.of("external_accounts"))
+            @JvmField val EXTERNAL_ACCOUNTS = of("external_accounts")
 
             @JvmStatic fun of(value: String) = AccountsType(JsonField.of(value))
         }

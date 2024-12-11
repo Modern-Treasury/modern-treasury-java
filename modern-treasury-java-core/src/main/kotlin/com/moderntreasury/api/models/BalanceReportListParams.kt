@@ -244,13 +244,13 @@ constructor(
 
         companion object {
 
-            @JvmField val INTRADAY = BalanceReportType(JsonField.of("intraday"))
+            @JvmField val INTRADAY = of("intraday")
 
-            @JvmField val OTHER = BalanceReportType(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val PREVIOUS_DAY = BalanceReportType(JsonField.of("previous_day"))
+            @JvmField val PREVIOUS_DAY = of("previous_day")
 
-            @JvmField val REAL_TIME = BalanceReportType(JsonField.of("real_time"))
+            @JvmField val REAL_TIME = of("real_time")
 
             @JvmStatic fun of(value: String) = BalanceReportType(JsonField.of(value))
         }

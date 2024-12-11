@@ -633,9 +633,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }
@@ -690,7 +690,7 @@ private constructor(
 
         companion object {
 
-            @JvmField val VERIFIED = ExistingExternalAccountsFilter(JsonField.of("verified"))
+            @JvmField val VERIFIED = of("verified")
 
             @JvmStatic fun of(value: String) = ExistingExternalAccountsFilter(JsonField.of(value))
         }
@@ -744,9 +744,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val DISABLED = ExternalAccountCollection(JsonField.of("disabled"))
+            @JvmField val DISABLED = of("disabled")
 
-            @JvmField val ENABLED = ExternalAccountCollection(JsonField.of("enabled"))
+            @JvmField val ENABLED = of("enabled")
 
             @JvmStatic fun of(value: String) = ExternalAccountCollection(JsonField.of(value))
         }
@@ -804,13 +804,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val CANCELLED = Status(JsonField.of("cancelled"))
+            @JvmField val CANCELLED = of("cancelled")
 
-            @JvmField val COMPLETED = Status(JsonField.of("completed"))
+            @JvmField val COMPLETED = of("completed")
 
-            @JvmField val EXPIRED = Status(JsonField.of("expired"))
+            @JvmField val EXPIRED = of("expired")
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

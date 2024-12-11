@@ -465,9 +465,9 @@ constructor(
 
         companion object {
 
-            @JvmField val CREDIT = Direction(JsonField.of("credit"))
+            @JvmField val CREDIT = of("credit")
 
-            @JvmField val DEBIT = Direction(JsonField.of("debit"))
+            @JvmField val DEBIT = of("debit")
 
             @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
         }
@@ -522,23 +522,23 @@ constructor(
 
         companion object {
 
-            @JvmField val ACH = Type(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
-            @JvmField val BOOK = Type(JsonField.of("book"))
+            @JvmField val BOOK = of("book")
 
-            @JvmField val CHECK = Type(JsonField.of("check"))
+            @JvmField val CHECK = of("check")
 
-            @JvmField val EFT = Type(JsonField.of("eft"))
+            @JvmField val EFT = of("eft")
 
-            @JvmField val INTERAC = Type(JsonField.of("interac"))
+            @JvmField val INTERAC = of("interac")
 
-            @JvmField val RTP = Type(JsonField.of("rtp"))
+            @JvmField val RTP = of("rtp")
 
-            @JvmField val SEPA = Type(JsonField.of("sepa"))
+            @JvmField val SEPA = of("sepa")
 
-            @JvmField val SIGNET = Type(JsonField.of("signet"))
+            @JvmField val SIGNET = of("signet")
 
-            @JvmField val WIRE = Type(JsonField.of("wire"))
+            @JvmField val WIRE = of("wire")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }

@@ -465,65 +465,65 @@ private constructor(
 
             companion object {
 
-                @JvmField val ACH = PaymentType(JsonField.of("ach"))
+                @JvmField val ACH = of("ach")
 
-                @JvmField val AU_BECS = PaymentType(JsonField.of("au_becs"))
+                @JvmField val AU_BECS = of("au_becs")
 
-                @JvmField val BACS = PaymentType(JsonField.of("bacs"))
+                @JvmField val BACS = of("bacs")
 
-                @JvmField val BOOK = PaymentType(JsonField.of("book"))
+                @JvmField val BOOK = of("book")
 
-                @JvmField val CARD = PaymentType(JsonField.of("card"))
+                @JvmField val CARD = of("card")
 
-                @JvmField val CHATS = PaymentType(JsonField.of("chats"))
+                @JvmField val CHATS = of("chats")
 
-                @JvmField val CHECK = PaymentType(JsonField.of("check"))
+                @JvmField val CHECK = of("check")
 
-                @JvmField val CROSS_BORDER = PaymentType(JsonField.of("cross_border"))
+                @JvmField val CROSS_BORDER = of("cross_border")
 
-                @JvmField val DK_NETS = PaymentType(JsonField.of("dk_nets"))
+                @JvmField val DK_NETS = of("dk_nets")
 
-                @JvmField val EFT = PaymentType(JsonField.of("eft"))
+                @JvmField val EFT = of("eft")
 
-                @JvmField val HU_ICS = PaymentType(JsonField.of("hu_ics"))
+                @JvmField val HU_ICS = of("hu_ics")
 
-                @JvmField val INTERAC = PaymentType(JsonField.of("interac"))
+                @JvmField val INTERAC = of("interac")
 
-                @JvmField val MASAV = PaymentType(JsonField.of("masav"))
+                @JvmField val MASAV = of("masav")
 
-                @JvmField val MX_CCEN = PaymentType(JsonField.of("mx_ccen"))
+                @JvmField val MX_CCEN = of("mx_ccen")
 
-                @JvmField val NEFT = PaymentType(JsonField.of("neft"))
+                @JvmField val NEFT = of("neft")
 
-                @JvmField val NICS = PaymentType(JsonField.of("nics"))
+                @JvmField val NICS = of("nics")
 
-                @JvmField val NZ_BECS = PaymentType(JsonField.of("nz_becs"))
+                @JvmField val NZ_BECS = of("nz_becs")
 
-                @JvmField val PL_ELIXIR = PaymentType(JsonField.of("pl_elixir"))
+                @JvmField val PL_ELIXIR = of("pl_elixir")
 
-                @JvmField val PROVXCHANGE = PaymentType(JsonField.of("provxchange"))
+                @JvmField val PROVXCHANGE = of("provxchange")
 
-                @JvmField val RO_SENT = PaymentType(JsonField.of("ro_sent"))
+                @JvmField val RO_SENT = of("ro_sent")
 
-                @JvmField val RTP = PaymentType(JsonField.of("rtp"))
+                @JvmField val RTP = of("rtp")
 
-                @JvmField val SE_BANKGIROT = PaymentType(JsonField.of("se_bankgirot"))
+                @JvmField val SE_BANKGIROT = of("se_bankgirot")
 
-                @JvmField val SEN = PaymentType(JsonField.of("sen"))
+                @JvmField val SEN = of("sen")
 
-                @JvmField val SEPA = PaymentType(JsonField.of("sepa"))
+                @JvmField val SEPA = of("sepa")
 
-                @JvmField val SG_GIRO = PaymentType(JsonField.of("sg_giro"))
+                @JvmField val SG_GIRO = of("sg_giro")
 
-                @JvmField val SIC = PaymentType(JsonField.of("sic"))
+                @JvmField val SIC = of("sic")
 
-                @JvmField val SIGNET = PaymentType(JsonField.of("signet"))
+                @JvmField val SIGNET = of("signet")
 
-                @JvmField val SKNBI = PaymentType(JsonField.of("sknbi"))
+                @JvmField val SKNBI = of("sknbi")
 
-                @JvmField val WIRE = PaymentType(JsonField.of("wire"))
+                @JvmField val WIRE = of("wire")
 
-                @JvmField val ZENGIN = PaymentType(JsonField.of("zengin"))
+                @JvmField val ZENGIN = of("zengin")
 
                 @JvmStatic fun of(value: String) = PaymentType(JsonField.of(value))
             }
@@ -690,9 +690,9 @@ private constructor(
 
             companion object {
 
-                @JvmField val HIGH = Priority(JsonField.of("high"))
+                @JvmField val HIGH = of("high")
 
-                @JvmField val NORMAL = Priority(JsonField.of("normal"))
+                @JvmField val NORMAL = of("normal")
 
                 @JvmStatic fun of(value: String) = Priority(JsonField.of(value))
             }
@@ -747,13 +747,13 @@ private constructor(
 
             companion object {
 
-                @JvmField val CANCELLED = Status(JsonField.of("cancelled"))
+                @JvmField val CANCELLED = of("cancelled")
 
-                @JvmField val FAILED = Status(JsonField.of("failed"))
+                @JvmField val FAILED = of("failed")
 
-                @JvmField val PENDING_VERIFICATION = Status(JsonField.of("pending_verification"))
+                @JvmField val PENDING_VERIFICATION = of("pending_verification")
 
-                @JvmField val VERIFIED = Status(JsonField.of("verified"))
+                @JvmField val VERIFIED = of("verified")
 
                 @JvmStatic fun of(value: String) = Status(JsonField.of(value))
             }

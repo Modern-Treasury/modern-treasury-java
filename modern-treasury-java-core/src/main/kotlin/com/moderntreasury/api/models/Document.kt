@@ -563,30 +563,29 @@ private constructor(
 
         companion object {
 
-            @JvmField val CASE = DocumentableType(JsonField.of("case"))
+            @JvmField val CASE = of("case")
 
-            @JvmField val COUNTERPARTY = DocumentableType(JsonField.of("counterparty"))
+            @JvmField val COUNTERPARTY = of("counterparty")
 
-            @JvmField val EXPECTED_PAYMENT = DocumentableType(JsonField.of("expected_payment"))
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-            @JvmField val EXTERNAL_ACCOUNT = DocumentableType(JsonField.of("external_account"))
+            @JvmField val EXTERNAL_ACCOUNT = of("external_account")
 
-            @JvmField
-            val INCOMING_PAYMENT_DETAIL = DocumentableType(JsonField.of("incoming_payment_detail"))
+            @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val INTERNAL_ACCOUNT = DocumentableType(JsonField.of("internal_account"))
+            @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
-            @JvmField val ORGANIZATION = DocumentableType(JsonField.of("organization"))
+            @JvmField val ORGANIZATION = of("organization")
 
-            @JvmField val PAPER_ITEM = DocumentableType(JsonField.of("paper_item"))
+            @JvmField val PAPER_ITEM = of("paper_item")
 
-            @JvmField val PAYMENT_ORDER = DocumentableType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField val TRANSACTION = DocumentableType(JsonField.of("transaction"))
+            @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val DECISION = DocumentableType(JsonField.of("decision"))
+            @JvmField val DECISION = of("decision")
 
-            @JvmField val CONNECTION = DocumentableType(JsonField.of("connection"))
+            @JvmField val CONNECTION = of("connection")
 
             @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
         }

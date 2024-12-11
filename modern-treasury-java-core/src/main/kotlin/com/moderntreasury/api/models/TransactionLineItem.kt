@@ -474,19 +474,17 @@ private constructor(
 
         companion object {
 
-            @JvmField
-            val INCOMING_PAYMENT_DETAIL = TransactableType(JsonField.of("incoming_payment_detail"))
+            @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val PAPER_ITEM = TransactableType(JsonField.of("paper_item"))
+            @JvmField val PAPER_ITEM = of("paper_item")
 
-            @JvmField val PAYMENT_ORDER = TransactableType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField
-            val PAYMENT_ORDER_ATTEMPT = TransactableType(JsonField.of("payment_order_attempt"))
+            @JvmField val PAYMENT_ORDER_ATTEMPT = of("payment_order_attempt")
 
-            @JvmField val RETURN = TransactableType(JsonField.of("return"))
+            @JvmField val RETURN = of("return")
 
-            @JvmField val REVERSAL = TransactableType(JsonField.of("reversal"))
+            @JvmField val REVERSAL = of("reversal")
 
             @JvmStatic fun of(value: String) = TransactableType(JsonField.of(value))
         }
@@ -557,9 +555,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val ORIGINATING = Type(JsonField.of("originating"))
+            @JvmField val ORIGINATING = of("originating")
 
-            @JvmField val RECEIVING = Type(JsonField.of("receiving"))
+            @JvmField val RECEIVING = of("receiving")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }

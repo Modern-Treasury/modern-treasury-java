@@ -288,9 +288,9 @@ constructor(
 
         companion object {
 
-            @JvmField val ORIGINATING = Type(JsonField.of("originating"))
+            @JvmField val ORIGINATING = of("originating")
 
-            @JvmField val RECEIVING = Type(JsonField.of("receiving"))
+            @JvmField val RECEIVING = of("receiving")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
