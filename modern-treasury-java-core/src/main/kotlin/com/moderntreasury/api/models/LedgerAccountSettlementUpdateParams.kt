@@ -441,9 +441,9 @@ constructor(
 
         companion object {
 
-            @JvmField val POSTED = Status(JsonField.of("posted"))
+            @JvmField val POSTED = of("posted")
 
-            @JvmField val ARCHIVED = Status(JsonField.of("archived"))
+            @JvmField val ARCHIVED = of("archived")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

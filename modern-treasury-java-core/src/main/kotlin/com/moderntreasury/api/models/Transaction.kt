@@ -1133,67 +1133,67 @@ private constructor(
 
         companion object {
 
-            @JvmField val ACH = Type(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
-            @JvmField val AU_BECS = Type(JsonField.of("au_becs"))
+            @JvmField val AU_BECS = of("au_becs")
 
-            @JvmField val BACS = Type(JsonField.of("bacs"))
+            @JvmField val BACS = of("bacs")
 
-            @JvmField val BOOK = Type(JsonField.of("book"))
+            @JvmField val BOOK = of("book")
 
-            @JvmField val CARD = Type(JsonField.of("card"))
+            @JvmField val CARD = of("card")
 
-            @JvmField val CHATS = Type(JsonField.of("chats"))
+            @JvmField val CHATS = of("chats")
 
-            @JvmField val CHECK = Type(JsonField.of("check"))
+            @JvmField val CHECK = of("check")
 
-            @JvmField val CROSS_BORDER = Type(JsonField.of("cross_border"))
+            @JvmField val CROSS_BORDER = of("cross_border")
 
-            @JvmField val DK_NETS = Type(JsonField.of("dk_nets"))
+            @JvmField val DK_NETS = of("dk_nets")
 
-            @JvmField val EFT = Type(JsonField.of("eft"))
+            @JvmField val EFT = of("eft")
 
-            @JvmField val HU_ICS = Type(JsonField.of("hu_ics"))
+            @JvmField val HU_ICS = of("hu_ics")
 
-            @JvmField val INTERAC = Type(JsonField.of("interac"))
+            @JvmField val INTERAC = of("interac")
 
-            @JvmField val MASAV = Type(JsonField.of("masav"))
+            @JvmField val MASAV = of("masav")
 
-            @JvmField val MX_CCEN = Type(JsonField.of("mx_ccen"))
+            @JvmField val MX_CCEN = of("mx_ccen")
 
-            @JvmField val NEFT = Type(JsonField.of("neft"))
+            @JvmField val NEFT = of("neft")
 
-            @JvmField val NICS = Type(JsonField.of("nics"))
+            @JvmField val NICS = of("nics")
 
-            @JvmField val NZ_BECS = Type(JsonField.of("nz_becs"))
+            @JvmField val NZ_BECS = of("nz_becs")
 
-            @JvmField val PL_ELIXIR = Type(JsonField.of("pl_elixir"))
+            @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = Type(JsonField.of("provxchange"))
+            @JvmField val PROVXCHANGE = of("provxchange")
 
-            @JvmField val RO_SENT = Type(JsonField.of("ro_sent"))
+            @JvmField val RO_SENT = of("ro_sent")
 
-            @JvmField val RTP = Type(JsonField.of("rtp"))
+            @JvmField val RTP = of("rtp")
 
-            @JvmField val SE_BANKGIROT = Type(JsonField.of("se_bankgirot"))
+            @JvmField val SE_BANKGIROT = of("se_bankgirot")
 
-            @JvmField val SEN = Type(JsonField.of("sen"))
+            @JvmField val SEN = of("sen")
 
-            @JvmField val SEPA = Type(JsonField.of("sepa"))
+            @JvmField val SEPA = of("sepa")
 
-            @JvmField val SG_GIRO = Type(JsonField.of("sg_giro"))
+            @JvmField val SG_GIRO = of("sg_giro")
 
-            @JvmField val SIC = Type(JsonField.of("sic"))
+            @JvmField val SIC = of("sic")
 
-            @JvmField val SIGNET = Type(JsonField.of("signet"))
+            @JvmField val SIGNET = of("signet")
 
-            @JvmField val SKNBI = Type(JsonField.of("sknbi"))
+            @JvmField val SKNBI = of("sknbi")
 
-            @JvmField val WIRE = Type(JsonField.of("wire"))
+            @JvmField val WIRE = of("wire")
 
-            @JvmField val ZENGIN = Type(JsonField.of("zengin"))
+            @JvmField val ZENGIN = of("zengin")
 
-            @JvmField val OTHER = Type(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
@@ -1364,49 +1364,49 @@ private constructor(
 
         companion object {
 
-            @JvmField val BAI2 = VendorCodeType(JsonField.of("bai2"))
+            @JvmField val BAI2 = of("bai2")
 
-            @JvmField val BANKPROV = VendorCodeType(JsonField.of("bankprov"))
+            @JvmField val BANKPROV = of("bankprov")
 
-            @JvmField val BNK_DEV = VendorCodeType(JsonField.of("bnk_dev"))
+            @JvmField val BNK_DEV = of("bnk_dev")
 
-            @JvmField val CLEARTOUCH = VendorCodeType(JsonField.of("cleartouch"))
+            @JvmField val CLEARTOUCH = of("cleartouch")
 
-            @JvmField val COLUMN = VendorCodeType(JsonField.of("column"))
+            @JvmField val COLUMN = of("column")
 
-            @JvmField val CROSS_RIVER = VendorCodeType(JsonField.of("cross_river"))
+            @JvmField val CROSS_RIVER = of("cross_river")
 
-            @JvmField val CURRENCYCLOUD = VendorCodeType(JsonField.of("currencycloud"))
+            @JvmField val CURRENCYCLOUD = of("currencycloud")
 
-            @JvmField val DC_BANK = VendorCodeType(JsonField.of("dc_bank"))
+            @JvmField val DC_BANK = of("dc_bank")
 
-            @JvmField val DWOLLA = VendorCodeType(JsonField.of("dwolla"))
+            @JvmField val DWOLLA = of("dwolla")
 
-            @JvmField val EVOLVE = VendorCodeType(JsonField.of("evolve"))
+            @JvmField val EVOLVE = of("evolve")
 
-            @JvmField val GOLDMAN_SACHS = VendorCodeType(JsonField.of("goldman_sachs"))
+            @JvmField val GOLDMAN_SACHS = of("goldman_sachs")
 
-            @JvmField val ISO20022 = VendorCodeType(JsonField.of("iso20022"))
+            @JvmField val ISO20022 = of("iso20022")
 
-            @JvmField val JPMC = VendorCodeType(JsonField.of("jpmc"))
+            @JvmField val JPMC = of("jpmc")
 
-            @JvmField val MX = VendorCodeType(JsonField.of("mx"))
+            @JvmField val MX = of("mx")
 
-            @JvmField val PLAID = VendorCodeType(JsonField.of("plaid"))
+            @JvmField val PLAID = of("plaid")
 
-            @JvmField val PNC = VendorCodeType(JsonField.of("pnc"))
+            @JvmField val PNC = of("pnc")
 
-            @JvmField val RSPEC_VENDOR = VendorCodeType(JsonField.of("rspec_vendor"))
+            @JvmField val RSPEC_VENDOR = of("rspec_vendor")
 
-            @JvmField val SIGNET = VendorCodeType(JsonField.of("signet"))
+            @JvmField val SIGNET = of("signet")
 
-            @JvmField val SILVERGATE = VendorCodeType(JsonField.of("silvergate"))
+            @JvmField val SILVERGATE = of("silvergate")
 
-            @JvmField val SWIFT = VendorCodeType(JsonField.of("swift"))
+            @JvmField val SWIFT = of("swift")
 
-            @JvmField val US_BANK = VendorCodeType(JsonField.of("us_bank"))
+            @JvmField val US_BANK = of("us_bank")
 
-            @JvmField val USER = VendorCodeType(JsonField.of("user"))
+            @JvmField val USER = of("user")
 
             @JvmStatic fun of(value: String) = VendorCodeType(JsonField.of(value))
         }

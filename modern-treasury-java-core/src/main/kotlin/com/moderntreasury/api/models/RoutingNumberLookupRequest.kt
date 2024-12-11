@@ -457,25 +457,21 @@ private constructor(
 
         companion object {
 
-            @JvmField val ABA = RoutingNumberType(JsonField.of("aba"))
+            @JvmField val ABA = of("aba")
 
-            @JvmField val AU_BSB = RoutingNumberType(JsonField.of("au_bsb"))
+            @JvmField val AU_BSB = of("au_bsb")
 
-            @JvmField val CA_CPA = RoutingNumberType(JsonField.of("ca_cpa"))
+            @JvmField val CA_CPA = of("ca_cpa")
 
-            @JvmField val GB_SORT_CODE = RoutingNumberType(JsonField.of("gb_sort_code"))
+            @JvmField val GB_SORT_CODE = of("gb_sort_code")
 
-            @JvmField val IN_IFSC = RoutingNumberType(JsonField.of("in_ifsc"))
+            @JvmField val IN_IFSC = of("in_ifsc")
 
-            @JvmField
-            val NZ_NATIONAL_CLEARING_CODE =
-                RoutingNumberType(JsonField.of("nz_national_clearing_code"))
+            @JvmField val NZ_NATIONAL_CLEARING_CODE = of("nz_national_clearing_code")
 
-            @JvmField
-            val SE_BANKGIRO_CLEARING_CODE =
-                RoutingNumberType(JsonField.of("se_bankgiro_clearing_code"))
+            @JvmField val SE_BANKGIRO_CLEARING_CODE = of("se_bankgiro_clearing_code")
 
-            @JvmField val SWIFT = RoutingNumberType(JsonField.of("swift"))
+            @JvmField val SWIFT = of("swift")
 
             @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
         }
@@ -629,65 +625,65 @@ private constructor(
 
         companion object {
 
-            @JvmField val ACH = SupportedPaymentType(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
-            @JvmField val AU_BECS = SupportedPaymentType(JsonField.of("au_becs"))
+            @JvmField val AU_BECS = of("au_becs")
 
-            @JvmField val BACS = SupportedPaymentType(JsonField.of("bacs"))
+            @JvmField val BACS = of("bacs")
 
-            @JvmField val BOOK = SupportedPaymentType(JsonField.of("book"))
+            @JvmField val BOOK = of("book")
 
-            @JvmField val CARD = SupportedPaymentType(JsonField.of("card"))
+            @JvmField val CARD = of("card")
 
-            @JvmField val CHATS = SupportedPaymentType(JsonField.of("chats"))
+            @JvmField val CHATS = of("chats")
 
-            @JvmField val CHECK = SupportedPaymentType(JsonField.of("check"))
+            @JvmField val CHECK = of("check")
 
-            @JvmField val CROSS_BORDER = SupportedPaymentType(JsonField.of("cross_border"))
+            @JvmField val CROSS_BORDER = of("cross_border")
 
-            @JvmField val DK_NETS = SupportedPaymentType(JsonField.of("dk_nets"))
+            @JvmField val DK_NETS = of("dk_nets")
 
-            @JvmField val EFT = SupportedPaymentType(JsonField.of("eft"))
+            @JvmField val EFT = of("eft")
 
-            @JvmField val HU_ICS = SupportedPaymentType(JsonField.of("hu_ics"))
+            @JvmField val HU_ICS = of("hu_ics")
 
-            @JvmField val INTERAC = SupportedPaymentType(JsonField.of("interac"))
+            @JvmField val INTERAC = of("interac")
 
-            @JvmField val MASAV = SupportedPaymentType(JsonField.of("masav"))
+            @JvmField val MASAV = of("masav")
 
-            @JvmField val MX_CCEN = SupportedPaymentType(JsonField.of("mx_ccen"))
+            @JvmField val MX_CCEN = of("mx_ccen")
 
-            @JvmField val NEFT = SupportedPaymentType(JsonField.of("neft"))
+            @JvmField val NEFT = of("neft")
 
-            @JvmField val NICS = SupportedPaymentType(JsonField.of("nics"))
+            @JvmField val NICS = of("nics")
 
-            @JvmField val NZ_BECS = SupportedPaymentType(JsonField.of("nz_becs"))
+            @JvmField val NZ_BECS = of("nz_becs")
 
-            @JvmField val PL_ELIXIR = SupportedPaymentType(JsonField.of("pl_elixir"))
+            @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = SupportedPaymentType(JsonField.of("provxchange"))
+            @JvmField val PROVXCHANGE = of("provxchange")
 
-            @JvmField val RO_SENT = SupportedPaymentType(JsonField.of("ro_sent"))
+            @JvmField val RO_SENT = of("ro_sent")
 
-            @JvmField val RTP = SupportedPaymentType(JsonField.of("rtp"))
+            @JvmField val RTP = of("rtp")
 
-            @JvmField val SE_BANKGIROT = SupportedPaymentType(JsonField.of("se_bankgirot"))
+            @JvmField val SE_BANKGIROT = of("se_bankgirot")
 
-            @JvmField val SEN = SupportedPaymentType(JsonField.of("sen"))
+            @JvmField val SEN = of("sen")
 
-            @JvmField val SEPA = SupportedPaymentType(JsonField.of("sepa"))
+            @JvmField val SEPA = of("sepa")
 
-            @JvmField val SG_GIRO = SupportedPaymentType(JsonField.of("sg_giro"))
+            @JvmField val SG_GIRO = of("sg_giro")
 
-            @JvmField val SIC = SupportedPaymentType(JsonField.of("sic"))
+            @JvmField val SIC = of("sic")
 
-            @JvmField val SIGNET = SupportedPaymentType(JsonField.of("signet"))
+            @JvmField val SIGNET = of("signet")
 
-            @JvmField val SKNBI = SupportedPaymentType(JsonField.of("sknbi"))
+            @JvmField val SKNBI = of("sknbi")
 
-            @JvmField val WIRE = SupportedPaymentType(JsonField.of("wire"))
+            @JvmField val WIRE = of("wire")
 
-            @JvmField val ZENGIN = SupportedPaymentType(JsonField.of("zengin"))
+            @JvmField val ZENGIN = of("zengin")
 
             @JvmStatic fun of(value: String) = SupportedPaymentType(JsonField.of(value))
         }

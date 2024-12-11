@@ -697,11 +697,11 @@ private constructor(
 
             companion object {
 
-                @JvmField val EMAIL = ContactIdentifierType(JsonField.of("email"))
+                @JvmField val EMAIL = of("email")
 
-                @JvmField val PHONE_NUMBER = ContactIdentifierType(JsonField.of("phone_number"))
+                @JvmField val PHONE_NUMBER = of("phone_number")
 
-                @JvmField val WEBSITE = ContactIdentifierType(JsonField.of("website"))
+                @JvmField val WEBSITE = of("website")
 
                 @JvmStatic fun of(value: String) = ContactIdentifierType(JsonField.of(value))
             }
@@ -1127,9 +1127,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val BUSINESS = PartyType(JsonField.of("business"))
+            @JvmField val BUSINESS = of("business")
 
-            @JvmField val INDIVIDUAL = PartyType(JsonField.of("individual"))
+            @JvmField val INDIVIDUAL = of("individual")
 
             @JvmStatic fun of(value: String) = PartyType(JsonField.of(value))
         }
@@ -1184,11 +1184,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val ACH_PRENOTE = VerificationSource(JsonField.of("ach_prenote"))
+            @JvmField val ACH_PRENOTE = of("ach_prenote")
 
-            @JvmField val MICRODEPOSITS = VerificationSource(JsonField.of("microdeposits"))
+            @JvmField val MICRODEPOSITS = of("microdeposits")
 
-            @JvmField val PLAID = VerificationSource(JsonField.of("plaid"))
+            @JvmField val PLAID = of("plaid")
 
             @JvmStatic fun of(value: String) = VerificationSource(JsonField.of(value))
         }
@@ -1248,12 +1248,11 @@ private constructor(
 
         companion object {
 
-            @JvmField
-            val PENDING_VERIFICATION = VerificationStatus(JsonField.of("pending_verification"))
+            @JvmField val PENDING_VERIFICATION = of("pending_verification")
 
-            @JvmField val UNVERIFIED = VerificationStatus(JsonField.of("unverified"))
+            @JvmField val UNVERIFIED = of("unverified")
 
-            @JvmField val VERIFIED = VerificationStatus(JsonField.of("verified"))
+            @JvmField val VERIFIED = of("verified")
 
             @JvmStatic fun of(value: String) = VerificationStatus(JsonField.of(value))
         }

@@ -358,11 +358,11 @@ constructor(
 
         companion object {
 
-            @JvmField val COMPLETED = Status(JsonField.of("completed"))
+            @JvmField val COMPLETED = of("completed")
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val RETURNED = Status(JsonField.of("returned"))
+            @JvmField val RETURNED = of("returned")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }
@@ -421,23 +421,23 @@ constructor(
 
         companion object {
 
-            @JvmField val ACH = Type(JsonField.of("ach"))
+            @JvmField val ACH = of("ach")
 
-            @JvmField val BOOK = Type(JsonField.of("book"))
+            @JvmField val BOOK = of("book")
 
-            @JvmField val CHECK = Type(JsonField.of("check"))
+            @JvmField val CHECK = of("check")
 
-            @JvmField val EFT = Type(JsonField.of("eft"))
+            @JvmField val EFT = of("eft")
 
-            @JvmField val INTERAC = Type(JsonField.of("interac"))
+            @JvmField val INTERAC = of("interac")
 
-            @JvmField val RTP = Type(JsonField.of("rtp"))
+            @JvmField val RTP = of("rtp")
 
-            @JvmField val SEPA = Type(JsonField.of("sepa"))
+            @JvmField val SEPA = of("sepa")
 
-            @JvmField val SIGNET = Type(JsonField.of("signet"))
+            @JvmField val SIGNET = of("signet")
 
-            @JvmField val WIRE = Type(JsonField.of("wire"))
+            @JvmField val WIRE = of("wire")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }

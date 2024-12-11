@@ -304,13 +304,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val INTRADAY = BalanceReportType(JsonField.of("intraday"))
+            @JvmField val INTRADAY = of("intraday")
 
-            @JvmField val OTHER = BalanceReportType(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val PREVIOUS_DAY = BalanceReportType(JsonField.of("previous_day"))
+            @JvmField val PREVIOUS_DAY = of("previous_day")
 
-            @JvmField val REAL_TIME = BalanceReportType(JsonField.of("real_time"))
+            @JvmField val REAL_TIME = of("real_time")
 
             @JvmStatic fun of(value: String) = BalanceReportType(JsonField.of(value))
         }
@@ -718,23 +718,22 @@ private constructor(
 
             companion object {
 
-                @JvmField val CLOSING_AVAILABLE = BalanceType(JsonField.of("closing_available"))
+                @JvmField val CLOSING_AVAILABLE = of("closing_available")
 
-                @JvmField val CLOSING_LEDGER = BalanceType(JsonField.of("closing_ledger"))
+                @JvmField val CLOSING_LEDGER = of("closing_ledger")
 
-                @JvmField val CURRENT_AVAILABLE = BalanceType(JsonField.of("current_available"))
+                @JvmField val CURRENT_AVAILABLE = of("current_available")
 
-                @JvmField val CURRENT_LEDGER = BalanceType(JsonField.of("current_ledger"))
+                @JvmField val CURRENT_LEDGER = of("current_ledger")
 
-                @JvmField val OPENING_AVAILABLE = BalanceType(JsonField.of("opening_available"))
+                @JvmField val OPENING_AVAILABLE = of("opening_available")
 
                 @JvmField
-                val OPENING_AVAILABLE_NEXT_BUSINESS_DAY =
-                    BalanceType(JsonField.of("opening_available_next_business_day"))
+                val OPENING_AVAILABLE_NEXT_BUSINESS_DAY = of("opening_available_next_business_day")
 
-                @JvmField val OPENING_LEDGER = BalanceType(JsonField.of("opening_ledger"))
+                @JvmField val OPENING_LEDGER = of("opening_ledger")
 
-                @JvmField val OTHER = BalanceType(JsonField.of("other"))
+                @JvmField val OTHER = of("other")
 
                 @JvmStatic fun of(value: String) = BalanceType(JsonField.of(value))
             }

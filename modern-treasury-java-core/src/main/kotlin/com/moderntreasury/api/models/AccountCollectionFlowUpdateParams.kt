@@ -324,7 +324,7 @@ constructor(
 
         companion object {
 
-            @JvmField val CANCELLED = Status(JsonField.of("cancelled"))
+            @JvmField val CANCELLED = of("cancelled")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

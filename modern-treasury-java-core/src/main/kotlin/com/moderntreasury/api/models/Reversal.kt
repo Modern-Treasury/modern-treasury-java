@@ -363,18 +363,15 @@ private constructor(
 
         companion object {
 
-            @JvmField val DUPLICATE = Reason(JsonField.of("duplicate"))
+            @JvmField val DUPLICATE = of("duplicate")
 
-            @JvmField val INCORRECT_AMOUNT = Reason(JsonField.of("incorrect_amount"))
+            @JvmField val INCORRECT_AMOUNT = of("incorrect_amount")
 
-            @JvmField
-            val INCORRECT_RECEIVING_ACCOUNT = Reason(JsonField.of("incorrect_receiving_account"))
+            @JvmField val INCORRECT_RECEIVING_ACCOUNT = of("incorrect_receiving_account")
 
-            @JvmField
-            val DATE_EARLIER_THAN_INTENDED = Reason(JsonField.of("date_earlier_than_intended"))
+            @JvmField val DATE_EARLIER_THAN_INTENDED = of("date_earlier_than_intended")
 
-            @JvmField
-            val DATE_LATER_THAN_INTENDED = Reason(JsonField.of("date_later_than_intended"))
+            @JvmField val DATE_LATER_THAN_INTENDED = of("date_later_than_intended")
 
             @JvmStatic fun of(value: String) = Reason(JsonField.of(value))
         }
@@ -441,17 +438,17 @@ private constructor(
 
         companion object {
 
-            @JvmField val COMPLETED = Status(JsonField.of("completed"))
+            @JvmField val COMPLETED = of("completed")
 
-            @JvmField val FAILED = Status(JsonField.of("failed"))
+            @JvmField val FAILED = of("failed")
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val PROCESSING = Status(JsonField.of("processing"))
+            @JvmField val PROCESSING = of("processing")
 
-            @JvmField val RETURNED = Status(JsonField.of("returned"))
+            @JvmField val RETURNED = of("returned")
 
-            @JvmField val SENT = Status(JsonField.of("sent"))
+            @JvmField val SENT = of("sent")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

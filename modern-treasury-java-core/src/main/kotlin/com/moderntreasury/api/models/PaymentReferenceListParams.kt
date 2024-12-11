@@ -239,11 +239,11 @@ constructor(
 
         companion object {
 
-            @JvmField val PAYMENT_ORDER = ReferenceableType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField val RETURN = ReferenceableType(JsonField.of("return"))
+            @JvmField val RETURN = of("return")
 
-            @JvmField val REVERSAL = ReferenceableType(JsonField.of("reversal"))
+            @JvmField val REVERSAL = of("reversal")
 
             @JvmStatic fun of(value: String) = ReferenceableType(JsonField.of(value))
         }

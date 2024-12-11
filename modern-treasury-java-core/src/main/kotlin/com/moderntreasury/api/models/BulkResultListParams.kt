@@ -256,15 +256,15 @@ constructor(
 
         companion object {
 
-            @JvmField val PAYMENT_ORDER = EntityType(JsonField.of("payment_order"))
+            @JvmField val PAYMENT_ORDER = of("payment_order")
 
-            @JvmField val LEDGER_TRANSACTION = EntityType(JsonField.of("ledger_transaction"))
+            @JvmField val LEDGER_TRANSACTION = of("ledger_transaction")
 
-            @JvmField val TRANSACTION = EntityType(JsonField.of("transaction"))
+            @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val EXPECTED_PAYMENT = EntityType(JsonField.of("expected_payment"))
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-            @JvmField val BULK_ERROR = EntityType(JsonField.of("bulk_error"))
+            @JvmField val BULK_ERROR = of("bulk_error")
 
             @JvmStatic fun of(value: String) = EntityType(JsonField.of(value))
         }
@@ -331,7 +331,7 @@ constructor(
 
         companion object {
 
-            @JvmField val BULK_REQUEST = RequestType(JsonField.of("bulk_request"))
+            @JvmField val BULK_REQUEST = of("bulk_request")
 
             @JvmStatic fun of(value: String) = RequestType(JsonField.of(value))
         }
@@ -382,11 +382,11 @@ constructor(
 
         companion object {
 
-            @JvmField val PENDING = Status(JsonField.of("pending"))
+            @JvmField val PENDING = of("pending")
 
-            @JvmField val SUCCESSFUL = Status(JsonField.of("successful"))
+            @JvmField val SUCCESSFUL = of("successful")
 
-            @JvmField val FAILED = Status(JsonField.of("failed"))
+            @JvmField val FAILED = of("failed")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }

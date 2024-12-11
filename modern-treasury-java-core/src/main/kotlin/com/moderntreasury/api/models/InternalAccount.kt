@@ -493,21 +493,21 @@ private constructor(
 
         companion object {
 
-            @JvmField val CASH = AccountType(JsonField.of("cash"))
+            @JvmField val CASH = of("cash")
 
-            @JvmField val CHECKING = AccountType(JsonField.of("checking"))
+            @JvmField val CHECKING = of("checking")
 
-            @JvmField val GENERAL_LEDGER = AccountType(JsonField.of("general_ledger"))
+            @JvmField val GENERAL_LEDGER = of("general_ledger")
 
-            @JvmField val LOAN = AccountType(JsonField.of("loan"))
+            @JvmField val LOAN = of("loan")
 
-            @JvmField val NON_RESIDENT = AccountType(JsonField.of("non_resident"))
+            @JvmField val NON_RESIDENT = of("non_resident")
 
-            @JvmField val OTHER = AccountType(JsonField.of("other"))
+            @JvmField val OTHER = of("other")
 
-            @JvmField val OVERDRAFT = AccountType(JsonField.of("overdraft"))
+            @JvmField val OVERDRAFT = of("overdraft")
 
-            @JvmField val SAVINGS = AccountType(JsonField.of("savings"))
+            @JvmField val SAVINGS = of("savings")
 
             @JvmStatic fun of(value: String) = AccountType(JsonField.of(value))
         }
@@ -932,9 +932,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val BUSINESS = PartyType(JsonField.of("business"))
+            @JvmField val BUSINESS = of("business")
 
-            @JvmField val INDIVIDUAL = PartyType(JsonField.of("individual"))
+            @JvmField val INDIVIDUAL = of("individual")
 
             @JvmStatic fun of(value: String) = PartyType(JsonField.of(value))
         }
