@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/2.12.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/3.1.0)
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://do
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:2.12.0")
+implementation("com.moderntreasury:modern-treasury-java:3.1.0")
 ```
 
 #### Maven
@@ -34,7 +34,7 @@ implementation("com.moderntreasury:modern-treasury-java:2.12.0")
 <dependency>
     <groupId>com.moderntreasury</groupId>
     <artifactId>modern-treasury-java</artifactId>
-    <version>2.12.0</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -313,30 +313,6 @@ ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
     ))
     .build();
 ```
-
-## Making custom/undocumented requests
-
-This library is typed for convenient access to the documented API. If you need to access undocumented
-params or response properties, the library can still be used.
-
-### Undocumented request params
-
-To make requests using undocumented parameters, you can provide or override parameters on the params object
-while building it.
-
-```kotlin
-FooCreateParams address = FooCreateParams.builder()
-    .id("my_id")
-    .putAdditionalProperty("secret_prop", JsonValue.from("hello"))
-    .build();
-```
-
-### Undocumented response properties
-
-To access undocumented response properties, you can use `res._additionalProperties()` on a response object to
-get a map of untyped fields of type `Map<String, JsonValue>`. You can then access fields like
-`._additionalProperties().get("secret_prop").asString()` or use other helpers defined on the `JsonValue` class
-to extract it to a desired type.
 
 ## Logging
 
