@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/3.1.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/3.1.1)
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://do
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:3.1.0")
+implementation("com.moderntreasury:modern-treasury-java:3.1.1")
 ```
 
 #### Maven
@@ -34,7 +34,7 @@ implementation("com.moderntreasury:modern-treasury-java:3.1.0")
 <dependency>
     <groupId>com.moderntreasury</groupId>
     <artifactId>modern-treasury-java</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
 </dependency>
 ```
 
@@ -104,6 +104,33 @@ CounterpartyListPage page = client.counterparties().list();
 for (Counterparty counterparty : page.items()) {
     System.out.println(counterparty);
 }
+```
+
+Use the `CounterpartyListParams` builder to set parameters:
+
+```java
+CounterpartyListParams params = CounterpartyListParams.builder()
+    .afterCursor("after_cursor")
+    .createdAtLowerBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+    .createdAtUpperBound(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+    .email("dev@stainlessapi.com")
+    .legalEntityId("legal_entity_id")
+    .metadata(CounterpartyListParams.Metadata.builder()
+        .putAdditionalProperty("foo", List.of("string"))
+        .build())
+    .name("name")
+    .perPage(0L)
+    .build();
+CounterpartyListPage page1 = client.counterparties().list(params);
+
+// Using the `from` method of the builder you can reuse previous params values:
+CounterpartyListPage page2 = client.counterparties().list(CounterpartyListParams.builder()
+    .from(params)
+    .afterCursor("abc123...")
+    .build());
+
+// Or easily get params for the next page by using the helper `getNextPageParams`:
+CounterpartyListPage page3 = client.counterparties().list(params.getNextPageParams(page2));
 ```
 
 See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.

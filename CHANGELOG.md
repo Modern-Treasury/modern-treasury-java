@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.1 (2024-12-19)
+
+Full Changelog: [v3.1.0...v3.1.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.1.0...v3.1.1)
+
+### Chores
+
+* update parameter examples in tests and docs ([#287](https://github.com/Modern-Treasury/modern-treasury-java/issues/287)) ([c45218f](https://github.com/Modern-Treasury/modern-treasury-java/commit/c45218f7bdc624f0cbf5e73da00ebacf94adba05))
+
 ## 3.1.0 (2024-12-16)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.0.0...v3.1.0)
