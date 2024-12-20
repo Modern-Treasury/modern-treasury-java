@@ -1200,7 +1200,7 @@ class BulkRequestCreateParamsTest {
                 )
             )
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 BulkRequestCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

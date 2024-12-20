@@ -92,28 +92,33 @@ constructor(
     ) {
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Optional<Long> = Optional.ofNullable(amount)
 
         /** Defaults to today. */
-        @JsonProperty("as_of_date") fun asOfDate(): LocalDate? = asOfDate
+        @JsonProperty("as_of_date")
+        fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
 
         /** Defaults to the currency of the originating account. */
-        @JsonProperty("currency") fun currency(): Currency? = currency
+        @JsonProperty("currency") fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
         /** Defaults to a random description. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /** One of `credit`, `debit`. */
-        @JsonProperty("direction") fun direction(): Direction? = direction
+        @JsonProperty("direction")
+        fun direction(): Optional<Direction> = Optional.ofNullable(direction)
 
         /** The ID of one of your internal accounts. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
+        @JsonProperty("internal_account_id")
+        fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
         /** One of `ach`, `wire`, `check`. */
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Optional<Type> = Optional.ofNullable(type)
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
-        @JsonProperty("virtual_account_id") fun virtualAccountId(): String? = virtualAccountId
+        @JsonProperty("virtual_account_id")
+        fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -142,15 +147,16 @@ constructor(
             internal fun from(
                 incomingPaymentDetailCreateAsyncBody: IncomingPaymentDetailCreateAsyncBody
             ) = apply {
-                this.amount = incomingPaymentDetailCreateAsyncBody.amount
-                this.asOfDate = incomingPaymentDetailCreateAsyncBody.asOfDate
-                this.currency = incomingPaymentDetailCreateAsyncBody.currency
-                this.description = incomingPaymentDetailCreateAsyncBody.description
-                this.direction = incomingPaymentDetailCreateAsyncBody.direction
-                this.internalAccountId = incomingPaymentDetailCreateAsyncBody.internalAccountId
-                this.type = incomingPaymentDetailCreateAsyncBody.type
-                this.virtualAccountId = incomingPaymentDetailCreateAsyncBody.virtualAccountId
-                additionalProperties(incomingPaymentDetailCreateAsyncBody.additionalProperties)
+                amount = incomingPaymentDetailCreateAsyncBody.amount
+                asOfDate = incomingPaymentDetailCreateAsyncBody.asOfDate
+                currency = incomingPaymentDetailCreateAsyncBody.currency
+                description = incomingPaymentDetailCreateAsyncBody.description
+                direction = incomingPaymentDetailCreateAsyncBody.direction
+                internalAccountId = incomingPaymentDetailCreateAsyncBody.internalAccountId
+                type = incomingPaymentDetailCreateAsyncBody.type
+                virtualAccountId = incomingPaymentDetailCreateAsyncBody.virtualAccountId
+                additionalProperties =
+                    incomingPaymentDetailCreateAsyncBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -193,16 +199,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): IncomingPaymentDetailCreateAsyncBody =

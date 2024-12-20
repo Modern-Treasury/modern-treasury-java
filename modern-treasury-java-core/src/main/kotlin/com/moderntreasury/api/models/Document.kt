@@ -38,8 +38,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -118,6 +116,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): Document = apply {
         if (!validated) {
             id()
@@ -161,19 +161,19 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(document: Document) = apply {
-            this.id = document.id
-            this.object_ = document.object_
-            this.liveMode = document.liveMode
-            this.createdAt = document.createdAt
-            this.updatedAt = document.updatedAt
-            this.discardedAt = document.discardedAt
-            this.documentType = document.documentType
-            this.source = document.source
-            this.documentableId = document.documentableId
-            this.documentableType = document.documentableType
-            this.documentDetails = document.documentDetails
-            this.file = document.file
-            additionalProperties(document.additionalProperties)
+            id = document.id
+            object_ = document.object_
+            liveMode = document.liveMode
+            createdAt = document.createdAt
+            updatedAt = document.updatedAt
+            discardedAt = document.discardedAt
+            documentType = document.documentType
+            source = document.source
+            documentableId = document.documentableId
+            documentableType = document.documentableType
+            documentDetails = document.documentDetails
+            file = document.file
+            additionalProperties = document.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -284,16 +284,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Document =
@@ -328,8 +334,6 @@ private constructor(
         private val documentIdentifier: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         fun id(): String = id.getRequired("id")
 
@@ -381,6 +385,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): DocumentDetail = apply {
             if (!validated) {
                 id()
@@ -416,15 +422,15 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(documentDetail: DocumentDetail) = apply {
-                this.id = documentDetail.id
-                this.object_ = documentDetail.object_
-                this.liveMode = documentDetail.liveMode
-                this.createdAt = documentDetail.createdAt
-                this.updatedAt = documentDetail.updatedAt
-                this.discardedAt = documentDetail.discardedAt
-                this.documentIdentifierType = documentDetail.documentIdentifierType
-                this.documentIdentifier = documentDetail.documentIdentifier
-                additionalProperties(documentDetail.additionalProperties)
+                id = documentDetail.id
+                object_ = documentDetail.object_
+                liveMode = documentDetail.liveMode
+                createdAt = documentDetail.createdAt
+                updatedAt = documentDetail.updatedAt
+                discardedAt = documentDetail.discardedAt
+                documentIdentifierType = documentDetail.documentIdentifierType
+                documentIdentifier = documentDetail.documentIdentifier
+                additionalProperties = documentDetail.additionalProperties.toMutableMap()
             }
 
             fun id(id: String) = id(JsonField.of(id))
@@ -497,16 +503,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): DocumentDetail =
@@ -668,8 +680,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** The size of the document in bytes. */
         fun size(): Optional<Long> = Optional.ofNullable(size.getNullable("size"))
 
@@ -692,6 +702,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): File = apply {
             if (!validated) {
@@ -718,10 +730,10 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(file: File) = apply {
-                this.size = file.size
-                this.filename = file.filename
-                this.contentType = file.contentType
-                additionalProperties(file.additionalProperties)
+                size = file.size
+                filename = file.filename
+                contentType = file.contentType
+                additionalProperties = file.additionalProperties.toMutableMap()
             }
 
             /** The size of the document in bytes. */
@@ -752,16 +764,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): File =

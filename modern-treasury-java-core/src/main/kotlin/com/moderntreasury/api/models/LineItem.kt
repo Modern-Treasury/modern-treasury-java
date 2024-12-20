@@ -39,8 +39,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -140,6 +138,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): LineItem = apply {
         if (!validated) {
             id()
@@ -185,20 +185,20 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(lineItem: LineItem) = apply {
-            this.id = lineItem.id
-            this.object_ = lineItem.object_
-            this.liveMode = lineItem.liveMode
-            this.createdAt = lineItem.createdAt
-            this.updatedAt = lineItem.updatedAt
-            this.itemizableId = lineItem.itemizableId
-            this.itemizableType = lineItem.itemizableType
-            this.amount = lineItem.amount
-            this.description = lineItem.description
-            this.metadata = lineItem.metadata
-            this.accounting = lineItem.accounting
-            this.accountingCategoryId = lineItem.accountingCategoryId
-            this.accountingLedgerClassId = lineItem.accountingLedgerClassId
-            additionalProperties(lineItem.additionalProperties)
+            id = lineItem.id
+            object_ = lineItem.object_
+            liveMode = lineItem.liveMode
+            createdAt = lineItem.createdAt
+            updatedAt = lineItem.updatedAt
+            itemizableId = lineItem.itemizableId
+            itemizableType = lineItem.itemizableType
+            amount = lineItem.amount
+            description = lineItem.description
+            metadata = lineItem.metadata
+            accounting = lineItem.accounting
+            accountingCategoryId = lineItem.accountingCategoryId
+            accountingLedgerClassId = lineItem.accountingLedgerClassId
+            additionalProperties = lineItem.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -330,16 +330,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): LineItem =
@@ -369,8 +375,6 @@ private constructor(
         private val classId: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
@@ -402,6 +406,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Accounting = apply {
             if (!validated) {
                 accountId()
@@ -425,9 +431,9 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(accounting: Accounting) = apply {
-                this.accountId = accounting.accountId
-                this.classId = accounting.classId
-                additionalProperties(accounting.additionalProperties)
+                accountId = accounting.accountId
+                classId = accounting.classId
+                additionalProperties = accounting.additionalProperties.toMutableMap()
             }
 
             /**
@@ -462,16 +468,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Accounting =
@@ -565,11 +577,11 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
             if (!validated) {
@@ -590,21 +602,27 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

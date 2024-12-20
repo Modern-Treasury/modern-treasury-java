@@ -41,16 +41,16 @@ class LedgerAccountSettlementUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.description()).contains("description")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerAccountSettlementUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.status()).isEqualTo(LedgerAccountSettlementUpdateParams.Status.POSTED)
+        assertThat(body.status()).contains(LedgerAccountSettlementUpdateParams.Status.POSTED)
     }
 
     @Test

@@ -128,10 +128,10 @@ class LedgerTransactionUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.effectiveAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.description()).contains("description")
+        assertThat(body.effectiveAt()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.ledgerEntries())
-            .isEqualTo(
+            .contains(
                 listOf(
                     LedgerTransactionUpdateParams.LedgerEntryCreateRequest.builder()
                         .amount(0L)
@@ -171,18 +171,18 @@ class LedgerTransactionUpdateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.ledgerableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.ledgerableId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.ledgerableType())
-            .isEqualTo(LedgerTransactionUpdateParams.LedgerableType.EXPECTED_PAYMENT)
+            .contains(LedgerTransactionUpdateParams.LedgerableType.EXPECTED_PAYMENT)
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerTransactionUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.status()).isEqualTo(LedgerTransactionUpdateParams.Status.ARCHIVED)
+        assertThat(body.status()).contains(LedgerTransactionUpdateParams.Status.ARCHIVED)
     }
 
     @Test

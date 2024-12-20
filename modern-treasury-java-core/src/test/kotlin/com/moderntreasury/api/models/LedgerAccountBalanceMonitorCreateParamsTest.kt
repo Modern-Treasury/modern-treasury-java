@@ -62,9 +62,9 @@ class LedgerAccountBalanceMonitorCreateParamsTest {
                     .build()
             )
         assertThat(body.ledgerAccountId()).isEqualTo("ledger_account_id")
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.description()).contains("description")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerAccountBalanceMonitorCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

@@ -39,9 +39,9 @@ class LedgerAccountBalanceMonitorUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.description()).contains("description")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerAccountBalanceMonitorUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

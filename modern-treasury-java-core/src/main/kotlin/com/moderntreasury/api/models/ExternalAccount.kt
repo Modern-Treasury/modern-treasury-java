@@ -45,8 +45,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun id(): String = id.getRequired("id")
 
     fun object_(): String = object_.getRequired("object")
@@ -171,6 +169,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): ExternalAccount = apply {
         if (!validated) {
             id()
@@ -228,26 +228,26 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(externalAccount: ExternalAccount) = apply {
-            this.id = externalAccount.id
-            this.object_ = externalAccount.object_
-            this.liveMode = externalAccount.liveMode
-            this.createdAt = externalAccount.createdAt
-            this.updatedAt = externalAccount.updatedAt
-            this.discardedAt = externalAccount.discardedAt
-            this.accountType = externalAccount.accountType
-            this.partyType = externalAccount.partyType
-            this.partyAddress = externalAccount.partyAddress
-            this.name = externalAccount.name
-            this.counterpartyId = externalAccount.counterpartyId
-            this.accountDetails = externalAccount.accountDetails
-            this.routingDetails = externalAccount.routingDetails
-            this.metadata = externalAccount.metadata
-            this.partyName = externalAccount.partyName
-            this.contactDetails = externalAccount.contactDetails
-            this.ledgerAccountId = externalAccount.ledgerAccountId
-            this.verificationStatus = externalAccount.verificationStatus
-            this.verificationSource = externalAccount.verificationSource
-            additionalProperties(externalAccount.additionalProperties)
+            id = externalAccount.id
+            object_ = externalAccount.object_
+            liveMode = externalAccount.liveMode
+            createdAt = externalAccount.createdAt
+            updatedAt = externalAccount.updatedAt
+            discardedAt = externalAccount.discardedAt
+            accountType = externalAccount.accountType
+            partyType = externalAccount.partyType
+            partyAddress = externalAccount.partyAddress
+            name = externalAccount.name
+            counterpartyId = externalAccount.counterpartyId
+            accountDetails = externalAccount.accountDetails
+            routingDetails = externalAccount.routingDetails
+            metadata = externalAccount.metadata
+            partyName = externalAccount.partyName
+            contactDetails = externalAccount.contactDetails
+            ledgerAccountId = externalAccount.ledgerAccountId
+            verificationStatus = externalAccount.verificationStatus
+            verificationSource = externalAccount.verificationSource
+            additionalProperties = externalAccount.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -428,16 +428,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ExternalAccount =
@@ -479,8 +485,6 @@ private constructor(
         private val contactIdentifierType: JsonField<ContactIdentifierType>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         fun id(): String = id.getRequired("id")
 
@@ -532,6 +536,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): ContactDetail = apply {
             if (!validated) {
                 id()
@@ -567,15 +573,15 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(contactDetail: ContactDetail) = apply {
-                this.id = contactDetail.id
-                this.object_ = contactDetail.object_
-                this.liveMode = contactDetail.liveMode
-                this.createdAt = contactDetail.createdAt
-                this.updatedAt = contactDetail.updatedAt
-                this.discardedAt = contactDetail.discardedAt
-                this.contactIdentifier = contactDetail.contactIdentifier
-                this.contactIdentifierType = contactDetail.contactIdentifierType
-                additionalProperties(contactDetail.additionalProperties)
+                id = contactDetail.id
+                object_ = contactDetail.object_
+                liveMode = contactDetail.liveMode
+                createdAt = contactDetail.createdAt
+                updatedAt = contactDetail.updatedAt
+                discardedAt = contactDetail.discardedAt
+                contactIdentifier = contactDetail.contactIdentifier
+                contactIdentifierType = contactDetail.contactIdentifierType
+                additionalProperties = contactDetail.additionalProperties.toMutableMap()
             }
 
             fun id(id: String) = id(JsonField.of(id))
@@ -649,16 +655,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ContactDetail =
@@ -767,11 +779,11 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
             if (!validated) {
@@ -792,21 +804,27 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
@@ -847,8 +865,6 @@ private constructor(
         private val country: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         fun id(): String = id.getRequired("id")
 
@@ -915,6 +931,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Address = apply {
             if (!validated) {
                 id()
@@ -956,18 +974,18 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(address: Address) = apply {
-                this.id = address.id
-                this.object_ = address.object_
-                this.liveMode = address.liveMode
-                this.createdAt = address.createdAt
-                this.updatedAt = address.updatedAt
-                this.line1 = address.line1
-                this.line2 = address.line2
-                this.locality = address.locality
-                this.region = address.region
-                this.postalCode = address.postalCode
-                this.country = address.country
-                additionalProperties(address.additionalProperties)
+                id = address.id
+                object_ = address.object_
+                liveMode = address.liveMode
+                createdAt = address.createdAt
+                updatedAt = address.updatedAt
+                line1 = address.line1
+                line2 = address.line2
+                locality = address.locality
+                region = address.region
+                postalCode = address.postalCode
+                country = address.country
+                additionalProperties = address.additionalProperties.toMutableMap()
             }
 
             fun id(id: String) = id(JsonField.of(id))
@@ -1058,16 +1076,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Address =

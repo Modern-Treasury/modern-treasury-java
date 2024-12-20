@@ -108,27 +108,27 @@ class ExpectedPaymentUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.amountLowerBound()).isEqualTo(0L)
-        assertThat(body.amountUpperBound()).isEqualTo(0L)
-        assertThat(body.counterpartyId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.currency()).isEqualTo(Currency.AED)
-        assertThat(body.dateLowerBound()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.dateUpperBound()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.direction()).isEqualTo(ExpectedPaymentUpdateParams.Direction.CREDIT)
-        assertThat(body.internalAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.amountLowerBound()).contains(0L)
+        assertThat(body.amountUpperBound()).contains(0L)
+        assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.currency()).contains(Currency.AED)
+        assertThat(body.dateLowerBound()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.dateUpperBound()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.description()).contains("description")
+        assertThat(body.direction()).contains(ExpectedPaymentUpdateParams.Direction.CREDIT)
+        assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 ExpectedPaymentUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.reconciliationFilters()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
-        assertThat(body.reconciliationGroups()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
+        assertThat(body.reconciliationFilters()).contains(JsonValue.from(mapOf<String, Any>()))
+        assertThat(body.reconciliationGroups()).contains(JsonValue.from(mapOf<String, Any>()))
         assertThat(body.reconciliationRuleVariables())
-            .isEqualTo(
+            .contains(
                 listOf(
                     ReconciliationRule.builder()
                         .amountLowerBound(0L)
@@ -148,10 +148,10 @@ class ExpectedPaymentUpdateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.remittanceInformation()).isEqualTo("remittance_information")
-        assertThat(body.statementDescriptor()).isEqualTo("statement_descriptor")
-        assertThat(body.status()).isEqualTo(ExpectedPaymentUpdateParams.Status.RECONCILED)
-        assertThat(body.type()).isEqualTo(ExpectedPaymentType.ACH)
+        assertThat(body.remittanceInformation()).contains("remittance_information")
+        assertThat(body.statementDescriptor()).contains("statement_descriptor")
+        assertThat(body.status()).contains(ExpectedPaymentUpdateParams.Status.RECONCILED)
+        assertThat(body.type()).contains(ExpectedPaymentType.ACH)
     }
 
     @Test

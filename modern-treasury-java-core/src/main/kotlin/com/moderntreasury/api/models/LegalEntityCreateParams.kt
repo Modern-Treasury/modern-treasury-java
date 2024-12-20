@@ -149,7 +149,7 @@ constructor(
     @NoAutoDetect
     class LegalEntityCreateBody
     internal constructor(
-        private val legalEntityType: LegalEntityType?,
+        private val legalEntityType: LegalEntityType,
         private val addresses: List<LegalEntityAddressCreateRequest>?,
         private val bankSettings: BankSettings?,
         private val businessName: String?,
@@ -177,81 +177,97 @@ constructor(
     ) {
 
         /** The type of legal entity. */
-        @JsonProperty("legal_entity_type") fun legalEntityType(): LegalEntityType? = legalEntityType
+        @JsonProperty("legal_entity_type") fun legalEntityType(): LegalEntityType = legalEntityType
 
         /** A list of addresses for the entity. */
         @JsonProperty("addresses")
-        fun addresses(): List<LegalEntityAddressCreateRequest>? = addresses
+        fun addresses(): Optional<List<LegalEntityAddressCreateRequest>> =
+            Optional.ofNullable(addresses)
 
-        @JsonProperty("bank_settings") fun bankSettings(): BankSettings? = bankSettings
+        @JsonProperty("bank_settings")
+        fun bankSettings(): Optional<BankSettings> = Optional.ofNullable(bankSettings)
 
         /** The business's legal business name. */
-        @JsonProperty("business_name") fun businessName(): String? = businessName
+        @JsonProperty("business_name")
+        fun businessName(): Optional<String> = Optional.ofNullable(businessName)
 
         /** The country of citizenship for an individual. */
-        @JsonProperty("citizenship_country") fun citizenshipCountry(): String? = citizenshipCountry
+        @JsonProperty("citizenship_country")
+        fun citizenshipCountry(): Optional<String> = Optional.ofNullable(citizenshipCountry)
 
         /** A business's formation date (YYYY-MM-DD). */
-        @JsonProperty("date_formed") fun dateFormed(): LocalDate? = dateFormed
+        @JsonProperty("date_formed")
+        fun dateFormed(): Optional<LocalDate> = Optional.ofNullable(dateFormed)
 
         /** An individual's date of birth (YYYY-MM-DD). */
-        @JsonProperty("date_of_birth") fun dateOfBirth(): LocalDate? = dateOfBirth
+        @JsonProperty("date_of_birth")
+        fun dateOfBirth(): Optional<LocalDate> = Optional.ofNullable(dateOfBirth)
 
         @JsonProperty("doing_business_as_names")
-        fun doingBusinessAsNames(): List<String>? = doingBusinessAsNames
+        fun doingBusinessAsNames(): Optional<List<String>> =
+            Optional.ofNullable(doingBusinessAsNames)
 
         /** The entity's primary email. */
-        @JsonProperty("email") fun email(): String? = email
+        @JsonProperty("email") fun email(): Optional<String> = Optional.ofNullable(email)
 
         /** An individual's first name. */
-        @JsonProperty("first_name") fun firstName(): String? = firstName
+        @JsonProperty("first_name")
+        fun firstName(): Optional<String> = Optional.ofNullable(firstName)
 
         /** A list of identifications for the legal entity. */
         @JsonProperty("identifications")
-        fun identifications(): List<IdentificationCreateRequest>? = identifications
+        fun identifications(): Optional<List<IdentificationCreateRequest>> =
+            Optional.ofNullable(identifications)
 
         /** An individual's last name. */
-        @JsonProperty("last_name") fun lastName(): String? = lastName
+        @JsonProperty("last_name") fun lastName(): Optional<String> = Optional.ofNullable(lastName)
 
         /** The legal entity associations and its child legal entities. */
         @JsonProperty("legal_entity_associations")
-        fun legalEntityAssociations(): List<LegalEntityAssociationInlineCreateRequest>? =
-            legalEntityAssociations
+        fun legalEntityAssociations(): Optional<List<LegalEntityAssociationInlineCreateRequest>> =
+            Optional.ofNullable(legalEntityAssociations)
 
         /** The business's legal structure. */
-        @JsonProperty("legal_structure") fun legalStructure(): LegalStructure? = legalStructure
+        @JsonProperty("legal_structure")
+        fun legalStructure(): Optional<LegalStructure> = Optional.ofNullable(legalStructure)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** An individual's middle name. */
-        @JsonProperty("middle_name") fun middleName(): String? = middleName
+        @JsonProperty("middle_name")
+        fun middleName(): Optional<String> = Optional.ofNullable(middleName)
 
-        @JsonProperty("phone_numbers") fun phoneNumbers(): List<PhoneNumber>? = phoneNumbers
+        @JsonProperty("phone_numbers")
+        fun phoneNumbers(): Optional<List<PhoneNumber>> = Optional.ofNullable(phoneNumbers)
 
         /** Whether the individual is a politically exposed person. */
         @JsonProperty("politically_exposed_person")
-        fun politicallyExposedPerson(): Boolean? = politicallyExposedPerson
+        fun politicallyExposedPerson(): Optional<Boolean> =
+            Optional.ofNullable(politicallyExposedPerson)
 
         /** An individual's preferred name. */
-        @JsonProperty("preferred_name") fun preferredName(): String? = preferredName
+        @JsonProperty("preferred_name")
+        fun preferredName(): Optional<String> = Optional.ofNullable(preferredName)
 
         /** An individual's prefix. */
-        @JsonProperty("prefix") fun prefix(): String? = prefix
+        @JsonProperty("prefix") fun prefix(): Optional<String> = Optional.ofNullable(prefix)
 
         /** The risk rating of the legal entity. One of low, medium, high. */
-        @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
+        @JsonProperty("risk_rating")
+        fun riskRating(): Optional<RiskRating> = Optional.ofNullable(riskRating)
 
         /** An individual's suffix. */
-        @JsonProperty("suffix") fun suffix(): String? = suffix
+        @JsonProperty("suffix") fun suffix(): Optional<String> = Optional.ofNullable(suffix)
 
         @JsonProperty("wealth_and_employment_details")
-        fun wealthAndEmploymentDetails(): WealthAndEmploymentDetails? = wealthAndEmploymentDetails
+        fun wealthAndEmploymentDetails(): Optional<WealthAndEmploymentDetails> =
+            Optional.ofNullable(wealthAndEmploymentDetails)
 
         /** The entity's primary website URL. */
-        @JsonProperty("website") fun website(): String? = website
+        @JsonProperty("website") fun website(): Optional<String> = Optional.ofNullable(website)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -295,31 +311,32 @@ constructor(
 
             @JvmSynthetic
             internal fun from(legalEntityCreateBody: LegalEntityCreateBody) = apply {
-                this.legalEntityType = legalEntityCreateBody.legalEntityType
-                this.addresses = legalEntityCreateBody.addresses
-                this.bankSettings = legalEntityCreateBody.bankSettings
-                this.businessName = legalEntityCreateBody.businessName
-                this.citizenshipCountry = legalEntityCreateBody.citizenshipCountry
-                this.dateFormed = legalEntityCreateBody.dateFormed
-                this.dateOfBirth = legalEntityCreateBody.dateOfBirth
-                this.doingBusinessAsNames = legalEntityCreateBody.doingBusinessAsNames
-                this.email = legalEntityCreateBody.email
-                this.firstName = legalEntityCreateBody.firstName
-                this.identifications = legalEntityCreateBody.identifications
-                this.lastName = legalEntityCreateBody.lastName
-                this.legalEntityAssociations = legalEntityCreateBody.legalEntityAssociations
-                this.legalStructure = legalEntityCreateBody.legalStructure
-                this.metadata = legalEntityCreateBody.metadata
-                this.middleName = legalEntityCreateBody.middleName
-                this.phoneNumbers = legalEntityCreateBody.phoneNumbers
-                this.politicallyExposedPerson = legalEntityCreateBody.politicallyExposedPerson
-                this.preferredName = legalEntityCreateBody.preferredName
-                this.prefix = legalEntityCreateBody.prefix
-                this.riskRating = legalEntityCreateBody.riskRating
-                this.suffix = legalEntityCreateBody.suffix
-                this.wealthAndEmploymentDetails = legalEntityCreateBody.wealthAndEmploymentDetails
-                this.website = legalEntityCreateBody.website
-                additionalProperties(legalEntityCreateBody.additionalProperties)
+                legalEntityType = legalEntityCreateBody.legalEntityType
+                addresses = legalEntityCreateBody.addresses?.toMutableList()
+                bankSettings = legalEntityCreateBody.bankSettings
+                businessName = legalEntityCreateBody.businessName
+                citizenshipCountry = legalEntityCreateBody.citizenshipCountry
+                dateFormed = legalEntityCreateBody.dateFormed
+                dateOfBirth = legalEntityCreateBody.dateOfBirth
+                doingBusinessAsNames = legalEntityCreateBody.doingBusinessAsNames?.toMutableList()
+                email = legalEntityCreateBody.email
+                firstName = legalEntityCreateBody.firstName
+                identifications = legalEntityCreateBody.identifications?.toMutableList()
+                lastName = legalEntityCreateBody.lastName
+                legalEntityAssociations =
+                    legalEntityCreateBody.legalEntityAssociations?.toMutableList()
+                legalStructure = legalEntityCreateBody.legalStructure
+                metadata = legalEntityCreateBody.metadata
+                middleName = legalEntityCreateBody.middleName
+                phoneNumbers = legalEntityCreateBody.phoneNumbers?.toMutableList()
+                politicallyExposedPerson = legalEntityCreateBody.politicallyExposedPerson
+                preferredName = legalEntityCreateBody.preferredName
+                prefix = legalEntityCreateBody.prefix
+                riskRating = legalEntityCreateBody.riskRating
+                suffix = legalEntityCreateBody.suffix
+                wealthAndEmploymentDetails = legalEntityCreateBody.wealthAndEmploymentDetails
+                website = legalEntityCreateBody.website
+                additionalProperties = legalEntityCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The type of legal entity. */
@@ -438,16 +455,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LegalEntityCreateBody =
@@ -918,23 +941,25 @@ constructor(
     ) {
 
         /** The types of this address. */
-        @JsonProperty("address_types") fun addressTypes(): List<AddressType>? = addressTypes
+        @JsonProperty("address_types")
+        fun addressTypes(): Optional<List<AddressType>> = Optional.ofNullable(addressTypes)
 
-        @JsonProperty("line1") fun line1(): String? = line1
+        @JsonProperty("line1") fun line1(): Optional<String> = Optional.ofNullable(line1)
 
-        @JsonProperty("line2") fun line2(): String? = line2
+        @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
 
         /** Locality or City. */
-        @JsonProperty("locality") fun locality(): String? = locality
+        @JsonProperty("locality") fun locality(): Optional<String> = Optional.ofNullable(locality)
 
         /** Region or State. */
-        @JsonProperty("region") fun region(): String? = region
+        @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
 
         /** The postal code of the address. */
-        @JsonProperty("postal_code") fun postalCode(): String? = postalCode
+        @JsonProperty("postal_code")
+        fun postalCode(): Optional<String> = Optional.ofNullable(postalCode)
 
         /** Country code conforms to [ISO 3166-1 alpha-2] */
-        @JsonProperty("country") fun country(): String? = country
+        @JsonProperty("country") fun country(): Optional<String> = Optional.ofNullable(country)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -961,14 +986,15 @@ constructor(
             @JvmSynthetic
             internal fun from(legalEntityAddressCreateRequest: LegalEntityAddressCreateRequest) =
                 apply {
-                    this.addressTypes = legalEntityAddressCreateRequest.addressTypes
-                    this.line1 = legalEntityAddressCreateRequest.line1
-                    this.line2 = legalEntityAddressCreateRequest.line2
-                    this.locality = legalEntityAddressCreateRequest.locality
-                    this.region = legalEntityAddressCreateRequest.region
-                    this.postalCode = legalEntityAddressCreateRequest.postalCode
-                    this.country = legalEntityAddressCreateRequest.country
-                    additionalProperties(legalEntityAddressCreateRequest.additionalProperties)
+                    addressTypes = legalEntityAddressCreateRequest.addressTypes?.toMutableList()
+                    line1 = legalEntityAddressCreateRequest.line1
+                    line2 = legalEntityAddressCreateRequest.line2
+                    locality = legalEntityAddressCreateRequest.locality
+                    region = legalEntityAddressCreateRequest.region
+                    postalCode = legalEntityAddressCreateRequest.postalCode
+                    country = legalEntityAddressCreateRequest.country
+                    additionalProperties =
+                        legalEntityAddressCreateRequest.additionalProperties.toMutableMap()
                 }
 
             /** The types of this address. */
@@ -997,16 +1023,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LegalEntityAddressCreateRequest =
@@ -1119,20 +1151,21 @@ constructor(
     @NoAutoDetect
     class IdentificationCreateRequest
     private constructor(
-        private val idNumber: String?,
-        private val idType: IdType?,
+        private val idNumber: String,
+        private val idType: IdType,
         private val issuingCountry: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The ID number of identification document. */
-        @JsonProperty("id_number") fun idNumber(): String? = idNumber
+        @JsonProperty("id_number") fun idNumber(): String = idNumber
 
         /** The type of ID number. */
-        @JsonProperty("id_type") fun idType(): IdType? = idType
+        @JsonProperty("id_type") fun idType(): IdType = idType
 
         /** The ISO 3166-1 alpha-2 country code of the country that issued the identification */
-        @JsonProperty("issuing_country") fun issuingCountry(): String? = issuingCountry
+        @JsonProperty("issuing_country")
+        fun issuingCountry(): Optional<String> = Optional.ofNullable(issuingCountry)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1154,10 +1187,11 @@ constructor(
 
             @JvmSynthetic
             internal fun from(identificationCreateRequest: IdentificationCreateRequest) = apply {
-                this.idNumber = identificationCreateRequest.idNumber
-                this.idType = identificationCreateRequest.idType
-                this.issuingCountry = identificationCreateRequest.issuingCountry
-                additionalProperties(identificationCreateRequest.additionalProperties)
+                idNumber = identificationCreateRequest.idNumber
+                idType = identificationCreateRequest.idType
+                issuingCountry = identificationCreateRequest.issuingCountry
+                additionalProperties =
+                    identificationCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The ID number of identification document. */
@@ -1175,16 +1209,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): IdentificationCreateRequest =
@@ -1389,7 +1429,7 @@ constructor(
     @NoAutoDetect
     class LegalEntityAssociationInlineCreateRequest
     private constructor(
-        private val relationshipTypes: List<RelationshipType>?,
+        private val relationshipTypes: List<RelationshipType>,
         private val title: String?,
         private val ownershipPercentage: Long?,
         private val childLegalEntity: ChildLegalEntityCreate?,
@@ -1398,21 +1438,23 @@ constructor(
     ) {
 
         @JsonProperty("relationship_types")
-        fun relationshipTypes(): List<RelationshipType>? = relationshipTypes
+        fun relationshipTypes(): List<RelationshipType> = relationshipTypes
 
         /** The job title of the child entity at the parent entity. */
-        @JsonProperty("title") fun title(): String? = title
+        @JsonProperty("title") fun title(): Optional<String> = Optional.ofNullable(title)
 
         /** The child entity's ownership percentage iff they are a beneficial owner. */
-        @JsonProperty("ownership_percentage") fun ownershipPercentage(): Long? = ownershipPercentage
+        @JsonProperty("ownership_percentage")
+        fun ownershipPercentage(): Optional<Long> = Optional.ofNullable(ownershipPercentage)
 
         /** The child legal entity. */
         @JsonProperty("child_legal_entity")
-        fun childLegalEntity(): ChildLegalEntityCreate? = childLegalEntity
+        fun childLegalEntity(): Optional<ChildLegalEntityCreate> =
+            Optional.ofNullable(childLegalEntity)
 
         /** The ID of the child legal entity. */
         @JsonProperty("child_legal_entity_id")
-        fun childLegalEntityId(): String? = childLegalEntityId
+        fun childLegalEntityId(): Optional<String> = Optional.ofNullable(childLegalEntityId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1438,14 +1480,14 @@ constructor(
             internal fun from(
                 legalEntityAssociationInlineCreateRequest: LegalEntityAssociationInlineCreateRequest
             ) = apply {
-                this.relationshipTypes = legalEntityAssociationInlineCreateRequest.relationshipTypes
-                this.title = legalEntityAssociationInlineCreateRequest.title
-                this.ownershipPercentage =
-                    legalEntityAssociationInlineCreateRequest.ownershipPercentage
-                this.childLegalEntity = legalEntityAssociationInlineCreateRequest.childLegalEntity
-                this.childLegalEntityId =
-                    legalEntityAssociationInlineCreateRequest.childLegalEntityId
-                additionalProperties(legalEntityAssociationInlineCreateRequest.additionalProperties)
+                relationshipTypes =
+                    legalEntityAssociationInlineCreateRequest.relationshipTypes.toMutableList()
+                title = legalEntityAssociationInlineCreateRequest.title
+                ownershipPercentage = legalEntityAssociationInlineCreateRequest.ownershipPercentage
+                childLegalEntity = legalEntityAssociationInlineCreateRequest.childLegalEntity
+                childLegalEntityId = legalEntityAssociationInlineCreateRequest.childLegalEntityId
+                additionalProperties =
+                    legalEntityAssociationInlineCreateRequest.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("relationship_types")
@@ -1476,16 +1518,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LegalEntityAssociationInlineCreateRequest =
@@ -1593,79 +1641,95 @@ constructor(
 
             /** The type of legal entity. */
             @JsonProperty("legal_entity_type")
-            fun legalEntityType(): LegalEntityType? = legalEntityType
+            fun legalEntityType(): Optional<LegalEntityType> = Optional.ofNullable(legalEntityType)
 
             /** The risk rating of the legal entity. One of low, medium, high. */
-            @JsonProperty("risk_rating") fun riskRating(): RiskRating? = riskRating
+            @JsonProperty("risk_rating")
+            fun riskRating(): Optional<RiskRating> = Optional.ofNullable(riskRating)
 
             /** An individual's prefix. */
-            @JsonProperty("prefix") fun prefix(): String? = prefix
+            @JsonProperty("prefix") fun prefix(): Optional<String> = Optional.ofNullable(prefix)
 
             /** An individual's first name. */
-            @JsonProperty("first_name") fun firstName(): String? = firstName
+            @JsonProperty("first_name")
+            fun firstName(): Optional<String> = Optional.ofNullable(firstName)
 
             /** An individual's middle name. */
-            @JsonProperty("middle_name") fun middleName(): String? = middleName
+            @JsonProperty("middle_name")
+            fun middleName(): Optional<String> = Optional.ofNullable(middleName)
 
             /** An individual's last name. */
-            @JsonProperty("last_name") fun lastName(): String? = lastName
+            @JsonProperty("last_name")
+            fun lastName(): Optional<String> = Optional.ofNullable(lastName)
 
             /** An individual's suffix. */
-            @JsonProperty("suffix") fun suffix(): String? = suffix
+            @JsonProperty("suffix") fun suffix(): Optional<String> = Optional.ofNullable(suffix)
 
             /** An individual's preferred name. */
-            @JsonProperty("preferred_name") fun preferredName(): String? = preferredName
+            @JsonProperty("preferred_name")
+            fun preferredName(): Optional<String> = Optional.ofNullable(preferredName)
 
             /** The country of citizenship for an individual. */
             @JsonProperty("citizenship_country")
-            fun citizenshipCountry(): String? = citizenshipCountry
+            fun citizenshipCountry(): Optional<String> = Optional.ofNullable(citizenshipCountry)
 
             /** Whether the individual is a politically exposed person. */
             @JsonProperty("politically_exposed_person")
-            fun politicallyExposedPerson(): Boolean? = politicallyExposedPerson
+            fun politicallyExposedPerson(): Optional<Boolean> =
+                Optional.ofNullable(politicallyExposedPerson)
 
             /** An individual's date of birth (YYYY-MM-DD). */
-            @JsonProperty("date_of_birth") fun dateOfBirth(): LocalDate? = dateOfBirth
+            @JsonProperty("date_of_birth")
+            fun dateOfBirth(): Optional<LocalDate> = Optional.ofNullable(dateOfBirth)
 
             /** A business's formation date (YYYY-MM-DD). */
-            @JsonProperty("date_formed") fun dateFormed(): LocalDate? = dateFormed
+            @JsonProperty("date_formed")
+            fun dateFormed(): Optional<LocalDate> = Optional.ofNullable(dateFormed)
 
             /** The business's legal business name. */
-            @JsonProperty("business_name") fun businessName(): String? = businessName
+            @JsonProperty("business_name")
+            fun businessName(): Optional<String> = Optional.ofNullable(businessName)
 
             @JsonProperty("doing_business_as_names")
-            fun doingBusinessAsNames(): List<String>? = doingBusinessAsNames
+            fun doingBusinessAsNames(): Optional<List<String>> =
+                Optional.ofNullable(doingBusinessAsNames)
 
             /** The business's legal structure. */
-            @JsonProperty("legal_structure") fun legalStructure(): LegalStructure? = legalStructure
+            @JsonProperty("legal_structure")
+            fun legalStructure(): Optional<LegalStructure> = Optional.ofNullable(legalStructure)
 
-            @JsonProperty("phone_numbers") fun phoneNumbers(): List<PhoneNumber>? = phoneNumbers
+            @JsonProperty("phone_numbers")
+            fun phoneNumbers(): Optional<List<PhoneNumber>> = Optional.ofNullable(phoneNumbers)
 
             /** The entity's primary email. */
-            @JsonProperty("email") fun email(): String? = email
+            @JsonProperty("email") fun email(): Optional<String> = Optional.ofNullable(email)
 
             /** The entity's primary website URL. */
-            @JsonProperty("website") fun website(): String? = website
+            @JsonProperty("website") fun website(): Optional<String> = Optional.ofNullable(website)
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+            @JsonProperty("metadata")
+            fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
-            @JsonProperty("bank_settings") fun bankSettings(): BankSettings? = bankSettings
+            @JsonProperty("bank_settings")
+            fun bankSettings(): Optional<BankSettings> = Optional.ofNullable(bankSettings)
 
             @JsonProperty("wealth_and_employment_details")
-            fun wealthAndEmploymentDetails(): WealthAndEmploymentDetails? =
-                wealthAndEmploymentDetails
+            fun wealthAndEmploymentDetails(): Optional<WealthAndEmploymentDetails> =
+                Optional.ofNullable(wealthAndEmploymentDetails)
 
             /** A list of addresses for the entity. */
             @JsonProperty("addresses")
-            fun addresses(): List<LegalEntityAddressCreateRequest>? = addresses
+            fun addresses(): Optional<List<LegalEntityAddressCreateRequest>> =
+                Optional.ofNullable(addresses)
 
             /** A list of identifications for the legal entity. */
             @JsonProperty("identifications")
-            fun identifications(): List<IdentificationCreateRequest>? = identifications
+            fun identifications(): Optional<List<IdentificationCreateRequest>> =
+                Optional.ofNullable(identifications)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1707,31 +1771,32 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(childLegalEntityCreate: ChildLegalEntityCreate) = apply {
-                    this.legalEntityType = childLegalEntityCreate.legalEntityType
-                    this.riskRating = childLegalEntityCreate.riskRating
-                    this.prefix = childLegalEntityCreate.prefix
-                    this.firstName = childLegalEntityCreate.firstName
-                    this.middleName = childLegalEntityCreate.middleName
-                    this.lastName = childLegalEntityCreate.lastName
-                    this.suffix = childLegalEntityCreate.suffix
-                    this.preferredName = childLegalEntityCreate.preferredName
-                    this.citizenshipCountry = childLegalEntityCreate.citizenshipCountry
-                    this.politicallyExposedPerson = childLegalEntityCreate.politicallyExposedPerson
-                    this.dateOfBirth = childLegalEntityCreate.dateOfBirth
-                    this.dateFormed = childLegalEntityCreate.dateFormed
-                    this.businessName = childLegalEntityCreate.businessName
-                    this.doingBusinessAsNames = childLegalEntityCreate.doingBusinessAsNames
-                    this.legalStructure = childLegalEntityCreate.legalStructure
-                    this.phoneNumbers = childLegalEntityCreate.phoneNumbers
-                    this.email = childLegalEntityCreate.email
-                    this.website = childLegalEntityCreate.website
-                    this.metadata = childLegalEntityCreate.metadata
-                    this.bankSettings = childLegalEntityCreate.bankSettings
-                    this.wealthAndEmploymentDetails =
-                        childLegalEntityCreate.wealthAndEmploymentDetails
-                    this.addresses = childLegalEntityCreate.addresses
-                    this.identifications = childLegalEntityCreate.identifications
-                    additionalProperties(childLegalEntityCreate.additionalProperties)
+                    legalEntityType = childLegalEntityCreate.legalEntityType
+                    riskRating = childLegalEntityCreate.riskRating
+                    prefix = childLegalEntityCreate.prefix
+                    firstName = childLegalEntityCreate.firstName
+                    middleName = childLegalEntityCreate.middleName
+                    lastName = childLegalEntityCreate.lastName
+                    suffix = childLegalEntityCreate.suffix
+                    preferredName = childLegalEntityCreate.preferredName
+                    citizenshipCountry = childLegalEntityCreate.citizenshipCountry
+                    politicallyExposedPerson = childLegalEntityCreate.politicallyExposedPerson
+                    dateOfBirth = childLegalEntityCreate.dateOfBirth
+                    dateFormed = childLegalEntityCreate.dateFormed
+                    businessName = childLegalEntityCreate.businessName
+                    doingBusinessAsNames =
+                        childLegalEntityCreate.doingBusinessAsNames?.toMutableList()
+                    legalStructure = childLegalEntityCreate.legalStructure
+                    phoneNumbers = childLegalEntityCreate.phoneNumbers?.toMutableList()
+                    email = childLegalEntityCreate.email
+                    website = childLegalEntityCreate.website
+                    metadata = childLegalEntityCreate.metadata
+                    bankSettings = childLegalEntityCreate.bankSettings
+                    wealthAndEmploymentDetails = childLegalEntityCreate.wealthAndEmploymentDetails
+                    addresses = childLegalEntityCreate.addresses?.toMutableList()
+                    identifications = childLegalEntityCreate.identifications?.toMutableList()
+                    additionalProperties =
+                        childLegalEntityCreate.additionalProperties.toMutableMap()
                 }
 
                 /** The type of legal entity. */
@@ -1846,18 +1911,26 @@ constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): ChildLegalEntityCreate =
                     ChildLegalEntityCreate(
@@ -1903,23 +1976,27 @@ constructor(
             ) {
 
                 /** The types of this address. */
-                @JsonProperty("address_types") fun addressTypes(): List<AddressType>? = addressTypes
+                @JsonProperty("address_types")
+                fun addressTypes(): Optional<List<AddressType>> = Optional.ofNullable(addressTypes)
 
-                @JsonProperty("line1") fun line1(): String? = line1
+                @JsonProperty("line1") fun line1(): Optional<String> = Optional.ofNullable(line1)
 
-                @JsonProperty("line2") fun line2(): String? = line2
+                @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
 
                 /** Locality or City. */
-                @JsonProperty("locality") fun locality(): String? = locality
+                @JsonProperty("locality")
+                fun locality(): Optional<String> = Optional.ofNullable(locality)
 
                 /** Region or State. */
-                @JsonProperty("region") fun region(): String? = region
+                @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
 
                 /** The postal code of the address. */
-                @JsonProperty("postal_code") fun postalCode(): String? = postalCode
+                @JsonProperty("postal_code")
+                fun postalCode(): Optional<String> = Optional.ofNullable(postalCode)
 
                 /** Country code conforms to [ISO 3166-1 alpha-2] */
-                @JsonProperty("country") fun country(): String? = country
+                @JsonProperty("country")
+                fun country(): Optional<String> = Optional.ofNullable(country)
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1947,14 +2024,15 @@ constructor(
                     internal fun from(
                         legalEntityAddressCreateRequest: LegalEntityAddressCreateRequest
                     ) = apply {
-                        this.addressTypes = legalEntityAddressCreateRequest.addressTypes
-                        this.line1 = legalEntityAddressCreateRequest.line1
-                        this.line2 = legalEntityAddressCreateRequest.line2
-                        this.locality = legalEntityAddressCreateRequest.locality
-                        this.region = legalEntityAddressCreateRequest.region
-                        this.postalCode = legalEntityAddressCreateRequest.postalCode
-                        this.country = legalEntityAddressCreateRequest.country
-                        additionalProperties(legalEntityAddressCreateRequest.additionalProperties)
+                        addressTypes = legalEntityAddressCreateRequest.addressTypes?.toMutableList()
+                        line1 = legalEntityAddressCreateRequest.line1
+                        line2 = legalEntityAddressCreateRequest.line2
+                        locality = legalEntityAddressCreateRequest.locality
+                        region = legalEntityAddressCreateRequest.region
+                        postalCode = legalEntityAddressCreateRequest.postalCode
+                        country = legalEntityAddressCreateRequest.country
+                        additionalProperties =
+                            legalEntityAddressCreateRequest.additionalProperties.toMutableMap()
                     }
 
                     /** The types of this address. */
@@ -1985,18 +2063,26 @@ constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): LegalEntityAddressCreateRequest =
                         LegalEntityAddressCreateRequest(
@@ -2112,22 +2198,23 @@ constructor(
             @NoAutoDetect
             class IdentificationCreateRequest
             private constructor(
-                private val idNumber: String?,
-                private val idType: IdType?,
+                private val idNumber: String,
+                private val idType: IdType,
                 private val issuingCountry: String?,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
                 /** The ID number of identification document. */
-                @JsonProperty("id_number") fun idNumber(): String? = idNumber
+                @JsonProperty("id_number") fun idNumber(): String = idNumber
 
                 /** The type of ID number. */
-                @JsonProperty("id_type") fun idType(): IdType? = idType
+                @JsonProperty("id_type") fun idType(): IdType = idType
 
                 /**
                  * The ISO 3166-1 alpha-2 country code of the country that issued the identification
                  */
-                @JsonProperty("issuing_country") fun issuingCountry(): String? = issuingCountry
+                @JsonProperty("issuing_country")
+                fun issuingCountry(): Optional<String> = Optional.ofNullable(issuingCountry)
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2150,10 +2237,11 @@ constructor(
                     @JvmSynthetic
                     internal fun from(identificationCreateRequest: IdentificationCreateRequest) =
                         apply {
-                            this.idNumber = identificationCreateRequest.idNumber
-                            this.idType = identificationCreateRequest.idType
-                            this.issuingCountry = identificationCreateRequest.issuingCountry
-                            additionalProperties(identificationCreateRequest.additionalProperties)
+                            idNumber = identificationCreateRequest.idNumber
+                            idType = identificationCreateRequest.idType
+                            issuingCountry = identificationCreateRequest.issuingCountry
+                            additionalProperties =
+                                identificationCreateRequest.additionalProperties.toMutableMap()
                         }
 
                     /** The ID number of identification document. */
@@ -2175,18 +2263,26 @@ constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): IdentificationCreateRequest =
                         IdentificationCreateRequest(
@@ -2560,23 +2656,31 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(metadata: Metadata) = apply {
-                        additionalProperties(metadata.additionalProperties)
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
@@ -2607,7 +2711,8 @@ constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                @JsonProperty("phone_number") fun phoneNumber(): String? = phoneNumber
+                @JsonProperty("phone_number")
+                fun phoneNumber(): Optional<String> = Optional.ofNullable(phoneNumber)
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2628,7 +2733,7 @@ constructor(
                     @JvmSynthetic
                     internal fun from(phoneNumber: PhoneNumber) = apply {
                         this.phoneNumber = phoneNumber.phoneNumber
-                        additionalProperties(phoneNumber.additionalProperties)
+                        additionalProperties = phoneNumber.additionalProperties.toMutableMap()
                     }
 
                     @JsonProperty("phone_number")
@@ -2636,18 +2741,26 @@ constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): PhoneNumber =
                         PhoneNumber(phoneNumber, additionalProperties.toImmutable())
@@ -2877,21 +2990,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
@@ -2923,7 +3042,8 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("phone_number") fun phoneNumber(): String? = phoneNumber
+        @JsonProperty("phone_number")
+        fun phoneNumber(): Optional<String> = Optional.ofNullable(phoneNumber)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2944,7 +3064,7 @@ constructor(
             @JvmSynthetic
             internal fun from(phoneNumber: PhoneNumber) = apply {
                 this.phoneNumber = phoneNumber.phoneNumber
-                additionalProperties(phoneNumber.additionalProperties)
+                additionalProperties = phoneNumber.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("phone_number")
@@ -2952,16 +3072,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PhoneNumber = PhoneNumber(phoneNumber, additionalProperties.toImmutable())
