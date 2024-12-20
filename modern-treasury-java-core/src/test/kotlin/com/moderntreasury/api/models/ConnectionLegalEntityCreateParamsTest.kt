@@ -677,7 +677,7 @@ class ConnectionLegalEntityCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.connectionId()).isEqualTo("connection_id")
         assertThat(body.legalEntity())
-            .isEqualTo(
+            .contains(
                 ConnectionLegalEntityCreateParams.LegalEntity.builder()
                     .addresses(
                         listOf(
@@ -990,7 +990,7 @@ class ConnectionLegalEntityCreateParamsTest {
                     .website("website")
                     .build()
             )
-        assertThat(body.legalEntityId()).isEqualTo("legal_entity_id")
+        assertThat(body.legalEntityId()).contains("legal_entity_id")
     }
 
     @Test

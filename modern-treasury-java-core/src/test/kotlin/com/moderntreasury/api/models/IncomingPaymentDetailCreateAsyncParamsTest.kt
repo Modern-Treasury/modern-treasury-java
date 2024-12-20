@@ -37,15 +37,15 @@ class IncomingPaymentDetailCreateAsyncParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.amount()).isEqualTo(0L)
-        assertThat(body.asOfDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.currency()).isEqualTo(Currency.AED)
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.amount()).contains(0L)
+        assertThat(body.asOfDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.currency()).contains(Currency.AED)
+        assertThat(body.description()).contains("description")
         assertThat(body.direction())
-            .isEqualTo(IncomingPaymentDetailCreateAsyncParams.Direction.CREDIT)
-        assertThat(body.internalAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.type()).isEqualTo(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
-        assertThat(body.virtualAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .contains(IncomingPaymentDetailCreateAsyncParams.Direction.CREDIT)
+        assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.type()).contains(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
+        assertThat(body.virtualAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
 
     @Test

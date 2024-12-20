@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
@@ -20,33 +20,66 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = PaymentFlow.Builder::class)
 @NoAutoDetect
 class PaymentFlow
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val object_: JsonField<String>,
-    private val liveMode: JsonField<Boolean>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val updatedAt: JsonField<OffsetDateTime>,
-    private val clientToken: JsonField<String>,
-    private val status: JsonField<Status>,
-    private val amount: JsonField<Long>,
-    private val currency: JsonField<String>,
-    private val direction: JsonField<Direction>,
-    private val counterpartyId: JsonField<String>,
-    private val receivingAccountId: JsonField<String>,
-    private val originatingAccountId: JsonField<String>,
-    private val paymentOrderId: JsonField<String>,
-    private val effectiveDateSelectionEnabled: JsonField<Boolean>,
-    private val dueDate: JsonField<LocalDate>,
-    private val selectedEffectiveDate: JsonField<LocalDate>,
-    private val externalAccountCollection: JsonField<ExternalAccountCollection>,
-    private val existingExternalAccountsFilter: JsonField<ExistingExternalAccountsFilter>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("client_token")
+    @ExcludeMissing
+    private val clientToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("direction")
+    @ExcludeMissing
+    private val direction: JsonField<Direction> = JsonMissing.of(),
+    @JsonProperty("counterparty_id")
+    @ExcludeMissing
+    private val counterpartyId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("receiving_account_id")
+    @ExcludeMissing
+    private val receivingAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("originating_account_id")
+    @ExcludeMissing
+    private val originatingAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("payment_order_id")
+    @ExcludeMissing
+    private val paymentOrderId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("effective_date_selection_enabled")
+    @ExcludeMissing
+    private val effectiveDateSelectionEnabled: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("due_date")
+    @ExcludeMissing
+    private val dueDate: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("selected_effective_date")
+    @ExcludeMissing
+    private val selectedEffectiveDate: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("external_account_collection")
+    @ExcludeMissing
+    private val externalAccountCollection: JsonField<ExternalAccountCollection> = JsonMissing.of(),
+    @JsonProperty("existing_external_accounts_filter")
+    @ExcludeMissing
+    private val existingExternalAccountsFilter: JsonField<ExistingExternalAccountsFilter> =
+        JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
@@ -253,6 +286,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): PaymentFlow = apply {
         if (!validated) {
             id()
@@ -312,36 +347,34 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(paymentFlow: PaymentFlow) = apply {
-            this.id = paymentFlow.id
-            this.object_ = paymentFlow.object_
-            this.liveMode = paymentFlow.liveMode
-            this.createdAt = paymentFlow.createdAt
-            this.updatedAt = paymentFlow.updatedAt
-            this.clientToken = paymentFlow.clientToken
-            this.status = paymentFlow.status
-            this.amount = paymentFlow.amount
-            this.currency = paymentFlow.currency
-            this.direction = paymentFlow.direction
-            this.counterpartyId = paymentFlow.counterpartyId
-            this.receivingAccountId = paymentFlow.receivingAccountId
-            this.originatingAccountId = paymentFlow.originatingAccountId
-            this.paymentOrderId = paymentFlow.paymentOrderId
-            this.effectiveDateSelectionEnabled = paymentFlow.effectiveDateSelectionEnabled
-            this.dueDate = paymentFlow.dueDate
-            this.selectedEffectiveDate = paymentFlow.selectedEffectiveDate
-            this.externalAccountCollection = paymentFlow.externalAccountCollection
-            this.existingExternalAccountsFilter = paymentFlow.existingExternalAccountsFilter
-            additionalProperties(paymentFlow.additionalProperties)
+            id = paymentFlow.id
+            object_ = paymentFlow.object_
+            liveMode = paymentFlow.liveMode
+            createdAt = paymentFlow.createdAt
+            updatedAt = paymentFlow.updatedAt
+            clientToken = paymentFlow.clientToken
+            status = paymentFlow.status
+            amount = paymentFlow.amount
+            currency = paymentFlow.currency
+            direction = paymentFlow.direction
+            counterpartyId = paymentFlow.counterpartyId
+            receivingAccountId = paymentFlow.receivingAccountId
+            originatingAccountId = paymentFlow.originatingAccountId
+            paymentOrderId = paymentFlow.paymentOrderId
+            effectiveDateSelectionEnabled = paymentFlow.effectiveDateSelectionEnabled
+            dueDate = paymentFlow.dueDate
+            selectedEffectiveDate = paymentFlow.selectedEffectiveDate
+            externalAccountCollection = paymentFlow.externalAccountCollection
+            existingExternalAccountsFilter = paymentFlow.existingExternalAccountsFilter
+            additionalProperties = paymentFlow.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
-        @JsonProperty("object")
-        @ExcludeMissing
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /**
@@ -354,20 +387,14 @@ private constructor(
          * This field will be true if this object exists in the live environment or false if it
          * exists in the test environment.
          */
-        @JsonProperty("live_mode")
-        @ExcludeMissing
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-        @JsonProperty("updated_at")
-        @ExcludeMissing
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /**
@@ -380,8 +407,6 @@ private constructor(
          * The client token of the payment flow. This token can be used to embed a payment workflow
          * in your client-side application.
          */
-        @JsonProperty("client_token")
-        @ExcludeMissing
         fun clientToken(clientToken: JsonField<String>) = apply { this.clientToken = clientToken }
 
         /**
@@ -394,8 +419,6 @@ private constructor(
          * The current status of the payment flow. One of `pending`, `completed`, `expired`, or
          * `cancelled`.
          */
-        @JsonProperty("status")
-        @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
@@ -408,16 +431,12 @@ private constructor(
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can
          * be any integer up to 36 digits.
          */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /** The currency of the payment. */
         fun currency(currency: String) = currency(JsonField.of(currency))
 
         /** The currency of the payment. */
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
@@ -430,8 +449,6 @@ private constructor(
          * Describes the direction money is flowing in the transaction. Can only be `debit`. A
          * `debit` pulls money from someone else's account to your own.
          */
-        @JsonProperty("direction")
-        @ExcludeMissing
         fun direction(direction: JsonField<Direction>) = apply { this.direction = direction }
 
         /**
@@ -444,8 +461,6 @@ private constructor(
          * The ID of a counterparty associated with the payment. As part of the payment workflow an
          * external account will be associated with this counterparty.
          */
-        @JsonProperty("counterparty_id")
-        @ExcludeMissing
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             this.counterpartyId = counterpartyId
         }
@@ -455,8 +470,6 @@ private constructor(
             receivingAccountId(JsonField.of(receivingAccountId))
 
         /** If present, the ID of the external account created using this flow. */
-        @JsonProperty("receiving_account_id")
-        @ExcludeMissing
         fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
             this.receivingAccountId = receivingAccountId
         }
@@ -466,8 +479,6 @@ private constructor(
             originatingAccountId(JsonField.of(originatingAccountId))
 
         /** The ID of one of your organization's internal accounts. */
-        @JsonProperty("originating_account_id")
-        @ExcludeMissing
         fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
             this.originatingAccountId = originatingAccountId
         }
@@ -476,8 +487,6 @@ private constructor(
         fun paymentOrderId(paymentOrderId: String) = paymentOrderId(JsonField.of(paymentOrderId))
 
         /** If present, the ID of the payment order created using this flow. */
-        @JsonProperty("payment_order_id")
-        @ExcludeMissing
         fun paymentOrderId(paymentOrderId: JsonField<String>) = apply {
             this.paymentOrderId = paymentOrderId
         }
@@ -493,8 +502,6 @@ private constructor(
          * When `true`, your end-user can schedule the payment `effective_date` while completing the
          * pre-built UI.
          */
-        @JsonProperty("effective_date_selection_enabled")
-        @ExcludeMissing
         fun effectiveDateSelectionEnabled(effectiveDateSelectionEnabled: JsonField<Boolean>) =
             apply {
                 this.effectiveDateSelectionEnabled = effectiveDateSelectionEnabled
@@ -510,8 +517,6 @@ private constructor(
          * The due date for the flow. Can only be passed in when `effective_date_selection_enabled`
          * is `true`.
          */
-        @JsonProperty("due_date")
-        @ExcludeMissing
         fun dueDate(dueDate: JsonField<LocalDate>) = apply { this.dueDate = dueDate }
 
         /**
@@ -527,8 +532,6 @@ private constructor(
          * pre-built UI. This field is always `null` unless `effective_date_selection_enabled` is
          * `true`.
          */
-        @JsonProperty("selected_effective_date")
-        @ExcludeMissing
         fun selectedEffectiveDate(selectedEffectiveDate: JsonField<LocalDate>) = apply {
             this.selectedEffectiveDate = selectedEffectiveDate
         }
@@ -546,8 +549,6 @@ private constructor(
          * completing the flow. When `disabled`, your end-user must add new payment details when
          * completing the flow.
          */
-        @JsonProperty("external_account_collection")
-        @ExcludeMissing
         fun externalAccountCollection(
             externalAccountCollection: JsonField<ExternalAccountCollection>
         ) = apply { this.externalAccountCollection = externalAccountCollection }
@@ -566,24 +567,27 @@ private constructor(
          * external accounts your end-user can select to those with a `verification_status` of
          * `verified`.
          */
-        @JsonProperty("existing_external_accounts_filter")
-        @ExcludeMissing
         fun existingExternalAccountsFilter(
             existingExternalAccountsFilter: JsonField<ExistingExternalAccountsFilter>
         ) = apply { this.existingExternalAccountsFilter = existingExternalAccountsFilter }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): PaymentFlow =

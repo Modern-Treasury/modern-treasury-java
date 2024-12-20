@@ -30,7 +30,7 @@ class AccountDetailCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.accountNumber()).isEqualTo("account_number")
         assertThat(body.accountNumberType())
-            .isEqualTo(AccountDetailCreateParams.AccountNumberType.AU_NUMBER)
+            .contains(AccountDetailCreateParams.AccountNumberType.AU_NUMBER)
     }
 
     @Test

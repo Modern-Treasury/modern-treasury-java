@@ -21,7 +21,7 @@ class ExternalAccountCompleteVerificationParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.amounts()).isEqualTo(listOf(2L, 4L))
+        assertThat(body.amounts()).contains(listOf(2L, 4L))
     }
 
     @Test

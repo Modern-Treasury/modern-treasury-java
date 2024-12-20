@@ -6,38 +6,58 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = BulkRequest.Builder::class)
 @NoAutoDetect
 class BulkRequest
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val object_: JsonField<String>,
-    private val liveMode: JsonField<Boolean>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val updatedAt: JsonField<OffsetDateTime>,
-    private val actionType: JsonField<ActionType>,
-    private val resourceType: JsonField<ResourceType>,
-    private val status: JsonField<Status>,
-    private val totalResourceCount: JsonField<Long>,
-    private val successResultCount: JsonField<Long>,
-    private val failedResultCount: JsonField<Long>,
-    private val metadata: JsonField<Metadata>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("action_type")
+    @ExcludeMissing
+    private val actionType: JsonField<ActionType> = JsonMissing.of(),
+    @JsonProperty("resource_type")
+    @ExcludeMissing
+    private val resourceType: JsonField<ResourceType> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("total_resource_count")
+    @ExcludeMissing
+    private val totalResourceCount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("success_result_count")
+    @ExcludeMissing
+    private val successResultCount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("failed_result_count")
+    @ExcludeMissing
+    private val failedResultCount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun id(): String = id.getRequired("id")
 
@@ -125,6 +145,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): BulkRequest = apply {
         if (!validated) {
             id()
@@ -168,29 +190,27 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(bulkRequest: BulkRequest) = apply {
-            this.id = bulkRequest.id
-            this.object_ = bulkRequest.object_
-            this.liveMode = bulkRequest.liveMode
-            this.createdAt = bulkRequest.createdAt
-            this.updatedAt = bulkRequest.updatedAt
-            this.actionType = bulkRequest.actionType
-            this.resourceType = bulkRequest.resourceType
-            this.status = bulkRequest.status
-            this.totalResourceCount = bulkRequest.totalResourceCount
-            this.successResultCount = bulkRequest.successResultCount
-            this.failedResultCount = bulkRequest.failedResultCount
-            this.metadata = bulkRequest.metadata
-            additionalProperties(bulkRequest.additionalProperties)
+            id = bulkRequest.id
+            object_ = bulkRequest.object_
+            liveMode = bulkRequest.liveMode
+            createdAt = bulkRequest.createdAt
+            updatedAt = bulkRequest.updatedAt
+            actionType = bulkRequest.actionType
+            resourceType = bulkRequest.resourceType
+            status = bulkRequest.status
+            totalResourceCount = bulkRequest.totalResourceCount
+            successResultCount = bulkRequest.successResultCount
+            failedResultCount = bulkRequest.failedResultCount
+            metadata = bulkRequest.metadata
+            additionalProperties = bulkRequest.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
-        @JsonProperty("object")
-        @ExcludeMissing
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /**
@@ -203,36 +223,26 @@ private constructor(
          * This field will be true if this object exists in the live environment or false if it
          * exists in the test environment.
          */
-        @JsonProperty("live_mode")
-        @ExcludeMissing
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-        @JsonProperty("updated_at")
-        @ExcludeMissing
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /** One of create, or update. */
         fun actionType(actionType: ActionType) = actionType(JsonField.of(actionType))
 
         /** One of create, or update. */
-        @JsonProperty("action_type")
-        @ExcludeMissing
         fun actionType(actionType: JsonField<ActionType>) = apply { this.actionType = actionType }
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
         fun resourceType(resourceType: ResourceType) = resourceType(JsonField.of(resourceType))
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
-        @JsonProperty("resource_type")
-        @ExcludeMissing
         fun resourceType(resourceType: JsonField<ResourceType>) = apply {
             this.resourceType = resourceType
         }
@@ -241,8 +251,6 @@ private constructor(
         fun status(status: Status) = status(JsonField.of(status))
 
         /** One of pending, processing, or completed. */
-        @JsonProperty("status")
-        @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
@@ -256,8 +264,6 @@ private constructor(
          * Total number of items in the `resources` array. Once a bulk request is completed,
          * `success_result_count` + `failed_result_count` will be equal to `total_result_count`.
          */
-        @JsonProperty("total_resource_count")
-        @ExcludeMissing
         fun totalResourceCount(totalResourceCount: JsonField<Long>) = apply {
             this.totalResourceCount = totalResourceCount
         }
@@ -267,8 +273,6 @@ private constructor(
             successResultCount(JsonField.of(successResultCount))
 
         /** Total number of successful bulk results so far for this request */
-        @JsonProperty("success_result_count")
-        @ExcludeMissing
         fun successResultCount(successResultCount: JsonField<Long>) = apply {
             this.successResultCount = successResultCount
         }
@@ -278,8 +282,6 @@ private constructor(
             failedResultCount(JsonField.of(failedResultCount))
 
         /** Total number of failed bulk results so far for this request */
-        @JsonProperty("failed_result_count")
-        @ExcludeMissing
         fun failedResultCount(failedResultCount: JsonField<Long>) = apply {
             this.failedResultCount = failedResultCount
         }
@@ -292,22 +294,25 @@ private constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata")
-        @ExcludeMissing
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): BulkRequest =
@@ -392,18 +397,19 @@ private constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
             if (!validated) {
@@ -424,21 +430,26 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

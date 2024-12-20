@@ -22,32 +22,53 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.getOrThrow
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = BulkResult.Builder::class)
 @NoAutoDetect
 class BulkResult
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val object_: JsonField<String>,
-    private val liveMode: JsonField<Boolean>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val updatedAt: JsonField<OffsetDateTime>,
-    private val requestId: JsonField<String>,
-    private val requestType: JsonField<RequestType>,
-    private val status: JsonField<Status>,
-    private val requestParams: JsonField<RequestParams>,
-    private val entityId: JsonField<String>,
-    private val entityType: JsonField<EntityType>,
-    private val entity: JsonField<Entity>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("request_id")
+    @ExcludeMissing
+    private val requestId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("request_type")
+    @ExcludeMissing
+    private val requestType: JsonField<RequestType> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("request_params")
+    @ExcludeMissing
+    private val requestParams: JsonField<RequestParams> = JsonMissing.of(),
+    @JsonProperty("entity_id")
+    @ExcludeMissing
+    private val entityId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("entity_type")
+    @ExcludeMissing
+    private val entityType: JsonField<EntityType> = JsonMissing.of(),
+    @JsonProperty("entity")
+    @ExcludeMissing
+    private val entity: JsonField<Entity> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun id(): String = id.getRequired("id")
 
@@ -154,6 +175,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): BulkResult = apply {
         if (!validated) {
             id()
@@ -197,29 +220,27 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(bulkResult: BulkResult) = apply {
-            this.id = bulkResult.id
-            this.object_ = bulkResult.object_
-            this.liveMode = bulkResult.liveMode
-            this.createdAt = bulkResult.createdAt
-            this.updatedAt = bulkResult.updatedAt
-            this.requestId = bulkResult.requestId
-            this.requestType = bulkResult.requestType
-            this.status = bulkResult.status
-            this.requestParams = bulkResult.requestParams
-            this.entityId = bulkResult.entityId
-            this.entityType = bulkResult.entityType
-            this.entity = bulkResult.entity
-            additionalProperties(bulkResult.additionalProperties)
+            id = bulkResult.id
+            object_ = bulkResult.object_
+            liveMode = bulkResult.liveMode
+            createdAt = bulkResult.createdAt
+            updatedAt = bulkResult.updatedAt
+            requestId = bulkResult.requestId
+            requestType = bulkResult.requestType
+            status = bulkResult.status
+            requestParams = bulkResult.requestParams
+            entityId = bulkResult.entityId
+            entityType = bulkResult.entityType
+            entity = bulkResult.entity
+            additionalProperties = bulkResult.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
-        @JsonProperty("object")
-        @ExcludeMissing
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /**
@@ -232,20 +253,14 @@ private constructor(
          * This field will be true if this object exists in the live environment or false if it
          * exists in the test environment.
          */
-        @JsonProperty("live_mode")
-        @ExcludeMissing
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-        @JsonProperty("updated_at")
-        @ExcludeMissing
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /**
@@ -258,8 +273,6 @@ private constructor(
          * Unique identifier for the request that created this bulk result. This is the ID of the
          * bulk request when `request_type` is bulk_request
          */
-        @JsonProperty("request_id")
-        @ExcludeMissing
         fun requestId(requestId: JsonField<String>) = apply { this.requestId = requestId }
 
         /**
@@ -272,8 +285,6 @@ private constructor(
          * The type of the request that created this result. bulk_request is the only supported
          * `request_type`
          */
-        @JsonProperty("request_type")
-        @ExcludeMissing
         fun requestType(requestType: JsonField<RequestType>) = apply {
             this.requestType = requestType
         }
@@ -282,8 +293,6 @@ private constructor(
         fun status(status: Status) = status(JsonField.of(status))
 
         /** One of successful or failed. */
-        @JsonProperty("status")
-        @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
@@ -296,8 +305,6 @@ private constructor(
          * An optional object that contains the provided input params for the request that created
          * this result. This is an item in the `resources` array for the bulk_request
          */
-        @JsonProperty("request_params")
-        @ExcludeMissing
         fun requestParams(requestParams: JsonField<RequestParams>) = apply {
             this.requestParams = requestParams
         }
@@ -306,8 +313,6 @@ private constructor(
         fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 
         /** Unique identifier for the result entity object. */
-        @JsonProperty("entity_id")
-        @ExcludeMissing
         fun entityId(entityId: JsonField<String>) = apply { this.entityId = entityId }
 
         /**
@@ -322,8 +327,6 @@ private constructor(
          * the `resource_type` of the bulk request. For a failed bulk result, this is always
          * bulk_error
          */
-        @JsonProperty("entity_type")
-        @ExcludeMissing
         fun entityType(entityType: JsonField<EntityType>) = apply { this.entityType = entityType }
 
         /**
@@ -336,22 +339,25 @@ private constructor(
          * An object with type as indicated by `entity_type`. This is the result object that is
          * generated by performing the requested action on the provided input `request_params`.
          */
-        @JsonProperty("entity")
-        @ExcludeMissing
         fun entity(entity: JsonField<Entity>) = apply { this.entity = entity }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): BulkResult =
@@ -558,20 +564,31 @@ private constructor(
             }
         }
 
-        @JsonDeserialize(builder = BulkError.Builder::class)
         @NoAutoDetect
         class BulkError
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val object_: JsonField<String>,
-            private val liveMode: JsonField<Boolean>,
-            private val createdAt: JsonField<OffsetDateTime>,
-            private val updatedAt: JsonField<OffsetDateTime>,
-            private val requestErrors: JsonField<List<RequestError>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("object")
+            @ExcludeMissing
+            private val object_: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("live_mode")
+            @ExcludeMissing
+            private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("created_at")
+            @ExcludeMissing
+            private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("updated_at")
+            @ExcludeMissing
+            private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("request_errors")
+            @ExcludeMissing
+            private val requestErrors: JsonField<List<RequestError>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -609,6 +626,8 @@ private constructor(
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+            private var validated: Boolean = false
+
             fun validate(): BulkError = apply {
                 if (!validated) {
                     id()
@@ -640,25 +659,21 @@ private constructor(
 
                 @JvmSynthetic
                 internal fun from(bulkError: BulkError) = apply {
-                    this.id = bulkError.id
-                    this.object_ = bulkError.object_
-                    this.liveMode = bulkError.liveMode
-                    this.createdAt = bulkError.createdAt
-                    this.updatedAt = bulkError.updatedAt
-                    this.requestErrors = bulkError.requestErrors
-                    additionalProperties(bulkError.additionalProperties)
+                    id = bulkError.id
+                    object_ = bulkError.object_
+                    liveMode = bulkError.liveMode
+                    createdAt = bulkError.createdAt
+                    updatedAt = bulkError.updatedAt
+                    requestErrors = bulkError.requestErrors
+                    additionalProperties = bulkError.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun object_(object_: String) = object_(JsonField.of(object_))
 
-                @JsonProperty("object")
-                @ExcludeMissing
                 fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
                 /**
@@ -671,22 +686,16 @@ private constructor(
                  * This field will be true if this object exists in the live environment or false if
                  * it exists in the test environment.
                  */
-                @JsonProperty("live_mode")
-                @ExcludeMissing
                 fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
                 fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-                @JsonProperty("created_at")
-                @ExcludeMissing
                 fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                     this.createdAt = createdAt
                 }
 
                 fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-                @JsonProperty("updated_at")
-                @ExcludeMissing
                 fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
                     this.updatedAt = updatedAt
                 }
@@ -694,26 +703,31 @@ private constructor(
                 fun requestErrors(requestErrors: List<RequestError>) =
                     requestErrors(JsonField.of(requestErrors))
 
-                @JsonProperty("request_errors")
-                @ExcludeMissing
                 fun requestErrors(requestErrors: JsonField<List<RequestError>>) = apply {
                     this.requestErrors = requestErrors
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): BulkError =
                     BulkError(
@@ -727,17 +741,22 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = RequestError.Builder::class)
             @NoAutoDetect
             class RequestError
+            @JsonCreator
             private constructor(
-                private val code: JsonField<String>,
-                private val message: JsonField<String>,
-                private val parameter: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("code")
+                @ExcludeMissing
+                private val code: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("message")
+                @ExcludeMissing
+                private val message: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("parameter")
+                @ExcludeMissing
+                private val parameter: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
-
-                private var validated: Boolean = false
 
                 fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
@@ -756,6 +775,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): RequestError = apply {
                     if (!validated) {
@@ -782,46 +803,47 @@ private constructor(
 
                     @JvmSynthetic
                     internal fun from(requestError: RequestError) = apply {
-                        this.code = requestError.code
-                        this.message = requestError.message
-                        this.parameter = requestError.parameter
-                        additionalProperties(requestError.additionalProperties)
+                        code = requestError.code
+                        message = requestError.message
+                        parameter = requestError.parameter
+                        additionalProperties = requestError.additionalProperties.toMutableMap()
                     }
 
                     fun code(code: String) = code(JsonField.of(code))
 
-                    @JsonProperty("code")
-                    @ExcludeMissing
                     fun code(code: JsonField<String>) = apply { this.code = code }
 
                     fun message(message: String) = message(JsonField.of(message))
 
-                    @JsonProperty("message")
-                    @ExcludeMissing
                     fun message(message: JsonField<String>) = apply { this.message = message }
 
                     fun parameter(parameter: String) = parameter(JsonField.of(parameter))
 
-                    @JsonProperty("parameter")
-                    @ExcludeMissing
                     fun parameter(parameter: JsonField<String>) = apply {
                         this.parameter = parameter
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): RequestError =
                         RequestError(
@@ -948,18 +970,19 @@ private constructor(
      * An optional object that contains the provided input params for the request that created this
      * result. This is an item in the `resources` array for the bulk_request
      */
-    @JsonDeserialize(builder = RequestParams.Builder::class)
     @NoAutoDetect
     class RequestParams
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): RequestParams = apply {
             if (!validated) {
@@ -980,21 +1003,26 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(requestParams: RequestParams) = apply {
-                additionalProperties(requestParams.additionalProperties)
+                additionalProperties = requestParams.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): RequestParams = RequestParams(additionalProperties.toImmutable())

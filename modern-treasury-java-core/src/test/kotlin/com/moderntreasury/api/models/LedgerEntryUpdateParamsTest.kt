@@ -38,7 +38,7 @@ class LedgerEntryUpdateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerEntryUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

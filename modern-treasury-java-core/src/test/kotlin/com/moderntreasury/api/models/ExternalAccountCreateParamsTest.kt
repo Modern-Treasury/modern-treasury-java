@@ -183,9 +183,9 @@ class ExternalAccountCreateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.counterpartyId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.accountDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     ExternalAccountCreateParams.AccountDetail.builder()
                         .accountNumber("account_number")
@@ -195,9 +195,9 @@ class ExternalAccountCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.accountType()).isEqualTo(ExternalAccountType.CASH)
+        assertThat(body.accountType()).contains(ExternalAccountType.CASH)
         assertThat(body.contactDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     ExternalAccountCreateParams.ContactDetailCreateRequest.builder()
                         .contactIdentifier("contact_identifier")
@@ -210,7 +210,7 @@ class ExternalAccountCreateParamsTest {
                 )
             )
         assertThat(body.ledgerAccount())
-            .isEqualTo(
+            .contains(
                 ExternalAccountCreateParams.LedgerAccountCreateRequest.builder()
                     .currency("currency")
                     .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -234,16 +234,16 @@ class ExternalAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 ExternalAccountCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.name()).contains("name")
         assertThat(body.partyAddress())
-            .isEqualTo(
+            .contains(
                 ExternalAccountCreateParams.AddressRequest.builder()
                     .country("country")
                     .line1("line1")
@@ -253,12 +253,12 @@ class ExternalAccountCreateParamsTest {
                     .region("region")
                     .build()
             )
-        assertThat(body.partyIdentifier()).isEqualTo("party_identifier")
-        assertThat(body.partyName()).isEqualTo("party_name")
-        assertThat(body.partyType()).isEqualTo(ExternalAccountCreateParams.PartyType.BUSINESS)
-        assertThat(body.plaidProcessorToken()).isEqualTo("plaid_processor_token")
+        assertThat(body.partyIdentifier()).contains("party_identifier")
+        assertThat(body.partyName()).contains("party_name")
+        assertThat(body.partyType()).contains(ExternalAccountCreateParams.PartyType.BUSINESS)
+        assertThat(body.plaidProcessorToken()).contains("plaid_processor_token")
         assertThat(body.routingDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     ExternalAccountCreateParams.RoutingDetail.builder()
                         .routingNumber("routing_number")

@@ -215,7 +215,7 @@ class LegalEntityUpdateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.addresses())
-            .isEqualTo(
+            .contains(
                 listOf(
                     LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
                         .country("country")
@@ -234,7 +234,7 @@ class LegalEntityUpdateParamsTest {
                 )
             )
         assertThat(body.bankSettings())
-            .isEqualTo(
+            .contains(
                 BankSettings.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .backupWithholdingPercentage(0L)
@@ -248,15 +248,15 @@ class LegalEntityUpdateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        assertThat(body.businessName()).isEqualTo("business_name")
-        assertThat(body.citizenshipCountry()).isEqualTo("citizenship_country")
-        assertThat(body.dateFormed()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.dateOfBirth()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.doingBusinessAsNames()).isEqualTo(listOf("string"))
-        assertThat(body.email()).isEqualTo("email")
-        assertThat(body.firstName()).isEqualTo("first_name")
+        assertThat(body.businessName()).contains("business_name")
+        assertThat(body.citizenshipCountry()).contains("citizenship_country")
+        assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.doingBusinessAsNames()).contains(listOf("string"))
+        assertThat(body.email()).contains("email")
+        assertThat(body.firstName()).contains("first_name")
         assertThat(body.identifications())
-            .isEqualTo(
+            .contains(
                 listOf(
                     LegalEntityUpdateParams.IdentificationCreateRequest.builder()
                         .idNumber("id_number")
@@ -265,33 +265,33 @@ class LegalEntityUpdateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.lastName()).isEqualTo("last_name")
+        assertThat(body.lastName()).contains("last_name")
         assertThat(body.legalStructure())
-            .isEqualTo(LegalEntityUpdateParams.LegalStructure.CORPORATION)
+            .contains(LegalEntityUpdateParams.LegalStructure.CORPORATION)
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LegalEntityUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.middleName()).isEqualTo("middle_name")
+        assertThat(body.middleName()).contains("middle_name")
         assertThat(body.phoneNumbers())
-            .isEqualTo(
+            .contains(
                 listOf(
                     LegalEntityUpdateParams.PhoneNumber.builder()
                         .phoneNumber("phone_number")
                         .build()
                 )
             )
-        assertThat(body.politicallyExposedPerson()).isEqualTo(true)
-        assertThat(body.preferredName()).isEqualTo("preferred_name")
-        assertThat(body.prefix()).isEqualTo("prefix")
-        assertThat(body.riskRating()).isEqualTo(LegalEntityUpdateParams.RiskRating.LOW)
-        assertThat(body.suffix()).isEqualTo("suffix")
+        assertThat(body.politicallyExposedPerson()).contains(true)
+        assertThat(body.preferredName()).contains("preferred_name")
+        assertThat(body.prefix()).contains("prefix")
+        assertThat(body.riskRating()).contains(LegalEntityUpdateParams.RiskRating.LOW)
+        assertThat(body.suffix()).contains("suffix")
         assertThat(body.wealthAndEmploymentDetails())
-            .isEqualTo(
+            .contains(
                 WealthAndEmploymentDetails.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .annualIncome(0L)
@@ -313,7 +313,7 @@ class LegalEntityUpdateParamsTest {
                     .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                     .build()
             )
-        assertThat(body.website()).isEqualTo("website")
+        assertThat(body.website()).contains("website")
     }
 
     @Test

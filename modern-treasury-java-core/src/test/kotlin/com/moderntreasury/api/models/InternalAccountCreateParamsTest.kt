@@ -73,11 +73,11 @@ class InternalAccountCreateParamsTest {
         assertThat(body.currency()).isEqualTo(InternalAccountCreateParams.Currency.USD)
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.partyName()).isEqualTo("party_name")
-        assertThat(body.counterpartyId()).isEqualTo("counterparty_id")
-        assertThat(body.legalEntityId()).isEqualTo("legal_entity_id")
-        assertThat(body.parentAccountId()).isEqualTo("parent_account_id")
+        assertThat(body.counterpartyId()).contains("counterparty_id")
+        assertThat(body.legalEntityId()).contains("legal_entity_id")
+        assertThat(body.parentAccountId()).contains("parent_account_id")
         assertThat(body.partyAddress())
-            .isEqualTo(
+            .contains(
                 InternalAccountCreateParams.PartyAddress.builder()
                     .country("country")
                     .line1("line1")
@@ -88,7 +88,7 @@ class InternalAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.vendorAttributes())
-            .isEqualTo(
+            .contains(
                 InternalAccountCreateParams.VendorAttributes.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

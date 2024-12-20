@@ -22,6 +22,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.getOrThrow
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
@@ -167,24 +168,41 @@ private constructor(
         }
     }
 
-    @JsonDeserialize(builder = ExternalAccountVerificationAttempt.Builder::class)
     @NoAutoDetect
     class ExternalAccountVerificationAttempt
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val object_: JsonField<String>,
-        private val liveMode: JsonField<Boolean>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val updatedAt: JsonField<OffsetDateTime>,
-        private val externalAccountId: JsonField<String>,
-        private val originatingAccountId: JsonField<String>,
-        private val paymentType: JsonField<PaymentType>,
-        private val priority: JsonField<Priority>,
-        private val status: JsonField<Status>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("object")
+        @ExcludeMissing
+        private val object_: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("live_mode")
+        @ExcludeMissing
+        private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("updated_at")
+        @ExcludeMissing
+        private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("external_account_id")
+        @ExcludeMissing
+        private val externalAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("originating_account_id")
+        @ExcludeMissing
+        private val originatingAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("payment_type")
+        @ExcludeMissing
+        private val paymentType: JsonField<PaymentType> = JsonMissing.of(),
+        @JsonProperty("priority")
+        @ExcludeMissing
+        private val priority: JsonField<Priority> = JsonMissing.of(),
+        @JsonProperty("status")
+        @ExcludeMissing
+        private val status: JsonField<Status> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         fun id(): String = id.getRequired("id")
 
@@ -259,6 +277,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): ExternalAccountVerificationAttempt = apply {
             if (!validated) {
                 id()
@@ -300,29 +320,26 @@ private constructor(
             internal fun from(
                 externalAccountVerificationAttempt: ExternalAccountVerificationAttempt
             ) = apply {
-                this.id = externalAccountVerificationAttempt.id
-                this.object_ = externalAccountVerificationAttempt.object_
-                this.liveMode = externalAccountVerificationAttempt.liveMode
-                this.createdAt = externalAccountVerificationAttempt.createdAt
-                this.updatedAt = externalAccountVerificationAttempt.updatedAt
-                this.externalAccountId = externalAccountVerificationAttempt.externalAccountId
-                this.originatingAccountId = externalAccountVerificationAttempt.originatingAccountId
-                this.paymentType = externalAccountVerificationAttempt.paymentType
-                this.priority = externalAccountVerificationAttempt.priority
-                this.status = externalAccountVerificationAttempt.status
-                additionalProperties(externalAccountVerificationAttempt.additionalProperties)
+                id = externalAccountVerificationAttempt.id
+                object_ = externalAccountVerificationAttempt.object_
+                liveMode = externalAccountVerificationAttempt.liveMode
+                createdAt = externalAccountVerificationAttempt.createdAt
+                updatedAt = externalAccountVerificationAttempt.updatedAt
+                externalAccountId = externalAccountVerificationAttempt.externalAccountId
+                originatingAccountId = externalAccountVerificationAttempt.originatingAccountId
+                paymentType = externalAccountVerificationAttempt.paymentType
+                priority = externalAccountVerificationAttempt.priority
+                status = externalAccountVerificationAttempt.status
+                additionalProperties =
+                    externalAccountVerificationAttempt.additionalProperties.toMutableMap()
             }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun object_(object_: String) = object_(JsonField.of(object_))
 
-            @JsonProperty("object")
-            @ExcludeMissing
             fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
             /**
@@ -335,22 +352,16 @@ private constructor(
              * This field will be true if this object exists in the live environment or false if it
              * exists in the test environment.
              */
-            @JsonProperty("live_mode")
-            @ExcludeMissing
             fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-            @JsonProperty("updated_at")
-            @ExcludeMissing
             fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
                 this.updatedAt = updatedAt
             }
@@ -360,8 +371,6 @@ private constructor(
                 externalAccountId(JsonField.of(externalAccountId))
 
             /** The ID of the external account. */
-            @JsonProperty("external_account_id")
-            @ExcludeMissing
             fun externalAccountId(externalAccountId: JsonField<String>) = apply {
                 this.externalAccountId = externalAccountId
             }
@@ -371,8 +380,6 @@ private constructor(
                 originatingAccountId(JsonField.of(originatingAccountId))
 
             /** The ID of the internal account where the micro-deposits originate from. */
-            @JsonProperty("originating_account_id")
-            @ExcludeMissing
             fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
                 this.originatingAccountId = originatingAccountId
             }
@@ -385,8 +392,6 @@ private constructor(
             /**
              * The type of payment that can be made to this account. Can be `ach`, `eft`, or `rtp`.
              */
-            @JsonProperty("payment_type")
-            @ExcludeMissing
             fun paymentType(paymentType: JsonField<PaymentType>) = apply {
                 this.paymentType = paymentType
             }
@@ -395,8 +400,6 @@ private constructor(
             fun priority(priority: Priority) = priority(JsonField.of(priority))
 
             /** The priority of the payment. Can be `normal` or `high`. */
-            @JsonProperty("priority")
-            @ExcludeMissing
             fun priority(priority: JsonField<Priority>) = apply { this.priority = priority }
 
             /**
@@ -409,22 +412,25 @@ private constructor(
              * The status of the verification attempt. Can be `pending_verification`, `verified`,
              * `failed`, or `cancelled`.
              */
-            @JsonProperty("status")
-            @ExcludeMissing
             fun status(status: JsonField<Status>) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalAccountVerificationAttempt =

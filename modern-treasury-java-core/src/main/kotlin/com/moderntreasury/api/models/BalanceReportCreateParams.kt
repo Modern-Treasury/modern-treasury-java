@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,10 +13,12 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
+import java.util.Optional
 
 class BalanceReportCreateParams
 constructor(
@@ -69,32 +70,33 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = BalanceReportCreateBody.Builder::class)
     @NoAutoDetect
     class BalanceReportCreateBody
+    @JsonCreator
     internal constructor(
-        private val asOfDate: LocalDate?,
-        private val asOfTime: String?,
-        private val balanceReportType: BalanceReportType?,
-        private val balances: List<BalanceCreateRequest>?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("as_of_date") private val asOfDate: LocalDate,
+        @JsonProperty("as_of_time") private val asOfTime: String,
+        @JsonProperty("balance_report_type") private val balanceReportType: BalanceReportType,
+        @JsonProperty("balances") private val balances: List<BalanceCreateRequest>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The date of the balance report in local time. */
-        @JsonProperty("as_of_date") fun asOfDate(): LocalDate? = asOfDate
+        @JsonProperty("as_of_date") fun asOfDate(): LocalDate = asOfDate
 
         /** The time (24-hour clock) of the balance report in local time. */
-        @JsonProperty("as_of_time") fun asOfTime(): String? = asOfTime
+        @JsonProperty("as_of_time") fun asOfTime(): String = asOfTime
 
         /**
          * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
          * `other`.
          */
         @JsonProperty("balance_report_type")
-        fun balanceReportType(): BalanceReportType? = balanceReportType
+        fun balanceReportType(): BalanceReportType = balanceReportType
 
         /** An array of `Balance` objects. */
-        @JsonProperty("balances") fun balances(): List<BalanceCreateRequest>? = balances
+        @JsonProperty("balances") fun balances(): List<BalanceCreateRequest> = balances
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -117,46 +119,47 @@ constructor(
 
             @JvmSynthetic
             internal fun from(balanceReportCreateBody: BalanceReportCreateBody) = apply {
-                this.asOfDate = balanceReportCreateBody.asOfDate
-                this.asOfTime = balanceReportCreateBody.asOfTime
-                this.balanceReportType = balanceReportCreateBody.balanceReportType
-                this.balances = balanceReportCreateBody.balances
-                additionalProperties(balanceReportCreateBody.additionalProperties)
+                asOfDate = balanceReportCreateBody.asOfDate
+                asOfTime = balanceReportCreateBody.asOfTime
+                balanceReportType = balanceReportCreateBody.balanceReportType
+                balances = balanceReportCreateBody.balances.toMutableList()
+                additionalProperties = balanceReportCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The date of the balance report in local time. */
-            @JsonProperty("as_of_date")
             fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
 
             /** The time (24-hour clock) of the balance report in local time. */
-            @JsonProperty("as_of_time")
             fun asOfTime(asOfTime: String) = apply { this.asOfTime = asOfTime }
 
             /**
              * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`,
              * or `other`.
              */
-            @JsonProperty("balance_report_type")
             fun balanceReportType(balanceReportType: BalanceReportType) = apply {
                 this.balanceReportType = balanceReportType
             }
 
             /** An array of `Balance` objects. */
-            @JsonProperty("balances")
             fun balances(balances: List<BalanceCreateRequest>) = apply { this.balances = balances }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): BalanceReportCreateBody =
@@ -456,36 +459,38 @@ constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = BalanceCreateRequest.Builder::class)
     @NoAutoDetect
     class BalanceCreateRequest
+    @JsonCreator
     private constructor(
-        private val amount: Long?,
-        private val balanceType: BalanceType?,
-        private val vendorCode: String?,
-        private val vendorCodeType: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: Long,
+        @JsonProperty("balance_type") private val balanceType: BalanceType,
+        @JsonProperty("vendor_code") private val vendorCode: String,
+        @JsonProperty("vendor_code_type") private val vendorCodeType: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The balance amount. */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
          * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
          * `closing_available`, `current_available`, or `other`.
          */
-        @JsonProperty("balance_type") fun balanceType(): BalanceType? = balanceType
+        @JsonProperty("balance_type") fun balanceType(): BalanceType = balanceType
 
         /** The code used by the bank when reporting this specific balance. */
-        @JsonProperty("vendor_code") fun vendorCode(): String? = vendorCode
+        @JsonProperty("vendor_code") fun vendorCode(): String = vendorCode
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
          * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
          * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, or `us_bank`.
          */
-        @JsonProperty("vendor_code_type") fun vendorCodeType(): String? = vendorCodeType
+        @JsonProperty("vendor_code_type")
+        fun vendorCodeType(): Optional<String> = Optional.ofNullable(vendorCodeType)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -508,26 +513,24 @@ constructor(
 
             @JvmSynthetic
             internal fun from(balanceCreateRequest: BalanceCreateRequest) = apply {
-                this.amount = balanceCreateRequest.amount
-                this.balanceType = balanceCreateRequest.balanceType
-                this.vendorCode = balanceCreateRequest.vendorCode
-                this.vendorCodeType = balanceCreateRequest.vendorCodeType
-                additionalProperties(balanceCreateRequest.additionalProperties)
+                amount = balanceCreateRequest.amount
+                balanceType = balanceCreateRequest.balanceType
+                vendorCode = balanceCreateRequest.vendorCode
+                vendorCodeType = balanceCreateRequest.vendorCodeType
+                additionalProperties = balanceCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The balance amount. */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long) = apply { this.amount = amount }
 
             /**
              * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
              * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
              * `closing_available`, `current_available`, or `other`.
              */
-            @JsonProperty("balance_type")
             fun balanceType(balanceType: BalanceType) = apply { this.balanceType = balanceType }
 
             /** The code used by the bank when reporting this specific balance. */
-            @JsonProperty("vendor_code")
             fun vendorCode(vendorCode: String) = apply { this.vendorCode = vendorCode }
 
             /**
@@ -536,23 +539,27 @@ constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * or `us_bank`.
              */
-            @JsonProperty("vendor_code_type")
             fun vendorCodeType(vendorCodeType: String) = apply {
                 this.vendorCodeType = vendorCodeType
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): BalanceCreateRequest =

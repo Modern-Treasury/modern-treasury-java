@@ -165,7 +165,7 @@ private constructor(
 
         fun organizationId(organizationId: String) = apply { this.organizationId = organizationId }
 
-        fun webhookKey(webhookKey: String?) = apply { this.webhookKey = webhookKey }
+        fun webhookKey(webhookKey: String) = apply { this.webhookKey = webhookKey }
 
         fun fromEnv() = apply {
             System.getenv("MODERN_TREASURY_API_KEY")?.let { apiKey(it) }

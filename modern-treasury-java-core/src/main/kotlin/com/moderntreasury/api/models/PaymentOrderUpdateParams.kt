@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
@@ -196,84 +196,95 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = PaymentOrderUpdateBody.Builder::class)
     @NoAutoDetect
     class PaymentOrderUpdateBody
+    @JsonCreator
     internal constructor(
-        private val accounting: Accounting?,
-        private val accountingCategoryId: String?,
-        private val accountingLedgerClassId: String?,
-        private val amount: Long?,
-        private val chargeBearer: ChargeBearer?,
-        private val counterpartyId: String?,
-        private val currency: Currency?,
-        private val description: String?,
-        private val direction: Direction?,
-        private val effectiveDate: LocalDate?,
-        private val expiresAt: OffsetDateTime?,
-        private val fallbackType: FallbackType?,
-        private val foreignExchangeContract: String?,
+        @JsonProperty("accounting") private val accounting: Accounting?,
+        @JsonProperty("accounting_category_id") private val accountingCategoryId: String?,
+        @JsonProperty("accounting_ledger_class_id") private val accountingLedgerClassId: String?,
+        @JsonProperty("amount") private val amount: Long?,
+        @JsonProperty("charge_bearer") private val chargeBearer: ChargeBearer?,
+        @JsonProperty("counterparty_id") private val counterpartyId: String?,
+        @JsonProperty("currency") private val currency: Currency?,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("direction") private val direction: Direction?,
+        @JsonProperty("effective_date") private val effectiveDate: LocalDate?,
+        @JsonProperty("expires_at") private val expiresAt: OffsetDateTime?,
+        @JsonProperty("fallback_type") private val fallbackType: FallbackType?,
+        @JsonProperty("foreign_exchange_contract") private val foreignExchangeContract: String?,
+        @JsonProperty("foreign_exchange_indicator")
         private val foreignExchangeIndicator: ForeignExchangeIndicator?,
-        private val lineItems: List<LineItemRequest>?,
-        private val metadata: Metadata?,
-        private val nsfProtected: Boolean?,
-        private val originatingAccountId: String?,
-        private val originatingPartyName: String?,
-        private val priority: Priority?,
-        private val processAfter: OffsetDateTime?,
-        private val purpose: String?,
-        private val receivingAccount: ReceivingAccount?,
-        private val receivingAccountId: String?,
-        private val remittanceInformation: String?,
-        private val sendRemittanceAdvice: Boolean?,
-        private val statementDescriptor: String?,
-        private val status: Status?,
-        private val subtype: PaymentOrderSubtype?,
-        private val type: PaymentOrderType?,
+        @JsonProperty("line_items") private val lineItems: List<LineItemRequest>?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("nsf_protected") private val nsfProtected: Boolean?,
+        @JsonProperty("originating_account_id") private val originatingAccountId: String?,
+        @JsonProperty("originating_party_name") private val originatingPartyName: String?,
+        @JsonProperty("priority") private val priority: Priority?,
+        @JsonProperty("process_after") private val processAfter: OffsetDateTime?,
+        @JsonProperty("purpose") private val purpose: String?,
+        @JsonProperty("receiving_account") private val receivingAccount: ReceivingAccount?,
+        @JsonProperty("receiving_account_id") private val receivingAccountId: String?,
+        @JsonProperty("remittance_information") private val remittanceInformation: String?,
+        @JsonProperty("send_remittance_advice") private val sendRemittanceAdvice: Boolean?,
+        @JsonProperty("statement_descriptor") private val statementDescriptor: String?,
+        @JsonProperty("status") private val status: Status?,
+        @JsonProperty("subtype") private val subtype: PaymentOrderSubtype?,
+        @JsonProperty("type") private val type: PaymentOrderType?,
+        @JsonProperty("ultimate_originating_party_identifier")
         private val ultimateOriginatingPartyIdentifier: String?,
+        @JsonProperty("ultimate_originating_party_name")
         private val ultimateOriginatingPartyName: String?,
+        @JsonProperty("ultimate_receiving_party_identifier")
         private val ultimateReceivingPartyIdentifier: String?,
+        @JsonProperty("ultimate_receiving_party_name")
         private val ultimateReceivingPartyName: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("accounting") fun accounting(): Accounting? = accounting
+        @JsonProperty("accounting")
+        fun accounting(): Optional<Accounting> = Optional.ofNullable(accounting)
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
         @JsonProperty("accounting_category_id")
-        fun accountingCategoryId(): String? = accountingCategoryId
+        fun accountingCategoryId(): Optional<String> = Optional.ofNullable(accountingCategoryId)
 
         /**
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
         @JsonProperty("accounting_ledger_class_id")
-        fun accountingLedgerClassId(): String? = accountingLedgerClassId
+        fun accountingLedgerClassId(): Optional<String> =
+            Optional.ofNullable(accountingLedgerClassId)
 
         /**
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000
          * (cents). For RTP, the maximum amount allowed by the network is $100,000.
          */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Optional<Long> = Optional.ofNullable(amount)
 
         /**
          * The party that will pay the fees for the payment order. Only applies to wire payment
          * orders. Can be one of shared, sender, or receiver, which correspond respectively with the
          * SWIFT 71A values `SHA`, `OUR`, `BEN`.
          */
-        @JsonProperty("charge_bearer") fun chargeBearer(): ChargeBearer? = chargeBearer
+        @JsonProperty("charge_bearer")
+        fun chargeBearer(): Optional<ChargeBearer> = Optional.ofNullable(chargeBearer)
 
         /** Required when receiving_account_id is passed the ID of an external account. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id")
+        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
         /** Defaults to the currency of the originating account. */
-        @JsonProperty("currency") fun currency(): Currency? = currency
+        @JsonProperty("currency") fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
         /** An optional description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
@@ -281,31 +292,36 @@ constructor(
          * someone else's account to your own. Note that wire, rtp, and check payments will always
          * be `credit`.
          */
-        @JsonProperty("direction") fun direction(): Direction? = direction
+        @JsonProperty("direction")
+        fun direction(): Optional<Direction> = Optional.ofNullable(direction)
 
         /**
          * Date transactions are to be posted to the participants' account. Defaults to the current
          * business day or the next business day if the current day is a bank holiday or weekend.
          * Format: yyyy-mm-dd.
          */
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
+        @JsonProperty("effective_date")
+        fun effectiveDate(): Optional<LocalDate> = Optional.ofNullable(effectiveDate)
 
         /** RFP payments require an expires_at. This value must be past the effective_date. */
-        @JsonProperty("expires_at") fun expiresAt(): OffsetDateTime? = expiresAt
+        @JsonProperty("expires_at")
+        fun expiresAt(): Optional<OffsetDateTime> = Optional.ofNullable(expiresAt)
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (type=rtp and
          * fallback_type=ach)
          */
-        @JsonProperty("fallback_type") fun fallbackType(): FallbackType? = fallbackType
+        @JsonProperty("fallback_type")
+        fun fallbackType(): Optional<FallbackType> = Optional.ofNullable(fallbackType)
 
         /**
          * If present, indicates a specific foreign exchange contract number that has been generated
          * by your financial institution.
          */
         @JsonProperty("foreign_exchange_contract")
-        fun foreignExchangeContract(): String? = foreignExchangeContract
+        fun foreignExchangeContract(): Optional<String> =
+            Optional.ofNullable(foreignExchangeContract)
 
         /**
          * Indicates the type of FX transfer to initiate, can be either `variable_to_fixed`,
@@ -313,25 +329,28 @@ constructor(
          * account currency.
          */
         @JsonProperty("foreign_exchange_indicator")
-        fun foreignExchangeIndicator(): ForeignExchangeIndicator? = foreignExchangeIndicator
+        fun foreignExchangeIndicator(): Optional<ForeignExchangeIndicator> =
+            Optional.ofNullable(foreignExchangeIndicator)
 
         /** An array of line items that must sum up to the amount of the payment order. */
-        @JsonProperty("line_items") fun lineItems(): List<LineItemRequest>? = lineItems
+        @JsonProperty("line_items")
+        fun lineItems(): Optional<List<LineItemRequest>> = Optional.ofNullable(lineItems)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /**
          * A boolean to determine if NSF Protection is enabled for this payment order. Note that
          * this setting must also be turned on in your organization settings page.
          */
-        @JsonProperty("nsf_protected") fun nsfProtected(): Boolean? = nsfProtected
+        @JsonProperty("nsf_protected")
+        fun nsfProtected(): Optional<Boolean> = Optional.ofNullable(nsfProtected)
 
         /** The ID of one of your organization's internal accounts. */
         @JsonProperty("originating_account_id")
-        fun originatingAccountId(): String? = originatingAccountId
+        fun originatingAccountId(): Optional<String> = Optional.ofNullable(originatingAccountId)
 
         /**
          * If present, this will replace your default company name on receiver's bank statement.
@@ -339,14 +358,14 @@ constructor(
          * characters of this string will be used. Any additional characters will be truncated.
          */
         @JsonProperty("originating_party_name")
-        fun originatingPartyName(): String? = originatingPartyName
+        fun originatingPartyName(): Optional<String> = Optional.ofNullable(originatingPartyName)
 
         /**
          * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or
          * EFT transfer, respectively. For check payments, `high` can mean an overnight check rather
          * than standard mail.
          */
-        @JsonProperty("priority") fun priority(): Priority? = priority
+        @JsonProperty("priority") fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
         /**
          * If present, Modern Treasury will not process the payment until after this time. If
@@ -354,14 +373,15 @@ constructor(
          * precedence and `effective_date` will automatically update to reflect the earliest
          * possible sending date after `process_after`. Format is ISO8601 timestamp.
          */
-        @JsonProperty("process_after") fun processAfter(): OffsetDateTime? = processAfter
+        @JsonProperty("process_after")
+        fun processAfter(): Optional<OffsetDateTime> = Optional.ofNullable(processAfter)
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
          * field in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be
          * attached to the payment.
          */
-        @JsonProperty("purpose") fun purpose(): String? = purpose
+        @JsonProperty("purpose") fun purpose(): Optional<String> = Optional.ofNullable(purpose)
 
         /**
          * Either `receiving_account` or `receiving_account_id` must be present. When using
@@ -369,14 +389,15 @@ constructor(
          * account.
          */
         @JsonProperty("receiving_account")
-        fun receivingAccount(): ReceivingAccount? = receivingAccount
+        fun receivingAccount(): Optional<ReceivingAccount> = Optional.ofNullable(receivingAccount)
 
         /**
          * Either `receiving_account` or `receiving_account_id` must be present. When using
          * `receiving_account_id`, you may pass the id of an external account or an internal
          * account.
          */
-        @JsonProperty("receiving_account_id") fun receivingAccountId(): String? = receivingAccountId
+        @JsonProperty("receiving_account_id")
+        fun receivingAccountId(): Optional<String> = Optional.ofNullable(receivingAccountId)
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -384,14 +405,14 @@ constructor(
          * known as OBI or Fedwire tag 6000.
          */
         @JsonProperty("remittance_information")
-        fun remittanceInformation(): String? = remittanceInformation
+        fun remittanceInformation(): Optional<String> = Optional.ofNullable(remittanceInformation)
 
         /**
          * Send an email to the counterparty when the payment order is sent to the bank. If `null`,
          * `send_remittance_advice` on the Counterparty is used.
          */
         @JsonProperty("send_remittance_advice")
-        fun sendRemittanceAdvice(): Boolean? = sendRemittanceAdvice
+        fun sendRemittanceAdvice(): Optional<Boolean> = Optional.ofNullable(sendRemittanceAdvice)
 
         /**
          * An optional descriptor which will appear in the receiver's statement. For `check`
@@ -401,13 +422,13 @@ constructor(
          * For `eft` the maximum length is 15 characters.
          */
         @JsonProperty("statement_descriptor")
-        fun statementDescriptor(): String? = statementDescriptor
+        fun statementDescriptor(): Optional<String> = Optional.ofNullable(statementDescriptor)
 
         /**
          * To cancel a payment order, use `cancelled`. To redraft a returned payment order, use
          * `approved`. To undo approval on a denied or approved payment order, use `needs_approval`.
          */
-        @JsonProperty("status") fun status(): Status? = status
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         /**
          * An additional layer of classification for the type of payment order you are doing. This
@@ -415,14 +436,15 @@ constructor(
          * `subtype` represents the SEC code. We currently support `CCD`, `PPD`, `IAT`, `CTX`,
          * `WEB`, `CIE`, and `TEL`.
          */
-        @JsonProperty("subtype") fun subtype(): PaymentOrderSubtype? = subtype
+        @JsonProperty("subtype")
+        fun subtype(): Optional<PaymentOrderSubtype> = Optional.ofNullable(subtype)
 
         /**
          * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
          * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
          * `signet`, `provexchange`, `zengin`.
          */
-        @JsonProperty("type") fun type(): PaymentOrderType? = type
+        @JsonProperty("type") fun type(): Optional<PaymentOrderType> = Optional.ofNullable(type)
 
         /**
          * This represents the identifier by which the person is known to the receiver when using
@@ -430,7 +452,8 @@ constructor(
          * used. Any additional characters will be truncated.
          */
         @JsonProperty("ultimate_originating_party_identifier")
-        fun ultimateOriginatingPartyIdentifier(): String? = ultimateOriginatingPartyIdentifier
+        fun ultimateOriginatingPartyIdentifier(): Optional<String> =
+            Optional.ofNullable(ultimateOriginatingPartyIdentifier)
 
         /**
          * This represents the name of the person that the payment is on behalf of when using the
@@ -438,7 +461,8 @@ constructor(
          * Any additional characters will be truncated.
          */
         @JsonProperty("ultimate_originating_party_name")
-        fun ultimateOriginatingPartyName(): String? = ultimateOriginatingPartyName
+        fun ultimateOriginatingPartyName(): Optional<String> =
+            Optional.ofNullable(ultimateOriginatingPartyName)
 
         /**
          * This represents the name of the merchant that the payment is being sent to when using the
@@ -446,7 +470,8 @@ constructor(
          * Any additional characters will be truncated.
          */
         @JsonProperty("ultimate_receiving_party_identifier")
-        fun ultimateReceivingPartyIdentifier(): String? = ultimateReceivingPartyIdentifier
+        fun ultimateReceivingPartyIdentifier(): Optional<String> =
+            Optional.ofNullable(ultimateReceivingPartyIdentifier)
 
         /**
          * This represents the identifier by which the merchant is known to the person initiating an
@@ -454,7 +479,8 @@ constructor(
          * Any additional characters will be truncated.
          */
         @JsonProperty("ultimate_receiving_party_name")
-        fun ultimateReceivingPartyName(): String? = ultimateReceivingPartyName
+        fun ultimateReceivingPartyName(): Optional<String> =
+            Optional.ofNullable(ultimateReceivingPartyName)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -507,54 +533,51 @@ constructor(
 
             @JvmSynthetic
             internal fun from(paymentOrderUpdateBody: PaymentOrderUpdateBody) = apply {
-                this.accounting = paymentOrderUpdateBody.accounting
-                this.accountingCategoryId = paymentOrderUpdateBody.accountingCategoryId
-                this.accountingLedgerClassId = paymentOrderUpdateBody.accountingLedgerClassId
-                this.amount = paymentOrderUpdateBody.amount
-                this.chargeBearer = paymentOrderUpdateBody.chargeBearer
-                this.counterpartyId = paymentOrderUpdateBody.counterpartyId
-                this.currency = paymentOrderUpdateBody.currency
-                this.description = paymentOrderUpdateBody.description
-                this.direction = paymentOrderUpdateBody.direction
-                this.effectiveDate = paymentOrderUpdateBody.effectiveDate
-                this.expiresAt = paymentOrderUpdateBody.expiresAt
-                this.fallbackType = paymentOrderUpdateBody.fallbackType
-                this.foreignExchangeContract = paymentOrderUpdateBody.foreignExchangeContract
-                this.foreignExchangeIndicator = paymentOrderUpdateBody.foreignExchangeIndicator
-                this.lineItems = paymentOrderUpdateBody.lineItems
-                this.metadata = paymentOrderUpdateBody.metadata
-                this.nsfProtected = paymentOrderUpdateBody.nsfProtected
-                this.originatingAccountId = paymentOrderUpdateBody.originatingAccountId
-                this.originatingPartyName = paymentOrderUpdateBody.originatingPartyName
-                this.priority = paymentOrderUpdateBody.priority
-                this.processAfter = paymentOrderUpdateBody.processAfter
-                this.purpose = paymentOrderUpdateBody.purpose
-                this.receivingAccount = paymentOrderUpdateBody.receivingAccount
-                this.receivingAccountId = paymentOrderUpdateBody.receivingAccountId
-                this.remittanceInformation = paymentOrderUpdateBody.remittanceInformation
-                this.sendRemittanceAdvice = paymentOrderUpdateBody.sendRemittanceAdvice
-                this.statementDescriptor = paymentOrderUpdateBody.statementDescriptor
-                this.status = paymentOrderUpdateBody.status
-                this.subtype = paymentOrderUpdateBody.subtype
-                this.type = paymentOrderUpdateBody.type
-                this.ultimateOriginatingPartyIdentifier =
+                accounting = paymentOrderUpdateBody.accounting
+                accountingCategoryId = paymentOrderUpdateBody.accountingCategoryId
+                accountingLedgerClassId = paymentOrderUpdateBody.accountingLedgerClassId
+                amount = paymentOrderUpdateBody.amount
+                chargeBearer = paymentOrderUpdateBody.chargeBearer
+                counterpartyId = paymentOrderUpdateBody.counterpartyId
+                currency = paymentOrderUpdateBody.currency
+                description = paymentOrderUpdateBody.description
+                direction = paymentOrderUpdateBody.direction
+                effectiveDate = paymentOrderUpdateBody.effectiveDate
+                expiresAt = paymentOrderUpdateBody.expiresAt
+                fallbackType = paymentOrderUpdateBody.fallbackType
+                foreignExchangeContract = paymentOrderUpdateBody.foreignExchangeContract
+                foreignExchangeIndicator = paymentOrderUpdateBody.foreignExchangeIndicator
+                lineItems = paymentOrderUpdateBody.lineItems?.toMutableList()
+                metadata = paymentOrderUpdateBody.metadata
+                nsfProtected = paymentOrderUpdateBody.nsfProtected
+                originatingAccountId = paymentOrderUpdateBody.originatingAccountId
+                originatingPartyName = paymentOrderUpdateBody.originatingPartyName
+                priority = paymentOrderUpdateBody.priority
+                processAfter = paymentOrderUpdateBody.processAfter
+                purpose = paymentOrderUpdateBody.purpose
+                receivingAccount = paymentOrderUpdateBody.receivingAccount
+                receivingAccountId = paymentOrderUpdateBody.receivingAccountId
+                remittanceInformation = paymentOrderUpdateBody.remittanceInformation
+                sendRemittanceAdvice = paymentOrderUpdateBody.sendRemittanceAdvice
+                statementDescriptor = paymentOrderUpdateBody.statementDescriptor
+                status = paymentOrderUpdateBody.status
+                subtype = paymentOrderUpdateBody.subtype
+                type = paymentOrderUpdateBody.type
+                ultimateOriginatingPartyIdentifier =
                     paymentOrderUpdateBody.ultimateOriginatingPartyIdentifier
-                this.ultimateOriginatingPartyName =
-                    paymentOrderUpdateBody.ultimateOriginatingPartyName
-                this.ultimateReceivingPartyIdentifier =
+                ultimateOriginatingPartyName = paymentOrderUpdateBody.ultimateOriginatingPartyName
+                ultimateReceivingPartyIdentifier =
                     paymentOrderUpdateBody.ultimateReceivingPartyIdentifier
-                this.ultimateReceivingPartyName = paymentOrderUpdateBody.ultimateReceivingPartyName
-                additionalProperties(paymentOrderUpdateBody.additionalProperties)
+                ultimateReceivingPartyName = paymentOrderUpdateBody.ultimateReceivingPartyName
+                additionalProperties = paymentOrderUpdateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("accounting")
             fun accounting(accounting: Accounting) = apply { this.accounting = accounting }
 
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            @JsonProperty("accounting_category_id")
             fun accountingCategoryId(accountingCategoryId: String) = apply {
                 this.accountingCategoryId = accountingCategoryId
             }
@@ -563,7 +586,6 @@ constructor(
              * The ID of one of your accounting ledger classes. Note that these will only be
              * accessible if your accounting system has been connected.
              */
-            @JsonProperty("accounting_ledger_class_id")
             fun accountingLedgerClassId(accountingLedgerClassId: String) = apply {
                 this.accountingLedgerClassId = accountingLedgerClassId
             }
@@ -572,30 +594,26 @@ constructor(
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000
              * (cents). For RTP, the maximum amount allowed by the network is $100,000.
              */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long) = apply { this.amount = amount }
 
             /**
              * The party that will pay the fees for the payment order. Only applies to wire payment
              * orders. Can be one of shared, sender, or receiver, which correspond respectively with
              * the SWIFT 71A values `SHA`, `OUR`, `BEN`.
              */
-            @JsonProperty("charge_bearer")
             fun chargeBearer(chargeBearer: ChargeBearer) = apply {
                 this.chargeBearer = chargeBearer
             }
 
             /** Required when receiving_account_id is passed the ID of an external account. */
-            @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
                 this.counterpartyId = counterpartyId
             }
 
             /** Defaults to the currency of the originating account. */
-            @JsonProperty("currency")
             fun currency(currency: Currency) = apply { this.currency = currency }
 
             /** An optional description for internal use. */
-            @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
 
             /**
@@ -604,7 +622,6 @@ constructor(
              * pulls money from someone else's account to your own. Note that wire, rtp, and check
              * payments will always be `credit`.
              */
-            @JsonProperty("direction")
             fun direction(direction: Direction) = apply { this.direction = direction }
 
             /**
@@ -612,13 +629,11 @@ constructor(
              * current business day or the next business day if the current day is a bank holiday or
              * weekend. Format: yyyy-mm-dd.
              */
-            @JsonProperty("effective_date")
             fun effectiveDate(effectiveDate: LocalDate) = apply {
                 this.effectiveDate = effectiveDate
             }
 
             /** RFP payments require an expires_at. This value must be past the effective_date. */
-            @JsonProperty("expires_at")
             fun expiresAt(expiresAt: OffsetDateTime) = apply { this.expiresAt = expiresAt }
 
             /**
@@ -626,7 +641,6 @@ constructor(
              * account. Currently, this only supports falling back from RTP to ACH (type=rtp and
              * fallback_type=ach)
              */
-            @JsonProperty("fallback_type")
             fun fallbackType(fallbackType: FallbackType) = apply {
                 this.fallbackType = fallbackType
             }
@@ -635,7 +649,6 @@ constructor(
              * If present, indicates a specific foreign exchange contract number that has been
              * generated by your financial institution.
              */
-            @JsonProperty("foreign_exchange_contract")
             fun foreignExchangeContract(foreignExchangeContract: String) = apply {
                 this.foreignExchangeContract = foreignExchangeContract
             }
@@ -645,32 +658,27 @@ constructor(
              * `fixed_to_variable`, or `null` if the payment order currency matches the originating
              * account currency.
              */
-            @JsonProperty("foreign_exchange_indicator")
             fun foreignExchangeIndicator(foreignExchangeIndicator: ForeignExchangeIndicator) =
                 apply {
                     this.foreignExchangeIndicator = foreignExchangeIndicator
                 }
 
             /** An array of line items that must sum up to the amount of the payment order. */
-            @JsonProperty("line_items")
             fun lineItems(lineItems: List<LineItemRequest>) = apply { this.lineItems = lineItems }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * A boolean to determine if NSF Protection is enabled for this payment order. Note that
              * this setting must also be turned on in your organization settings page.
              */
-            @JsonProperty("nsf_protected")
             fun nsfProtected(nsfProtected: Boolean) = apply { this.nsfProtected = nsfProtected }
 
             /** The ID of one of your organization's internal accounts. */
-            @JsonProperty("originating_account_id")
             fun originatingAccountId(originatingAccountId: String) = apply {
                 this.originatingAccountId = originatingAccountId
             }
@@ -680,7 +688,6 @@ constructor(
              * This field can only be used for ACH payments currently. For ACH, only the first 16
              * characters of this string will be used. Any additional characters will be truncated.
              */
-            @JsonProperty("originating_party_name")
             fun originatingPartyName(originatingPartyName: String) = apply {
                 this.originatingPartyName = originatingPartyName
             }
@@ -690,7 +697,6 @@ constructor(
              * or EFT transfer, respectively. For check payments, `high` can mean an overnight check
              * rather than standard mail.
              */
-            @JsonProperty("priority")
             fun priority(priority: Priority) = apply { this.priority = priority }
 
             /**
@@ -699,7 +705,6 @@ constructor(
              * precedence and `effective_date` will automatically update to reflect the earliest
              * possible sending date after `process_after`. Format is ISO8601 timestamp.
              */
-            @JsonProperty("process_after")
             fun processAfter(processAfter: OffsetDateTime) = apply {
                 this.processAfter = processAfter
             }
@@ -709,14 +714,13 @@ constructor(
              * "InstrForDbtrAgt" field in the ISO20022 file. For `eft`, this field is the 3 digit
              * CPA Code that will be attached to the payment.
              */
-            @JsonProperty("purpose") fun purpose(purpose: String) = apply { this.purpose = purpose }
+            fun purpose(purpose: String) = apply { this.purpose = purpose }
 
             /**
              * Either `receiving_account` or `receiving_account_id` must be present. When using
              * `receiving_account_id`, you may pass the id of an external account or an internal
              * account.
              */
-            @JsonProperty("receiving_account")
             fun receivingAccount(receivingAccount: ReceivingAccount) = apply {
                 this.receivingAccount = receivingAccount
             }
@@ -726,7 +730,6 @@ constructor(
              * `receiving_account_id`, you may pass the id of an external account or an internal
              * account.
              */
-            @JsonProperty("receiving_account_id")
             fun receivingAccountId(receivingAccountId: String) = apply {
                 this.receivingAccountId = receivingAccountId
             }
@@ -736,7 +739,6 @@ constructor(
              * payments the field will be passed through as the "Originator to Beneficiary
              * Information", also known as OBI or Fedwire tag 6000.
              */
-            @JsonProperty("remittance_information")
             fun remittanceInformation(remittanceInformation: String) = apply {
                 this.remittanceInformation = remittanceInformation
             }
@@ -745,7 +747,6 @@ constructor(
              * Send an email to the counterparty when the payment order is sent to the bank. If
              * `null`, `send_remittance_advice` on the Counterparty is used.
              */
-            @JsonProperty("send_remittance_advice")
             fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) = apply {
                 this.sendRemittanceAdvice = sendRemittanceAdvice
             }
@@ -757,7 +758,6 @@ constructor(
              * included automatically by the bank, so you can use the characters for other useful
              * information. For `eft` the maximum length is 15 characters.
              */
-            @JsonProperty("statement_descriptor")
             fun statementDescriptor(statementDescriptor: String) = apply {
                 this.statementDescriptor = statementDescriptor
             }
@@ -767,7 +767,7 @@ constructor(
              * `approved`. To undo approval on a denied or approved payment order, use
              * `needs_approval`.
              */
-            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status) = apply { this.status = status }
 
             /**
              * An additional layer of classification for the type of payment order you are doing.
@@ -775,7 +775,6 @@ constructor(
              * the `subtype` represents the SEC code. We currently support `CCD`, `PPD`, `IAT`,
              * `CTX`, `WEB`, `CIE`, and `TEL`.
              */
-            @JsonProperty("subtype")
             fun subtype(subtype: PaymentOrderSubtype) = apply { this.subtype = subtype }
 
             /**
@@ -783,14 +782,13 @@ constructor(
              * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
              * `signet`, `provexchange`, `zengin`.
              */
-            @JsonProperty("type") fun type(type: PaymentOrderType) = apply { this.type = type }
+            fun type(type: PaymentOrderType) = apply { this.type = type }
 
             /**
              * This represents the identifier by which the person is known to the receiver when
              * using the CIE subtype for ACH payments. Only the first 22 characters of this string
              * will be used. Any additional characters will be truncated.
              */
-            @JsonProperty("ultimate_originating_party_identifier")
             fun ultimateOriginatingPartyIdentifier(ultimateOriginatingPartyIdentifier: String) =
                 apply {
                     this.ultimateOriginatingPartyIdentifier = ultimateOriginatingPartyIdentifier
@@ -801,7 +799,6 @@ constructor(
              * the CIE subtype for ACH payments. Only the first 15 characters of this string will be
              * used. Any additional characters will be truncated.
              */
-            @JsonProperty("ultimate_originating_party_name")
             fun ultimateOriginatingPartyName(ultimateOriginatingPartyName: String) = apply {
                 this.ultimateOriginatingPartyName = ultimateOriginatingPartyName
             }
@@ -811,7 +808,6 @@ constructor(
              * the CIE subtype for ACH payments. Only the first 22 characters of this string will be
              * used. Any additional characters will be truncated.
              */
-            @JsonProperty("ultimate_receiving_party_identifier")
             fun ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier: String) = apply {
                 this.ultimateReceivingPartyIdentifier = ultimateReceivingPartyIdentifier
             }
@@ -821,23 +817,27 @@ constructor(
              * initiating an ACH payment with CIE subtype. Only the first 15 characters of this
              * string will be used. Any additional characters will be truncated.
              */
-            @JsonProperty("ultimate_receiving_party_name")
             fun ultimateReceivingPartyName(ultimateReceivingPartyName: String) = apply {
                 this.ultimateReceivingPartyName = ultimateReceivingPartyName
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentOrderUpdateBody =
@@ -1398,27 +1398,29 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = Accounting.Builder::class)
     @NoAutoDetect
     class Accounting
+    @JsonCreator
     private constructor(
-        private val accountId: String?,
-        private val classId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("account_id") private val accountId: String?,
+        @JsonProperty("class_id") private val classId: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
-        @JsonProperty("account_id") fun accountId(): String? = accountId
+        @JsonProperty("account_id")
+        fun accountId(): Optional<String> = Optional.ofNullable(accountId)
 
         /**
          * The ID of one of the class objects in your accounting system. Class objects track
          * segments of your business independent of client or project. Note that these will only be
          * accessible if your accounting system has been connected.
          */
-        @JsonProperty("class_id") fun classId(): String? = classId
+        @JsonProperty("class_id") fun classId(): Optional<String> = Optional.ofNullable(classId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1439,16 +1441,15 @@ constructor(
 
             @JvmSynthetic
             internal fun from(accounting: Accounting) = apply {
-                this.accountId = accounting.accountId
-                this.classId = accounting.classId
-                additionalProperties(accounting.additionalProperties)
+                accountId = accounting.accountId
+                classId = accounting.classId
+                additionalProperties = accounting.additionalProperties.toMutableMap()
             }
 
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            @JsonProperty("account_id")
             fun accountId(accountId: String) = apply { this.accountId = accountId }
 
             /**
@@ -1456,21 +1457,25 @@ constructor(
              * segments of your business independent of client or project. Note that these will only
              * be accessible if your accounting system has been connected.
              */
-            @JsonProperty("class_id")
             fun classId(classId: String) = apply { this.classId = classId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Accounting =
@@ -1730,34 +1735,36 @@ constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = LineItemRequest.Builder::class)
     @NoAutoDetect
     class LineItemRequest
+    @JsonCreator
     private constructor(
-        private val amount: Long?,
-        private val metadata: Metadata?,
-        private val description: String?,
-        private val accountingCategoryId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: Long,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("accounting_category_id") private val accountingCategoryId: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** A free-form description of the line item. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
         @JsonProperty("accounting_category_id")
-        fun accountingCategoryId(): String? = accountingCategoryId
+        fun accountingCategoryId(): Optional<String> = Optional.ofNullable(accountingCategoryId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1780,50 +1787,52 @@ constructor(
 
             @JvmSynthetic
             internal fun from(lineItemRequest: LineItemRequest) = apply {
-                this.amount = lineItemRequest.amount
-                this.metadata = lineItemRequest.metadata
-                this.description = lineItemRequest.description
-                this.accountingCategoryId = lineItemRequest.accountingCategoryId
-                additionalProperties(lineItemRequest.additionalProperties)
+                amount = lineItemRequest.amount
+                metadata = lineItemRequest.metadata
+                description = lineItemRequest.description
+                accountingCategoryId = lineItemRequest.accountingCategoryId
+                additionalProperties = lineItemRequest.additionalProperties.toMutableMap()
             }
 
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long) = apply { this.amount = amount }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** A free-form description of the line item. */
-            @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
 
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            @JsonProperty("accounting_category_id")
             fun accountingCategoryId(accountingCategoryId: String) = apply {
                 this.accountingCategoryId = accountingCategoryId
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LineItemRequest =
@@ -1839,11 +1848,12 @@ constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -1863,23 +1873,30 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -1920,11 +1937,12 @@ constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -1944,21 +1962,26 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
@@ -2042,53 +2065,62 @@ constructor(
      * Either `receiving_account` or `receiving_account_id` must be present. When using
      * `receiving_account_id`, you may pass the id of an external account or an internal account.
      */
-    @JsonDeserialize(builder = ReceivingAccount.Builder::class)
     @NoAutoDetect
     class ReceivingAccount
+    @JsonCreator
     private constructor(
-        private val accountType: ExternalAccountType?,
-        private val partyType: PartyType?,
-        private val partyAddress: AddressRequest?,
-        private val name: String?,
-        private val accountDetails: List<AccountDetail>?,
-        private val routingDetails: List<RoutingDetail>?,
-        private val metadata: Metadata?,
-        private val partyName: String?,
-        private val partyIdentifier: String?,
-        private val ledgerAccount: LedgerAccountCreateRequest?,
-        private val plaidProcessorToken: String?,
+        @JsonProperty("account_type") private val accountType: ExternalAccountType?,
+        @JsonProperty("party_type") private val partyType: PartyType?,
+        @JsonProperty("party_address") private val partyAddress: AddressRequest?,
+        @JsonProperty("name") private val name: String?,
+        @JsonProperty("account_details") private val accountDetails: List<AccountDetail>?,
+        @JsonProperty("routing_details") private val routingDetails: List<RoutingDetail>?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("party_name") private val partyName: String?,
+        @JsonProperty("party_identifier") private val partyIdentifier: String?,
+        @JsonProperty("ledger_account") private val ledgerAccount: LedgerAccountCreateRequest?,
+        @JsonProperty("plaid_processor_token") private val plaidProcessorToken: String?,
+        @JsonProperty("contact_details")
         private val contactDetails: List<ContactDetailCreateRequest>?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Can be `checking`, `savings` or `other`. */
-        @JsonProperty("account_type") fun accountType(): ExternalAccountType? = accountType
+        @JsonProperty("account_type")
+        fun accountType(): Optional<ExternalAccountType> = Optional.ofNullable(accountType)
 
         /** Either `individual` or `business`. */
-        @JsonProperty("party_type") fun partyType(): PartyType? = partyType
+        @JsonProperty("party_type")
+        fun partyType(): Optional<PartyType> = Optional.ofNullable(partyType)
 
         /** Required if receiving wire payments. */
-        @JsonProperty("party_address") fun partyAddress(): AddressRequest? = partyAddress
+        @JsonProperty("party_address")
+        fun partyAddress(): Optional<AddressRequest> = Optional.ofNullable(partyAddress)
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
          * payments
          */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): Optional<String> = Optional.ofNullable(name)
 
-        @JsonProperty("account_details") fun accountDetails(): List<AccountDetail>? = accountDetails
+        @JsonProperty("account_details")
+        fun accountDetails(): Optional<List<AccountDetail>> = Optional.ofNullable(accountDetails)
 
-        @JsonProperty("routing_details") fun routingDetails(): List<RoutingDetail>? = routingDetails
+        @JsonProperty("routing_details")
+        fun routingDetails(): Optional<List<RoutingDetail>> = Optional.ofNullable(routingDetails)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** If this value isn't provided, it will be inherited from the counterparty's name. */
-        @JsonProperty("party_name") fun partyName(): String? = partyName
+        @JsonProperty("party_name")
+        fun partyName(): Optional<String> = Optional.ofNullable(partyName)
 
-        @JsonProperty("party_identifier") fun partyIdentifier(): String? = partyIdentifier
+        @JsonProperty("party_identifier")
+        fun partyIdentifier(): Optional<String> = Optional.ofNullable(partyIdentifier)
 
         /**
          * Specifies a ledger account object that will be created with the external account. The
@@ -2098,17 +2130,19 @@ constructor(
          * details.
          */
         @JsonProperty("ledger_account")
-        fun ledgerAccount(): LedgerAccountCreateRequest? = ledgerAccount
+        fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
+            Optional.ofNullable(ledgerAccount)
 
         /**
          * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
          * pass the processor token in this field.
          */
         @JsonProperty("plaid_processor_token")
-        fun plaidProcessorToken(): String? = plaidProcessorToken
+        fun plaidProcessorToken(): Optional<String> = Optional.ofNullable(plaidProcessorToken)
 
         @JsonProperty("contact_details")
-        fun contactDetails(): List<ContactDetailCreateRequest>? = contactDetails
+        fun contactDetails(): Optional<List<ContactDetailCreateRequest>> =
+            Optional.ofNullable(contactDetails)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2139,33 +2173,30 @@ constructor(
 
             @JvmSynthetic
             internal fun from(receivingAccount: ReceivingAccount) = apply {
-                this.accountType = receivingAccount.accountType
-                this.partyType = receivingAccount.partyType
-                this.partyAddress = receivingAccount.partyAddress
-                this.name = receivingAccount.name
-                this.accountDetails = receivingAccount.accountDetails
-                this.routingDetails = receivingAccount.routingDetails
-                this.metadata = receivingAccount.metadata
-                this.partyName = receivingAccount.partyName
-                this.partyIdentifier = receivingAccount.partyIdentifier
-                this.ledgerAccount = receivingAccount.ledgerAccount
-                this.plaidProcessorToken = receivingAccount.plaidProcessorToken
-                this.contactDetails = receivingAccount.contactDetails
-                additionalProperties(receivingAccount.additionalProperties)
+                accountType = receivingAccount.accountType
+                partyType = receivingAccount.partyType
+                partyAddress = receivingAccount.partyAddress
+                name = receivingAccount.name
+                accountDetails = receivingAccount.accountDetails?.toMutableList()
+                routingDetails = receivingAccount.routingDetails?.toMutableList()
+                metadata = receivingAccount.metadata
+                partyName = receivingAccount.partyName
+                partyIdentifier = receivingAccount.partyIdentifier
+                ledgerAccount = receivingAccount.ledgerAccount
+                plaidProcessorToken = receivingAccount.plaidProcessorToken
+                contactDetails = receivingAccount.contactDetails?.toMutableList()
+                additionalProperties = receivingAccount.additionalProperties.toMutableMap()
             }
 
             /** Can be `checking`, `savings` or `other`. */
-            @JsonProperty("account_type")
             fun accountType(accountType: ExternalAccountType) = apply {
                 this.accountType = accountType
             }
 
             /** Either `individual` or `business`. */
-            @JsonProperty("party_type")
             fun partyType(partyType: PartyType) = apply { this.partyType = partyType }
 
             /** Required if receiving wire payments. */
-            @JsonProperty("party_address")
             fun partyAddress(partyAddress: AddressRequest) = apply {
                 this.partyAddress = partyAddress
             }
@@ -2174,14 +2205,12 @@ constructor(
              * A nickname for the external account. This is only for internal usage and won't affect
              * any payments
              */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
-            @JsonProperty("account_details")
             fun accountDetails(accountDetails: List<AccountDetail>) = apply {
                 this.accountDetails = accountDetails
             }
 
-            @JsonProperty("routing_details")
             fun routingDetails(routingDetails: List<RoutingDetail>) = apply {
                 this.routingDetails = routingDetails
             }
@@ -2190,14 +2219,11 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** If this value isn't provided, it will be inherited from the counterparty's name. */
-            @JsonProperty("party_name")
             fun partyName(partyName: String) = apply { this.partyName = partyName }
 
-            @JsonProperty("party_identifier")
             fun partyIdentifier(partyIdentifier: String) = apply {
                 this.partyIdentifier = partyIdentifier
             }
@@ -2209,7 +2235,6 @@ constructor(
              * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for
              * more details.
              */
-            @JsonProperty("ledger_account")
             fun ledgerAccount(ledgerAccount: LedgerAccountCreateRequest) = apply {
                 this.ledgerAccount = ledgerAccount
             }
@@ -2218,28 +2243,31 @@ constructor(
              * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you
              * can pass the processor token in this field.
              */
-            @JsonProperty("plaid_processor_token")
             fun plaidProcessorToken(plaidProcessorToken: String) = apply {
                 this.plaidProcessorToken = plaidProcessorToken
             }
 
-            @JsonProperty("contact_details")
             fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) = apply {
                 this.contactDetails = contactDetails
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ReceivingAccount =
@@ -2260,19 +2288,21 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = AccountDetail.Builder::class)
         @NoAutoDetect
         class AccountDetail
+        @JsonCreator
         private constructor(
-            private val accountNumber: String?,
-            private val accountNumberType: AccountNumberType?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("account_number") private val accountNumber: String,
+            @JsonProperty("account_number_type") private val accountNumberType: AccountNumberType?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("account_number") fun accountNumber(): String? = accountNumber
+            @JsonProperty("account_number") fun accountNumber(): String = accountNumber
 
             @JsonProperty("account_number_type")
-            fun accountNumberType(): AccountNumberType? = accountNumberType
+            fun accountNumberType(): Optional<AccountNumberType> =
+                Optional.ofNullable(accountNumberType)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2293,35 +2323,40 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(accountDetail: AccountDetail) = apply {
-                    this.accountNumber = accountDetail.accountNumber
-                    this.accountNumberType = accountDetail.accountNumberType
-                    additionalProperties(accountDetail.additionalProperties)
+                    accountNumber = accountDetail.accountNumber
+                    accountNumberType = accountDetail.accountNumberType
+                    additionalProperties = accountDetail.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("account_number")
                 fun accountNumber(accountNumber: String) = apply {
                     this.accountNumber = accountNumber
                 }
 
-                @JsonProperty("account_number_type")
                 fun accountNumberType(accountNumberType: AccountNumberType) = apply {
                     this.accountNumberType = accountNumberType
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): AccountDetail =
                     AccountDetail(
@@ -2459,19 +2494,23 @@ constructor(
                 "AccountDetail{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = ContactDetailCreateRequest.Builder::class)
         @NoAutoDetect
         class ContactDetailCreateRequest
+        @JsonCreator
         private constructor(
-            private val contactIdentifier: String?,
+            @JsonProperty("contact_identifier") private val contactIdentifier: String?,
+            @JsonProperty("contact_identifier_type")
             private val contactIdentifierType: ContactIdentifierType?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("contact_identifier") fun contactIdentifier(): String? = contactIdentifier
+            @JsonProperty("contact_identifier")
+            fun contactIdentifier(): Optional<String> = Optional.ofNullable(contactIdentifier)
 
             @JsonProperty("contact_identifier_type")
-            fun contactIdentifierType(): ContactIdentifierType? = contactIdentifierType
+            fun contactIdentifierType(): Optional<ContactIdentifierType> =
+                Optional.ofNullable(contactIdentifierType)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2492,35 +2531,41 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(contactDetailCreateRequest: ContactDetailCreateRequest) = apply {
-                    this.contactIdentifier = contactDetailCreateRequest.contactIdentifier
-                    this.contactIdentifierType = contactDetailCreateRequest.contactIdentifierType
-                    additionalProperties(contactDetailCreateRequest.additionalProperties)
+                    contactIdentifier = contactDetailCreateRequest.contactIdentifier
+                    contactIdentifierType = contactDetailCreateRequest.contactIdentifierType
+                    additionalProperties =
+                        contactDetailCreateRequest.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("contact_identifier")
                 fun contactIdentifier(contactIdentifier: String) = apply {
                     this.contactIdentifier = contactIdentifier
                 }
 
-                @JsonProperty("contact_identifier_type")
                 fun contactIdentifierType(contactIdentifierType: ContactIdentifierType) = apply {
                     this.contactIdentifierType = contactIdentifierType
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): ContactDetailCreateRequest =
                     ContactDetailCreateRequest(
@@ -2621,67 +2666,75 @@ constructor(
          * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for more
          * details.
          */
-        @JsonDeserialize(builder = LedgerAccountCreateRequest.Builder::class)
         @NoAutoDetect
         class LedgerAccountCreateRequest
+        @JsonCreator
         private constructor(
-            private val name: String?,
-            private val description: String?,
-            private val normalBalance: TransactionDirection?,
-            private val ledgerId: String?,
-            private val currency: String?,
-            private val currencyExponent: Long?,
+            @JsonProperty("name") private val name: String,
+            @JsonProperty("description") private val description: String?,
+            @JsonProperty("normal_balance") private val normalBalance: TransactionDirection,
+            @JsonProperty("ledger_id") private val ledgerId: String,
+            @JsonProperty("currency") private val currency: String,
+            @JsonProperty("currency_exponent") private val currencyExponent: Long?,
+            @JsonProperty("ledger_account_category_ids")
             private val ledgerAccountCategoryIds: List<String>?,
-            private val ledgerableId: String?,
-            private val ledgerableType: LedgerableType?,
-            private val metadata: Metadata?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("ledgerable_id") private val ledgerableId: String?,
+            @JsonProperty("ledgerable_type") private val ledgerableType: LedgerableType?,
+            @JsonProperty("metadata") private val metadata: Metadata?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The name of the ledger account. */
-            @JsonProperty("name") fun name(): String? = name
+            @JsonProperty("name") fun name(): String = name
 
             /** The description of the ledger account. */
-            @JsonProperty("description") fun description(): String? = description
+            @JsonProperty("description")
+            fun description(): Optional<String> = Optional.ofNullable(description)
 
             /** The normal balance of the ledger account. */
             @JsonProperty("normal_balance")
-            fun normalBalance(): TransactionDirection? = normalBalance
+            fun normalBalance(): TransactionDirection = normalBalance
 
             /** The id of the ledger that this account belongs to. */
-            @JsonProperty("ledger_id") fun ledgerId(): String? = ledgerId
+            @JsonProperty("ledger_id") fun ledgerId(): String = ledgerId
 
             /** The currency of the ledger account. */
-            @JsonProperty("currency") fun currency(): String? = currency
+            @JsonProperty("currency") fun currency(): String = currency
 
             /** The currency exponent of the ledger account. */
-            @JsonProperty("currency_exponent") fun currencyExponent(): Long? = currencyExponent
+            @JsonProperty("currency_exponent")
+            fun currencyExponent(): Optional<Long> = Optional.ofNullable(currencyExponent)
 
             /**
              * The array of ledger account category ids that this ledger account should be a child
              * of.
              */
             @JsonProperty("ledger_account_category_ids")
-            fun ledgerAccountCategoryIds(): List<String>? = ledgerAccountCategoryIds
+            fun ledgerAccountCategoryIds(): Optional<List<String>> =
+                Optional.ofNullable(ledgerAccountCategoryIds)
 
             /**
              * If the ledger account links to another object in Modern Treasury, the id will be
              * populated here, otherwise null.
              */
-            @JsonProperty("ledgerable_id") fun ledgerableId(): String? = ledgerableId
+            @JsonProperty("ledgerable_id")
+            fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
             /**
              * If the ledger account links to another object in Modern Treasury, the type will be
              * populated here, otherwise null. The value is one of internal_account or
              * external_account.
              */
-            @JsonProperty("ledgerable_type") fun ledgerableType(): LedgerableType? = ledgerableType
+            @JsonProperty("ledgerable_type")
+            fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+            @JsonProperty("metadata")
+            fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2710,43 +2763,39 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(ledgerAccountCreateRequest: LedgerAccountCreateRequest) = apply {
-                    this.name = ledgerAccountCreateRequest.name
-                    this.description = ledgerAccountCreateRequest.description
-                    this.normalBalance = ledgerAccountCreateRequest.normalBalance
-                    this.ledgerId = ledgerAccountCreateRequest.ledgerId
-                    this.currency = ledgerAccountCreateRequest.currency
-                    this.currencyExponent = ledgerAccountCreateRequest.currencyExponent
-                    this.ledgerAccountCategoryIds =
-                        ledgerAccountCreateRequest.ledgerAccountCategoryIds
-                    this.ledgerableId = ledgerAccountCreateRequest.ledgerableId
-                    this.ledgerableType = ledgerAccountCreateRequest.ledgerableType
-                    this.metadata = ledgerAccountCreateRequest.metadata
-                    additionalProperties(ledgerAccountCreateRequest.additionalProperties)
+                    name = ledgerAccountCreateRequest.name
+                    description = ledgerAccountCreateRequest.description
+                    normalBalance = ledgerAccountCreateRequest.normalBalance
+                    ledgerId = ledgerAccountCreateRequest.ledgerId
+                    currency = ledgerAccountCreateRequest.currency
+                    currencyExponent = ledgerAccountCreateRequest.currencyExponent
+                    ledgerAccountCategoryIds =
+                        ledgerAccountCreateRequest.ledgerAccountCategoryIds?.toMutableList()
+                    ledgerableId = ledgerAccountCreateRequest.ledgerableId
+                    ledgerableType = ledgerAccountCreateRequest.ledgerableType
+                    metadata = ledgerAccountCreateRequest.metadata
+                    additionalProperties =
+                        ledgerAccountCreateRequest.additionalProperties.toMutableMap()
                 }
 
                 /** The name of the ledger account. */
-                @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+                fun name(name: String) = apply { this.name = name }
 
                 /** The description of the ledger account. */
-                @JsonProperty("description")
                 fun description(description: String) = apply { this.description = description }
 
                 /** The normal balance of the ledger account. */
-                @JsonProperty("normal_balance")
                 fun normalBalance(normalBalance: TransactionDirection) = apply {
                     this.normalBalance = normalBalance
                 }
 
                 /** The id of the ledger that this account belongs to. */
-                @JsonProperty("ledger_id")
                 fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
 
                 /** The currency of the ledger account. */
-                @JsonProperty("currency")
                 fun currency(currency: String) = apply { this.currency = currency }
 
                 /** The currency exponent of the ledger account. */
-                @JsonProperty("currency_exponent")
                 fun currencyExponent(currencyExponent: Long) = apply {
                     this.currencyExponent = currencyExponent
                 }
@@ -2755,7 +2804,6 @@ constructor(
                  * The array of ledger account category ids that this ledger account should be a
                  * child of.
                  */
-                @JsonProperty("ledger_account_category_ids")
                 fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
                     this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
                 }
@@ -2764,7 +2812,6 @@ constructor(
                  * If the ledger account links to another object in Modern Treasury, the id will be
                  * populated here, otherwise null.
                  */
-                @JsonProperty("ledgerable_id")
                 fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
 
                 /**
@@ -2772,7 +2819,6 @@ constructor(
                  * be populated here, otherwise null. The value is one of internal_account or
                  * external_account.
                  */
-                @JsonProperty("ledgerable_type")
                 fun ledgerableType(ledgerableType: LedgerableType) = apply {
                     this.ledgerableType = ledgerableType
                 }
@@ -2781,23 +2827,29 @@ constructor(
                  * Additional data represented as key-value pairs. Both the key and value must be
                  * strings.
                  */
-                @JsonProperty("metadata")
                 fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): LedgerAccountCreateRequest =
                     LedgerAccountCreateRequest(
@@ -2893,11 +2945,12 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonDeserialize(builder = Metadata.Builder::class)
             @NoAutoDetect
             class Metadata
+            @JsonCreator
             private constructor(
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 @JsonAnyGetter
@@ -2917,23 +2970,30 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(metadata: Metadata) = apply {
-                        additionalProperties(metadata.additionalProperties)
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
@@ -2976,11 +3036,12 @@ constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -3000,23 +3061,30 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -3039,34 +3107,37 @@ constructor(
         }
 
         /** Required if receiving wire payments. */
-        @JsonDeserialize(builder = AddressRequest.Builder::class)
         @NoAutoDetect
         class AddressRequest
+        @JsonCreator
         private constructor(
-            private val line1: String?,
-            private val line2: String?,
-            private val locality: String?,
-            private val region: String?,
-            private val postalCode: String?,
-            private val country: String?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("line1") private val line1: String?,
+            @JsonProperty("line2") private val line2: String?,
+            @JsonProperty("locality") private val locality: String?,
+            @JsonProperty("region") private val region: String?,
+            @JsonProperty("postal_code") private val postalCode: String?,
+            @JsonProperty("country") private val country: String?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("line1") fun line1(): String? = line1
+            @JsonProperty("line1") fun line1(): Optional<String> = Optional.ofNullable(line1)
 
-            @JsonProperty("line2") fun line2(): String? = line2
+            @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
 
             /** Locality or City. */
-            @JsonProperty("locality") fun locality(): String? = locality
+            @JsonProperty("locality")
+            fun locality(): Optional<String> = Optional.ofNullable(locality)
 
             /** Region or State. */
-            @JsonProperty("region") fun region(): String? = region
+            @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
 
             /** The postal code of the address. */
-            @JsonProperty("postal_code") fun postalCode(): String? = postalCode
+            @JsonProperty("postal_code")
+            fun postalCode(): Optional<String> = Optional.ofNullable(postalCode)
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            @JsonProperty("country") fun country(): String? = country
+            @JsonProperty("country") fun country(): Optional<String> = Optional.ofNullable(country)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -3091,48 +3162,52 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(addressRequest: AddressRequest) = apply {
-                    this.line1 = addressRequest.line1
-                    this.line2 = addressRequest.line2
-                    this.locality = addressRequest.locality
-                    this.region = addressRequest.region
-                    this.postalCode = addressRequest.postalCode
-                    this.country = addressRequest.country
-                    additionalProperties(addressRequest.additionalProperties)
+                    line1 = addressRequest.line1
+                    line2 = addressRequest.line2
+                    locality = addressRequest.locality
+                    region = addressRequest.region
+                    postalCode = addressRequest.postalCode
+                    country = addressRequest.country
+                    additionalProperties = addressRequest.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("line1") fun line1(line1: String) = apply { this.line1 = line1 }
+                fun line1(line1: String) = apply { this.line1 = line1 }
 
-                @JsonProperty("line2") fun line2(line2: String) = apply { this.line2 = line2 }
+                fun line2(line2: String) = apply { this.line2 = line2 }
 
                 /** Locality or City. */
-                @JsonProperty("locality")
                 fun locality(locality: String) = apply { this.locality = locality }
 
                 /** Region or State. */
-                @JsonProperty("region") fun region(region: String) = apply { this.region = region }
+                fun region(region: String) = apply { this.region = region }
 
                 /** The postal code of the address. */
-                @JsonProperty("postal_code")
                 fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
                 /** Country code conforms to [ISO 3166-1 alpha-2] */
-                @JsonProperty("country")
                 fun country(country: String) = apply { this.country = country }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): AddressRequest =
                     AddressRequest(
@@ -3221,22 +3296,24 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = RoutingDetail.Builder::class)
         @NoAutoDetect
         class RoutingDetail
+        @JsonCreator
         private constructor(
-            private val routingNumber: String?,
-            private val routingNumberType: RoutingNumberType?,
-            private val paymentType: PaymentType?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("routing_number") private val routingNumber: String,
+            @JsonProperty("routing_number_type") private val routingNumberType: RoutingNumberType,
+            @JsonProperty("payment_type") private val paymentType: PaymentType?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("routing_number") fun routingNumber(): String? = routingNumber
+            @JsonProperty("routing_number") fun routingNumber(): String = routingNumber
 
             @JsonProperty("routing_number_type")
-            fun routingNumberType(): RoutingNumberType? = routingNumberType
+            fun routingNumberType(): RoutingNumberType = routingNumberType
 
-            @JsonProperty("payment_type") fun paymentType(): PaymentType? = paymentType
+            @JsonProperty("payment_type")
+            fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -3258,39 +3335,43 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(routingDetail: RoutingDetail) = apply {
-                    this.routingNumber = routingDetail.routingNumber
-                    this.routingNumberType = routingDetail.routingNumberType
-                    this.paymentType = routingDetail.paymentType
-                    additionalProperties(routingDetail.additionalProperties)
+                    routingNumber = routingDetail.routingNumber
+                    routingNumberType = routingDetail.routingNumberType
+                    paymentType = routingDetail.paymentType
+                    additionalProperties = routingDetail.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("routing_number")
                 fun routingNumber(routingNumber: String) = apply {
                     this.routingNumber = routingNumber
                 }
 
-                @JsonProperty("routing_number_type")
                 fun routingNumberType(routingNumberType: RoutingNumberType) = apply {
                     this.routingNumberType = routingNumberType
                 }
 
-                @JsonProperty("payment_type")
                 fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): RoutingDetail =
                     RoutingDetail(

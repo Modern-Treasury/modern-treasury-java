@@ -51,18 +51,18 @@ class InvoiceLineItemCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.unitAmount()).isEqualTo(0L)
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.direction()).isEqualTo("direction")
+        assertThat(body.description()).contains("description")
+        assertThat(body.direction()).contains("direction")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 InvoiceLineItemCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.quantity()).isEqualTo(0L)
-        assertThat(body.unitAmountDecimal()).isEqualTo("unit_amount_decimal")
+        assertThat(body.quantity()).contains(0L)
+        assertThat(body.unitAmountDecimal()).contains("unit_amount_decimal")
     }
 
     @Test

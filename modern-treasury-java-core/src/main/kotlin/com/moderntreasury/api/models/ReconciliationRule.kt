@@ -6,37 +6,53 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = ReconciliationRule.Builder::class)
 @NoAutoDetect
 class ReconciliationRule
+@JsonCreator
 private constructor(
-    private val amountUpperBound: JsonField<Long>,
-    private val amountLowerBound: JsonField<Long>,
-    private val direction: JsonField<Direction>,
-    private val internalAccountId: JsonField<String>,
-    private val type: JsonField<Type>,
-    private val currency: JsonField<Currency>,
-    private val dateUpperBound: JsonField<LocalDate>,
-    private val dateLowerBound: JsonField<LocalDate>,
-    private val counterpartyId: JsonField<String>,
-    private val customIdentifiers: JsonField<CustomIdentifiers>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("amount_upper_bound")
+    @ExcludeMissing
+    private val amountUpperBound: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("amount_lower_bound")
+    @ExcludeMissing
+    private val amountLowerBound: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("direction")
+    @ExcludeMissing
+    private val direction: JsonField<Direction> = JsonMissing.of(),
+    @JsonProperty("internal_account_id")
+    @ExcludeMissing
+    private val internalAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<Currency> = JsonMissing.of(),
+    @JsonProperty("date_upper_bound")
+    @ExcludeMissing
+    private val dateUpperBound: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("date_lower_bound")
+    @ExcludeMissing
+    private val dateLowerBound: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("counterparty_id")
+    @ExcludeMissing
+    private val counterpartyId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("custom_identifiers")
+    @ExcludeMissing
+    private val customIdentifiers: JsonField<CustomIdentifiers> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /**
      * The highest amount this expected payment may be equal to. Value in specified currency's
@@ -132,6 +148,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): ReconciliationRule = apply {
         if (!validated) {
             amountUpperBound()
@@ -171,17 +189,17 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(reconciliationRule: ReconciliationRule) = apply {
-            this.amountUpperBound = reconciliationRule.amountUpperBound
-            this.amountLowerBound = reconciliationRule.amountLowerBound
-            this.direction = reconciliationRule.direction
-            this.internalAccountId = reconciliationRule.internalAccountId
-            this.type = reconciliationRule.type
-            this.currency = reconciliationRule.currency
-            this.dateUpperBound = reconciliationRule.dateUpperBound
-            this.dateLowerBound = reconciliationRule.dateLowerBound
-            this.counterpartyId = reconciliationRule.counterpartyId
-            this.customIdentifiers = reconciliationRule.customIdentifiers
-            additionalProperties(reconciliationRule.additionalProperties)
+            amountUpperBound = reconciliationRule.amountUpperBound
+            amountLowerBound = reconciliationRule.amountLowerBound
+            direction = reconciliationRule.direction
+            internalAccountId = reconciliationRule.internalAccountId
+            type = reconciliationRule.type
+            currency = reconciliationRule.currency
+            dateUpperBound = reconciliationRule.dateUpperBound
+            dateLowerBound = reconciliationRule.dateLowerBound
+            counterpartyId = reconciliationRule.counterpartyId
+            customIdentifiers = reconciliationRule.customIdentifiers
+            additionalProperties = reconciliationRule.additionalProperties.toMutableMap()
         }
 
         /**
@@ -195,8 +213,6 @@ private constructor(
          * The highest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @JsonProperty("amount_upper_bound")
-        @ExcludeMissing
         fun amountUpperBound(amountUpperBound: JsonField<Long>) = apply {
             this.amountUpperBound = amountUpperBound
         }
@@ -212,8 +228,6 @@ private constructor(
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @JsonProperty("amount_lower_bound")
-        @ExcludeMissing
         fun amountLowerBound(amountLowerBound: JsonField<Long>) = apply {
             this.amountLowerBound = amountLowerBound
         }
@@ -228,8 +242,6 @@ private constructor(
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        @JsonProperty("direction")
-        @ExcludeMissing
         fun direction(direction: JsonField<Direction>) = apply { this.direction = direction }
 
         /** The ID of the Internal Account for the expected payment */
@@ -237,8 +249,6 @@ private constructor(
             internalAccountId(JsonField.of(internalAccountId))
 
         /** The ID of the Internal Account for the expected payment */
-        @JsonProperty("internal_account_id")
-        @ExcludeMissing
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
             this.internalAccountId = internalAccountId
         }
@@ -253,24 +263,18 @@ private constructor(
          * One of ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet
          * wire
          */
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account */
         fun currency(currency: Currency) = currency(JsonField.of(currency))
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account */
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
         /** The latest date the payment may come in. Format is yyyy-mm-dd */
         fun dateUpperBound(dateUpperBound: LocalDate) = dateUpperBound(JsonField.of(dateUpperBound))
 
         /** The latest date the payment may come in. Format is yyyy-mm-dd */
-        @JsonProperty("date_upper_bound")
-        @ExcludeMissing
         fun dateUpperBound(dateUpperBound: JsonField<LocalDate>) = apply {
             this.dateUpperBound = dateUpperBound
         }
@@ -279,8 +283,6 @@ private constructor(
         fun dateLowerBound(dateLowerBound: LocalDate) = dateLowerBound(JsonField.of(dateLowerBound))
 
         /** The earliest date the payment may come in. Format is yyyy-mm-dd */
-        @JsonProperty("date_lower_bound")
-        @ExcludeMissing
         fun dateLowerBound(dateLowerBound: JsonField<LocalDate>) = apply {
             this.dateLowerBound = dateLowerBound
         }
@@ -289,8 +291,6 @@ private constructor(
         fun counterpartyId(counterpartyId: String) = counterpartyId(JsonField.of(counterpartyId))
 
         /** The ID of the counterparty you expect for this payment */
-        @JsonProperty("counterparty_id")
-        @ExcludeMissing
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             this.counterpartyId = counterpartyId
         }
@@ -300,24 +300,27 @@ private constructor(
             customIdentifiers(JsonField.of(customIdentifiers))
 
         /** A hash of custom identifiers for this payment */
-        @JsonProperty("custom_identifiers")
-        @ExcludeMissing
         fun customIdentifiers(customIdentifiers: JsonField<CustomIdentifiers>) = apply {
             this.customIdentifiers = customIdentifiers
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ReconciliationRule =
@@ -394,18 +397,19 @@ private constructor(
     }
 
     /** A hash of custom identifiers for this payment */
-    @JsonDeserialize(builder = CustomIdentifiers.Builder::class)
     @NoAutoDetect
     class CustomIdentifiers
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): CustomIdentifiers = apply {
             if (!validated) {
@@ -426,21 +430,26 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(customIdentifiers: CustomIdentifiers) = apply {
-                additionalProperties(customIdentifiers.additionalProperties)
+                additionalProperties = customIdentifiers.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CustomIdentifiers = CustomIdentifiers(additionalProperties.toImmutable())

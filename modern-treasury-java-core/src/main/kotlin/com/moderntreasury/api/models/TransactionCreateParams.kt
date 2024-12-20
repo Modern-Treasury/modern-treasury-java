@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
@@ -84,40 +84,43 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = TransactionCreateBody.Builder::class)
     @NoAutoDetect
     class TransactionCreateBody
+    @JsonCreator
     internal constructor(
-        private val amount: Long?,
-        private val asOfDate: LocalDate?,
-        private val direction: String?,
-        private val internalAccountId: String?,
-        private val vendorCode: String?,
-        private val vendorCodeType: String?,
-        private val metadata: Metadata?,
-        private val posted: Boolean?,
-        private val type: Type?,
-        private val vendorDescription: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: Long,
+        @JsonProperty("as_of_date") private val asOfDate: LocalDate?,
+        @JsonProperty("direction") private val direction: String,
+        @JsonProperty("internal_account_id") private val internalAccountId: String,
+        @JsonProperty("vendor_code") private val vendorCode: String?,
+        @JsonProperty("vendor_code_type") private val vendorCodeType: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("posted") private val posted: Boolean?,
+        @JsonProperty("type") private val type: Type?,
+        @JsonProperty("vendor_description") private val vendorDescription: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         /** The date on which the transaction occurred. */
-        @JsonProperty("as_of_date") fun asOfDate(): LocalDate? = asOfDate
+        @JsonProperty("as_of_date")
+        fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
 
         /** Either `credit` or `debit`. */
-        @JsonProperty("direction") fun direction(): String? = direction
+        @JsonProperty("direction") fun direction(): String = direction
 
         /** The ID of the relevant Internal Account. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
+        @JsonProperty("internal_account_id") fun internalAccountId(): String = internalAccountId
 
         /**
          * When applicable, the bank-given code that determines the transaction's category. For most
          * banks this is the BAI2/BTRS transaction code.
          */
-        @JsonProperty("vendor_code") fun vendorCode(): String? = vendorCode
+        @JsonProperty("vendor_code")
+        fun vendorCode(): Optional<String> = Optional.ofNullable(vendorCode)
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -125,27 +128,29 @@ constructor(
          * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
          * others.
          */
-        @JsonProperty("vendor_code_type") fun vendorCodeType(): String? = vendorCodeType
+        @JsonProperty("vendor_code_type")
+        fun vendorCodeType(): Optional<String> = Optional.ofNullable(vendorCodeType)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** This field will be `true` if the transaction has posted to the account. */
-        @JsonProperty("posted") fun posted(): Boolean? = posted
+        @JsonProperty("posted") fun posted(): Optional<Boolean> = Optional.ofNullable(posted)
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
          * `book`, or `sen`.
          */
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Optional<Type> = Optional.ofNullable(type)
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
          * banking portal.
          */
-        @JsonProperty("vendor_description") fun vendorDescription(): String? = vendorDescription
+        @JsonProperty("vendor_description")
+        fun vendorDescription(): Optional<String> = Optional.ofNullable(vendorDescription)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -174,34 +179,31 @@ constructor(
 
             @JvmSynthetic
             internal fun from(transactionCreateBody: TransactionCreateBody) = apply {
-                this.amount = transactionCreateBody.amount
-                this.asOfDate = transactionCreateBody.asOfDate
-                this.direction = transactionCreateBody.direction
-                this.internalAccountId = transactionCreateBody.internalAccountId
-                this.vendorCode = transactionCreateBody.vendorCode
-                this.vendorCodeType = transactionCreateBody.vendorCodeType
-                this.metadata = transactionCreateBody.metadata
-                this.posted = transactionCreateBody.posted
-                this.type = transactionCreateBody.type
-                this.vendorDescription = transactionCreateBody.vendorDescription
-                additionalProperties(transactionCreateBody.additionalProperties)
+                amount = transactionCreateBody.amount
+                asOfDate = transactionCreateBody.asOfDate
+                direction = transactionCreateBody.direction
+                internalAccountId = transactionCreateBody.internalAccountId
+                vendorCode = transactionCreateBody.vendorCode
+                vendorCodeType = transactionCreateBody.vendorCodeType
+                metadata = transactionCreateBody.metadata
+                posted = transactionCreateBody.posted
+                type = transactionCreateBody.type
+                vendorDescription = transactionCreateBody.vendorDescription
+                additionalProperties = transactionCreateBody.additionalProperties.toMutableMap()
             }
 
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long) = apply { this.amount = amount }
 
             /** The date on which the transaction occurred. */
-            @JsonProperty("as_of_date")
             fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
 
             /** Either `credit` or `debit`. */
-            @JsonProperty("direction")
             fun direction(direction: String) = apply { this.direction = direction }
 
             /** The ID of the relevant Internal Account. */
-            @JsonProperty("internal_account_id")
             fun internalAccountId(internalAccountId: String) = apply {
                 this.internalAccountId = internalAccountId
             }
@@ -210,7 +212,6 @@ constructor(
              * When applicable, the bank-given code that determines the transaction's category. For
              * most banks this is the BAI2/BTRS transaction code.
              */
-            @JsonProperty("vendor_code")
             fun vendorCode(vendorCode: String) = apply { this.vendorCode = vendorCode }
 
             /**
@@ -219,7 +220,6 @@ constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * `us_bank`, or others.
              */
-            @JsonProperty("vendor_code_type")
             fun vendorCodeType(vendorCodeType: String) = apply {
                 this.vendorCodeType = vendorCodeType
             }
@@ -228,39 +228,42 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** This field will be `true` if the transaction has posted to the account. */
-            @JsonProperty("posted") fun posted(posted: Boolean) = apply { this.posted = posted }
+            fun posted(posted: Boolean) = apply { this.posted = posted }
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
              * `book`, or `sen`.
              */
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = apply { this.type = type }
 
             /**
              * The transaction detail text that often appears in on your bank statement and in your
              * banking portal.
              */
-            @JsonProperty("vendor_description")
             fun vendorDescription(vendorDescription: String) = apply {
                 this.vendorDescription = vendorDescription
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TransactionCreateBody =
@@ -532,11 +535,12 @@ constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -556,21 +560,26 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

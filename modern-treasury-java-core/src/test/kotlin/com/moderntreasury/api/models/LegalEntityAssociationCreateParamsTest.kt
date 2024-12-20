@@ -285,7 +285,7 @@ class LegalEntityAssociationCreateParamsTest {
         assertThat(body.relationshipTypes())
             .isEqualTo(listOf(LegalEntityAssociationCreateParams.RelationshipType.BENEFICIAL_OWNER))
         assertThat(body.childLegalEntity())
-            .isEqualTo(
+            .contains(
                 LegalEntityAssociationCreateParams.ChildLegalEntityCreate.builder()
                     .addresses(
                         listOf(
@@ -403,9 +403,9 @@ class LegalEntityAssociationCreateParamsTest {
                     .website("website")
                     .build()
             )
-        assertThat(body.childLegalEntityId()).isEqualTo("child_legal_entity_id")
-        assertThat(body.ownershipPercentage()).isEqualTo(0L)
-        assertThat(body.title()).isEqualTo("title")
+        assertThat(body.childLegalEntityId()).contains("child_legal_entity_id")
+        assertThat(body.ownershipPercentage()).contains(0L)
+        assertThat(body.title()).contains("title")
     }
 
     @Test

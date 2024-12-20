@@ -43,17 +43,17 @@ class CounterpartyUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
-        assertThat(body.legalEntityId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.email()).contains("dev@stainlessapi.com")
+        assertThat(body.legalEntityId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 CounterpartyUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.sendRemittanceAdvice()).isEqualTo(true)
-        assertThat(body.taxpayerIdentifier()).isEqualTo("taxpayer_identifier")
+        assertThat(body.name()).contains("name")
+        assertThat(body.sendRemittanceAdvice()).contains(true)
+        assertThat(body.taxpayerIdentifier()).contains("taxpayer_identifier")
     }
 
     @Test

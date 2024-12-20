@@ -4,13 +4,14 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -64,42 +65,47 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = ForeignExchangeQuoteCreateBody.Builder::class)
     @NoAutoDetect
     class ForeignExchangeQuoteCreateBody
+    @JsonCreator
     internal constructor(
-        private val internalAccountId: String?,
-        private val targetCurrency: Currency?,
-        private val baseAmount: Long?,
-        private val baseCurrency: Currency?,
-        private val effectiveAt: OffsetDateTime?,
-        private val targetAmount: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("internal_account_id") private val internalAccountId: String,
+        @JsonProperty("target_currency") private val targetCurrency: Currency,
+        @JsonProperty("base_amount") private val baseAmount: Long?,
+        @JsonProperty("base_currency") private val baseCurrency: Currency?,
+        @JsonProperty("effective_at") private val effectiveAt: OffsetDateTime?,
+        @JsonProperty("target_amount") private val targetAmount: Long?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The ID for the `InternalAccount` this quote is associated with. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
+        @JsonProperty("internal_account_id") fun internalAccountId(): String = internalAccountId
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
-        @JsonProperty("target_currency") fun targetCurrency(): Currency? = targetCurrency
+        @JsonProperty("target_currency") fun targetCurrency(): Currency = targetCurrency
 
         /**
          * Amount in the lowest denomination of the `base_currency` to convert, often called the
          * "sell" amount.
          */
-        @JsonProperty("base_amount") fun baseAmount(): Long? = baseAmount
+        @JsonProperty("base_amount")
+        fun baseAmount(): Optional<Long> = Optional.ofNullable(baseAmount)
 
         /** Currency to convert, often called the "sell" currency. */
-        @JsonProperty("base_currency") fun baseCurrency(): Currency? = baseCurrency
+        @JsonProperty("base_currency")
+        fun baseCurrency(): Optional<Currency> = Optional.ofNullable(baseCurrency)
 
         /** The timestamp until when the quoted rate is valid. */
-        @JsonProperty("effective_at") fun effectiveAt(): OffsetDateTime? = effectiveAt
+        @JsonProperty("effective_at")
+        fun effectiveAt(): Optional<OffsetDateTime> = Optional.ofNullable(effectiveAt)
 
         /**
          * Amount in the lowest denomination of the `target_currency`, often called the "buy"
          * amount.
          */
-        @JsonProperty("target_amount") fun targetAmount(): Long? = targetAmount
+        @JsonProperty("target_amount")
+        fun targetAmount(): Optional<Long> = Optional.ofNullable(targetAmount)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -125,23 +131,22 @@ constructor(
             @JvmSynthetic
             internal fun from(foreignExchangeQuoteCreateBody: ForeignExchangeQuoteCreateBody) =
                 apply {
-                    this.internalAccountId = foreignExchangeQuoteCreateBody.internalAccountId
-                    this.targetCurrency = foreignExchangeQuoteCreateBody.targetCurrency
-                    this.baseAmount = foreignExchangeQuoteCreateBody.baseAmount
-                    this.baseCurrency = foreignExchangeQuoteCreateBody.baseCurrency
-                    this.effectiveAt = foreignExchangeQuoteCreateBody.effectiveAt
-                    this.targetAmount = foreignExchangeQuoteCreateBody.targetAmount
-                    additionalProperties(foreignExchangeQuoteCreateBody.additionalProperties)
+                    internalAccountId = foreignExchangeQuoteCreateBody.internalAccountId
+                    targetCurrency = foreignExchangeQuoteCreateBody.targetCurrency
+                    baseAmount = foreignExchangeQuoteCreateBody.baseAmount
+                    baseCurrency = foreignExchangeQuoteCreateBody.baseCurrency
+                    effectiveAt = foreignExchangeQuoteCreateBody.effectiveAt
+                    targetAmount = foreignExchangeQuoteCreateBody.targetAmount
+                    additionalProperties =
+                        foreignExchangeQuoteCreateBody.additionalProperties.toMutableMap()
                 }
 
             /** The ID for the `InternalAccount` this quote is associated with. */
-            @JsonProperty("internal_account_id")
             fun internalAccountId(internalAccountId: String) = apply {
                 this.internalAccountId = internalAccountId
             }
 
             /** Currency to convert the `base_currency` to, often called the "buy" currency. */
-            @JsonProperty("target_currency")
             fun targetCurrency(targetCurrency: Currency) = apply {
                 this.targetCurrency = targetCurrency
             }
@@ -150,36 +155,37 @@ constructor(
              * Amount in the lowest denomination of the `base_currency` to convert, often called the
              * "sell" amount.
              */
-            @JsonProperty("base_amount")
             fun baseAmount(baseAmount: Long) = apply { this.baseAmount = baseAmount }
 
             /** Currency to convert, often called the "sell" currency. */
-            @JsonProperty("base_currency")
             fun baseCurrency(baseCurrency: Currency) = apply { this.baseCurrency = baseCurrency }
 
             /** The timestamp until when the quoted rate is valid. */
-            @JsonProperty("effective_at")
             fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
 
             /**
              * Amount in the lowest denomination of the `target_currency`, often called the "buy"
              * amount.
              */
-            @JsonProperty("target_amount")
             fun targetAmount(targetAmount: Long) = apply { this.targetAmount = targetAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ForeignExchangeQuoteCreateBody =

@@ -152,17 +152,17 @@ class LedgerEventHandlerCreateParamsTest {
             )
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.conditions())
-            .isEqualTo(
+            .contains(
                 LedgerEventHandlerCreateParams.LedgerEventHandlerConditions.builder()
                     .field("ledgerable_event.name")
                     .operator("equals")
                     .value("credit_card_swipe")
                     .build()
             )
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.ledgerId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.description()).contains("description")
+        assertThat(body.ledgerId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerEventHandlerCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -170,7 +170,7 @@ class LedgerEventHandlerCreateParamsTest {
                     .build()
             )
         assertThat(body.variables())
-            .isEqualTo(
+            .contains(
                 LedgerEventHandlerCreateParams.LedgerEventHandlerVariables.builder()
                     .putAdditionalProperty(
                         "credit_account",

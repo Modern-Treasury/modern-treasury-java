@@ -145,7 +145,7 @@ class VirtualAccountCreateParamsTest {
         assertThat(body.internalAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.accountDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     VirtualAccountCreateParams.AccountDetailCreateRequest.builder()
                         .accountNumber("account_number")
@@ -156,12 +156,12 @@ class VirtualAccountCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.counterpartyId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.creditLedgerAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.debitLedgerAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.creditLedgerAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.debitLedgerAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.description()).contains("description")
         assertThat(body.ledgerAccount())
-            .isEqualTo(
+            .contains(
                 VirtualAccountCreateParams.LedgerAccountCreateRequest.builder()
                     .currency("currency")
                     .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -185,13 +185,13 @@ class VirtualAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 VirtualAccountCreateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.routingDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     VirtualAccountCreateParams.RoutingDetailCreateRequest.builder()
                         .routingNumber("routing_number")

@@ -24,7 +24,7 @@ class ConnectionLegalEntityUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.status()).isEqualTo(ConnectionLegalEntityUpdateParams.Status.PROCESSING)
+        assertThat(body.status()).contains(ConnectionLegalEntityUpdateParams.Status.PROCESSING)
     }
 
     @Test

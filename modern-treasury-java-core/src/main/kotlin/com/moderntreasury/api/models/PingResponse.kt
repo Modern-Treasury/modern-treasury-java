@@ -4,25 +4,24 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = PingResponse.Builder::class)
 @NoAutoDetect
 class PingResponse
+@JsonCreator
 private constructor(
-    private val ping: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("ping") @ExcludeMissing private val ping: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun ping(): String = ping.getRequired("ping")
 
@@ -31,6 +30,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): PingResponse = apply {
         if (!validated) {
@@ -53,28 +54,31 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(pingResponse: PingResponse) = apply {
-            this.ping = pingResponse.ping
-            additionalProperties(pingResponse.additionalProperties)
+            ping = pingResponse.ping
+            additionalProperties = pingResponse.additionalProperties.toMutableMap()
         }
 
         fun ping(ping: String) = ping(JsonField.of(ping))
 
-        @JsonProperty("ping")
-        @ExcludeMissing
         fun ping(ping: JsonField<String>) = apply { this.ping = ping }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): PingResponse = PingResponse(ping, additionalProperties.toImmutable())

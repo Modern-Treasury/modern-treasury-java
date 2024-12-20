@@ -33,13 +33,13 @@ class ReturnCreateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.returnableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.returnableId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.returnableType())
             .isEqualTo(ReturnCreateParams.ReturnableType.INCOMING_PAYMENT_DETAIL)
-        assertThat(body.additionalInformation()).isEqualTo("additional_information")
-        assertThat(body.code()).isEqualTo(ReturnCreateParams.Code._901)
-        assertThat(body.dateOfDeath()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.reason()).isEqualTo("reason")
+        assertThat(body.additionalInformation()).contains("additional_information")
+        assertThat(body.code()).contains(ReturnCreateParams.Code._901)
+        assertThat(body.dateOfDeath()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.reason()).contains("reason")
     }
 
     @Test

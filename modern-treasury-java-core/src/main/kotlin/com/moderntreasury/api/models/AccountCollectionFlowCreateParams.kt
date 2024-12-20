@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
@@ -56,23 +56,26 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = AccountCollectionFlowCreateBody.Builder::class)
     @NoAutoDetect
     class AccountCollectionFlowCreateBody
+    @JsonCreator
     internal constructor(
-        private val counterpartyId: String?,
-        private val paymentTypes: List<String>?,
+        @JsonProperty("counterparty_id") private val counterpartyId: String,
+        @JsonProperty("payment_types") private val paymentTypes: List<String>,
+        @JsonProperty("receiving_countries")
         private val receivingCountries: List<ReceivingCountry>?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Required. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id") fun counterpartyId(): String = counterpartyId
 
-        @JsonProperty("payment_types") fun paymentTypes(): List<String>? = paymentTypes
+        @JsonProperty("payment_types") fun paymentTypes(): List<String> = paymentTypes
 
         @JsonProperty("receiving_countries")
-        fun receivingCountries(): List<ReceivingCountry>? = receivingCountries
+        fun receivingCountries(): Optional<List<ReceivingCountry>> =
+            Optional.ofNullable(receivingCountries)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -95,40 +98,44 @@ constructor(
             @JvmSynthetic
             internal fun from(accountCollectionFlowCreateBody: AccountCollectionFlowCreateBody) =
                 apply {
-                    this.counterpartyId = accountCollectionFlowCreateBody.counterpartyId
-                    this.paymentTypes = accountCollectionFlowCreateBody.paymentTypes
-                    this.receivingCountries = accountCollectionFlowCreateBody.receivingCountries
-                    additionalProperties(accountCollectionFlowCreateBody.additionalProperties)
+                    counterpartyId = accountCollectionFlowCreateBody.counterpartyId
+                    paymentTypes = accountCollectionFlowCreateBody.paymentTypes.toMutableList()
+                    receivingCountries =
+                        accountCollectionFlowCreateBody.receivingCountries?.toMutableList()
+                    additionalProperties =
+                        accountCollectionFlowCreateBody.additionalProperties.toMutableMap()
                 }
 
             /** Required. */
-            @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
                 this.counterpartyId = counterpartyId
             }
 
-            @JsonProperty("payment_types")
             fun paymentTypes(paymentTypes: List<String>) = apply {
                 this.paymentTypes = paymentTypes
             }
 
-            @JsonProperty("receiving_countries")
             fun receivingCountries(receivingCountries: List<ReceivingCountry>) = apply {
                 this.receivingCountries = receivingCountries
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountCollectionFlowCreateBody =

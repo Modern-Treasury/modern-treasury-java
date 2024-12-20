@@ -4,13 +4,14 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
@@ -69,35 +70,39 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = InternalAccountUpdateBody.Builder::class)
     @NoAutoDetect
     class InternalAccountUpdateBody
+    @JsonCreator
     internal constructor(
-        private val counterpartyId: String?,
-        private val ledgerAccountId: String?,
-        private val metadata: Metadata?,
-        private val name: String?,
-        private val parentAccountId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("counterparty_id") private val counterpartyId: String?,
+        @JsonProperty("ledger_account_id") private val ledgerAccountId: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("name") private val name: String?,
+        @JsonProperty("parent_account_id") private val parentAccountId: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The Counterparty associated to this account. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id")
+        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
         /** The Ledger Account associated to this account. */
-        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
+        @JsonProperty("ledger_account_id")
+        fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** The nickname for the internal account. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): Optional<String> = Optional.ofNullable(name)
 
         /** The parent internal account for this account. */
-        @JsonProperty("parent_account_id") fun parentAccountId(): String? = parentAccountId
+        @JsonProperty("parent_account_id")
+        fun parentAccountId(): Optional<String> = Optional.ofNullable(parentAccountId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -121,22 +126,20 @@ constructor(
 
             @JvmSynthetic
             internal fun from(internalAccountUpdateBody: InternalAccountUpdateBody) = apply {
-                this.counterpartyId = internalAccountUpdateBody.counterpartyId
-                this.ledgerAccountId = internalAccountUpdateBody.ledgerAccountId
-                this.metadata = internalAccountUpdateBody.metadata
-                this.name = internalAccountUpdateBody.name
-                this.parentAccountId = internalAccountUpdateBody.parentAccountId
-                additionalProperties(internalAccountUpdateBody.additionalProperties)
+                counterpartyId = internalAccountUpdateBody.counterpartyId
+                ledgerAccountId = internalAccountUpdateBody.ledgerAccountId
+                metadata = internalAccountUpdateBody.metadata
+                name = internalAccountUpdateBody.name
+                parentAccountId = internalAccountUpdateBody.parentAccountId
+                additionalProperties = internalAccountUpdateBody.additionalProperties.toMutableMap()
             }
 
             /** The Counterparty associated to this account. */
-            @JsonProperty("counterparty_id")
             fun counterpartyId(counterpartyId: String) = apply {
                 this.counterpartyId = counterpartyId
             }
 
             /** The Ledger Account associated to this account. */
-            @JsonProperty("ledger_account_id")
             fun ledgerAccountId(ledgerAccountId: String) = apply {
                 this.ledgerAccountId = ledgerAccountId
             }
@@ -145,30 +148,33 @@ constructor(
              * Additional data in the form of key-value pairs. Pairs can be removed by passing an
              * empty string or `null` as the value.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** The nickname for the internal account. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /** The parent internal account for this account. */
-            @JsonProperty("parent_account_id")
             fun parentAccountId(parentAccountId: String) = apply {
                 this.parentAccountId = parentAccountId
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InternalAccountUpdateBody =
@@ -396,11 +402,12 @@ constructor(
      * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
      * string or `null` as the value.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -420,21 +427,26 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

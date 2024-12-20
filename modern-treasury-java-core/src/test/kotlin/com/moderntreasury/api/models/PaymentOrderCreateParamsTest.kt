@@ -517,19 +517,19 @@ class PaymentOrderCreateParamsTest {
         assertThat(body.originatingAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.type()).isEqualTo(PaymentOrderType.ACH)
         assertThat(body.accounting())
-            .isEqualTo(
+            .contains(
                 PaymentOrderCreateParams.Accounting.builder()
                     .accountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .classId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
             )
-        assertThat(body.accountingCategoryId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.accountingLedgerClassId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.chargeBearer()).isEqualTo(PaymentOrderCreateParams.ChargeBearer.SHARED)
-        assertThat(body.currency()).isEqualTo(Currency.AED)
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.accountingCategoryId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.accountingLedgerClassId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.chargeBearer()).contains(PaymentOrderCreateParams.ChargeBearer.SHARED)
+        assertThat(body.currency()).contains(Currency.AED)
+        assertThat(body.description()).contains("description")
         assertThat(body.documents())
-            .isEqualTo(
+            .contains(
                 listOf(
                     PaymentOrderCreateParams.DocumentCreateRequest.builder()
                         .documentableId("documentable_id")
@@ -541,14 +541,14 @@ class PaymentOrderCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.expiresAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.fallbackType()).isEqualTo(PaymentOrderCreateParams.FallbackType.ACH)
-        assertThat(body.foreignExchangeContract()).isEqualTo("foreign_exchange_contract")
+        assertThat(body.effectiveDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.expiresAt()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.fallbackType()).contains(PaymentOrderCreateParams.FallbackType.ACH)
+        assertThat(body.foreignExchangeContract()).contains("foreign_exchange_contract")
         assertThat(body.foreignExchangeIndicator())
-            .isEqualTo(PaymentOrderCreateParams.ForeignExchangeIndicator.FIXED_TO_VARIABLE)
+            .contains(PaymentOrderCreateParams.ForeignExchangeIndicator.FIXED_TO_VARIABLE)
         assertThat(body.ledgerTransaction())
-            .isEqualTo(
+            .contains(
                 PaymentOrderCreateParams.LedgerTransactionCreateRequest.builder()
                     .ledgerEntries(
                         listOf(
@@ -616,9 +616,9 @@ class PaymentOrderCreateParamsTest {
                     .status(PaymentOrderCreateParams.LedgerTransactionCreateRequest.Status.ARCHIVED)
                     .build()
             )
-        assertThat(body.ledgerTransactionId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.ledgerTransactionId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.lineItems())
-            .isEqualTo(
+            .contains(
                 listOf(
                     PaymentOrderCreateParams.LineItemRequest.builder()
                         .amount(0L)
@@ -635,20 +635,20 @@ class PaymentOrderCreateParamsTest {
                 )
             )
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 PaymentOrderCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.nsfProtected()).isEqualTo(true)
-        assertThat(body.originatingPartyName()).isEqualTo("originating_party_name")
-        assertThat(body.priority()).isEqualTo(PaymentOrderCreateParams.Priority.HIGH)
-        assertThat(body.processAfter()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.purpose()).isEqualTo("purpose")
+        assertThat(body.nsfProtected()).contains(true)
+        assertThat(body.originatingPartyName()).contains("originating_party_name")
+        assertThat(body.priority()).contains(PaymentOrderCreateParams.Priority.HIGH)
+        assertThat(body.processAfter()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.purpose()).contains("purpose")
         assertThat(body.receivingAccount())
-            .isEqualTo(
+            .contains(
                 PaymentOrderCreateParams.ReceivingAccount.builder()
                     .accountDetails(
                         listOf(
@@ -747,18 +747,18 @@ class PaymentOrderCreateParamsTest {
                     )
                     .build()
             )
-        assertThat(body.receivingAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.remittanceInformation()).isEqualTo("remittance_information")
-        assertThat(body.sendRemittanceAdvice()).isEqualTo(true)
-        assertThat(body.statementDescriptor()).isEqualTo("statement_descriptor")
-        assertThat(body.subtype()).isEqualTo(PaymentOrderSubtype.BACS_NEW_INSTRUCTION)
-        assertThat(body.transactionMonitoringEnabled()).isEqualTo(true)
+        assertThat(body.receivingAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.remittanceInformation()).contains("remittance_information")
+        assertThat(body.sendRemittanceAdvice()).contains(true)
+        assertThat(body.statementDescriptor()).contains("statement_descriptor")
+        assertThat(body.subtype()).contains(PaymentOrderSubtype.BACS_NEW_INSTRUCTION)
+        assertThat(body.transactionMonitoringEnabled()).contains(true)
         assertThat(body.ultimateOriginatingPartyIdentifier())
-            .isEqualTo("ultimate_originating_party_identifier")
-        assertThat(body.ultimateOriginatingPartyName()).isEqualTo("ultimate_originating_party_name")
+            .contains("ultimate_originating_party_identifier")
+        assertThat(body.ultimateOriginatingPartyName()).contains("ultimate_originating_party_name")
         assertThat(body.ultimateReceivingPartyIdentifier())
-            .isEqualTo("ultimate_receiving_party_identifier")
-        assertThat(body.ultimateReceivingPartyName()).isEqualTo("ultimate_receiving_party_name")
+            .contains("ultimate_receiving_party_identifier")
+        assertThat(body.ultimateReceivingPartyName()).contains("ultimate_receiving_party_name")
     }
 
     @Test

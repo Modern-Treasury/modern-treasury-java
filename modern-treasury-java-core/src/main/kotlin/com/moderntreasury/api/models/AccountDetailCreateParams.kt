@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
@@ -65,24 +65,26 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = AccountDetailCreateBody.Builder::class)
     @NoAutoDetect
     class AccountDetailCreateBody
+    @JsonCreator
     internal constructor(
-        private val accountNumber: String?,
-        private val accountNumberType: AccountNumberType?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("account_number") private val accountNumber: String,
+        @JsonProperty("account_number_type") private val accountNumberType: AccountNumberType?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The account number for the bank account. */
-        @JsonProperty("account_number") fun accountNumber(): String? = accountNumber
+        @JsonProperty("account_number") fun accountNumber(): String = accountNumber
 
         /**
          * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
          * number is in a generic format.
          */
         @JsonProperty("account_number_type")
-        fun accountNumberType(): AccountNumberType? = accountNumberType
+        fun accountNumberType(): Optional<AccountNumberType> =
+            Optional.ofNullable(accountNumberType)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -103,36 +105,39 @@ constructor(
 
             @JvmSynthetic
             internal fun from(accountDetailCreateBody: AccountDetailCreateBody) = apply {
-                this.accountNumber = accountDetailCreateBody.accountNumber
-                this.accountNumberType = accountDetailCreateBody.accountNumberType
-                additionalProperties(accountDetailCreateBody.additionalProperties)
+                accountNumber = accountDetailCreateBody.accountNumber
+                accountNumberType = accountDetailCreateBody.accountNumberType
+                additionalProperties = accountDetailCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The account number for the bank account. */
-            @JsonProperty("account_number")
             fun accountNumber(accountNumber: String) = apply { this.accountNumber = accountNumber }
 
             /**
              * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
              * number is in a generic format.
              */
-            @JsonProperty("account_number_type")
             fun accountNumberType(accountNumberType: AccountNumberType) = apply {
                 this.accountNumberType = accountNumberType
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountDetailCreateBody =

@@ -4,13 +4,14 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
@@ -55,31 +56,33 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = LedgerAccountBalanceMonitorCreateBody.Builder::class)
     @NoAutoDetect
     class LedgerAccountBalanceMonitorCreateBody
+    @JsonCreator
     internal constructor(
-        private val alertCondition: AlertConditionCreateRequest?,
-        private val ledgerAccountId: String?,
-        private val description: String?,
-        private val metadata: Metadata?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("alert_condition") private val alertCondition: AlertConditionCreateRequest,
+        @JsonProperty("ledger_account_id") private val ledgerAccountId: String,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Describes the condition that must be satisfied for the monitor to be triggered. */
         @JsonProperty("alert_condition")
-        fun alertCondition(): AlertConditionCreateRequest? = alertCondition
+        fun alertCondition(): AlertConditionCreateRequest = alertCondition
 
         /** The ledger account associated with this balance monitor. */
-        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
+        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
 
         /** An optional, free-form description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -104,48 +107,50 @@ constructor(
             internal fun from(
                 ledgerAccountBalanceMonitorCreateBody: LedgerAccountBalanceMonitorCreateBody
             ) = apply {
-                this.alertCondition = ledgerAccountBalanceMonitorCreateBody.alertCondition
-                this.ledgerAccountId = ledgerAccountBalanceMonitorCreateBody.ledgerAccountId
-                this.description = ledgerAccountBalanceMonitorCreateBody.description
-                this.metadata = ledgerAccountBalanceMonitorCreateBody.metadata
-                additionalProperties(ledgerAccountBalanceMonitorCreateBody.additionalProperties)
+                alertCondition = ledgerAccountBalanceMonitorCreateBody.alertCondition
+                ledgerAccountId = ledgerAccountBalanceMonitorCreateBody.ledgerAccountId
+                description = ledgerAccountBalanceMonitorCreateBody.description
+                metadata = ledgerAccountBalanceMonitorCreateBody.metadata
+                additionalProperties =
+                    ledgerAccountBalanceMonitorCreateBody.additionalProperties.toMutableMap()
             }
 
             /** Describes the condition that must be satisfied for the monitor to be triggered. */
-            @JsonProperty("alert_condition")
             fun alertCondition(alertCondition: AlertConditionCreateRequest) = apply {
                 this.alertCondition = alertCondition
             }
 
             /** The ledger account associated with this balance monitor. */
-            @JsonProperty("ledger_account_id")
             fun ledgerAccountId(ledgerAccountId: String) = apply {
                 this.ledgerAccountId = ledgerAccountId
             }
 
             /** An optional, free-form description for internal use. */
-            @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerAccountBalanceMonitorCreateBody =
@@ -363,33 +368,34 @@ constructor(
     }
 
     /** Describes the condition that must be satisfied for the monitor to be triggered. */
-    @JsonDeserialize(builder = AlertConditionCreateRequest.Builder::class)
     @NoAutoDetect
     class AlertConditionCreateRequest
+    @JsonCreator
     private constructor(
-        private val field: String?,
-        private val operator: String?,
-        private val value: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("field") private val field: String,
+        @JsonProperty("operator") private val operator: String,
+        @JsonProperty("value") private val value: Long,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
          * One of `available_balance_amount`, `pending_balance_amount`, `posted_balance_amount`,
          * `ledger_account_lock_version`.
          */
-        @JsonProperty("field") fun field(): String? = field
+        @JsonProperty("field") fun field(): String = field
 
         /**
          * A logical operator to compare the `field` against the `value`. One of `less_than`,
          * `less_than_or_equals`, `equals`, `greater_than_or_equals`, `greater_than`.
          */
-        @JsonProperty("operator") fun operator(): String? = operator
+        @JsonProperty("operator") fun operator(): String = operator
 
         /**
          * The monitor's `current_ledger_account_balance_state.triggered` will be `true` when
          * comparing the `field` to this integer value using the `operator` is logically true.
          */
-        @JsonProperty("value") fun value(): Long? = value
+        @JsonProperty("value") fun value(): Long = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -411,43 +417,48 @@ constructor(
 
             @JvmSynthetic
             internal fun from(alertConditionCreateRequest: AlertConditionCreateRequest) = apply {
-                this.field = alertConditionCreateRequest.field
-                this.operator = alertConditionCreateRequest.operator
-                this.value = alertConditionCreateRequest.value
-                additionalProperties(alertConditionCreateRequest.additionalProperties)
+                field = alertConditionCreateRequest.field
+                operator = alertConditionCreateRequest.operator
+                value = alertConditionCreateRequest.value
+                additionalProperties =
+                    alertConditionCreateRequest.additionalProperties.toMutableMap()
             }
 
             /**
              * One of `available_balance_amount`, `pending_balance_amount`, `posted_balance_amount`,
              * `ledger_account_lock_version`.
              */
-            @JsonProperty("field") fun field(field: String) = apply { this.field = field }
+            fun field(field: String) = apply { this.field = field }
 
             /**
              * A logical operator to compare the `field` against the `value`. One of `less_than`,
              * `less_than_or_equals`, `equals`, `greater_than_or_equals`, `greater_than`.
              */
-            @JsonProperty("operator")
             fun operator(operator: String) = apply { this.operator = operator }
 
             /**
              * The monitor's `current_ledger_account_balance_state.triggered` will be `true` when
              * comparing the `field` to this integer value using the `operator` is logically true.
              */
-            @JsonProperty("value") fun value(value: Long) = apply { this.value = value }
+            fun value(value: Long) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AlertConditionCreateRequest =
@@ -478,11 +489,12 @@ constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -502,21 +514,26 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
