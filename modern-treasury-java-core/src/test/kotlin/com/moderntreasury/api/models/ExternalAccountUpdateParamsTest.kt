@@ -63,17 +63,17 @@ class ExternalAccountUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.accountType()).isEqualTo(ExternalAccountType.CASH)
-        assertThat(body.counterpartyId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.accountType()).contains(ExternalAccountType.CASH)
+        assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 ExternalAccountUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.name()).contains("name")
         assertThat(body.partyAddress())
-            .isEqualTo(
+            .contains(
                 ExternalAccountUpdateParams.AddressRequest.builder()
                     .country("country")
                     .line1("line1")
@@ -83,8 +83,8 @@ class ExternalAccountUpdateParamsTest {
                     .region("region")
                     .build()
             )
-        assertThat(body.partyName()).isEqualTo("party_name")
-        assertThat(body.partyType()).isEqualTo(ExternalAccountUpdateParams.PartyType.BUSINESS)
+        assertThat(body.partyName()).contains("party_name")
+        assertThat(body.partyType()).contains(ExternalAccountUpdateParams.PartyType.BUSINESS)
     }
 
     @Test

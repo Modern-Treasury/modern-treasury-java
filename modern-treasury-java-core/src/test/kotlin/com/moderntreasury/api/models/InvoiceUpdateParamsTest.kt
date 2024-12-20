@@ -208,7 +208,7 @@ class InvoiceUpdateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.contactDetails())
-            .isEqualTo(
+            .contains(
                 listOf(
                     InvoiceUpdateParams.ContactDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -225,7 +225,7 @@ class InvoiceUpdateParamsTest {
                 )
             )
         assertThat(body.counterpartyBillingAddress())
-            .isEqualTo(
+            .contains(
                 InvoiceUpdateParams.CounterpartyBillingAddress.builder()
                     .country("country")
                     .line1("line1")
@@ -235,9 +235,9 @@ class InvoiceUpdateParamsTest {
                     .line2("line2")
                     .build()
             )
-        assertThat(body.counterpartyId()).isEqualTo("counterparty_id")
+        assertThat(body.counterpartyId()).contains("counterparty_id")
         assertThat(body.counterpartyShippingAddress())
-            .isEqualTo(
+            .contains(
                 InvoiceUpdateParams.CounterpartyShippingAddress.builder()
                     .country("country")
                     .line1("line1")
@@ -247,13 +247,13 @@ class InvoiceUpdateParamsTest {
                     .line2("line2")
                     .build()
             )
-        assertThat(body.currency()).isEqualTo(Currency.AED)
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.dueDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.fallbackPaymentMethod()).isEqualTo("fallback_payment_method")
-        assertThat(body.ingestLedgerEntries()).isEqualTo(true)
+        assertThat(body.currency()).contains(Currency.AED)
+        assertThat(body.description()).contains("description")
+        assertThat(body.dueDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.fallbackPaymentMethod()).contains("fallback_payment_method")
+        assertThat(body.ingestLedgerEntries()).contains(true)
         assertThat(body.invoiceLineItems())
-            .isEqualTo(
+            .contains(
                 listOf(
                     InvoiceUpdateParams.InvoiceLineItemCreateRequest.builder()
                         .name("name")
@@ -273,7 +273,7 @@ class InvoiceUpdateParamsTest {
                 )
             )
         assertThat(body.invoicerAddress())
-            .isEqualTo(
+            .contains(
                 InvoiceUpdateParams.InvoicerAddress.builder()
                     .country("country")
                     .line1("line1")
@@ -284,27 +284,27 @@ class InvoiceUpdateParamsTest {
                     .build()
             )
         assertThat(body.ledgerAccountSettlementId())
-            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 InvoiceUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.notificationEmailAddresses()).isEqualTo(listOf("string"))
-        assertThat(body.notificationsEnabled()).isEqualTo(true)
-        assertThat(body.originatingAccountId()).isEqualTo("originating_account_id")
-        assertThat(body.paymentEffectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.paymentMethod()).isEqualTo(InvoiceUpdateParams.PaymentMethod.UI)
-        assertThat(body.paymentType()).isEqualTo(PaymentOrderType.ACH)
-        assertThat(body.receivingAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.recipientEmail()).isEqualTo("recipient_email")
-        assertThat(body.recipientName()).isEqualTo("recipient_name")
-        assertThat(body.remindAfterOverdueDays()).isEqualTo(listOf(0L))
-        assertThat(body.status()).isEqualTo("status")
-        assertThat(body.virtualAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.notificationEmailAddresses()).contains(listOf("string"))
+        assertThat(body.notificationsEnabled()).contains(true)
+        assertThat(body.originatingAccountId()).contains("originating_account_id")
+        assertThat(body.paymentEffectiveDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.paymentMethod()).contains(InvoiceUpdateParams.PaymentMethod.UI)
+        assertThat(body.paymentType()).contains(PaymentOrderType.ACH)
+        assertThat(body.receivingAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.recipientEmail()).contains("recipient_email")
+        assertThat(body.recipientName()).contains("recipient_name")
+        assertThat(body.remindAfterOverdueDays()).contains(listOf(0L))
+        assertThat(body.status()).contains("status")
+        assertThat(body.virtualAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
 
     @Test

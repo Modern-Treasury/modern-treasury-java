@@ -54,9 +54,9 @@ constructor(
     @NoAutoDetect
     class TransactionLineItemCreateBody
     internal constructor(
-        private val amount: Long?,
-        private val expectedPaymentId: String?,
-        private val transactionId: String?,
+        private val amount: Long,
+        private val expectedPaymentId: String,
+        private val transactionId: String,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -64,13 +64,13 @@ constructor(
          * If a matching object exists in Modern Treasury, `amount` will be populated. Value in
          * specified currency's smallest unit (taken from parent Transaction).
          */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         /** The ID of the reconciled Expected Payment, otherwise `null`. */
-        @JsonProperty("expected_payment_id") fun expectedPaymentId(): String? = expectedPaymentId
+        @JsonProperty("expected_payment_id") fun expectedPaymentId(): String = expectedPaymentId
 
         /** The ID of the parent transaction. */
-        @JsonProperty("transaction_id") fun transactionId(): String? = transactionId
+        @JsonProperty("transaction_id") fun transactionId(): String = transactionId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -93,10 +93,11 @@ constructor(
             @JvmSynthetic
             internal fun from(transactionLineItemCreateBody: TransactionLineItemCreateBody) =
                 apply {
-                    this.amount = transactionLineItemCreateBody.amount
-                    this.expectedPaymentId = transactionLineItemCreateBody.expectedPaymentId
-                    this.transactionId = transactionLineItemCreateBody.transactionId
-                    additionalProperties(transactionLineItemCreateBody.additionalProperties)
+                    amount = transactionLineItemCreateBody.amount
+                    expectedPaymentId = transactionLineItemCreateBody.expectedPaymentId
+                    transactionId = transactionLineItemCreateBody.transactionId
+                    additionalProperties =
+                        transactionLineItemCreateBody.additionalProperties.toMutableMap()
                 }
 
             /**
@@ -117,16 +118,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TransactionLineItemCreateBody =

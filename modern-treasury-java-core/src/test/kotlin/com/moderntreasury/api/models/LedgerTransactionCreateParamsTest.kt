@@ -172,22 +172,22 @@ class LedgerTransactionCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.description()).isEqualTo("description")
-        assertThat(body.effectiveAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.externalId()).isEqualTo("external_id")
-        assertThat(body.ledgerableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.description()).contains("description")
+        assertThat(body.effectiveAt()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.effectiveDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.externalId()).contains("external_id")
+        assertThat(body.ledgerableId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.ledgerableType())
-            .isEqualTo(LedgerTransactionCreateParams.LedgerableType.EXPECTED_PAYMENT)
+            .contains(LedgerTransactionCreateParams.LedgerableType.EXPECTED_PAYMENT)
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerTransactionCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.status()).isEqualTo(LedgerTransactionCreateParams.Status.ARCHIVED)
+        assertThat(body.status()).contains(LedgerTransactionCreateParams.Status.ARCHIVED)
     }
 
     @Test

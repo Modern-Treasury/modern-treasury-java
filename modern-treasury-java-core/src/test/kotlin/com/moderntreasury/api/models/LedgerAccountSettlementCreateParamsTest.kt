@@ -52,20 +52,20 @@ class LedgerAccountSettlementCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.contraLedgerAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.settledLedgerAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.allowEitherDirection()).isEqualTo(true)
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.allowEitherDirection()).contains(true)
+        assertThat(body.description()).contains("description")
         assertThat(body.effectiveAtUpperBound())
-            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerAccountSettlementCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.skipSettlementLedgerTransaction()).isEqualTo(true)
-        assertThat(body.status()).isEqualTo(LedgerAccountSettlementCreateParams.Status.PENDING)
+        assertThat(body.skipSettlementLedgerTransaction()).contains(true)
+        assertThat(body.status()).contains(LedgerAccountSettlementCreateParams.Status.PENDING)
     }
 
     @Test

@@ -113,7 +113,6 @@ Use the `CounterpartyListParams` builder to set parameters:
 import com.moderntreasury.api.models.CounterpartyListPage;
 import com.moderntreasury.api.models.CounterpartyListParams;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 CounterpartyListParams params = CounterpartyListParams.builder()
     .afterCursor("after_cursor")
@@ -122,7 +121,7 @@ CounterpartyListParams params = CounterpartyListParams.builder()
     .email("dev@stainlessapi.com")
     .legalEntityId("legal_entity_id")
     .metadata(CounterpartyListParams.Metadata.builder()
-        .putAdditionalProperty("foo", List.of("string"))
+        .putAdditionalProperty("foo", "string")
         .build())
     .name("name")
     .perPage(0L)

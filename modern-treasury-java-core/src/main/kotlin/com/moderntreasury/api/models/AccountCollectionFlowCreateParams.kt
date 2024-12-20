@@ -60,19 +60,20 @@ constructor(
     @NoAutoDetect
     class AccountCollectionFlowCreateBody
     internal constructor(
-        private val counterpartyId: String?,
-        private val paymentTypes: List<String>?,
+        private val counterpartyId: String,
+        private val paymentTypes: List<String>,
         private val receivingCountries: List<ReceivingCountry>?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Required. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id") fun counterpartyId(): String = counterpartyId
 
-        @JsonProperty("payment_types") fun paymentTypes(): List<String>? = paymentTypes
+        @JsonProperty("payment_types") fun paymentTypes(): List<String> = paymentTypes
 
         @JsonProperty("receiving_countries")
-        fun receivingCountries(): List<ReceivingCountry>? = receivingCountries
+        fun receivingCountries(): Optional<List<ReceivingCountry>> =
+            Optional.ofNullable(receivingCountries)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -95,10 +96,12 @@ constructor(
             @JvmSynthetic
             internal fun from(accountCollectionFlowCreateBody: AccountCollectionFlowCreateBody) =
                 apply {
-                    this.counterpartyId = accountCollectionFlowCreateBody.counterpartyId
-                    this.paymentTypes = accountCollectionFlowCreateBody.paymentTypes
-                    this.receivingCountries = accountCollectionFlowCreateBody.receivingCountries
-                    additionalProperties(accountCollectionFlowCreateBody.additionalProperties)
+                    counterpartyId = accountCollectionFlowCreateBody.counterpartyId
+                    paymentTypes = accountCollectionFlowCreateBody.paymentTypes.toMutableList()
+                    receivingCountries =
+                        accountCollectionFlowCreateBody.receivingCountries?.toMutableList()
+                    additionalProperties =
+                        accountCollectionFlowCreateBody.additionalProperties.toMutableMap()
                 }
 
             /** Required. */
@@ -119,16 +122,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountCollectionFlowCreateBody =

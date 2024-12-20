@@ -33,7 +33,7 @@ class RoutingDetailCreateParamsTest {
         assertThat(body.routingNumber()).isEqualTo("routing_number")
         assertThat(body.routingNumberType())
             .isEqualTo(RoutingDetailCreateParams.RoutingNumberType.ABA)
-        assertThat(body.paymentType()).isEqualTo(RoutingDetailCreateParams.PaymentType.ACH)
+        assertThat(body.paymentType()).contains(RoutingDetailCreateParams.PaymentType.ACH)
     }
 
     @Test

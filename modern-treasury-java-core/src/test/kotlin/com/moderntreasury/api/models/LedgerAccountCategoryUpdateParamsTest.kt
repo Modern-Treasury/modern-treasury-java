@@ -41,16 +41,16 @@ class LedgerAccountCategoryUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.description()).isEqualTo("description")
+        assertThat(body.description()).contains("description")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 LedgerAccountCategoryUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.name()).contains("name")
     }
 
     @Test

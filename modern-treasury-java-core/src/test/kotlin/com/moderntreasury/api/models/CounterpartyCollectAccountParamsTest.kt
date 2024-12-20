@@ -31,9 +31,9 @@ class CounterpartyCollectAccountParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.direction()).isEqualTo(TransactionDirection.CREDIT)
-        assertThat(body.customRedirect()).isEqualTo("https://example.com")
-        assertThat(body.fields()).isEqualTo(listOf(CounterpartyCollectAccountParams.Field.NAME))
-        assertThat(body.sendEmail()).isEqualTo(true)
+        assertThat(body.customRedirect()).contains("https://example.com")
+        assertThat(body.fields()).contains(listOf(CounterpartyCollectAccountParams.Field.NAME))
+        assertThat(body.sendEmail()).contains(true)
     }
 
     @Test

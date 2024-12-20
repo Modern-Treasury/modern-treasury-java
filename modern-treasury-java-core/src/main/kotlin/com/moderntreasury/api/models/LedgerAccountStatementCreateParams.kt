@@ -64,9 +64,9 @@ constructor(
     @NoAutoDetect
     class LedgerAccountStatementCreateBody
     internal constructor(
-        private val effectiveAtLowerBound: OffsetDateTime?,
-        private val effectiveAtUpperBound: OffsetDateTime?,
-        private val ledgerAccountId: String?,
+        private val effectiveAtLowerBound: OffsetDateTime,
+        private val effectiveAtUpperBound: OffsetDateTime,
+        private val ledgerAccountId: String,
         private val description: String?,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -77,28 +77,29 @@ constructor(
          * included in the ledger account statement.
          */
         @JsonProperty("effective_at_lower_bound")
-        fun effectiveAtLowerBound(): OffsetDateTime? = effectiveAtLowerBound
+        fun effectiveAtLowerBound(): OffsetDateTime = effectiveAtLowerBound
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
         @JsonProperty("effective_at_upper_bound")
-        fun effectiveAtUpperBound(): OffsetDateTime? = effectiveAtUpperBound
+        fun effectiveAtUpperBound(): OffsetDateTime = effectiveAtUpperBound
 
         /**
          * The id of the ledger account whose ledger entries are queried against, and its balances
          * are computed as a result.
          */
-        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
+        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
 
         /** The description of the ledger account statement. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -123,14 +124,13 @@ constructor(
             @JvmSynthetic
             internal fun from(ledgerAccountStatementCreateBody: LedgerAccountStatementCreateBody) =
                 apply {
-                    this.effectiveAtLowerBound =
-                        ledgerAccountStatementCreateBody.effectiveAtLowerBound
-                    this.effectiveAtUpperBound =
-                        ledgerAccountStatementCreateBody.effectiveAtUpperBound
-                    this.ledgerAccountId = ledgerAccountStatementCreateBody.ledgerAccountId
-                    this.description = ledgerAccountStatementCreateBody.description
-                    this.metadata = ledgerAccountStatementCreateBody.metadata
-                    additionalProperties(ledgerAccountStatementCreateBody.additionalProperties)
+                    effectiveAtLowerBound = ledgerAccountStatementCreateBody.effectiveAtLowerBound
+                    effectiveAtUpperBound = ledgerAccountStatementCreateBody.effectiveAtUpperBound
+                    ledgerAccountId = ledgerAccountStatementCreateBody.ledgerAccountId
+                    description = ledgerAccountStatementCreateBody.description
+                    metadata = ledgerAccountStatementCreateBody.metadata
+                    additionalProperties =
+                        ledgerAccountStatementCreateBody.additionalProperties.toMutableMap()
                 }
 
             /**
@@ -173,16 +173,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerAccountStatementCreateBody =
@@ -448,21 +454,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

@@ -38,7 +38,7 @@ class PaymentFlowCreateParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.direction()).isEqualTo(PaymentFlowCreateParams.Direction.CREDIT)
         assertThat(body.originatingAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.dueDate()).isEqualTo(LocalDate.parse("2019-12-27"))
+        assertThat(body.dueDate()).contains(LocalDate.parse("2019-12-27"))
     }
 
     @Test

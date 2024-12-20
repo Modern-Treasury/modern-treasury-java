@@ -196,7 +196,7 @@ class PaymentOrderReversalCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.reason()).isEqualTo(PaymentOrderReversalCreateParams.Reason.DUPLICATE)
         assertThat(body.ledgerTransaction())
-            .isEqualTo(
+            .contains(
                 PaymentOrderReversalCreateParams.LedgerTransactionCreateRequest.builder()
                     .ledgerEntries(
                         listOf(
@@ -270,7 +270,7 @@ class PaymentOrderReversalCreateParamsTest {
                     .build()
             )
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 PaymentOrderReversalCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
