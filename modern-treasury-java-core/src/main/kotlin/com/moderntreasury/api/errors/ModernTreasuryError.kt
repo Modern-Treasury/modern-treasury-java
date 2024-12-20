@@ -5,6 +5,7 @@ package com.moderntreasury.api.errors
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.toImmutable
@@ -15,6 +16,7 @@ import java.util.Objects
 class ModernTreasuryError
 private constructor(
     @JsonAnyGetter
+    @ExcludeMissing
     @get:JvmName("additionalProperties")
     val additionalProperties: Map<String, JsonValue>,
 ) {

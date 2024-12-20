@@ -63,7 +63,7 @@ constructor(
     ) {
 
         /** The status of the connection legal entity. */
-        @JsonProperty("status") fun status(): Status? = status
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -84,8 +84,9 @@ constructor(
             @JvmSynthetic
             internal fun from(connectionLegalEntityUpdateBody: ConnectionLegalEntityUpdateBody) =
                 apply {
-                    this.status = connectionLegalEntityUpdateBody.status
-                    additionalProperties(connectionLegalEntityUpdateBody.additionalProperties)
+                    status = connectionLegalEntityUpdateBody.status
+                    additionalProperties =
+                        connectionLegalEntityUpdateBody.additionalProperties.toMutableMap()
                 }
 
             /** The status of the connection legal entity. */
@@ -93,16 +94,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ConnectionLegalEntityUpdateBody =

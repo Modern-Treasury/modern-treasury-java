@@ -73,7 +73,7 @@ constructor(
     class ReturnCreateBody
     internal constructor(
         private val returnableId: String?,
-        private val returnableType: ReturnableType?,
+        private val returnableType: ReturnableType,
         private val additionalInformation: String?,
         private val code: Code?,
         private val dateOfDeath: LocalDate?,
@@ -82,34 +82,36 @@ constructor(
     ) {
 
         /** The ID of the object being returned or `null`. */
-        @JsonProperty("returnable_id") fun returnableId(): String? = returnableId
+        @JsonProperty("returnable_id")
+        fun returnableId(): Optional<String> = Optional.ofNullable(returnableId)
 
         /**
          * The type of object being returned. Currently, this may only be incoming_payment_detail.
          */
-        @JsonProperty("returnable_type") fun returnableType(): ReturnableType? = returnableType
+        @JsonProperty("returnable_type") fun returnableType(): ReturnableType = returnableType
 
         /**
          * Some returns may include additional information from the bank. In these cases, this
          * string will be present.
          */
         @JsonProperty("additional_information")
-        fun additionalInformation(): String? = additionalInformation
+        fun additionalInformation(): Optional<String> = Optional.ofNullable(additionalInformation)
 
         /** The return code. For ACH returns, this is the required ACH return code. */
-        @JsonProperty("code") fun code(): Code? = code
+        @JsonProperty("code") fun code(): Optional<Code> = Optional.ofNullable(code)
 
         /**
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
          * away.
          */
-        @JsonProperty("date_of_death") fun dateOfDeath(): LocalDate? = dateOfDeath
+        @JsonProperty("date_of_death")
+        fun dateOfDeath(): Optional<LocalDate> = Optional.ofNullable(dateOfDeath)
 
         /**
          * An optional description of the reason for the return. This is for internal usage and will
          * not be transmitted to the bank.”
          */
-        @JsonProperty("reason") fun reason(): String? = reason
+        @JsonProperty("reason") fun reason(): Optional<String> = Optional.ofNullable(reason)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -134,13 +136,13 @@ constructor(
 
             @JvmSynthetic
             internal fun from(returnCreateBody: ReturnCreateBody) = apply {
-                this.returnableId = returnCreateBody.returnableId
-                this.returnableType = returnCreateBody.returnableType
-                this.additionalInformation = returnCreateBody.additionalInformation
-                this.code = returnCreateBody.code
-                this.dateOfDeath = returnCreateBody.dateOfDeath
-                this.reason = returnCreateBody.reason
-                additionalProperties(returnCreateBody.additionalProperties)
+                returnableId = returnCreateBody.returnableId
+                returnableType = returnCreateBody.returnableType
+                additionalInformation = returnCreateBody.additionalInformation
+                code = returnCreateBody.code
+                dateOfDeath = returnCreateBody.dateOfDeath
+                reason = returnCreateBody.reason
+                additionalProperties = returnCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The ID of the object being returned or `null`. */
@@ -183,16 +185,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ReturnCreateBody =

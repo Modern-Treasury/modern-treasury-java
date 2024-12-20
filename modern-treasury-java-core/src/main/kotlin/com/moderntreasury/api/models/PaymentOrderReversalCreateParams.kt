@@ -72,7 +72,7 @@ constructor(
     @NoAutoDetect
     class PaymentOrderReversalCreateBody
     internal constructor(
-        private val reason: Reason?,
+        private val reason: Reason,
         private val ledgerTransaction: LedgerTransactionCreateRequest?,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -82,7 +82,7 @@ constructor(
          * The reason for the reversal. Must be one of `duplicate`, `incorrect_amount`,
          * `incorrect_receiving_account`, `date_earlier_than_intended`, `date_later_than_intended`.
          */
-        @JsonProperty("reason") fun reason(): Reason? = reason
+        @JsonProperty("reason") fun reason(): Reason = reason
 
         /**
          * Specifies a ledger transaction object that will be created with the reversal. If the
@@ -90,12 +90,13 @@ constructor(
          * ledger transaction will mirror the status of the reversal.
          */
         @JsonProperty("ledger_transaction")
-        fun ledgerTransaction(): LedgerTransactionCreateRequest? = ledgerTransaction
+        fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> =
+            Optional.ofNullable(ledgerTransaction)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -118,10 +119,11 @@ constructor(
             @JvmSynthetic
             internal fun from(paymentOrderReversalCreateBody: PaymentOrderReversalCreateBody) =
                 apply {
-                    this.reason = paymentOrderReversalCreateBody.reason
-                    this.ledgerTransaction = paymentOrderReversalCreateBody.ledgerTransaction
-                    this.metadata = paymentOrderReversalCreateBody.metadata
-                    additionalProperties(paymentOrderReversalCreateBody.additionalProperties)
+                    reason = paymentOrderReversalCreateBody.reason
+                    ledgerTransaction = paymentOrderReversalCreateBody.ledgerTransaction
+                    metadata = paymentOrderReversalCreateBody.metadata
+                    additionalProperties =
+                        paymentOrderReversalCreateBody.additionalProperties.toMutableMap()
                 }
 
             /**
@@ -150,16 +152,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentOrderReversalCreateBody =
@@ -465,7 +473,7 @@ constructor(
         private val metadata: Metadata?,
         private val effectiveAt: OffsetDateTime?,
         private val effectiveDate: LocalDate?,
-        private val ledgerEntries: List<LedgerEntryCreateRequest>?,
+        private val ledgerEntries: List<LedgerEntryCreateRequest>,
         private val externalId: String?,
         private val ledgerableType: LedgerableType?,
         private val ledgerableId: String?,
@@ -473,49 +481,55 @@ constructor(
     ) {
 
         /** An optional description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /** To post a ledger transaction at creation, use `posted`. */
-        @JsonProperty("status") fun status(): Status? = status
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
          * purposes.
          */
-        @JsonProperty("effective_at") fun effectiveAt(): OffsetDateTime? = effectiveAt
+        @JsonProperty("effective_at")
+        fun effectiveAt(): Optional<OffsetDateTime> = Optional.ofNullable(effectiveAt)
 
         /**
          * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting purposes.
          */
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
+        @JsonProperty("effective_date")
+        fun effectiveDate(): Optional<LocalDate> = Optional.ofNullable(effectiveDate)
 
         /** An array of ledger entry objects. */
         @JsonProperty("ledger_entries")
-        fun ledgerEntries(): List<LedgerEntryCreateRequest>? = ledgerEntries
+        fun ledgerEntries(): List<LedgerEntryCreateRequest> = ledgerEntries
 
         /**
          * A unique string to represent the ledger transaction. Only one pending or posted ledger
          * transaction may have this ID in the ledger.
          */
-        @JsonProperty("external_id") fun externalId(): String? = externalId
+        @JsonProperty("external_id")
+        fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
          * type will be populated here, otherwise null. This can be one of payment_order,
          * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
          */
-        @JsonProperty("ledgerable_type") fun ledgerableType(): LedgerableType? = ledgerableType
+        @JsonProperty("ledgerable_type")
+        fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
          * will be populated here, otherwise null.
          */
-        @JsonProperty("ledgerable_id") fun ledgerableId(): String? = ledgerableId
+        @JsonProperty("ledgerable_id")
+        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -544,16 +558,17 @@ constructor(
             @JvmSynthetic
             internal fun from(ledgerTransactionCreateRequest: LedgerTransactionCreateRequest) =
                 apply {
-                    this.description = ledgerTransactionCreateRequest.description
-                    this.status = ledgerTransactionCreateRequest.status
-                    this.metadata = ledgerTransactionCreateRequest.metadata
-                    this.effectiveAt = ledgerTransactionCreateRequest.effectiveAt
-                    this.effectiveDate = ledgerTransactionCreateRequest.effectiveDate
-                    this.ledgerEntries = ledgerTransactionCreateRequest.ledgerEntries
-                    this.externalId = ledgerTransactionCreateRequest.externalId
-                    this.ledgerableType = ledgerTransactionCreateRequest.ledgerableType
-                    this.ledgerableId = ledgerTransactionCreateRequest.ledgerableId
-                    additionalProperties(ledgerTransactionCreateRequest.additionalProperties)
+                    description = ledgerTransactionCreateRequest.description
+                    status = ledgerTransactionCreateRequest.status
+                    metadata = ledgerTransactionCreateRequest.metadata
+                    effectiveAt = ledgerTransactionCreateRequest.effectiveAt
+                    effectiveDate = ledgerTransactionCreateRequest.effectiveDate
+                    ledgerEntries = ledgerTransactionCreateRequest.ledgerEntries.toMutableList()
+                    externalId = ledgerTransactionCreateRequest.externalId
+                    ledgerableType = ledgerTransactionCreateRequest.ledgerableType
+                    ledgerableId = ledgerTransactionCreateRequest.ledgerableId
+                    additionalProperties =
+                        ledgerTransactionCreateRequest.additionalProperties.toMutableMap()
                 }
 
             /** An optional description for internal use. */
@@ -618,16 +633,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerTransactionCreateRequest =
@@ -650,9 +671,9 @@ constructor(
         @NoAutoDetect
         class LedgerEntryCreateRequest
         private constructor(
-            private val amount: Long?,
-            private val direction: TransactionDirection?,
-            private val ledgerAccountId: String?,
+            private val amount: Long,
+            private val direction: TransactionDirection,
+            private val ledgerAccountId: String,
             private val lockVersion: Long?,
             private val pendingBalanceAmount: PendingBalanceAmount?,
             private val postedBalanceAmount: PostedBalanceAmount?,
@@ -666,7 +687,7 @@ constructor(
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
              * Can be any integer up to 36 digits.
              */
-            @JsonProperty("amount") fun amount(): Long? = amount
+            @JsonProperty("amount") fun amount(): Long = amount
 
             /**
              * One of `credit`, `debit`. Describes the direction money is flowing in the
@@ -674,10 +695,10 @@ constructor(
              * pulls money from someone else's account to your own. Note that wire, rtp, and check
              * payments will always be `credit`.
              */
-            @JsonProperty("direction") fun direction(): TransactionDirection? = direction
+            @JsonProperty("direction") fun direction(): TransactionDirection = direction
 
             /** The ledger account that this ledger entry is associated with. */
-            @JsonProperty("ledger_account_id") fun ledgerAccountId(): String? = ledgerAccountId
+            @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
 
             /**
              * Lock version of the ledger account. This can be passed when creating a ledger
@@ -685,7 +706,8 @@ constructor(
              * version. See our post about Designing the Ledgers API with Optimistic Locking for
              * more details.
              */
-            @JsonProperty("lock_version") fun lockVersion(): Long? = lockVersion
+            @JsonProperty("lock_version")
+            fun lockVersion(): Optional<Long> = Optional.ofNullable(lockVersion)
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -693,7 +715,8 @@ constructor(
              * created, the entire call will fail with error code 422.
              */
             @JsonProperty("pending_balance_amount")
-            fun pendingBalanceAmount(): PendingBalanceAmount? = pendingBalanceAmount
+            fun pendingBalanceAmount(): Optional<PendingBalanceAmount> =
+                Optional.ofNullable(pendingBalanceAmount)
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -701,7 +724,8 @@ constructor(
              * created, the entire call will fail with error code 422.
              */
             @JsonProperty("posted_balance_amount")
-            fun postedBalanceAmount(): PostedBalanceAmount? = postedBalanceAmount
+            fun postedBalanceAmount(): Optional<PostedBalanceAmount> =
+                Optional.ofNullable(postedBalanceAmount)
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -709,20 +733,23 @@ constructor(
              * created, the entire call will fail with error code 422.
              */
             @JsonProperty("available_balance_amount")
-            fun availableBalanceAmount(): AvailableBalanceAmount? = availableBalanceAmount
+            fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
+                Optional.ofNullable(availableBalanceAmount)
 
             /**
              * If true, response will include the balance of the associated ledger account for the
              * entry.
              */
             @JsonProperty("show_resulting_ledger_account_balances")
-            fun showResultingLedgerAccountBalances(): Boolean? = showResultingLedgerAccountBalances
+            fun showResultingLedgerAccountBalances(): Optional<Boolean> =
+                Optional.ofNullable(showResultingLedgerAccountBalances)
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+            @JsonProperty("metadata")
+            fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -750,17 +777,18 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(ledgerEntryCreateRequest: LedgerEntryCreateRequest) = apply {
-                    this.amount = ledgerEntryCreateRequest.amount
-                    this.direction = ledgerEntryCreateRequest.direction
-                    this.ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
-                    this.lockVersion = ledgerEntryCreateRequest.lockVersion
-                    this.pendingBalanceAmount = ledgerEntryCreateRequest.pendingBalanceAmount
-                    this.postedBalanceAmount = ledgerEntryCreateRequest.postedBalanceAmount
-                    this.availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
-                    this.showResultingLedgerAccountBalances =
+                    amount = ledgerEntryCreateRequest.amount
+                    direction = ledgerEntryCreateRequest.direction
+                    ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
+                    lockVersion = ledgerEntryCreateRequest.lockVersion
+                    pendingBalanceAmount = ledgerEntryCreateRequest.pendingBalanceAmount
+                    postedBalanceAmount = ledgerEntryCreateRequest.postedBalanceAmount
+                    availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
+                    showResultingLedgerAccountBalances =
                         ledgerEntryCreateRequest.showResultingLedgerAccountBalances
-                    this.metadata = ledgerEntryCreateRequest.metadata
-                    additionalProperties(ledgerEntryCreateRequest.additionalProperties)
+                    metadata = ledgerEntryCreateRequest.metadata
+                    additionalProperties =
+                        ledgerEntryCreateRequest.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -845,18 +873,26 @@ constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): LedgerEntryCreateRequest =
                     LedgerEntryCreateRequest(
@@ -904,23 +940,32 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(availableBalanceAmount: AvailableBalanceAmount) = apply {
-                        additionalProperties(availableBalanceAmount.additionalProperties)
+                        additionalProperties =
+                            availableBalanceAmount.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): AvailableBalanceAmount =
                         AvailableBalanceAmount(additionalProperties.toImmutable())
@@ -972,23 +1017,31 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(metadata: Metadata) = apply {
-                        additionalProperties(metadata.additionalProperties)
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
@@ -1039,23 +1092,32 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(pendingBalanceAmount: PendingBalanceAmount) = apply {
-                        additionalProperties(pendingBalanceAmount.additionalProperties)
+                        additionalProperties =
+                            pendingBalanceAmount.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): PendingBalanceAmount =
                         PendingBalanceAmount(additionalProperties.toImmutable())
@@ -1108,23 +1170,32 @@ constructor(
 
                     @JvmSynthetic
                     internal fun from(postedBalanceAmount: PostedBalanceAmount) = apply {
-                        additionalProperties(postedBalanceAmount.additionalProperties)
+                        additionalProperties =
+                            postedBalanceAmount.additionalProperties.toMutableMap()
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): PostedBalanceAmount =
                         PostedBalanceAmount(additionalProperties.toImmutable())
@@ -1275,23 +1346,31 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -1419,21 +1498,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

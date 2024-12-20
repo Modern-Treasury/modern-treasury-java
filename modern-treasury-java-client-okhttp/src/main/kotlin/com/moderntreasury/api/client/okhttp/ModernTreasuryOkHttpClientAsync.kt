@@ -134,7 +134,7 @@ class ModernTreasuryOkHttpClientAsync private constructor() {
             clientOptions.organizationId(organizationId)
         }
 
-        fun webhookKey(webhookKey: String?) = apply { clientOptions.webhookKey(webhookKey) }
+        fun webhookKey(webhookKey: String) = apply { clientOptions.webhookKey(webhookKey) }
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 

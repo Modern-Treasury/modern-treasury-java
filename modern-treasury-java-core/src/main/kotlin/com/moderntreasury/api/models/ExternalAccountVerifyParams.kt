@@ -77,8 +77,8 @@ constructor(
     @NoAutoDetect
     class ExternalAccountVerifyBody
     internal constructor(
-        private val originatingAccountId: String?,
-        private val paymentType: PaymentType?,
+        private val originatingAccountId: String,
+        private val paymentType: PaymentType,
         private val currency: Currency?,
         private val fallbackType: FallbackType?,
         private val priority: Priority?,
@@ -90,26 +90,27 @@ constructor(
          * debit capabilities must be enabled.
          */
         @JsonProperty("originating_account_id")
-        fun originatingAccountId(): String? = originatingAccountId
+        fun originatingAccountId(): String = originatingAccountId
 
         /** Can be `ach`, `eft`, or `rtp`. */
-        @JsonProperty("payment_type") fun paymentType(): PaymentType? = paymentType
+        @JsonProperty("payment_type") fun paymentType(): PaymentType = paymentType
 
         /** Defaults to the currency of the originating account. */
-        @JsonProperty("currency") fun currency(): Currency? = currency
+        @JsonProperty("currency") fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
          * fallback_type=ach)
          */
-        @JsonProperty("fallback_type") fun fallbackType(): FallbackType? = fallbackType
+        @JsonProperty("fallback_type")
+        fun fallbackType(): Optional<FallbackType> = Optional.ofNullable(fallbackType)
 
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
          * This will apply to both `payment_type` and `fallback_type`.
          */
-        @JsonProperty("priority") fun priority(): Priority? = priority
+        @JsonProperty("priority") fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -133,12 +134,12 @@ constructor(
 
             @JvmSynthetic
             internal fun from(externalAccountVerifyBody: ExternalAccountVerifyBody) = apply {
-                this.originatingAccountId = externalAccountVerifyBody.originatingAccountId
-                this.paymentType = externalAccountVerifyBody.paymentType
-                this.currency = externalAccountVerifyBody.currency
-                this.fallbackType = externalAccountVerifyBody.fallbackType
-                this.priority = externalAccountVerifyBody.priority
-                additionalProperties(externalAccountVerifyBody.additionalProperties)
+                originatingAccountId = externalAccountVerifyBody.originatingAccountId
+                paymentType = externalAccountVerifyBody.paymentType
+                currency = externalAccountVerifyBody.currency
+                fallbackType = externalAccountVerifyBody.fallbackType
+                priority = externalAccountVerifyBody.priority
+                additionalProperties = externalAccountVerifyBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -177,16 +178,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalAccountVerifyBody =

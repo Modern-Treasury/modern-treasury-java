@@ -36,8 +36,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /**
      * The highest amount this expected payment may be equal to. Value in specified currency's
      * smallest unit. e.g. $10 would be represented as 1000.
@@ -132,6 +130,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): ReconciliationRule = apply {
         if (!validated) {
             amountUpperBound()
@@ -171,17 +171,17 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(reconciliationRule: ReconciliationRule) = apply {
-            this.amountUpperBound = reconciliationRule.amountUpperBound
-            this.amountLowerBound = reconciliationRule.amountLowerBound
-            this.direction = reconciliationRule.direction
-            this.internalAccountId = reconciliationRule.internalAccountId
-            this.type = reconciliationRule.type
-            this.currency = reconciliationRule.currency
-            this.dateUpperBound = reconciliationRule.dateUpperBound
-            this.dateLowerBound = reconciliationRule.dateLowerBound
-            this.counterpartyId = reconciliationRule.counterpartyId
-            this.customIdentifiers = reconciliationRule.customIdentifiers
-            additionalProperties(reconciliationRule.additionalProperties)
+            amountUpperBound = reconciliationRule.amountUpperBound
+            amountLowerBound = reconciliationRule.amountLowerBound
+            direction = reconciliationRule.direction
+            internalAccountId = reconciliationRule.internalAccountId
+            type = reconciliationRule.type
+            currency = reconciliationRule.currency
+            dateUpperBound = reconciliationRule.dateUpperBound
+            dateLowerBound = reconciliationRule.dateLowerBound
+            counterpartyId = reconciliationRule.counterpartyId
+            customIdentifiers = reconciliationRule.customIdentifiers
+            additionalProperties = reconciliationRule.additionalProperties.toMutableMap()
         }
 
         /**
@@ -308,16 +308,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ReconciliationRule =
@@ -401,11 +407,11 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): CustomIdentifiers = apply {
             if (!validated) {
@@ -426,21 +432,27 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(customIdentifiers: CustomIdentifiers) = apply {
-                additionalProperties(customIdentifiers.additionalProperties)
+                additionalProperties = customIdentifiers.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CustomIdentifiers = CustomIdentifiers(additionalProperties.toImmutable())

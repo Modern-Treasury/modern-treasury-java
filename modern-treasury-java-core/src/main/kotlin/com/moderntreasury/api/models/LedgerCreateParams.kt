@@ -55,22 +55,23 @@ constructor(
     @NoAutoDetect
     class LedgerCreateBody
     internal constructor(
-        private val name: String?,
+        private val name: String,
         private val description: String?,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The name of the ledger. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
         /** An optional free-form description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -92,10 +93,10 @@ constructor(
 
             @JvmSynthetic
             internal fun from(ledgerCreateBody: LedgerCreateBody) = apply {
-                this.name = ledgerCreateBody.name
-                this.description = ledgerCreateBody.description
-                this.metadata = ledgerCreateBody.metadata
-                additionalProperties(ledgerCreateBody.additionalProperties)
+                name = ledgerCreateBody.name
+                description = ledgerCreateBody.description
+                metadata = ledgerCreateBody.metadata
+                additionalProperties = ledgerCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The name of the ledger. */
@@ -114,16 +115,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerCreateBody =
@@ -347,21 +354,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

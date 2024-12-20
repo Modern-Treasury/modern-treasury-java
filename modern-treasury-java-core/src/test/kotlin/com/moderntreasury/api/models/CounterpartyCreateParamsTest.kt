@@ -919,15 +919,15 @@ class CounterpartyCreateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.name()).contains("name")
         assertThat(body.accounting())
-            .isEqualTo(
+            .contains(
                 CounterpartyCreateParams.Accounting.builder()
                     .type(CounterpartyCreateParams.Accounting.Type.CUSTOMER)
                     .build()
             )
         assertThat(body.accounts())
-            .isEqualTo(
+            .contains(
                 listOf(
                     CounterpartyCreateParams.Account.builder()
                         .accountDetails(
@@ -1025,10 +1025,10 @@ class CounterpartyCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
-        assertThat(body.ledgerType()).isEqualTo(CounterpartyCreateParams.LedgerType.CUSTOMER)
+        assertThat(body.email()).contains("dev@stainlessapi.com")
+        assertThat(body.ledgerType()).contains(CounterpartyCreateParams.LedgerType.CUSTOMER)
         assertThat(body.legalEntity())
-            .isEqualTo(
+            .contains(
                 CounterpartyCreateParams.LegalEntityCreateRequest.builder()
                     .legalEntityType(
                         CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityType.BUSINESS
@@ -1341,19 +1341,19 @@ class CounterpartyCreateParamsTest {
                     .website("website")
                     .build()
             )
-        assertThat(body.legalEntityId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.legalEntityId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 CounterpartyCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(body.sendRemittanceAdvice()).isEqualTo(true)
-        assertThat(body.taxpayerIdentifier()).isEqualTo("taxpayer_identifier")
+        assertThat(body.sendRemittanceAdvice()).contains(true)
+        assertThat(body.taxpayerIdentifier()).contains("taxpayer_identifier")
         assertThat(body.verificationStatus())
-            .isEqualTo(CounterpartyCreateParams.VerificationStatus.DENIED)
+            .contains(CounterpartyCreateParams.VerificationStatus.DENIED)
     }
 
     @Test
