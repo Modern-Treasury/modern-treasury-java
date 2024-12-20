@@ -34,9 +34,9 @@ class ExternalAccountVerifyParamsTest {
         assertThat(body).isNotNull
         assertThat(body.originatingAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.paymentType()).isEqualTo(ExternalAccountVerifyParams.PaymentType.ACH)
-        assertThat(body.currency()).isEqualTo(Currency.AED)
-        assertThat(body.fallbackType()).isEqualTo(ExternalAccountVerifyParams.FallbackType.ACH)
-        assertThat(body.priority()).isEqualTo(ExternalAccountVerifyParams.Priority.HIGH)
+        assertThat(body.currency()).contains(Currency.AED)
+        assertThat(body.fallbackType()).contains(ExternalAccountVerifyParams.FallbackType.ACH)
+        assertThat(body.priority()).contains(ExternalAccountVerifyParams.Priority.HIGH)
     }
 
     @Test

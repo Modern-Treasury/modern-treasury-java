@@ -89,8 +89,8 @@ constructor(
     @NoAutoDetect
     class VirtualAccountCreateBody
     internal constructor(
-        private val internalAccountId: String?,
-        private val name: String?,
+        private val internalAccountId: String,
+        private val name: String,
         private val accountDetails: List<AccountDetailCreateRequest>?,
         private val counterpartyId: String?,
         private val creditLedgerAccountId: String?,
@@ -103,17 +103,19 @@ constructor(
     ) {
 
         /** The ID of the internal account that this virtual account is associated with. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
+        @JsonProperty("internal_account_id") fun internalAccountId(): String = internalAccountId
 
         /** The name of the virtual account. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
         /** An array of account detail objects. */
         @JsonProperty("account_details")
-        fun accountDetails(): List<AccountDetailCreateRequest>? = accountDetails
+        fun accountDetails(): Optional<List<AccountDetailCreateRequest>> =
+            Optional.ofNullable(accountDetails)
 
         /** The ID of the counterparty that the virtual account belongs to. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id")
+        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
         /**
          * The ID of a credit normal ledger account. When money leaves the virtual account, this
@@ -121,7 +123,7 @@ constructor(
          * present.
          */
         @JsonProperty("credit_ledger_account_id")
-        fun creditLedgerAccountId(): String? = creditLedgerAccountId
+        fun creditLedgerAccountId(): Optional<String> = Optional.ofNullable(creditLedgerAccountId)
 
         /**
          * The ID of a debit normal ledger account. When money enters the virtual account, this
@@ -129,26 +131,29 @@ constructor(
          * present.
          */
         @JsonProperty("debit_ledger_account_id")
-        fun debitLedgerAccountId(): String? = debitLedgerAccountId
+        fun debitLedgerAccountId(): Optional<String> = Optional.ofNullable(debitLedgerAccountId)
 
         /** An optional description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * Specifies a ledger account object that will be created with the virtual account. The
          * resulting ledger account is linked to the virtual account for auto-ledgering IPDs.
          */
         @JsonProperty("ledger_account")
-        fun ledgerAccount(): LedgerAccountCreateRequest? = ledgerAccount
+        fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
+            Optional.ofNullable(ledgerAccount)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** An array of routing detail objects. */
         @JsonProperty("routing_details")
-        fun routingDetails(): List<RoutingDetailCreateRequest>? = routingDetails
+        fun routingDetails(): Optional<List<RoutingDetailCreateRequest>> =
+            Optional.ofNullable(routingDetails)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -177,17 +182,17 @@ constructor(
 
             @JvmSynthetic
             internal fun from(virtualAccountCreateBody: VirtualAccountCreateBody) = apply {
-                this.internalAccountId = virtualAccountCreateBody.internalAccountId
-                this.name = virtualAccountCreateBody.name
-                this.accountDetails = virtualAccountCreateBody.accountDetails
-                this.counterpartyId = virtualAccountCreateBody.counterpartyId
-                this.creditLedgerAccountId = virtualAccountCreateBody.creditLedgerAccountId
-                this.debitLedgerAccountId = virtualAccountCreateBody.debitLedgerAccountId
-                this.description = virtualAccountCreateBody.description
-                this.ledgerAccount = virtualAccountCreateBody.ledgerAccount
-                this.metadata = virtualAccountCreateBody.metadata
-                this.routingDetails = virtualAccountCreateBody.routingDetails
-                additionalProperties(virtualAccountCreateBody.additionalProperties)
+                internalAccountId = virtualAccountCreateBody.internalAccountId
+                name = virtualAccountCreateBody.name
+                accountDetails = virtualAccountCreateBody.accountDetails?.toMutableList()
+                counterpartyId = virtualAccountCreateBody.counterpartyId
+                creditLedgerAccountId = virtualAccountCreateBody.creditLedgerAccountId
+                debitLedgerAccountId = virtualAccountCreateBody.debitLedgerAccountId
+                description = virtualAccountCreateBody.description
+                ledgerAccount = virtualAccountCreateBody.ledgerAccount
+                metadata = virtualAccountCreateBody.metadata
+                routingDetails = virtualAccountCreateBody.routingDetails?.toMutableList()
+                additionalProperties = virtualAccountCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The ID of the internal account that this virtual account is associated with. */
@@ -259,16 +264,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): VirtualAccountCreateBody =
@@ -562,20 +573,21 @@ constructor(
     @NoAutoDetect
     class AccountDetailCreateRequest
     private constructor(
-        private val accountNumber: String?,
+        private val accountNumber: String,
         private val accountNumberType: AccountNumberType?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The account number for the bank account. */
-        @JsonProperty("account_number") fun accountNumber(): String? = accountNumber
+        @JsonProperty("account_number") fun accountNumber(): String = accountNumber
 
         /**
          * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
          * number is in a generic format.
          */
         @JsonProperty("account_number_type")
-        fun accountNumberType(): AccountNumberType? = accountNumberType
+        fun accountNumberType(): Optional<AccountNumberType> =
+            Optional.ofNullable(accountNumberType)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -596,9 +608,10 @@ constructor(
 
             @JvmSynthetic
             internal fun from(accountDetailCreateRequest: AccountDetailCreateRequest) = apply {
-                this.accountNumber = accountDetailCreateRequest.accountNumber
-                this.accountNumberType = accountDetailCreateRequest.accountNumberType
-                additionalProperties(accountDetailCreateRequest.additionalProperties)
+                accountNumber = accountDetailCreateRequest.accountNumber
+                accountNumberType = accountDetailCreateRequest.accountNumberType
+                additionalProperties =
+                    accountDetailCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The account number for the bank account. */
@@ -616,16 +629,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountDetailCreateRequest =
@@ -770,11 +789,11 @@ constructor(
     @NoAutoDetect
     class LedgerAccountCreateRequest
     private constructor(
-        private val name: String?,
+        private val name: String,
         private val description: String?,
-        private val normalBalance: TransactionDirection?,
-        private val ledgerId: String?,
-        private val currency: String?,
+        private val normalBalance: TransactionDirection,
+        private val ledgerId: String,
+        private val currency: String,
         private val currencyExponent: Long?,
         private val ledgerAccountCategoryIds: List<String>?,
         private val ledgerableId: String?,
@@ -784,45 +803,50 @@ constructor(
     ) {
 
         /** The name of the ledger account. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
         /** The description of the ledger account. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /** The normal balance of the ledger account. */
-        @JsonProperty("normal_balance") fun normalBalance(): TransactionDirection? = normalBalance
+        @JsonProperty("normal_balance") fun normalBalance(): TransactionDirection = normalBalance
 
         /** The id of the ledger that this account belongs to. */
-        @JsonProperty("ledger_id") fun ledgerId(): String? = ledgerId
+        @JsonProperty("ledger_id") fun ledgerId(): String = ledgerId
 
         /** The currency of the ledger account. */
-        @JsonProperty("currency") fun currency(): String? = currency
+        @JsonProperty("currency") fun currency(): String = currency
 
         /** The currency exponent of the ledger account. */
-        @JsonProperty("currency_exponent") fun currencyExponent(): Long? = currencyExponent
+        @JsonProperty("currency_exponent")
+        fun currencyExponent(): Optional<Long> = Optional.ofNullable(currencyExponent)
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
          */
         @JsonProperty("ledger_account_category_ids")
-        fun ledgerAccountCategoryIds(): List<String>? = ledgerAccountCategoryIds
+        fun ledgerAccountCategoryIds(): Optional<List<String>> =
+            Optional.ofNullable(ledgerAccountCategoryIds)
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
          * populated here, otherwise null.
          */
-        @JsonProperty("ledgerable_id") fun ledgerableId(): String? = ledgerableId
+        @JsonProperty("ledgerable_id")
+        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
          * populated here, otherwise null. The value is one of internal_account or external_account.
          */
-        @JsonProperty("ledgerable_type") fun ledgerableType(): LedgerableType? = ledgerableType
+        @JsonProperty("ledgerable_type")
+        fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -851,17 +875,19 @@ constructor(
 
             @JvmSynthetic
             internal fun from(ledgerAccountCreateRequest: LedgerAccountCreateRequest) = apply {
-                this.name = ledgerAccountCreateRequest.name
-                this.description = ledgerAccountCreateRequest.description
-                this.normalBalance = ledgerAccountCreateRequest.normalBalance
-                this.ledgerId = ledgerAccountCreateRequest.ledgerId
-                this.currency = ledgerAccountCreateRequest.currency
-                this.currencyExponent = ledgerAccountCreateRequest.currencyExponent
-                this.ledgerAccountCategoryIds = ledgerAccountCreateRequest.ledgerAccountCategoryIds
-                this.ledgerableId = ledgerAccountCreateRequest.ledgerableId
-                this.ledgerableType = ledgerAccountCreateRequest.ledgerableType
-                this.metadata = ledgerAccountCreateRequest.metadata
-                additionalProperties(ledgerAccountCreateRequest.additionalProperties)
+                name = ledgerAccountCreateRequest.name
+                description = ledgerAccountCreateRequest.description
+                normalBalance = ledgerAccountCreateRequest.normalBalance
+                ledgerId = ledgerAccountCreateRequest.ledgerId
+                currency = ledgerAccountCreateRequest.currency
+                currencyExponent = ledgerAccountCreateRequest.currencyExponent
+                ledgerAccountCategoryIds =
+                    ledgerAccountCreateRequest.ledgerAccountCategoryIds?.toMutableList()
+                ledgerableId = ledgerAccountCreateRequest.ledgerableId
+                ledgerableType = ledgerAccountCreateRequest.ledgerableType
+                metadata = ledgerAccountCreateRequest.metadata
+                additionalProperties =
+                    ledgerAccountCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The name of the ledger account. */
@@ -926,16 +952,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerAccountCreateRequest =
@@ -1051,23 +1083,31 @@ constructor(
 
                 @JvmSynthetic
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -1132,21 +1172,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
@@ -1173,14 +1219,14 @@ constructor(
     @NoAutoDetect
     class RoutingDetailCreateRequest
     private constructor(
-        private val routingNumber: String?,
-        private val routingNumberType: RoutingNumberType?,
+        private val routingNumber: String,
+        private val routingNumberType: RoutingNumberType,
         private val paymentType: PaymentType?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The routing number of the bank. */
-        @JsonProperty("routing_number") fun routingNumber(): String? = routingNumber
+        @JsonProperty("routing_number") fun routingNumber(): String = routingNumber
 
         /**
          * The type of routing number. See
@@ -1188,13 +1234,14 @@ constructor(
          * details.
          */
         @JsonProperty("routing_number_type")
-        fun routingNumberType(): RoutingNumberType? = routingNumberType
+        fun routingNumberType(): RoutingNumberType = routingNumberType
 
         /**
          * If the routing detail is to be used for a specific payment type this field will be
          * populated, otherwise null.
          */
-        @JsonProperty("payment_type") fun paymentType(): PaymentType? = paymentType
+        @JsonProperty("payment_type")
+        fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1216,10 +1263,11 @@ constructor(
 
             @JvmSynthetic
             internal fun from(routingDetailCreateRequest: RoutingDetailCreateRequest) = apply {
-                this.routingNumber = routingDetailCreateRequest.routingNumber
-                this.routingNumberType = routingDetailCreateRequest.routingNumberType
-                this.paymentType = routingDetailCreateRequest.paymentType
-                additionalProperties(routingDetailCreateRequest.additionalProperties)
+                routingNumber = routingDetailCreateRequest.routingNumber
+                routingNumberType = routingDetailCreateRequest.routingNumberType
+                paymentType = routingDetailCreateRequest.paymentType
+                additionalProperties =
+                    routingDetailCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The routing number of the bank. */
@@ -1245,16 +1293,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): RoutingDetailCreateRequest =

@@ -73,7 +73,7 @@ constructor(
     @NoAutoDetect
     class CounterpartyCollectAccountBody
     internal constructor(
-        private val direction: TransactionDirection?,
+        private val direction: TransactionDirection,
         private val customRedirect: String?,
         private val fields: List<Field>?,
         private val sendEmail: Boolean?,
@@ -85,13 +85,14 @@ constructor(
          * when you need to charge a counterparty. This field helps us send a more tailored email to
          * your counterparties."
          */
-        @JsonProperty("direction") fun direction(): TransactionDirection? = direction
+        @JsonProperty("direction") fun direction(): TransactionDirection = direction
 
         /**
          * The URL you want your customer to visit upon filling out the form. By default, they will
          * be sent to a Modern Treasury landing page. This must be a valid HTTPS URL if set.
          */
-        @JsonProperty("custom_redirect") fun customRedirect(): String? = customRedirect
+        @JsonProperty("custom_redirect")
+        fun customRedirect(): Optional<String> = Optional.ofNullable(customRedirect)
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
@@ -100,7 +101,7 @@ constructor(
          * The full list of options is
          * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
          */
-        @JsonProperty("fields") fun fields(): List<Field>? = fields
+        @JsonProperty("fields") fun fields(): Optional<List<Field>> = Optional.ofNullable(fields)
 
         /**
          * By default, Modern Treasury will send an email to your counterparty that includes a link
@@ -108,7 +109,8 @@ constructor(
          * link, you can set this parameter to `false`. The JSON body will include the link to the
          * secure Modern Treasury form.
          */
-        @JsonProperty("send_email") fun sendEmail(): Boolean? = sendEmail
+        @JsonProperty("send_email")
+        fun sendEmail(): Optional<Boolean> = Optional.ofNullable(sendEmail)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -132,11 +134,12 @@ constructor(
             @JvmSynthetic
             internal fun from(counterpartyCollectAccountBody: CounterpartyCollectAccountBody) =
                 apply {
-                    this.direction = counterpartyCollectAccountBody.direction
-                    this.customRedirect = counterpartyCollectAccountBody.customRedirect
-                    this.fields = counterpartyCollectAccountBody.fields
-                    this.sendEmail = counterpartyCollectAccountBody.sendEmail
-                    additionalProperties(counterpartyCollectAccountBody.additionalProperties)
+                    direction = counterpartyCollectAccountBody.direction
+                    customRedirect = counterpartyCollectAccountBody.customRedirect
+                    fields = counterpartyCollectAccountBody.fields?.toMutableList()
+                    sendEmail = counterpartyCollectAccountBody.sendEmail
+                    additionalProperties =
+                        counterpartyCollectAccountBody.additionalProperties.toMutableMap()
                 }
 
             /**
@@ -177,16 +180,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CounterpartyCollectAccountBody =

@@ -41,16 +41,16 @@ class InternalAccountUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.counterpartyId()).isEqualTo("counterparty_id")
-        assertThat(body.ledgerAccountId()).isEqualTo("ledger_account_id")
+        assertThat(body.counterpartyId()).contains("counterparty_id")
+        assertThat(body.ledgerAccountId()).contains("ledger_account_id")
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 InternalAccountUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.parentAccountId()).isEqualTo("parent_account_id")
+        assertThat(body.name()).contains("name")
+        assertThat(body.parentAccountId()).contains("parent_account_id")
     }
 
     @Test

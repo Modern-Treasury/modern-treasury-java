@@ -34,7 +34,7 @@ class TransactionUpdateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.metadata())
-            .isEqualTo(
+            .contains(
                 TransactionUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()

@@ -100,38 +100,43 @@ constructor(
          * An optional free-form description for the reversal ledger transaction. Maximum of 1000
          * characters allowed.
          */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * The timestamp (ISO8601 format) at which the reversal ledger transaction happened for
          * reporting purposes. It defaults to the `effective_at` of the original ledger transaction
          * if not provided.
          */
-        @JsonProperty("effective_at") fun effectiveAt(): OffsetDateTime? = effectiveAt
+        @JsonProperty("effective_at")
+        fun effectiveAt(): Optional<OffsetDateTime> = Optional.ofNullable(effectiveAt)
 
         /** Must be unique within the ledger. */
-        @JsonProperty("external_id") fun externalId(): String? = externalId
+        @JsonProperty("external_id")
+        fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
         /**
          * Specify this if you'd like to link the reversal ledger transaction to a Payment object
          * like Return or Reversal.
          */
-        @JsonProperty("ledgerable_id") fun ledgerableId(): String? = ledgerableId
+        @JsonProperty("ledgerable_id")
+        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
         /**
          * Specify this if you'd like to link the reversal ledger transaction to a Payment object
          * like Return or Reversal.
          */
-        @JsonProperty("ledgerable_type") fun ledgerableType(): LedgerableType? = ledgerableType
+        @JsonProperty("ledgerable_type")
+        fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
 
         /**
          * Additional data to be added to the reversal ledger transaction as key-value pairs. Both
          * the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** Status of the reversal ledger transaction. It defaults to `posted` if not provided. */
-        @JsonProperty("status") fun status(): Status? = status
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -159,14 +164,15 @@ constructor(
             internal fun from(
                 ledgerTransactionCreateReversalBody: LedgerTransactionCreateReversalBody
             ) = apply {
-                this.description = ledgerTransactionCreateReversalBody.description
-                this.effectiveAt = ledgerTransactionCreateReversalBody.effectiveAt
-                this.externalId = ledgerTransactionCreateReversalBody.externalId
-                this.ledgerableId = ledgerTransactionCreateReversalBody.ledgerableId
-                this.ledgerableType = ledgerTransactionCreateReversalBody.ledgerableType
-                this.metadata = ledgerTransactionCreateReversalBody.metadata
-                this.status = ledgerTransactionCreateReversalBody.status
-                additionalProperties(ledgerTransactionCreateReversalBody.additionalProperties)
+                description = ledgerTransactionCreateReversalBody.description
+                effectiveAt = ledgerTransactionCreateReversalBody.effectiveAt
+                externalId = ledgerTransactionCreateReversalBody.externalId
+                ledgerableId = ledgerTransactionCreateReversalBody.ledgerableId
+                ledgerableType = ledgerTransactionCreateReversalBody.ledgerableType
+                metadata = ledgerTransactionCreateReversalBody.metadata
+                status = ledgerTransactionCreateReversalBody.status
+                additionalProperties =
+                    ledgerTransactionCreateReversalBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -218,16 +224,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LedgerTransactionCreateReversalBody =
@@ -588,21 +600,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

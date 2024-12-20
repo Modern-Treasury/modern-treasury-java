@@ -151,54 +151,64 @@ constructor(
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @JsonProperty("amount_lower_bound") fun amountLowerBound(): Long? = amountLowerBound
+        @JsonProperty("amount_lower_bound")
+        fun amountLowerBound(): Optional<Long> = Optional.ofNullable(amountLowerBound)
 
         /**
          * The highest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @JsonProperty("amount_upper_bound") fun amountUpperBound(): Long? = amountUpperBound
+        @JsonProperty("amount_upper_bound")
+        fun amountUpperBound(): Optional<Long> = Optional.ofNullable(amountUpperBound)
 
         /** The ID of the counterparty you expect for this payment. */
-        @JsonProperty("counterparty_id") fun counterpartyId(): String? = counterpartyId
+        @JsonProperty("counterparty_id")
+        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-        @JsonProperty("currency") fun currency(): Currency? = currency
+        @JsonProperty("currency") fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
         /** The earliest date the payment may come in. Format: yyyy-mm-dd */
-        @JsonProperty("date_lower_bound") fun dateLowerBound(): LocalDate? = dateLowerBound
+        @JsonProperty("date_lower_bound")
+        fun dateLowerBound(): Optional<LocalDate> = Optional.ofNullable(dateLowerBound)
 
         /** The latest date the payment may come in. Format: yyyy-mm-dd */
-        @JsonProperty("date_upper_bound") fun dateUpperBound(): LocalDate? = dateUpperBound
+        @JsonProperty("date_upper_bound")
+        fun dateUpperBound(): Optional<LocalDate> = Optional.ofNullable(dateUpperBound)
 
         /** An optional description for internal use. */
-        @JsonProperty("description") fun description(): String? = description
+        @JsonProperty("description")
+        fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        @JsonProperty("direction") fun direction(): Direction? = direction
+        @JsonProperty("direction")
+        fun direction(): Optional<Direction> = Optional.ofNullable(direction)
 
         /** The ID of the Internal Account for the expected payment. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String? = internalAccountId
+        @JsonProperty("internal_account_id")
+        fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /** The reconciliation filters you have for this payment. */
         @JsonProperty("reconciliation_filters")
-        fun reconciliationFilters(): JsonValue? = reconciliationFilters
+        fun reconciliationFilters(): Optional<JsonValue> =
+            Optional.ofNullable(reconciliationFilters)
 
         /** The reconciliation groups you have for this payment. */
         @JsonProperty("reconciliation_groups")
-        fun reconciliationGroups(): JsonValue? = reconciliationGroups
+        fun reconciliationGroups(): Optional<JsonValue> = Optional.ofNullable(reconciliationGroups)
 
         /** An array of reconciliation rule variables for this payment. */
         @JsonProperty("reconciliation_rule_variables")
-        fun reconciliationRuleVariables(): List<ReconciliationRule>? = reconciliationRuleVariables
+        fun reconciliationRuleVariables(): Optional<List<ReconciliationRule>> =
+            Optional.ofNullable(reconciliationRuleVariables)
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -206,7 +216,7 @@ constructor(
          * known as OBI or Fedwire tag 6000.
          */
         @JsonProperty("remittance_information")
-        fun remittanceInformation(): String? = remittanceInformation
+        fun remittanceInformation(): Optional<String> = Optional.ofNullable(remittanceInformation)
 
         /**
          * The statement description you expect to see on the transaction. For ACH payments, this
@@ -214,16 +224,16 @@ constructor(
          * field on the wire. For check payments, this will be the memo field.
          */
         @JsonProperty("statement_descriptor")
-        fun statementDescriptor(): String? = statementDescriptor
+        fun statementDescriptor(): Optional<String> = Optional.ofNullable(statementDescriptor)
 
         /** The Expected Payment's status can be updated from partially_reconciled to reconciled. */
-        @JsonProperty("status") fun status(): Status? = status
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
          * signet, wire.
          */
-        @JsonProperty("type") fun type(): ExpectedPaymentType? = type
+        @JsonProperty("type") fun type(): Optional<ExpectedPaymentType> = Optional.ofNullable(type)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -259,25 +269,25 @@ constructor(
 
             @JvmSynthetic
             internal fun from(expectedPaymentUpdateBody: ExpectedPaymentUpdateBody) = apply {
-                this.amountLowerBound = expectedPaymentUpdateBody.amountLowerBound
-                this.amountUpperBound = expectedPaymentUpdateBody.amountUpperBound
-                this.counterpartyId = expectedPaymentUpdateBody.counterpartyId
-                this.currency = expectedPaymentUpdateBody.currency
-                this.dateLowerBound = expectedPaymentUpdateBody.dateLowerBound
-                this.dateUpperBound = expectedPaymentUpdateBody.dateUpperBound
-                this.description = expectedPaymentUpdateBody.description
-                this.direction = expectedPaymentUpdateBody.direction
-                this.internalAccountId = expectedPaymentUpdateBody.internalAccountId
-                this.metadata = expectedPaymentUpdateBody.metadata
-                this.reconciliationFilters = expectedPaymentUpdateBody.reconciliationFilters
-                this.reconciliationGroups = expectedPaymentUpdateBody.reconciliationGroups
-                this.reconciliationRuleVariables =
-                    expectedPaymentUpdateBody.reconciliationRuleVariables
-                this.remittanceInformation = expectedPaymentUpdateBody.remittanceInformation
-                this.statementDescriptor = expectedPaymentUpdateBody.statementDescriptor
-                this.status = expectedPaymentUpdateBody.status
-                this.type = expectedPaymentUpdateBody.type
-                additionalProperties(expectedPaymentUpdateBody.additionalProperties)
+                amountLowerBound = expectedPaymentUpdateBody.amountLowerBound
+                amountUpperBound = expectedPaymentUpdateBody.amountUpperBound
+                counterpartyId = expectedPaymentUpdateBody.counterpartyId
+                currency = expectedPaymentUpdateBody.currency
+                dateLowerBound = expectedPaymentUpdateBody.dateLowerBound
+                dateUpperBound = expectedPaymentUpdateBody.dateUpperBound
+                description = expectedPaymentUpdateBody.description
+                direction = expectedPaymentUpdateBody.direction
+                internalAccountId = expectedPaymentUpdateBody.internalAccountId
+                metadata = expectedPaymentUpdateBody.metadata
+                reconciliationFilters = expectedPaymentUpdateBody.reconciliationFilters
+                reconciliationGroups = expectedPaymentUpdateBody.reconciliationGroups
+                reconciliationRuleVariables =
+                    expectedPaymentUpdateBody.reconciliationRuleVariables?.toMutableList()
+                remittanceInformation = expectedPaymentUpdateBody.remittanceInformation
+                statementDescriptor = expectedPaymentUpdateBody.statementDescriptor
+                status = expectedPaymentUpdateBody.status
+                type = expectedPaymentUpdateBody.type
+                additionalProperties = expectedPaymentUpdateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -396,16 +406,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExpectedPaymentUpdateBody =
@@ -839,21 +855,27 @@ constructor(
 
             @JvmSynthetic
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
