@@ -1,5 +1,27 @@
 # Changelog
 
+## 4.0.0 (2024-12-20)
+
+Full Changelog: [v3.1.0...v4.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.1.0...v4.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** switch query params objects to use `QueryParams` ([#293](https://github.com/Modern-Treasury/modern-treasury-java/issues/293))
+
+### Chores
+
+* **docs:** add example project ([#291](https://github.com/Modern-Treasury/modern-treasury-java/issues/291)) ([592ed0b](https://github.com/Modern-Treasury/modern-treasury-java/commit/592ed0b45702cfd57b95cd724e3756581ef23673))
+* **docs:** fix code block language ([#292](https://github.com/Modern-Treasury/modern-treasury-java/issues/292)) ([028e31e](https://github.com/Modern-Treasury/modern-treasury-java/commit/028e31ec837380ed09b40c40e14813b18806f619))
+* **docs:** update readme ([#289](https://github.com/Modern-Treasury/modern-treasury-java/issues/289)) ([7ace870](https://github.com/Modern-Treasury/modern-treasury-java/commit/7ace870a1ec171ab32b8a7c3207ddee00f5c9828))
+* fix example path ([e736e61](https://github.com/Modern-Treasury/modern-treasury-java/commit/e736e617b8b5eadbde0b0967291de7acd586f3e7))
+* update parameter examples in tests and docs ([#287](https://github.com/Modern-Treasury/modern-treasury-java/issues/287)) ([c45218f](https://github.com/Modern-Treasury/modern-treasury-java/commit/c45218f7bdc624f0cbf5e73da00ebacf94adba05))
+
+
+### Refactors
+
+* **client:** switch query params objects to use `QueryParams` ([#293](https://github.com/Modern-Treasury/modern-treasury-java/issues/293)) ([15ccd7f](https://github.com/Modern-Treasury/modern-treasury-java/commit/15ccd7f842763d6ef7f2ff564dc83d748059b8bf))
+* **internal:** use constructor to deserialize json ([#294](https://github.com/Modern-Treasury/modern-treasury-java/issues/294)) ([e0242e2](https://github.com/Modern-Treasury/modern-treasury-java/commit/e0242e2fd7ffb150688d2e314cb84160e706ff68))
+
 ## 3.1.0 (2024-12-16)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.0.0...v3.1.0)
