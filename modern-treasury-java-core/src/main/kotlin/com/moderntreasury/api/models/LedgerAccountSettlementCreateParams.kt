@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
@@ -14,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
@@ -78,19 +78,22 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = LedgerAccountSettlementCreateBody.Builder::class)
     @NoAutoDetect
     class LedgerAccountSettlementCreateBody
+    @JsonCreator
     internal constructor(
-        private val contraLedgerAccountId: String,
-        private val settledLedgerAccountId: String,
-        private val allowEitherDirection: Boolean?,
-        private val description: String?,
+        @JsonProperty("contra_ledger_account_id") private val contraLedgerAccountId: String,
+        @JsonProperty("settled_ledger_account_id") private val settledLedgerAccountId: String,
+        @JsonProperty("allow_either_direction") private val allowEitherDirection: Boolean?,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("effective_at_upper_bound")
         private val effectiveAtUpperBound: OffsetDateTime?,
-        private val metadata: Metadata?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("skip_settlement_ledger_transaction")
         private val skipSettlementLedgerTransaction: Boolean?,
-        private val status: Status?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("status") private val status: Status?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -190,7 +193,6 @@ constructor(
              * The id of the contra ledger account that sends to or receives funds from the settled
              * ledger account.
              */
-            @JsonProperty("contra_ledger_account_id")
             fun contraLedgerAccountId(contraLedgerAccountId: String) = apply {
                 this.contraLedgerAccountId = contraLedgerAccountId
             }
@@ -199,7 +201,6 @@ constructor(
              * The id of the settled ledger account whose ledger entries are queried against, and
              * its balance is reduced as a result.
              */
-            @JsonProperty("settled_ledger_account_id")
             fun settledLedgerAccountId(settledLedgerAccountId: String) = apply {
                 this.settledLedgerAccountId = settledLedgerAccountId
             }
@@ -208,13 +209,11 @@ constructor(
              * If true, the settlement amount and settlement_entry_direction will bring the
              * settlement ledger account's balance closer to zero, even if the balance is negative.
              */
-            @JsonProperty("allow_either_direction")
             fun allowEitherDirection(allowEitherDirection: Boolean) = apply {
                 this.allowEitherDirection = allowEitherDirection
             }
 
             /** The description of the ledger account settlement. */
-            @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
 
             /**
@@ -222,7 +221,6 @@ constructor(
              * included in the ledger account settlement. The default value is the created_at
              * timestamp of the ledger account settlement.
              */
-            @JsonProperty("effective_at_upper_bound")
             fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
@@ -231,14 +229,12 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * It is set to `false` by default. It should be set to `true` when migrating existing
              * settlements.
              */
-            @JsonProperty("skip_settlement_ledger_transaction")
             fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) = apply {
                 this.skipSettlementLedgerTransaction = skipSettlementLedgerTransaction
             }
@@ -247,14 +243,13 @@ constructor(
              * The status of the ledger account settlement. It is set to `pending` by default. To
              * post a ledger account settlement at creation, use `posted`.
              */
-            @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -543,11 +538,12 @@ constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -575,7 +571,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
