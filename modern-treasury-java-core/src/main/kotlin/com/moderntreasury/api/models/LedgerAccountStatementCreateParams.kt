@@ -4,13 +4,14 @@ package com.moderntreasury.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -60,16 +61,17 @@ constructor(
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = LedgerAccountStatementCreateBody.Builder::class)
     @NoAutoDetect
     class LedgerAccountStatementCreateBody
+    @JsonCreator
     internal constructor(
-        private val effectiveAtLowerBound: OffsetDateTime,
-        private val effectiveAtUpperBound: OffsetDateTime,
-        private val ledgerAccountId: String,
-        private val description: String?,
-        private val metadata: Metadata?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("effective_at_lower_bound") private val effectiveAtLowerBound: OffsetDateTime,
+        @JsonProperty("effective_at_upper_bound") private val effectiveAtUpperBound: OffsetDateTime,
+        @JsonProperty("ledger_account_id") private val ledgerAccountId: String,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -137,7 +139,6 @@ constructor(
              * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
              * included in the ledger account statement.
              */
-            @JsonProperty("effective_at_lower_bound")
             fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
@@ -146,7 +147,6 @@ constructor(
              * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
              * included in the ledger account statement.
              */
-            @JsonProperty("effective_at_upper_bound")
             fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
@@ -155,20 +155,17 @@ constructor(
              * The id of the ledger account whose ledger entries are queried against, and its
              * balances are computed as a result.
              */
-            @JsonProperty("ledger_account_id")
             fun ledgerAccountId(ledgerAccountId: String) = apply {
                 this.ledgerAccountId = ledgerAccountId
             }
 
             /** The description of the ledger account statement. */
-            @JsonProperty("description")
             fun description(description: String) = apply { this.description = description }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -176,7 +173,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -430,11 +426,12 @@ constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -462,7 +459,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
