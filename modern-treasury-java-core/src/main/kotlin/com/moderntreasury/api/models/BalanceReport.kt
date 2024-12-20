@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
@@ -20,21 +20,39 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = BalanceReport.Builder::class)
 @NoAutoDetect
 class BalanceReport
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val object_: JsonField<String>,
-    private val liveMode: JsonField<Boolean>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val updatedAt: JsonField<OffsetDateTime>,
-    private val balanceReportType: JsonField<BalanceReportType>,
-    private val asOfDate: JsonField<LocalDate>,
-    private val asOfTime: JsonField<String>,
-    private val balances: JsonField<List<Balance>>,
-    private val internalAccountId: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("balance_report_type")
+    @ExcludeMissing
+    private val balanceReportType: JsonField<BalanceReportType> = JsonMissing.of(),
+    @JsonProperty("as_of_date")
+    @ExcludeMissing
+    private val asOfDate: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("as_of_time")
+    @ExcludeMissing
+    private val asOfTime: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("balances")
+    @ExcludeMissing
+    private val balances: JsonField<List<Balance>> = JsonMissing.of(),
+    @JsonProperty("internal_account_id")
+    @ExcludeMissing
+    private val internalAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun id(): String = id.getRequired("id")
@@ -166,12 +184,10 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
-        @JsonProperty("object")
-        @ExcludeMissing
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /**
@@ -184,20 +200,14 @@ private constructor(
          * This field will be true if this object exists in the live environment or false if it
          * exists in the test environment.
          */
-        @JsonProperty("live_mode")
-        @ExcludeMissing
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-        @JsonProperty("updated_at")
-        @ExcludeMissing
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /**
@@ -211,8 +221,6 @@ private constructor(
          * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
          * `other`.
          */
-        @JsonProperty("balance_report_type")
-        @ExcludeMissing
         fun balanceReportType(balanceReportType: JsonField<BalanceReportType>) = apply {
             this.balanceReportType = balanceReportType
         }
@@ -221,24 +229,18 @@ private constructor(
         fun asOfDate(asOfDate: LocalDate) = asOfDate(JsonField.of(asOfDate))
 
         /** The date of the balance report in local time. */
-        @JsonProperty("as_of_date")
-        @ExcludeMissing
         fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
 
         /** The time (24-hour clock) of the balance report in local time. */
         fun asOfTime(asOfTime: String) = asOfTime(JsonField.of(asOfTime))
 
         /** The time (24-hour clock) of the balance report in local time. */
-        @JsonProperty("as_of_time")
-        @ExcludeMissing
         fun asOfTime(asOfTime: JsonField<String>) = apply { this.asOfTime = asOfTime }
 
         /** An array of `Balance` objects. */
         fun balances(balances: List<Balance>) = balances(JsonField.of(balances))
 
         /** An array of `Balance` objects. */
-        @JsonProperty("balances")
-        @ExcludeMissing
         fun balances(balances: JsonField<List<Balance>>) = apply { this.balances = balances }
 
         /** The ID of one of your organization's Internal Accounts. */
@@ -246,8 +248,6 @@ private constructor(
             internalAccountId(JsonField.of(internalAccountId))
 
         /** The ID of one of your organization's Internal Accounts. */
-        @JsonProperty("internal_account_id")
-        @ExcludeMissing
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
             this.internalAccountId = internalAccountId
         }
@@ -257,7 +257,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -358,24 +357,49 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = Balance.Builder::class)
     @NoAutoDetect
     class Balance
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val object_: JsonField<String>,
-        private val liveMode: JsonField<Boolean>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val updatedAt: JsonField<OffsetDateTime>,
-        private val amount: JsonField<Long>,
-        private val currency: JsonField<Currency>,
-        private val balanceType: JsonField<BalanceType>,
-        private val vendorCode: JsonField<String>,
-        private val vendorCodeType: JsonField<String>,
-        private val asOfDate: JsonField<LocalDate>,
-        private val asOfTime: JsonField<String>,
-        private val valueDate: JsonField<LocalDate>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("object")
+        @ExcludeMissing
+        private val object_: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("live_mode")
+        @ExcludeMissing
+        private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("updated_at")
+        @ExcludeMissing
+        private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<Currency> = JsonMissing.of(),
+        @JsonProperty("balance_type")
+        @ExcludeMissing
+        private val balanceType: JsonField<BalanceType> = JsonMissing.of(),
+        @JsonProperty("vendor_code")
+        @ExcludeMissing
+        private val vendorCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("vendor_code_type")
+        @ExcludeMissing
+        private val vendorCodeType: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("as_of_date")
+        @ExcludeMissing
+        private val asOfDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("as_of_time")
+        @ExcludeMissing
+        private val asOfTime: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("value_date")
+        @ExcludeMissing
+        private val valueDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun id(): String = id.getRequired("id")
@@ -542,14 +566,10 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun object_(object_: String) = object_(JsonField.of(object_))
 
-            @JsonProperty("object")
-            @ExcludeMissing
             fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
             /**
@@ -562,22 +582,16 @@ private constructor(
              * This field will be true if this object exists in the live environment or false if it
              * exists in the test environment.
              */
-            @JsonProperty("live_mode")
-            @ExcludeMissing
             fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-            @JsonProperty("updated_at")
-            @ExcludeMissing
             fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
                 this.updatedAt = updatedAt
             }
@@ -586,16 +600,12 @@ private constructor(
             fun amount(amount: Long) = amount(JsonField.of(amount))
 
             /** The balance amount. */
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /** The currency of the balance. */
             fun currency(currency: Currency) = currency(JsonField.of(currency))
 
             /** The currency of the balance. */
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
             /**
@@ -610,8 +620,6 @@ private constructor(
              * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
              * `closing_available`, `current_available`, or `other`.
              */
-            @JsonProperty("balance_type")
-            @ExcludeMissing
             fun balanceType(balanceType: JsonField<BalanceType>) = apply {
                 this.balanceType = balanceType
             }
@@ -620,8 +628,6 @@ private constructor(
             fun vendorCode(vendorCode: String) = vendorCode(JsonField.of(vendorCode))
 
             /** The code used by the bank when reporting this specific balance. */
-            @JsonProperty("vendor_code")
-            @ExcludeMissing
             fun vendorCode(vendorCode: JsonField<String>) = apply { this.vendorCode = vendorCode }
 
             /**
@@ -639,8 +645,6 @@ private constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * or `us_bank`.
              */
-            @JsonProperty("vendor_code_type")
-            @ExcludeMissing
             fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
                 this.vendorCodeType = vendorCodeType
             }
@@ -649,24 +653,18 @@ private constructor(
             fun asOfDate(asOfDate: LocalDate) = asOfDate(JsonField.of(asOfDate))
 
             /** The date on which the balance became true for the account. */
-            @JsonProperty("as_of_date")
-            @ExcludeMissing
             fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
 
             /** The time on which the balance became true for the account. */
             fun asOfTime(asOfTime: String) = asOfTime(JsonField.of(asOfTime))
 
             /** The time on which the balance became true for the account. */
-            @JsonProperty("as_of_time")
-            @ExcludeMissing
             fun asOfTime(asOfTime: JsonField<String>) = apply { this.asOfTime = asOfTime }
 
             /** The date on which the balance becomes available. */
             fun valueDate(valueDate: LocalDate) = valueDate(JsonField.of(valueDate))
 
             /** The date on which the balance becomes available. */
-            @JsonProperty("value_date")
-            @ExcludeMissing
             fun valueDate(valueDate: JsonField<LocalDate>) = apply { this.valueDate = valueDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -674,7 +672,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

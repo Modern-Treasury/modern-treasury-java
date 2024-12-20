@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
@@ -20,34 +20,70 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
-@JsonDeserialize(builder = ReturnObject.Builder::class)
 @NoAutoDetect
 class ReturnObject
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val object_: JsonField<String>,
-    private val liveMode: JsonField<Boolean>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val updatedAt: JsonField<OffsetDateTime>,
-    private val returnableId: JsonField<String>,
-    private val returnableType: JsonField<ReturnableType>,
-    private val code: JsonField<Code>,
-    private val reason: JsonField<String>,
-    private val dateOfDeath: JsonField<LocalDate>,
-    private val additionalInformation: JsonField<String>,
-    private val status: JsonField<Status>,
-    private val transactionLineItemId: JsonField<String>,
-    private val transactionId: JsonField<String>,
-    private val internalAccountId: JsonField<String>,
-    private val type: JsonField<Type>,
-    private val amount: JsonField<Long>,
-    private val currency: JsonField<Currency>,
-    private val failureReason: JsonField<String>,
-    private val role: JsonField<Role>,
-    private val currentReturn: JsonField<ReturnObject>,
-    private val referenceNumbers: JsonField<List<PaymentReference>>,
-    private val ledgerTransactionId: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("returnable_id")
+    @ExcludeMissing
+    private val returnableId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("returnable_type")
+    @ExcludeMissing
+    private val returnableType: JsonField<ReturnableType> = JsonMissing.of(),
+    @JsonProperty("code") @ExcludeMissing private val code: JsonField<Code> = JsonMissing.of(),
+    @JsonProperty("reason")
+    @ExcludeMissing
+    private val reason: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("date_of_death")
+    @ExcludeMissing
+    private val dateOfDeath: JsonField<LocalDate> = JsonMissing.of(),
+    @JsonProperty("additional_information")
+    @ExcludeMissing
+    private val additionalInformation: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("transaction_line_item_id")
+    @ExcludeMissing
+    private val transactionLineItemId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("transaction_id")
+    @ExcludeMissing
+    private val transactionId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("internal_account_id")
+    @ExcludeMissing
+    private val internalAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<Currency> = JsonMissing.of(),
+    @JsonProperty("failure_reason")
+    @ExcludeMissing
+    private val failureReason: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("role") @ExcludeMissing private val role: JsonField<Role> = JsonMissing.of(),
+    @JsonProperty("current_return")
+    @ExcludeMissing
+    private val currentReturn: JsonField<ReturnObject> = JsonMissing.of(),
+    @JsonProperty("reference_numbers")
+    @ExcludeMissing
+    private val referenceNumbers: JsonField<List<PaymentReference>> = JsonMissing.of(),
+    @JsonProperty("ledger_transaction_id")
+    @ExcludeMissing
+    private val ledgerTransactionId: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun id(): String = id.getRequired("id")
@@ -338,12 +374,10 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
-        @JsonProperty("object")
-        @ExcludeMissing
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /**
@@ -356,28 +390,20 @@ private constructor(
          * This field will be true if this object exists in the live environment or false if it
          * exists in the test environment.
          */
-        @JsonProperty("live_mode")
-        @ExcludeMissing
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-        @JsonProperty("updated_at")
-        @ExcludeMissing
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: String) = returnableId(JsonField.of(returnableId))
 
         /** The ID of the object being returned or `null`. */
-        @JsonProperty("returnable_id")
-        @ExcludeMissing
         fun returnableId(returnableId: JsonField<String>) = apply {
             this.returnableId = returnableId
         }
@@ -387,8 +413,6 @@ private constructor(
             returnableType(JsonField.of(returnableType))
 
         /** The type of object being returned or `null`. */
-        @JsonProperty("returnable_type")
-        @ExcludeMissing
         fun returnableType(returnableType: JsonField<ReturnableType>) = apply {
             this.returnableType = returnableType
         }
@@ -397,8 +421,6 @@ private constructor(
         fun code(code: Code) = code(JsonField.of(code))
 
         /** The return code. For ACH returns, this is the required ACH return code. */
-        @JsonProperty("code")
-        @ExcludeMissing
         fun code(code: JsonField<Code>) = apply { this.code = code }
 
         /**
@@ -411,8 +433,6 @@ private constructor(
          * Often the bank will provide an explanation for the return, which is a short human
          * readable string.
          */
-        @JsonProperty("reason")
-        @ExcludeMissing
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         /**
@@ -425,8 +445,6 @@ private constructor(
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
          * away.
          */
-        @JsonProperty("date_of_death")
-        @ExcludeMissing
         fun dateOfDeath(dateOfDeath: JsonField<LocalDate>) = apply {
             this.dateOfDeath = dateOfDeath
         }
@@ -442,8 +460,6 @@ private constructor(
          * Some returns may include additional information from the bank. In these cases, this
          * string will be present.
          */
-        @JsonProperty("additional_information")
-        @ExcludeMissing
         fun additionalInformation(additionalInformation: JsonField<String>) = apply {
             this.additionalInformation = additionalInformation
         }
@@ -452,8 +468,6 @@ private constructor(
         fun status(status: Status) = status(JsonField.of(status))
 
         /** The current status of the return. */
-        @JsonProperty("status")
-        @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /** The ID of the relevant Transaction Line Item or `null`. */
@@ -461,8 +475,6 @@ private constructor(
             transactionLineItemId(JsonField.of(transactionLineItemId))
 
         /** The ID of the relevant Transaction Line Item or `null`. */
-        @JsonProperty("transaction_line_item_id")
-        @ExcludeMissing
         fun transactionLineItemId(transactionLineItemId: JsonField<String>) = apply {
             this.transactionLineItemId = transactionLineItemId
         }
@@ -471,8 +483,6 @@ private constructor(
         fun transactionId(transactionId: String) = transactionId(JsonField.of(transactionId))
 
         /** The ID of the relevant Transaction or `null`. */
-        @JsonProperty("transaction_id")
-        @ExcludeMissing
         fun transactionId(transactionId: JsonField<String>) = apply {
             this.transactionId = transactionId
         }
@@ -482,8 +492,6 @@ private constructor(
             internalAccountId(JsonField.of(internalAccountId))
 
         /** The ID of the relevant Internal Account. */
-        @JsonProperty("internal_account_id")
-        @ExcludeMissing
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
             this.internalAccountId = internalAccountId
         }
@@ -498,24 +506,18 @@ private constructor(
          * The type of return. Can be one of: `ach`, `ach_noc`, `au_becs`, `bacs`, `eft`, `interac`,
          * `manual`, `paper_item`, `wire`.
          */
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = amount(JsonField.of(amount))
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /** Currency that this transaction is denominated in. */
         fun currency(currency: Currency) = currency(JsonField.of(currency))
 
         /** Currency that this transaction is denominated in. */
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
         /**
@@ -528,8 +530,6 @@ private constructor(
          * If an originating return failed to be processed by the bank, a description of the failure
          * reason will be available.
          */
-        @JsonProperty("failure_reason")
-        @ExcludeMissing
         fun failureReason(failureReason: JsonField<String>) = apply {
             this.failureReason = failureReason
         }
@@ -538,8 +538,6 @@ private constructor(
         fun role(role: Role) = role(JsonField.of(role))
 
         /** The role of the return, can be `originating` or `receiving`. */
-        @JsonProperty("role")
-        @ExcludeMissing
         fun role(role: JsonField<Role>) = apply { this.role = role }
 
         /**
@@ -552,8 +550,6 @@ private constructor(
          * If the return's status is `returned`, this will include the return object's data that is
          * returning this return.
          */
-        @JsonProperty("current_return")
-        @ExcludeMissing
         fun currentReturn(currentReturn: JsonField<ReturnObject>) = apply {
             this.currentReturn = currentReturn
         }
@@ -563,8 +559,6 @@ private constructor(
             referenceNumbers(JsonField.of(referenceNumbers))
 
         /** An array of Payment Reference objects. */
-        @JsonProperty("reference_numbers")
-        @ExcludeMissing
         fun referenceNumbers(referenceNumbers: JsonField<List<PaymentReference>>) = apply {
             this.referenceNumbers = referenceNumbers
         }
@@ -574,8 +568,6 @@ private constructor(
             ledgerTransactionId(JsonField.of(ledgerTransactionId))
 
         /** The ID of the ledger transaction linked to the return. */
-        @JsonProperty("ledger_transaction_id")
-        @ExcludeMissing
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
             this.ledgerTransactionId = ledgerTransactionId
         }
@@ -585,7 +577,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -992,18 +983,31 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = PaymentReference.Builder::class)
     @NoAutoDetect
     class PaymentReference
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val object_: JsonField<String>,
-        private val liveMode: JsonField<Boolean>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val updatedAt: JsonField<OffsetDateTime>,
-        private val referenceNumber: JsonField<String>,
-        private val referenceNumberType: JsonField<ReferenceNumberType>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("object")
+        @ExcludeMissing
+        private val object_: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("live_mode")
+        @ExcludeMissing
+        private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("updated_at")
+        @ExcludeMissing
+        private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("reference_number")
+        @ExcludeMissing
+        private val referenceNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("reference_number_type")
+        @ExcludeMissing
+        private val referenceNumberType: JsonField<ReferenceNumberType> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun id(): String = id.getRequired("id")
@@ -1100,14 +1104,10 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun object_(object_: String) = object_(JsonField.of(object_))
 
-            @JsonProperty("object")
-            @ExcludeMissing
             fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
             /**
@@ -1120,22 +1120,16 @@ private constructor(
              * This field will be true if this object exists in the live environment or false if it
              * exists in the test environment.
              */
-            @JsonProperty("live_mode")
-            @ExcludeMissing
             fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
-            @JsonProperty("updated_at")
-            @ExcludeMissing
             fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
                 this.updatedAt = updatedAt
             }
@@ -1145,8 +1139,6 @@ private constructor(
                 referenceNumber(JsonField.of(referenceNumber))
 
             /** The vendor reference number. */
-            @JsonProperty("reference_number")
-            @ExcludeMissing
             fun referenceNumber(referenceNumber: JsonField<String>) = apply {
                 this.referenceNumber = referenceNumber
             }
@@ -1156,8 +1148,6 @@ private constructor(
                 referenceNumberType(JsonField.of(referenceNumberType))
 
             /** The type of the reference number. Referring to the vendor payment id. */
-            @JsonProperty("reference_number_type")
-            @ExcludeMissing
             fun referenceNumberType(referenceNumberType: JsonField<ReferenceNumberType>) = apply {
                 this.referenceNumberType = referenceNumberType
             }
@@ -1167,7 +1157,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
