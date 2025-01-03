@@ -24,38 +24,37 @@ import java.util.Optional
 class PaymentOrderReversalCreateParams
 constructor(
     private val paymentOrderId: String,
-    private val reason: Reason,
-    private val ledgerTransaction: LedgerTransactionCreateRequest?,
-    private val metadata: Metadata?,
+    private val body: PaymentOrderReversalCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
+    /** The id of the payment order being reversed. */
     fun paymentOrderId(): String = paymentOrderId
 
-    fun reason(): Reason = reason
+    /**
+     * The reason for the reversal. Must be one of `duplicate`, `incorrect_amount`,
+     * `incorrect_receiving_account`, `date_earlier_than_intended`, `date_later_than_intended`.
+     */
+    fun reason(): Reason = body.reason()
 
-    fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> =
-        Optional.ofNullable(ledgerTransaction)
+    /**
+     * Specifies a ledger transaction object that will be created with the reversal. If the ledger
+     * transaction cannot be created, then the reversal creation will fail. The resulting ledger
+     * transaction will mirror the status of the reversal.
+     */
+    fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> = body.ledgerTransaction()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): PaymentOrderReversalCreateBody {
-        return PaymentOrderReversalCreateBody(
-            reason,
-            ledgerTransaction,
-            metadata,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): PaymentOrderReversalCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -207,25 +206,19 @@ constructor(
     class Builder {
 
         private var paymentOrderId: String? = null
-        private var reason: Reason? = null
-        private var ledgerTransaction: LedgerTransactionCreateRequest? = null
-        private var metadata: Metadata? = null
+        private var body: PaymentOrderReversalCreateBody.Builder =
+            PaymentOrderReversalCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(paymentOrderReversalCreateParams: PaymentOrderReversalCreateParams) =
             apply {
                 paymentOrderId = paymentOrderReversalCreateParams.paymentOrderId
-                reason = paymentOrderReversalCreateParams.reason
-                ledgerTransaction = paymentOrderReversalCreateParams.ledgerTransaction
-                metadata = paymentOrderReversalCreateParams.metadata
+                body = paymentOrderReversalCreateParams.body.toBuilder()
                 additionalHeaders = paymentOrderReversalCreateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     paymentOrderReversalCreateParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    paymentOrderReversalCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The id of the payment order being reversed. */
@@ -235,7 +228,7 @@ constructor(
          * The reason for the reversal. Must be one of `duplicate`, `incorrect_amount`,
          * `incorrect_receiving_account`, `date_earlier_than_intended`, `date_later_than_intended`.
          */
-        fun reason(reason: Reason) = apply { this.reason = reason }
+        fun reason(reason: Reason) = apply { body.reason(reason) }
 
         /**
          * Specifies a ledger transaction object that will be created with the reversal. If the
@@ -243,13 +236,13 @@ constructor(
          * ledger transaction will mirror the status of the reversal.
          */
         fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
-            this.ledgerTransaction = ledgerTransaction
+            body.ledgerTransaction(ledgerTransaction)
         }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -350,36 +343,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PaymentOrderReversalCreateParams =
             PaymentOrderReversalCreateParams(
                 checkNotNull(paymentOrderId) { "`paymentOrderId` is required but was not set" },
-                checkNotNull(reason) { "`reason` is required but was not set" },
-                ledgerTransaction,
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -549,7 +536,7 @@ constructor(
             private var metadata: Metadata? = null
             private var effectiveAt: OffsetDateTime? = null
             private var effectiveDate: LocalDate? = null
-            private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+            private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
             private var externalId: String? = null
             private var ledgerableType: LedgerableType? = null
             private var ledgerableId: String? = null
@@ -599,7 +586,12 @@ constructor(
 
             /** An array of ledger entry objects. */
             fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                this.ledgerEntries = ledgerEntries
+                this.ledgerEntries = ledgerEntries.toMutableList()
+            }
+
+            /** An array of ledger entry objects. */
+            fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
             }
 
             /**
@@ -1533,11 +1525,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentOrderReversalCreateParams && paymentOrderId == other.paymentOrderId && reason == other.reason && ledgerTransaction == other.ledgerTransaction && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PaymentOrderReversalCreateParams && paymentOrderId == other.paymentOrderId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrderId, reason, ledgerTransaction, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrderId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PaymentOrderReversalCreateParams{paymentOrderId=$paymentOrderId, reason=$reason, ledgerTransaction=$ledgerTransaction, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PaymentOrderReversalCreateParams{paymentOrderId=$paymentOrderId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

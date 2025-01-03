@@ -31,28 +31,47 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * Filters transactions with an `as_of_date` starting on or before the specified date
+     * (YYYY-MM-DD).
+     */
     fun asOfDateEnd(): Optional<LocalDate> = Optional.ofNullable(asOfDateEnd)
 
+    /**
+     * Filters transactions with an `as_of_date` starting on or after the specified date
+     * (YYYY-MM-DD).
+     */
     fun asOfDateStart(): Optional<LocalDate> = Optional.ofNullable(asOfDateStart)
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** Filters for transactions including the queried string in the description. */
     fun description(): Optional<String> = Optional.ofNullable(description)
 
     fun direction(): Optional<String> = Optional.ofNullable(direction)
 
+    /** Specify `internal_account_id` if you wish to see transactions to/from a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun paymentType(): Optional<String> = Optional.ofNullable(paymentType)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** Either `true` or `false`. */
     fun posted(): Optional<Boolean> = Optional.ofNullable(posted)
 
     fun transactableType(): Optional<String> = Optional.ofNullable(transactableType)
 
+    /**
+     * Filters for transactions including the queried vendor id (an identifier given to transactions
+     * by the bank).
+     */
     fun vendorId(): Optional<String> = Optional.ofNullable(vendorId)
 
     fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)

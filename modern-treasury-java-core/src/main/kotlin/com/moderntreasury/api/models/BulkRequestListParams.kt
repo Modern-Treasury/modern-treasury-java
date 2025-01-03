@@ -24,16 +24,23 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** One of create, or update. */
     fun actionType(): Optional<ActionType> = Optional.ofNullable(actionType)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** One of payment_order, expected_payment, or ledger_transaction. */
     fun resourceType(): Optional<ResourceType> = Optional.ofNullable(resourceType)
 
+    /** One of pending, processing, or completed. */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
     fun _additionalHeaders(): Headers = additionalHeaders

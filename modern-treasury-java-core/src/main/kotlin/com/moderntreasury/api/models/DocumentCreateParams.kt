@@ -25,12 +25,14 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** The unique identifier for the associated object. */
     fun documentableId(): MultipartFormValue<String> = documentableId
 
     fun documentableType(): MultipartFormValue<DocumentableType> = documentableType
 
     fun file(): MultipartFormValue<ByteArray> = file
 
+    /** A category given to the document, can be `null`. */
     fun documentType(): Optional<MultipartFormValue<String>> = Optional.ofNullable(documentType)
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -38,101 +40,17 @@ constructor(
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     @JvmSynthetic
-    internal fun getBody(): Array<MultipartFormValue<*>?> {
-        return arrayOf(
-            documentableId,
-            documentableType,
-            file,
-            documentType,
+    internal fun getBody(): Array<MultipartFormValue<*>?> =
+        arrayOf(
+            documentableId(),
+            documentableType(),
+            file(),
+            documentType().orElse(null),
         )
-    }
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
     @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
-
-    class DocumentCreateBody
-    internal constructor(
-        private val documentableId: String,
-        private val documentableType: DocumentableType,
-        private val file: ByteArray,
-        private val documentType: String?,
-    ) {
-
-        /** The unique identifier for the associated object. */
-        fun documentableId(): String = documentableId
-
-        fun documentableType(): DocumentableType = documentableType
-
-        fun file(): ByteArray = file
-
-        /** A category given to the document, can be `null`. */
-        fun documentType(): Optional<String> = Optional.ofNullable(documentType)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var documentableId: String? = null
-            private var documentableType: DocumentableType? = null
-            private var file: ByteArray? = null
-            private var documentType: String? = null
-
-            @JvmSynthetic
-            internal fun from(documentCreateBody: DocumentCreateBody) = apply {
-                documentableId = documentCreateBody.documentableId
-                documentableType = documentCreateBody.documentableType
-                file = documentCreateBody.file
-                documentType = documentCreateBody.documentType
-            }
-
-            /** The unique identifier for the associated object. */
-            fun documentableId(documentableId: String) = apply {
-                this.documentableId = documentableId
-            }
-
-            fun documentableType(documentableType: DocumentableType) = apply {
-                this.documentableType = documentableType
-            }
-
-            fun file(file: ByteArray) = apply { this.file = file }
-
-            /** A category given to the document, can be `null`. */
-            fun documentType(documentType: String) = apply { this.documentType = documentType }
-
-            fun build(): DocumentCreateBody =
-                DocumentCreateBody(
-                    checkNotNull(documentableId) { "`documentableId` is required but was not set" },
-                    checkNotNull(documentableType) {
-                        "`documentableType` is required but was not set"
-                    },
-                    checkNotNull(file) { "`file` is required but was not set" },
-                    documentType,
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is DocumentCreateBody && documentableId == other.documentableId && documentableType == other.documentableType && file == other.file && documentType == other.documentType /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(documentableId, documentableType, file, documentType) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "DocumentCreateBody{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType}"
-    }
 
     fun toBuilder() = Builder().from(this)
 
@@ -167,7 +85,11 @@ constructor(
             contentType: ContentType = ContentTypes.DefaultText
         ) = apply {
             this.documentableId =
-                MultipartFormValue.fromString("documentableId", documentableId, contentType)
+                MultipartFormValue.fromString(
+                    "documentableId",
+                    documentableId,
+                    contentType,
+                )
         }
 
         fun documentableType(
@@ -175,7 +97,11 @@ constructor(
             contentType: ContentType = ContentTypes.DefaultText
         ) = apply {
             this.documentableType =
-                MultipartFormValue.fromEnum("documentableType", documentableType, contentType)
+                MultipartFormValue.fromEnum(
+                    "documentableType",
+                    documentableType,
+                    contentType,
+                )
         }
 
         fun file(
@@ -183,7 +109,13 @@ constructor(
             filename: String? = null,
             contentType: ContentType = ContentTypes.DefaultBinary
         ) = apply {
-            this.file = MultipartFormValue.fromByteArray("file", content, contentType, filename)
+            this.file =
+                MultipartFormValue.fromByteArray(
+                    "file",
+                    content,
+                    contentType,
+                    filename,
+                )
         }
 
         /** A category given to the document, can be `null`. */
@@ -192,7 +124,11 @@ constructor(
             contentType: ContentType = ContentTypes.DefaultText
         ) = apply {
             this.documentType =
-                MultipartFormValue.fromString("documentType", documentType, contentType)
+                MultipartFormValue.fromString(
+                    "documentType",
+                    documentType,
+                    contentType,
+                )
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

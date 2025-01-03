@@ -20,10 +20,12 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** A string code representing the vendor (i.e. bank). */
     fun entity(): Optional<String> = Optional.ofNullable(entity)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** An identifier assigned by the vendor to your organization. */
     fun vendorCustomerId(): Optional<String> = Optional.ofNullable(vendorCustomerId)
 
     fun _additionalHeaders(): Headers = additionalHeaders

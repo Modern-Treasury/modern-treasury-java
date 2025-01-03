@@ -29,8 +29,10 @@ constructor(
 
     fun eventName(): Optional<String> = Optional.ofNullable(eventName)
 
+    /** An inclusive upper bound for when the event occurred */
     fun eventTimeEnd(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeEnd)
 
+    /** An inclusive lower bound for when the event occurred */
     fun eventTimeStart(): Optional<OffsetDateTime> = Optional.ofNullable(eventTimeStart)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)

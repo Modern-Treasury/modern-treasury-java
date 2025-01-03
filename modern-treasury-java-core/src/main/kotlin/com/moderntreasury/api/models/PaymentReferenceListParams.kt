@@ -27,10 +27,19 @@ constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** The actual reference number assigned by the bank. */
     fun referenceNumber(): Optional<String> = Optional.ofNullable(referenceNumber)
 
+    /**
+     * The id of the referenceable to search for. Must be accompanied by the referenceable_type or
+     * will return an error.
+     */
     fun referenceableId(): Optional<String> = Optional.ofNullable(referenceableId)
 
+    /**
+     * One of the referenceable types. This must be accompanied by the id of the referenceable or
+     * will return an error.
+     */
     fun referenceableType(): Optional<ReferenceableType> = Optional.ofNullable(referenceableType)
 
     fun _additionalHeaders(): Headers = additionalHeaders

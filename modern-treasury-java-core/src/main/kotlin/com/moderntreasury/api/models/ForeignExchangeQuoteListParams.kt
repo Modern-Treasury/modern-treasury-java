@@ -28,20 +28,30 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** Currency to convert, often called the "sell" currency. */
     fun baseCurrency(): Optional<String> = Optional.ofNullable(baseCurrency)
 
+    /** An inclusive upper bound for searching effective_at */
     fun effectiveAtEnd(): Optional<LocalDate> = Optional.ofNullable(effectiveAtEnd)
 
+    /** An inclusive lower bound for searching effective_at */
     fun effectiveAtStart(): Optional<LocalDate> = Optional.ofNullable(effectiveAtStart)
 
+    /** The timestamp until which the quote must be booked by. */
     fun expiresAt(): Optional<OffsetDateTime> = Optional.ofNullable(expiresAt)
 
+    /** The ID for the `InternalAccount` this quote is associated with. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** Currency to convert the `base_currency` to, often called the "buy" currency. */
     fun targetCurrency(): Optional<String> = Optional.ofNullable(targetCurrency)
 
     fun _additionalHeaders(): Headers = additionalHeaders

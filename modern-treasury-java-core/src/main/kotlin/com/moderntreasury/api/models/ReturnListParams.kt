@@ -26,14 +26,24 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * Specify `counterparty_id` if you wish to see returns that occurred with a specific
+     * counterparty.
+     */
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** Specify `internal_account_id` if you wish to see returns to/from a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
     fun returnableId(): Optional<String> = Optional.ofNullable(returnableId)
 
+    /**
+     * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
+     * accompanied by `returnable_id`.
+     */
     fun returnableType(): Optional<ReturnableType> = Optional.ofNullable(returnableType)
 
     fun _additionalHeaders(): Headers = additionalHeaders
