@@ -30,20 +30,39 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * Filters incoming payment details with an as_of_date starting on or before the specified date
+     * (YYYY-MM-DD).
+     */
     fun asOfDateEnd(): Optional<LocalDate> = Optional.ofNullable(asOfDateEnd)
 
+    /**
+     * Filters incoming payment details with an as_of_date starting on or after the specified date
+     * (YYYY-MM-DD).
+     */
     fun asOfDateStart(): Optional<LocalDate> = Optional.ofNullable(asOfDateStart)
 
+    /** One of `credit` or `debit`. */
     fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /**
+     * The current status of the incoming payment order. One of `pending`, `completed`, or
+     * `returned`.
+     */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
+    /** If the incoming payment detail is in a virtual account, the ID of the Virtual Account. */
     fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)
 
     fun _additionalHeaders(): Headers = additionalHeaders

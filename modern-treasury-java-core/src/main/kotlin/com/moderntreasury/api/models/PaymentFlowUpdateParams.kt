@@ -21,26 +21,26 @@ import java.util.Objects
 class PaymentFlowUpdateParams
 constructor(
     private val id: String,
-    private val status: Status,
+    private val body: PaymentFlowUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun id(): String = id
 
-    fun status(): Status = status
+    /**
+     * Required. The updated status of the payment flow. Can only be used to mark a flow as
+     * `cancelled`.
+     */
+    fun status(): Status = body.status()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): PaymentFlowUpdateBody {
-        return PaymentFlowUpdateBody(status, additionalBodyProperties)
-    }
+    @JvmSynthetic internal fun getBody(): PaymentFlowUpdateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -151,19 +151,16 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var status: Status? = null
+        private var body: PaymentFlowUpdateBody.Builder = PaymentFlowUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(paymentFlowUpdateParams: PaymentFlowUpdateParams) = apply {
             id = paymentFlowUpdateParams.id
-            status = paymentFlowUpdateParams.status
+            body = paymentFlowUpdateParams.body.toBuilder()
             additionalHeaders = paymentFlowUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = paymentFlowUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                paymentFlowUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -172,7 +169,7 @@ constructor(
          * Required. The updated status of the payment flow. Can only be used to mark a flow as
          * `cancelled`.
          */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status) = apply { body.status(status) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -273,34 +270,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PaymentFlowUpdateParams =
             PaymentFlowUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(status) { "`status` is required but was not set" },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -360,11 +353,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentFlowUpdateParams && id == other.id && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PaymentFlowUpdateParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, status, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PaymentFlowUpdateParams{id=$id, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PaymentFlowUpdateParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

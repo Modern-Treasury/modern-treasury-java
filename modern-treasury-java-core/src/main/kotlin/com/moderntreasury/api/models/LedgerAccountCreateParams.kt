@@ -21,64 +21,54 @@ import java.util.Optional
 
 class LedgerAccountCreateParams
 constructor(
-    private val currency: String,
-    private val ledgerId: String,
-    private val name: String,
-    private val normalBalance: TransactionDirection,
-    private val currencyExponent: Long?,
-    private val description: String?,
-    private val ledgerAccountCategoryIds: List<String>?,
-    private val ledgerableId: String?,
-    private val ledgerableType: LedgerableType?,
-    private val metadata: Metadata?,
+    private val body: LedgerAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun currency(): String = currency
+    /** The currency of the ledger account. */
+    fun currency(): String = body.currency()
 
-    fun ledgerId(): String = ledgerId
+    /** The id of the ledger that this account belongs to. */
+    fun ledgerId(): String = body.ledgerId()
 
-    fun name(): String = name
+    /** The name of the ledger account. */
+    fun name(): String = body.name()
 
-    fun normalBalance(): TransactionDirection = normalBalance
+    /** The normal balance of the ledger account. */
+    fun normalBalance(): TransactionDirection = body.normalBalance()
 
-    fun currencyExponent(): Optional<Long> = Optional.ofNullable(currencyExponent)
+    /** The currency exponent of the ledger account. */
+    fun currencyExponent(): Optional<Long> = body.currencyExponent()
 
-    fun description(): Optional<String> = Optional.ofNullable(description)
+    /** The description of the ledger account. */
+    fun description(): Optional<String> = body.description()
 
-    fun ledgerAccountCategoryIds(): Optional<List<String>> =
-        Optional.ofNullable(ledgerAccountCategoryIds)
+    /** The array of ledger account category ids that this ledger account should be a child of. */
+    fun ledgerAccountCategoryIds(): Optional<List<String>> = body.ledgerAccountCategoryIds()
 
-    fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
+    /**
+     * If the ledger account links to another object in Modern Treasury, the id will be populated
+     * here, otherwise null.
+     */
+    fun ledgerableId(): Optional<String> = body.ledgerableId()
 
-    fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
+    /**
+     * If the ledger account links to another object in Modern Treasury, the type will be populated
+     * here, otherwise null. The value is one of internal_account or external_account.
+     */
+    fun ledgerableType(): Optional<LedgerableType> = body.ledgerableType()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): LedgerAccountCreateBody {
-        return LedgerAccountCreateBody(
-            currency,
-            ledgerId,
-            name,
-            normalBalance,
-            currencyExponent,
-            description,
-            ledgerAccountCategoryIds,
-            ledgerableId,
-            ledgerableType,
-            metadata,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): LedgerAccountCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -168,7 +158,7 @@ constructor(
             private var normalBalance: TransactionDirection? = null
             private var currencyExponent: Long? = null
             private var description: String? = null
-            private var ledgerAccountCategoryIds: List<String>? = null
+            private var ledgerAccountCategoryIds: MutableList<String>? = null
             private var ledgerableId: String? = null
             private var ledgerableType: LedgerableType? = null
             private var metadata: Metadata? = null
@@ -217,7 +207,18 @@ constructor(
              * of.
              */
             fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
-                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
+                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds.toMutableList()
+            }
+
+            /**
+             * The array of ledger account category ids that this ledger account should be a child
+             * of.
+             */
+            fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+                ledgerAccountCategoryIds =
+                    (ledgerAccountCategoryIds ?: mutableListOf()).apply {
+                        add(ledgerAccountCategoryId)
+                    }
             }
 
             /**
@@ -304,95 +305,71 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var currency: String? = null
-        private var ledgerId: String? = null
-        private var name: String? = null
-        private var normalBalance: TransactionDirection? = null
-        private var currencyExponent: Long? = null
-        private var description: String? = null
-        private var ledgerAccountCategoryIds: MutableList<String> = mutableListOf()
-        private var ledgerableId: String? = null
-        private var ledgerableType: LedgerableType? = null
-        private var metadata: Metadata? = null
+        private var body: LedgerAccountCreateBody.Builder = LedgerAccountCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(ledgerAccountCreateParams: LedgerAccountCreateParams) = apply {
-            currency = ledgerAccountCreateParams.currency
-            ledgerId = ledgerAccountCreateParams.ledgerId
-            name = ledgerAccountCreateParams.name
-            normalBalance = ledgerAccountCreateParams.normalBalance
-            currencyExponent = ledgerAccountCreateParams.currencyExponent
-            description = ledgerAccountCreateParams.description
-            ledgerAccountCategoryIds =
-                ledgerAccountCreateParams.ledgerAccountCategoryIds?.toMutableList()
-                    ?: mutableListOf()
-            ledgerableId = ledgerAccountCreateParams.ledgerableId
-            ledgerableType = ledgerAccountCreateParams.ledgerableType
-            metadata = ledgerAccountCreateParams.metadata
+            body = ledgerAccountCreateParams.body.toBuilder()
             additionalHeaders = ledgerAccountCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = ledgerAccountCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                ledgerAccountCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The currency of the ledger account. */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String) = apply { body.currency(currency) }
 
         /** The id of the ledger that this account belongs to. */
-        fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+        fun ledgerId(ledgerId: String) = apply { body.ledgerId(ledgerId) }
 
         /** The name of the ledger account. */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /** The normal balance of the ledger account. */
         fun normalBalance(normalBalance: TransactionDirection) = apply {
-            this.normalBalance = normalBalance
+            body.normalBalance(normalBalance)
         }
 
         /** The currency exponent of the ledger account. */
         fun currencyExponent(currencyExponent: Long) = apply {
-            this.currencyExponent = currencyExponent
+            body.currencyExponent(currencyExponent)
         }
 
         /** The description of the ledger account. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String) = apply { body.description(description) }
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
          */
         fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
-            this.ledgerAccountCategoryIds.clear()
-            this.ledgerAccountCategoryIds.addAll(ledgerAccountCategoryIds)
+            body.ledgerAccountCategoryIds(ledgerAccountCategoryIds)
         }
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
          */
         fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
-            this.ledgerAccountCategoryIds.add(ledgerAccountCategoryId)
+            body.addLedgerAccountCategoryId(ledgerAccountCategoryId)
         }
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
          * populated here, otherwise null.
          */
-        fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
+        fun ledgerableId(ledgerableId: String) = apply { body.ledgerableId(ledgerableId) }
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
          * populated here, otherwise null. The value is one of internal_account or external_account.
          */
         fun ledgerableType(ledgerableType: LedgerableType) = apply {
-            this.ledgerableType = ledgerableType
+            body.ledgerableType(ledgerableType)
         }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -493,42 +470,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): LedgerAccountCreateParams =
             LedgerAccountCreateParams(
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(normalBalance) { "`normalBalance` is required but was not set" },
-                currencyExponent,
-                description,
-                ledgerAccountCategoryIds.toImmutable().ifEmpty { null },
-                ledgerableId,
-                ledgerableType,
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -674,11 +638,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountCreateParams && currency == other.currency && ledgerId == other.ledgerId && name == other.name && normalBalance == other.normalBalance && currencyExponent == other.currencyExponent && description == other.description && ledgerAccountCategoryIds == other.ledgerAccountCategoryIds && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(currency, ledgerId, name, normalBalance, currencyExponent, description, ledgerAccountCategoryIds, ledgerableId, ledgerableType, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "LedgerAccountCreateParams{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "LedgerAccountCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

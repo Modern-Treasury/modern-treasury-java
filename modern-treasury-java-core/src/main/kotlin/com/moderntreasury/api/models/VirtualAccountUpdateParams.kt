@@ -19,41 +19,29 @@ import java.util.Optional
 class VirtualAccountUpdateParams
 constructor(
     private val id: String,
-    private val counterpartyId: String?,
-    private val ledgerAccountId: String?,
-    private val metadata: Metadata?,
-    private val name: String?,
+    private val body: VirtualAccountUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun id(): String = id
 
-    fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+    fun counterpartyId(): Optional<String> = body.counterpartyId()
 
-    fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
+    /** The ledger account that you'd like to link to the virtual account. */
+    fun ledgerAccountId(): Optional<String> = body.ledgerAccountId()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    fun metadata(): Optional<Metadata> = body.metadata()
 
-    fun name(): Optional<String> = Optional.ofNullable(name)
+    fun name(): Optional<String> = body.name()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): VirtualAccountUpdateBody {
-        return VirtualAccountUpdateBody(
-            counterpartyId,
-            ledgerAccountId,
-            metadata,
-            name,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): VirtualAccountUpdateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -188,39 +176,30 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var counterpartyId: String? = null
-        private var ledgerAccountId: String? = null
-        private var metadata: Metadata? = null
-        private var name: String? = null
+        private var body: VirtualAccountUpdateBody.Builder = VirtualAccountUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(virtualAccountUpdateParams: VirtualAccountUpdateParams) = apply {
             id = virtualAccountUpdateParams.id
-            counterpartyId = virtualAccountUpdateParams.counterpartyId
-            ledgerAccountId = virtualAccountUpdateParams.ledgerAccountId
-            metadata = virtualAccountUpdateParams.metadata
-            name = virtualAccountUpdateParams.name
+            body = virtualAccountUpdateParams.body.toBuilder()
             additionalHeaders = virtualAccountUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = virtualAccountUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                virtualAccountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
 
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
 
         /** The ledger account that you'd like to link to the virtual account. */
         fun ledgerAccountId(ledgerAccountId: String) = apply {
-            this.ledgerAccountId = ledgerAccountId
+            body.ledgerAccountId(ledgerAccountId)
         }
 
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -321,37 +300,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): VirtualAccountUpdateParams =
             VirtualAccountUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                counterpartyId,
-                ledgerAccountId,
-                metadata,
-                name,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -427,11 +399,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is VirtualAccountUpdateParams && id == other.id && counterpartyId == other.counterpartyId && ledgerAccountId == other.ledgerAccountId && metadata == other.metadata && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is VirtualAccountUpdateParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, counterpartyId, ledgerAccountId, metadata, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "VirtualAccountUpdateParams{id=$id, counterpartyId=$counterpartyId, ledgerAccountId=$ledgerAccountId, metadata=$metadata, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "VirtualAccountUpdateParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -27,16 +27,30 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** Unique identifier for the result entity object. */
     fun entityId(): Optional<String> = Optional.ofNullable(entityId)
 
+    /**
+     * The type of the request that created this result. bulk_request is the only supported
+     * `request_type`
+     */
     fun entityType(): Optional<EntityType> = Optional.ofNullable(entityType)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /**
+     * Unique identifier for the request that created this bulk result. This is the ID of the bulk
+     * request when `request_type` is bulk_request
+     */
     fun requestId(): Optional<String> = Optional.ofNullable(requestId)
 
+    /**
+     * The type of the request that created this result. bulk_request is the only supported
+     * `request_type`
+     */
     fun requestType(): Optional<RequestType> = Optional.ofNullable(requestType)
 
+    /** One of successful or failed. */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
     fun _additionalHeaders(): Headers = additionalHeaders

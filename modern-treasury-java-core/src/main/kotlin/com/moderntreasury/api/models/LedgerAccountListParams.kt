@@ -32,15 +32,34 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * If you have specific IDs to retrieve in bulk, you can pass them as query parameters delimited
+     * with `id[]=`, for example `?id[]=123&id[]=abc`.
+     */
     fun id(): Optional<List<String>> = Optional.ofNullable(id)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+     * balance amount.
+     */
     fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
         Optional.ofNullable(availableBalanceAmount)
 
+    /**
+     * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get the
+     * balances change between the two timestamps. The lower bound is inclusive while the upper
+     * bound is exclusive of the provided timestamps. If no value is supplied the balances will be
+     * retrieved not including that bound.
+     */
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
+     * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+     * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
+     */
     fun createdAt(): Optional<CreatedAt> = Optional.ofNullable(createdAt)
 
     fun currency(): Optional<String> = Optional.ofNullable(currency)
@@ -49,18 +68,39 @@ constructor(
 
     fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    /**
+     * If you have specific names to retrieve in bulk, you can pass them as query parameters
+     * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
+     */
     fun name(): Optional<List<String>> = Optional.ofNullable(name)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+     * balance amount.
+     */
     fun pendingBalanceAmount(): Optional<PendingBalanceAmount> =
         Optional.ofNullable(pendingBalanceAmount)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+     * balance amount.
+     */
     fun postedBalanceAmount(): Optional<PostedBalanceAmount> =
         Optional.ofNullable(postedBalanceAmount)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
+     * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+     * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
+     */
     fun updatedAt(): Optional<UpdatedAt> = Optional.ofNullable(updatedAt)
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -116,7 +156,7 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var id: MutableList<String> = mutableListOf()
+        private var id: MutableList<String>? = null
         private var afterCursor: String? = null
         private var availableBalanceAmount: AvailableBalanceAmount? = null
         private var balances: Balances? = null
@@ -125,7 +165,7 @@ constructor(
         private var ledgerAccountCategoryId: String? = null
         private var ledgerId: String? = null
         private var metadata: Metadata? = null
-        private var name: MutableList<String> = mutableListOf()
+        private var name: MutableList<String>? = null
         private var pendingBalanceAmount: PendingBalanceAmount? = null
         private var perPage: Long? = null
         private var postedBalanceAmount: PostedBalanceAmount? = null
@@ -135,7 +175,7 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerAccountListParams: LedgerAccountListParams) = apply {
-            id = ledgerAccountListParams.id?.toMutableList() ?: mutableListOf()
+            id = ledgerAccountListParams.id?.toMutableList()
             afterCursor = ledgerAccountListParams.afterCursor
             availableBalanceAmount = ledgerAccountListParams.availableBalanceAmount
             balances = ledgerAccountListParams.balances
@@ -144,7 +184,7 @@ constructor(
             ledgerAccountCategoryId = ledgerAccountListParams.ledgerAccountCategoryId
             ledgerId = ledgerAccountListParams.ledgerId
             metadata = ledgerAccountListParams.metadata
-            name = ledgerAccountListParams.name?.toMutableList() ?: mutableListOf()
+            name = ledgerAccountListParams.name?.toMutableList()
             pendingBalanceAmount = ledgerAccountListParams.pendingBalanceAmount
             perPage = ledgerAccountListParams.perPage
             postedBalanceAmount = ledgerAccountListParams.postedBalanceAmount
@@ -157,16 +197,13 @@ constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: List<String>) = apply {
-            this.id.clear()
-            this.id.addAll(id)
-        }
+        fun id(id: List<String>) = apply { this.id = id.toMutableList() }
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun addId(id: String) = apply { this.id.add(id) }
+        fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
@@ -211,16 +248,15 @@ constructor(
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
          * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
          */
-        fun name(name: List<String>) = apply {
-            this.name.clear()
-            this.name.addAll(name)
-        }
+        fun name(name: List<String>) = apply { this.name = name.toMutableList() }
 
         /**
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
          * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
          */
-        fun addName(name: String) = apply { this.name.add(name) }
+        fun addName(name: String) = apply {
+            this.name = (this.name ?: mutableListOf()).apply { add(name) }
+        }
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
@@ -347,7 +383,7 @@ constructor(
 
         fun build(): LedgerAccountListParams =
             LedgerAccountListParams(
-                id.toImmutable().ifEmpty { null },
+                id?.toImmutable(),
                 afterCursor,
                 availableBalanceAmount,
                 balances,
@@ -356,7 +392,7 @@ constructor(
                 ledgerAccountCategoryId,
                 ledgerId,
                 metadata,
-                name.toImmutable().ifEmpty { null },
+                name?.toImmutable(),
                 pendingBalanceAmount,
                 perPage,
                 postedBalanceAmount,

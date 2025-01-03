@@ -21,6 +21,11 @@ constructor(
 
     fun id(): String = id
 
+    /**
+     * For example, if you want the balances as of a particular time (ISO8601), the encoded query
+     * string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as of a time
+     * are inclusive of entries with that exact time.
+     */
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
     fun _additionalHeaders(): Headers = additionalHeaders

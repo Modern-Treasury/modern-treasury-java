@@ -42,32 +42,49 @@ constructor(
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** An inclusive upper bound for searching created_at */
     fun createdAtEnd(): Optional<LocalDate> = Optional.ofNullable(createdAtEnd)
 
+    /** An inclusive lower bound for searching created_at */
     fun createdAtStart(): Optional<LocalDate> = Optional.ofNullable(createdAtStart)
 
     fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
 
+    /** An inclusive upper bound for searching effective_date */
     fun effectiveDateEnd(): Optional<LocalDate> = Optional.ofNullable(effectiveDateEnd)
 
+    /** An inclusive lower bound for searching effective_date */
     fun effectiveDateStart(): Optional<LocalDate> = Optional.ofNullable(effectiveDateStart)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun originatingAccountId(): Optional<String> = Optional.ofNullable(originatingAccountId)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /**
+     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
+     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
+     * standard mail.
+     */
     fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
+    /** An inclusive upper bound for searching process_after */
     fun processAfterEnd(): Optional<OffsetDateTime> = Optional.ofNullable(processAfterEnd)
 
+    /** An inclusive lower bound for searching process_after */
     fun processAfterStart(): Optional<OffsetDateTime> = Optional.ofNullable(processAfterStart)
 
+    /** Query for records with the provided reference number */
     fun referenceNumber(): Optional<String> = Optional.ofNullable(referenceNumber)
 
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /** The ID of a transaction that the payment order has been reconciled to. */
     fun transactionId(): Optional<String> = Optional.ofNullable(transactionId)
 
     fun type(): Optional<Type> = Optional.ofNullable(type)
