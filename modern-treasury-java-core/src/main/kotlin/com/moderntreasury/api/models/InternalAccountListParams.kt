@@ -28,16 +28,25 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** Only return internal accounts associated with this counterparty. */
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** Only return internal accounts with this currency. */
     fun currency(): Optional<Currency> = Optional.ofNullable(currency)
 
+    /** Only return internal accounts associated with this legal entity. */
     fun legalEntityId(): Optional<String> = Optional.ofNullable(legalEntityId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    /** Only return internal accounts that can originate payments with this direction. */
     fun paymentDirection(): Optional<TransactionDirection> = Optional.ofNullable(paymentDirection)
 
+    /** Only return internal accounts that can make this type of payment. */
     fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)

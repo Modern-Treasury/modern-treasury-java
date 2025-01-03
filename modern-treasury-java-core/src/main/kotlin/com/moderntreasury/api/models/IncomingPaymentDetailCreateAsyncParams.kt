@@ -22,55 +22,42 @@ import java.util.Optional
 
 class IncomingPaymentDetailCreateAsyncParams
 constructor(
-    private val amount: Long?,
-    private val asOfDate: LocalDate?,
-    private val currency: Currency?,
-    private val description: String?,
-    private val direction: Direction?,
-    private val internalAccountId: String?,
-    private val type: Type?,
-    private val virtualAccountId: String?,
+    private val body: IncomingPaymentDetailCreateAsyncBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Optional<Long> = Optional.ofNullable(amount)
+    /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+    fun amount(): Optional<Long> = body.amount()
 
-    fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
+    /** Defaults to today. */
+    fun asOfDate(): Optional<LocalDate> = body.asOfDate()
 
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency)
+    /** Defaults to the currency of the originating account. */
+    fun currency(): Optional<Currency> = body.currency()
 
-    fun description(): Optional<String> = Optional.ofNullable(description)
+    /** Defaults to a random description. */
+    fun description(): Optional<String> = body.description()
 
-    fun direction(): Optional<Direction> = Optional.ofNullable(direction)
+    /** One of `credit`, `debit`. */
+    fun direction(): Optional<Direction> = body.direction()
 
-    fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
+    /** The ID of one of your internal accounts. */
+    fun internalAccountId(): Optional<String> = body.internalAccountId()
 
-    fun type(): Optional<Type> = Optional.ofNullable(type)
+    /** One of `ach`, `wire`, `check`. */
+    fun type(): Optional<Type> = body.type()
 
-    fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)
+    /** An optional parameter to associate the incoming payment detail to a virtual account. */
+    fun virtualAccountId(): Optional<String> = body.virtualAccountId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): IncomingPaymentDetailCreateAsyncBody {
-        return IncomingPaymentDetailCreateAsyncBody(
-            amount,
-            asOfDate,
-            currency,
-            description,
-            direction,
-            internalAccountId,
-            type,
-            virtualAccountId,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): IncomingPaymentDetailCreateAsyncBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -253,63 +240,47 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
-        private var asOfDate: LocalDate? = null
-        private var currency: Currency? = null
-        private var description: String? = null
-        private var direction: Direction? = null
-        private var internalAccountId: String? = null
-        private var type: Type? = null
-        private var virtualAccountId: String? = null
+        private var body: IncomingPaymentDetailCreateAsyncBody.Builder =
+            IncomingPaymentDetailCreateAsyncBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(
             incomingPaymentDetailCreateAsyncParams: IncomingPaymentDetailCreateAsyncParams
         ) = apply {
-            amount = incomingPaymentDetailCreateAsyncParams.amount
-            asOfDate = incomingPaymentDetailCreateAsyncParams.asOfDate
-            currency = incomingPaymentDetailCreateAsyncParams.currency
-            description = incomingPaymentDetailCreateAsyncParams.description
-            direction = incomingPaymentDetailCreateAsyncParams.direction
-            internalAccountId = incomingPaymentDetailCreateAsyncParams.internalAccountId
-            type = incomingPaymentDetailCreateAsyncParams.type
-            virtualAccountId = incomingPaymentDetailCreateAsyncParams.virtualAccountId
+            body = incomingPaymentDetailCreateAsyncParams.body.toBuilder()
             additionalHeaders = incomingPaymentDetailCreateAsyncParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 incomingPaymentDetailCreateAsyncParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                incomingPaymentDetailCreateAsyncParams.additionalBodyProperties.toMutableMap()
         }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        fun amount(amount: Long) = apply { this.amount = amount }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
         /** Defaults to today. */
-        fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+        fun asOfDate(asOfDate: LocalDate) = apply { body.asOfDate(asOfDate) }
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Currency) = apply { this.currency = currency }
+        fun currency(currency: Currency) = apply { body.currency(currency) }
 
         /** Defaults to a random description. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String) = apply { body.description(description) }
 
         /** One of `credit`, `debit`. */
-        fun direction(direction: Direction) = apply { this.direction = direction }
+        fun direction(direction: Direction) = apply { body.direction(direction) }
 
         /** The ID of one of your internal accounts. */
         fun internalAccountId(internalAccountId: String) = apply {
-            this.internalAccountId = internalAccountId
+            body.internalAccountId(internalAccountId)
         }
 
         /** One of `ach`, `wire`, `check`. */
-        fun type(type: Type) = apply { this.type = type }
+        fun type(type: Type) = apply { body.type(type) }
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
         fun virtualAccountId(virtualAccountId: String) = apply {
-            this.virtualAccountId = virtualAccountId
+            body.virtualAccountId(virtualAccountId)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -411,40 +382,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams(
-                amount,
-                asOfDate,
-                currency,
-                description,
-                direction,
-                internalAccountId,
-                type,
-                virtualAccountId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -609,11 +569,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is IncomingPaymentDetailCreateAsyncParams && amount == other.amount && asOfDate == other.asOfDate && currency == other.currency && description == other.description && direction == other.direction && internalAccountId == other.internalAccountId && type == other.type && virtualAccountId == other.virtualAccountId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is IncomingPaymentDetailCreateAsyncParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, asOfDate, currency, description, direction, internalAccountId, type, virtualAccountId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "IncomingPaymentDetailCreateAsyncParams{amount=$amount, asOfDate=$asOfDate, currency=$currency, description=$description, direction=$direction, internalAccountId=$internalAccountId, type=$type, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "IncomingPaymentDetailCreateAsyncParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -23,170 +23,212 @@ import java.util.Optional
 
 class PaymentOrderCreateAsyncParams
 constructor(
-    private val amount: Long,
-    private val direction: Direction,
-    private val originatingAccountId: String,
-    private val type: PaymentOrderType,
-    private val accounting: Accounting?,
-    private val accountingCategoryId: String?,
-    private val accountingLedgerClassId: String?,
-    private val chargeBearer: ChargeBearer?,
-    private val currency: Currency?,
-    private val description: String?,
-    private val effectiveDate: LocalDate?,
-    private val expiresAt: OffsetDateTime?,
-    private val fallbackType: FallbackType?,
-    private val foreignExchangeContract: String?,
-    private val foreignExchangeIndicator: ForeignExchangeIndicator?,
-    private val ledgerTransaction: LedgerTransactionCreateRequest?,
-    private val ledgerTransactionId: String?,
-    private val lineItems: List<LineItemRequest>?,
-    private val metadata: Metadata?,
-    private val nsfProtected: Boolean?,
-    private val originatingPartyName: String?,
-    private val priority: Priority?,
-    private val processAfter: OffsetDateTime?,
-    private val purpose: String?,
-    private val receivingAccount: ReceivingAccount?,
-    private val receivingAccountId: String?,
-    private val remittanceInformation: String?,
-    private val sendRemittanceAdvice: Boolean?,
-    private val statementDescriptor: String?,
-    private val subtype: PaymentOrderSubtype?,
-    private val transactionMonitoringEnabled: Boolean?,
-    private val ultimateOriginatingPartyIdentifier: String?,
-    private val ultimateOriginatingPartyName: String?,
-    private val ultimateReceivingPartyIdentifier: String?,
-    private val ultimateReceivingPartyName: String?,
+    private val body: PaymentOrderCreateAsyncBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long = amount
+    /**
+     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000 (cents).
+     * For RTP, the maximum amount allowed by the network is $100,000.
+     */
+    fun amount(): Long = body.amount()
 
-    fun direction(): Direction = direction
+    /**
+     * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
+     * `credit` moves money from your account to someone else's. A `debit` pulls money from someone
+     * else's account to your own. Note that wire, rtp, and check payments will always be `credit`.
+     */
+    fun direction(): Direction = body.direction()
 
-    fun originatingAccountId(): String = originatingAccountId
+    /** The ID of one of your organization's internal accounts. */
+    fun originatingAccountId(): String = body.originatingAccountId()
 
-    fun type(): PaymentOrderType = type
+    /**
+     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
+     * `provexchange`, `zengin`.
+     */
+    fun type(): PaymentOrderType = body.type()
 
-    fun accounting(): Optional<Accounting> = Optional.ofNullable(accounting)
+    fun accounting(): Optional<Accounting> = body.accounting()
 
-    fun accountingCategoryId(): Optional<String> = Optional.ofNullable(accountingCategoryId)
+    /**
+     * The ID of one of your accounting categories. Note that these will only be accessible if your
+     * accounting system has been connected.
+     */
+    fun accountingCategoryId(): Optional<String> = body.accountingCategoryId()
 
-    fun accountingLedgerClassId(): Optional<String> = Optional.ofNullable(accountingLedgerClassId)
+    /**
+     * The ID of one of your accounting ledger classes. Note that these will only be accessible if
+     * your accounting system has been connected.
+     */
+    fun accountingLedgerClassId(): Optional<String> = body.accountingLedgerClassId()
 
-    fun chargeBearer(): Optional<ChargeBearer> = Optional.ofNullable(chargeBearer)
+    /**
+     * The party that will pay the fees for the payment order. Only applies to wire payment orders.
+     * Can be one of shared, sender, or receiver, which correspond respectively with the SWIFT 71A
+     * values `SHA`, `OUR`, `BEN`.
+     */
+    fun chargeBearer(): Optional<ChargeBearer> = body.chargeBearer()
 
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency)
+    /** Defaults to the currency of the originating account. */
+    fun currency(): Optional<Currency> = body.currency()
 
-    fun description(): Optional<String> = Optional.ofNullable(description)
+    /** An optional description for internal use. */
+    fun description(): Optional<String> = body.description()
 
-    fun effectiveDate(): Optional<LocalDate> = Optional.ofNullable(effectiveDate)
+    /**
+     * Date transactions are to be posted to the participants' account. Defaults to the current
+     * business day or the next business day if the current day is a bank holiday or weekend.
+     * Format: yyyy-mm-dd.
+     */
+    fun effectiveDate(): Optional<LocalDate> = body.effectiveDate()
 
-    fun expiresAt(): Optional<OffsetDateTime> = Optional.ofNullable(expiresAt)
+    /** RFP payments require an expires_at. This value must be past the effective_date. */
+    fun expiresAt(): Optional<OffsetDateTime> = body.expiresAt()
 
-    fun fallbackType(): Optional<FallbackType> = Optional.ofNullable(fallbackType)
+    /**
+     * A payment type to fallback to if the original type is not valid for the receiving account.
+     * Currently, this only supports falling back from RTP to ACH (type=rtp and fallback_type=ach)
+     */
+    fun fallbackType(): Optional<FallbackType> = body.fallbackType()
 
-    fun foreignExchangeContract(): Optional<String> = Optional.ofNullable(foreignExchangeContract)
+    /**
+     * If present, indicates a specific foreign exchange contract number that has been generated by
+     * your financial institution.
+     */
+    fun foreignExchangeContract(): Optional<String> = body.foreignExchangeContract()
 
+    /**
+     * Indicates the type of FX transfer to initiate, can be either `variable_to_fixed`,
+     * `fixed_to_variable`, or `null` if the payment order currency matches the originating account
+     * currency.
+     */
     fun foreignExchangeIndicator(): Optional<ForeignExchangeIndicator> =
-        Optional.ofNullable(foreignExchangeIndicator)
+        body.foreignExchangeIndicator()
 
-    fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> =
-        Optional.ofNullable(ledgerTransaction)
+    /**
+     * Specifies a ledger transaction object that will be created with the payment order. If the
+     * ledger transaction cannot be created, then the payment order creation will fail. The
+     * resulting ledger transaction will mirror the status of the payment order.
+     */
+    fun ledgerTransaction(): Optional<LedgerTransactionCreateRequest> = body.ledgerTransaction()
 
-    fun ledgerTransactionId(): Optional<String> = Optional.ofNullable(ledgerTransactionId)
+    /**
+     * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending ledger
+     * transaction can be attached upon payment order creation. Once the payment order is created,
+     * the status of the ledger transaction tracks the payment order automatically.
+     */
+    fun ledgerTransactionId(): Optional<String> = body.ledgerTransactionId()
 
-    fun lineItems(): Optional<List<LineItemRequest>> = Optional.ofNullable(lineItems)
+    /** An array of line items that must sum up to the amount of the payment order. */
+    fun lineItems(): Optional<List<LineItemRequest>> = body.lineItems()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = body.metadata()
 
-    fun nsfProtected(): Optional<Boolean> = Optional.ofNullable(nsfProtected)
+    /**
+     * A boolean to determine if NSF Protection is enabled for this payment order. Note that this
+     * setting must also be turned on in your organization settings page.
+     */
+    fun nsfProtected(): Optional<Boolean> = body.nsfProtected()
 
-    fun originatingPartyName(): Optional<String> = Optional.ofNullable(originatingPartyName)
+    /**
+     * If present, this will replace your default company name on receiver's bank statement. This
+     * field can only be used for ACH payments currently. For ACH, only the first 16 characters of
+     * this string will be used. Any additional characters will be truncated.
+     */
+    fun originatingPartyName(): Optional<String> = body.originatingPartyName()
 
-    fun priority(): Optional<Priority> = Optional.ofNullable(priority)
+    /**
+     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
+     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
+     * standard mail.
+     */
+    fun priority(): Optional<Priority> = body.priority()
 
-    fun processAfter(): Optional<OffsetDateTime> = Optional.ofNullable(processAfter)
+    /**
+     * If present, Modern Treasury will not process the payment until after this time. If
+     * `process_after` is past the cutoff for `effective_date`, `process_after` will take precedence
+     * and `effective_date` will automatically update to reflect the earliest possible sending date
+     * after `process_after`. Format is ISO8601 timestamp.
+     */
+    fun processAfter(): Optional<OffsetDateTime> = body.processAfter()
 
-    fun purpose(): Optional<String> = Optional.ofNullable(purpose)
+    /**
+     * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt" field
+     * in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be attached to
+     * the payment.
+     */
+    fun purpose(): Optional<String> = body.purpose()
 
-    fun receivingAccount(): Optional<ReceivingAccount> = Optional.ofNullable(receivingAccount)
+    /**
+     * Either `receiving_account` or `receiving_account_id` must be present. When using
+     * `receiving_account_id`, you may pass the id of an external account or an internal account.
+     */
+    fun receivingAccount(): Optional<ReceivingAccount> = body.receivingAccount()
 
-    fun receivingAccountId(): Optional<String> = Optional.ofNullable(receivingAccountId)
+    /**
+     * Either `receiving_account` or `receiving_account_id` must be present. When using
+     * `receiving_account_id`, you may pass the id of an external account or an internal account.
+     */
+    fun receivingAccountId(): Optional<String> = body.receivingAccountId()
 
-    fun remittanceInformation(): Optional<String> = Optional.ofNullable(remittanceInformation)
+    /**
+     * For `ach`, this field will be passed through on an addenda record. For `wire` payments the
+     * field will be passed through as the "Originator to Beneficiary Information", also known as
+     * OBI or Fedwire tag 6000.
+     */
+    fun remittanceInformation(): Optional<String> = body.remittanceInformation()
 
-    fun sendRemittanceAdvice(): Optional<Boolean> = Optional.ofNullable(sendRemittanceAdvice)
+    /**
+     * Send an email to the counterparty when the payment order is sent to the bank. If `null`,
+     * `send_remittance_advice` on the Counterparty is used.
+     */
+    fun sendRemittanceAdvice(): Optional<Boolean> = body.sendRemittanceAdvice()
 
-    fun statementDescriptor(): Optional<String> = Optional.ofNullable(statementDescriptor)
+    /**
+     * An optional descriptor which will appear in the receiver's statement. For `check` payments
+     * this field will be used as the memo line. For `ach` the maximum length is 10 characters. Note
+     * that for ACH payments, the name on your bank account will be included automatically by the
+     * bank, so you can use the characters for other useful information. For `eft` the maximum
+     * length is 15 characters.
+     */
+    fun statementDescriptor(): Optional<String> = body.statementDescriptor()
 
-    fun subtype(): Optional<PaymentOrderSubtype> = Optional.ofNullable(subtype)
+    /**
+     * An additional layer of classification for the type of payment order you are doing. This field
+     * is only used for `ach` payment orders currently. For `ach` payment orders, the `subtype`
+     * represents the SEC code. We currently support `CCD`, `PPD`, `IAT`, `CTX`, `WEB`, `CIE`, and
+     * `TEL`.
+     */
+    fun subtype(): Optional<PaymentOrderSubtype> = body.subtype()
 
-    fun transactionMonitoringEnabled(): Optional<Boolean> =
-        Optional.ofNullable(transactionMonitoringEnabled)
+    /** A flag that determines whether a payment order should go through transaction monitoring. */
+    fun transactionMonitoringEnabled(): Optional<Boolean> = body.transactionMonitoringEnabled()
 
+    /** Identifier of the ultimate originator of the payment order. */
     fun ultimateOriginatingPartyIdentifier(): Optional<String> =
-        Optional.ofNullable(ultimateOriginatingPartyIdentifier)
+        body.ultimateOriginatingPartyIdentifier()
 
-    fun ultimateOriginatingPartyName(): Optional<String> =
-        Optional.ofNullable(ultimateOriginatingPartyName)
+    /** Name of the ultimate originator of the payment order. */
+    fun ultimateOriginatingPartyName(): Optional<String> = body.ultimateOriginatingPartyName()
 
+    /** Identifier of the ultimate funds recipient. */
     fun ultimateReceivingPartyIdentifier(): Optional<String> =
-        Optional.ofNullable(ultimateReceivingPartyIdentifier)
+        body.ultimateReceivingPartyIdentifier()
 
-    fun ultimateReceivingPartyName(): Optional<String> =
-        Optional.ofNullable(ultimateReceivingPartyName)
+    /** Name of the ultimate funds recipient. */
+    fun ultimateReceivingPartyName(): Optional<String> = body.ultimateReceivingPartyName()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): PaymentOrderCreateAsyncBody {
-        return PaymentOrderCreateAsyncBody(
-            amount,
-            direction,
-            originatingAccountId,
-            type,
-            accounting,
-            accountingCategoryId,
-            accountingLedgerClassId,
-            chargeBearer,
-            currency,
-            description,
-            effectiveDate,
-            expiresAt,
-            fallbackType,
-            foreignExchangeContract,
-            foreignExchangeIndicator,
-            ledgerTransaction,
-            ledgerTransactionId,
-            lineItems,
-            metadata,
-            nsfProtected,
-            originatingPartyName,
-            priority,
-            processAfter,
-            purpose,
-            receivingAccount,
-            receivingAccountId,
-            remittanceInformation,
-            sendRemittanceAdvice,
-            statementDescriptor,
-            subtype,
-            transactionMonitoringEnabled,
-            ultimateOriginatingPartyIdentifier,
-            ultimateOriginatingPartyName,
-            ultimateReceivingPartyIdentifier,
-            ultimateReceivingPartyName,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): PaymentOrderCreateAsyncBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -508,7 +550,7 @@ constructor(
             private var foreignExchangeIndicator: ForeignExchangeIndicator? = null
             private var ledgerTransaction: LedgerTransactionCreateRequest? = null
             private var ledgerTransactionId: String? = null
-            private var lineItems: List<LineItemRequest>? = null
+            private var lineItems: MutableList<LineItemRequest>? = null
             private var metadata: Metadata? = null
             private var nsfProtected: Boolean? = null
             private var originatingPartyName: String? = null
@@ -691,7 +733,14 @@ constructor(
             }
 
             /** An array of line items that must sum up to the amount of the payment order. */
-            fun lineItems(lineItems: List<LineItemRequest>) = apply { this.lineItems = lineItems }
+            fun lineItems(lineItems: List<LineItemRequest>) = apply {
+                this.lineItems = lineItems.toMutableList()
+            }
+
+            /** An array of line items that must sum up to the amount of the payment order. */
+            fun addLineItem(lineItem: LineItemRequest) = apply {
+                lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
+            }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
@@ -911,97 +960,23 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
-        private var direction: Direction? = null
-        private var originatingAccountId: String? = null
-        private var type: PaymentOrderType? = null
-        private var accounting: Accounting? = null
-        private var accountingCategoryId: String? = null
-        private var accountingLedgerClassId: String? = null
-        private var chargeBearer: ChargeBearer? = null
-        private var currency: Currency? = null
-        private var description: String? = null
-        private var effectiveDate: LocalDate? = null
-        private var expiresAt: OffsetDateTime? = null
-        private var fallbackType: FallbackType? = null
-        private var foreignExchangeContract: String? = null
-        private var foreignExchangeIndicator: ForeignExchangeIndicator? = null
-        private var ledgerTransaction: LedgerTransactionCreateRequest? = null
-        private var ledgerTransactionId: String? = null
-        private var lineItems: MutableList<LineItemRequest> = mutableListOf()
-        private var metadata: Metadata? = null
-        private var nsfProtected: Boolean? = null
-        private var originatingPartyName: String? = null
-        private var priority: Priority? = null
-        private var processAfter: OffsetDateTime? = null
-        private var purpose: String? = null
-        private var receivingAccount: ReceivingAccount? = null
-        private var receivingAccountId: String? = null
-        private var remittanceInformation: String? = null
-        private var sendRemittanceAdvice: Boolean? = null
-        private var statementDescriptor: String? = null
-        private var subtype: PaymentOrderSubtype? = null
-        private var transactionMonitoringEnabled: Boolean? = null
-        private var ultimateOriginatingPartyIdentifier: String? = null
-        private var ultimateOriginatingPartyName: String? = null
-        private var ultimateReceivingPartyIdentifier: String? = null
-        private var ultimateReceivingPartyName: String? = null
+        private var body: PaymentOrderCreateAsyncBody.Builder =
+            PaymentOrderCreateAsyncBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(paymentOrderCreateAsyncParams: PaymentOrderCreateAsyncParams) = apply {
-            amount = paymentOrderCreateAsyncParams.amount
-            direction = paymentOrderCreateAsyncParams.direction
-            originatingAccountId = paymentOrderCreateAsyncParams.originatingAccountId
-            type = paymentOrderCreateAsyncParams.type
-            accounting = paymentOrderCreateAsyncParams.accounting
-            accountingCategoryId = paymentOrderCreateAsyncParams.accountingCategoryId
-            accountingLedgerClassId = paymentOrderCreateAsyncParams.accountingLedgerClassId
-            chargeBearer = paymentOrderCreateAsyncParams.chargeBearer
-            currency = paymentOrderCreateAsyncParams.currency
-            description = paymentOrderCreateAsyncParams.description
-            effectiveDate = paymentOrderCreateAsyncParams.effectiveDate
-            expiresAt = paymentOrderCreateAsyncParams.expiresAt
-            fallbackType = paymentOrderCreateAsyncParams.fallbackType
-            foreignExchangeContract = paymentOrderCreateAsyncParams.foreignExchangeContract
-            foreignExchangeIndicator = paymentOrderCreateAsyncParams.foreignExchangeIndicator
-            ledgerTransaction = paymentOrderCreateAsyncParams.ledgerTransaction
-            ledgerTransactionId = paymentOrderCreateAsyncParams.ledgerTransactionId
-            lineItems = paymentOrderCreateAsyncParams.lineItems?.toMutableList() ?: mutableListOf()
-            metadata = paymentOrderCreateAsyncParams.metadata
-            nsfProtected = paymentOrderCreateAsyncParams.nsfProtected
-            originatingPartyName = paymentOrderCreateAsyncParams.originatingPartyName
-            priority = paymentOrderCreateAsyncParams.priority
-            processAfter = paymentOrderCreateAsyncParams.processAfter
-            purpose = paymentOrderCreateAsyncParams.purpose
-            receivingAccount = paymentOrderCreateAsyncParams.receivingAccount
-            receivingAccountId = paymentOrderCreateAsyncParams.receivingAccountId
-            remittanceInformation = paymentOrderCreateAsyncParams.remittanceInformation
-            sendRemittanceAdvice = paymentOrderCreateAsyncParams.sendRemittanceAdvice
-            statementDescriptor = paymentOrderCreateAsyncParams.statementDescriptor
-            subtype = paymentOrderCreateAsyncParams.subtype
-            transactionMonitoringEnabled =
-                paymentOrderCreateAsyncParams.transactionMonitoringEnabled
-            ultimateOriginatingPartyIdentifier =
-                paymentOrderCreateAsyncParams.ultimateOriginatingPartyIdentifier
-            ultimateOriginatingPartyName =
-                paymentOrderCreateAsyncParams.ultimateOriginatingPartyName
-            ultimateReceivingPartyIdentifier =
-                paymentOrderCreateAsyncParams.ultimateReceivingPartyIdentifier
-            ultimateReceivingPartyName = paymentOrderCreateAsyncParams.ultimateReceivingPartyName
+            body = paymentOrderCreateAsyncParams.body.toBuilder()
             additionalHeaders = paymentOrderCreateAsyncParams.additionalHeaders.toBuilder()
             additionalQueryParams = paymentOrderCreateAsyncParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                paymentOrderCreateAsyncParams.additionalBodyProperties.toMutableMap()
         }
 
         /**
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000
          * (cents). For RTP, the maximum amount allowed by the network is $100,000.
          */
-        fun amount(amount: Long) = apply { this.amount = amount }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
          * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
@@ -1009,11 +984,11 @@ constructor(
          * someone else's account to your own. Note that wire, rtp, and check payments will always
          * be `credit`.
          */
-        fun direction(direction: Direction) = apply { this.direction = direction }
+        fun direction(direction: Direction) = apply { body.direction(direction) }
 
         /** The ID of one of your organization's internal accounts. */
         fun originatingAccountId(originatingAccountId: String) = apply {
-            this.originatingAccountId = originatingAccountId
+            body.originatingAccountId(originatingAccountId)
         }
 
         /**
@@ -1021,16 +996,16 @@ constructor(
          * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
          * `signet`, `provexchange`, `zengin`.
          */
-        fun type(type: PaymentOrderType) = apply { this.type = type }
+        fun type(type: PaymentOrderType) = apply { body.type(type) }
 
-        fun accounting(accounting: Accounting) = apply { this.accounting = accounting }
+        fun accounting(accounting: Accounting) = apply { body.accounting(accounting) }
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
         fun accountingCategoryId(accountingCategoryId: String) = apply {
-            this.accountingCategoryId = accountingCategoryId
+            body.accountingCategoryId(accountingCategoryId)
         }
 
         /**
@@ -1038,7 +1013,7 @@ constructor(
          * if your accounting system has been connected.
          */
         fun accountingLedgerClassId(accountingLedgerClassId: String) = apply {
-            this.accountingLedgerClassId = accountingLedgerClassId
+            body.accountingLedgerClassId(accountingLedgerClassId)
         }
 
         /**
@@ -1046,37 +1021,37 @@ constructor(
          * orders. Can be one of shared, sender, or receiver, which correspond respectively with the
          * SWIFT 71A values `SHA`, `OUR`, `BEN`.
          */
-        fun chargeBearer(chargeBearer: ChargeBearer) = apply { this.chargeBearer = chargeBearer }
+        fun chargeBearer(chargeBearer: ChargeBearer) = apply { body.chargeBearer(chargeBearer) }
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Currency) = apply { this.currency = currency }
+        fun currency(currency: Currency) = apply { body.currency(currency) }
 
         /** An optional description for internal use. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String) = apply { body.description(description) }
 
         /**
          * Date transactions are to be posted to the participants' account. Defaults to the current
          * business day or the next business day if the current day is a bank holiday or weekend.
          * Format: yyyy-mm-dd.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { this.effectiveDate = effectiveDate }
+        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
         /** RFP payments require an expires_at. This value must be past the effective_date. */
-        fun expiresAt(expiresAt: OffsetDateTime) = apply { this.expiresAt = expiresAt }
+        fun expiresAt(expiresAt: OffsetDateTime) = apply { body.expiresAt(expiresAt) }
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (type=rtp and
          * fallback_type=ach)
          */
-        fun fallbackType(fallbackType: FallbackType) = apply { this.fallbackType = fallbackType }
+        fun fallbackType(fallbackType: FallbackType) = apply { body.fallbackType(fallbackType) }
 
         /**
          * If present, indicates a specific foreign exchange contract number that has been generated
          * by your financial institution.
          */
         fun foreignExchangeContract(foreignExchangeContract: String) = apply {
-            this.foreignExchangeContract = foreignExchangeContract
+            body.foreignExchangeContract(foreignExchangeContract)
         }
 
         /**
@@ -1085,7 +1060,7 @@ constructor(
          * account currency.
          */
         fun foreignExchangeIndicator(foreignExchangeIndicator: ForeignExchangeIndicator) = apply {
-            this.foreignExchangeIndicator = foreignExchangeIndicator
+            body.foreignExchangeIndicator(foreignExchangeIndicator)
         }
 
         /**
@@ -1094,7 +1069,7 @@ constructor(
          * resulting ledger transaction will mirror the status of the payment order.
          */
         fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
-            this.ledgerTransaction = ledgerTransaction
+            body.ledgerTransaction(ledgerTransaction)
         }
 
         /**
@@ -1103,28 +1078,25 @@ constructor(
          * created, the status of the ledger transaction tracks the payment order automatically.
          */
         fun ledgerTransactionId(ledgerTransactionId: String) = apply {
-            this.ledgerTransactionId = ledgerTransactionId
+            body.ledgerTransactionId(ledgerTransactionId)
         }
 
         /** An array of line items that must sum up to the amount of the payment order. */
-        fun lineItems(lineItems: List<LineItemRequest>) = apply {
-            this.lineItems.clear()
-            this.lineItems.addAll(lineItems)
-        }
+        fun lineItems(lineItems: List<LineItemRequest>) = apply { body.lineItems(lineItems) }
 
         /** An array of line items that must sum up to the amount of the payment order. */
-        fun addLineItem(lineItem: LineItemRequest) = apply { this.lineItems.add(lineItem) }
+        fun addLineItem(lineItem: LineItemRequest) = apply { body.addLineItem(lineItem) }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /**
          * A boolean to determine if NSF Protection is enabled for this payment order. Note that
          * this setting must also be turned on in your organization settings page.
          */
-        fun nsfProtected(nsfProtected: Boolean) = apply { this.nsfProtected = nsfProtected }
+        fun nsfProtected(nsfProtected: Boolean) = apply { body.nsfProtected(nsfProtected) }
 
         /**
          * If present, this will replace your default company name on receiver's bank statement.
@@ -1132,7 +1104,7 @@ constructor(
          * characters of this string will be used. Any additional characters will be truncated.
          */
         fun originatingPartyName(originatingPartyName: String) = apply {
-            this.originatingPartyName = originatingPartyName
+            body.originatingPartyName(originatingPartyName)
         }
 
         /**
@@ -1140,7 +1112,7 @@ constructor(
          * EFT transfer, respectively. For check payments, `high` can mean an overnight check rather
          * than standard mail.
          */
-        fun priority(priority: Priority) = apply { this.priority = priority }
+        fun priority(priority: Priority) = apply { body.priority(priority) }
 
         /**
          * If present, Modern Treasury will not process the payment until after this time. If
@@ -1148,14 +1120,14 @@ constructor(
          * precedence and `effective_date` will automatically update to reflect the earliest
          * possible sending date after `process_after`. Format is ISO8601 timestamp.
          */
-        fun processAfter(processAfter: OffsetDateTime) = apply { this.processAfter = processAfter }
+        fun processAfter(processAfter: OffsetDateTime) = apply { body.processAfter(processAfter) }
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
          * field in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be
          * attached to the payment.
          */
-        fun purpose(purpose: String) = apply { this.purpose = purpose }
+        fun purpose(purpose: String) = apply { body.purpose(purpose) }
 
         /**
          * Either `receiving_account` or `receiving_account_id` must be present. When using
@@ -1163,7 +1135,7 @@ constructor(
          * account.
          */
         fun receivingAccount(receivingAccount: ReceivingAccount) = apply {
-            this.receivingAccount = receivingAccount
+            body.receivingAccount(receivingAccount)
         }
 
         /**
@@ -1172,7 +1144,7 @@ constructor(
          * account.
          */
         fun receivingAccountId(receivingAccountId: String) = apply {
-            this.receivingAccountId = receivingAccountId
+            body.receivingAccountId(receivingAccountId)
         }
 
         /**
@@ -1181,7 +1153,7 @@ constructor(
          * known as OBI or Fedwire tag 6000.
          */
         fun remittanceInformation(remittanceInformation: String) = apply {
-            this.remittanceInformation = remittanceInformation
+            body.remittanceInformation(remittanceInformation)
         }
 
         /**
@@ -1189,7 +1161,7 @@ constructor(
          * `send_remittance_advice` on the Counterparty is used.
          */
         fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) = apply {
-            this.sendRemittanceAdvice = sendRemittanceAdvice
+            body.sendRemittanceAdvice(sendRemittanceAdvice)
         }
 
         /**
@@ -1200,7 +1172,7 @@ constructor(
          * For `eft` the maximum length is 15 characters.
          */
         fun statementDescriptor(statementDescriptor: String) = apply {
-            this.statementDescriptor = statementDescriptor
+            body.statementDescriptor(statementDescriptor)
         }
 
         /**
@@ -1209,33 +1181,33 @@ constructor(
          * `subtype` represents the SEC code. We currently support `CCD`, `PPD`, `IAT`, `CTX`,
          * `WEB`, `CIE`, and `TEL`.
          */
-        fun subtype(subtype: PaymentOrderSubtype) = apply { this.subtype = subtype }
+        fun subtype(subtype: PaymentOrderSubtype) = apply { body.subtype(subtype) }
 
         /**
          * A flag that determines whether a payment order should go through transaction monitoring.
          */
         fun transactionMonitoringEnabled(transactionMonitoringEnabled: Boolean) = apply {
-            this.transactionMonitoringEnabled = transactionMonitoringEnabled
+            body.transactionMonitoringEnabled(transactionMonitoringEnabled)
         }
 
         /** Identifier of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyIdentifier(ultimateOriginatingPartyIdentifier: String) = apply {
-            this.ultimateOriginatingPartyIdentifier = ultimateOriginatingPartyIdentifier
+            body.ultimateOriginatingPartyIdentifier(ultimateOriginatingPartyIdentifier)
         }
 
         /** Name of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyName(ultimateOriginatingPartyName: String) = apply {
-            this.ultimateOriginatingPartyName = ultimateOriginatingPartyName
+            body.ultimateOriginatingPartyName(ultimateOriginatingPartyName)
         }
 
         /** Identifier of the ultimate funds recipient. */
         fun ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier: String) = apply {
-            this.ultimateReceivingPartyIdentifier = ultimateReceivingPartyIdentifier
+            body.ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier)
         }
 
         /** Name of the ultimate funds recipient. */
         fun ultimateReceivingPartyName(ultimateReceivingPartyName: String) = apply {
-            this.ultimateReceivingPartyName = ultimateReceivingPartyName
+            body.ultimateReceivingPartyName(ultimateReceivingPartyName)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -1337,69 +1309,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PaymentOrderCreateAsyncParams =
             PaymentOrderCreateAsyncParams(
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(direction) { "`direction` is required but was not set" },
-                checkNotNull(originatingAccountId) {
-                    "`originatingAccountId` is required but was not set"
-                },
-                checkNotNull(type) { "`type` is required but was not set" },
-                accounting,
-                accountingCategoryId,
-                accountingLedgerClassId,
-                chargeBearer,
-                currency,
-                description,
-                effectiveDate,
-                expiresAt,
-                fallbackType,
-                foreignExchangeContract,
-                foreignExchangeIndicator,
-                ledgerTransaction,
-                ledgerTransactionId,
-                lineItems.toImmutable().ifEmpty { null },
-                metadata,
-                nsfProtected,
-                originatingPartyName,
-                priority,
-                processAfter,
-                purpose,
-                receivingAccount,
-                receivingAccountId,
-                remittanceInformation,
-                sendRemittanceAdvice,
-                statementDescriptor,
-                subtype,
-                transactionMonitoringEnabled,
-                ultimateOriginatingPartyIdentifier,
-                ultimateOriginatingPartyName,
-                ultimateReceivingPartyIdentifier,
-                ultimateReceivingPartyName,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -1831,7 +1763,7 @@ constructor(
             private var metadata: Metadata? = null
             private var effectiveAt: OffsetDateTime? = null
             private var effectiveDate: LocalDate? = null
-            private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+            private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
             private var externalId: String? = null
             private var ledgerableType: LedgerableType? = null
             private var ledgerableId: String? = null
@@ -1881,7 +1813,12 @@ constructor(
 
             /** An array of ledger entry objects. */
             fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                this.ledgerEntries = ledgerEntries
+                this.ledgerEntries = ledgerEntries.toMutableList()
+            }
+
+            /** An array of ledger entry objects. */
+            fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
             }
 
             /**
@@ -3168,14 +3105,14 @@ constructor(
             private var partyType: PartyType? = null
             private var partyAddress: AddressRequest? = null
             private var name: String? = null
-            private var accountDetails: List<AccountDetail>? = null
-            private var routingDetails: List<RoutingDetail>? = null
+            private var accountDetails: MutableList<AccountDetail>? = null
+            private var routingDetails: MutableList<RoutingDetail>? = null
             private var metadata: Metadata? = null
             private var partyName: String? = null
             private var partyIdentifier: String? = null
             private var ledgerAccount: LedgerAccountCreateRequest? = null
             private var plaidProcessorToken: String? = null
-            private var contactDetails: List<ContactDetailCreateRequest>? = null
+            private var contactDetails: MutableList<ContactDetailCreateRequest>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -3215,11 +3152,19 @@ constructor(
             fun name(name: String) = apply { this.name = name }
 
             fun accountDetails(accountDetails: List<AccountDetail>) = apply {
-                this.accountDetails = accountDetails
+                this.accountDetails = accountDetails.toMutableList()
+            }
+
+            fun addAccountDetail(accountDetail: AccountDetail) = apply {
+                accountDetails = (accountDetails ?: mutableListOf()).apply { add(accountDetail) }
             }
 
             fun routingDetails(routingDetails: List<RoutingDetail>) = apply {
-                this.routingDetails = routingDetails
+                this.routingDetails = routingDetails.toMutableList()
+            }
+
+            fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
+                routingDetails = (routingDetails ?: mutableListOf()).apply { add(routingDetail) }
             }
 
             /**
@@ -3255,7 +3200,11 @@ constructor(
             }
 
             fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) = apply {
-                this.contactDetails = contactDetails
+                this.contactDetails = contactDetails.toMutableList()
+            }
+
+            fun addContactDetail(contactDetail: ContactDetailCreateRequest) = apply {
+                contactDetails = (contactDetails ?: mutableListOf()).apply { add(contactDetail) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3762,7 +3711,7 @@ constructor(
                 private var ledgerId: String? = null
                 private var currency: String? = null
                 private var currencyExponent: Long? = null
-                private var ledgerAccountCategoryIds: List<String>? = null
+                private var ledgerAccountCategoryIds: MutableList<String>? = null
                 private var ledgerableId: String? = null
                 private var ledgerableType: LedgerableType? = null
                 private var metadata: Metadata? = null
@@ -3812,7 +3761,18 @@ constructor(
                  * child of.
                  */
                 fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
-                    this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
+                    this.ledgerAccountCategoryIds = ledgerAccountCategoryIds.toMutableList()
+                }
+
+                /**
+                 * The array of ledger account category ids that this ledger account should be a
+                 * child of.
+                 */
+                fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+                    ledgerAccountCategoryIds =
+                        (ledgerAccountCategoryIds ?: mutableListOf()).apply {
+                            add(ledgerAccountCategoryId)
+                        }
                 }
 
                 /**
@@ -4828,11 +4788,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentOrderCreateAsyncParams && amount == other.amount && direction == other.direction && originatingAccountId == other.originatingAccountId && type == other.type && accounting == other.accounting && accountingCategoryId == other.accountingCategoryId && accountingLedgerClassId == other.accountingLedgerClassId && chargeBearer == other.chargeBearer && currency == other.currency && description == other.description && effectiveDate == other.effectiveDate && expiresAt == other.expiresAt && fallbackType == other.fallbackType && foreignExchangeContract == other.foreignExchangeContract && foreignExchangeIndicator == other.foreignExchangeIndicator && ledgerTransaction == other.ledgerTransaction && ledgerTransactionId == other.ledgerTransactionId && lineItems == other.lineItems && metadata == other.metadata && nsfProtected == other.nsfProtected && originatingPartyName == other.originatingPartyName && priority == other.priority && processAfter == other.processAfter && purpose == other.purpose && receivingAccount == other.receivingAccount && receivingAccountId == other.receivingAccountId && remittanceInformation == other.remittanceInformation && sendRemittanceAdvice == other.sendRemittanceAdvice && statementDescriptor == other.statementDescriptor && subtype == other.subtype && transactionMonitoringEnabled == other.transactionMonitoringEnabled && ultimateOriginatingPartyIdentifier == other.ultimateOriginatingPartyIdentifier && ultimateOriginatingPartyName == other.ultimateOriginatingPartyName && ultimateReceivingPartyIdentifier == other.ultimateReceivingPartyIdentifier && ultimateReceivingPartyName == other.ultimateReceivingPartyName && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PaymentOrderCreateAsyncParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, direction, originatingAccountId, type, accounting, accountingCategoryId, accountingLedgerClassId, chargeBearer, currency, description, effectiveDate, expiresAt, fallbackType, foreignExchangeContract, foreignExchangeIndicator, ledgerTransaction, ledgerTransactionId, lineItems, metadata, nsfProtected, originatingPartyName, priority, processAfter, purpose, receivingAccount, receivingAccountId, remittanceInformation, sendRemittanceAdvice, statementDescriptor, subtype, transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier, ultimateReceivingPartyName, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PaymentOrderCreateAsyncParams{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PaymentOrderCreateAsyncParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

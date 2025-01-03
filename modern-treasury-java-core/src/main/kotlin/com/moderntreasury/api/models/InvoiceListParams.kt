@@ -34,14 +34,21 @@ constructor(
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** An inclusive upper bound for searching due_date */
     fun dueDateEnd(): Optional<LocalDate> = Optional.ofNullable(dueDateEnd)
 
+    /** An inclusive lower bound for searching due_date */
     fun dueDateStart(): Optional<LocalDate> = Optional.ofNullable(dueDateStart)
 
     fun expectedPaymentId(): Optional<String> = Optional.ofNullable(expectedPaymentId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    /** A unique record number assigned to each invoice that is issued. */
     fun number(): Optional<String> = Optional.ofNullable(number)
 
     fun originatingAccountId(): Optional<String> = Optional.ofNullable(originatingAccountId)

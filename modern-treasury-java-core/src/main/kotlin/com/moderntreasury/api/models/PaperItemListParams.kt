@@ -22,10 +22,16 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
     fun depositDateEnd(): Optional<LocalDate> = Optional.ofNullable(depositDateEnd)
 
+    /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
     fun depositDateStart(): Optional<LocalDate> = Optional.ofNullable(depositDateStart)
 
+    /**
+     * Specify `lockbox_number` if you wish to see paper items that are associated with a specific
+     * lockbox number.
+     */
     fun lockboxNumber(): Optional<String> = Optional.ofNullable(lockboxNumber)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
