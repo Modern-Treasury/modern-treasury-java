@@ -23,128 +23,139 @@ import java.util.Optional
 
 class InvoiceCreateParams
 constructor(
-    private val counterpartyId: String,
-    private val dueDate: OffsetDateTime,
-    private val originatingAccountId: String,
-    private val autoAdvance: Boolean?,
-    private val contactDetails: List<ContactDetail>?,
-    private val counterpartyBillingAddress: CounterpartyBillingAddress?,
-    private val counterpartyShippingAddress: CounterpartyShippingAddress?,
-    private val currency: Currency?,
-    private val description: String?,
-    private val fallbackPaymentMethod: String?,
-    private val ingestLedgerEntries: Boolean?,
-    private val invoiceLineItems: List<InvoiceLineItemCreateRequest>?,
-    private val invoicerAddress: InvoicerAddress?,
-    private val ledgerAccountSettlementId: String?,
-    private val metadata: Metadata?,
-    private val notificationEmailAddresses: List<String>?,
-    private val notificationsEnabled: Boolean?,
-    private val paymentEffectiveDate: LocalDate?,
-    private val paymentMethod: PaymentMethod?,
-    private val paymentType: PaymentOrderType?,
-    private val receivingAccountId: String?,
-    private val recipientEmail: String?,
-    private val recipientName: String?,
-    private val remindAfterOverdueDays: List<Long>?,
-    private val virtualAccountId: String?,
+    private val body: InvoiceCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun counterpartyId(): String = counterpartyId
+    /** The ID of the counterparty receiving the invoice. */
+    fun counterpartyId(): String = body.counterpartyId()
 
-    fun dueDate(): OffsetDateTime = dueDate
+    /** A future date by when the invoice needs to be paid. */
+    fun dueDate(): OffsetDateTime = body.dueDate()
 
-    fun originatingAccountId(): String = originatingAccountId
+    /** The ID of the internal account the invoice should be paid to. */
+    fun originatingAccountId(): String = body.originatingAccountId()
 
-    fun autoAdvance(): Optional<Boolean> = Optional.ofNullable(autoAdvance)
+    /**
+     * When true, the invoice will progress to unpaid automatically and cannot be edited after
+     * entering that state. If the invoice fails to progress to unpaid, the errors will be returned
+     * and the invoice will not be created.
+     */
+    fun autoAdvance(): Optional<Boolean> = body.autoAdvance()
 
-    fun contactDetails(): Optional<List<ContactDetail>> = Optional.ofNullable(contactDetails)
+    /** The invoicer's contact details displayed at the top of the invoice. */
+    fun contactDetails(): Optional<List<ContactDetail>> = body.contactDetails()
 
+    /** The counterparty's billing address. */
     fun counterpartyBillingAddress(): Optional<CounterpartyBillingAddress> =
-        Optional.ofNullable(counterpartyBillingAddress)
+        body.counterpartyBillingAddress()
 
+    /** The counterparty's shipping address where physical goods should be delivered. */
     fun counterpartyShippingAddress(): Optional<CounterpartyShippingAddress> =
-        Optional.ofNullable(counterpartyShippingAddress)
+        body.counterpartyShippingAddress()
 
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency)
+    /** Currency that the invoice is denominated in. Defaults to `USD` if not provided. */
+    fun currency(): Optional<Currency> = body.currency()
 
-    fun description(): Optional<String> = Optional.ofNullable(description)
+    /** A free-form description of the invoice. */
+    fun description(): Optional<String> = body.description()
 
-    fun fallbackPaymentMethod(): Optional<String> = Optional.ofNullable(fallbackPaymentMethod)
+    /**
+     * When payment_method is automatic, the fallback payment method to use when an automatic
+     * payment fails. One of `manual` or `ui`.
+     */
+    fun fallbackPaymentMethod(): Optional<String> = body.fallbackPaymentMethod()
 
-    fun ingestLedgerEntries(): Optional<Boolean> = Optional.ofNullable(ingestLedgerEntries)
+    /**
+     * Whether to ingest the ledger_entries to populate the invoice line items. If this is false,
+     * then a line item must be provided. If this is true, line_items must be empty. Ignored if
+     * ledger_account_settlement_id is empty.
+     */
+    fun ingestLedgerEntries(): Optional<Boolean> = body.ingestLedgerEntries()
 
-    fun invoiceLineItems(): Optional<List<InvoiceLineItemCreateRequest>> =
-        Optional.ofNullable(invoiceLineItems)
+    /**
+     * An array of invoice line items. The API supports a maximum of 50 invoice line items per
+     * invoice. If a greater number of invoice line items is required, please contact support.
+     */
+    fun invoiceLineItems(): Optional<List<InvoiceLineItemCreateRequest>> = body.invoiceLineItems()
 
-    fun invoicerAddress(): Optional<InvoicerAddress> = Optional.ofNullable(invoicerAddress)
+    /** The invoice issuer's business address. */
+    fun invoicerAddress(): Optional<InvoicerAddress> = body.invoicerAddress()
 
-    fun ledgerAccountSettlementId(): Optional<String> =
-        Optional.ofNullable(ledgerAccountSettlementId)
+    /** The ID of the virtual account the invoice should be paid to. */
+    fun ledgerAccountSettlementId(): Optional<String> = body.ledgerAccountSettlementId()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = body.metadata()
 
-    fun notificationEmailAddresses(): Optional<List<String>> =
-        Optional.ofNullable(notificationEmailAddresses)
+    /**
+     * Emails in addition to the counterparty email to send invoice status notifications to. At
+     * least one email is required if notifications are enabled and the counterparty doesn't have an
+     * email.
+     */
+    fun notificationEmailAddresses(): Optional<List<String>> = body.notificationEmailAddresses()
 
-    fun notificationsEnabled(): Optional<Boolean> = Optional.ofNullable(notificationsEnabled)
+    /**
+     * If true, the invoice will send email notifications to the invoice recipients about invoice
+     * status changes.
+     */
+    fun notificationsEnabled(): Optional<Boolean> = body.notificationsEnabled()
 
-    fun paymentEffectiveDate(): Optional<LocalDate> = Optional.ofNullable(paymentEffectiveDate)
+    /**
+     * Date transactions are to be posted to the participants' account. Defaults to the current
+     * business day or the next business day if the current day is a bank holiday or weekend.
+     * Format: yyyy-mm-dd.
+     */
+    fun paymentEffectiveDate(): Optional<LocalDate> = body.paymentEffectiveDate()
 
-    fun paymentMethod(): Optional<PaymentMethod> = Optional.ofNullable(paymentMethod)
+    /**
+     * The method by which the invoice can be paid. `ui` will show the embedded payment collection
+     * flow. `automatic` will automatically initiate payment based upon the account details of the
+     * receiving_account id.\nIf the invoice amount is positive, the automatically initiated payment
+     * order's direction will be debit. If the invoice amount is negative, the automatically
+     * initiated payment order's direction will be credit. One of `manual`, `ui`, or `automatic`.
+     */
+    fun paymentMethod(): Optional<PaymentMethod> = body.paymentMethod()
 
-    fun paymentType(): Optional<PaymentOrderType> = Optional.ofNullable(paymentType)
+    /**
+     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
+     * `provexchange`, `zengin`.
+     */
+    fun paymentType(): Optional<PaymentOrderType> = body.paymentType()
 
-    fun receivingAccountId(): Optional<String> = Optional.ofNullable(receivingAccountId)
+    /** The receiving account ID. Can be an `external_account`. */
+    fun receivingAccountId(): Optional<String> = body.receivingAccountId()
 
-    fun recipientEmail(): Optional<String> = Optional.ofNullable(recipientEmail)
+    /**
+     * The email of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    fun recipientEmail(): Optional<String> = body.recipientEmail()
 
-    fun recipientName(): Optional<String> = Optional.ofNullable(recipientName)
+    /**
+     * The name of the recipient of the invoice. Leaving this value as null will fallback to using
+     * the counterparty's name.
+     */
+    fun recipientName(): Optional<String> = body.recipientName()
 
-    fun remindAfterOverdueDays(): Optional<List<Long>> = Optional.ofNullable(remindAfterOverdueDays)
+    /**
+     * Number of days after due date when overdue reminder emails will be sent out to invoice
+     * recipients.
+     */
+    fun remindAfterOverdueDays(): Optional<List<Long>> = body.remindAfterOverdueDays()
 
-    fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)
+    /** The ID of the virtual account the invoice should be paid to. */
+    fun virtualAccountId(): Optional<String> = body.virtualAccountId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): InvoiceCreateBody {
-        return InvoiceCreateBody(
-            counterpartyId,
-            dueDate,
-            originatingAccountId,
-            autoAdvance,
-            contactDetails,
-            counterpartyBillingAddress,
-            counterpartyShippingAddress,
-            currency,
-            description,
-            fallbackPaymentMethod,
-            ingestLedgerEntries,
-            invoiceLineItems,
-            invoicerAddress,
-            ledgerAccountSettlementId,
-            metadata,
-            notificationEmailAddresses,
-            notificationsEnabled,
-            paymentEffectiveDate,
-            paymentMethod,
-            paymentType,
-            receivingAccountId,
-            recipientEmail,
-            recipientName,
-            remindAfterOverdueDays,
-            virtualAccountId,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): InvoiceCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -354,18 +365,18 @@ constructor(
             private var dueDate: OffsetDateTime? = null
             private var originatingAccountId: String? = null
             private var autoAdvance: Boolean? = null
-            private var contactDetails: List<ContactDetail>? = null
+            private var contactDetails: MutableList<ContactDetail>? = null
             private var counterpartyBillingAddress: CounterpartyBillingAddress? = null
             private var counterpartyShippingAddress: CounterpartyShippingAddress? = null
             private var currency: Currency? = null
             private var description: String? = null
             private var fallbackPaymentMethod: String? = null
             private var ingestLedgerEntries: Boolean? = null
-            private var invoiceLineItems: List<InvoiceLineItemCreateRequest>? = null
+            private var invoiceLineItems: MutableList<InvoiceLineItemCreateRequest>? = null
             private var invoicerAddress: InvoicerAddress? = null
             private var ledgerAccountSettlementId: String? = null
             private var metadata: Metadata? = null
-            private var notificationEmailAddresses: List<String>? = null
+            private var notificationEmailAddresses: MutableList<String>? = null
             private var notificationsEnabled: Boolean? = null
             private var paymentEffectiveDate: LocalDate? = null
             private var paymentMethod: PaymentMethod? = null
@@ -373,7 +384,7 @@ constructor(
             private var receivingAccountId: String? = null
             private var recipientEmail: String? = null
             private var recipientName: String? = null
-            private var remindAfterOverdueDays: List<Long>? = null
+            private var remindAfterOverdueDays: MutableList<Long>? = null
             private var virtualAccountId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -430,7 +441,12 @@ constructor(
 
             /** The invoicer's contact details displayed at the top of the invoice. */
             fun contactDetails(contactDetails: List<ContactDetail>) = apply {
-                this.contactDetails = contactDetails
+                this.contactDetails = contactDetails.toMutableList()
+            }
+
+            /** The invoicer's contact details displayed at the top of the invoice. */
+            fun addContactDetail(contactDetail: ContactDetail) = apply {
+                contactDetails = (contactDetails ?: mutableListOf()).apply { add(contactDetail) }
             }
 
             /** The counterparty's billing address. */
@@ -473,7 +489,17 @@ constructor(
              * support.
              */
             fun invoiceLineItems(invoiceLineItems: List<InvoiceLineItemCreateRequest>) = apply {
-                this.invoiceLineItems = invoiceLineItems
+                this.invoiceLineItems = invoiceLineItems.toMutableList()
+            }
+
+            /**
+             * An array of invoice line items. The API supports a maximum of 50 invoice line items
+             * per invoice. If a greater number of invoice line items is required, please contact
+             * support.
+             */
+            fun addInvoiceLineItem(invoiceLineItem: InvoiceLineItemCreateRequest) = apply {
+                invoiceLineItems =
+                    (invoiceLineItems ?: mutableListOf()).apply { add(invoiceLineItem) }
             }
 
             /** The invoice issuer's business address. */
@@ -498,7 +524,19 @@ constructor(
              * doesn't have an email.
              */
             fun notificationEmailAddresses(notificationEmailAddresses: List<String>) = apply {
-                this.notificationEmailAddresses = notificationEmailAddresses
+                this.notificationEmailAddresses = notificationEmailAddresses.toMutableList()
+            }
+
+            /**
+             * Emails in addition to the counterparty email to send invoice status notifications to.
+             * At least one email is required if notifications are enabled and the counterparty
+             * doesn't have an email.
+             */
+            fun addNotificationEmailAddress(notificationEmailAddress: String) = apply {
+                notificationEmailAddresses =
+                    (notificationEmailAddresses ?: mutableListOf()).apply {
+                        add(notificationEmailAddress)
+                    }
             }
 
             /**
@@ -563,7 +601,16 @@ constructor(
              * invoice recipients.
              */
             fun remindAfterOverdueDays(remindAfterOverdueDays: List<Long>) = apply {
-                this.remindAfterOverdueDays = remindAfterOverdueDays
+                this.remindAfterOverdueDays = remindAfterOverdueDays.toMutableList()
+            }
+
+            /**
+             * Number of days after due date when overdue reminder emails will be sent out to
+             * invoice recipients.
+             */
+            fun addRemindAfterOverdueDay(remindAfterOverdueDay: Long) = apply {
+                remindAfterOverdueDays =
+                    (remindAfterOverdueDays ?: mutableListOf()).apply { add(remindAfterOverdueDay) }
             }
 
             /** The ID of the virtual account the invoice should be paid to. */
@@ -651,79 +698,26 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var counterpartyId: String? = null
-        private var dueDate: OffsetDateTime? = null
-        private var originatingAccountId: String? = null
-        private var autoAdvance: Boolean? = null
-        private var contactDetails: MutableList<ContactDetail> = mutableListOf()
-        private var counterpartyBillingAddress: CounterpartyBillingAddress? = null
-        private var counterpartyShippingAddress: CounterpartyShippingAddress? = null
-        private var currency: Currency? = null
-        private var description: String? = null
-        private var fallbackPaymentMethod: String? = null
-        private var ingestLedgerEntries: Boolean? = null
-        private var invoiceLineItems: MutableList<InvoiceLineItemCreateRequest> = mutableListOf()
-        private var invoicerAddress: InvoicerAddress? = null
-        private var ledgerAccountSettlementId: String? = null
-        private var metadata: Metadata? = null
-        private var notificationEmailAddresses: MutableList<String> = mutableListOf()
-        private var notificationsEnabled: Boolean? = null
-        private var paymentEffectiveDate: LocalDate? = null
-        private var paymentMethod: PaymentMethod? = null
-        private var paymentType: PaymentOrderType? = null
-        private var receivingAccountId: String? = null
-        private var recipientEmail: String? = null
-        private var recipientName: String? = null
-        private var remindAfterOverdueDays: MutableList<Long> = mutableListOf()
-        private var virtualAccountId: String? = null
+        private var body: InvoiceCreateBody.Builder = InvoiceCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(invoiceCreateParams: InvoiceCreateParams) = apply {
-            counterpartyId = invoiceCreateParams.counterpartyId
-            dueDate = invoiceCreateParams.dueDate
-            originatingAccountId = invoiceCreateParams.originatingAccountId
-            autoAdvance = invoiceCreateParams.autoAdvance
-            contactDetails = invoiceCreateParams.contactDetails?.toMutableList() ?: mutableListOf()
-            counterpartyBillingAddress = invoiceCreateParams.counterpartyBillingAddress
-            counterpartyShippingAddress = invoiceCreateParams.counterpartyShippingAddress
-            currency = invoiceCreateParams.currency
-            description = invoiceCreateParams.description
-            fallbackPaymentMethod = invoiceCreateParams.fallbackPaymentMethod
-            ingestLedgerEntries = invoiceCreateParams.ingestLedgerEntries
-            invoiceLineItems =
-                invoiceCreateParams.invoiceLineItems?.toMutableList() ?: mutableListOf()
-            invoicerAddress = invoiceCreateParams.invoicerAddress
-            ledgerAccountSettlementId = invoiceCreateParams.ledgerAccountSettlementId
-            metadata = invoiceCreateParams.metadata
-            notificationEmailAddresses =
-                invoiceCreateParams.notificationEmailAddresses?.toMutableList() ?: mutableListOf()
-            notificationsEnabled = invoiceCreateParams.notificationsEnabled
-            paymentEffectiveDate = invoiceCreateParams.paymentEffectiveDate
-            paymentMethod = invoiceCreateParams.paymentMethod
-            paymentType = invoiceCreateParams.paymentType
-            receivingAccountId = invoiceCreateParams.receivingAccountId
-            recipientEmail = invoiceCreateParams.recipientEmail
-            recipientName = invoiceCreateParams.recipientName
-            remindAfterOverdueDays =
-                invoiceCreateParams.remindAfterOverdueDays?.toMutableList() ?: mutableListOf()
-            virtualAccountId = invoiceCreateParams.virtualAccountId
+            body = invoiceCreateParams.body.toBuilder()
             additionalHeaders = invoiceCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = invoiceCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The ID of the counterparty receiving the invoice. */
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
 
         /** A future date by when the invoice needs to be paid. */
-        fun dueDate(dueDate: OffsetDateTime) = apply { this.dueDate = dueDate }
+        fun dueDate(dueDate: OffsetDateTime) = apply { body.dueDate(dueDate) }
 
         /** The ID of the internal account the invoice should be paid to. */
         fun originatingAccountId(originatingAccountId: String) = apply {
-            this.originatingAccountId = originatingAccountId
+            body.originatingAccountId(originatingAccountId)
         }
 
         /**
@@ -731,43 +725,42 @@ constructor(
          * entering that state. If the invoice fails to progress to unpaid, the errors will be
          * returned and the invoice will not be created.
          */
-        fun autoAdvance(autoAdvance: Boolean) = apply { this.autoAdvance = autoAdvance }
+        fun autoAdvance(autoAdvance: Boolean) = apply { body.autoAdvance(autoAdvance) }
 
         /** The invoicer's contact details displayed at the top of the invoice. */
         fun contactDetails(contactDetails: List<ContactDetail>) = apply {
-            this.contactDetails.clear()
-            this.contactDetails.addAll(contactDetails)
+            body.contactDetails(contactDetails)
         }
 
         /** The invoicer's contact details displayed at the top of the invoice. */
         fun addContactDetail(contactDetail: ContactDetail) = apply {
-            this.contactDetails.add(contactDetail)
+            body.addContactDetail(contactDetail)
         }
 
         /** The counterparty's billing address. */
         fun counterpartyBillingAddress(counterpartyBillingAddress: CounterpartyBillingAddress) =
             apply {
-                this.counterpartyBillingAddress = counterpartyBillingAddress
+                body.counterpartyBillingAddress(counterpartyBillingAddress)
             }
 
         /** The counterparty's shipping address where physical goods should be delivered. */
         fun counterpartyShippingAddress(counterpartyShippingAddress: CounterpartyShippingAddress) =
             apply {
-                this.counterpartyShippingAddress = counterpartyShippingAddress
+                body.counterpartyShippingAddress(counterpartyShippingAddress)
             }
 
         /** Currency that the invoice is denominated in. Defaults to `USD` if not provided. */
-        fun currency(currency: Currency) = apply { this.currency = currency }
+        fun currency(currency: Currency) = apply { body.currency(currency) }
 
         /** A free-form description of the invoice. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String) = apply { body.description(description) }
 
         /**
          * When payment_method is automatic, the fallback payment method to use when an automatic
          * payment fails. One of `manual` or `ui`.
          */
         fun fallbackPaymentMethod(fallbackPaymentMethod: String) = apply {
-            this.fallbackPaymentMethod = fallbackPaymentMethod
+            body.fallbackPaymentMethod(fallbackPaymentMethod)
         }
 
         /**
@@ -776,7 +769,7 @@ constructor(
          * Ignored if ledger_account_settlement_id is empty.
          */
         fun ingestLedgerEntries(ingestLedgerEntries: Boolean) = apply {
-            this.ingestLedgerEntries = ingestLedgerEntries
+            body.ingestLedgerEntries(ingestLedgerEntries)
         }
 
         /**
@@ -784,8 +777,7 @@ constructor(
          * invoice. If a greater number of invoice line items is required, please contact support.
          */
         fun invoiceLineItems(invoiceLineItems: List<InvoiceLineItemCreateRequest>) = apply {
-            this.invoiceLineItems.clear()
-            this.invoiceLineItems.addAll(invoiceLineItems)
+            body.invoiceLineItems(invoiceLineItems)
         }
 
         /**
@@ -793,23 +785,23 @@ constructor(
          * invoice. If a greater number of invoice line items is required, please contact support.
          */
         fun addInvoiceLineItem(invoiceLineItem: InvoiceLineItemCreateRequest) = apply {
-            this.invoiceLineItems.add(invoiceLineItem)
+            body.addInvoiceLineItem(invoiceLineItem)
         }
 
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: InvoicerAddress) = apply {
-            this.invoicerAddress = invoicerAddress
+            body.invoicerAddress(invoicerAddress)
         }
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: String) = apply {
-            this.ledgerAccountSettlementId = ledgerAccountSettlementId
+            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
         }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /**
          * Emails in addition to the counterparty email to send invoice status notifications to. At
@@ -817,8 +809,7 @@ constructor(
          * have an email.
          */
         fun notificationEmailAddresses(notificationEmailAddresses: List<String>) = apply {
-            this.notificationEmailAddresses.clear()
-            this.notificationEmailAddresses.addAll(notificationEmailAddresses)
+            body.notificationEmailAddresses(notificationEmailAddresses)
         }
 
         /**
@@ -827,7 +818,7 @@ constructor(
          * have an email.
          */
         fun addNotificationEmailAddress(notificationEmailAddress: String) = apply {
-            this.notificationEmailAddresses.add(notificationEmailAddress)
+            body.addNotificationEmailAddress(notificationEmailAddress)
         }
 
         /**
@@ -835,7 +826,7 @@ constructor(
          * invoice status changes.
          */
         fun notificationsEnabled(notificationsEnabled: Boolean) = apply {
-            this.notificationsEnabled = notificationsEnabled
+            body.notificationsEnabled(notificationsEnabled)
         }
 
         /**
@@ -844,7 +835,7 @@ constructor(
          * Format: yyyy-mm-dd.
          */
         fun paymentEffectiveDate(paymentEffectiveDate: LocalDate) = apply {
-            this.paymentEffectiveDate = paymentEffectiveDate
+            body.paymentEffectiveDate(paymentEffectiveDate)
         }
 
         /**
@@ -856,7 +847,7 @@ constructor(
          * `manual`, `ui`, or `automatic`.
          */
         fun paymentMethod(paymentMethod: PaymentMethod) = apply {
-            this.paymentMethod = paymentMethod
+            body.paymentMethod(paymentMethod)
         }
 
         /**
@@ -864,32 +855,31 @@ constructor(
          * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
          * `signet`, `provexchange`, `zengin`.
          */
-        fun paymentType(paymentType: PaymentOrderType) = apply { this.paymentType = paymentType }
+        fun paymentType(paymentType: PaymentOrderType) = apply { body.paymentType(paymentType) }
 
         /** The receiving account ID. Can be an `external_account`. */
         fun receivingAccountId(receivingAccountId: String) = apply {
-            this.receivingAccountId = receivingAccountId
+            body.receivingAccountId(receivingAccountId)
         }
 
         /**
          * The email of the recipient of the invoice. Leaving this value as null will fallback to
          * using the counterparty's name.
          */
-        fun recipientEmail(recipientEmail: String) = apply { this.recipientEmail = recipientEmail }
+        fun recipientEmail(recipientEmail: String) = apply { body.recipientEmail(recipientEmail) }
 
         /**
          * The name of the recipient of the invoice. Leaving this value as null will fallback to
          * using the counterparty's name.
          */
-        fun recipientName(recipientName: String) = apply { this.recipientName = recipientName }
+        fun recipientName(recipientName: String) = apply { body.recipientName(recipientName) }
 
         /**
          * Number of days after due date when overdue reminder emails will be sent out to invoice
          * recipients.
          */
         fun remindAfterOverdueDays(remindAfterOverdueDays: List<Long>) = apply {
-            this.remindAfterOverdueDays.clear()
-            this.remindAfterOverdueDays.addAll(remindAfterOverdueDays)
+            body.remindAfterOverdueDays(remindAfterOverdueDays)
         }
 
         /**
@@ -897,12 +887,12 @@ constructor(
          * recipients.
          */
         fun addRemindAfterOverdueDay(remindAfterOverdueDay: Long) = apply {
-            this.remindAfterOverdueDays.add(remindAfterOverdueDay)
+            body.addRemindAfterOverdueDay(remindAfterOverdueDay)
         }
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun virtualAccountId(virtualAccountId: String) = apply {
-            this.virtualAccountId = virtualAccountId
+            body.virtualAccountId(virtualAccountId)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -1004,59 +994,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceCreateParams =
             InvoiceCreateParams(
-                checkNotNull(counterpartyId) { "`counterpartyId` is required but was not set" },
-                checkNotNull(dueDate) { "`dueDate` is required but was not set" },
-                checkNotNull(originatingAccountId) {
-                    "`originatingAccountId` is required but was not set"
-                },
-                autoAdvance,
-                contactDetails.toImmutable().ifEmpty { null },
-                counterpartyBillingAddress,
-                counterpartyShippingAddress,
-                currency,
-                description,
-                fallbackPaymentMethod,
-                ingestLedgerEntries,
-                invoiceLineItems.toImmutable().ifEmpty { null },
-                invoicerAddress,
-                ledgerAccountSettlementId,
-                metadata,
-                notificationEmailAddresses.toImmutable().ifEmpty { null },
-                notificationsEnabled,
-                paymentEffectiveDate,
-                paymentMethod,
-                paymentType,
-                receivingAccountId,
-                recipientEmail,
-                recipientName,
-                remindAfterOverdueDays.toImmutable().ifEmpty { null },
-                virtualAccountId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -2053,11 +2013,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceCreateParams && counterpartyId == other.counterpartyId && dueDate == other.dueDate && originatingAccountId == other.originatingAccountId && autoAdvance == other.autoAdvance && contactDetails == other.contactDetails && counterpartyBillingAddress == other.counterpartyBillingAddress && counterpartyShippingAddress == other.counterpartyShippingAddress && currency == other.currency && description == other.description && fallbackPaymentMethod == other.fallbackPaymentMethod && ingestLedgerEntries == other.ingestLedgerEntries && invoiceLineItems == other.invoiceLineItems && invoicerAddress == other.invoicerAddress && ledgerAccountSettlementId == other.ledgerAccountSettlementId && metadata == other.metadata && notificationEmailAddresses == other.notificationEmailAddresses && notificationsEnabled == other.notificationsEnabled && paymentEffectiveDate == other.paymentEffectiveDate && paymentMethod == other.paymentMethod && paymentType == other.paymentType && receivingAccountId == other.receivingAccountId && recipientEmail == other.recipientEmail && recipientName == other.recipientName && remindAfterOverdueDays == other.remindAfterOverdueDays && virtualAccountId == other.virtualAccountId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(counterpartyId, dueDate, originatingAccountId, autoAdvance, contactDetails, counterpartyBillingAddress, counterpartyShippingAddress, currency, description, fallbackPaymentMethod, ingestLedgerEntries, invoiceLineItems, invoicerAddress, ledgerAccountSettlementId, metadata, notificationEmailAddresses, notificationsEnabled, paymentEffectiveDate, paymentMethod, paymentType, receivingAccountId, recipientEmail, recipientName, remindAfterOverdueDays, virtualAccountId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "InvoiceCreateParams{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, ingestLedgerEntries=$ingestLedgerEntries, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, ledgerAccountSettlementId=$ledgerAccountSettlementId, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -39,22 +39,48 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * If you have specific IDs to retrieve in bulk, you can pass them as query parameters delimited
+     * with `id[]=`, for example `?id[]=123&id[]=abc`.
+     */
     fun id(): Optional<List<String>> = Optional.ofNullable(id)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * Shows all ledger entries that were present on a ledger account at a particular
+     * `lock_version`. You must also specify `ledger_account_id`.
+     */
     fun asOfLockVersion(): Optional<Long> = Optional.ofNullable(asOfLockVersion)
 
+    /**
+     * If true, response will include ledger entries that were deleted. When you update a ledger
+     * transaction to specify a new set of entries, the previous entries are deleted.
+     */
     fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the transaction's
+     * effective time. Format ISO8601
+     */
     fun effectiveAt(): Optional<EffectiveAt> = Optional.ofNullable(effectiveAt)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the transaction's
+     * effective date. Format YYYY-MM-DD
+     */
     fun effectiveDate(): Optional<EffectiveDate> = Optional.ofNullable(effectiveDate)
 
+    /** Get all ledger entries that match the direction specified. One of `credit`, `debit`. */
     fun ledgerAccountCategoryId(): Optional<String> = Optional.ofNullable(ledgerAccountCategoryId)
 
     fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the lock_version of
+     * a ledger account. For example, for all entries created at or before before lock_version 1000
+     * of a ledger account, use `ledger_account_lock_version%5Blte%5D=1000`.
+     */
     fun ledgerAccountLockVersion(): Optional<LedgerAccountLockVersion> =
         Optional.ofNullable(ledgerAccountLockVersion)
 
@@ -63,22 +89,49 @@ constructor(
     fun ledgerAccountSettlementId(): Optional<String> =
         Optional.ofNullable(ledgerAccountSettlementId)
 
+    /** Get all ledger entries that are included in the ledger account statement. */
     fun ledgerAccountStatementId(): Optional<String> = Optional.ofNullable(ledgerAccountStatementId)
 
     fun ledgerTransactionId(): Optional<String> = Optional.ofNullable(ledgerTransactionId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
+    /**
+     * Order by `created_at` or `effective_at` in `asc` or `desc` order. For example, to order by
+     * `effective_at asc`, use `order_by%5Beffective_at%5D=asc`. Ordering by only one field at a
+     * time is supported.
+     */
     fun orderBy(): Optional<OrderBy> = Optional.ofNullable(orderBy)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /**
+     * If true, response will include the balances attached to the ledger entry. If there is no
+     * balance available, null will be returned instead.
+     */
     fun showBalances(): Optional<Boolean> = Optional.ofNullable(showBalances)
 
+    /**
+     * If true, response will include ledger entries that were deleted. When you update a ledger
+     * transaction to specify a new set of entries, the previous entries are deleted.
+     */
     fun showDeleted(): Optional<Boolean> = Optional.ofNullable(showDeleted)
 
+    /**
+     * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
+     * `archived`.
+     */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /**
+     * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
+     * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+     * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
+     */
     fun updatedAt(): Optional<UpdatedAt> = Optional.ofNullable(updatedAt)
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -144,7 +197,7 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var id: MutableList<String> = mutableListOf()
+        private var id: MutableList<String>? = null
         private var afterCursor: String? = null
         private var asOfLockVersion: Long? = null
         private var direction: TransactionDirection? = null
@@ -169,7 +222,7 @@ constructor(
 
         @JvmSynthetic
         internal fun from(ledgerEntryListParams: LedgerEntryListParams) = apply {
-            id = ledgerEntryListParams.id?.toMutableList() ?: mutableListOf()
+            id = ledgerEntryListParams.id?.toMutableList()
             afterCursor = ledgerEntryListParams.afterCursor
             asOfLockVersion = ledgerEntryListParams.asOfLockVersion
             direction = ledgerEntryListParams.direction
@@ -197,16 +250,13 @@ constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: List<String>) = apply {
-            this.id.clear()
-            this.id.addAll(id)
-        }
+        fun id(id: List<String>) = apply { this.id = id.toMutableList() }
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun addId(id: String) = apply { this.id.add(id) }
+        fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
@@ -413,7 +463,7 @@ constructor(
 
         fun build(): LedgerEntryListParams =
             LedgerEntryListParams(
-                id.toImmutable().ifEmpty { null },
+                id?.toImmutable(),
                 afterCursor,
                 asOfLockVersion,
                 direction,

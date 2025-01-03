@@ -19,47 +19,41 @@ import java.util.Optional
 
 class ForeignExchangeQuoteCreateParams
 constructor(
-    private val internalAccountId: String,
-    private val targetCurrency: Currency,
-    private val baseAmount: Long?,
-    private val baseCurrency: Currency?,
-    private val effectiveAt: OffsetDateTime?,
-    private val targetAmount: Long?,
+    private val body: ForeignExchangeQuoteCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun internalAccountId(): String = internalAccountId
+    /** The ID for the `InternalAccount` this quote is associated with. */
+    fun internalAccountId(): String = body.internalAccountId()
 
-    fun targetCurrency(): Currency = targetCurrency
+    /** Currency to convert the `base_currency` to, often called the "buy" currency. */
+    fun targetCurrency(): Currency = body.targetCurrency()
 
-    fun baseAmount(): Optional<Long> = Optional.ofNullable(baseAmount)
+    /**
+     * Amount in the lowest denomination of the `base_currency` to convert, often called the "sell"
+     * amount.
+     */
+    fun baseAmount(): Optional<Long> = body.baseAmount()
 
-    fun baseCurrency(): Optional<Currency> = Optional.ofNullable(baseCurrency)
+    /** Currency to convert, often called the "sell" currency. */
+    fun baseCurrency(): Optional<Currency> = body.baseCurrency()
 
-    fun effectiveAt(): Optional<OffsetDateTime> = Optional.ofNullable(effectiveAt)
+    /** The timestamp until when the quoted rate is valid. */
+    fun effectiveAt(): Optional<OffsetDateTime> = body.effectiveAt()
 
-    fun targetAmount(): Optional<Long> = Optional.ofNullable(targetAmount)
+    /**
+     * Amount in the lowest denomination of the `target_currency`, often called the "buy" amount.
+     */
+    fun targetAmount(): Optional<Long> = body.targetAmount()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): ForeignExchangeQuoteCreateBody {
-        return ForeignExchangeQuoteCreateBody(
-            internalAccountId,
-            targetCurrency,
-            baseAmount,
-            baseCurrency,
-            effectiveAt,
-            targetAmount,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): ForeignExchangeQuoteCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -230,59 +224,45 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var internalAccountId: String? = null
-        private var targetCurrency: Currency? = null
-        private var baseAmount: Long? = null
-        private var baseCurrency: Currency? = null
-        private var effectiveAt: OffsetDateTime? = null
-        private var targetAmount: Long? = null
+        private var body: ForeignExchangeQuoteCreateBody.Builder =
+            ForeignExchangeQuoteCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(foreignExchangeQuoteCreateParams: ForeignExchangeQuoteCreateParams) =
             apply {
-                internalAccountId = foreignExchangeQuoteCreateParams.internalAccountId
-                targetCurrency = foreignExchangeQuoteCreateParams.targetCurrency
-                baseAmount = foreignExchangeQuoteCreateParams.baseAmount
-                baseCurrency = foreignExchangeQuoteCreateParams.baseCurrency
-                effectiveAt = foreignExchangeQuoteCreateParams.effectiveAt
-                targetAmount = foreignExchangeQuoteCreateParams.targetAmount
+                body = foreignExchangeQuoteCreateParams.body.toBuilder()
                 additionalHeaders = foreignExchangeQuoteCreateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     foreignExchangeQuoteCreateParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    foreignExchangeQuoteCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The ID for the `InternalAccount` this quote is associated with. */
         fun internalAccountId(internalAccountId: String) = apply {
-            this.internalAccountId = internalAccountId
+            body.internalAccountId(internalAccountId)
         }
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
-        fun targetCurrency(targetCurrency: Currency) = apply {
-            this.targetCurrency = targetCurrency
-        }
+        fun targetCurrency(targetCurrency: Currency) = apply { body.targetCurrency(targetCurrency) }
 
         /**
          * Amount in the lowest denomination of the `base_currency` to convert, often called the
          * "sell" amount.
          */
-        fun baseAmount(baseAmount: Long) = apply { this.baseAmount = baseAmount }
+        fun baseAmount(baseAmount: Long) = apply { body.baseAmount(baseAmount) }
 
         /** Currency to convert, often called the "sell" currency. */
-        fun baseCurrency(baseCurrency: Currency) = apply { this.baseCurrency = baseCurrency }
+        fun baseCurrency(baseCurrency: Currency) = apply { body.baseCurrency(baseCurrency) }
 
         /** The timestamp until when the quoted rate is valid. */
-        fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+        fun effectiveAt(effectiveAt: OffsetDateTime) = apply { body.effectiveAt(effectiveAt) }
 
         /**
          * Amount in the lowest denomination of the `target_currency`, often called the "buy"
          * amount.
          */
-        fun targetAmount(targetAmount: Long) = apply { this.targetAmount = targetAmount }
+        fun targetAmount(targetAmount: Long) = apply { body.targetAmount(targetAmount) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -383,40 +363,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ForeignExchangeQuoteCreateParams =
             ForeignExchangeQuoteCreateParams(
-                checkNotNull(internalAccountId) {
-                    "`internalAccountId` is required but was not set"
-                },
-                checkNotNull(targetCurrency) { "`targetCurrency` is required but was not set" },
-                baseAmount,
-                baseCurrency,
-                effectiveAt,
-                targetAmount,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -425,11 +394,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ForeignExchangeQuoteCreateParams && internalAccountId == other.internalAccountId && targetCurrency == other.targetCurrency && baseAmount == other.baseAmount && baseCurrency == other.baseCurrency && effectiveAt == other.effectiveAt && targetAmount == other.targetAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ForeignExchangeQuoteCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, targetCurrency, baseAmount, baseCurrency, effectiveAt, targetAmount, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ForeignExchangeQuoteCreateParams{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ForeignExchangeQuoteCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

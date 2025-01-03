@@ -22,45 +22,45 @@ import java.util.Optional
 class ExternalAccountVerifyParams
 constructor(
     private val id: String,
-    private val originatingAccountId: String,
-    private val paymentType: PaymentType,
-    private val currency: Currency?,
-    private val fallbackType: FallbackType?,
-    private val priority: Priority?,
+    private val body: ExternalAccountVerifyBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun id(): String = id
 
-    fun originatingAccountId(): String = originatingAccountId
+    /**
+     * The ID of the internal account where the micro-deposits originate from. Both credit and debit
+     * capabilities must be enabled.
+     */
+    fun originatingAccountId(): String = body.originatingAccountId()
 
-    fun paymentType(): PaymentType = paymentType
+    /** Can be `ach`, `eft`, or `rtp`. */
+    fun paymentType(): PaymentType = body.paymentType()
 
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency)
+    /** Defaults to the currency of the originating account. */
+    fun currency(): Optional<Currency> = body.currency()
 
-    fun fallbackType(): Optional<FallbackType> = Optional.ofNullable(fallbackType)
+    /**
+     * A payment type to fallback to if the original type is not valid for the receiving account.
+     * Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
+     * fallback_type=ach)
+     */
+    fun fallbackType(): Optional<FallbackType> = body.fallbackType()
 
-    fun priority(): Optional<Priority> = Optional.ofNullable(priority)
+    /**
+     * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer. This
+     * will apply to both `payment_type` and `fallback_type`.
+     */
+    fun priority(): Optional<Priority> = body.priority()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): ExternalAccountVerifyBody {
-        return ExternalAccountVerifyBody(
-            originatingAccountId,
-            paymentType,
-            currency,
-            fallbackType,
-            priority,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): ExternalAccountVerifyBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -233,27 +233,16 @@ constructor(
     class Builder {
 
         private var id: String? = null
-        private var originatingAccountId: String? = null
-        private var paymentType: PaymentType? = null
-        private var currency: Currency? = null
-        private var fallbackType: FallbackType? = null
-        private var priority: Priority? = null
+        private var body: ExternalAccountVerifyBody.Builder = ExternalAccountVerifyBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(externalAccountVerifyParams: ExternalAccountVerifyParams) = apply {
             id = externalAccountVerifyParams.id
-            originatingAccountId = externalAccountVerifyParams.originatingAccountId
-            paymentType = externalAccountVerifyParams.paymentType
-            currency = externalAccountVerifyParams.currency
-            fallbackType = externalAccountVerifyParams.fallbackType
-            priority = externalAccountVerifyParams.priority
+            body = externalAccountVerifyParams.body.toBuilder()
             additionalHeaders = externalAccountVerifyParams.additionalHeaders.toBuilder()
             additionalQueryParams = externalAccountVerifyParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                externalAccountVerifyParams.additionalBodyProperties.toMutableMap()
         }
 
         fun id(id: String) = apply { this.id = id }
@@ -263,27 +252,27 @@ constructor(
          * debit capabilities must be enabled.
          */
         fun originatingAccountId(originatingAccountId: String) = apply {
-            this.originatingAccountId = originatingAccountId
+            body.originatingAccountId(originatingAccountId)
         }
 
         /** Can be `ach`, `eft`, or `rtp`. */
-        fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
+        fun paymentType(paymentType: PaymentType) = apply { body.paymentType(paymentType) }
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Currency) = apply { this.currency = currency }
+        fun currency(currency: Currency) = apply { body.currency(currency) }
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
          * fallback_type=ach)
          */
-        fun fallbackType(fallbackType: FallbackType) = apply { this.fallbackType = fallbackType }
+        fun fallbackType(fallbackType: FallbackType) = apply { body.fallbackType(fallbackType) }
 
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
          * This will apply to both `payment_type` and `fallback_type`.
          */
-        fun priority(priority: Priority) = apply { this.priority = priority }
+        fun priority(priority: Priority) = apply { body.priority(priority) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -384,40 +373,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ExternalAccountVerifyParams =
             ExternalAccountVerifyParams(
                 checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(originatingAccountId) {
-                    "`originatingAccountId` is required but was not set"
-                },
-                checkNotNull(paymentType) { "`paymentType` is required but was not set" },
-                currency,
-                fallbackType,
-                priority,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -759,11 +738,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalAccountVerifyParams && id == other.id && originatingAccountId == other.originatingAccountId && paymentType == other.paymentType && currency == other.currency && fallbackType == other.fallbackType && priority == other.priority && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ExternalAccountVerifyParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, originatingAccountId, paymentType, currency, fallbackType, priority, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExternalAccountVerifyParams{id=$id, originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, fallbackType=$fallbackType, priority=$priority, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalAccountVerifyParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

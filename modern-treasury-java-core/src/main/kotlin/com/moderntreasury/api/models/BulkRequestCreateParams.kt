@@ -33,39 +33,33 @@ import java.util.Optional
 
 class BulkRequestCreateParams
 constructor(
-    private val actionType: ActionType,
-    private val resourceType: ResourceType,
-    private val resources: List<Resource>,
-    private val metadata: Metadata?,
+    private val body: BulkRequestCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun actionType(): ActionType = actionType
+    /** One of create, or update. */
+    fun actionType(): ActionType = body.actionType()
 
-    fun resourceType(): ResourceType = resourceType
+    /** One of payment_order, expected_payment, or ledger_transaction. */
+    fun resourceType(): ResourceType = body.resourceType()
 
-    fun resources(): List<Resource> = resources
+    /**
+     * An array of objects where each object contains the input params for a single `action_type`
+     * request on a `resource_type` resource
+     */
+    fun resources(): List<Resource> = body.resources()
 
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun metadata(): Optional<Metadata> = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): BulkRequestCreateBody {
-        return BulkRequestCreateBody(
-            actionType,
-            resourceType,
-            resources,
-            metadata,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): BulkRequestCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -115,7 +109,7 @@ constructor(
 
             private var actionType: ActionType? = null
             private var resourceType: ResourceType? = null
-            private var resources: List<Resource>? = null
+            private var resources: MutableList<Resource>? = null
             private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -140,7 +134,17 @@ constructor(
              * An array of objects where each object contains the input params for a single
              * `action_type` request on a `resource_type` resource
              */
-            fun resources(resources: List<Resource>) = apply { this.resources = resources }
+            fun resources(resources: List<Resource>) = apply {
+                this.resources = resources.toMutableList()
+            }
+
+            /**
+             * An array of objects where each object contains the input params for a single
+             * `action_type` request on a `resource_type` resource
+             */
+            fun addResource(resource: Resource) = apply {
+                resources = (resources ?: mutableListOf()).apply { add(resource) }
+            }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
@@ -206,51 +210,39 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var actionType: ActionType? = null
-        private var resourceType: ResourceType? = null
-        private var resources: MutableList<Resource> = mutableListOf()
-        private var metadata: Metadata? = null
+        private var body: BulkRequestCreateBody.Builder = BulkRequestCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(bulkRequestCreateParams: BulkRequestCreateParams) = apply {
-            actionType = bulkRequestCreateParams.actionType
-            resourceType = bulkRequestCreateParams.resourceType
-            resources = bulkRequestCreateParams.resources.toMutableList()
-            metadata = bulkRequestCreateParams.metadata
+            body = bulkRequestCreateParams.body.toBuilder()
             additionalHeaders = bulkRequestCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = bulkRequestCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                bulkRequestCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** One of create, or update. */
-        fun actionType(actionType: ActionType) = apply { this.actionType = actionType }
+        fun actionType(actionType: ActionType) = apply { body.actionType(actionType) }
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
-        fun resourceType(resourceType: ResourceType) = apply { this.resourceType = resourceType }
+        fun resourceType(resourceType: ResourceType) = apply { body.resourceType(resourceType) }
 
         /**
          * An array of objects where each object contains the input params for a single
          * `action_type` request on a `resource_type` resource
          */
-        fun resources(resources: List<Resource>) = apply {
-            this.resources.clear()
-            this.resources.addAll(resources)
-        }
+        fun resources(resources: List<Resource>) = apply { body.resources(resources) }
 
         /**
          * An array of objects where each object contains the input params for a single
          * `action_type` request on a `resource_type` resource
          */
-        fun addResource(resource: Resource) = apply { this.resources.add(resource) }
+        fun addResource(resource: Resource) = apply { body.addResource(resource) }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -351,36 +343,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): BulkRequestCreateParams =
             BulkRequestCreateParams(
-                checkNotNull(actionType) { "`actionType` is required but was not set" },
-                checkNotNull(resourceType) { "`resourceType` is required but was not set" },
-                resources.toImmutable(),
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -1163,7 +1148,7 @@ constructor(
                 private var receivingAccount: ReceivingAccount? = null
                 private var ledgerTransaction: LedgerTransactionCreateRequest? = null
                 private var ledgerTransactionId: String? = null
-                private var lineItems: List<LineItemRequest>? = null
+                private var lineItems: MutableList<LineItemRequest>? = null
                 private var transactionMonitoringEnabled: Boolean? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1462,7 +1447,12 @@ constructor(
 
                 /** An array of line items that must sum up to the amount of the payment order. */
                 fun lineItems(lineItems: List<LineItemRequest>) = apply {
-                    this.lineItems = lineItems
+                    this.lineItems = lineItems.toMutableList()
+                }
+
+                /** An array of line items that must sum up to the amount of the payment order. */
+                fun addLineItem(lineItem: LineItemRequest) = apply {
+                    lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
                 }
 
                 /**
@@ -1978,7 +1968,7 @@ constructor(
                     private var metadata: Metadata? = null
                     private var effectiveAt: OffsetDateTime? = null
                     private var effectiveDate: LocalDate? = null
-                    private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+                    private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
                     private var externalId: String? = null
                     private var ledgerableType: LedgerableType? = null
                     private var ledgerableId: String? = null
@@ -2031,7 +2021,13 @@ constructor(
 
                     /** An array of ledger entry objects. */
                     fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                        this.ledgerEntries = ledgerEntries
+                        this.ledgerEntries = ledgerEntries.toMutableList()
+                    }
+
+                    /** An array of ledger entry objects. */
+                    fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                        ledgerEntries =
+                            (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
                     }
 
                     /**
@@ -3384,14 +3380,14 @@ constructor(
                     private var partyType: PartyType? = null
                     private var partyAddress: AddressRequest? = null
                     private var name: String? = null
-                    private var accountDetails: List<AccountDetail>? = null
-                    private var routingDetails: List<RoutingDetail>? = null
+                    private var accountDetails: MutableList<AccountDetail>? = null
+                    private var routingDetails: MutableList<RoutingDetail>? = null
                     private var metadata: Metadata? = null
                     private var partyName: String? = null
                     private var partyIdentifier: String? = null
                     private var ledgerAccount: LedgerAccountCreateRequest? = null
                     private var plaidProcessorToken: String? = null
-                    private var contactDetails: List<ContactDetailCreateRequest>? = null
+                    private var contactDetails: MutableList<ContactDetailCreateRequest>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     @JvmSynthetic
@@ -3431,11 +3427,21 @@ constructor(
                     fun name(name: String) = apply { this.name = name }
 
                     fun accountDetails(accountDetails: List<AccountDetail>) = apply {
-                        this.accountDetails = accountDetails
+                        this.accountDetails = accountDetails.toMutableList()
+                    }
+
+                    fun addAccountDetail(accountDetail: AccountDetail) = apply {
+                        accountDetails =
+                            (accountDetails ?: mutableListOf()).apply { add(accountDetail) }
                     }
 
                     fun routingDetails(routingDetails: List<RoutingDetail>) = apply {
-                        this.routingDetails = routingDetails
+                        this.routingDetails = routingDetails.toMutableList()
+                    }
+
+                    fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
+                        routingDetails =
+                            (routingDetails ?: mutableListOf()).apply { add(routingDetail) }
                     }
 
                     /**
@@ -3474,7 +3480,12 @@ constructor(
                     }
 
                     fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) = apply {
-                        this.contactDetails = contactDetails
+                        this.contactDetails = contactDetails.toMutableList()
+                    }
+
+                    fun addContactDetail(contactDetail: ContactDetailCreateRequest) = apply {
+                        contactDetails =
+                            (contactDetails ?: mutableListOf()).apply { add(contactDetail) }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3996,7 +4007,7 @@ constructor(
                         private var ledgerId: String? = null
                         private var currency: String? = null
                         private var currencyExponent: Long? = null
-                        private var ledgerAccountCategoryIds: List<String>? = null
+                        private var ledgerAccountCategoryIds: MutableList<String>? = null
                         private var ledgerableId: String? = null
                         private var ledgerableType: LedgerableType? = null
                         private var metadata: Metadata? = null
@@ -4052,8 +4063,20 @@ constructor(
                          */
                         fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) =
                             apply {
-                                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
+                                this.ledgerAccountCategoryIds =
+                                    ledgerAccountCategoryIds.toMutableList()
                             }
+
+                        /**
+                         * The array of ledger account category ids that this ledger account should
+                         * be a child of.
+                         */
+                        fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+                            ledgerAccountCategoryIds =
+                                (ledgerAccountCategoryIds ?: mutableListOf()).apply {
+                                    add(ledgerAccountCategoryId)
+                                }
+                        }
 
                         /**
                          * If the ledger account links to another object in Modern Treasury, the id
@@ -5285,8 +5308,8 @@ constructor(
                 private var remittanceInformation: String? = null
                 private var reconciliationGroups: JsonValue? = null
                 private var reconciliationFilters: JsonValue? = null
-                private var reconciliationRuleVariables: List<ReconciliationRule>? = null
-                private var lineItems: List<LineItemRequest>? = null
+                private var reconciliationRuleVariables: MutableList<ReconciliationRule>? = null
+                private var lineItems: MutableList<LineItemRequest>? = null
                 private var ledgerTransaction: LedgerTransactionCreateRequest? = null
                 private var ledgerTransactionId: String? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -5411,10 +5434,25 @@ constructor(
                 /** An array of reconciliation rule variables for this payment. */
                 fun reconciliationRuleVariables(
                     reconciliationRuleVariables: List<ReconciliationRule>
-                ) = apply { this.reconciliationRuleVariables = reconciliationRuleVariables }
+                ) = apply {
+                    this.reconciliationRuleVariables = reconciliationRuleVariables.toMutableList()
+                }
+
+                /** An array of reconciliation rule variables for this payment. */
+                fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRule) =
+                    apply {
+                        reconciliationRuleVariables =
+                            (reconciliationRuleVariables ?: mutableListOf()).apply {
+                                add(reconciliationRuleVariable)
+                            }
+                    }
 
                 fun lineItems(lineItems: List<LineItemRequest>) = apply {
-                    this.lineItems = lineItems
+                    this.lineItems = lineItems.toMutableList()
+                }
+
+                fun addLineItem(lineItem: LineItemRequest) = apply {
+                    lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
                 }
 
                 /**
@@ -5639,7 +5677,7 @@ constructor(
                     private var metadata: Metadata? = null
                     private var effectiveAt: OffsetDateTime? = null
                     private var effectiveDate: LocalDate? = null
-                    private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+                    private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
                     private var externalId: String? = null
                     private var ledgerableType: LedgerableType? = null
                     private var ledgerableId: String? = null
@@ -5692,7 +5730,13 @@ constructor(
 
                     /** An array of ledger entry objects. */
                     fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                        this.ledgerEntries = ledgerEntries
+                        this.ledgerEntries = ledgerEntries.toMutableList()
+                    }
+
+                    /** An array of ledger entry objects. */
+                    fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                        ledgerEntries =
+                            (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
                     }
 
                     /**
@@ -6987,7 +7031,7 @@ constructor(
                 private var metadata: Metadata? = null
                 private var effectiveAt: OffsetDateTime? = null
                 private var effectiveDate: LocalDate? = null
-                private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+                private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
                 private var externalId: String? = null
                 private var ledgerableType: LedgerableType? = null
                 private var ledgerableId: String? = null
@@ -7039,7 +7083,12 @@ constructor(
 
                 /** An array of ledger entry objects. */
                 fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                    this.ledgerEntries = ledgerEntries
+                    this.ledgerEntries = ledgerEntries.toMutableList()
+                }
+
+                /** An array of ledger entry objects. */
+                fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                    ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
                 }
 
                 /**
@@ -8867,7 +8916,7 @@ constructor(
                 private var counterpartyId: String? = null
                 private var fallbackType: FallbackType? = null
                 private var receivingAccount: ReceivingAccount? = null
-                private var lineItems: List<LineItemRequest>? = null
+                private var lineItems: MutableList<LineItemRequest>? = null
                 private var id: String? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -9174,7 +9223,12 @@ constructor(
 
                 /** An array of line items that must sum up to the amount of the payment order. */
                 fun lineItems(lineItems: List<LineItemRequest>) = apply {
-                    this.lineItems = lineItems
+                    this.lineItems = lineItems.toMutableList()
+                }
+
+                /** An array of line items that must sum up to the amount of the payment order. */
+                fun addLineItem(lineItem: LineItemRequest) = apply {
+                    lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
                 }
 
                 fun id(id: String) = apply { this.id = id }
@@ -10039,14 +10093,14 @@ constructor(
                     private var partyType: PartyType? = null
                     private var partyAddress: AddressRequest? = null
                     private var name: String? = null
-                    private var accountDetails: List<AccountDetail>? = null
-                    private var routingDetails: List<RoutingDetail>? = null
+                    private var accountDetails: MutableList<AccountDetail>? = null
+                    private var routingDetails: MutableList<RoutingDetail>? = null
                     private var metadata: Metadata? = null
                     private var partyName: String? = null
                     private var partyIdentifier: String? = null
                     private var ledgerAccount: LedgerAccountCreateRequest? = null
                     private var plaidProcessorToken: String? = null
-                    private var contactDetails: List<ContactDetailCreateRequest>? = null
+                    private var contactDetails: MutableList<ContactDetailCreateRequest>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     @JvmSynthetic
@@ -10086,11 +10140,21 @@ constructor(
                     fun name(name: String) = apply { this.name = name }
 
                     fun accountDetails(accountDetails: List<AccountDetail>) = apply {
-                        this.accountDetails = accountDetails
+                        this.accountDetails = accountDetails.toMutableList()
+                    }
+
+                    fun addAccountDetail(accountDetail: AccountDetail) = apply {
+                        accountDetails =
+                            (accountDetails ?: mutableListOf()).apply { add(accountDetail) }
                     }
 
                     fun routingDetails(routingDetails: List<RoutingDetail>) = apply {
-                        this.routingDetails = routingDetails
+                        this.routingDetails = routingDetails.toMutableList()
+                    }
+
+                    fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
+                        routingDetails =
+                            (routingDetails ?: mutableListOf()).apply { add(routingDetail) }
                     }
 
                     /**
@@ -10129,7 +10193,12 @@ constructor(
                     }
 
                     fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) = apply {
-                        this.contactDetails = contactDetails
+                        this.contactDetails = contactDetails.toMutableList()
+                    }
+
+                    fun addContactDetail(contactDetail: ContactDetailCreateRequest) = apply {
+                        contactDetails =
+                            (contactDetails ?: mutableListOf()).apply { add(contactDetail) }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10651,7 +10720,7 @@ constructor(
                         private var ledgerId: String? = null
                         private var currency: String? = null
                         private var currencyExponent: Long? = null
-                        private var ledgerAccountCategoryIds: List<String>? = null
+                        private var ledgerAccountCategoryIds: MutableList<String>? = null
                         private var ledgerableId: String? = null
                         private var ledgerableType: LedgerableType? = null
                         private var metadata: Metadata? = null
@@ -10707,8 +10776,20 @@ constructor(
                          */
                         fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) =
                             apply {
-                                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds
+                                this.ledgerAccountCategoryIds =
+                                    ledgerAccountCategoryIds.toMutableList()
                             }
+
+                        /**
+                         * The array of ledger account category ids that this ledger account should
+                         * be a child of.
+                         */
+                        fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+                            ledgerAccountCategoryIds =
+                                (ledgerAccountCategoryIds ?: mutableListOf()).apply {
+                                    add(ledgerAccountCategoryId)
+                                }
+                        }
 
                         /**
                          * If the ledger account links to another object in Modern Treasury, the id
@@ -12034,7 +12115,7 @@ constructor(
                 private var remittanceInformation: String? = null
                 private var reconciliationGroups: JsonValue? = null
                 private var reconciliationFilters: JsonValue? = null
-                private var reconciliationRuleVariables: List<ReconciliationRule>? = null
+                private var reconciliationRuleVariables: MutableList<ReconciliationRule>? = null
                 private var status: Status? = null
                 private var id: String? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -12159,7 +12240,18 @@ constructor(
                 /** An array of reconciliation rule variables for this payment. */
                 fun reconciliationRuleVariables(
                     reconciliationRuleVariables: List<ReconciliationRule>
-                ) = apply { this.reconciliationRuleVariables = reconciliationRuleVariables }
+                ) = apply {
+                    this.reconciliationRuleVariables = reconciliationRuleVariables.toMutableList()
+                }
+
+                /** An array of reconciliation rule variables for this payment. */
+                fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRule) =
+                    apply {
+                        reconciliationRuleVariables =
+                            (reconciliationRuleVariables ?: mutableListOf()).apply {
+                                add(reconciliationRuleVariable)
+                            }
+                    }
 
                 /**
                  * The Expected Payment's status can be updated from partially_reconciled to
@@ -12668,7 +12760,7 @@ constructor(
                 private var status: Status? = null
                 private var metadata: Metadata? = null
                 private var effectiveAt: OffsetDateTime? = null
-                private var ledgerEntries: List<LedgerEntryCreateRequest>? = null
+                private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
                 private var ledgerableType: LedgerableType? = null
                 private var ledgerableId: String? = null
                 private var id: String? = null
@@ -12713,7 +12805,12 @@ constructor(
 
                 /** An array of ledger entry objects. */
                 fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                    this.ledgerEntries = ledgerEntries
+                    this.ledgerEntries = ledgerEntries.toMutableList()
+                }
+
+                /** An array of ledger entry objects. */
+                fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                    ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
                 }
 
                 /**
@@ -13654,11 +13751,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is BulkRequestCreateParams && actionType == other.actionType && resourceType == other.resourceType && resources == other.resources && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is BulkRequestCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(actionType, resourceType, resources, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BulkRequestCreateParams{actionType=$actionType, resourceType=$resourceType, resources=$resources, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "BulkRequestCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

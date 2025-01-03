@@ -27,22 +27,37 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * If you have specific IDs to retrieve in bulk, you can pass them as query parameters delimited
+     * with `id[]=`, for example `?id[]=123&id[]=abc`.
+     */
     fun id(): Optional<List<String>> = Optional.ofNullable(id)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /**
+     * For example, if you want the balances as of a particular time (ISO8601), the encoded query
+     * string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as of a time
+     * are inclusive of entries with that exact time.
+     */
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
     fun currency(): Optional<String> = Optional.ofNullable(currency)
 
+    /** Query categories which contain a ledger account directly or through child categories. */
     fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
     fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun name(): Optional<String> = Optional.ofNullable(name)
 
+    /** Query categories that are nested underneath a parent category */
     fun parentLedgerAccountCategoryId(): Optional<String> =
         Optional.ofNullable(parentLedgerAccountCategoryId)
 
@@ -87,7 +102,7 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var id: MutableList<String> = mutableListOf()
+        private var id: MutableList<String>? = null
         private var afterCursor: String? = null
         private var balances: Balances? = null
         private var currency: String? = null
@@ -103,7 +118,7 @@ constructor(
         @JvmSynthetic
         internal fun from(ledgerAccountCategoryListParams: LedgerAccountCategoryListParams) =
             apply {
-                id = ledgerAccountCategoryListParams.id?.toMutableList() ?: mutableListOf()
+                id = ledgerAccountCategoryListParams.id?.toMutableList()
                 afterCursor = ledgerAccountCategoryListParams.afterCursor
                 balances = ledgerAccountCategoryListParams.balances
                 currency = ledgerAccountCategoryListParams.currency
@@ -123,16 +138,13 @@ constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: List<String>) = apply {
-            this.id.clear()
-            this.id.addAll(id)
-        }
+        fun id(id: List<String>) = apply { this.id = id.toMutableList() }
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun addId(id: String) = apply { this.id.add(id) }
+        fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
 
@@ -267,7 +279,7 @@ constructor(
 
         fun build(): LedgerAccountCategoryListParams =
             LedgerAccountCategoryListParams(
-                id.toImmutable().ifEmpty { null },
+                id?.toImmutable(),
                 afterCursor,
                 balances,
                 currency,

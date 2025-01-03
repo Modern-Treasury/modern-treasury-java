@@ -32,22 +32,36 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** Specify counterparty_id to see expected_payments for a specific account. */
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
 
+    /** Used to return expected payments created after some datetime */
     fun createdAtLowerBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtLowerBound)
 
+    /** Used to return expected payments created before some datetime */
     fun createdAtUpperBound(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtUpperBound)
 
+    /** One of credit, debit */
     fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
 
+    /** Specify internal_account_id to see expected_payments for a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
+    /**
+     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
+     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+     */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** One of unreconciled, reconciled, or archived. */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /**
+     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa, signet,
+     * wire
+     */
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
     fun _additionalHeaders(): Headers = additionalHeaders

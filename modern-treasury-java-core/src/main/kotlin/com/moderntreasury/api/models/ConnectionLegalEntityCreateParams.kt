@@ -22,35 +22,27 @@ import java.util.Optional
 
 class ConnectionLegalEntityCreateParams
 constructor(
-    private val connectionId: String,
-    private val legalEntity: LegalEntity?,
-    private val legalEntityId: String?,
+    private val body: ConnectionLegalEntityCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun connectionId(): String = connectionId
+    /** The ID of the connection. */
+    fun connectionId(): String = body.connectionId()
 
-    fun legalEntity(): Optional<LegalEntity> = Optional.ofNullable(legalEntity)
+    /** The legal entity. */
+    fun legalEntity(): Optional<LegalEntity> = body.legalEntity()
 
-    fun legalEntityId(): Optional<String> = Optional.ofNullable(legalEntityId)
+    /** The ID of the legal entity. */
+    fun legalEntityId(): Optional<String> = body.legalEntityId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    @JvmSynthetic
-    internal fun getBody(): ConnectionLegalEntityCreateBody {
-        return ConnectionLegalEntityCreateBody(
-            connectionId,
-            legalEntity,
-            legalEntityId,
-            additionalBodyProperties,
-        )
-    }
+    @JvmSynthetic internal fun getBody(): ConnectionLegalEntityCreateBody = body
 
     @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
 
@@ -171,34 +163,28 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var connectionId: String? = null
-        private var legalEntity: LegalEntity? = null
-        private var legalEntityId: String? = null
+        private var body: ConnectionLegalEntityCreateBody.Builder =
+            ConnectionLegalEntityCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(connectionLegalEntityCreateParams: ConnectionLegalEntityCreateParams) =
             apply {
-                connectionId = connectionLegalEntityCreateParams.connectionId
-                legalEntity = connectionLegalEntityCreateParams.legalEntity
-                legalEntityId = connectionLegalEntityCreateParams.legalEntityId
+                body = connectionLegalEntityCreateParams.body.toBuilder()
                 additionalHeaders = connectionLegalEntityCreateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     connectionLegalEntityCreateParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    connectionLegalEntityCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The ID of the connection. */
-        fun connectionId(connectionId: String) = apply { this.connectionId = connectionId }
+        fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
 
         /** The legal entity. */
-        fun legalEntity(legalEntity: LegalEntity) = apply { this.legalEntity = legalEntity }
+        fun legalEntity(legalEntity: LegalEntity) = apply { body.legalEntity(legalEntity) }
 
         /** The ID of the legal entity. */
-        fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+        fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -299,35 +285,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ConnectionLegalEntityCreateParams =
             ConnectionLegalEntityCreateParams(
-                checkNotNull(connectionId) { "`connectionId` is required but was not set" },
-                legalEntity,
-                legalEntityId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -487,17 +467,18 @@ constructor(
             private var dateOfBirth: LocalDate? = null
             private var dateFormed: LocalDate? = null
             private var businessName: String? = null
-            private var doingBusinessAsNames: List<String>? = null
+            private var doingBusinessAsNames: MutableList<String>? = null
             private var legalStructure: LegalStructure? = null
-            private var phoneNumbers: List<PhoneNumber>? = null
+            private var phoneNumbers: MutableList<PhoneNumber>? = null
             private var email: String? = null
             private var website: String? = null
             private var metadata: Metadata? = null
             private var bankSettings: BankSettings? = null
             private var wealthAndEmploymentDetails: WealthAndEmploymentDetails? = null
-            private var addresses: List<LegalEntityAddressCreateRequest>? = null
-            private var identifications: List<IdentificationCreateRequest>? = null
-            private var legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>? =
+            private var addresses: MutableList<LegalEntityAddressCreateRequest>? = null
+            private var identifications: MutableList<IdentificationCreateRequest>? = null
+            private var legalEntityAssociations:
+                MutableList<LegalEntityAssociationInlineCreateRequest>? =
                 null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -576,7 +557,12 @@ constructor(
             fun businessName(businessName: String) = apply { this.businessName = businessName }
 
             fun doingBusinessAsNames(doingBusinessAsNames: List<String>) = apply {
-                this.doingBusinessAsNames = doingBusinessAsNames
+                this.doingBusinessAsNames = doingBusinessAsNames.toMutableList()
+            }
+
+            fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
+                doingBusinessAsNames =
+                    (doingBusinessAsNames ?: mutableListOf()).apply { add(doingBusinessAsName) }
             }
 
             /** The business's legal structure. */
@@ -585,7 +571,11 @@ constructor(
             }
 
             fun phoneNumbers(phoneNumbers: List<PhoneNumber>) = apply {
-                this.phoneNumbers = phoneNumbers
+                this.phoneNumbers = phoneNumbers.toMutableList()
+            }
+
+            fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
+                phoneNumbers = (phoneNumbers ?: mutableListOf()).apply { add(phoneNumber) }
             }
 
             /** The entity's primary email. */
@@ -611,18 +601,38 @@ constructor(
 
             /** A list of addresses for the entity. */
             fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
-                this.addresses = addresses
+                this.addresses = addresses.toMutableList()
+            }
+
+            /** A list of addresses for the entity. */
+            fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
+                addresses = (addresses ?: mutableListOf()).apply { add(address) }
             }
 
             /** A list of identifications for the legal entity. */
             fun identifications(identifications: List<IdentificationCreateRequest>) = apply {
-                this.identifications = identifications
+                this.identifications = identifications.toMutableList()
+            }
+
+            /** A list of identifications for the legal entity. */
+            fun addIdentification(identification: IdentificationCreateRequest) = apply {
+                identifications = (identifications ?: mutableListOf()).apply { add(identification) }
             }
 
             /** The legal entity associations and its child legal entities. */
             fun legalEntityAssociations(
                 legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>
-            ) = apply { this.legalEntityAssociations = legalEntityAssociations }
+            ) = apply { this.legalEntityAssociations = legalEntityAssociations.toMutableList() }
+
+            /** The legal entity associations and its child legal entities. */
+            fun addLegalEntityAssociation(
+                legalEntityAssociation: LegalEntityAssociationInlineCreateRequest
+            ) = apply {
+                legalEntityAssociations =
+                    (legalEntityAssociations ?: mutableListOf()).apply {
+                        add(legalEntityAssociation)
+                    }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -723,7 +733,7 @@ constructor(
 
             class Builder {
 
-                private var addressTypes: List<AddressType>? = null
+                private var addressTypes: MutableList<AddressType>? = null
                 private var line1: String? = null
                 private var line2: String? = null
                 private var locality: String? = null
@@ -749,7 +759,12 @@ constructor(
 
                 /** The types of this address. */
                 fun addressTypes(addressTypes: List<AddressType>) = apply {
-                    this.addressTypes = addressTypes
+                    this.addressTypes = addressTypes.toMutableList()
+                }
+
+                /** The types of this address. */
+                fun addAddressType(addressType: AddressType) = apply {
+                    addressTypes = (addressTypes ?: mutableListOf()).apply { add(addressType) }
                 }
 
                 fun line1(line1: String) = apply { this.line1 = line1 }
@@ -1226,7 +1241,7 @@ constructor(
 
             class Builder {
 
-                private var relationshipTypes: List<RelationshipType>? = null
+                private var relationshipTypes: MutableList<RelationshipType>? = null
                 private var title: String? = null
                 private var ownershipPercentage: Long? = null
                 private var childLegalEntity: ChildLegalEntityCreate? = null
@@ -1252,7 +1267,12 @@ constructor(
                 }
 
                 fun relationshipTypes(relationshipTypes: List<RelationshipType>) = apply {
-                    this.relationshipTypes = relationshipTypes
+                    this.relationshipTypes = relationshipTypes.toMutableList()
+                }
+
+                fun addRelationshipType(relationshipType: RelationshipType) = apply {
+                    relationshipTypes =
+                        (relationshipTypes ?: mutableListOf()).apply { add(relationshipType) }
                 }
 
                 /** The job title of the child entity at the parent entity. */
@@ -1526,16 +1546,16 @@ constructor(
                     private var dateOfBirth: LocalDate? = null
                     private var dateFormed: LocalDate? = null
                     private var businessName: String? = null
-                    private var doingBusinessAsNames: List<String>? = null
+                    private var doingBusinessAsNames: MutableList<String>? = null
                     private var legalStructure: LegalStructure? = null
-                    private var phoneNumbers: List<PhoneNumber>? = null
+                    private var phoneNumbers: MutableList<PhoneNumber>? = null
                     private var email: String? = null
                     private var website: String? = null
                     private var metadata: Metadata? = null
                     private var bankSettings: BankSettings? = null
                     private var wealthAndEmploymentDetails: WealthAndEmploymentDetails? = null
-                    private var addresses: List<LegalEntityAddressCreateRequest>? = null
-                    private var identifications: List<IdentificationCreateRequest>? = null
+                    private var addresses: MutableList<LegalEntityAddressCreateRequest>? = null
+                    private var identifications: MutableList<IdentificationCreateRequest>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     @JvmSynthetic
@@ -1621,7 +1641,14 @@ constructor(
                     }
 
                     fun doingBusinessAsNames(doingBusinessAsNames: List<String>) = apply {
-                        this.doingBusinessAsNames = doingBusinessAsNames
+                        this.doingBusinessAsNames = doingBusinessAsNames.toMutableList()
+                    }
+
+                    fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
+                        doingBusinessAsNames =
+                            (doingBusinessAsNames ?: mutableListOf()).apply {
+                                add(doingBusinessAsName)
+                            }
                     }
 
                     /** The business's legal structure. */
@@ -1630,7 +1657,11 @@ constructor(
                     }
 
                     fun phoneNumbers(phoneNumbers: List<PhoneNumber>) = apply {
-                        this.phoneNumbers = phoneNumbers
+                        this.phoneNumbers = phoneNumbers.toMutableList()
+                    }
+
+                    fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
+                        phoneNumbers = (phoneNumbers ?: mutableListOf()).apply { add(phoneNumber) }
                     }
 
                     /** The entity's primary email. */
@@ -1655,14 +1686,25 @@ constructor(
 
                     /** A list of addresses for the entity. */
                     fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
-                        this.addresses = addresses
+                        this.addresses = addresses.toMutableList()
+                    }
+
+                    /** A list of addresses for the entity. */
+                    fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
+                        addresses = (addresses ?: mutableListOf()).apply { add(address) }
                     }
 
                     /** A list of identifications for the legal entity. */
                     fun identifications(identifications: List<IdentificationCreateRequest>) =
                         apply {
-                            this.identifications = identifications
+                            this.identifications = identifications.toMutableList()
                         }
+
+                    /** A list of identifications for the legal entity. */
+                    fun addIdentification(identification: IdentificationCreateRequest) = apply {
+                        identifications =
+                            (identifications ?: mutableListOf()).apply { add(identification) }
+                    }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -1770,7 +1812,7 @@ constructor(
 
                     class Builder {
 
-                        private var addressTypes: List<AddressType>? = null
+                        private var addressTypes: MutableList<AddressType>? = null
                         private var line1: String? = null
                         private var line2: String? = null
                         private var locality: String? = null
@@ -1798,7 +1840,13 @@ constructor(
 
                         /** The types of this address. */
                         fun addressTypes(addressTypes: List<AddressType>) = apply {
-                            this.addressTypes = addressTypes
+                            this.addressTypes = addressTypes.toMutableList()
+                        }
+
+                        /** The types of this address. */
+                        fun addAddressType(addressType: AddressType) = apply {
+                            addressTypes =
+                                (addressTypes ?: mutableListOf()).apply { add(addressType) }
                         }
 
                         fun line1(line1: String) = apply { this.line1 = line1 }
@@ -3029,11 +3077,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ConnectionLegalEntityCreateParams && connectionId == other.connectionId && legalEntity == other.legalEntity && legalEntityId == other.legalEntityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ConnectionLegalEntityCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(connectionId, legalEntity, legalEntityId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ConnectionLegalEntityCreateParams{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ConnectionLegalEntityCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

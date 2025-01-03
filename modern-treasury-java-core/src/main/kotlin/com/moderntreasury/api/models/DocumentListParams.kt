@@ -24,8 +24,14 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** The unique identifier for the associated object. */
     fun documentableId(): Optional<String> = Optional.ofNullable(documentableId)
 
+    /**
+     * The type of the associated object. Currently can be one of `payment_order`, `transaction`,
+     * `paper_item`, `expected_payment`, `counterparty`, `organization`, `case`, `internal_account`,
+     * `decision`, or `external_account`.
+     */
     fun documentableType(): Optional<DocumentableType> = Optional.ofNullable(documentableType)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)

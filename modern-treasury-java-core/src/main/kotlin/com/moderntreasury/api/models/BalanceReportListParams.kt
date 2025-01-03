@@ -28,8 +28,13 @@ constructor(
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
+    /** The date of the balance report in local time. */
     fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
 
+    /**
+     * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
+     * `other`.
+     */
     fun balanceReportType(): Optional<BalanceReportType> = Optional.ofNullable(balanceReportType)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
