@@ -96,23 +96,46 @@ constructor(
         }
 
         /** One of create, or update. */
-        fun actionType(actionType: ActionType) = apply { this.actionType = actionType }
+        fun actionType(actionType: ActionType?) = apply { this.actionType = actionType }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        /** One of create, or update. */
+        fun actionType(actionType: Optional<ActionType>) = actionType(actionType.orElse(null))
+
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
-        fun resourceType(resourceType: ResourceType) = apply { this.resourceType = resourceType }
+        fun resourceType(resourceType: ResourceType?) = apply { this.resourceType = resourceType }
+
+        /** One of payment_order, expected_payment, or ledger_transaction. */
+        fun resourceType(resourceType: Optional<ResourceType>) =
+            resourceType(resourceType.orElse(null))
 
         /** One of pending, processing, or completed. */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status?) = apply { this.status = status }
+
+        /** One of pending, processing, or completed. */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

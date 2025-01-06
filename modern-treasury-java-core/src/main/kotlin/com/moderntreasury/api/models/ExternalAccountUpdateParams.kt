@@ -153,35 +153,63 @@ constructor(
             }
 
             /** Can be `checking`, `savings` or `other`. */
-            fun accountType(accountType: ExternalAccountType) = apply {
+            fun accountType(accountType: ExternalAccountType?) = apply {
                 this.accountType = accountType
             }
 
-            fun counterpartyId(counterpartyId: String) = apply {
+            /** Can be `checking`, `savings` or `other`. */
+            fun accountType(accountType: Optional<ExternalAccountType>) =
+                accountType(accountType.orElse(null))
+
+            fun counterpartyId(counterpartyId: String?) = apply {
                 this.counterpartyId = counterpartyId
             }
+
+            fun counterpartyId(counterpartyId: Optional<String>) =
+                counterpartyId(counterpartyId.orElse(null))
 
             /**
              * Additional data in the form of key-value pairs. Pairs can be removed by passing an
              * empty string or `null` as the value.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
+             * empty string or `null` as the value.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /**
              * A nickname for the external account. This is only for internal usage and won't affect
              * any payments
              */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
-            fun partyAddress(partyAddress: AddressRequest) = apply {
+            /**
+             * A nickname for the external account. This is only for internal usage and won't affect
+             * any payments
+             */
+            fun name(name: Optional<String>) = name(name.orElse(null))
+
+            fun partyAddress(partyAddress: AddressRequest?) = apply {
                 this.partyAddress = partyAddress
             }
 
+            fun partyAddress(partyAddress: Optional<AddressRequest>) =
+                partyAddress(partyAddress.orElse(null))
+
             /** If this value isn't provided, it will be inherited from the counterparty's name. */
-            fun partyName(partyName: String) = apply { this.partyName = partyName }
+            fun partyName(partyName: String?) = apply { this.partyName = partyName }
+
+            /** If this value isn't provided, it will be inherited from the counterparty's name. */
+            fun partyName(partyName: Optional<String>) = partyName(partyName.orElse(null))
 
             /** Either `individual` or `business`. */
-            fun partyType(partyType: PartyType) = apply { this.partyType = partyType }
+            fun partyType(partyType: PartyType?) = apply { this.partyType = partyType }
+
+            /** Either `individual` or `business`. */
+            fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -259,29 +287,57 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** Can be `checking`, `savings` or `other`. */
-        fun accountType(accountType: ExternalAccountType) = apply { body.accountType(accountType) }
+        fun accountType(accountType: ExternalAccountType?) = apply { body.accountType(accountType) }
 
-        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
+        /** Can be `checking`, `savings` or `other`. */
+        fun accountType(accountType: Optional<ExternalAccountType>) =
+            accountType(accountType.orElse(null))
+
+        fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
+
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+         * string or `null` as the value.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
          * payments
          */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
 
-        fun partyAddress(partyAddress: AddressRequest) = apply { body.partyAddress(partyAddress) }
+        /**
+         * A nickname for the external account. This is only for internal usage and won't affect any
+         * payments
+         */
+        fun name(name: Optional<String>) = name(name.orElse(null))
+
+        fun partyAddress(partyAddress: AddressRequest?) = apply { body.partyAddress(partyAddress) }
+
+        fun partyAddress(partyAddress: Optional<AddressRequest>) =
+            partyAddress(partyAddress.orElse(null))
 
         /** If this value isn't provided, it will be inherited from the counterparty's name. */
-        fun partyName(partyName: String) = apply { body.partyName(partyName) }
+        fun partyName(partyName: String?) = apply { body.partyName(partyName) }
+
+        /** If this value isn't provided, it will be inherited from the counterparty's name. */
+        fun partyName(partyName: Optional<String>) = partyName(partyName.orElse(null))
 
         /** Either `individual` or `business`. */
-        fun partyType(partyType: PartyType) = apply { body.partyType(partyType) }
+        fun partyType(partyType: PartyType?) = apply { body.partyType(partyType) }
+
+        /** Either `individual` or `business`. */
+        fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -544,20 +600,36 @@ constructor(
             }
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: String) = apply { this.country = country }
+            fun country(country: String?) = apply { this.country = country }
 
-            fun line1(line1: String) = apply { this.line1 = line1 }
+            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            fun country(country: Optional<String>) = country(country.orElse(null))
 
-            fun line2(line2: String) = apply { this.line2 = line2 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
+
+            fun line1(line1: Optional<String>) = line1(line1.orElse(null))
+
+            fun line2(line2: String?) = apply { this.line2 = line2 }
+
+            fun line2(line2: Optional<String>) = line2(line2.orElse(null))
 
             /** Locality or City. */
-            fun locality(locality: String) = apply { this.locality = locality }
+            fun locality(locality: String?) = apply { this.locality = locality }
+
+            /** Locality or City. */
+            fun locality(locality: Optional<String>) = locality(locality.orElse(null))
 
             /** The postal code of the address. */
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+
+            /** The postal code of the address. */
+            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
 
             /** Region or State. */
-            fun region(region: String) = apply { this.region = region }
+            fun region(region: String?) = apply { this.region = region }
+
+            /** Region or State. */
+            fun region(region: Optional<String>) = region(region.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

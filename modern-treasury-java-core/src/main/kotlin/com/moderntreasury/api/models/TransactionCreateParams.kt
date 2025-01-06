@@ -196,7 +196,10 @@ constructor(
             fun amount(amount: Long) = apply { this.amount = amount }
 
             /** The date on which the transaction occurred. */
-            fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+            fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
+
+            /** The date on which the transaction occurred. */
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
             /** Either `credit` or `debit`. */
             fun direction(direction: String) = apply { this.direction = direction }
@@ -210,7 +213,13 @@ constructor(
              * When applicable, the bank-given code that determines the transaction's category. For
              * most banks this is the BAI2/BTRS transaction code.
              */
-            fun vendorCode(vendorCode: String) = apply { this.vendorCode = vendorCode }
+            fun vendorCode(vendorCode: String?) = apply { this.vendorCode = vendorCode }
+
+            /**
+             * When applicable, the bank-given code that determines the transaction's category. For
+             * most banks this is the BAI2/BTRS transaction code.
+             */
+            fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
@@ -218,32 +227,67 @@ constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * `us_bank`, or others.
              */
-            fun vendorCodeType(vendorCodeType: String) = apply {
+            fun vendorCodeType(vendorCodeType: String?) = apply {
                 this.vendorCodeType = vendorCodeType
             }
+
+            /**
+             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * `us_bank`, or others.
+             */
+            fun vendorCodeType(vendorCodeType: Optional<String>) =
+                vendorCodeType(vendorCodeType.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** This field will be `true` if the transaction has posted to the account. */
-            fun posted(posted: Boolean) = apply { this.posted = posted }
+            fun posted(posted: Boolean?) = apply { this.posted = posted }
+
+            /** This field will be `true` if the transaction has posted to the account. */
+            fun posted(posted: Boolean) = posted(posted as Boolean?)
+
+            /** This field will be `true` if the transaction has posted to the account. */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
              * `book`, or `sen`.
              */
-            fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type?) = apply { this.type = type }
+
+            /**
+             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+             * `book`, or `sen`.
+             */
+            fun type(type: Optional<Type>) = type(type.orElse(null))
 
             /**
              * The transaction detail text that often appears in on your bank statement and in your
              * banking portal.
              */
-            fun vendorDescription(vendorDescription: String) = apply {
+            fun vendorDescription(vendorDescription: String?) = apply {
                 this.vendorDescription = vendorDescription
             }
+
+            /**
+             * The transaction detail text that often appears in on your bank statement and in your
+             * banking portal.
+             */
+            fun vendorDescription(vendorDescription: Optional<String>) =
+                vendorDescription(vendorDescription.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -325,7 +369,10 @@ constructor(
         fun amount(amount: Long) = apply { body.amount(amount) }
 
         /** The date on which the transaction occurred. */
-        fun asOfDate(asOfDate: LocalDate) = apply { body.asOfDate(asOfDate) }
+        fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
+
+        /** The date on which the transaction occurred. */
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
         /** Either `credit` or `debit`. */
         fun direction(direction: String) = apply { body.direction(direction) }
@@ -339,7 +386,13 @@ constructor(
          * When applicable, the bank-given code that determines the transaction's category. For most
          * banks this is the BAI2/BTRS transaction code.
          */
-        fun vendorCode(vendorCode: String) = apply { body.vendorCode(vendorCode) }
+        fun vendorCode(vendorCode: String?) = apply { body.vendorCode(vendorCode) }
+
+        /**
+         * When applicable, the bank-given code that determines the transaction's category. For most
+         * banks this is the BAI2/BTRS transaction code.
+         */
+        fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -347,29 +400,63 @@ constructor(
          * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
          * others.
          */
-        fun vendorCodeType(vendorCodeType: String) = apply { body.vendorCodeType(vendorCodeType) }
+        fun vendorCodeType(vendorCodeType: String?) = apply { body.vendorCodeType(vendorCodeType) }
+
+        /**
+         * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
+         * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
+         * others.
+         */
+        fun vendorCodeType(vendorCodeType: Optional<String>) =
+            vendorCodeType(vendorCodeType.orElse(null))
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** This field will be `true` if the transaction has posted to the account. */
-        fun posted(posted: Boolean) = apply { body.posted(posted) }
+        fun posted(posted: Boolean?) = apply { body.posted(posted) }
+
+        /** This field will be `true` if the transaction has posted to the account. */
+        fun posted(posted: Boolean) = posted(posted as Boolean?)
+
+        /** This field will be `true` if the transaction has posted to the account. */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
          * `book`, or `sen`.
          */
-        fun type(type: Type) = apply { body.type(type) }
+        fun type(type: Type?) = apply { body.type(type) }
+
+        /**
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+         * `book`, or `sen`.
+         */
+        fun type(type: Optional<Type>) = type(type.orElse(null))
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
          * banking portal.
          */
-        fun vendorDescription(vendorDescription: String) = apply {
+        fun vendorDescription(vendorDescription: String?) = apply {
             body.vendorDescription(vendorDescription)
         }
+
+        /**
+         * The transaction detail text that often appears in on your bank statement and in your
+         * banking portal.
+         */
+        fun vendorDescription(vendorDescription: Optional<String>) =
+            vendorDescription(vendorDescription.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

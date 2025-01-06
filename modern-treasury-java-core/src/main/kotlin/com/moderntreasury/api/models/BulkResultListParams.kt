@@ -106,33 +106,64 @@ constructor(
             additionalQueryParams = bulkResultListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** Unique identifier for the result entity object. */
-        fun entityId(entityId: String) = apply { this.entityId = entityId }
+        fun entityId(entityId: String?) = apply { this.entityId = entityId }
+
+        /** Unique identifier for the result entity object. */
+        fun entityId(entityId: Optional<String>) = entityId(entityId.orElse(null))
 
         /**
          * The type of the request that created this result. bulk_request is the only supported
          * `request_type`
          */
-        fun entityType(entityType: EntityType) = apply { this.entityType = entityType }
+        fun entityType(entityType: EntityType?) = apply { this.entityType = entityType }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * The type of the request that created this result. bulk_request is the only supported
+         * `request_type`
+         */
+        fun entityType(entityType: Optional<EntityType>) = entityType(entityType.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /**
          * Unique identifier for the request that created this bulk result. This is the ID of the
          * bulk request when `request_type` is bulk_request
          */
-        fun requestId(requestId: String) = apply { this.requestId = requestId }
+        fun requestId(requestId: String?) = apply { this.requestId = requestId }
+
+        /**
+         * Unique identifier for the request that created this bulk result. This is the ID of the
+         * bulk request when `request_type` is bulk_request
+         */
+        fun requestId(requestId: Optional<String>) = requestId(requestId.orElse(null))
 
         /**
          * The type of the request that created this result. bulk_request is the only supported
          * `request_type`
          */
-        fun requestType(requestType: RequestType) = apply { this.requestType = requestType }
+        fun requestType(requestType: RequestType?) = apply { this.requestType = requestType }
+
+        /**
+         * The type of the request that created this result. bulk_request is the only supported
+         * `request_type`
+         */
+        fun requestType(requestType: Optional<RequestType>) = requestType(requestType.orElse(null))
 
         /** One of successful or failed. */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status?) = apply { this.status = status }
+
+        /** One of successful or failed. */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

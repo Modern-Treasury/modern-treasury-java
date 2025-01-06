@@ -116,19 +116,34 @@ constructor(
             }
 
             /** The description of the ledger account settlement. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** The description of the ledger account settlement. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /**
              * To post a pending ledger account settlement, use `posted`. To archive a pending
              * ledger transaction, use `archived`.
              */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status?) = apply { this.status = status }
+
+            /**
+             * To post a pending ledger account settlement, use `posted`. To archive a pending
+             * ledger transaction, use `archived`.
+             */
+            fun status(status: Optional<Status>) = status(status.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -206,18 +221,32 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** The description of the ledger account settlement. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** The description of the ledger account settlement. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /**
          * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
          * transaction, use `archived`.
          */
-        fun status(status: Status) = apply { body.status(status) }
+        fun status(status: Status?) = apply { body.status(status) }
+
+        /**
+         * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
+         * transaction, use `archived`.
+         */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

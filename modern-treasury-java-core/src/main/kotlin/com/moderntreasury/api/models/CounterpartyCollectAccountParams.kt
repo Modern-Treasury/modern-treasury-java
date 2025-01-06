@@ -164,9 +164,17 @@ constructor(
              * will be sent to a Modern Treasury landing page. This must be a valid HTTPS URL if
              * set.
              */
-            fun customRedirect(customRedirect: String) = apply {
+            fun customRedirect(customRedirect: String?) = apply {
                 this.customRedirect = customRedirect
             }
+
+            /**
+             * The URL you want your customer to visit upon filling out the form. By default, they
+             * will be sent to a Modern Treasury landing page. This must be a valid HTTPS URL if
+             * set.
+             */
+            fun customRedirect(customRedirect: Optional<String>) =
+                customRedirect(customRedirect.orElse(null))
 
             /**
              * The list of fields you want on the form. This field is optional and if it is not set,
@@ -175,7 +183,16 @@ constructor(
              * The full list of options is
              * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
              */
-            fun fields(fields: List<Field>) = apply { this.fields = fields.toMutableList() }
+            fun fields(fields: List<Field>?) = apply { this.fields = fields?.toMutableList() }
+
+            /**
+             * The list of fields you want on the form. This field is optional and if it is not set,
+             * will default to
+             * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+             * The full list of options is
+             * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+             */
+            fun fields(fields: Optional<List<Field>>) = fields(fields.orElse(null))
 
             /**
              * The list of fields you want on the form. This field is optional and if it is not set,
@@ -194,7 +211,25 @@ constructor(
              * counterparty the link, you can set this parameter to `false`. The JSON body will
              * include the link to the secure Modern Treasury form.
              */
-            fun sendEmail(sendEmail: Boolean) = apply { this.sendEmail = sendEmail }
+            fun sendEmail(sendEmail: Boolean?) = apply { this.sendEmail = sendEmail }
+
+            /**
+             * By default, Modern Treasury will send an email to your counterparty that includes a
+             * link to the form they must fill out. However, if you would like to send the
+             * counterparty the link, you can set this parameter to `false`. The JSON body will
+             * include the link to the secure Modern Treasury form.
+             */
+            fun sendEmail(sendEmail: Boolean) = sendEmail(sendEmail as Boolean?)
+
+            /**
+             * By default, Modern Treasury will send an email to your counterparty that includes a
+             * link to the form they must fill out. However, if you would like to send the
+             * counterparty the link, you can set this parameter to `false`. The JSON body will
+             * include the link to the secure Modern Treasury form.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun sendEmail(sendEmail: Optional<Boolean>) =
+                sendEmail(sendEmail.orElse(null) as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -282,7 +317,14 @@ constructor(
          * The URL you want your customer to visit upon filling out the form. By default, they will
          * be sent to a Modern Treasury landing page. This must be a valid HTTPS URL if set.
          */
-        fun customRedirect(customRedirect: String) = apply { body.customRedirect(customRedirect) }
+        fun customRedirect(customRedirect: String?) = apply { body.customRedirect(customRedirect) }
+
+        /**
+         * The URL you want your customer to visit upon filling out the form. By default, they will
+         * be sent to a Modern Treasury landing page. This must be a valid HTTPS URL if set.
+         */
+        fun customRedirect(customRedirect: Optional<String>) =
+            customRedirect(customRedirect.orElse(null))
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
@@ -291,7 +333,16 @@ constructor(
          * The full list of options is
          * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
          */
-        fun fields(fields: List<Field>) = apply { body.fields(fields) }
+        fun fields(fields: List<Field>?) = apply { body.fields(fields) }
+
+        /**
+         * The list of fields you want on the form. This field is optional and if it is not set,
+         * will default to
+         * [\"nameOnAccount\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\"].
+         * The full list of options is
+         * [\"name\", \"nameOnAccount\", \"taxpayerIdentifier\", \"accountType\", \"accountNumber\", \"routingNumber\", \"address\", \"ibanNumber\", \"swiftCode\"].
+         */
+        fun fields(fields: Optional<List<Field>>) = fields(fields.orElse(null))
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
@@ -308,7 +359,24 @@ constructor(
          * link, you can set this parameter to `false`. The JSON body will include the link to the
          * secure Modern Treasury form.
          */
-        fun sendEmail(sendEmail: Boolean) = apply { body.sendEmail(sendEmail) }
+        fun sendEmail(sendEmail: Boolean?) = apply { body.sendEmail(sendEmail) }
+
+        /**
+         * By default, Modern Treasury will send an email to your counterparty that includes a link
+         * to the form they must fill out. However, if you would like to send the counterparty the
+         * link, you can set this parameter to `false`. The JSON body will include the link to the
+         * secure Modern Treasury form.
+         */
+        fun sendEmail(sendEmail: Boolean) = sendEmail(sendEmail as Boolean?)
+
+        /**
+         * By default, Modern Treasury will send an email to your counterparty that includes a link
+         * to the form they must fill out. However, if you would like to send the counterparty the
+         * link, you can set this parameter to `false`. The JSON body will include the link to the
+         * secure Modern Treasury form.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun sendEmail(sendEmail: Optional<Boolean>) = sendEmail(sendEmail.orElse(null) as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

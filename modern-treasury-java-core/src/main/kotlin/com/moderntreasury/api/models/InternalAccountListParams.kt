@@ -109,32 +109,63 @@ constructor(
             additionalQueryParams = internalAccountListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** Only return internal accounts associated with this counterparty. */
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        /** Only return internal accounts associated with this counterparty. */
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** Only return internal accounts with this currency. */
-        fun currency(currency: Currency) = apply { this.currency = currency }
+        fun currency(currency: Currency?) = apply { this.currency = currency }
+
+        /** Only return internal accounts with this currency. */
+        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
         /** Only return internal accounts associated with this legal entity. */
-        fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+        fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+
+        /** Only return internal accounts associated with this legal entity. */
+        fun legalEntityId(legalEntityId: Optional<String>) =
+            legalEntityId(legalEntityId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** Only return internal accounts that can originate payments with this direction. */
-        fun paymentDirection(paymentDirection: TransactionDirection) = apply {
+        fun paymentDirection(paymentDirection: TransactionDirection?) = apply {
             this.paymentDirection = paymentDirection
         }
 
-        /** Only return internal accounts that can make this type of payment. */
-        fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
+        /** Only return internal accounts that can originate payments with this direction. */
+        fun paymentDirection(paymentDirection: Optional<TransactionDirection>) =
+            paymentDirection(paymentDirection.orElse(null))
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /** Only return internal accounts that can make this type of payment. */
+        fun paymentType(paymentType: PaymentType?) = apply { this.paymentType = paymentType }
+
+        /** Only return internal accounts that can make this type of payment. */
+        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

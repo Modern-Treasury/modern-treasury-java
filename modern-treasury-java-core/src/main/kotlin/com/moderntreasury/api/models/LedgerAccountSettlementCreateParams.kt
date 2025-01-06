@@ -214,41 +214,98 @@ constructor(
              * If true, the settlement amount and settlement_entry_direction will bring the
              * settlement ledger account's balance closer to zero, even if the balance is negative.
              */
-            fun allowEitherDirection(allowEitherDirection: Boolean) = apply {
+            fun allowEitherDirection(allowEitherDirection: Boolean?) = apply {
                 this.allowEitherDirection = allowEitherDirection
             }
 
+            /**
+             * If true, the settlement amount and settlement_entry_direction will bring the
+             * settlement ledger account's balance closer to zero, even if the balance is negative.
+             */
+            fun allowEitherDirection(allowEitherDirection: Boolean) =
+                allowEitherDirection(allowEitherDirection as Boolean?)
+
+            /**
+             * If true, the settlement amount and settlement_entry_direction will bring the
+             * settlement ledger account's balance closer to zero, even if the balance is negative.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun allowEitherDirection(allowEitherDirection: Optional<Boolean>) =
+                allowEitherDirection(allowEitherDirection.orElse(null) as Boolean?)
+
             /** The description of the ledger account settlement. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** The description of the ledger account settlement. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
              * included in the ledger account settlement. The default value is the created_at
              * timestamp of the ledger account settlement.
              */
-            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
+
+            /**
+             * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
+             * included in the ledger account settlement. The default value is the created_at
+             * timestamp of the ledger account settlement.
+             */
+            fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
+                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /**
              * It is set to `false` by default. It should be set to `true` when migrating existing
              * settlements.
              */
-            fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) = apply {
+            fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean?) = apply {
                 this.skipSettlementLedgerTransaction = skipSettlementLedgerTransaction
             }
+
+            /**
+             * It is set to `false` by default. It should be set to `true` when migrating existing
+             * settlements.
+             */
+            fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) =
+                skipSettlementLedgerTransaction(skipSettlementLedgerTransaction as Boolean?)
+
+            /**
+             * It is set to `false` by default. It should be set to `true` when migrating existing
+             * settlements.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun skipSettlementLedgerTransaction(
+                skipSettlementLedgerTransaction: Optional<Boolean>
+            ) =
+                skipSettlementLedgerTransaction(
+                    skipSettlementLedgerTransaction.orElse(null) as Boolean?
+                )
 
             /**
              * The status of the ledger account settlement. It is set to `pending` by default. To
              * post a ledger account settlement at creation, use `posted`.
              */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status?) = apply { this.status = status }
+
+            /**
+             * The status of the ledger account settlement. It is set to `pending` by default. To
+             * post a ledger account settlement at creation, use `posted`.
+             */
+            fun status(status: Optional<Status>) = status(status.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -350,40 +407,94 @@ constructor(
          * If true, the settlement amount and settlement_entry_direction will bring the settlement
          * ledger account's balance closer to zero, even if the balance is negative.
          */
-        fun allowEitherDirection(allowEitherDirection: Boolean) = apply {
+        fun allowEitherDirection(allowEitherDirection: Boolean?) = apply {
             body.allowEitherDirection(allowEitherDirection)
         }
 
+        /**
+         * If true, the settlement amount and settlement_entry_direction will bring the settlement
+         * ledger account's balance closer to zero, even if the balance is negative.
+         */
+        fun allowEitherDirection(allowEitherDirection: Boolean) =
+            allowEitherDirection(allowEitherDirection as Boolean?)
+
+        /**
+         * If true, the settlement amount and settlement_entry_direction will bring the settlement
+         * ledger account's balance closer to zero, even if the balance is negative.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun allowEitherDirection(allowEitherDirection: Optional<Boolean>) =
+            allowEitherDirection(allowEitherDirection.orElse(null) as Boolean?)
+
         /** The description of the ledger account settlement. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** The description of the ledger account settlement. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account settlement. The default value is the created_at timestamp
          * of the ledger account settlement.
          */
-        fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+        fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
             body.effectiveAtUpperBound(effectiveAtUpperBound)
         }
 
         /**
+         * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
+         * included in the ledger account settlement. The default value is the created_at timestamp
+         * of the ledger account settlement.
+         */
+        fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
+            effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /**
          * It is set to `false` by default. It should be set to `true` when migrating existing
          * settlements.
          */
-        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) = apply {
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean?) = apply {
             body.skipSettlementLedgerTransaction(skipSettlementLedgerTransaction)
         }
+
+        /**
+         * It is set to `false` by default. It should be set to `true` when migrating existing
+         * settlements.
+         */
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) =
+            skipSettlementLedgerTransaction(skipSettlementLedgerTransaction as Boolean?)
+
+        /**
+         * It is set to `false` by default. It should be set to `true` when migrating existing
+         * settlements.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Optional<Boolean>) =
+            skipSettlementLedgerTransaction(
+                skipSettlementLedgerTransaction.orElse(null) as Boolean?
+            )
 
         /**
          * The status of the ledger account settlement. It is set to `pending` by default. To post a
          * ledger account settlement at creation, use `posted`.
          */
-        fun status(status: Status) = apply { body.status(status) }
+        fun status(status: Status?) = apply { body.status(status) }
+
+        /**
+         * The status of the ledger account settlement. It is set to `pending` by default. To post a
+         * ledger account settlement at creation, use `posted`.
+         */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

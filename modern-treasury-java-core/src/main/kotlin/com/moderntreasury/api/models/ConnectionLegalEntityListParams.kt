@@ -82,15 +82,29 @@ constructor(
                     connectionLegalEntityListParams.additionalQueryParams.toBuilder()
             }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun connectionId(connectionId: String) = apply { this.connectionId = connectionId }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
-        fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+        fun connectionId(connectionId: String?) = apply { this.connectionId = connectionId }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun connectionId(connectionId: Optional<String>) = connectionId(connectionId.orElse(null))
 
-        fun status(status: Status) = apply { this.status = status }
+        fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+
+        fun legalEntityId(legalEntityId: Optional<String>) =
+            legalEntityId(legalEntityId.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun status(status: Status?) = apply { this.status = status }
+
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

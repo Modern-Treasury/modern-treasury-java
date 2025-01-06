@@ -197,7 +197,13 @@ constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: List<String>) = apply { this.id = id.toMutableList() }
+        fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
+
+        /**
+         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
+         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         */
+        fun id(id: Optional<List<String>>) = id(id.orElse(null))
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -205,15 +211,24 @@ constructor(
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
          * balance amount.
          */
-        fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
+        fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount?) = apply {
             this.availableBalanceAmount = availableBalanceAmount
         }
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+         * balance amount.
+         */
+        fun availableBalanceAmount(availableBalanceAmount: Optional<AvailableBalanceAmount>) =
+            availableBalanceAmount(availableBalanceAmount.orElse(null))
 
         /**
          * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
@@ -221,34 +236,68 @@ constructor(
          * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
          * will be retrieved not including that bound.
          */
-        fun balances(balances: Balances) = apply { this.balances = balances }
+        fun balances(balances: Balances?) = apply { this.balances = balances }
+
+        /**
+         * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
+         * the balances change between the two timestamps. The lower bound is inclusive while the
+         * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
+         * will be retrieved not including that bound.
+         */
+        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun createdAt(createdAt: CreatedAt) = apply { this.createdAt = createdAt }
+        fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-        fun currency(currency: String) = apply { this.currency = currency }
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
+         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+         * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
+         */
+        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
 
-        fun ledgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
+        fun currency(currency: String?) = apply { this.currency = currency }
+
+        fun currency(currency: Optional<String>) = currency(currency.orElse(null))
+
+        fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
-        fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+        fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
+            ledgerAccountCategoryId(ledgerAccountCategoryId.orElse(null))
+
+        fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
+
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /**
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
          * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
          */
-        fun name(name: List<String>) = apply { this.name = name.toMutableList() }
+        fun name(name: List<String>?) = apply { this.name = name?.toMutableList() }
+
+        /**
+         * If you have specific names to retrieve in bulk, you can pass them as query parameters
+         * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
+         */
+        fun name(name: Optional<List<String>>) = name(name.orElse(null))
 
         /**
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
@@ -262,26 +311,52 @@ constructor(
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
          * balance amount.
          */
-        fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount) = apply {
+        fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount?) = apply {
             this.pendingBalanceAmount = pendingBalanceAmount
         }
-
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
          * balance amount.
          */
-        fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount) = apply {
+        fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
+            pendingBalanceAmount(pendingBalanceAmount.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+         * balance amount.
+         */
+        fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount?) = apply {
             this.postedBalanceAmount = postedBalanceAmount
         }
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
+         * balance amount.
+         */
+        fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
+            postedBalanceAmount(postedBalanceAmount.orElse(null))
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun updatedAt(updatedAt: UpdatedAt) = apply { this.updatedAt = updatedAt }
+        fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
+         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
+         */
+        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -470,17 +545,47 @@ constructor(
                 additionalProperties = availableBalanceAmount.additionalProperties.toBuilder()
             }
 
-            fun eq(eq: Long) = apply { this.eq = eq }
+            fun eq(eq: Long?) = apply { this.eq = eq }
 
-            fun gt(gt: Long) = apply { this.gt = gt }
+            fun eq(eq: Long) = eq(eq as Long?)
 
-            fun gte(gte: Long) = apply { this.gte = gte }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
 
-            fun lt(lt: Long) = apply { this.lt = lt }
+            fun gt(gt: Long?) = apply { this.gt = gt }
 
-            fun lte(lte: Long) = apply { this.lte = lte }
+            fun gt(gt: Long) = gt(gt as Long?)
 
-            fun notEq(notEq: Long) = apply { this.notEq = notEq }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+
+            fun gte(gte: Long?) = apply { this.gte = gte }
+
+            fun gte(gte: Long) = gte(gte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+
+            fun lt(lt: Long?) = apply { this.lt = lt }
+
+            fun lt(lt: Long) = lt(lt as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+
+            fun lte(lte: Long?) = apply { this.lte = lte }
+
+            fun lte(lte: Long) = lte(lte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+
+            fun notEq(notEq: Long?) = apply { this.notEq = notEq }
+
+            fun notEq(notEq: Long) = notEq(notEq as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -633,17 +738,28 @@ constructor(
                 additionalProperties = balances.additionalProperties.toBuilder()
             }
 
-            fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+            fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
-            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) = apply {
+            fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
+
+            fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+                effectiveAt(effectiveAt.orElse(null))
+
+            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime?) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
-            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+            fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
+                effectiveAtLowerBound(effectiveAtLowerBound.orElse(null))
+
+            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
+
+            fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
+                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -993,17 +1109,47 @@ constructor(
                 additionalProperties = pendingBalanceAmount.additionalProperties.toBuilder()
             }
 
-            fun eq(eq: Long) = apply { this.eq = eq }
+            fun eq(eq: Long?) = apply { this.eq = eq }
 
-            fun gt(gt: Long) = apply { this.gt = gt }
+            fun eq(eq: Long) = eq(eq as Long?)
 
-            fun gte(gte: Long) = apply { this.gte = gte }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
 
-            fun lt(lt: Long) = apply { this.lt = lt }
+            fun gt(gt: Long?) = apply { this.gt = gt }
 
-            fun lte(lte: Long) = apply { this.lte = lte }
+            fun gt(gt: Long) = gt(gt as Long?)
 
-            fun notEq(notEq: Long) = apply { this.notEq = notEq }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+
+            fun gte(gte: Long?) = apply { this.gte = gte }
+
+            fun gte(gte: Long) = gte(gte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+
+            fun lt(lt: Long?) = apply { this.lt = lt }
+
+            fun lt(lt: Long) = lt(lt as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+
+            fun lte(lte: Long?) = apply { this.lte = lte }
+
+            fun lte(lte: Long) = lte(lte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+
+            fun notEq(notEq: Long?) = apply { this.notEq = notEq }
+
+            fun notEq(notEq: Long) = notEq(notEq as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -1152,17 +1298,47 @@ constructor(
                 additionalProperties = postedBalanceAmount.additionalProperties.toBuilder()
             }
 
-            fun eq(eq: Long) = apply { this.eq = eq }
+            fun eq(eq: Long?) = apply { this.eq = eq }
 
-            fun gt(gt: Long) = apply { this.gt = gt }
+            fun eq(eq: Long) = eq(eq as Long?)
 
-            fun gte(gte: Long) = apply { this.gte = gte }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
 
-            fun lt(lt: Long) = apply { this.lt = lt }
+            fun gt(gt: Long?) = apply { this.gt = gt }
 
-            fun lte(lte: Long) = apply { this.lte = lte }
+            fun gt(gt: Long) = gt(gt as Long?)
 
-            fun notEq(notEq: Long) = apply { this.notEq = notEq }
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+
+            fun gte(gte: Long?) = apply { this.gte = gte }
+
+            fun gte(gte: Long) = gte(gte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+
+            fun lt(lt: Long?) = apply { this.lt = lt }
+
+            fun lt(lt: Long) = lt(lt as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+
+            fun lte(lte: Long?) = apply { this.lte = lte }
+
+            fun lte(lte: Long) = lte(lte as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+
+            fun notEq(notEq: Long?) = apply { this.notEq = notEq }
+
+            fun notEq(notEq: Long) = notEq(notEq as Long?)
+
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

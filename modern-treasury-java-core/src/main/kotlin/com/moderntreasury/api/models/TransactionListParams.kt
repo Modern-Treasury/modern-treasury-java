@@ -154,60 +154,121 @@ constructor(
             additionalQueryParams = transactionListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /**
          * Filters transactions with an `as_of_date` starting on or before the specified date
          * (YYYY-MM-DD).
          */
-        fun asOfDateEnd(asOfDateEnd: LocalDate) = apply { this.asOfDateEnd = asOfDateEnd }
+        fun asOfDateEnd(asOfDateEnd: LocalDate?) = apply { this.asOfDateEnd = asOfDateEnd }
+
+        /**
+         * Filters transactions with an `as_of_date` starting on or before the specified date
+         * (YYYY-MM-DD).
+         */
+        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.orElse(null))
 
         /**
          * Filters transactions with an `as_of_date` starting on or after the specified date
          * (YYYY-MM-DD).
          */
-        fun asOfDateStart(asOfDateStart: LocalDate) = apply { this.asOfDateStart = asOfDateStart }
+        fun asOfDateStart(asOfDateStart: LocalDate?) = apply { this.asOfDateStart = asOfDateStart }
 
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        /**
+         * Filters transactions with an `as_of_date` starting on or after the specified date
+         * (YYYY-MM-DD).
+         */
+        fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
+            asOfDateStart(asOfDateStart.orElse(null))
+
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** Filters for transactions including the queried string in the description. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String?) = apply { this.description = description }
 
-        fun direction(direction: String) = apply { this.direction = direction }
+        /** Filters for transactions including the queried string in the description. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
+
+        fun direction(direction: String?) = apply { this.direction = direction }
+
+        fun direction(direction: Optional<String>) = direction(direction.orElse(null))
 
         /**
          * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
          */
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
         }
+
+        /**
+         * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
+         */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun paymentType(paymentType: String) = apply { this.paymentType = paymentType }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun paymentType(paymentType: String?) = apply { this.paymentType = paymentType }
+
+        fun paymentType(paymentType: Optional<String>) = paymentType(paymentType.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /** Either `true` or `false`. */
-        fun posted(posted: Boolean) = apply { this.posted = posted }
+        fun posted(posted: Boolean?) = apply { this.posted = posted }
 
-        fun transactableType(transactableType: String) = apply {
+        /** Either `true` or `false`. */
+        fun posted(posted: Boolean) = posted(posted as Boolean?)
+
+        /** Either `true` or `false`. */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
+
+        fun transactableType(transactableType: String?) = apply {
             this.transactableType = transactableType
         }
+
+        fun transactableType(transactableType: Optional<String>) =
+            transactableType(transactableType.orElse(null))
 
         /**
          * Filters for transactions including the queried vendor id (an identifier given to
          * transactions by the bank).
          */
-        fun vendorId(vendorId: String) = apply { this.vendorId = vendorId }
+        fun vendorId(vendorId: String?) = apply { this.vendorId = vendorId }
 
-        fun virtualAccountId(virtualAccountId: String) = apply {
+        /**
+         * Filters for transactions including the queried vendor id (an identifier given to
+         * transactions by the bank).
+         */
+        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.orElse(null))
+
+        fun virtualAccountId(virtualAccountId: String?) = apply {
             this.virtualAccountId = virtualAccountId
         }
+
+        fun virtualAccountId(virtualAccountId: Optional<String>) =
+            virtualAccountId(virtualAccountId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
