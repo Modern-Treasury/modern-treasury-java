@@ -22,18 +22,9 @@ class ForeignExchangeQuote
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("object")
-    @ExcludeMissing
-    private val object_: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("live_mode")
-    @ExcludeMissing
-    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("updated_at")
-    @ExcludeMissing
-    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("effective_at")
     @ExcludeMissing
     private val effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -49,9 +40,18 @@ private constructor(
     @JsonProperty("internal_account_id")
     @ExcludeMissing
     private val internalAccountId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
     @JsonProperty("metadata")
     @ExcludeMissing
     private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("vendor_id")
     @ExcludeMissing
     private val vendorId: JsonField<String> = JsonMissing.of(),
@@ -60,17 +60,7 @@ private constructor(
 
     fun id(): String = id.getRequired("id")
 
-    fun object_(): String = object_.getRequired("object")
-
-    /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
-     */
-    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
-
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /** The timestamp until when the quoted rate is valid. */
     fun effectiveAt(): OffsetDateTime = effectiveAt.getRequired("effective_at")
@@ -92,25 +82,25 @@ private constructor(
     /** The ID for the `InternalAccount` this quote is associated with. */
     fun internalAccountId(): String = internalAccountId.getRequired("internal_account_id")
 
+    /**
+     * This field will be true if this object exists in the live environment or false if it exists
+     * in the test environment.
+     */
+    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     fun metadata(): Metadata = metadata.getRequired("metadata")
+
+    fun object_(): String = object_.getRequired("object")
+
+    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /** This vendor assigned ID for this quote. */
     fun vendorId(): Optional<String> = Optional.ofNullable(vendorId.getNullable("vendor_id"))
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("object") @ExcludeMissing fun _object_() = object_
-
-    /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
-     */
-    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode() = liveMode
-
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-    @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
     /** The timestamp until when the quoted rate is valid. */
     @JsonProperty("effective_at") @ExcludeMissing fun _effectiveAt() = effectiveAt
@@ -136,8 +126,18 @@ private constructor(
     @ExcludeMissing
     fun _internalAccountId() = internalAccountId
 
+    /**
+     * This field will be true if this object exists in the live environment or false if it exists
+     * in the test environment.
+     */
+    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode() = liveMode
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
+    @JsonProperty("object") @ExcludeMissing fun _object_() = object_
+
+    @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
     /** This vendor assigned ID for this quote. */
     @JsonProperty("vendor_id") @ExcludeMissing fun _vendorId() = vendorId
@@ -151,16 +151,16 @@ private constructor(
     fun validate(): ForeignExchangeQuote = apply {
         if (!validated) {
             id()
-            object_()
-            liveMode()
             createdAt()
-            updatedAt()
             effectiveAt()
             expiresAt()
             foreignExchangeIndicator()
             foreignExchangeRate().validate()
             internalAccountId()
+            liveMode()
             metadata().validate()
+            object_()
+            updatedAt()
             vendorId()
             validated = true
         }
@@ -176,32 +176,32 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var object_: JsonField<String> = JsonMissing.of()
-        private var liveMode: JsonField<Boolean> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var expiresAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var foreignExchangeIndicator: JsonField<String> = JsonMissing.of()
         private var foreignExchangeRate: JsonField<ForeignExchangeRate> = JsonMissing.of()
         private var internalAccountId: JsonField<String> = JsonMissing.of()
+        private var liveMode: JsonField<Boolean> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
+        private var object_: JsonField<String> = JsonMissing.of()
+        private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var vendorId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(foreignExchangeQuote: ForeignExchangeQuote) = apply {
             id = foreignExchangeQuote.id
-            object_ = foreignExchangeQuote.object_
-            liveMode = foreignExchangeQuote.liveMode
             createdAt = foreignExchangeQuote.createdAt
-            updatedAt = foreignExchangeQuote.updatedAt
             effectiveAt = foreignExchangeQuote.effectiveAt
             expiresAt = foreignExchangeQuote.expiresAt
             foreignExchangeIndicator = foreignExchangeQuote.foreignExchangeIndicator
             foreignExchangeRate = foreignExchangeQuote.foreignExchangeRate
             internalAccountId = foreignExchangeQuote.internalAccountId
+            liveMode = foreignExchangeQuote.liveMode
             metadata = foreignExchangeQuote.metadata
+            object_ = foreignExchangeQuote.object_
+            updatedAt = foreignExchangeQuote.updatedAt
             vendorId = foreignExchangeQuote.vendorId
             additionalProperties = foreignExchangeQuote.additionalProperties.toMutableMap()
         }
@@ -210,29 +210,9 @@ private constructor(
 
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun object_(object_: String) = object_(JsonField.of(object_))
-
-        fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         */
-        fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         */
-        fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
-
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
-
-        fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
-
-        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /** The timestamp until when the quoted rate is valid. */
         fun effectiveAt(effectiveAt: OffsetDateTime) = effectiveAt(JsonField.of(effectiveAt))
@@ -282,6 +262,18 @@ private constructor(
         }
 
         /**
+         * This field will be true if this object exists in the live environment or false if it
+         * exists in the test environment.
+         */
+        fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
+
+        /**
+         * This field will be true if this object exists in the live environment or false if it
+         * exists in the test environment.
+         */
+        fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
@@ -290,6 +282,14 @@ private constructor(
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+        fun object_(object_: String) = object_(JsonField.of(object_))
+
+        fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
+
+        fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
+
+        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         /** This vendor assigned ID for this quote. */
         fun vendorId(vendorId: String) = vendorId(JsonField.of(vendorId))
@@ -319,16 +319,16 @@ private constructor(
         fun build(): ForeignExchangeQuote =
             ForeignExchangeQuote(
                 id,
-                object_,
-                liveMode,
                 createdAt,
-                updatedAt,
                 effectiveAt,
                 expiresAt,
                 foreignExchangeIndicator,
                 foreignExchangeRate,
                 internalAccountId,
+                liveMode,
                 metadata,
+                object_,
+                updatedAt,
                 vendorId,
                 additionalProperties.toImmutable(),
             )
@@ -683,15 +683,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ForeignExchangeQuote && id == other.id && object_ == other.object_ && liveMode == other.liveMode && createdAt == other.createdAt && updatedAt == other.updatedAt && effectiveAt == other.effectiveAt && expiresAt == other.expiresAt && foreignExchangeIndicator == other.foreignExchangeIndicator && foreignExchangeRate == other.foreignExchangeRate && internalAccountId == other.internalAccountId && metadata == other.metadata && vendorId == other.vendorId && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is ForeignExchangeQuote && id == other.id && createdAt == other.createdAt && effectiveAt == other.effectiveAt && expiresAt == other.expiresAt && foreignExchangeIndicator == other.foreignExchangeIndicator && foreignExchangeRate == other.foreignExchangeRate && internalAccountId == other.internalAccountId && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && updatedAt == other.updatedAt && vendorId == other.vendorId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, object_, liveMode, createdAt, updatedAt, effectiveAt, expiresAt, foreignExchangeIndicator, foreignExchangeRate, internalAccountId, metadata, vendorId, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, effectiveAt, expiresAt, foreignExchangeIndicator, foreignExchangeRate, internalAccountId, liveMode, metadata, object_, updatedAt, vendorId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ForeignExchangeQuote{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, effectiveAt=$effectiveAt, expiresAt=$expiresAt, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, internalAccountId=$internalAccountId, metadata=$metadata, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+        "ForeignExchangeQuote{id=$id, createdAt=$createdAt, effectiveAt=$effectiveAt, expiresAt=$expiresAt, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, internalAccountId=$internalAccountId, liveMode=$liveMode, metadata=$metadata, object_=$object_, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }
