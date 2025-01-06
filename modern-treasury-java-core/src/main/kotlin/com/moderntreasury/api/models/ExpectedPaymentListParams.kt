@@ -140,45 +140,86 @@ constructor(
             additionalQueryParams = expectedPaymentListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** Specify counterparty_id to see expected_payments for a specific account. */
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        /** Specify counterparty_id to see expected_payments for a specific account. */
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** Used to return expected payments created after some datetime */
-        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime) = apply {
+        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) = apply {
             this.createdAtLowerBound = createdAtLowerBound
         }
 
+        /** Used to return expected payments created after some datetime */
+        fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
+            createdAtLowerBound(createdAtLowerBound.orElse(null))
+
         /** Used to return expected payments created before some datetime */
-        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime) = apply {
+        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) = apply {
             this.createdAtUpperBound = createdAtUpperBound
         }
 
+        /** Used to return expected payments created before some datetime */
+        fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
+            createdAtUpperBound(createdAtUpperBound.orElse(null))
+
         /** One of credit, debit */
-        fun direction(direction: TransactionDirection) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
+
+        /** One of credit, debit */
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
         }
+
+        /** Specify internal_account_id to see expected_payments for a specific account. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /** One of unreconciled, reconciled, or archived. */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status?) = apply { this.status = status }
+
+        /** One of unreconciled, reconciled, or archived. */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
          * signet, wire
          */
-        fun type(type: Type) = apply { this.type = type }
+        fun type(type: Type?) = apply { this.type = type }
+
+        /**
+         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
+         * signet, wire
+         */
+        fun type(type: Optional<Type>) = type(type.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

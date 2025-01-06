@@ -86,21 +86,39 @@ constructor(
             additionalQueryParams = legalEntityListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun legalEntityType(legalEntityType: LegalEntityType) = apply {
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+
+        fun legalEntityType(legalEntityType: LegalEntityType?) = apply {
             this.legalEntityType = legalEntityType
         }
+
+        fun legalEntityType(legalEntityType: Optional<LegalEntityType>) =
+            legalEntityType(legalEntityType.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
-        fun showDeleted(showDeleted: String) = apply { this.showDeleted = showDeleted }
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun showDeleted(showDeleted: String?) = apply { this.showDeleted = showDeleted }
+
+        fun showDeleted(showDeleted: Optional<String>) = showDeleted(showDeleted.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

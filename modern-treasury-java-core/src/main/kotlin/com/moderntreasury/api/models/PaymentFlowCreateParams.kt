@@ -181,7 +181,14 @@ constructor(
              * When set, the due date is shown to your end-user in the pre-built UI as they are
              * selecting a payment `effective_date`.
              */
-            fun dueDate(dueDate: LocalDate) = apply { this.dueDate = dueDate }
+            fun dueDate(dueDate: LocalDate?) = apply { this.dueDate = dueDate }
+
+            /**
+             * Optional. Can only be passed in when `effective_date_selection_enabled` is `true`.
+             * When set, the due date is shown to your end-user in the pre-built UI as they are
+             * selecting a payment `effective_date`.
+             */
+            fun dueDate(dueDate: Optional<LocalDate>) = dueDate(dueDate.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -286,7 +293,14 @@ constructor(
          * set, the due date is shown to your end-user in the pre-built UI as they are selecting a
          * payment `effective_date`.
          */
-        fun dueDate(dueDate: LocalDate) = apply { body.dueDate(dueDate) }
+        fun dueDate(dueDate: LocalDate?) = apply { body.dueDate(dueDate) }
+
+        /**
+         * Optional. Can only be passed in when `effective_date_selection_enabled` is `true`. When
+         * set, the due date is shown to your end-user in the pre-built UI as they are selecting a
+         * payment `effective_date`.
+         */
+        fun dueDate(dueDate: Optional<LocalDate>) = dueDate(dueDate.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

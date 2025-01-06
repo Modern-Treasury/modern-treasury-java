@@ -80,21 +80,40 @@ constructor(
             additionalQueryParams = documentListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** The unique identifier for the associated object. */
-        fun documentableId(documentableId: String) = apply { this.documentableId = documentableId }
+        fun documentableId(documentableId: String?) = apply { this.documentableId = documentableId }
+
+        /** The unique identifier for the associated object. */
+        fun documentableId(documentableId: Optional<String>) =
+            documentableId(documentableId.orElse(null))
 
         /**
          * The type of the associated object. Currently can be one of `payment_order`,
          * `transaction`, `paper_item`, `expected_payment`, `counterparty`, `organization`, `case`,
          * `internal_account`, `decision`, or `external_account`.
          */
-        fun documentableType(documentableType: DocumentableType) = apply {
+        fun documentableType(documentableType: DocumentableType?) = apply {
             this.documentableType = documentableType
         }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * The type of the associated object. Currently can be one of `payment_order`,
+         * `transaction`, `paper_item`, `expected_payment`, `counterparty`, `organization`, `case`,
+         * `internal_account`, `decision`, or `external_account`.
+         */
+        fun documentableType(documentableType: Optional<DocumentableType>) =
+            documentableType(documentableType.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

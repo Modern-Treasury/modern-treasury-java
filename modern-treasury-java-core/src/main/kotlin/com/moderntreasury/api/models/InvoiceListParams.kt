@@ -130,38 +130,75 @@ constructor(
             additionalQueryParams = invoiceListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** An inclusive upper bound for searching due_date */
-        fun dueDateEnd(dueDateEnd: LocalDate) = apply { this.dueDateEnd = dueDateEnd }
+        fun dueDateEnd(dueDateEnd: LocalDate?) = apply { this.dueDateEnd = dueDateEnd }
+
+        /** An inclusive upper bound for searching due_date */
+        fun dueDateEnd(dueDateEnd: Optional<LocalDate>) = dueDateEnd(dueDateEnd.orElse(null))
 
         /** An inclusive lower bound for searching due_date */
-        fun dueDateStart(dueDateStart: LocalDate) = apply { this.dueDateStart = dueDateStart }
+        fun dueDateStart(dueDateStart: LocalDate?) = apply { this.dueDateStart = dueDateStart }
 
-        fun expectedPaymentId(expectedPaymentId: String) = apply {
+        /** An inclusive lower bound for searching due_date */
+        fun dueDateStart(dueDateStart: Optional<LocalDate>) =
+            dueDateStart(dueDateStart.orElse(null))
+
+        fun expectedPaymentId(expectedPaymentId: String?) = apply {
             this.expectedPaymentId = expectedPaymentId
         }
+
+        fun expectedPaymentId(expectedPaymentId: Optional<String>) =
+            expectedPaymentId(expectedPaymentId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** A unique record number assigned to each invoice that is issued. */
-        fun number(number: String) = apply { this.number = number }
+        fun number(number: String?) = apply { this.number = number }
 
-        fun originatingAccountId(originatingAccountId: String) = apply {
+        /** A unique record number assigned to each invoice that is issued. */
+        fun number(number: Optional<String>) = number(number.orElse(null))
+
+        fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
-        fun paymentOrderId(paymentOrderId: String) = apply { this.paymentOrderId = paymentOrderId }
+        fun originatingAccountId(originatingAccountId: Optional<String>) =
+            originatingAccountId(originatingAccountId.orElse(null))
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
 
-        fun status(status: Status) = apply { this.status = status }
+        fun paymentOrderId(paymentOrderId: Optional<String>) =
+            paymentOrderId(paymentOrderId.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun status(status: Status?) = apply { this.status = status }
+
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

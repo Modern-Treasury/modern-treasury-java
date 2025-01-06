@@ -89,30 +89,55 @@ constructor(
             additionalQueryParams = paymentReferenceListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /** The actual reference number assigned by the bank. */
-        fun referenceNumber(referenceNumber: String) = apply {
+        fun referenceNumber(referenceNumber: String?) = apply {
             this.referenceNumber = referenceNumber
+        }
+
+        /** The actual reference number assigned by the bank. */
+        fun referenceNumber(referenceNumber: Optional<String>) =
+            referenceNumber(referenceNumber.orElse(null))
+
+        /**
+         * The id of the referenceable to search for. Must be accompanied by the referenceable_type
+         * or will return an error.
+         */
+        fun referenceableId(referenceableId: String?) = apply {
+            this.referenceableId = referenceableId
         }
 
         /**
          * The id of the referenceable to search for. Must be accompanied by the referenceable_type
          * or will return an error.
          */
-        fun referenceableId(referenceableId: String) = apply {
-            this.referenceableId = referenceableId
+        fun referenceableId(referenceableId: Optional<String>) =
+            referenceableId(referenceableId.orElse(null))
+
+        /**
+         * One of the referenceable types. This must be accompanied by the id of the referenceable
+         * or will return an error.
+         */
+        fun referenceableType(referenceableType: ReferenceableType?) = apply {
+            this.referenceableType = referenceableType
         }
 
         /**
          * One of the referenceable types. This must be accompanied by the id of the referenceable
          * or will return an error.
          */
-        fun referenceableType(referenceableType: ReferenceableType) = apply {
-            this.referenceableType = referenceableType
-        }
+        fun referenceableType(referenceableType: Optional<ReferenceableType>) =
+            referenceableType(referenceableType.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -98,20 +98,37 @@ constructor(
             this.internalAccountId = internalAccountId
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** The date of the balance report in local time. */
-        fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+        fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
+
+        /** The date of the balance report in local time. */
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
         /**
          * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
          * `other`.
          */
-        fun balanceReportType(balanceReportType: BalanceReportType) = apply {
+        fun balanceReportType(balanceReportType: BalanceReportType?) = apply {
             this.balanceReportType = balanceReportType
         }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
+         * `other`.
+         */
+        fun balanceReportType(balanceReportType: Optional<BalanceReportType>) =
+            balanceReportType(balanceReportType.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

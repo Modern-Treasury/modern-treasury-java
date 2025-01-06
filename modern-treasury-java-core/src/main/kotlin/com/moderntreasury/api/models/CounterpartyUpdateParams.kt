@@ -143,32 +143,67 @@ constructor(
             }
 
             /** A new email for the counterparty. */
-            fun email(email: String) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
+
+            /** A new email for the counterparty. */
+            fun email(email: Optional<String>) = email(email.orElse(null))
 
             /** The id of the legal entity. */
-            fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+            fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+
+            /** The id of the legal entity. */
+            fun legalEntityId(legalEntityId: Optional<String>) =
+                legalEntityId(legalEntityId.orElse(null))
 
             /**
              * Additional data in the form of key-value pairs. Pairs can be removed by passing an
              * empty string or `null` as the value.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
+             * empty string or `null` as the value.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** A new name for the counterparty. Will only update if passed. */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
+
+            /** A new name for the counterparty. Will only update if passed. */
+            fun name(name: Optional<String>) = name(name.orElse(null))
 
             /**
              * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
              * associated payment order is sent to the bank.
              */
-            fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) = apply {
+            fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean?) = apply {
                 this.sendRemittanceAdvice = sendRemittanceAdvice
             }
 
+            /**
+             * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+             * associated payment order is sent to the bank.
+             */
+            fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) =
+                sendRemittanceAdvice(sendRemittanceAdvice as Boolean?)
+
+            /**
+             * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+             * associated payment order is sent to the bank.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun sendRemittanceAdvice(sendRemittanceAdvice: Optional<Boolean>) =
+                sendRemittanceAdvice(sendRemittanceAdvice.orElse(null) as Boolean?)
+
             /** Either a valid SSN or EIN. */
-            fun taxpayerIdentifier(taxpayerIdentifier: String) = apply {
+            fun taxpayerIdentifier(taxpayerIdentifier: String?) = apply {
                 this.taxpayerIdentifier = taxpayerIdentifier
             }
+
+            /** Either a valid SSN or EIN. */
+            fun taxpayerIdentifier(taxpayerIdentifier: Optional<String>) =
+                taxpayerIdentifier(taxpayerIdentifier.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -245,32 +280,67 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** A new email for the counterparty. */
-        fun email(email: String) = apply { body.email(email) }
+        fun email(email: String?) = apply { body.email(email) }
+
+        /** A new email for the counterparty. */
+        fun email(email: Optional<String>) = email(email.orElse(null))
 
         /** The id of the legal entity. */
-        fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
+        fun legalEntityId(legalEntityId: String?) = apply { body.legalEntityId(legalEntityId) }
+
+        /** The id of the legal entity. */
+        fun legalEntityId(legalEntityId: Optional<String>) =
+            legalEntityId(legalEntityId.orElse(null))
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+         * string or `null` as the value.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** A new name for the counterparty. Will only update if passed. */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
+
+        /** A new name for the counterparty. Will only update if passed. */
+        fun name(name: Optional<String>) = name(name.orElse(null))
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
          * associated payment order is sent to the bank.
          */
-        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) = apply {
+        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean?) = apply {
             body.sendRemittanceAdvice(sendRemittanceAdvice)
         }
 
+        /**
+         * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+         * associated payment order is sent to the bank.
+         */
+        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) =
+            sendRemittanceAdvice(sendRemittanceAdvice as Boolean?)
+
+        /**
+         * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+         * associated payment order is sent to the bank.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun sendRemittanceAdvice(sendRemittanceAdvice: Optional<Boolean>) =
+            sendRemittanceAdvice(sendRemittanceAdvice.orElse(null) as Boolean?)
+
         /** Either a valid SSN or EIN. */
-        fun taxpayerIdentifier(taxpayerIdentifier: String) = apply {
+        fun taxpayerIdentifier(taxpayerIdentifier: String?) = apply {
             body.taxpayerIdentifier(taxpayerIdentifier)
         }
+
+        /** Either a valid SSN or EIN. */
+        fun taxpayerIdentifier(taxpayerIdentifier: Optional<String>) =
+            taxpayerIdentifier(taxpayerIdentifier.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

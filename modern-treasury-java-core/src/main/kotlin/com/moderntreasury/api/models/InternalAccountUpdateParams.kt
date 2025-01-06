@@ -128,28 +128,49 @@ constructor(
             }
 
             /** The Counterparty associated to this account. */
-            fun counterpartyId(counterpartyId: String) = apply {
+            fun counterpartyId(counterpartyId: String?) = apply {
                 this.counterpartyId = counterpartyId
             }
 
+            /** The Counterparty associated to this account. */
+            fun counterpartyId(counterpartyId: Optional<String>) =
+                counterpartyId(counterpartyId.orElse(null))
+
             /** The Ledger Account associated to this account. */
-            fun ledgerAccountId(ledgerAccountId: String) = apply {
+            fun ledgerAccountId(ledgerAccountId: String?) = apply {
                 this.ledgerAccountId = ledgerAccountId
             }
+
+            /** The Ledger Account associated to this account. */
+            fun ledgerAccountId(ledgerAccountId: Optional<String>) =
+                ledgerAccountId(ledgerAccountId.orElse(null))
 
             /**
              * Additional data in the form of key-value pairs. Pairs can be removed by passing an
              * empty string or `null` as the value.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
+             * empty string or `null` as the value.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** The nickname for the internal account. */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
+
+            /** The nickname for the internal account. */
+            fun name(name: Optional<String>) = name(name.orElse(null))
 
             /** The parent internal account for this account. */
-            fun parentAccountId(parentAccountId: String) = apply {
+            fun parentAccountId(parentAccountId: String?) = apply {
                 this.parentAccountId = parentAccountId
             }
+
+            /** The parent internal account for this account. */
+            fun parentAccountId(parentAccountId: Optional<String>) =
+                parentAccountId(parentAccountId.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -225,26 +246,47 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** The Counterparty associated to this account. */
-        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
+        fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
+
+        /** The Counterparty associated to this account. */
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** The Ledger Account associated to this account. */
-        fun ledgerAccountId(ledgerAccountId: String) = apply {
+        fun ledgerAccountId(ledgerAccountId: String?) = apply {
             body.ledgerAccountId(ledgerAccountId)
         }
+
+        /** The Ledger Account associated to this account. */
+        fun ledgerAccountId(ledgerAccountId: Optional<String>) =
+            ledgerAccountId(ledgerAccountId.orElse(null))
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+         * string or `null` as the value.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** The nickname for the internal account. */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
+
+        /** The nickname for the internal account. */
+        fun name(name: Optional<String>) = name(name.orElse(null))
 
         /** The parent internal account for this account. */
-        fun parentAccountId(parentAccountId: String) = apply {
+        fun parentAccountId(parentAccountId: String?) = apply {
             body.parentAccountId(parentAccountId)
         }
+
+        /** The parent internal account for this account. */
+        fun parentAccountId(parentAccountId: Optional<String>) =
+            parentAccountId(parentAccountId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

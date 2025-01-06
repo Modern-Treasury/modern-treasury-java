@@ -155,22 +155,39 @@ constructor(
             fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
 
             /** Defaults to the currency of the originating account. */
-            fun currency(currency: Currency) = apply { this.currency = currency }
+            fun currency(currency: Currency?) = apply { this.currency = currency }
+
+            /** Defaults to the currency of the originating account. */
+            fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
             /**
              * A payment type to fallback to if the original type is not valid for the receiving
              * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp
              * and fallback_type=ach)
              */
-            fun fallbackType(fallbackType: FallbackType) = apply {
+            fun fallbackType(fallbackType: FallbackType?) = apply {
                 this.fallbackType = fallbackType
             }
+
+            /**
+             * A payment type to fallback to if the original type is not valid for the receiving
+             * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp
+             * and fallback_type=ach)
+             */
+            fun fallbackType(fallbackType: Optional<FallbackType>) =
+                fallbackType(fallbackType.orElse(null))
 
             /**
              * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH
              * transfer. This will apply to both `payment_type` and `fallback_type`.
              */
-            fun priority(priority: Priority) = apply { this.priority = priority }
+            fun priority(priority: Priority?) = apply { this.priority = priority }
+
+            /**
+             * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH
+             * transfer. This will apply to both `payment_type` and `fallback_type`.
+             */
+            fun priority(priority: Optional<Priority>) = priority(priority.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -259,20 +276,37 @@ constructor(
         fun paymentType(paymentType: PaymentType) = apply { body.paymentType(paymentType) }
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Currency) = apply { body.currency(currency) }
+        fun currency(currency: Currency?) = apply { body.currency(currency) }
+
+        /** Defaults to the currency of the originating account. */
+        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
          * fallback_type=ach)
          */
-        fun fallbackType(fallbackType: FallbackType) = apply { body.fallbackType(fallbackType) }
+        fun fallbackType(fallbackType: FallbackType?) = apply { body.fallbackType(fallbackType) }
+
+        /**
+         * A payment type to fallback to if the original type is not valid for the receiving
+         * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
+         * fallback_type=ach)
+         */
+        fun fallbackType(fallbackType: Optional<FallbackType>) =
+            fallbackType(fallbackType.orElse(null))
 
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
          * This will apply to both `payment_type` and `fallback_type`.
          */
-        fun priority(priority: Priority) = apply { body.priority(priority) }
+        fun priority(priority: Priority?) = apply { body.priority(priority) }
+
+        /**
+         * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
+         * This will apply to both `payment_type` and `fallback_type`.
+         */
+        fun priority(priority: Optional<Priority>) = priority(priority.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
