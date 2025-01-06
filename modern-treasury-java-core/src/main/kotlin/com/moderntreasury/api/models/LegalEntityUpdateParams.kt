@@ -713,37 +713,37 @@ constructor(
     class LegalEntityAddressCreateRequest
     @JsonCreator
     private constructor(
-        @JsonProperty("address_types") private val addressTypes: List<AddressType>?,
-        @JsonProperty("line1") private val line1: String?,
-        @JsonProperty("line2") private val line2: String?,
-        @JsonProperty("locality") private val locality: String?,
-        @JsonProperty("region") private val region: String?,
-        @JsonProperty("postal_code") private val postalCode: String?,
         @JsonProperty("country") private val country: String?,
+        @JsonProperty("line1") private val line1: String?,
+        @JsonProperty("locality") private val locality: String?,
+        @JsonProperty("postal_code") private val postalCode: String?,
+        @JsonProperty("region") private val region: String?,
+        @JsonProperty("address_types") private val addressTypes: List<AddressType>?,
+        @JsonProperty("line2") private val line2: String?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The types of this address. */
-        @JsonProperty("address_types")
-        fun addressTypes(): Optional<List<AddressType>> = Optional.ofNullable(addressTypes)
+        /** Country code conforms to [ISO 3166-1 alpha-2] */
+        @JsonProperty("country") fun country(): Optional<String> = Optional.ofNullable(country)
 
         @JsonProperty("line1") fun line1(): Optional<String> = Optional.ofNullable(line1)
 
-        @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
-
         /** Locality or City. */
         @JsonProperty("locality") fun locality(): Optional<String> = Optional.ofNullable(locality)
-
-        /** Region or State. */
-        @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
 
         /** The postal code of the address. */
         @JsonProperty("postal_code")
         fun postalCode(): Optional<String> = Optional.ofNullable(postalCode)
 
-        /** Country code conforms to [ISO 3166-1 alpha-2] */
-        @JsonProperty("country") fun country(): Optional<String> = Optional.ofNullable(country)
+        /** Region or State. */
+        @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
+
+        /** The types of this address. */
+        @JsonProperty("address_types")
+        fun addressTypes(): Optional<List<AddressType>> = Optional.ofNullable(addressTypes)
+
+        @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -758,28 +758,42 @@ constructor(
 
         class Builder {
 
-            private var addressTypes: MutableList<AddressType>? = null
-            private var line1: String? = null
-            private var line2: String? = null
-            private var locality: String? = null
-            private var region: String? = null
-            private var postalCode: String? = null
             private var country: String? = null
+            private var line1: String? = null
+            private var locality: String? = null
+            private var postalCode: String? = null
+            private var region: String? = null
+            private var addressTypes: MutableList<AddressType>? = null
+            private var line2: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(legalEntityAddressCreateRequest: LegalEntityAddressCreateRequest) =
                 apply {
-                    addressTypes = legalEntityAddressCreateRequest.addressTypes?.toMutableList()
-                    line1 = legalEntityAddressCreateRequest.line1
-                    line2 = legalEntityAddressCreateRequest.line2
-                    locality = legalEntityAddressCreateRequest.locality
-                    region = legalEntityAddressCreateRequest.region
-                    postalCode = legalEntityAddressCreateRequest.postalCode
                     country = legalEntityAddressCreateRequest.country
+                    line1 = legalEntityAddressCreateRequest.line1
+                    locality = legalEntityAddressCreateRequest.locality
+                    postalCode = legalEntityAddressCreateRequest.postalCode
+                    region = legalEntityAddressCreateRequest.region
+                    addressTypes = legalEntityAddressCreateRequest.addressTypes?.toMutableList()
+                    line2 = legalEntityAddressCreateRequest.line2
                     additionalProperties =
                         legalEntityAddressCreateRequest.additionalProperties.toMutableMap()
                 }
+
+            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            fun country(country: String) = apply { this.country = country }
+
+            fun line1(line1: String) = apply { this.line1 = line1 }
+
+            /** Locality or City. */
+            fun locality(locality: String) = apply { this.locality = locality }
+
+            /** The postal code of the address. */
+            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+
+            /** Region or State. */
+            fun region(region: String) = apply { this.region = region }
 
             /** The types of this address. */
             fun addressTypes(addressTypes: List<AddressType>) = apply {
@@ -791,21 +805,7 @@ constructor(
                 addressTypes = (addressTypes ?: mutableListOf()).apply { add(addressType) }
             }
 
-            fun line1(line1: String) = apply { this.line1 = line1 }
-
             fun line2(line2: String) = apply { this.line2 = line2 }
-
-            /** Locality or City. */
-            fun locality(locality: String) = apply { this.locality = locality }
-
-            /** Region or State. */
-            fun region(region: String) = apply { this.region = region }
-
-            /** The postal code of the address. */
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
-
-            /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: String) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -828,13 +828,13 @@ constructor(
 
             fun build(): LegalEntityAddressCreateRequest =
                 LegalEntityAddressCreateRequest(
-                    addressTypes?.toImmutable(),
-                    line1,
-                    line2,
-                    locality,
-                    region,
-                    postalCode,
                     country,
+                    line1,
+                    locality,
+                    postalCode,
+                    region,
+                    addressTypes?.toImmutable(),
+                    line2,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -919,17 +919,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LegalEntityAddressCreateRequest && addressTypes == other.addressTypes && line1 == other.line1 && line2 == other.line2 && locality == other.locality && region == other.region && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LegalEntityAddressCreateRequest && country == other.country && line1 == other.line1 && locality == other.locality && postalCode == other.postalCode && region == other.region && addressTypes == other.addressTypes && line2 == other.line2 && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(addressTypes, line1, line2, locality, region, postalCode, country, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(country, line1, locality, postalCode, region, addressTypes, line2, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityAddressCreateRequest{addressTypes=$addressTypes, line1=$line1, line2=$line2, locality=$locality, region=$region, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+            "LegalEntityAddressCreateRequest{country=$country, line1=$line1, locality=$locality, postalCode=$postalCode, region=$region, addressTypes=$addressTypes, line2=$line2, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
