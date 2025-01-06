@@ -22,49 +22,45 @@ class BankSettings
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("object")
+    @JsonProperty("backup_withholding_percentage")
     @ExcludeMissing
-    private val object_: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("live_mode")
-    @ExcludeMissing
-    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    private val backupWithholdingPercentage: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("updated_at")
-    @ExcludeMissing
-    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("discarded_at")
     @ExcludeMissing
     private val discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("enable_backup_withholding")
     @ExcludeMissing
     private val enableBackupWithholding: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("backup_withholding_percentage")
+    @JsonProperty("live_mode")
     @ExcludeMissing
-    private val backupWithholdingPercentage: JsonField<Long> = JsonMissing.of(),
+    private val liveMode: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("object")
+    @ExcludeMissing
+    private val object_: JsonField<String> = JsonMissing.of(),
     @JsonProperty("privacy_opt_out")
     @ExcludeMissing
     private val privacyOptOut: JsonField<Boolean> = JsonMissing.of(),
     @JsonProperty("regulation_o")
     @ExcludeMissing
     private val regulationO: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun id(): String = id.getRequired("id")
 
-    fun object_(): String = object_.getRequired("object")
-
-    /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
-     */
-    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
+    /** The percentage of backup withholding to apply to the legal entity. */
+    fun backupWithholdingPercentage(): Optional<Long> =
+        Optional.ofNullable(
+            backupWithholdingPercentage.getNullable("backup_withholding_percentage")
+        )
 
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     fun discardedAt(): Optional<OffsetDateTime> =
         Optional.ofNullable(discardedAt.getNullable("discarded_at"))
@@ -76,11 +72,13 @@ private constructor(
     fun enableBackupWithholding(): Optional<Boolean> =
         Optional.ofNullable(enableBackupWithholding.getNullable("enable_backup_withholding"))
 
-    /** The percentage of backup withholding to apply to the legal entity. */
-    fun backupWithholdingPercentage(): Optional<Long> =
-        Optional.ofNullable(
-            backupWithholdingPercentage.getNullable("backup_withholding_percentage")
-        )
+    /**
+     * This field will be true if this object exists in the live environment or false if it exists
+     * in the test environment.
+     */
+    fun liveMode(): Boolean = liveMode.getRequired("live_mode")
+
+    fun object_(): String = object_.getRequired("object")
 
     /** Cross River Bank specific setting to opt out of privacy policy. */
     fun privacyOptOut(): Optional<Boolean> =
@@ -95,19 +93,16 @@ private constructor(
     fun regulationO(): Optional<Boolean> =
         Optional.ofNullable(regulationO.getNullable("regulation_o"))
 
+    fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("object") @ExcludeMissing fun _object_() = object_
-
-    /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
-     */
-    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode() = liveMode
+    /** The percentage of backup withholding to apply to the legal entity. */
+    @JsonProperty("backup_withholding_percentage")
+    @ExcludeMissing
+    fun _backupWithholdingPercentage() = backupWithholdingPercentage
 
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-    @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
     @JsonProperty("discarded_at") @ExcludeMissing fun _discardedAt() = discardedAt
 
@@ -119,10 +114,13 @@ private constructor(
     @ExcludeMissing
     fun _enableBackupWithholding() = enableBackupWithholding
 
-    /** The percentage of backup withholding to apply to the legal entity. */
-    @JsonProperty("backup_withholding_percentage")
-    @ExcludeMissing
-    fun _backupWithholdingPercentage() = backupWithholdingPercentage
+    /**
+     * This field will be true if this object exists in the live environment or false if it exists
+     * in the test environment.
+     */
+    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode() = liveMode
+
+    @JsonProperty("object") @ExcludeMissing fun _object_() = object_
 
     /** Cross River Bank specific setting to opt out of privacy policy. */
     @JsonProperty("privacy_opt_out") @ExcludeMissing fun _privacyOptOut() = privacyOptOut
@@ -135,6 +133,8 @@ private constructor(
      */
     @JsonProperty("regulation_o") @ExcludeMissing fun _regulationO() = regulationO
 
+    @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -144,15 +144,15 @@ private constructor(
     fun validate(): BankSettings = apply {
         if (!validated) {
             id()
-            object_()
-            liveMode()
+            backupWithholdingPercentage()
             createdAt()
-            updatedAt()
             discardedAt()
             enableBackupWithholding()
-            backupWithholdingPercentage()
+            liveMode()
+            object_()
             privacyOptOut()
             regulationO()
+            updatedAt()
             validated = true
         }
     }
@@ -167,29 +167,29 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var object_: JsonField<String> = JsonMissing.of()
-        private var liveMode: JsonField<Boolean> = JsonMissing.of()
+        private var backupWithholdingPercentage: JsonField<Long> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var discardedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var enableBackupWithholding: JsonField<Boolean> = JsonMissing.of()
-        private var backupWithholdingPercentage: JsonField<Long> = JsonMissing.of()
+        private var liveMode: JsonField<Boolean> = JsonMissing.of()
+        private var object_: JsonField<String> = JsonMissing.of()
         private var privacyOptOut: JsonField<Boolean> = JsonMissing.of()
         private var regulationO: JsonField<Boolean> = JsonMissing.of()
+        private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(bankSettings: BankSettings) = apply {
             id = bankSettings.id
-            object_ = bankSettings.object_
-            liveMode = bankSettings.liveMode
+            backupWithholdingPercentage = bankSettings.backupWithholdingPercentage
             createdAt = bankSettings.createdAt
-            updatedAt = bankSettings.updatedAt
             discardedAt = bankSettings.discardedAt
             enableBackupWithholding = bankSettings.enableBackupWithholding
-            backupWithholdingPercentage = bankSettings.backupWithholdingPercentage
+            liveMode = bankSettings.liveMode
+            object_ = bankSettings.object_
             privacyOptOut = bankSettings.privacyOptOut
             regulationO = bankSettings.regulationO
+            updatedAt = bankSettings.updatedAt
             additionalProperties = bankSettings.additionalProperties.toMutableMap()
         }
 
@@ -197,29 +197,18 @@ private constructor(
 
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun object_(object_: String) = object_(JsonField.of(object_))
+        /** The percentage of backup withholding to apply to the legal entity. */
+        fun backupWithholdingPercentage(backupWithholdingPercentage: Long) =
+            backupWithholdingPercentage(JsonField.of(backupWithholdingPercentage))
 
-        fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         */
-        fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         */
-        fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
+        /** The percentage of backup withholding to apply to the legal entity. */
+        fun backupWithholdingPercentage(backupWithholdingPercentage: JsonField<Long>) = apply {
+            this.backupWithholdingPercentage = backupWithholdingPercentage
+        }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
-
-        fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
-
-        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         fun discardedAt(discardedAt: OffsetDateTime) = discardedAt(JsonField.of(discardedAt))
 
@@ -242,14 +231,21 @@ private constructor(
             this.enableBackupWithholding = enableBackupWithholding
         }
 
-        /** The percentage of backup withholding to apply to the legal entity. */
-        fun backupWithholdingPercentage(backupWithholdingPercentage: Long) =
-            backupWithholdingPercentage(JsonField.of(backupWithholdingPercentage))
+        /**
+         * This field will be true if this object exists in the live environment or false if it
+         * exists in the test environment.
+         */
+        fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
 
-        /** The percentage of backup withholding to apply to the legal entity. */
-        fun backupWithholdingPercentage(backupWithholdingPercentage: JsonField<Long>) = apply {
-            this.backupWithholdingPercentage = backupWithholdingPercentage
-        }
+        /**
+         * This field will be true if this object exists in the live environment or false if it
+         * exists in the test environment.
+         */
+        fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
+
+        fun object_(object_: String) = object_(JsonField.of(object_))
+
+        fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         /** Cross River Bank specific setting to opt out of privacy policy. */
         fun privacyOptOut(privacyOptOut: Boolean) = privacyOptOut(JsonField.of(privacyOptOut))
@@ -275,6 +271,10 @@ private constructor(
          */
         fun regulationO(regulationO: JsonField<Boolean>) = apply { this.regulationO = regulationO }
 
+        fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
+
+        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -297,15 +297,15 @@ private constructor(
         fun build(): BankSettings =
             BankSettings(
                 id,
-                object_,
-                liveMode,
+                backupWithholdingPercentage,
                 createdAt,
-                updatedAt,
                 discardedAt,
                 enableBackupWithholding,
-                backupWithholdingPercentage,
+                liveMode,
+                object_,
                 privacyOptOut,
                 regulationO,
+                updatedAt,
                 additionalProperties.toImmutable(),
             )
     }
@@ -315,15 +315,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BankSettings && id == other.id && object_ == other.object_ && liveMode == other.liveMode && createdAt == other.createdAt && updatedAt == other.updatedAt && discardedAt == other.discardedAt && enableBackupWithholding == other.enableBackupWithholding && backupWithholdingPercentage == other.backupWithholdingPercentage && privacyOptOut == other.privacyOptOut && regulationO == other.regulationO && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BankSettings && id == other.id && backupWithholdingPercentage == other.backupWithholdingPercentage && createdAt == other.createdAt && discardedAt == other.discardedAt && enableBackupWithholding == other.enableBackupWithholding && liveMode == other.liveMode && object_ == other.object_ && privacyOptOut == other.privacyOptOut && regulationO == other.regulationO && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, object_, liveMode, createdAt, updatedAt, discardedAt, enableBackupWithholding, backupWithholdingPercentage, privacyOptOut, regulationO, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, backupWithholdingPercentage, createdAt, discardedAt, enableBackupWithholding, liveMode, object_, privacyOptOut, regulationO, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BankSettings{id=$id, object_=$object_, liveMode=$liveMode, createdAt=$createdAt, updatedAt=$updatedAt, discardedAt=$discardedAt, enableBackupWithholding=$enableBackupWithholding, backupWithholdingPercentage=$backupWithholdingPercentage, privacyOptOut=$privacyOptOut, regulationO=$regulationO, additionalProperties=$additionalProperties}"
+        "BankSettings{id=$id, backupWithholdingPercentage=$backupWithholdingPercentage, createdAt=$createdAt, discardedAt=$discardedAt, enableBackupWithholding=$enableBackupWithholding, liveMode=$liveMode, object_=$object_, privacyOptOut=$privacyOptOut, regulationO=$regulationO, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }

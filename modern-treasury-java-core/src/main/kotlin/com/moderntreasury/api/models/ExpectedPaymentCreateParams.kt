@@ -841,30 +841,26 @@ constructor(
     class LedgerTransactionCreateRequest
     @JsonCreator
     private constructor(
+        @JsonProperty("ledger_entries") private val ledgerEntries: List<LedgerEntryCreateRequest>,
         @JsonProperty("description") private val description: String?,
-        @JsonProperty("status") private val status: Status?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
         @JsonProperty("effective_at") private val effectiveAt: OffsetDateTime?,
         @JsonProperty("effective_date") private val effectiveDate: LocalDate?,
-        @JsonProperty("ledger_entries") private val ledgerEntries: List<LedgerEntryCreateRequest>,
         @JsonProperty("external_id") private val externalId: String?,
-        @JsonProperty("ledgerable_type") private val ledgerableType: LedgerableType?,
         @JsonProperty("ledgerable_id") private val ledgerableId: String?,
+        @JsonProperty("ledgerable_type") private val ledgerableType: LedgerableType?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("status") private val status: Status?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /** An array of ledger entry objects. */
+        @JsonProperty("ledger_entries")
+        fun ledgerEntries(): List<LedgerEntryCreateRequest> = ledgerEntries
+
         /** An optional description for internal use. */
         @JsonProperty("description")
         fun description(): Optional<String> = Optional.ofNullable(description)
-
-        /** To post a ledger transaction at creation, use `posted`. */
-        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -879,16 +875,19 @@ constructor(
         @JsonProperty("effective_date")
         fun effectiveDate(): Optional<LocalDate> = Optional.ofNullable(effectiveDate)
 
-        /** An array of ledger entry objects. */
-        @JsonProperty("ledger_entries")
-        fun ledgerEntries(): List<LedgerEntryCreateRequest> = ledgerEntries
-
         /**
          * A unique string to represent the ledger transaction. Only one pending or posted ledger
          * transaction may have this ID in the ledger.
          */
         @JsonProperty("external_id")
         fun externalId(): Optional<String> = Optional.ofNullable(externalId)
+
+        /**
+         * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
+         * will be populated here, otherwise null.
+         */
+        @JsonProperty("ledgerable_id")
+        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
@@ -899,11 +898,12 @@ constructor(
         fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
 
         /**
-         * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
-         * will be populated here, otherwise null.
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("ledgerable_id")
-        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+
+        /** To post a ledger transaction at creation, use `posted`. */
+        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -918,44 +918,45 @@ constructor(
 
         class Builder {
 
+            private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
             private var description: String? = null
-            private var status: Status? = null
-            private var metadata: Metadata? = null
             private var effectiveAt: OffsetDateTime? = null
             private var effectiveDate: LocalDate? = null
-            private var ledgerEntries: MutableList<LedgerEntryCreateRequest>? = null
             private var externalId: String? = null
-            private var ledgerableType: LedgerableType? = null
             private var ledgerableId: String? = null
+            private var ledgerableType: LedgerableType? = null
+            private var metadata: Metadata? = null
+            private var status: Status? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(ledgerTransactionCreateRequest: LedgerTransactionCreateRequest) =
                 apply {
+                    ledgerEntries = ledgerTransactionCreateRequest.ledgerEntries.toMutableList()
                     description = ledgerTransactionCreateRequest.description
-                    status = ledgerTransactionCreateRequest.status
-                    metadata = ledgerTransactionCreateRequest.metadata
                     effectiveAt = ledgerTransactionCreateRequest.effectiveAt
                     effectiveDate = ledgerTransactionCreateRequest.effectiveDate
-                    ledgerEntries = ledgerTransactionCreateRequest.ledgerEntries.toMutableList()
                     externalId = ledgerTransactionCreateRequest.externalId
-                    ledgerableType = ledgerTransactionCreateRequest.ledgerableType
                     ledgerableId = ledgerTransactionCreateRequest.ledgerableId
+                    ledgerableType = ledgerTransactionCreateRequest.ledgerableType
+                    metadata = ledgerTransactionCreateRequest.metadata
+                    status = ledgerTransactionCreateRequest.status
                     additionalProperties =
                         ledgerTransactionCreateRequest.additionalProperties.toMutableMap()
                 }
 
+            /** An array of ledger entry objects. */
+            fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
+                this.ledgerEntries = ledgerEntries.toMutableList()
+            }
+
+            /** An array of ledger entry objects. */
+            fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
+                ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
+            }
+
             /** An optional description for internal use. */
             fun description(description: String) = apply { this.description = description }
-
-            /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: Status) = apply { this.status = status }
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -971,21 +972,17 @@ constructor(
                 this.effectiveDate = effectiveDate
             }
 
-            /** An array of ledger entry objects. */
-            fun ledgerEntries(ledgerEntries: List<LedgerEntryCreateRequest>) = apply {
-                this.ledgerEntries = ledgerEntries.toMutableList()
-            }
-
-            /** An array of ledger entry objects. */
-            fun addLedgerEntry(ledgerEntry: LedgerEntryCreateRequest) = apply {
-                ledgerEntries = (ledgerEntries ?: mutableListOf()).apply { add(ledgerEntry) }
-            }
-
             /**
              * A unique string to represent the ledger transaction. Only one pending or posted
              * ledger transaction may have this ID in the ledger.
              */
             fun externalId(externalId: String) = apply { this.externalId = externalId }
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * id will be populated here, otherwise null.
+             */
+            fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
 
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
@@ -997,10 +994,13 @@ constructor(
             }
 
             /**
-             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
-             * id will be populated here, otherwise null.
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
              */
-            fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            fun status(status: Status) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1023,16 +1023,16 @@ constructor(
 
             fun build(): LedgerTransactionCreateRequest =
                 LedgerTransactionCreateRequest(
-                    description,
-                    status,
-                    metadata,
-                    effectiveAt,
-                    effectiveDate,
                     checkNotNull(ledgerEntries) { "`ledgerEntries` is required but was not set" }
                         .toImmutable(),
+                    description,
+                    effectiveAt,
+                    effectiveDate,
                     externalId,
-                    ledgerableType,
                     ledgerableId,
+                    ledgerableType,
+                    metadata,
+                    status,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1044,16 +1044,16 @@ constructor(
             @JsonProperty("amount") private val amount: Long,
             @JsonProperty("direction") private val direction: TransactionDirection,
             @JsonProperty("ledger_account_id") private val ledgerAccountId: String,
+            @JsonProperty("available_balance_amount")
+            private val availableBalanceAmount: AvailableBalanceAmount?,
             @JsonProperty("lock_version") private val lockVersion: Long?,
+            @JsonProperty("metadata") private val metadata: Metadata?,
             @JsonProperty("pending_balance_amount")
             private val pendingBalanceAmount: PendingBalanceAmount?,
             @JsonProperty("posted_balance_amount")
             private val postedBalanceAmount: PostedBalanceAmount?,
-            @JsonProperty("available_balance_amount")
-            private val availableBalanceAmount: AvailableBalanceAmount?,
             @JsonProperty("show_resulting_ledger_account_balances")
             private val showResultingLedgerAccountBalances: Boolean?,
-            @JsonProperty("metadata") private val metadata: Metadata?,
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
@@ -1076,6 +1076,15 @@ constructor(
             @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
 
             /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * available balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            @JsonProperty("available_balance_amount")
+            fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
+                Optional.ofNullable(availableBalanceAmount)
+
+            /**
              * Lock version of the ledger account. This can be passed when creating a ledger
              * transaction to only succeed if no ledger transactions have posted since the given
              * version. See our post about Designing the Ledgers API with Optimistic Locking for
@@ -1083,6 +1092,13 @@ constructor(
              */
             @JsonProperty("lock_version")
             fun lockVersion(): Optional<Long> = Optional.ofNullable(lockVersion)
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            @JsonProperty("metadata")
+            fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -1103,28 +1119,12 @@ constructor(
                 Optional.ofNullable(postedBalanceAmount)
 
             /**
-             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
-             * available balance. If any of these conditions would be false after the transaction is
-             * created, the entire call will fail with error code 422.
-             */
-            @JsonProperty("available_balance_amount")
-            fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
-                Optional.ofNullable(availableBalanceAmount)
-
-            /**
              * If true, response will include the balance of the associated ledger account for the
              * entry.
              */
             @JsonProperty("show_resulting_ledger_account_balances")
             fun showResultingLedgerAccountBalances(): Optional<Boolean> =
                 Optional.ofNullable(showResultingLedgerAccountBalances)
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            @JsonProperty("metadata")
-            fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1142,12 +1142,12 @@ constructor(
                 private var amount: Long? = null
                 private var direction: TransactionDirection? = null
                 private var ledgerAccountId: String? = null
+                private var availableBalanceAmount: AvailableBalanceAmount? = null
                 private var lockVersion: Long? = null
+                private var metadata: Metadata? = null
                 private var pendingBalanceAmount: PendingBalanceAmount? = null
                 private var postedBalanceAmount: PostedBalanceAmount? = null
-                private var availableBalanceAmount: AvailableBalanceAmount? = null
                 private var showResultingLedgerAccountBalances: Boolean? = null
-                private var metadata: Metadata? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
@@ -1155,13 +1155,13 @@ constructor(
                     amount = ledgerEntryCreateRequest.amount
                     direction = ledgerEntryCreateRequest.direction
                     ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
+                    availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
                     lockVersion = ledgerEntryCreateRequest.lockVersion
+                    metadata = ledgerEntryCreateRequest.metadata
                     pendingBalanceAmount = ledgerEntryCreateRequest.pendingBalanceAmount
                     postedBalanceAmount = ledgerEntryCreateRequest.postedBalanceAmount
-                    availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
                     showResultingLedgerAccountBalances =
                         ledgerEntryCreateRequest.showResultingLedgerAccountBalances
-                    metadata = ledgerEntryCreateRequest.metadata
                     additionalProperties =
                         ledgerEntryCreateRequest.additionalProperties.toMutableMap()
                 }
@@ -1188,12 +1188,27 @@ constructor(
                 }
 
                 /**
+                 * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
+                 * account’s available balance. If any of these conditions would be false after the
+                 * transaction is created, the entire call will fail with error code 422.
+                 */
+                fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
+                    this.availableBalanceAmount = availableBalanceAmount
+                }
+
+                /**
                  * Lock version of the ledger account. This can be passed when creating a ledger
                  * transaction to only succeed if no ledger transactions have posted since the given
                  * version. See our post about Designing the Ledgers API with Optimistic Locking for
                  * more details.
                  */
                 fun lockVersion(lockVersion: Long) = apply { this.lockVersion = lockVersion }
+
+                /**
+                 * Additional data represented as key-value pairs. Both the key and value must be
+                 * strings.
+                 */
+                fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
                 /**
                  * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
@@ -1214,15 +1229,6 @@ constructor(
                 }
 
                 /**
-                 * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
-                 * account’s available balance. If any of these conditions would be false after the
-                 * transaction is created, the entire call will fail with error code 422.
-                 */
-                fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
-                    this.availableBalanceAmount = availableBalanceAmount
-                }
-
-                /**
                  * If true, response will include the balance of the associated ledger account for
                  * the entry.
                  */
@@ -1231,12 +1237,6 @@ constructor(
                 ) = apply {
                     this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
                 }
-
-                /**
-                 * Additional data represented as key-value pairs. Both the key and value must be
-                 * strings.
-                 */
-                fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1267,12 +1267,12 @@ constructor(
                         checkNotNull(ledgerAccountId) {
                             "`ledgerAccountId` is required but was not set"
                         },
+                        availableBalanceAmount,
                         lockVersion,
+                        metadata,
                         pendingBalanceAmount,
                         postedBalanceAmount,
-                        availableBalanceAmount,
                         showResultingLedgerAccountBalances,
-                        metadata,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1590,17 +1590,17 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is LedgerEntryCreateRequest && amount == other.amount && direction == other.direction && ledgerAccountId == other.ledgerAccountId && lockVersion == other.lockVersion && pendingBalanceAmount == other.pendingBalanceAmount && postedBalanceAmount == other.postedBalanceAmount && availableBalanceAmount == other.availableBalanceAmount && showResultingLedgerAccountBalances == other.showResultingLedgerAccountBalances && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is LedgerEntryCreateRequest && amount == other.amount && direction == other.direction && ledgerAccountId == other.ledgerAccountId && availableBalanceAmount == other.availableBalanceAmount && lockVersion == other.lockVersion && metadata == other.metadata && pendingBalanceAmount == other.pendingBalanceAmount && postedBalanceAmount == other.postedBalanceAmount && showResultingLedgerAccountBalances == other.showResultingLedgerAccountBalances && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, direction, ledgerAccountId, lockVersion, pendingBalanceAmount, postedBalanceAmount, availableBalanceAmount, showResultingLedgerAccountBalances, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(amount, direction, ledgerAccountId, availableBalanceAmount, lockVersion, metadata, pendingBalanceAmount, postedBalanceAmount, showResultingLedgerAccountBalances, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, lockVersion=$lockVersion, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, availableBalanceAmount=$availableBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
         }
 
         class LedgerableType
@@ -1826,17 +1826,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerTransactionCreateRequest && description == other.description && status == other.status && metadata == other.metadata && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && ledgerEntries == other.ledgerEntries && externalId == other.externalId && ledgerableType == other.ledgerableType && ledgerableId == other.ledgerableId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerTransactionCreateRequest && ledgerEntries == other.ledgerEntries && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && metadata == other.metadata && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(description, status, metadata, effectiveAt, effectiveDate, ledgerEntries, externalId, ledgerableType, ledgerableId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(ledgerEntries, description, effectiveAt, effectiveDate, externalId, ledgerableId, ledgerableType, metadata, status, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerTransactionCreateRequest{description=$description, status=$status, metadata=$metadata, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, ledgerEntries=$ledgerEntries, externalId=$externalId, ledgerableType=$ledgerableType, ledgerableId=$ledgerableId, additionalProperties=$additionalProperties}"
+            "LedgerTransactionCreateRequest{ledgerEntries=$ledgerEntries, description=$description, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, externalId=$externalId, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
@@ -1844,9 +1844,9 @@ constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("amount") private val amount: Long,
-        @JsonProperty("metadata") private val metadata: Metadata?,
-        @JsonProperty("description") private val description: String?,
         @JsonProperty("accounting_category_id") private val accountingCategoryId: String?,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -1855,20 +1855,20 @@ constructor(
         @JsonProperty("amount") fun amount(): Long = amount
 
         /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         * The ID of one of your accounting categories. Note that these will only be accessible if
+         * your accounting system has been connected.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        @JsonProperty("accounting_category_id")
+        fun accountingCategoryId(): Optional<String> = Optional.ofNullable(accountingCategoryId)
 
         /** A free-form description of the line item. */
         @JsonProperty("description")
         fun description(): Optional<String> = Optional.ofNullable(description)
 
         /**
-         * The ID of one of your accounting categories. Note that these will only be accessible if
-         * your accounting system has been connected.
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("accounting_category_id")
-        fun accountingCategoryId(): Optional<String> = Optional.ofNullable(accountingCategoryId)
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1884,17 +1884,17 @@ constructor(
         class Builder {
 
             private var amount: Long? = null
-            private var metadata: Metadata? = null
-            private var description: String? = null
             private var accountingCategoryId: String? = null
+            private var description: String? = null
+            private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(lineItemRequest: LineItemRequest) = apply {
                 amount = lineItemRequest.amount
-                metadata = lineItemRequest.metadata
-                description = lineItemRequest.description
                 accountingCategoryId = lineItemRequest.accountingCategoryId
+                description = lineItemRequest.description
+                metadata = lineItemRequest.metadata
                 additionalProperties = lineItemRequest.additionalProperties.toMutableMap()
             }
 
@@ -1904,21 +1904,21 @@ constructor(
             fun amount(amount: Long) = apply { this.amount = amount }
 
             /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
-
-            /** A free-form description of the line item. */
-            fun description(description: String) = apply { this.description = description }
-
-            /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
             fun accountingCategoryId(accountingCategoryId: String) = apply {
                 this.accountingCategoryId = accountingCategoryId
             }
+
+            /** A free-form description of the line item. */
+            fun description(description: String) = apply { this.description = description }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1942,9 +1942,9 @@ constructor(
             fun build(): LineItemRequest =
                 LineItemRequest(
                     checkNotNull(amount) { "`amount` is required but was not set" },
-                    metadata,
-                    description,
                     accountingCategoryId,
+                    description,
+                    metadata,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2027,17 +2027,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemRequest && amount == other.amount && metadata == other.metadata && description == other.description && accountingCategoryId == other.accountingCategoryId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItemRequest && amount == other.amount && accountingCategoryId == other.accountingCategoryId && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, metadata, description, accountingCategoryId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, accountingCategoryId, description, metadata, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItemRequest{amount=$amount, metadata=$metadata, description=$description, accountingCategoryId=$accountingCategoryId, additionalProperties=$additionalProperties}"
+            "LineItemRequest{amount=$amount, accountingCategoryId=$accountingCategoryId, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
