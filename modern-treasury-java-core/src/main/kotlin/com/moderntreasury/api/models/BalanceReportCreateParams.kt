@@ -519,9 +519,18 @@ constructor(
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * or `us_bank`.
              */
-            fun vendorCodeType(vendorCodeType: String) = apply {
+            fun vendorCodeType(vendorCodeType: String?) = apply {
                 this.vendorCodeType = vendorCodeType
             }
+
+            /**
+             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * or `us_bank`.
+             */
+            fun vendorCodeType(vendorCodeType: Optional<String>) =
+                vendorCodeType(vendorCodeType.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

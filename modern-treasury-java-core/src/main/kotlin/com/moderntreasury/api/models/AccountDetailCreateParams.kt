@@ -113,9 +113,16 @@ constructor(
              * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
              * number is in a generic format.
              */
-            fun accountNumberType(accountNumberType: AccountNumberType) = apply {
+            fun accountNumberType(accountNumberType: AccountNumberType?) = apply {
                 this.accountNumberType = accountNumberType
             }
+
+            /**
+             * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
+             * number is in a generic format.
+             */
+            fun accountNumberType(accountNumberType: Optional<AccountNumberType>) =
+                accountNumberType(accountNumberType.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -198,9 +205,16 @@ constructor(
          * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
          * number is in a generic format.
          */
-        fun accountNumberType(accountNumberType: AccountNumberType) = apply {
+        fun accountNumberType(accountNumberType: AccountNumberType?) = apply {
             body.accountNumberType(accountNumberType)
         }
+
+        /**
+         * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
+         * number is in a generic format.
+         */
+        fun accountNumberType(accountNumberType: Optional<AccountNumberType>) =
+            accountNumberType(accountNumberType.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

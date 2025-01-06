@@ -149,19 +149,55 @@ constructor(
              * Amount in the lowest denomination of the `base_currency` to convert, often called the
              * "sell" amount.
              */
-            fun baseAmount(baseAmount: Long) = apply { this.baseAmount = baseAmount }
+            fun baseAmount(baseAmount: Long?) = apply { this.baseAmount = baseAmount }
+
+            /**
+             * Amount in the lowest denomination of the `base_currency` to convert, often called the
+             * "sell" amount.
+             */
+            fun baseAmount(baseAmount: Long) = baseAmount(baseAmount as Long?)
+
+            /**
+             * Amount in the lowest denomination of the `base_currency` to convert, often called the
+             * "sell" amount.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun baseAmount(baseAmount: Optional<Long>) =
+                baseAmount(baseAmount.orElse(null) as Long?)
 
             /** Currency to convert, often called the "sell" currency. */
-            fun baseCurrency(baseCurrency: Currency) = apply { this.baseCurrency = baseCurrency }
+            fun baseCurrency(baseCurrency: Currency?) = apply { this.baseCurrency = baseCurrency }
+
+            /** Currency to convert, often called the "sell" currency. */
+            fun baseCurrency(baseCurrency: Optional<Currency>) =
+                baseCurrency(baseCurrency.orElse(null))
 
             /** The timestamp until when the quoted rate is valid. */
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+            fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
+
+            /** The timestamp until when the quoted rate is valid. */
+            fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+                effectiveAt(effectiveAt.orElse(null))
 
             /**
              * Amount in the lowest denomination of the `target_currency`, often called the "buy"
              * amount.
              */
-            fun targetAmount(targetAmount: Long) = apply { this.targetAmount = targetAmount }
+            fun targetAmount(targetAmount: Long?) = apply { this.targetAmount = targetAmount }
+
+            /**
+             * Amount in the lowest denomination of the `target_currency`, often called the "buy"
+             * amount.
+             */
+            fun targetAmount(targetAmount: Long) = targetAmount(targetAmount as Long?)
+
+            /**
+             * Amount in the lowest denomination of the `target_currency`, often called the "buy"
+             * amount.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun targetAmount(targetAmount: Optional<Long>) =
+                targetAmount(targetAmount.orElse(null) as Long?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -250,19 +286,53 @@ constructor(
          * Amount in the lowest denomination of the `base_currency` to convert, often called the
          * "sell" amount.
          */
-        fun baseAmount(baseAmount: Long) = apply { body.baseAmount(baseAmount) }
+        fun baseAmount(baseAmount: Long?) = apply { body.baseAmount(baseAmount) }
+
+        /**
+         * Amount in the lowest denomination of the `base_currency` to convert, often called the
+         * "sell" amount.
+         */
+        fun baseAmount(baseAmount: Long) = baseAmount(baseAmount as Long?)
+
+        /**
+         * Amount in the lowest denomination of the `base_currency` to convert, often called the
+         * "sell" amount.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun baseAmount(baseAmount: Optional<Long>) = baseAmount(baseAmount.orElse(null) as Long?)
 
         /** Currency to convert, often called the "sell" currency. */
-        fun baseCurrency(baseCurrency: Currency) = apply { body.baseCurrency(baseCurrency) }
+        fun baseCurrency(baseCurrency: Currency?) = apply { body.baseCurrency(baseCurrency) }
+
+        /** Currency to convert, often called the "sell" currency. */
+        fun baseCurrency(baseCurrency: Optional<Currency>) = baseCurrency(baseCurrency.orElse(null))
 
         /** The timestamp until when the quoted rate is valid. */
-        fun effectiveAt(effectiveAt: OffsetDateTime) = apply { body.effectiveAt(effectiveAt) }
+        fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { body.effectiveAt(effectiveAt) }
+
+        /** The timestamp until when the quoted rate is valid. */
+        fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+            effectiveAt(effectiveAt.orElse(null))
 
         /**
          * Amount in the lowest denomination of the `target_currency`, often called the "buy"
          * amount.
          */
-        fun targetAmount(targetAmount: Long) = apply { body.targetAmount(targetAmount) }
+        fun targetAmount(targetAmount: Long?) = apply { body.targetAmount(targetAmount) }
+
+        /**
+         * Amount in the lowest denomination of the `target_currency`, often called the "buy"
+         * amount.
+         */
+        fun targetAmount(targetAmount: Long) = targetAmount(targetAmount as Long?)
+
+        /**
+         * Amount in the lowest denomination of the `target_currency`, often called the "buy"
+         * amount.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun targetAmount(targetAmount: Optional<Long>) =
+            targetAmount(targetAmount.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

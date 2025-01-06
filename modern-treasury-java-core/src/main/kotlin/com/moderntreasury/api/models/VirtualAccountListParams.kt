@@ -84,21 +84,40 @@ constructor(
             additionalQueryParams = virtualAccountListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
+
+        fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
         }
+
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

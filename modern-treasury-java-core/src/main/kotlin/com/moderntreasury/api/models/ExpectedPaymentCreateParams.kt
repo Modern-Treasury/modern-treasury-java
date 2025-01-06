@@ -322,48 +322,116 @@ constructor(
              * The lowest amount this expected payment may be equal to. Value in specified
              * currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            fun amountLowerBound(amountLowerBound: Long) = apply {
+            fun amountLowerBound(amountLowerBound: Long?) = apply {
                 this.amountLowerBound = amountLowerBound
+            }
+
+            /**
+             * The lowest amount this expected payment may be equal to. Value in specified
+             * currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amountLowerBound(amountLowerBound: Long) =
+                amountLowerBound(amountLowerBound as Long?)
+
+            /**
+             * The lowest amount this expected payment may be equal to. Value in specified
+             * currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun amountLowerBound(amountLowerBound: Optional<Long>) =
+                amountLowerBound(amountLowerBound.orElse(null) as Long?)
+
+            /**
+             * The highest amount this expected payment may be equal to. Value in specified
+             * currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amountUpperBound(amountUpperBound: Long?) = apply {
+                this.amountUpperBound = amountUpperBound
             }
 
             /**
              * The highest amount this expected payment may be equal to. Value in specified
              * currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            fun amountUpperBound(amountUpperBound: Long) = apply {
-                this.amountUpperBound = amountUpperBound
-            }
+            fun amountUpperBound(amountUpperBound: Long) =
+                amountUpperBound(amountUpperBound as Long?)
+
+            /**
+             * The highest amount this expected payment may be equal to. Value in specified
+             * currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun amountUpperBound(amountUpperBound: Optional<Long>) =
+                amountUpperBound(amountUpperBound.orElse(null) as Long?)
 
             /** The ID of the counterparty you expect for this payment. */
-            fun counterpartyId(counterpartyId: String) = apply {
+            fun counterpartyId(counterpartyId: String?) = apply {
                 this.counterpartyId = counterpartyId
             }
 
+            /** The ID of the counterparty you expect for this payment. */
+            fun counterpartyId(counterpartyId: Optional<String>) =
+                counterpartyId(counterpartyId.orElse(null))
+
             /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-            fun currency(currency: Currency) = apply { this.currency = currency }
+            fun currency(currency: Currency?) = apply { this.currency = currency }
+
+            /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
+            fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
             /** The earliest date the payment may come in. Format: yyyy-mm-dd */
-            fun dateLowerBound(dateLowerBound: LocalDate) = apply {
+            fun dateLowerBound(dateLowerBound: LocalDate?) = apply {
                 this.dateLowerBound = dateLowerBound
             }
 
+            /** The earliest date the payment may come in. Format: yyyy-mm-dd */
+            fun dateLowerBound(dateLowerBound: Optional<LocalDate>) =
+                dateLowerBound(dateLowerBound.orElse(null))
+
             /** The latest date the payment may come in. Format: yyyy-mm-dd */
-            fun dateUpperBound(dateUpperBound: LocalDate) = apply {
+            fun dateUpperBound(dateUpperBound: LocalDate?) = apply {
                 this.dateUpperBound = dateUpperBound
             }
 
+            /** The latest date the payment may come in. Format: yyyy-mm-dd */
+            fun dateUpperBound(dateUpperBound: Optional<LocalDate>) =
+                dateUpperBound(dateUpperBound.orElse(null))
+
             /** An optional description for internal use. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** An optional description for internal use. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * One of credit or debit. When you are receiving money, use credit. When you are being
              * charged, use debit.
              */
-            fun direction(direction: Direction) = apply { this.direction = direction }
+            fun direction(direction: Direction?) = apply { this.direction = direction }
+
+            /**
+             * One of credit or debit. When you are receiving money, use credit. When you are being
+             * charged, use debit.
+             */
+            fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
 
             /** The ID of the Internal Account for the expected payment. */
-            fun internalAccountId(internalAccountId: String) = apply {
+            fun internalAccountId(internalAccountId: String?) = apply {
                 this.internalAccountId = internalAccountId
+            }
+
+            /** The ID of the Internal Account for the expected payment. */
+            fun internalAccountId(internalAccountId: Optional<String>) =
+                internalAccountId(internalAccountId.orElse(null))
+
+            /**
+             * Specifies a ledger transaction object that will be created with the expected payment.
+             * If the ledger transaction cannot be created, then the expected payment creation will
+             * fail. The resulting ledger transaction will mirror the status of the expected
+             * payment.
+             */
+            fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest?) = apply {
+                this.ledgerTransaction = ledgerTransaction
             }
 
             /**
@@ -372,8 +440,17 @@ constructor(
              * fail. The resulting ledger transaction will mirror the status of the expected
              * payment.
              */
-            fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
-                this.ledgerTransaction = ledgerTransaction
+            fun ledgerTransaction(ledgerTransaction: Optional<LedgerTransactionCreateRequest>) =
+                ledgerTransaction(ledgerTransaction.orElse(null))
+
+            /**
+             * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending
+             * ledger transaction can be attached upon expected payment creation. Once the expected
+             * payment is created, the status of the ledger transaction tracks the expected payment
+             * automatically.
+             */
+            fun ledgerTransactionId(ledgerTransactionId: String?) = apply {
+                this.ledgerTransactionId = ledgerTransactionId
             }
 
             /**
@@ -382,13 +459,15 @@ constructor(
              * payment is created, the status of the ledger transaction tracks the expected payment
              * automatically.
              */
-            fun ledgerTransactionId(ledgerTransactionId: String) = apply {
-                this.ledgerTransactionId = ledgerTransactionId
+            fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
+                ledgerTransactionId(ledgerTransactionId.orElse(null))
+
+            fun lineItems(lineItems: List<LineItemRequest>?) = apply {
+                this.lineItems = lineItems?.toMutableList()
             }
 
-            fun lineItems(lineItems: List<LineItemRequest>) = apply {
-                this.lineItems = lineItems.toMutableList()
-            }
+            fun lineItems(lineItems: Optional<List<LineItemRequest>>) =
+                lineItems(lineItems.orElse(null))
 
             fun addLineItem(lineItem: LineItemRequest) = apply {
                 lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
@@ -398,23 +477,43 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** The reconciliation filters you have for this payment. */
-            fun reconciliationFilters(reconciliationFilters: JsonValue) = apply {
+            fun reconciliationFilters(reconciliationFilters: JsonValue?) = apply {
                 this.reconciliationFilters = reconciliationFilters
             }
 
+            /** The reconciliation filters you have for this payment. */
+            fun reconciliationFilters(reconciliationFilters: Optional<JsonValue>) =
+                reconciliationFilters(reconciliationFilters.orElse(null))
+
             /** The reconciliation groups you have for this payment. */
-            fun reconciliationGroups(reconciliationGroups: JsonValue) = apply {
+            fun reconciliationGroups(reconciliationGroups: JsonValue?) = apply {
                 this.reconciliationGroups = reconciliationGroups
             }
 
+            /** The reconciliation groups you have for this payment. */
+            fun reconciliationGroups(reconciliationGroups: Optional<JsonValue>) =
+                reconciliationGroups(reconciliationGroups.orElse(null))
+
             /** An array of reconciliation rule variables for this payment. */
-            fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>) =
-                apply {
-                    this.reconciliationRuleVariables = reconciliationRuleVariables.toMutableList()
-                }
+            fun reconciliationRuleVariables(
+                reconciliationRuleVariables: List<ReconciliationRule>?
+            ) = apply {
+                this.reconciliationRuleVariables = reconciliationRuleVariables?.toMutableList()
+            }
+
+            /** An array of reconciliation rule variables for this payment. */
+            fun reconciliationRuleVariables(
+                reconciliationRuleVariables: Optional<List<ReconciliationRule>>
+            ) = reconciliationRuleVariables(reconciliationRuleVariables.orElse(null))
 
             /** An array of reconciliation rule variables for this payment. */
             fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRule) =
@@ -430,8 +529,25 @@ constructor(
              * payments the field will be passed through as the "Originator to Beneficiary
              * Information", also known as OBI or Fedwire tag 6000.
              */
-            fun remittanceInformation(remittanceInformation: String) = apply {
+            fun remittanceInformation(remittanceInformation: String?) = apply {
                 this.remittanceInformation = remittanceInformation
+            }
+
+            /**
+             * For `ach`, this field will be passed through on an addenda record. For `wire`
+             * payments the field will be passed through as the "Originator to Beneficiary
+             * Information", also known as OBI or Fedwire tag 6000.
+             */
+            fun remittanceInformation(remittanceInformation: Optional<String>) =
+                remittanceInformation(remittanceInformation.orElse(null))
+
+            /**
+             * The statement description you expect to see on the transaction. For ACH payments,
+             * this will be the full line item passed from the bank. For wire payments, this will be
+             * the OBI field on the wire. For check payments, this will be the memo field.
+             */
+            fun statementDescriptor(statementDescriptor: String?) = apply {
+                this.statementDescriptor = statementDescriptor
             }
 
             /**
@@ -439,15 +555,20 @@ constructor(
              * this will be the full line item passed from the bank. For wire payments, this will be
              * the OBI field on the wire. For check payments, this will be the memo field.
              */
-            fun statementDescriptor(statementDescriptor: String) = apply {
-                this.statementDescriptor = statementDescriptor
-            }
+            fun statementDescriptor(statementDescriptor: Optional<String>) =
+                statementDescriptor(statementDescriptor.orElse(null))
 
             /**
              * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
              * signet, wire.
              */
-            fun type(type: ExpectedPaymentType) = apply { this.type = type }
+            fun type(type: ExpectedPaymentType?) = apply { this.type = type }
+
+            /**
+             * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
+             * signet, wire.
+             */
+            fun type(type: Optional<ExpectedPaymentType>) = type(type.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -536,46 +657,111 @@ constructor(
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        fun amountLowerBound(amountLowerBound: Long) = apply {
+        fun amountLowerBound(amountLowerBound: Long?) = apply {
             body.amountLowerBound(amountLowerBound)
+        }
+
+        /**
+         * The lowest amount this expected payment may be equal to. Value in specified currency's
+         * smallest unit. e.g. $10 would be represented as 1000.
+         */
+        fun amountLowerBound(amountLowerBound: Long) = amountLowerBound(amountLowerBound as Long?)
+
+        /**
+         * The lowest amount this expected payment may be equal to. Value in specified currency's
+         * smallest unit. e.g. $10 would be represented as 1000.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun amountLowerBound(amountLowerBound: Optional<Long>) =
+            amountLowerBound(amountLowerBound.orElse(null) as Long?)
+
+        /**
+         * The highest amount this expected payment may be equal to. Value in specified currency's
+         * smallest unit. e.g. $10 would be represented as 1000.
+         */
+        fun amountUpperBound(amountUpperBound: Long?) = apply {
+            body.amountUpperBound(amountUpperBound)
         }
 
         /**
          * The highest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        fun amountUpperBound(amountUpperBound: Long) = apply {
-            body.amountUpperBound(amountUpperBound)
-        }
+        fun amountUpperBound(amountUpperBound: Long) = amountUpperBound(amountUpperBound as Long?)
+
+        /**
+         * The highest amount this expected payment may be equal to. Value in specified currency's
+         * smallest unit. e.g. $10 would be represented as 1000.
+         */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun amountUpperBound(amountUpperBound: Optional<Long>) =
+            amountUpperBound(amountUpperBound.orElse(null) as Long?)
 
         /** The ID of the counterparty you expect for this payment. */
-        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
+        fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
+
+        /** The ID of the counterparty you expect for this payment. */
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-        fun currency(currency: Currency) = apply { body.currency(currency) }
+        fun currency(currency: Currency?) = apply { body.currency(currency) }
+
+        /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
+        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
         /** The earliest date the payment may come in. Format: yyyy-mm-dd */
-        fun dateLowerBound(dateLowerBound: LocalDate) = apply {
+        fun dateLowerBound(dateLowerBound: LocalDate?) = apply {
             body.dateLowerBound(dateLowerBound)
         }
 
+        /** The earliest date the payment may come in. Format: yyyy-mm-dd */
+        fun dateLowerBound(dateLowerBound: Optional<LocalDate>) =
+            dateLowerBound(dateLowerBound.orElse(null))
+
         /** The latest date the payment may come in. Format: yyyy-mm-dd */
-        fun dateUpperBound(dateUpperBound: LocalDate) = apply {
+        fun dateUpperBound(dateUpperBound: LocalDate?) = apply {
             body.dateUpperBound(dateUpperBound)
         }
 
+        /** The latest date the payment may come in. Format: yyyy-mm-dd */
+        fun dateUpperBound(dateUpperBound: Optional<LocalDate>) =
+            dateUpperBound(dateUpperBound.orElse(null))
+
         /** An optional description for internal use. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** An optional description for internal use. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /**
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        fun direction(direction: Direction) = apply { body.direction(direction) }
+        fun direction(direction: Direction?) = apply { body.direction(direction) }
+
+        /**
+         * One of credit or debit. When you are receiving money, use credit. When you are being
+         * charged, use debit.
+         */
+        fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
 
         /** The ID of the Internal Account for the expected payment. */
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             body.internalAccountId(internalAccountId)
+        }
+
+        /** The ID of the Internal Account for the expected payment. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.orElse(null))
+
+        /**
+         * Specifies a ledger transaction object that will be created with the expected payment. If
+         * the ledger transaction cannot be created, then the expected payment creation will fail.
+         * The resulting ledger transaction will mirror the status of the expected payment.
+         */
+        fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest?) = apply {
+            body.ledgerTransaction(ledgerTransaction)
         }
 
         /**
@@ -583,8 +769,16 @@ constructor(
          * the ledger transaction cannot be created, then the expected payment creation will fail.
          * The resulting ledger transaction will mirror the status of the expected payment.
          */
-        fun ledgerTransaction(ledgerTransaction: LedgerTransactionCreateRequest) = apply {
-            body.ledgerTransaction(ledgerTransaction)
+        fun ledgerTransaction(ledgerTransaction: Optional<LedgerTransactionCreateRequest>) =
+            ledgerTransaction(ledgerTransaction.orElse(null))
+
+        /**
+         * Either ledger_transaction or ledger_transaction_id can be provided. Only a pending ledger
+         * transaction can be attached upon expected payment creation. Once the expected payment is
+         * created, the status of the ledger transaction tracks the expected payment automatically.
+         */
+        fun ledgerTransactionId(ledgerTransactionId: String?) = apply {
+            body.ledgerTransactionId(ledgerTransactionId)
         }
 
         /**
@@ -592,34 +786,54 @@ constructor(
          * transaction can be attached upon expected payment creation. Once the expected payment is
          * created, the status of the ledger transaction tracks the expected payment automatically.
          */
-        fun ledgerTransactionId(ledgerTransactionId: String) = apply {
-            body.ledgerTransactionId(ledgerTransactionId)
-        }
+        fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
+            ledgerTransactionId(ledgerTransactionId.orElse(null))
 
-        fun lineItems(lineItems: List<LineItemRequest>) = apply { body.lineItems(lineItems) }
+        fun lineItems(lineItems: List<LineItemRequest>?) = apply { body.lineItems(lineItems) }
+
+        fun lineItems(lineItems: Optional<List<LineItemRequest>>) =
+            lineItems(lineItems.orElse(null))
 
         fun addLineItem(lineItem: LineItemRequest) = apply { body.addLineItem(lineItem) }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** The reconciliation filters you have for this payment. */
-        fun reconciliationFilters(reconciliationFilters: JsonValue) = apply {
+        fun reconciliationFilters(reconciliationFilters: JsonValue?) = apply {
             body.reconciliationFilters(reconciliationFilters)
         }
 
+        /** The reconciliation filters you have for this payment. */
+        fun reconciliationFilters(reconciliationFilters: Optional<JsonValue>) =
+            reconciliationFilters(reconciliationFilters.orElse(null))
+
         /** The reconciliation groups you have for this payment. */
-        fun reconciliationGroups(reconciliationGroups: JsonValue) = apply {
+        fun reconciliationGroups(reconciliationGroups: JsonValue?) = apply {
             body.reconciliationGroups(reconciliationGroups)
         }
 
+        /** The reconciliation groups you have for this payment. */
+        fun reconciliationGroups(reconciliationGroups: Optional<JsonValue>) =
+            reconciliationGroups(reconciliationGroups.orElse(null))
+
         /** An array of reconciliation rule variables for this payment. */
-        fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>) =
+        fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>?) =
             apply {
                 body.reconciliationRuleVariables(reconciliationRuleVariables)
             }
+
+        /** An array of reconciliation rule variables for this payment. */
+        fun reconciliationRuleVariables(
+            reconciliationRuleVariables: Optional<List<ReconciliationRule>>
+        ) = reconciliationRuleVariables(reconciliationRuleVariables.orElse(null))
 
         /** An array of reconciliation rule variables for this payment. */
         fun addReconciliationRuleVariable(reconciliationRuleVariable: ReconciliationRule) = apply {
@@ -631,8 +845,25 @@ constructor(
          * the field will be passed through as the "Originator to Beneficiary Information", also
          * known as OBI or Fedwire tag 6000.
          */
-        fun remittanceInformation(remittanceInformation: String) = apply {
+        fun remittanceInformation(remittanceInformation: String?) = apply {
             body.remittanceInformation(remittanceInformation)
+        }
+
+        /**
+         * For `ach`, this field will be passed through on an addenda record. For `wire` payments
+         * the field will be passed through as the "Originator to Beneficiary Information", also
+         * known as OBI or Fedwire tag 6000.
+         */
+        fun remittanceInformation(remittanceInformation: Optional<String>) =
+            remittanceInformation(remittanceInformation.orElse(null))
+
+        /**
+         * The statement description you expect to see on the transaction. For ACH payments, this
+         * will be the full line item passed from the bank. For wire payments, this will be the OBI
+         * field on the wire. For check payments, this will be the memo field.
+         */
+        fun statementDescriptor(statementDescriptor: String?) = apply {
+            body.statementDescriptor(statementDescriptor)
         }
 
         /**
@@ -640,15 +871,20 @@ constructor(
          * will be the full line item passed from the bank. For wire payments, this will be the OBI
          * field on the wire. For check payments, this will be the memo field.
          */
-        fun statementDescriptor(statementDescriptor: String) = apply {
-            body.statementDescriptor(statementDescriptor)
-        }
+        fun statementDescriptor(statementDescriptor: Optional<String>) =
+            statementDescriptor(statementDescriptor.orElse(null))
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
          * signet, wire.
          */
-        fun type(type: ExpectedPaymentType) = apply { body.type(type) }
+        fun type(type: ExpectedPaymentType?) = apply { body.type(type) }
+
+        /**
+         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
+         * signet, wire.
+         */
+        fun type(type: Optional<ExpectedPaymentType>) = type(type.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -956,51 +1192,98 @@ constructor(
             }
 
             /** An optional description for internal use. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** An optional description for internal use. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+            fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
+
+            /**
+             * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+                effectiveAt(effectiveAt.orElse(null))
 
             /**
              * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
+
+            /**
+             * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveDate(effectiveDate: Optional<LocalDate>) =
+                effectiveDate(effectiveDate.orElse(null))
 
             /**
              * A unique string to represent the ledger transaction. Only one pending or posted
              * ledger transaction may have this ID in the ledger.
              */
-            fun externalId(externalId: String) = apply { this.externalId = externalId }
+            fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+            /**
+             * A unique string to represent the ledger transaction. Only one pending or posted
+             * ledger transaction may have this ID in the ledger.
+             */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.orElse(null))
 
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * id will be populated here, otherwise null.
              */
-            fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
+            fun ledgerableId(ledgerableId: String?) = apply { this.ledgerableId = ledgerableId }
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * id will be populated here, otherwise null.
+             */
+            fun ledgerableId(ledgerableId: Optional<String>) =
+                ledgerableId(ledgerableId.orElse(null))
 
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * type will be populated here, otherwise null. This can be one of payment_order,
              * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
              */
-            fun ledgerableType(ledgerableType: LedgerableType) = apply {
+            fun ledgerableType(ledgerableType: LedgerableType?) = apply {
                 this.ledgerableType = ledgerableType
             }
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * type will be populated here, otherwise null. This can be one of payment_order,
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+             */
+            fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
+                ledgerableType(ledgerableType.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status?) = apply { this.status = status }
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            fun status(status: Optional<Status>) = status(status.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1192,9 +1475,19 @@ constructor(
                  * account’s available balance. If any of these conditions would be false after the
                  * transaction is created, the entire call will fail with error code 422.
                  */
-                fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
-                    this.availableBalanceAmount = availableBalanceAmount
-                }
+                fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount?) =
+                    apply {
+                        this.availableBalanceAmount = availableBalanceAmount
+                    }
+
+                /**
+                 * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
+                 * account’s available balance. If any of these conditions would be false after the
+                 * transaction is created, the entire call will fail with error code 422.
+                 */
+                fun availableBalanceAmount(
+                    availableBalanceAmount: Optional<AvailableBalanceAmount>
+                ) = availableBalanceAmount(availableBalanceAmount.orElse(null))
 
                 /**
                  * Lock version of the ledger account. This can be passed when creating a ledger
@@ -1202,21 +1495,62 @@ constructor(
                  * version. See our post about Designing the Ledgers API with Optimistic Locking for
                  * more details.
                  */
-                fun lockVersion(lockVersion: Long) = apply { this.lockVersion = lockVersion }
+                fun lockVersion(lockVersion: Long?) = apply { this.lockVersion = lockVersion }
+
+                /**
+                 * Lock version of the ledger account. This can be passed when creating a ledger
+                 * transaction to only succeed if no ledger transactions have posted since the given
+                 * version. See our post about Designing the Ledgers API with Optimistic Locking for
+                 * more details.
+                 */
+                fun lockVersion(lockVersion: Long) = lockVersion(lockVersion as Long?)
+
+                /**
+                 * Lock version of the ledger account. This can be passed when creating a ledger
+                 * transaction to only succeed if no ledger transactions have posted since the given
+                 * version. See our post about Designing the Ledgers API with Optimistic Locking for
+                 * more details.
+                 */
+                @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+                fun lockVersion(lockVersion: Optional<Long>) =
+                    lockVersion(lockVersion.orElse(null) as Long?)
 
                 /**
                  * Additional data represented as key-value pairs. Both the key and value must be
                  * strings.
                  */
-                fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+                /**
+                 * Additional data represented as key-value pairs. Both the key and value must be
+                 * strings.
+                 */
+                fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
                 /**
                  * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
                  * account’s pending balance. If any of these conditions would be false after the
                  * transaction is created, the entire call will fail with error code 422.
                  */
-                fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount) = apply {
+                fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount?) = apply {
                     this.pendingBalanceAmount = pendingBalanceAmount
+                }
+
+                /**
+                 * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
+                 * account’s pending balance. If any of these conditions would be false after the
+                 * transaction is created, the entire call will fail with error code 422.
+                 */
+                fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
+                    pendingBalanceAmount(pendingBalanceAmount.orElse(null))
+
+                /**
+                 * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
+                 * account’s posted balance. If any of these conditions would be false after the
+                 * transaction is created, the entire call will fail with error code 422.
+                 */
+                fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount?) = apply {
+                    this.postedBalanceAmount = postedBalanceAmount
                 }
 
                 /**
@@ -1224,8 +1558,17 @@ constructor(
                  * account’s posted balance. If any of these conditions would be false after the
                  * transaction is created, the entire call will fail with error code 422.
                  */
-                fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount) = apply {
-                    this.postedBalanceAmount = postedBalanceAmount
+                fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
+                    postedBalanceAmount(postedBalanceAmount.orElse(null))
+
+                /**
+                 * If true, response will include the balance of the associated ledger account for
+                 * the entry.
+                 */
+                fun showResultingLedgerAccountBalances(
+                    showResultingLedgerAccountBalances: Boolean?
+                ) = apply {
+                    this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
                 }
 
                 /**
@@ -1234,9 +1577,22 @@ constructor(
                  */
                 fun showResultingLedgerAccountBalances(
                     showResultingLedgerAccountBalances: Boolean
-                ) = apply {
-                    this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
-                }
+                ) =
+                    showResultingLedgerAccountBalances(
+                        showResultingLedgerAccountBalances as Boolean?
+                    )
+
+                /**
+                 * If true, response will include the balance of the associated ledger account for
+                 * the entry.
+                 */
+                @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+                fun showResultingLedgerAccountBalances(
+                    showResultingLedgerAccountBalances: Optional<Boolean>
+                ) =
+                    showResultingLedgerAccountBalances(
+                        showResultingLedgerAccountBalances.orElse(null) as Boolean?
+                    )
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1907,18 +2263,34 @@ constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            fun accountingCategoryId(accountingCategoryId: String) = apply {
+            fun accountingCategoryId(accountingCategoryId: String?) = apply {
                 this.accountingCategoryId = accountingCategoryId
             }
 
+            /**
+             * The ID of one of your accounting categories. Note that these will only be accessible
+             * if your accounting system has been connected.
+             */
+            fun accountingCategoryId(accountingCategoryId: Optional<String>) =
+                accountingCategoryId(accountingCategoryId.orElse(null))
+
             /** A free-form description of the line item. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** A free-form description of the line item. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

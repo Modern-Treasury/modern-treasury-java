@@ -166,20 +166,39 @@ constructor(
             }
 
             /** The currency exponent of the ledger account category. */
-            fun currencyExponent(currencyExponent: Long) = apply {
+            fun currencyExponent(currencyExponent: Long?) = apply {
                 this.currencyExponent = currencyExponent
             }
 
+            /** The currency exponent of the ledger account category. */
+            fun currencyExponent(currencyExponent: Long) =
+                currencyExponent(currencyExponent as Long?)
+
+            /** The currency exponent of the ledger account category. */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun currencyExponent(currencyExponent: Optional<Long>) =
+                currencyExponent(currencyExponent.orElse(null) as Long?)
+
             /** The description of the ledger account category. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** The description of the ledger account category. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * The array of ledger account category ids that this ledger account category should be
              * a child of.
              */
-            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
-                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds.toMutableList()
+            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>?) = apply {
+                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds?.toMutableList()
             }
+
+            /**
+             * The array of ledger account category ids that this ledger account category should be
+             * a child of.
+             */
+            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: Optional<List<String>>) =
+                ledgerAccountCategoryIds(ledgerAccountCategoryIds.orElse(null))
 
             /**
              * The array of ledger account category ids that this ledger account category should be
@@ -196,7 +215,13 @@ constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -288,20 +313,38 @@ constructor(
         }
 
         /** The currency exponent of the ledger account category. */
-        fun currencyExponent(currencyExponent: Long) = apply {
+        fun currencyExponent(currencyExponent: Long?) = apply {
             body.currencyExponent(currencyExponent)
         }
 
+        /** The currency exponent of the ledger account category. */
+        fun currencyExponent(currencyExponent: Long) = currencyExponent(currencyExponent as Long?)
+
+        /** The currency exponent of the ledger account category. */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun currencyExponent(currencyExponent: Optional<Long>) =
+            currencyExponent(currencyExponent.orElse(null) as Long?)
+
         /** The description of the ledger account category. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** The description of the ledger account category. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /**
          * The array of ledger account category ids that this ledger account category should be a
          * child of.
          */
-        fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) = apply {
+        fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>?) = apply {
             body.ledgerAccountCategoryIds(ledgerAccountCategoryIds)
         }
+
+        /**
+         * The array of ledger account category ids that this ledger account category should be a
+         * child of.
+         */
+        fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: Optional<List<String>>) =
+            ledgerAccountCategoryIds(ledgerAccountCategoryIds.orElse(null))
 
         /**
          * The array of ledger account category ids that this ledger account category should be a
@@ -314,7 +357,12 @@ constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

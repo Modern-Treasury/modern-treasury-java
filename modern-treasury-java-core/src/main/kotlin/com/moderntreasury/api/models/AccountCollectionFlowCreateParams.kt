@@ -108,9 +108,12 @@ constructor(
                 paymentTypes = (paymentTypes ?: mutableListOf()).apply { add(paymentType) }
             }
 
-            fun receivingCountries(receivingCountries: List<ReceivingCountry>) = apply {
-                this.receivingCountries = receivingCountries.toMutableList()
+            fun receivingCountries(receivingCountries: List<ReceivingCountry>?) = apply {
+                this.receivingCountries = receivingCountries?.toMutableList()
             }
+
+            fun receivingCountries(receivingCountries: Optional<List<ReceivingCountry>>) =
+                receivingCountries(receivingCountries.orElse(null))
 
             fun addReceivingCountry(receivingCountry: ReceivingCountry) = apply {
                 receivingCountries =
@@ -195,9 +198,12 @@ constructor(
 
         fun addPaymentType(paymentType: String) = apply { body.addPaymentType(paymentType) }
 
-        fun receivingCountries(receivingCountries: List<ReceivingCountry>) = apply {
+        fun receivingCountries(receivingCountries: List<ReceivingCountry>?) = apply {
             body.receivingCountries(receivingCountries)
         }
+
+        fun receivingCountries(receivingCountries: Optional<List<ReceivingCountry>>) =
+            receivingCountries(receivingCountries.orElse(null))
 
         fun addReceivingCountry(receivingCountry: ReceivingCountry) = apply {
             body.addReceivingCountry(receivingCountry)

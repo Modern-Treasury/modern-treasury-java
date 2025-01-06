@@ -144,7 +144,13 @@ constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: List<String>) = apply { this.id = id.toMutableList() }
+        fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
+
+        /**
+         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
+         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         */
+        fun id(id: Optional<List<String>>) = id(id.orElse(null))
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -152,43 +158,81 @@ constructor(
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun createdAt(createdAt: CreatedAt) = apply { this.createdAt = createdAt }
+        fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-        fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
+         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+         * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
+         */
+        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
 
-        fun ledgerTransactionId(ledgerTransactionId: String) = apply {
+        fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
+
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
+
+        fun ledgerTransactionId(ledgerTransactionId: String?) = apply {
             this.ledgerTransactionId = ledgerTransactionId
         }
+
+        fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
+            ledgerTransactionId(ledgerTransactionId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
-        fun settledLedgerAccountId(settledLedgerAccountId: String) = apply {
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun settledLedgerAccountId(settledLedgerAccountId: String?) = apply {
             this.settledLedgerAccountId = settledLedgerAccountId
         }
 
-        fun settlementEntryDirection(settlementEntryDirection: String) = apply {
+        fun settledLedgerAccountId(settledLedgerAccountId: Optional<String>) =
+            settledLedgerAccountId(settledLedgerAccountId.orElse(null))
+
+        fun settlementEntryDirection(settlementEntryDirection: String?) = apply {
             this.settlementEntryDirection = settlementEntryDirection
         }
+
+        fun settlementEntryDirection(settlementEntryDirection: Optional<String>) =
+            settlementEntryDirection(settlementEntryDirection.orElse(null))
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun updatedAt(updatedAt: UpdatedAt) = apply { this.updatedAt = updatedAt }
+        fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
+         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
+         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
+         */
+        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

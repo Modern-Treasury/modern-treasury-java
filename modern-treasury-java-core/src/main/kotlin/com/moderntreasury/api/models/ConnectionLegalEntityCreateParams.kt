@@ -102,10 +102,18 @@ constructor(
             fun connectionId(connectionId: String) = apply { this.connectionId = connectionId }
 
             /** The legal entity. */
-            fun legalEntity(legalEntity: LegalEntity) = apply { this.legalEntity = legalEntity }
+            fun legalEntity(legalEntity: LegalEntity?) = apply { this.legalEntity = legalEntity }
+
+            /** The legal entity. */
+            fun legalEntity(legalEntity: Optional<LegalEntity>) =
+                legalEntity(legalEntity.orElse(null))
 
             /** The ID of the legal entity. */
-            fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+            fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+
+            /** The ID of the legal entity. */
+            fun legalEntityId(legalEntityId: Optional<String>) =
+                legalEntityId(legalEntityId.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -181,10 +189,17 @@ constructor(
         fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
 
         /** The legal entity. */
-        fun legalEntity(legalEntity: LegalEntity) = apply { body.legalEntity(legalEntity) }
+        fun legalEntity(legalEntity: LegalEntity?) = apply { body.legalEntity(legalEntity) }
+
+        /** The legal entity. */
+        fun legalEntity(legalEntity: Optional<LegalEntity>) = legalEntity(legalEntity.orElse(null))
 
         /** The ID of the legal entity. */
-        fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
+        fun legalEntityId(legalEntityId: String?) = apply { body.legalEntityId(legalEntityId) }
+
+        /** The ID of the legal entity. */
+        fun legalEntityId(legalEntityId: Optional<String>) =
+            legalEntityId(legalEntityId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -512,36 +527,61 @@ constructor(
             }
 
             /** A list of addresses for the entity. */
-            fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
-                this.addresses = addresses.toMutableList()
+            fun addresses(addresses: List<LegalEntityAddressCreateRequest>?) = apply {
+                this.addresses = addresses?.toMutableList()
             }
+
+            /** A list of addresses for the entity. */
+            fun addresses(addresses: Optional<List<LegalEntityAddressCreateRequest>>) =
+                addresses(addresses.orElse(null))
 
             /** A list of addresses for the entity. */
             fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
                 addresses = (addresses ?: mutableListOf()).apply { add(address) }
             }
 
-            fun bankSettings(bankSettings: BankSettings) = apply {
+            fun bankSettings(bankSettings: BankSettings?) = apply {
                 this.bankSettings = bankSettings
             }
 
+            fun bankSettings(bankSettings: Optional<BankSettings>) =
+                bankSettings(bankSettings.orElse(null))
+
             /** The business's legal business name. */
-            fun businessName(businessName: String) = apply { this.businessName = businessName }
+            fun businessName(businessName: String?) = apply { this.businessName = businessName }
+
+            /** The business's legal business name. */
+            fun businessName(businessName: Optional<String>) =
+                businessName(businessName.orElse(null))
 
             /** The country of citizenship for an individual. */
-            fun citizenshipCountry(citizenshipCountry: String) = apply {
+            fun citizenshipCountry(citizenshipCountry: String?) = apply {
                 this.citizenshipCountry = citizenshipCountry
             }
 
+            /** The country of citizenship for an individual. */
+            fun citizenshipCountry(citizenshipCountry: Optional<String>) =
+                citizenshipCountry(citizenshipCountry.orElse(null))
+
             /** A business's formation date (YYYY-MM-DD). */
-            fun dateFormed(dateFormed: LocalDate) = apply { this.dateFormed = dateFormed }
+            fun dateFormed(dateFormed: LocalDate?) = apply { this.dateFormed = dateFormed }
+
+            /** A business's formation date (YYYY-MM-DD). */
+            fun dateFormed(dateFormed: Optional<LocalDate>) = dateFormed(dateFormed.orElse(null))
 
             /** An individual's date of birth (YYYY-MM-DD). */
-            fun dateOfBirth(dateOfBirth: LocalDate) = apply { this.dateOfBirth = dateOfBirth }
+            fun dateOfBirth(dateOfBirth: LocalDate?) = apply { this.dateOfBirth = dateOfBirth }
 
-            fun doingBusinessAsNames(doingBusinessAsNames: List<String>) = apply {
-                this.doingBusinessAsNames = doingBusinessAsNames.toMutableList()
+            /** An individual's date of birth (YYYY-MM-DD). */
+            fun dateOfBirth(dateOfBirth: Optional<LocalDate>) =
+                dateOfBirth(dateOfBirth.orElse(null))
+
+            fun doingBusinessAsNames(doingBusinessAsNames: List<String>?) = apply {
+                this.doingBusinessAsNames = doingBusinessAsNames?.toMutableList()
             }
+
+            fun doingBusinessAsNames(doingBusinessAsNames: Optional<List<String>>) =
+                doingBusinessAsNames(doingBusinessAsNames.orElse(null))
 
             fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
                 doingBusinessAsNames =
@@ -549,15 +589,25 @@ constructor(
             }
 
             /** The entity's primary email. */
-            fun email(email: String) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
+
+            /** The entity's primary email. */
+            fun email(email: Optional<String>) = email(email.orElse(null))
 
             /** An individual's first name. */
-            fun firstName(firstName: String) = apply { this.firstName = firstName }
+            fun firstName(firstName: String?) = apply { this.firstName = firstName }
+
+            /** An individual's first name. */
+            fun firstName(firstName: Optional<String>) = firstName(firstName.orElse(null))
 
             /** A list of identifications for the legal entity. */
-            fun identifications(identifications: List<IdentificationCreateRequest>) = apply {
-                this.identifications = identifications.toMutableList()
+            fun identifications(identifications: List<IdentificationCreateRequest>?) = apply {
+                this.identifications = identifications?.toMutableList()
             }
+
+            /** A list of identifications for the legal entity. */
+            fun identifications(identifications: Optional<List<IdentificationCreateRequest>>) =
+                identifications(identifications.orElse(null))
 
             /** A list of identifications for the legal entity. */
             fun addIdentification(identification: IdentificationCreateRequest) = apply {
@@ -565,12 +615,20 @@ constructor(
             }
 
             /** An individual's last name. */
-            fun lastName(lastName: String) = apply { this.lastName = lastName }
+            fun lastName(lastName: String?) = apply { this.lastName = lastName }
+
+            /** An individual's last name. */
+            fun lastName(lastName: Optional<String>) = lastName(lastName.orElse(null))
 
             /** The legal entity associations and its child legal entities. */
             fun legalEntityAssociations(
-                legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>
-            ) = apply { this.legalEntityAssociations = legalEntityAssociations.toMutableList() }
+                legalEntityAssociations: List<LegalEntityAssociationInlineCreateRequest>?
+            ) = apply { this.legalEntityAssociations = legalEntityAssociations?.toMutableList() }
+
+            /** The legal entity associations and its child legal entities. */
+            fun legalEntityAssociations(
+                legalEntityAssociations: Optional<List<LegalEntityAssociationInlineCreateRequest>>
+            ) = legalEntityAssociations(legalEntityAssociations.orElse(null))
 
             /** The legal entity associations and its child legal entities. */
             fun addLegalEntityAssociation(
@@ -583,56 +641,104 @@ constructor(
             }
 
             /** The type of legal entity. */
-            fun legalEntityType(legalEntityType: LegalEntityType) = apply {
+            fun legalEntityType(legalEntityType: LegalEntityType?) = apply {
                 this.legalEntityType = legalEntityType
             }
 
+            /** The type of legal entity. */
+            fun legalEntityType(legalEntityType: Optional<LegalEntityType>) =
+                legalEntityType(legalEntityType.orElse(null))
+
             /** The business's legal structure. */
-            fun legalStructure(legalStructure: LegalStructure) = apply {
+            fun legalStructure(legalStructure: LegalStructure?) = apply {
                 this.legalStructure = legalStructure
             }
+
+            /** The business's legal structure. */
+            fun legalStructure(legalStructure: Optional<LegalStructure>) =
+                legalStructure(legalStructure.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** An individual's middle name. */
-            fun middleName(middleName: String) = apply { this.middleName = middleName }
+            fun middleName(middleName: String?) = apply { this.middleName = middleName }
 
-            fun phoneNumbers(phoneNumbers: List<PhoneNumber>) = apply {
-                this.phoneNumbers = phoneNumbers.toMutableList()
+            /** An individual's middle name. */
+            fun middleName(middleName: Optional<String>) = middleName(middleName.orElse(null))
+
+            fun phoneNumbers(phoneNumbers: List<PhoneNumber>?) = apply {
+                this.phoneNumbers = phoneNumbers?.toMutableList()
             }
+
+            fun phoneNumbers(phoneNumbers: Optional<List<PhoneNumber>>) =
+                phoneNumbers(phoneNumbers.orElse(null))
 
             fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
                 phoneNumbers = (phoneNumbers ?: mutableListOf()).apply { add(phoneNumber) }
             }
 
             /** Whether the individual is a politically exposed person. */
-            fun politicallyExposedPerson(politicallyExposedPerson: Boolean) = apply {
+            fun politicallyExposedPerson(politicallyExposedPerson: Boolean?) = apply {
                 this.politicallyExposedPerson = politicallyExposedPerson
             }
 
+            /** Whether the individual is a politically exposed person. */
+            fun politicallyExposedPerson(politicallyExposedPerson: Boolean) =
+                politicallyExposedPerson(politicallyExposedPerson as Boolean?)
+
+            /** Whether the individual is a politically exposed person. */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun politicallyExposedPerson(politicallyExposedPerson: Optional<Boolean>) =
+                politicallyExposedPerson(politicallyExposedPerson.orElse(null) as Boolean?)
+
             /** An individual's preferred name. */
-            fun preferredName(preferredName: String) = apply { this.preferredName = preferredName }
+            fun preferredName(preferredName: String?) = apply { this.preferredName = preferredName }
+
+            /** An individual's preferred name. */
+            fun preferredName(preferredName: Optional<String>) =
+                preferredName(preferredName.orElse(null))
 
             /** An individual's prefix. */
-            fun prefix(prefix: String) = apply { this.prefix = prefix }
+            fun prefix(prefix: String?) = apply { this.prefix = prefix }
+
+            /** An individual's prefix. */
+            fun prefix(prefix: Optional<String>) = prefix(prefix.orElse(null))
 
             /** The risk rating of the legal entity. One of low, medium, high. */
-            fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
+            fun riskRating(riskRating: RiskRating?) = apply { this.riskRating = riskRating }
+
+            /** The risk rating of the legal entity. One of low, medium, high. */
+            fun riskRating(riskRating: Optional<RiskRating>) = riskRating(riskRating.orElse(null))
 
             /** An individual's suffix. */
-            fun suffix(suffix: String) = apply { this.suffix = suffix }
+            fun suffix(suffix: String?) = apply { this.suffix = suffix }
 
-            fun wealthAndEmploymentDetails(wealthAndEmploymentDetails: WealthAndEmploymentDetails) =
-                apply {
-                    this.wealthAndEmploymentDetails = wealthAndEmploymentDetails
-                }
+            /** An individual's suffix. */
+            fun suffix(suffix: Optional<String>) = suffix(suffix.orElse(null))
+
+            fun wealthAndEmploymentDetails(
+                wealthAndEmploymentDetails: WealthAndEmploymentDetails?
+            ) = apply { this.wealthAndEmploymentDetails = wealthAndEmploymentDetails }
+
+            fun wealthAndEmploymentDetails(
+                wealthAndEmploymentDetails: Optional<WealthAndEmploymentDetails>
+            ) = wealthAndEmploymentDetails(wealthAndEmploymentDetails.orElse(null))
 
             /** The entity's primary website URL. */
-            fun website(website: String) = apply { this.website = website }
+            fun website(website: String?) = apply { this.website = website }
+
+            /** The entity's primary website URL. */
+            fun website(website: Optional<String>) = website(website.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -758,30 +864,50 @@ constructor(
                 }
 
                 /** Country code conforms to [ISO 3166-1 alpha-2] */
-                fun country(country: String) = apply { this.country = country }
+                fun country(country: String?) = apply { this.country = country }
 
-                fun line1(line1: String) = apply { this.line1 = line1 }
+                /** Country code conforms to [ISO 3166-1 alpha-2] */
+                fun country(country: Optional<String>) = country(country.orElse(null))
+
+                fun line1(line1: String?) = apply { this.line1 = line1 }
+
+                fun line1(line1: Optional<String>) = line1(line1.orElse(null))
 
                 /** Locality or City. */
-                fun locality(locality: String) = apply { this.locality = locality }
+                fun locality(locality: String?) = apply { this.locality = locality }
+
+                /** Locality or City. */
+                fun locality(locality: Optional<String>) = locality(locality.orElse(null))
 
                 /** The postal code of the address. */
-                fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+                fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+
+                /** The postal code of the address. */
+                fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
 
                 /** Region or State. */
-                fun region(region: String) = apply { this.region = region }
+                fun region(region: String?) = apply { this.region = region }
+
+                /** Region or State. */
+                fun region(region: Optional<String>) = region(region.orElse(null))
 
                 /** The types of this address. */
-                fun addressTypes(addressTypes: List<AddressType>) = apply {
-                    this.addressTypes = addressTypes.toMutableList()
+                fun addressTypes(addressTypes: List<AddressType>?) = apply {
+                    this.addressTypes = addressTypes?.toMutableList()
                 }
+
+                /** The types of this address. */
+                fun addressTypes(addressTypes: Optional<List<AddressType>>) =
+                    addressTypes(addressTypes.orElse(null))
 
                 /** The types of this address. */
                 fun addAddressType(addressType: AddressType) = apply {
                     addressTypes = (addressTypes ?: mutableListOf()).apply { add(addressType) }
                 }
 
-                fun line2(line2: String) = apply { this.line2 = line2 }
+                fun line2(line2: String?) = apply { this.line2 = line2 }
+
+                fun line2(line2: Optional<String>) = line2(line2.orElse(null))
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -970,9 +1096,15 @@ constructor(
                 /**
                  * The ISO 3166-1 alpha-2 country code of the country that issued the identification
                  */
-                fun issuingCountry(issuingCountry: String) = apply {
+                fun issuingCountry(issuingCountry: String?) = apply {
                     this.issuingCountry = issuingCountry
                 }
+
+                /**
+                 * The ISO 3166-1 alpha-2 country code of the country that issued the identification
+                 */
+                fun issuingCountry(issuingCountry: Optional<String>) =
+                    issuingCountry(issuingCountry.orElse(null))
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1276,22 +1408,42 @@ constructor(
                 }
 
                 /** The child legal entity. */
-                fun childLegalEntity(childLegalEntity: ChildLegalEntityCreate) = apply {
+                fun childLegalEntity(childLegalEntity: ChildLegalEntityCreate?) = apply {
                     this.childLegalEntity = childLegalEntity
                 }
 
+                /** The child legal entity. */
+                fun childLegalEntity(childLegalEntity: Optional<ChildLegalEntityCreate>) =
+                    childLegalEntity(childLegalEntity.orElse(null))
+
                 /** The ID of the child legal entity. */
-                fun childLegalEntityId(childLegalEntityId: String) = apply {
+                fun childLegalEntityId(childLegalEntityId: String?) = apply {
                     this.childLegalEntityId = childLegalEntityId
                 }
 
+                /** The ID of the child legal entity. */
+                fun childLegalEntityId(childLegalEntityId: Optional<String>) =
+                    childLegalEntityId(childLegalEntityId.orElse(null))
+
                 /** The child entity's ownership percentage iff they are a beneficial owner. */
-                fun ownershipPercentage(ownershipPercentage: Long) = apply {
+                fun ownershipPercentage(ownershipPercentage: Long?) = apply {
                     this.ownershipPercentage = ownershipPercentage
                 }
 
+                /** The child entity's ownership percentage iff they are a beneficial owner. */
+                fun ownershipPercentage(ownershipPercentage: Long) =
+                    ownershipPercentage(ownershipPercentage as Long?)
+
+                /** The child entity's ownership percentage iff they are a beneficial owner. */
+                @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+                fun ownershipPercentage(ownershipPercentage: Optional<Long>) =
+                    ownershipPercentage(ownershipPercentage.orElse(null) as Long?)
+
                 /** The job title of the child entity at the parent entity. */
-                fun title(title: String) = apply { this.title = title }
+                fun title(title: String?) = apply { this.title = title }
+
+                /** The job title of the child entity at the parent entity. */
+                fun title(title: Optional<String>) = title(title.orElse(null))
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1590,40 +1742,66 @@ constructor(
                     }
 
                     /** A list of addresses for the entity. */
-                    fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
-                        this.addresses = addresses.toMutableList()
+                    fun addresses(addresses: List<LegalEntityAddressCreateRequest>?) = apply {
+                        this.addresses = addresses?.toMutableList()
                     }
+
+                    /** A list of addresses for the entity. */
+                    fun addresses(addresses: Optional<List<LegalEntityAddressCreateRequest>>) =
+                        addresses(addresses.orElse(null))
 
                     /** A list of addresses for the entity. */
                     fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
                         addresses = (addresses ?: mutableListOf()).apply { add(address) }
                     }
 
-                    fun bankSettings(bankSettings: BankSettings) = apply {
+                    fun bankSettings(bankSettings: BankSettings?) = apply {
                         this.bankSettings = bankSettings
                     }
 
+                    fun bankSettings(bankSettings: Optional<BankSettings>) =
+                        bankSettings(bankSettings.orElse(null))
+
                     /** The business's legal business name. */
-                    fun businessName(businessName: String) = apply {
+                    fun businessName(businessName: String?) = apply {
                         this.businessName = businessName
                     }
 
+                    /** The business's legal business name. */
+                    fun businessName(businessName: Optional<String>) =
+                        businessName(businessName.orElse(null))
+
                     /** The country of citizenship for an individual. */
-                    fun citizenshipCountry(citizenshipCountry: String) = apply {
+                    fun citizenshipCountry(citizenshipCountry: String?) = apply {
                         this.citizenshipCountry = citizenshipCountry
                     }
 
+                    /** The country of citizenship for an individual. */
+                    fun citizenshipCountry(citizenshipCountry: Optional<String>) =
+                        citizenshipCountry(citizenshipCountry.orElse(null))
+
                     /** A business's formation date (YYYY-MM-DD). */
-                    fun dateFormed(dateFormed: LocalDate) = apply { this.dateFormed = dateFormed }
+                    fun dateFormed(dateFormed: LocalDate?) = apply { this.dateFormed = dateFormed }
+
+                    /** A business's formation date (YYYY-MM-DD). */
+                    fun dateFormed(dateFormed: Optional<LocalDate>) =
+                        dateFormed(dateFormed.orElse(null))
 
                     /** An individual's date of birth (YYYY-MM-DD). */
-                    fun dateOfBirth(dateOfBirth: LocalDate) = apply {
+                    fun dateOfBirth(dateOfBirth: LocalDate?) = apply {
                         this.dateOfBirth = dateOfBirth
                     }
 
-                    fun doingBusinessAsNames(doingBusinessAsNames: List<String>) = apply {
-                        this.doingBusinessAsNames = doingBusinessAsNames.toMutableList()
+                    /** An individual's date of birth (YYYY-MM-DD). */
+                    fun dateOfBirth(dateOfBirth: Optional<LocalDate>) =
+                        dateOfBirth(dateOfBirth.orElse(null))
+
+                    fun doingBusinessAsNames(doingBusinessAsNames: List<String>?) = apply {
+                        this.doingBusinessAsNames = doingBusinessAsNames?.toMutableList()
                     }
+
+                    fun doingBusinessAsNames(doingBusinessAsNames: Optional<List<String>>) =
+                        doingBusinessAsNames(doingBusinessAsNames.orElse(null))
 
                     fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
                         doingBusinessAsNames =
@@ -1633,16 +1811,27 @@ constructor(
                     }
 
                     /** The entity's primary email. */
-                    fun email(email: String) = apply { this.email = email }
+                    fun email(email: String?) = apply { this.email = email }
+
+                    /** The entity's primary email. */
+                    fun email(email: Optional<String>) = email(email.orElse(null))
 
                     /** An individual's first name. */
-                    fun firstName(firstName: String) = apply { this.firstName = firstName }
+                    fun firstName(firstName: String?) = apply { this.firstName = firstName }
+
+                    /** An individual's first name. */
+                    fun firstName(firstName: Optional<String>) = firstName(firstName.orElse(null))
 
                     /** A list of identifications for the legal entity. */
-                    fun identifications(identifications: List<IdentificationCreateRequest>) =
+                    fun identifications(identifications: List<IdentificationCreateRequest>?) =
                         apply {
-                            this.identifications = identifications.toMutableList()
+                            this.identifications = identifications?.toMutableList()
                         }
+
+                    /** A list of identifications for the legal entity. */
+                    fun identifications(
+                        identifications: Optional<List<IdentificationCreateRequest>>
+                    ) = identifications(identifications.orElse(null))
 
                     /** A list of identifications for the legal entity. */
                     fun addIdentification(identification: IdentificationCreateRequest) = apply {
@@ -1651,60 +1840,114 @@ constructor(
                     }
 
                     /** An individual's last name. */
-                    fun lastName(lastName: String) = apply { this.lastName = lastName }
+                    fun lastName(lastName: String?) = apply { this.lastName = lastName }
+
+                    /** An individual's last name. */
+                    fun lastName(lastName: Optional<String>) = lastName(lastName.orElse(null))
 
                     /** The type of legal entity. */
-                    fun legalEntityType(legalEntityType: LegalEntityType) = apply {
+                    fun legalEntityType(legalEntityType: LegalEntityType?) = apply {
                         this.legalEntityType = legalEntityType
                     }
 
+                    /** The type of legal entity. */
+                    fun legalEntityType(legalEntityType: Optional<LegalEntityType>) =
+                        legalEntityType(legalEntityType.orElse(null))
+
                     /** The business's legal structure. */
-                    fun legalStructure(legalStructure: LegalStructure) = apply {
+                    fun legalStructure(legalStructure: LegalStructure?) = apply {
                         this.legalStructure = legalStructure
                     }
+
+                    /** The business's legal structure. */
+                    fun legalStructure(legalStructure: Optional<LegalStructure>) =
+                        legalStructure(legalStructure.orElse(null))
 
                     /**
                      * Additional data represented as key-value pairs. Both the key and value must
                      * be strings.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+                    /**
+                     * Additional data represented as key-value pairs. Both the key and value must
+                     * be strings.
+                     */
+                    fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
                     /** An individual's middle name. */
-                    fun middleName(middleName: String) = apply { this.middleName = middleName }
+                    fun middleName(middleName: String?) = apply { this.middleName = middleName }
 
-                    fun phoneNumbers(phoneNumbers: List<PhoneNumber>) = apply {
-                        this.phoneNumbers = phoneNumbers.toMutableList()
+                    /** An individual's middle name. */
+                    fun middleName(middleName: Optional<String>) =
+                        middleName(middleName.orElse(null))
+
+                    fun phoneNumbers(phoneNumbers: List<PhoneNumber>?) = apply {
+                        this.phoneNumbers = phoneNumbers?.toMutableList()
                     }
+
+                    fun phoneNumbers(phoneNumbers: Optional<List<PhoneNumber>>) =
+                        phoneNumbers(phoneNumbers.orElse(null))
 
                     fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
                         phoneNumbers = (phoneNumbers ?: mutableListOf()).apply { add(phoneNumber) }
                     }
 
                     /** Whether the individual is a politically exposed person. */
-                    fun politicallyExposedPerson(politicallyExposedPerson: Boolean) = apply {
+                    fun politicallyExposedPerson(politicallyExposedPerson: Boolean?) = apply {
                         this.politicallyExposedPerson = politicallyExposedPerson
                     }
 
+                    /** Whether the individual is a politically exposed person. */
+                    fun politicallyExposedPerson(politicallyExposedPerson: Boolean) =
+                        politicallyExposedPerson(politicallyExposedPerson as Boolean?)
+
+                    /** Whether the individual is a politically exposed person. */
+                    @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+                    fun politicallyExposedPerson(politicallyExposedPerson: Optional<Boolean>) =
+                        politicallyExposedPerson(politicallyExposedPerson.orElse(null) as Boolean?)
+
                     /** An individual's preferred name. */
-                    fun preferredName(preferredName: String) = apply {
+                    fun preferredName(preferredName: String?) = apply {
                         this.preferredName = preferredName
                     }
 
+                    /** An individual's preferred name. */
+                    fun preferredName(preferredName: Optional<String>) =
+                        preferredName(preferredName.orElse(null))
+
                     /** An individual's prefix. */
-                    fun prefix(prefix: String) = apply { this.prefix = prefix }
+                    fun prefix(prefix: String?) = apply { this.prefix = prefix }
+
+                    /** An individual's prefix. */
+                    fun prefix(prefix: Optional<String>) = prefix(prefix.orElse(null))
 
                     /** The risk rating of the legal entity. One of low, medium, high. */
-                    fun riskRating(riskRating: RiskRating) = apply { this.riskRating = riskRating }
+                    fun riskRating(riskRating: RiskRating?) = apply { this.riskRating = riskRating }
+
+                    /** The risk rating of the legal entity. One of low, medium, high. */
+                    fun riskRating(riskRating: Optional<RiskRating>) =
+                        riskRating(riskRating.orElse(null))
 
                     /** An individual's suffix. */
-                    fun suffix(suffix: String) = apply { this.suffix = suffix }
+                    fun suffix(suffix: String?) = apply { this.suffix = suffix }
+
+                    /** An individual's suffix. */
+                    fun suffix(suffix: Optional<String>) = suffix(suffix.orElse(null))
 
                     fun wealthAndEmploymentDetails(
-                        wealthAndEmploymentDetails: WealthAndEmploymentDetails
+                        wealthAndEmploymentDetails: WealthAndEmploymentDetails?
                     ) = apply { this.wealthAndEmploymentDetails = wealthAndEmploymentDetails }
 
+                    fun wealthAndEmploymentDetails(
+                        wealthAndEmploymentDetails: Optional<WealthAndEmploymentDetails>
+                    ) = wealthAndEmploymentDetails(wealthAndEmploymentDetails.orElse(null))
+
                     /** The entity's primary website URL. */
-                    fun website(website: String) = apply { this.website = website }
+                    fun website(website: String?) = apply { this.website = website }
+
+                    /** The entity's primary website URL. */
+                    fun website(website: Optional<String>) = website(website.orElse(null))
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -1839,23 +2082,42 @@ constructor(
                         }
 
                         /** Country code conforms to [ISO 3166-1 alpha-2] */
-                        fun country(country: String) = apply { this.country = country }
+                        fun country(country: String?) = apply { this.country = country }
 
-                        fun line1(line1: String) = apply { this.line1 = line1 }
+                        /** Country code conforms to [ISO 3166-1 alpha-2] */
+                        fun country(country: Optional<String>) = country(country.orElse(null))
+
+                        fun line1(line1: String?) = apply { this.line1 = line1 }
+
+                        fun line1(line1: Optional<String>) = line1(line1.orElse(null))
 
                         /** Locality or City. */
-                        fun locality(locality: String) = apply { this.locality = locality }
+                        fun locality(locality: String?) = apply { this.locality = locality }
+
+                        /** Locality or City. */
+                        fun locality(locality: Optional<String>) = locality(locality.orElse(null))
 
                         /** The postal code of the address. */
-                        fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+                        fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+
+                        /** The postal code of the address. */
+                        fun postalCode(postalCode: Optional<String>) =
+                            postalCode(postalCode.orElse(null))
 
                         /** Region or State. */
-                        fun region(region: String) = apply { this.region = region }
+                        fun region(region: String?) = apply { this.region = region }
+
+                        /** Region or State. */
+                        fun region(region: Optional<String>) = region(region.orElse(null))
 
                         /** The types of this address. */
-                        fun addressTypes(addressTypes: List<AddressType>) = apply {
-                            this.addressTypes = addressTypes.toMutableList()
+                        fun addressTypes(addressTypes: List<AddressType>?) = apply {
+                            this.addressTypes = addressTypes?.toMutableList()
                         }
+
+                        /** The types of this address. */
+                        fun addressTypes(addressTypes: Optional<List<AddressType>>) =
+                            addressTypes(addressTypes.orElse(null))
 
                         /** The types of this address. */
                         fun addAddressType(addressType: AddressType) = apply {
@@ -1863,7 +2125,9 @@ constructor(
                                 (addressTypes ?: mutableListOf()).apply { add(addressType) }
                         }
 
-                        fun line2(line2: String) = apply { this.line2 = line2 }
+                        fun line2(line2: String?) = apply { this.line2 = line2 }
+
+                        fun line2(line2: Optional<String>) = line2(line2.orElse(null))
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -2061,9 +2325,16 @@ constructor(
                          * The ISO 3166-1 alpha-2 country code of the country that issued the
                          * identification
                          */
-                        fun issuingCountry(issuingCountry: String) = apply {
+                        fun issuingCountry(issuingCountry: String?) = apply {
                             this.issuingCountry = issuingCountry
                         }
+
+                        /**
+                         * The ISO 3166-1 alpha-2 country code of the country that issued the
+                         * identification
+                         */
+                        fun issuingCountry(issuingCountry: Optional<String>) =
+                            issuingCountry(issuingCountry.orElse(null))
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -2546,9 +2817,12 @@ constructor(
                             additionalProperties = phoneNumber.additionalProperties.toMutableMap()
                         }
 
-                        fun phoneNumber(phoneNumber: String) = apply {
+                        fun phoneNumber(phoneNumber: String?) = apply {
                             this.phoneNumber = phoneNumber
                         }
+
+                        fun phoneNumber(phoneNumber: Optional<String>) =
+                            phoneNumber(phoneNumber.orElse(null))
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -2945,7 +3219,10 @@ constructor(
                     additionalProperties = phoneNumber.additionalProperties.toMutableMap()
                 }
 
-                fun phoneNumber(phoneNumber: String) = apply { this.phoneNumber = phoneNumber }
+                fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
+
+                fun phoneNumber(phoneNumber: Optional<String>) =
+                    phoneNumber(phoneNumber.orElse(null))
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()

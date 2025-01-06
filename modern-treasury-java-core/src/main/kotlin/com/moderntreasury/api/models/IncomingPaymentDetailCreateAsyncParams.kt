@@ -150,34 +150,70 @@ constructor(
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long?) = apply { this.amount = amount }
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amount(amount: Long) = amount(amount as Long?)
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun amount(amount: Optional<Long>) = amount(amount.orElse(null) as Long?)
 
             /** Defaults to today. */
-            fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+            fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
+
+            /** Defaults to today. */
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
             /** Defaults to the currency of the originating account. */
-            fun currency(currency: Currency) = apply { this.currency = currency }
+            fun currency(currency: Currency?) = apply { this.currency = currency }
+
+            /** Defaults to the currency of the originating account. */
+            fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
             /** Defaults to a random description. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** Defaults to a random description. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /** One of `credit`, `debit`. */
-            fun direction(direction: Direction) = apply { this.direction = direction }
+            fun direction(direction: Direction?) = apply { this.direction = direction }
+
+            /** One of `credit`, `debit`. */
+            fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
 
             /** The ID of one of your internal accounts. */
-            fun internalAccountId(internalAccountId: String) = apply {
+            fun internalAccountId(internalAccountId: String?) = apply {
                 this.internalAccountId = internalAccountId
             }
 
+            /** The ID of one of your internal accounts. */
+            fun internalAccountId(internalAccountId: Optional<String>) =
+                internalAccountId(internalAccountId.orElse(null))
+
             /** One of `ach`, `wire`, `check`. */
-            fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type?) = apply { this.type = type }
+
+            /** One of `ach`, `wire`, `check`. */
+            fun type(type: Optional<Type>) = type(type.orElse(null))
 
             /**
              * An optional parameter to associate the incoming payment detail to a virtual account.
              */
-            fun virtualAccountId(virtualAccountId: String) = apply {
+            fun virtualAccountId(virtualAccountId: String?) = apply {
                 this.virtualAccountId = virtualAccountId
             }
+
+            /**
+             * An optional parameter to associate the incoming payment detail to a virtual account.
+             */
+            fun virtualAccountId(virtualAccountId: Optional<String>) =
+                virtualAccountId(virtualAccountId.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -256,32 +292,62 @@ constructor(
         }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        fun amount(amount: Long) = apply { body.amount(amount) }
+        fun amount(amount: Long?) = apply { body.amount(amount) }
+
+        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        fun amount(amount: Long) = amount(amount as Long?)
+
+        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun amount(amount: Optional<Long>) = amount(amount.orElse(null) as Long?)
 
         /** Defaults to today. */
-        fun asOfDate(asOfDate: LocalDate) = apply { body.asOfDate(asOfDate) }
+        fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
+
+        /** Defaults to today. */
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Currency) = apply { body.currency(currency) }
+        fun currency(currency: Currency?) = apply { body.currency(currency) }
+
+        /** Defaults to the currency of the originating account. */
+        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
 
         /** Defaults to a random description. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** Defaults to a random description. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /** One of `credit`, `debit`. */
-        fun direction(direction: Direction) = apply { body.direction(direction) }
+        fun direction(direction: Direction?) = apply { body.direction(direction) }
+
+        /** One of `credit`, `debit`. */
+        fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
 
         /** The ID of one of your internal accounts. */
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             body.internalAccountId(internalAccountId)
         }
 
+        /** The ID of one of your internal accounts. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.orElse(null))
+
         /** One of `ach`, `wire`, `check`. */
-        fun type(type: Type) = apply { body.type(type) }
+        fun type(type: Type?) = apply { body.type(type) }
+
+        /** One of `ach`, `wire`, `check`. */
+        fun type(type: Optional<Type>) = type(type.orElse(null))
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
-        fun virtualAccountId(virtualAccountId: String) = apply {
+        fun virtualAccountId(virtualAccountId: String?) = apply {
             body.virtualAccountId(virtualAccountId)
         }
+
+        /** An optional parameter to associate the incoming payment detail to a virtual account. */
+        fun virtualAccountId(virtualAccountId: Optional<String>) =
+            virtualAccountId(virtualAccountId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

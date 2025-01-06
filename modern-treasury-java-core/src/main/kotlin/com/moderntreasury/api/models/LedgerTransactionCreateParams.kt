@@ -198,51 +198,98 @@ constructor(
             }
 
             /** An optional description for internal use. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** An optional description for internal use. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+            fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
+
+            /**
+             * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+                effectiveAt(effectiveAt.orElse(null))
 
             /**
              * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
+
+            /**
+             * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveDate(effectiveDate: Optional<LocalDate>) =
+                effectiveDate(effectiveDate.orElse(null))
 
             /**
              * A unique string to represent the ledger transaction. Only one pending or posted
              * ledger transaction may have this ID in the ledger.
              */
-            fun externalId(externalId: String) = apply { this.externalId = externalId }
+            fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+            /**
+             * A unique string to represent the ledger transaction. Only one pending or posted
+             * ledger transaction may have this ID in the ledger.
+             */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.orElse(null))
 
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * id will be populated here, otherwise null.
              */
-            fun ledgerableId(ledgerableId: String) = apply { this.ledgerableId = ledgerableId }
+            fun ledgerableId(ledgerableId: String?) = apply { this.ledgerableId = ledgerableId }
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * id will be populated here, otherwise null.
+             */
+            fun ledgerableId(ledgerableId: Optional<String>) =
+                ledgerableId(ledgerableId.orElse(null))
 
             /**
              * If the ledger transaction can be reconciled to another object in Modern Treasury, the
              * type will be populated here, otherwise null. This can be one of payment_order,
              * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
              */
-            fun ledgerableType(ledgerableType: LedgerableType) = apply {
+            fun ledgerableType(ledgerableType: LedgerableType?) = apply {
                 this.ledgerableType = ledgerableType
             }
+
+            /**
+             * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+             * type will be populated here, otherwise null. This can be one of payment_order,
+             * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+             */
+            fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
+                ledgerableType(ledgerableType.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status?) = apply { this.status = status }
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            fun status(status: Optional<Status>) = status(status.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -330,47 +377,91 @@ constructor(
         }
 
         /** An optional description for internal use. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** An optional description for internal use. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
          * purposes.
          */
-        fun effectiveAt(effectiveAt: OffsetDateTime) = apply { body.effectiveAt(effectiveAt) }
+        fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { body.effectiveAt(effectiveAt) }
+
+        /**
+         * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+         * purposes.
+         */
+        fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+            effectiveAt(effectiveAt.orElse(null))
 
         /**
          * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting purposes.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
+        fun effectiveDate(effectiveDate: LocalDate?) = apply { body.effectiveDate(effectiveDate) }
+
+        /**
+         * The date (YYYY-MM-DD) on which the ledger transaction happened for reporting purposes.
+         */
+        fun effectiveDate(effectiveDate: Optional<LocalDate>) =
+            effectiveDate(effectiveDate.orElse(null))
 
         /**
          * A unique string to represent the ledger transaction. Only one pending or posted ledger
          * transaction may have this ID in the ledger.
          */
-        fun externalId(externalId: String) = apply { body.externalId(externalId) }
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /**
+         * A unique string to represent the ledger transaction. Only one pending or posted ledger
+         * transaction may have this ID in the ledger.
+         */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.orElse(null))
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
          * will be populated here, otherwise null.
          */
-        fun ledgerableId(ledgerableId: String) = apply { body.ledgerableId(ledgerableId) }
+        fun ledgerableId(ledgerableId: String?) = apply { body.ledgerableId(ledgerableId) }
+
+        /**
+         * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
+         * will be populated here, otherwise null.
+         */
+        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.orElse(null))
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
          * type will be populated here, otherwise null. This can be one of payment_order,
          * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
          */
-        fun ledgerableType(ledgerableType: LedgerableType) = apply {
+        fun ledgerableType(ledgerableType: LedgerableType?) = apply {
             body.ledgerableType(ledgerableType)
         }
 
         /**
+         * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+         * type will be populated here, otherwise null. This can be one of payment_order,
+         * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+         */
+        fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
+            ledgerableType(ledgerableType.orElse(null))
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** To post a ledger transaction at creation, use `posted`. */
-        fun status(status: Status) = apply { body.status(status) }
+        fun status(status: Status?) = apply { body.status(status) }
+
+        /** To post a ledger transaction at creation, use `posted`. */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -646,9 +737,17 @@ constructor(
              * available balance. If any of these conditions would be false after the transaction is
              * created, the entire call will fail with error code 422.
              */
-            fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
+            fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount?) = apply {
                 this.availableBalanceAmount = availableBalanceAmount
             }
+
+            /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * available balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun availableBalanceAmount(availableBalanceAmount: Optional<AvailableBalanceAmount>) =
+                availableBalanceAmount(availableBalanceAmount.orElse(null))
 
             /**
              * Lock version of the ledger account. This can be passed when creating a ledger
@@ -656,21 +755,62 @@ constructor(
              * version. See our post about Designing the Ledgers API with Optimistic Locking for
              * more details.
              */
-            fun lockVersion(lockVersion: Long) = apply { this.lockVersion = lockVersion }
+            fun lockVersion(lockVersion: Long?) = apply { this.lockVersion = lockVersion }
+
+            /**
+             * Lock version of the ledger account. This can be passed when creating a ledger
+             * transaction to only succeed if no ledger transactions have posted since the given
+             * version. See our post about Designing the Ledgers API with Optimistic Locking for
+             * more details.
+             */
+            fun lockVersion(lockVersion: Long) = lockVersion(lockVersion as Long?)
+
+            /**
+             * Lock version of the ledger account. This can be passed when creating a ledger
+             * transaction to only succeed if no ledger transactions have posted since the given
+             * version. See our post about Designing the Ledgers API with Optimistic Locking for
+             * more details.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun lockVersion(lockVersion: Optional<Long>) =
+                lockVersion(lockVersion.orElse(null) as Long?)
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
              * pending balance. If any of these conditions would be false after the transaction is
              * created, the entire call will fail with error code 422.
              */
-            fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount) = apply {
+            fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount?) = apply {
                 this.pendingBalanceAmount = pendingBalanceAmount
+            }
+
+            /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * pending balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
+                pendingBalanceAmount(pendingBalanceAmount.orElse(null))
+
+            /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * posted balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount?) = apply {
+                this.postedBalanceAmount = postedBalanceAmount
             }
 
             /**
@@ -678,18 +818,36 @@ constructor(
              * posted balance. If any of these conditions would be false after the transaction is
              * created, the entire call will fail with error code 422.
              */
-            fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount) = apply {
-                this.postedBalanceAmount = postedBalanceAmount
-            }
+            fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
+                postedBalanceAmount(postedBalanceAmount.orElse(null))
+
+            /**
+             * If true, response will include the balance of the associated ledger account for the
+             * entry.
+             */
+            fun showResultingLedgerAccountBalances(showResultingLedgerAccountBalances: Boolean?) =
+                apply {
+                    this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
+                }
 
             /**
              * If true, response will include the balance of the associated ledger account for the
              * entry.
              */
             fun showResultingLedgerAccountBalances(showResultingLedgerAccountBalances: Boolean) =
-                apply {
-                    this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
-                }
+                showResultingLedgerAccountBalances(showResultingLedgerAccountBalances as Boolean?)
+
+            /**
+             * If true, response will include the balance of the associated ledger account for the
+             * entry.
+             */
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun showResultingLedgerAccountBalances(
+                showResultingLedgerAccountBalances: Optional<Boolean>
+            ) =
+                showResultingLedgerAccountBalances(
+                    showResultingLedgerAccountBalances.orElse(null) as Boolean?
+                )
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
