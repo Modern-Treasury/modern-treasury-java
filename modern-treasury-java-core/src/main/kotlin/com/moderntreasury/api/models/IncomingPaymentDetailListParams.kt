@@ -128,46 +128,90 @@ constructor(
                     incomingPaymentDetailListParams.additionalQueryParams.toBuilder()
             }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /**
          * Filters incoming payment details with an as_of_date starting on or before the specified
          * date (YYYY-MM-DD).
          */
-        fun asOfDateEnd(asOfDateEnd: LocalDate) = apply { this.asOfDateEnd = asOfDateEnd }
+        fun asOfDateEnd(asOfDateEnd: LocalDate?) = apply { this.asOfDateEnd = asOfDateEnd }
+
+        /**
+         * Filters incoming payment details with an as_of_date starting on or before the specified
+         * date (YYYY-MM-DD).
+         */
+        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.orElse(null))
 
         /**
          * Filters incoming payment details with an as_of_date starting on or after the specified
          * date (YYYY-MM-DD).
          */
-        fun asOfDateStart(asOfDateStart: LocalDate) = apply { this.asOfDateStart = asOfDateStart }
+        fun asOfDateStart(asOfDateStart: LocalDate?) = apply { this.asOfDateStart = asOfDateStart }
+
+        /**
+         * Filters incoming payment details with an as_of_date starting on or after the specified
+         * date (YYYY-MM-DD).
+         */
+        fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
+            asOfDateStart(asOfDateStart.orElse(null))
 
         /** One of `credit` or `debit`. */
-        fun direction(direction: TransactionDirection) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
+
+        /** One of `credit` or `debit`. */
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /**
          * The current status of the incoming payment order. One of `pending`, `completed`, or
          * `returned`.
          */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status?) = apply { this.status = status }
+
+        /**
+         * The current status of the incoming payment order. One of `pending`, `completed`, or
+         * `returned`.
+         */
+        fun status(status: Optional<Status>) = status(status.orElse(null))
 
         /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
-        fun type(type: Type) = apply { this.type = type }
+        fun type(type: Type?) = apply { this.type = type }
+
+        /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
+        fun type(type: Optional<Type>) = type(type.orElse(null))
 
         /**
          * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
          */
-        fun virtualAccountId(virtualAccountId: String) = apply {
+        fun virtualAccountId(virtualAccountId: String?) = apply {
             this.virtualAccountId = virtualAccountId
         }
+
+        /**
+         * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
+         */
+        fun virtualAccountId(virtualAccountId: Optional<String>) =
+            virtualAccountId(virtualAccountId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

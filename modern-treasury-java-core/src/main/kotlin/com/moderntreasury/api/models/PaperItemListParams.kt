@@ -83,25 +83,47 @@ constructor(
             additionalQueryParams = paperItemListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
-        fun depositDateEnd(depositDateEnd: LocalDate) = apply {
+        fun depositDateEnd(depositDateEnd: LocalDate?) = apply {
             this.depositDateEnd = depositDateEnd
         }
 
+        /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
+        fun depositDateEnd(depositDateEnd: Optional<LocalDate>) =
+            depositDateEnd(depositDateEnd.orElse(null))
+
         /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
-        fun depositDateStart(depositDateStart: LocalDate) = apply {
+        fun depositDateStart(depositDateStart: LocalDate?) = apply {
             this.depositDateStart = depositDateStart
         }
+
+        /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
+        fun depositDateStart(depositDateStart: Optional<LocalDate>) =
+            depositDateStart(depositDateStart.orElse(null))
 
         /**
          * Specify `lockbox_number` if you wish to see paper items that are associated with a
          * specific lockbox number.
          */
-        fun lockboxNumber(lockboxNumber: String) = apply { this.lockboxNumber = lockboxNumber }
+        fun lockboxNumber(lockboxNumber: String?) = apply { this.lockboxNumber = lockboxNumber }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /**
+         * Specify `lockbox_number` if you wish to see paper items that are associated with a
+         * specific lockbox number.
+         */
+        fun lockboxNumber(lockboxNumber: Optional<String>) =
+            lockboxNumber(lockboxNumber.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

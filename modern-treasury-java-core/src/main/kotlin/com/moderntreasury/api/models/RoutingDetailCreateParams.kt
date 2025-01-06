@@ -138,7 +138,14 @@ constructor(
              * If the routing detail is to be used for a specific payment type this field will be
              * populated, otherwise null.
              */
-            fun paymentType(paymentType: PaymentType) = apply { this.paymentType = paymentType }
+            fun paymentType(paymentType: PaymentType?) = apply { this.paymentType = paymentType }
+
+            /**
+             * If the routing detail is to be used for a specific payment type this field will be
+             * populated, otherwise null.
+             */
+            fun paymentType(paymentType: Optional<PaymentType>) =
+                paymentType(paymentType.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -233,7 +240,13 @@ constructor(
          * If the routing detail is to be used for a specific payment type this field will be
          * populated, otherwise null.
          */
-        fun paymentType(paymentType: PaymentType) = apply { body.paymentType(paymentType) }
+        fun paymentType(paymentType: PaymentType?) = apply { body.paymentType(paymentType) }
+
+        /**
+         * If the routing detail is to be used for a specific payment type this field will be
+         * populated, otherwise null.
+         */
+        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

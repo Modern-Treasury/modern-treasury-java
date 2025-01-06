@@ -72,17 +72,31 @@ constructor(
             additionalQueryParams = connectionListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** A string code representing the vendor (i.e. bank). */
-        fun entity(entity: String) = apply { this.entity = entity }
+        fun entity(entity: String?) = apply { this.entity = entity }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /** A string code representing the vendor (i.e. bank). */
+        fun entity(entity: Optional<String>) = entity(entity.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         /** An identifier assigned by the vendor to your organization. */
-        fun vendorCustomerId(vendorCustomerId: String) = apply {
+        fun vendorCustomerId(vendorCustomerId: String?) = apply {
             this.vendorCustomerId = vendorCustomerId
         }
+
+        /** An identifier assigned by the vendor to your organization. */
+        fun vendorCustomerId(vendorCustomerId: Optional<String>) =
+            vendorCustomerId(vendorCustomerId.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

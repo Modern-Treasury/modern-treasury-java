@@ -80,15 +80,29 @@ constructor(
             additionalQueryParams = transactionLineItemListParams.additionalQueryParams.toBuilder()
         }
 
-        fun id(id: Id) = apply { this.id = id }
+        fun id(id: Id?) = apply { this.id = id }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun id(id: Optional<Id>) = id(id.orElse(null))
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun transactionId(transactionId: String) = apply { this.transactionId = transactionId }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
-        fun type(type: Type) = apply { this.type = type }
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun transactionId(transactionId: String?) = apply { this.transactionId = transactionId }
+
+        fun transactionId(transactionId: Optional<String>) =
+            transactionId(transactionId.orElse(null))
+
+        fun type(type: Type?) = apply { this.type = type }
+
+        fun type(type: Optional<Type>) = type(type.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

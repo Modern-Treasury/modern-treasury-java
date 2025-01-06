@@ -117,34 +117,65 @@ constructor(
             additionalQueryParams = counterpartyListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
         /** Used to return counterparties created after some datetime. */
-        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime) = apply {
+        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) = apply {
             this.createdAtLowerBound = createdAtLowerBound
         }
 
+        /** Used to return counterparties created after some datetime. */
+        fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
+            createdAtLowerBound(createdAtLowerBound.orElse(null))
+
         /** Used to return counterparties created before some datetime. */
-        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime) = apply {
+        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) = apply {
             this.createdAtUpperBound = createdAtUpperBound
         }
 
+        /** Used to return counterparties created before some datetime. */
+        fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
+            createdAtUpperBound(createdAtUpperBound.orElse(null))
+
         /** Performs a partial string match of the email field. This is also case insensitive. */
-        fun email(email: String) = apply { this.email = email }
+        fun email(email: String?) = apply { this.email = email }
+
+        /** Performs a partial string match of the email field. This is also case insensitive. */
+        fun email(email: Optional<String>) = email(email.orElse(null))
 
         /** Filters for counterparties with the given legal entity ID. */
-        fun legalEntityId(legalEntityId: String) = apply { this.legalEntityId = legalEntityId }
+        fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+
+        /** Filters for counterparties with the given legal entity ID. */
+        fun legalEntityId(legalEntityId: Optional<String>) =
+            legalEntityId(legalEntityId.orElse(null))
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+
+        /**
+         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
+         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /** Performs a partial string match of the name field. This is also case insensitive. */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String?) = apply { this.name = name }
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        /** Performs a partial string match of the name field. This is also case insensitive. */
+        fun name(name: Optional<String>) = name(name.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

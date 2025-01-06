@@ -138,25 +138,43 @@ constructor(
             /** Name of the ledger event handler. */
             fun name(name: String) = apply { this.name = name }
 
-            fun conditions(conditions: LedgerEventHandlerConditions) = apply {
+            fun conditions(conditions: LedgerEventHandlerConditions?) = apply {
                 this.conditions = conditions
             }
 
+            fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
+                conditions(conditions.orElse(null))
+
             /** An optional description. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** An optional description. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /** The id of the ledger that this account belongs to. */
-            fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+            fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
+
+            /** The id of the ledger that this account belongs to. */
+            fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-            fun variables(variables: LedgerEventHandlerVariables) = apply {
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+            fun variables(variables: LedgerEventHandlerVariables?) = apply {
                 this.variables = variables
             }
+
+            fun variables(variables: Optional<LedgerEventHandlerVariables>) =
+                variables(variables.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -239,22 +257,39 @@ constructor(
         /** Name of the ledger event handler. */
         fun name(name: String) = apply { body.name(name) }
 
-        fun conditions(conditions: LedgerEventHandlerConditions) = apply {
+        fun conditions(conditions: LedgerEventHandlerConditions?) = apply {
             body.conditions(conditions)
         }
 
+        fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
+            conditions(conditions.orElse(null))
+
         /** An optional description. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
+
+        /** An optional description. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /** The id of the ledger that this account belongs to. */
-        fun ledgerId(ledgerId: String) = apply { body.ledgerId(ledgerId) }
+        fun ledgerId(ledgerId: String?) = apply { body.ledgerId(ledgerId) }
+
+        /** The id of the ledger that this account belongs to. */
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
-        fun variables(variables: LedgerEventHandlerVariables) = apply { body.variables(variables) }
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+
+        fun variables(variables: LedgerEventHandlerVariables?) = apply { body.variables(variables) }
+
+        fun variables(variables: Optional<LedgerEventHandlerVariables>) =
+            variables(variables.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -446,13 +481,22 @@ constructor(
             }
 
             /** An optional description for internal use. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
+
+            /** An optional description for internal use. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveAt(effectiveAt: String) = apply { this.effectiveAt = effectiveAt }
+            fun effectiveAt(effectiveAt: String?) = apply { this.effectiveAt = effectiveAt }
+
+            /**
+             * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveAt(effectiveAt: Optional<String>) = effectiveAt(effectiveAt.orElse(null))
 
             /** An array of ledger entry objects. */
             fun ledgerEntries(ledgerEntries: List<LedgerEventHandlerLedgerEntries>) = apply {
@@ -465,7 +509,10 @@ constructor(
             }
 
             /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: String) = apply { this.status = status }
+            fun status(status: String?) = apply { this.status = status }
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            fun status(status: Optional<String>) = status(status.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

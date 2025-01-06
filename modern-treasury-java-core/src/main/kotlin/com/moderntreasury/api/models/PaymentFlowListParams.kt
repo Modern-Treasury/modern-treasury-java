@@ -98,25 +98,48 @@ constructor(
             additionalQueryParams = paymentFlowListParams.additionalQueryParams.toBuilder()
         }
 
-        fun afterCursor(afterCursor: String) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun clientToken(clientToken: String) = apply { this.clientToken = clientToken }
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
 
-        fun counterpartyId(counterpartyId: String) = apply { this.counterpartyId = counterpartyId }
+        fun clientToken(clientToken: String?) = apply { this.clientToken = clientToken }
 
-        fun originatingAccountId(originatingAccountId: String) = apply {
+        fun clientToken(clientToken: Optional<String>) = clientToken(clientToken.orElse(null))
+
+        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+
+        fun counterpartyId(counterpartyId: Optional<String>) =
+            counterpartyId(counterpartyId.orElse(null))
+
+        fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
-        fun paymentOrderId(paymentOrderId: String) = apply { this.paymentOrderId = paymentOrderId }
+        fun originatingAccountId(originatingAccountId: Optional<String>) =
+            originatingAccountId(originatingAccountId.orElse(null))
 
-        fun perPage(perPage: Long) = apply { this.perPage = perPage }
+        fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
 
-        fun receivingAccountId(receivingAccountId: String) = apply {
+        fun paymentOrderId(paymentOrderId: Optional<String>) =
+            paymentOrderId(paymentOrderId.orElse(null))
+
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+
+        fun receivingAccountId(receivingAccountId: String?) = apply {
             this.receivingAccountId = receivingAccountId
         }
 
-        fun status(status: String) = apply { this.status = status }
+        fun receivingAccountId(receivingAccountId: Optional<String>) =
+            receivingAccountId(receivingAccountId.orElse(null))
+
+        fun status(status: String?) = apply { this.status = status }
+
+        fun status(status: Optional<String>) = status(status.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

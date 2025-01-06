@@ -85,7 +85,16 @@ constructor(
          * will be retrieved not including that bound. Use `balances[as_of_lock_version]` to
          * retrieve a balance as of a specific Ledger Account `lock_version`.
          */
-        fun balances(balances: Balances) = apply { this.balances = balances }
+        fun balances(balances: Balances?) = apply { this.balances = balances }
+
+        /**
+         * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
+         * the balances change between the two timestamps. The lower bound is inclusive while the
+         * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
+         * will be retrieved not including that bound. Use `balances[as_of_lock_version]` to
+         * retrieve a balance as of a specific Ledger Account `lock_version`.
+         */
+        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -273,21 +282,38 @@ constructor(
                 additionalProperties = balances.additionalProperties.toBuilder()
             }
 
-            fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+            fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-            fun asOfLockVersion(asOfLockVersion: Long) = apply {
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+
+            fun asOfLockVersion(asOfLockVersion: Long?) = apply {
                 this.asOfLockVersion = asOfLockVersion
             }
 
-            fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
+            fun asOfLockVersion(asOfLockVersion: Long) = asOfLockVersion(asOfLockVersion as Long?)
 
-            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) = apply {
+            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
+            fun asOfLockVersion(asOfLockVersion: Optional<Long>) =
+                asOfLockVersion(asOfLockVersion.orElse(null) as Long?)
+
+            fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
+
+            fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
+                effectiveAt(effectiveAt.orElse(null))
+
+            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime?) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
-            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+            fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
+                effectiveAtLowerBound(effectiveAtLowerBound.orElse(null))
+
+            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
+
+            fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
+                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

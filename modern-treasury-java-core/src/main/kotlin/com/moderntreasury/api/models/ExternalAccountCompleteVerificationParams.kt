@@ -83,7 +83,9 @@ constructor(
                     externalAccountCompleteVerificationBody.additionalProperties.toMutableMap()
             }
 
-            fun amounts(amounts: List<Long>) = apply { this.amounts = amounts.toMutableList() }
+            fun amounts(amounts: List<Long>?) = apply { this.amounts = amounts?.toMutableList() }
+
+            fun amounts(amounts: Optional<List<Long>>) = amounts(amounts.orElse(null))
 
             fun addAmount(amount: Long) = apply {
                 amounts = (amounts ?: mutableListOf()).apply { add(amount) }
@@ -163,7 +165,9 @@ constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        fun amounts(amounts: List<Long>) = apply { body.amounts(amounts) }
+        fun amounts(amounts: List<Long>?) = apply { body.amounts(amounts) }
+
+        fun amounts(amounts: Optional<List<Long>>) = amounts(amounts.orElse(null))
 
         fun addAmount(amount: Long) = apply { body.addAmount(amount) }
 
