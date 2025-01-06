@@ -204,14 +204,16 @@ constructor(
     class Balances
     private constructor(
         private val asOfDate: LocalDate?,
+        private val asOfLockVersion: Long?,
         private val effectiveAt: OffsetDateTime?,
         private val effectiveAtLowerBound: OffsetDateTime?,
         private val effectiveAtUpperBound: OffsetDateTime?,
-        private val asOfLockVersion: Long?,
         private val additionalProperties: QueryParams,
     ) {
 
         fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
+
+        fun asOfLockVersion(): Optional<Long> = Optional.ofNullable(asOfLockVersion)
 
         fun effectiveAt(): Optional<OffsetDateTime> = Optional.ofNullable(effectiveAt)
 
@@ -220,8 +222,6 @@ constructor(
 
         fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
             Optional.ofNullable(effectiveAtUpperBound)
-
-        fun asOfLockVersion(): Optional<Long> = Optional.ofNullable(asOfLockVersion)
 
         fun _additionalProperties(): QueryParams = additionalProperties
 
@@ -257,23 +257,27 @@ constructor(
         class Builder {
 
             private var asOfDate: LocalDate? = null
+            private var asOfLockVersion: Long? = null
             private var effectiveAt: OffsetDateTime? = null
             private var effectiveAtLowerBound: OffsetDateTime? = null
             private var effectiveAtUpperBound: OffsetDateTime? = null
-            private var asOfLockVersion: Long? = null
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
             @JvmSynthetic
             internal fun from(balances: Balances) = apply {
                 asOfDate = balances.asOfDate
+                asOfLockVersion = balances.asOfLockVersion
                 effectiveAt = balances.effectiveAt
                 effectiveAtLowerBound = balances.effectiveAtLowerBound
                 effectiveAtUpperBound = balances.effectiveAtUpperBound
-                asOfLockVersion = balances.asOfLockVersion
                 additionalProperties = balances.additionalProperties.toBuilder()
             }
 
             fun asOfDate(asOfDate: LocalDate) = apply { this.asOfDate = asOfDate }
+
+            fun asOfLockVersion(asOfLockVersion: Long) = apply {
+                this.asOfLockVersion = asOfLockVersion
+            }
 
             fun effectiveAt(effectiveAt: OffsetDateTime) = apply { this.effectiveAt = effectiveAt }
 
@@ -283,10 +287,6 @@ constructor(
 
             fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
-            }
-
-            fun asOfLockVersion(asOfLockVersion: Long) = apply {
-                this.asOfLockVersion = asOfLockVersion
             }
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
@@ -341,10 +341,10 @@ constructor(
             fun build(): Balances =
                 Balances(
                     asOfDate,
+                    asOfLockVersion,
                     effectiveAt,
                     effectiveAtLowerBound,
                     effectiveAtUpperBound,
-                    asOfLockVersion,
                     additionalProperties.build(),
                 )
         }
@@ -354,17 +354,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Balances && asOfDate == other.asOfDate && effectiveAt == other.effectiveAt && effectiveAtLowerBound == other.effectiveAtLowerBound && effectiveAtUpperBound == other.effectiveAtUpperBound && asOfLockVersion == other.asOfLockVersion && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Balances && asOfDate == other.asOfDate && asOfLockVersion == other.asOfLockVersion && effectiveAt == other.effectiveAt && effectiveAtLowerBound == other.effectiveAtLowerBound && effectiveAtUpperBound == other.effectiveAtUpperBound && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(asOfDate, effectiveAt, effectiveAtLowerBound, effectiveAtUpperBound, asOfLockVersion, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(asOfDate, asOfLockVersion, effectiveAt, effectiveAtLowerBound, effectiveAtUpperBound, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Balances{asOfDate=$asOfDate, effectiveAt=$effectiveAt, effectiveAtLowerBound=$effectiveAtLowerBound, effectiveAtUpperBound=$effectiveAtUpperBound, asOfLockVersion=$asOfLockVersion, additionalProperties=$additionalProperties}"
+            "Balances{asOfDate=$asOfDate, asOfLockVersion=$asOfLockVersion, effectiveAt=$effectiveAt, effectiveAtLowerBound=$effectiveAtLowerBound, effectiveAtUpperBound=$effectiveAtUpperBound, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

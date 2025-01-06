@@ -504,16 +504,16 @@ constructor(
         @JsonProperty("amount") private val amount: Long,
         @JsonProperty("direction") private val direction: TransactionDirection,
         @JsonProperty("ledger_account_id") private val ledgerAccountId: String,
+        @JsonProperty("available_balance_amount")
+        private val availableBalanceAmount: AvailableBalanceAmount?,
         @JsonProperty("lock_version") private val lockVersion: Long?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
         @JsonProperty("pending_balance_amount")
         private val pendingBalanceAmount: PendingBalanceAmount?,
         @JsonProperty("posted_balance_amount")
         private val postedBalanceAmount: PostedBalanceAmount?,
-        @JsonProperty("available_balance_amount")
-        private val availableBalanceAmount: AvailableBalanceAmount?,
         @JsonProperty("show_resulting_ledger_account_balances")
         private val showResultingLedgerAccountBalances: Boolean?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -536,12 +536,26 @@ constructor(
         @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
 
         /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * available balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         */
+        @JsonProperty("available_balance_amount")
+        fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
+            Optional.ofNullable(availableBalanceAmount)
+
+        /**
          * Lock version of the ledger account. This can be passed when creating a ledger transaction
          * to only succeed if no ledger transactions have posted since the given version. See our
          * post about Designing the Ledgers API with Optimistic Locking for more details.
          */
         @JsonProperty("lock_version")
         fun lockVersion(): Optional<Long> = Optional.ofNullable(lockVersion)
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -562,26 +576,12 @@ constructor(
             Optional.ofNullable(postedBalanceAmount)
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
-         * available balance. If any of these conditions would be false after the transaction is
-         * created, the entire call will fail with error code 422.
-         */
-        @JsonProperty("available_balance_amount")
-        fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
-            Optional.ofNullable(availableBalanceAmount)
-
-        /**
          * If true, response will include the balance of the associated ledger account for the
          * entry.
          */
         @JsonProperty("show_resulting_ledger_account_balances")
         fun showResultingLedgerAccountBalances(): Optional<Boolean> =
             Optional.ofNullable(showResultingLedgerAccountBalances)
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -599,12 +599,12 @@ constructor(
             private var amount: Long? = null
             private var direction: TransactionDirection? = null
             private var ledgerAccountId: String? = null
+            private var availableBalanceAmount: AvailableBalanceAmount? = null
             private var lockVersion: Long? = null
+            private var metadata: Metadata? = null
             private var pendingBalanceAmount: PendingBalanceAmount? = null
             private var postedBalanceAmount: PostedBalanceAmount? = null
-            private var availableBalanceAmount: AvailableBalanceAmount? = null
             private var showResultingLedgerAccountBalances: Boolean? = null
-            private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -612,13 +612,13 @@ constructor(
                 amount = ledgerEntryCreateRequest.amount
                 direction = ledgerEntryCreateRequest.direction
                 ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
+                availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
                 lockVersion = ledgerEntryCreateRequest.lockVersion
+                metadata = ledgerEntryCreateRequest.metadata
                 pendingBalanceAmount = ledgerEntryCreateRequest.pendingBalanceAmount
                 postedBalanceAmount = ledgerEntryCreateRequest.postedBalanceAmount
-                availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
                 showResultingLedgerAccountBalances =
                     ledgerEntryCreateRequest.showResultingLedgerAccountBalances
-                metadata = ledgerEntryCreateRequest.metadata
                 additionalProperties = ledgerEntryCreateRequest.additionalProperties.toMutableMap()
             }
 
@@ -642,12 +642,27 @@ constructor(
             }
 
             /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * available balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
+                this.availableBalanceAmount = availableBalanceAmount
+            }
+
+            /**
              * Lock version of the ledger account. This can be passed when creating a ledger
              * transaction to only succeed if no ledger transactions have posted since the given
              * version. See our post about Designing the Ledgers API with Optimistic Locking for
              * more details.
              */
             fun lockVersion(lockVersion: Long) = apply { this.lockVersion = lockVersion }
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -668,15 +683,6 @@ constructor(
             }
 
             /**
-             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
-             * available balance. If any of these conditions would be false after the transaction is
-             * created, the entire call will fail with error code 422.
-             */
-            fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount) = apply {
-                this.availableBalanceAmount = availableBalanceAmount
-            }
-
-            /**
              * If true, response will include the balance of the associated ledger account for the
              * entry.
              */
@@ -684,12 +690,6 @@ constructor(
                 apply {
                     this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
                 }
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -717,12 +717,12 @@ constructor(
                     checkNotNull(ledgerAccountId) {
                         "`ledgerAccountId` is required but was not set"
                     },
+                    availableBalanceAmount,
                     lockVersion,
+                    metadata,
                     pendingBalanceAmount,
                     postedBalanceAmount,
-                    availableBalanceAmount,
                     showResultingLedgerAccountBalances,
-                    metadata,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1037,17 +1037,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerEntryCreateRequest && amount == other.amount && direction == other.direction && ledgerAccountId == other.ledgerAccountId && lockVersion == other.lockVersion && pendingBalanceAmount == other.pendingBalanceAmount && postedBalanceAmount == other.postedBalanceAmount && availableBalanceAmount == other.availableBalanceAmount && showResultingLedgerAccountBalances == other.showResultingLedgerAccountBalances && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerEntryCreateRequest && amount == other.amount && direction == other.direction && ledgerAccountId == other.ledgerAccountId && availableBalanceAmount == other.availableBalanceAmount && lockVersion == other.lockVersion && metadata == other.metadata && pendingBalanceAmount == other.pendingBalanceAmount && postedBalanceAmount == other.postedBalanceAmount && showResultingLedgerAccountBalances == other.showResultingLedgerAccountBalances && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, direction, ledgerAccountId, lockVersion, pendingBalanceAmount, postedBalanceAmount, availableBalanceAmount, showResultingLedgerAccountBalances, metadata, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, direction, ledgerAccountId, availableBalanceAmount, lockVersion, metadata, pendingBalanceAmount, postedBalanceAmount, showResultingLedgerAccountBalances, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, lockVersion=$lockVersion, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, availableBalanceAmount=$availableBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
     }
 
     class LedgerableType
