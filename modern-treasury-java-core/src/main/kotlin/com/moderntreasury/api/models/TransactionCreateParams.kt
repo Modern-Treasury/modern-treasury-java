@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -71,11 +72,54 @@ constructor(
      */
     fun vendorDescription(): Optional<String> = body.vendorDescription()
 
+    /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+    fun _amount(): JsonField<Long> = body._amount()
+
+    /** The date on which the transaction occurred. */
+    fun _asOfDate(): JsonField<LocalDate> = body._asOfDate()
+
+    /** Either `credit` or `debit`. */
+    fun _direction(): JsonField<String> = body._direction()
+
+    /** The ID of the relevant Internal Account. */
+    fun _internalAccountId(): JsonField<String> = body._internalAccountId()
+
+    /**
+     * When applicable, the bank-given code that determines the transaction's category. For most
+     * banks this is the BAI2/BTRS transaction code.
+     */
+    fun _vendorCode(): JsonField<String> = body._vendorCode()
+
+    /**
+     * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
+     * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
+     * `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or others.
+     */
+    fun _vendorCodeType(): JsonField<String> = body._vendorCodeType()
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /** This field will be `true` if the transaction has posted to the account. */
+    fun _posted(): JsonField<Boolean> = body._posted()
+
+    /**
+     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, `book`,
+     * or `sen`.
+     */
+    fun _type(): JsonField<Type> = body._type()
+
+    /**
+     * The transaction detail text that often appears in on your bank statement and in your banking
+     * portal.
+     */
+    fun _vendorDescription(): JsonField<String> = body._vendorDescription()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): TransactionCreateBody = body
 
@@ -87,39 +131,109 @@ constructor(
     class TransactionCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("amount") private val amount: Long,
-        @JsonProperty("as_of_date") private val asOfDate: LocalDate?,
-        @JsonProperty("direction") private val direction: String,
-        @JsonProperty("internal_account_id") private val internalAccountId: String,
-        @JsonProperty("vendor_code") private val vendorCode: String?,
-        @JsonProperty("vendor_code_type") private val vendorCodeType: String?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
-        @JsonProperty("posted") private val posted: Boolean?,
-        @JsonProperty("type") private val type: Type?,
-        @JsonProperty("vendor_description") private val vendorDescription: String?,
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("as_of_date")
+        @ExcludeMissing
+        private val asOfDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("direction")
+        @ExcludeMissing
+        private val direction: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("internal_account_id")
+        @ExcludeMissing
+        private val internalAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("vendor_code")
+        @ExcludeMissing
+        private val vendorCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("vendor_code_type")
+        @ExcludeMissing
+        private val vendorCodeType: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("posted")
+        @ExcludeMissing
+        private val posted: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("vendor_description")
+        @ExcludeMissing
+        private val vendorDescription: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        @JsonProperty("amount") fun amount(): Long = amount
+        fun amount(): Long = amount.getRequired("amount")
 
         /** The date on which the transaction occurred. */
-        @JsonProperty("as_of_date")
-        fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate)
+        fun asOfDate(): Optional<LocalDate> =
+            Optional.ofNullable(asOfDate.getNullable("as_of_date"))
 
         /** Either `credit` or `debit`. */
-        @JsonProperty("direction") fun direction(): String = direction
+        fun direction(): String = direction.getRequired("direction")
 
         /** The ID of the relevant Internal Account. */
-        @JsonProperty("internal_account_id") fun internalAccountId(): String = internalAccountId
+        fun internalAccountId(): String = internalAccountId.getRequired("internal_account_id")
+
+        /**
+         * When applicable, the bank-given code that determines the transaction's category. For most
+         * banks this is the BAI2/BTRS transaction code.
+         */
+        fun vendorCode(): Optional<String> =
+            Optional.ofNullable(vendorCode.getNullable("vendor_code"))
+
+        /**
+         * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
+         * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
+         * others.
+         */
+        fun vendorCodeType(): Optional<String> =
+            Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+
+        /** This field will be `true` if the transaction has posted to the account. */
+        fun posted(): Optional<Boolean> = Optional.ofNullable(posted.getNullable("posted"))
+
+        /**
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+         * `book`, or `sen`.
+         */
+        fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+
+        /**
+         * The transaction detail text that often appears in on your bank statement and in your
+         * banking portal.
+         */
+        fun vendorDescription(): Optional<String> =
+            Optional.ofNullable(vendorDescription.getNullable("vendor_description"))
+
+        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+        /** The date on which the transaction occurred. */
+        @JsonProperty("as_of_date") @ExcludeMissing fun _asOfDate(): JsonField<LocalDate> = asOfDate
+
+        /** Either `credit` or `debit`. */
+        @JsonProperty("direction") @ExcludeMissing fun _direction(): JsonField<String> = direction
+
+        /** The ID of the relevant Internal Account. */
+        @JsonProperty("internal_account_id")
+        @ExcludeMissing
+        fun _internalAccountId(): JsonField<String> = internalAccountId
 
         /**
          * When applicable, the bank-given code that determines the transaction's category. For most
          * banks this is the BAI2/BTRS transaction code.
          */
         @JsonProperty("vendor_code")
-        fun vendorCode(): Optional<String> = Optional.ofNullable(vendorCode)
+        @ExcludeMissing
+        fun _vendorCode(): JsonField<String> = vendorCode
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -128,32 +242,52 @@ constructor(
          * others.
          */
         @JsonProperty("vendor_code_type")
-        fun vendorCodeType(): Optional<String> = Optional.ofNullable(vendorCodeType)
+        @ExcludeMissing
+        fun _vendorCodeType(): JsonField<String> = vendorCodeType
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /** This field will be `true` if the transaction has posted to the account. */
-        @JsonProperty("posted") fun posted(): Optional<Boolean> = Optional.ofNullable(posted)
+        @JsonProperty("posted") @ExcludeMissing fun _posted(): JsonField<Boolean> = posted
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
          * `book`, or `sen`.
          */
-        @JsonProperty("type") fun type(): Optional<Type> = Optional.ofNullable(type)
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
          * banking portal.
          */
         @JsonProperty("vendor_description")
-        fun vendorDescription(): Optional<String> = Optional.ofNullable(vendorDescription)
+        @ExcludeMissing
+        fun _vendorDescription(): JsonField<String> = vendorDescription
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): TransactionCreateBody = apply {
+            if (!validated) {
+                amount()
+                asOfDate()
+                direction()
+                internalAccountId()
+                vendorCode()
+                vendorCodeType()
+                metadata().map { it.validate() }
+                posted()
+                type()
+                vendorDescription()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -164,16 +298,16 @@ constructor(
 
         class Builder {
 
-            private var amount: Long? = null
-            private var asOfDate: LocalDate? = null
-            private var direction: String? = null
-            private var internalAccountId: String? = null
-            private var vendorCode: String? = null
-            private var vendorCodeType: String? = null
-            private var metadata: Metadata? = null
-            private var posted: Boolean? = null
-            private var type: Type? = null
-            private var vendorDescription: String? = null
+            private var amount: JsonField<Long>? = null
+            private var asOfDate: JsonField<LocalDate>? = null
+            private var direction: JsonField<String>? = null
+            private var internalAccountId: JsonField<String>? = null
+            private var vendorCode: JsonField<String>? = null
+            private var vendorCodeType: JsonField<String>? = null
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var posted: JsonField<Boolean> = JsonMissing.of()
+            private var type: JsonField<Type> = JsonMissing.of()
+            private var vendorDescription: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -194,19 +328,34 @@ constructor(
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long) = amount(JsonField.of(amount))
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /** The date on which the transaction occurred. */
-            fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
+            fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
 
             /** The date on which the transaction occurred. */
             fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
+            /** The date on which the transaction occurred. */
+            fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
+
             /** Either `credit` or `debit`. */
-            fun direction(direction: String) = apply { this.direction = direction }
+            fun direction(direction: String) = direction(JsonField.of(direction))
+
+            /** Either `credit` or `debit`. */
+            fun direction(direction: JsonField<String>) = apply { this.direction = direction }
 
             /** The ID of the relevant Internal Account. */
-            fun internalAccountId(internalAccountId: String) = apply {
+            fun internalAccountId(internalAccountId: String) =
+                internalAccountId(JsonField.of(internalAccountId))
+
+            /** The ID of the relevant Internal Account. */
+            fun internalAccountId(internalAccountId: JsonField<String>) = apply {
                 this.internalAccountId = internalAccountId
             }
 
@@ -214,7 +363,7 @@ constructor(
              * When applicable, the bank-given code that determines the transaction's category. For
              * most banks this is the BAI2/BTRS transaction code.
              */
-            fun vendorCode(vendorCode: String?) = apply { this.vendorCode = vendorCode }
+            fun vendorCode(vendorCode: String?) = vendorCode(JsonField.ofNullable(vendorCode))
 
             /**
              * When applicable, the bank-given code that determines the transaction's category. For
@@ -223,14 +372,19 @@ constructor(
             fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
 
             /**
+             * When applicable, the bank-given code that determines the transaction's category. For
+             * most banks this is the BAI2/BTRS transaction code.
+             */
+            fun vendorCode(vendorCode: JsonField<String>) = apply { this.vendorCode = vendorCode }
+
+            /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
              * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
              * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
              * `us_bank`, or others.
              */
-            fun vendorCodeType(vendorCodeType: String?) = apply {
-                this.vendorCodeType = vendorCodeType
-            }
+            fun vendorCodeType(vendorCodeType: String?) =
+                vendorCodeType(JsonField.ofNullable(vendorCodeType))
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
@@ -242,32 +396,38 @@ constructor(
                 vendorCodeType(vendorCodeType.orElse(null))
 
             /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
+             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
+             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * `us_bank`, or others.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
+                this.vendorCodeType = vendorCodeType
+            }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /** This field will be `true` if the transaction has posted to the account. */
-            fun posted(posted: Boolean?) = apply { this.posted = posted }
+            fun posted(posted: Boolean) = posted(JsonField.of(posted))
 
             /** This field will be `true` if the transaction has posted to the account. */
-            fun posted(posted: Boolean) = posted(posted as Boolean?)
-
-            /** This field will be `true` if the transaction has posted to the account. */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
+            fun posted(posted: JsonField<Boolean>) = apply { this.posted = posted }
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
              * `book`, or `sen`.
              */
-            fun type(type: Type?) = apply { this.type = type }
+            fun type(type: Type?) = type(JsonField.ofNullable(type))
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
@@ -276,12 +436,17 @@ constructor(
             fun type(type: Optional<Type>) = type(type.orElse(null))
 
             /**
+             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+             * `book`, or `sen`.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
+
+            /**
              * The transaction detail text that often appears in on your bank statement and in your
              * banking portal.
              */
-            fun vendorDescription(vendorDescription: String?) = apply {
-                this.vendorDescription = vendorDescription
-            }
+            fun vendorDescription(vendorDescription: String?) =
+                vendorDescription(JsonField.ofNullable(vendorDescription))
 
             /**
              * The transaction detail text that often appears in on your bank statement and in your
@@ -289,6 +454,14 @@ constructor(
              */
             fun vendorDescription(vendorDescription: Optional<String>) =
                 vendorDescription(vendorDescription.orElse(null))
+
+            /**
+             * The transaction detail text that often appears in on your bank statement and in your
+             * banking portal.
+             */
+            fun vendorDescription(vendorDescription: JsonField<String>) = apply {
+                this.vendorDescription = vendorDescription
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -312,13 +485,13 @@ constructor(
             fun build(): TransactionCreateBody =
                 TransactionCreateBody(
                     checkNotNull(amount) { "`amount` is required but was not set" },
-                    asOfDate,
+                    checkNotNull(asOfDate) { "`asOfDate` is required but was not set" },
                     checkNotNull(direction) { "`direction` is required but was not set" },
                     checkNotNull(internalAccountId) {
                         "`internalAccountId` is required but was not set"
                     },
-                    vendorCode,
-                    vendorCodeType,
+                    checkNotNull(vendorCode) { "`vendorCode` is required but was not set" },
+                    checkNotNull(vendorCodeType) { "`vendorCodeType` is required but was not set" },
                     metadata,
                     posted,
                     type,
@@ -369,17 +542,31 @@ constructor(
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
+        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
+
         /** The date on which the transaction occurred. */
         fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
 
         /** The date on which the transaction occurred. */
         fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
 
+        /** The date on which the transaction occurred. */
+        fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { body.asOfDate(asOfDate) }
+
         /** Either `credit` or `debit`. */
         fun direction(direction: String) = apply { body.direction(direction) }
 
+        /** Either `credit` or `debit`. */
+        fun direction(direction: JsonField<String>) = apply { body.direction(direction) }
+
         /** The ID of the relevant Internal Account. */
         fun internalAccountId(internalAccountId: String) = apply {
+            body.internalAccountId(internalAccountId)
+        }
+
+        /** The ID of the relevant Internal Account. */
+        fun internalAccountId(internalAccountId: JsonField<String>) = apply {
             body.internalAccountId(internalAccountId)
         }
 
@@ -394,6 +581,12 @@ constructor(
          * banks this is the BAI2/BTRS transaction code.
          */
         fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
+
+        /**
+         * When applicable, the bank-given code that determines the transaction's category. For most
+         * banks this is the BAI2/BTRS transaction code.
+         */
+        fun vendorCode(vendorCode: JsonField<String>) = apply { body.vendorCode(vendorCode) }
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -413,24 +606,30 @@ constructor(
             vendorCodeType(vendorCodeType.orElse(null))
 
         /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
+         * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
+         * others.
          */
-        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+        fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
+            body.vendorCodeType(vendorCodeType)
+        }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
         /** This field will be `true` if the transaction has posted to the account. */
-        fun posted(posted: Boolean?) = apply { body.posted(posted) }
+        fun posted(posted: Boolean) = apply { body.posted(posted) }
 
         /** This field will be `true` if the transaction has posted to the account. */
-        fun posted(posted: Boolean) = posted(posted as Boolean?)
-
-        /** This field will be `true` if the transaction has posted to the account. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
+        fun posted(posted: JsonField<Boolean>) = apply { body.posted(posted) }
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
@@ -443,6 +642,12 @@ constructor(
          * `book`, or `sen`.
          */
         fun type(type: Optional<Type>) = type(type.orElse(null))
+
+        /**
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
+         * `book`, or `sen`.
+         */
+        fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
@@ -458,6 +663,33 @@ constructor(
          */
         fun vendorDescription(vendorDescription: Optional<String>) =
             vendorDescription(vendorDescription.orElse(null))
+
+        /**
+         * The transaction detail text that often appears in on your bank statement and in your
+         * banking portal.
+         */
+        fun vendorDescription(vendorDescription: JsonField<String>) = apply {
+            body.vendorDescription(vendorDescription)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -557,25 +789,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): TransactionCreateParams =
             TransactionCreateParams(
                 body.build(),
@@ -596,6 +809,14 @@ constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 

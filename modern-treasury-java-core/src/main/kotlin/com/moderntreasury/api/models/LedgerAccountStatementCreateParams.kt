@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.ExcludeMissing
+import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -49,11 +51,35 @@ constructor(
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     fun metadata(): Optional<Metadata> = body.metadata()
 
+    /**
+     * The inclusive lower bound of the effective_at timestamp of the ledger entries to be included
+     * in the ledger account statement.
+     */
+    fun _effectiveAtLowerBound(): JsonField<OffsetDateTime> = body._effectiveAtLowerBound()
+
+    /**
+     * The exclusive upper bound of the effective_at timestamp of the ledger entries to be included
+     * in the ledger account statement.
+     */
+    fun _effectiveAtUpperBound(): JsonField<OffsetDateTime> = body._effectiveAtUpperBound()
+
+    /**
+     * The id of the ledger account whose ledger entries are queried against, and its balances are
+     * computed as a result.
+     */
+    fun _ledgerAccountId(): JsonField<String> = body._ledgerAccountId()
+
+    /** The description of the ledger account statement. */
+    fun _description(): JsonField<String> = body._description()
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): LedgerAccountStatementCreateBody = body
 
@@ -65,11 +91,21 @@ constructor(
     class LedgerAccountStatementCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("effective_at_lower_bound") private val effectiveAtLowerBound: OffsetDateTime,
-        @JsonProperty("effective_at_upper_bound") private val effectiveAtUpperBound: OffsetDateTime,
-        @JsonProperty("ledger_account_id") private val ledgerAccountId: String,
-        @JsonProperty("description") private val description: String?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("effective_at_lower_bound")
+        @ExcludeMissing
+        private val effectiveAtLowerBound: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("effective_at_upper_bound")
+        @ExcludeMissing
+        private val effectiveAtUpperBound: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("ledger_account_id")
+        @ExcludeMissing
+        private val ledgerAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -78,34 +114,81 @@ constructor(
          * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
+        fun effectiveAtLowerBound(): OffsetDateTime =
+            effectiveAtLowerBound.getRequired("effective_at_lower_bound")
+
+        /**
+         * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
+         * included in the ledger account statement.
+         */
+        fun effectiveAtUpperBound(): OffsetDateTime =
+            effectiveAtUpperBound.getRequired("effective_at_upper_bound")
+
+        /**
+         * The id of the ledger account whose ledger entries are queried against, and its balances
+         * are computed as a result.
+         */
+        fun ledgerAccountId(): String = ledgerAccountId.getRequired("ledger_account_id")
+
+        /** The description of the ledger account statement. */
+        fun description(): Optional<String> =
+            Optional.ofNullable(description.getNullable("description"))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+
+        /**
+         * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
+         * included in the ledger account statement.
+         */
         @JsonProperty("effective_at_lower_bound")
-        fun effectiveAtLowerBound(): OffsetDateTime = effectiveAtLowerBound
+        @ExcludeMissing
+        fun _effectiveAtLowerBound(): JsonField<OffsetDateTime> = effectiveAtLowerBound
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
         @JsonProperty("effective_at_upper_bound")
-        fun effectiveAtUpperBound(): OffsetDateTime = effectiveAtUpperBound
+        @ExcludeMissing
+        fun _effectiveAtUpperBound(): JsonField<OffsetDateTime> = effectiveAtUpperBound
 
         /**
          * The id of the ledger account whose ledger entries are queried against, and its balances
          * are computed as a result.
          */
-        @JsonProperty("ledger_account_id") fun ledgerAccountId(): String = ledgerAccountId
+        @JsonProperty("ledger_account_id")
+        @ExcludeMissing
+        fun _ledgerAccountId(): JsonField<String> = ledgerAccountId
 
         /** The description of the ledger account statement. */
         @JsonProperty("description")
-        fun description(): Optional<String> = Optional.ofNullable(description)
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): LedgerAccountStatementCreateBody = apply {
+            if (!validated) {
+                effectiveAtLowerBound()
+                effectiveAtUpperBound()
+                ledgerAccountId()
+                description()
+                metadata().map { it.validate() }
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -116,11 +199,11 @@ constructor(
 
         class Builder {
 
-            private var effectiveAtLowerBound: OffsetDateTime? = null
-            private var effectiveAtUpperBound: OffsetDateTime? = null
-            private var ledgerAccountId: String? = null
-            private var description: String? = null
-            private var metadata: Metadata? = null
+            private var effectiveAtLowerBound: JsonField<OffsetDateTime>? = null
+            private var effectiveAtUpperBound: JsonField<OffsetDateTime>? = null
+            private var ledgerAccountId: JsonField<String>? = null
+            private var description: JsonField<String> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -139,7 +222,14 @@ constructor(
              * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
              * included in the ledger account statement.
              */
-            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) = apply {
+            fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime) =
+                effectiveAtLowerBound(JsonField.of(effectiveAtLowerBound))
+
+            /**
+             * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
+             * included in the ledger account statement.
+             */
+            fun effectiveAtLowerBound(effectiveAtLowerBound: JsonField<OffsetDateTime>) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
@@ -147,7 +237,14 @@ constructor(
              * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
              * included in the ledger account statement.
              */
-            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+            fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) =
+                effectiveAtUpperBound(JsonField.of(effectiveAtUpperBound))
+
+            /**
+             * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
+             * included in the ledger account statement.
+             */
+            fun effectiveAtUpperBound(effectiveAtUpperBound: JsonField<OffsetDateTime>) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
 
@@ -155,27 +252,39 @@ constructor(
              * The id of the ledger account whose ledger entries are queried against, and its
              * balances are computed as a result.
              */
-            fun ledgerAccountId(ledgerAccountId: String) = apply {
+            fun ledgerAccountId(ledgerAccountId: String) =
+                ledgerAccountId(JsonField.of(ledgerAccountId))
+
+            /**
+             * The id of the ledger account whose ledger entries are queried against, and its
+             * balances are computed as a result.
+             */
+            fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
                 this.ledgerAccountId = ledgerAccountId
             }
 
             /** The description of the ledger account statement. */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account statement. */
             fun description(description: Optional<String>) = description(description.orElse(null))
 
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            /** The description of the ledger account statement. */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+            /**
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -264,10 +373,26 @@ constructor(
         }
 
         /**
+         * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
+         * included in the ledger account statement.
+         */
+        fun effectiveAtLowerBound(effectiveAtLowerBound: JsonField<OffsetDateTime>) = apply {
+            body.effectiveAtLowerBound(effectiveAtLowerBound)
+        }
+
+        /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
         fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) = apply {
+            body.effectiveAtUpperBound(effectiveAtUpperBound)
+        }
+
+        /**
+         * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
+         * included in the ledger account statement.
+         */
+        fun effectiveAtUpperBound(effectiveAtUpperBound: JsonField<OffsetDateTime>) = apply {
             body.effectiveAtUpperBound(effectiveAtUpperBound)
         }
 
@@ -279,21 +404,51 @@ constructor(
             body.ledgerAccountId(ledgerAccountId)
         }
 
+        /**
+         * The id of the ledger account whose ledger entries are queried against, and its balances
+         * are computed as a result.
+         */
+        fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
+            body.ledgerAccountId(ledgerAccountId)
+        }
+
         /** The description of the ledger account statement. */
         fun description(description: String?) = apply { body.description(description) }
 
         /** The description of the ledger account statement. */
         fun description(description: Optional<String>) = description(description.orElse(null))
 
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+        /** The description of the ledger account statement. */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -393,25 +548,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): LedgerAccountStatementCreateParams =
             LedgerAccountStatementCreateParams(
                 body.build(),
@@ -432,6 +568,14 @@ constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 

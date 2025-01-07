@@ -42,7 +42,7 @@ class LedgerableEventCreateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("name")
-        assertThat(body.customData()).contains(JsonValue.from(mapOf<String, Any>()))
+        assertThat(body._customData()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(body.description()).contains("description")
         assertThat(body.metadata())
             .contains(

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -72,11 +73,56 @@ constructor(
 
     fun routingDetails(): Optional<List<RoutingDetail>> = body.routingDetails()
 
+    fun _counterpartyId(): JsonField<String> = body._counterpartyId()
+
+    fun _accountDetails(): JsonField<List<AccountDetail>> = body._accountDetails()
+
+    /** Can be `checking`, `savings` or `other`. */
+    fun _accountType(): JsonField<ExternalAccountType> = body._accountType()
+
+    fun _contactDetails(): JsonField<List<ContactDetailCreateRequest>> = body._contactDetails()
+
+    /**
+     * Specifies a ledger account object that will be created with the external account. The
+     * resulting ledger account is linked to the external account for auto-ledgering Payment
+     * objects. See https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects
+     * for more details.
+     */
+    fun _ledgerAccount(): JsonField<LedgerAccountCreateRequest> = body._ledgerAccount()
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /**
+     * A nickname for the external account. This is only for internal usage and won't affect any
+     * payments
+     */
+    fun _name(): JsonField<String> = body._name()
+
+    /** Required if receiving wire payments. */
+    fun _partyAddress(): JsonField<AddressRequest> = body._partyAddress()
+
+    fun _partyIdentifier(): JsonField<String> = body._partyIdentifier()
+
+    /** If this value isn't provided, it will be inherited from the counterparty's name. */
+    fun _partyName(): JsonField<String> = body._partyName()
+
+    /** Either `individual` or `business`. */
+    fun _partyType(): JsonField<PartyType> = body._partyType()
+
+    /**
+     * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can pass
+     * the processor token in this field.
+     */
+    fun _plaidProcessorToken(): JsonField<String> = body._plaidProcessorToken()
+
+    fun _routingDetails(): JsonField<List<RoutingDetail>> = body._routingDetails()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): ExternalAccountCreateBody = body
 
@@ -88,37 +134,123 @@ constructor(
     class ExternalAccountCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("counterparty_id") private val counterpartyId: String?,
-        @JsonProperty("account_details") private val accountDetails: List<AccountDetail>?,
-        @JsonProperty("account_type") private val accountType: ExternalAccountType?,
+        @JsonProperty("counterparty_id")
+        @ExcludeMissing
+        private val counterpartyId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("account_details")
+        @ExcludeMissing
+        private val accountDetails: JsonField<List<AccountDetail>> = JsonMissing.of(),
+        @JsonProperty("account_type")
+        @ExcludeMissing
+        private val accountType: JsonField<ExternalAccountType> = JsonMissing.of(),
         @JsonProperty("contact_details")
-        private val contactDetails: List<ContactDetailCreateRequest>?,
-        @JsonProperty("ledger_account") private val ledgerAccount: LedgerAccountCreateRequest?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
-        @JsonProperty("name") private val name: String?,
-        @JsonProperty("party_address") private val partyAddress: AddressRequest?,
-        @JsonProperty("party_identifier") private val partyIdentifier: String?,
-        @JsonProperty("party_name") private val partyName: String?,
-        @JsonProperty("party_type") private val partyType: PartyType?,
-        @JsonProperty("plaid_processor_token") private val plaidProcessorToken: String?,
-        @JsonProperty("routing_details") private val routingDetails: List<RoutingDetail>?,
+        @ExcludeMissing
+        private val contactDetails: JsonField<List<ContactDetailCreateRequest>> = JsonMissing.of(),
+        @JsonProperty("ledger_account")
+        @ExcludeMissing
+        private val ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("party_address")
+        @ExcludeMissing
+        private val partyAddress: JsonField<AddressRequest> = JsonMissing.of(),
+        @JsonProperty("party_identifier")
+        @ExcludeMissing
+        private val partyIdentifier: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("party_name")
+        @ExcludeMissing
+        private val partyName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("party_type")
+        @ExcludeMissing
+        private val partyType: JsonField<PartyType> = JsonMissing.of(),
+        @JsonProperty("plaid_processor_token")
+        @ExcludeMissing
+        private val plaidProcessorToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("routing_details")
+        @ExcludeMissing
+        private val routingDetails: JsonField<List<RoutingDetail>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        fun counterpartyId(): Optional<String> =
+            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+
+        fun accountDetails(): Optional<List<AccountDetail>> =
+            Optional.ofNullable(accountDetails.getNullable("account_details"))
+
+        /** Can be `checking`, `savings` or `other`. */
+        fun accountType(): Optional<ExternalAccountType> =
+            Optional.ofNullable(accountType.getNullable("account_type"))
+
+        fun contactDetails(): Optional<List<ContactDetailCreateRequest>> =
+            Optional.ofNullable(contactDetails.getNullable("contact_details"))
+
+        /**
+         * Specifies a ledger account object that will be created with the external account. The
+         * resulting ledger account is linked to the external account for auto-ledgering Payment
+         * objects. See
+         * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for more
+         * details.
+         */
+        fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
+            Optional.ofNullable(ledgerAccount.getNullable("ledger_account"))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+
+        /**
+         * A nickname for the external account. This is only for internal usage and won't affect any
+         * payments
+         */
+        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+
+        /** Required if receiving wire payments. */
+        fun partyAddress(): Optional<AddressRequest> =
+            Optional.ofNullable(partyAddress.getNullable("party_address"))
+
+        fun partyIdentifier(): Optional<String> =
+            Optional.ofNullable(partyIdentifier.getNullable("party_identifier"))
+
+        /** If this value isn't provided, it will be inherited from the counterparty's name. */
+        fun partyName(): Optional<String> = Optional.ofNullable(partyName.getNullable("party_name"))
+
+        /** Either `individual` or `business`. */
+        fun partyType(): Optional<PartyType> =
+            Optional.ofNullable(partyType.getNullable("party_type"))
+
+        /**
+         * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
+         * pass the processor token in this field.
+         */
+        fun plaidProcessorToken(): Optional<String> =
+            Optional.ofNullable(plaidProcessorToken.getNullable("plaid_processor_token"))
+
+        fun routingDetails(): Optional<List<RoutingDetail>> =
+            Optional.ofNullable(routingDetails.getNullable("routing_details"))
+
         @JsonProperty("counterparty_id")
-        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+        @ExcludeMissing
+        fun _counterpartyId(): JsonField<String> = counterpartyId
 
         @JsonProperty("account_details")
-        fun accountDetails(): Optional<List<AccountDetail>> = Optional.ofNullable(accountDetails)
+        @ExcludeMissing
+        fun _accountDetails(): JsonField<List<AccountDetail>> = accountDetails
 
         /** Can be `checking`, `savings` or `other`. */
         @JsonProperty("account_type")
-        fun accountType(): Optional<ExternalAccountType> = Optional.ofNullable(accountType)
+        @ExcludeMissing
+        fun _accountType(): JsonField<ExternalAccountType> = accountType
 
         @JsonProperty("contact_details")
-        fun contactDetails(): Optional<List<ContactDetailCreateRequest>> =
-            Optional.ofNullable(contactDetails)
+        @ExcludeMissing
+        fun _contactDetails(): JsonField<List<ContactDetailCreateRequest>> = contactDetails
 
         /**
          * Specifies a ledger account object that will be created with the external account. The
@@ -128,48 +260,73 @@ constructor(
          * details.
          */
         @JsonProperty("ledger_account")
-        fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
-            Optional.ofNullable(ledgerAccount)
+        @ExcludeMissing
+        fun _ledgerAccount(): JsonField<LedgerAccountCreateRequest> = ledgerAccount
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
          * payments
          */
-        @JsonProperty("name") fun name(): Optional<String> = Optional.ofNullable(name)
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /** Required if receiving wire payments. */
         @JsonProperty("party_address")
-        fun partyAddress(): Optional<AddressRequest> = Optional.ofNullable(partyAddress)
+        @ExcludeMissing
+        fun _partyAddress(): JsonField<AddressRequest> = partyAddress
 
         @JsonProperty("party_identifier")
-        fun partyIdentifier(): Optional<String> = Optional.ofNullable(partyIdentifier)
+        @ExcludeMissing
+        fun _partyIdentifier(): JsonField<String> = partyIdentifier
 
         /** If this value isn't provided, it will be inherited from the counterparty's name. */
-        @JsonProperty("party_name")
-        fun partyName(): Optional<String> = Optional.ofNullable(partyName)
+        @JsonProperty("party_name") @ExcludeMissing fun _partyName(): JsonField<String> = partyName
 
         /** Either `individual` or `business`. */
         @JsonProperty("party_type")
-        fun partyType(): Optional<PartyType> = Optional.ofNullable(partyType)
+        @ExcludeMissing
+        fun _partyType(): JsonField<PartyType> = partyType
 
         /**
          * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
          * pass the processor token in this field.
          */
         @JsonProperty("plaid_processor_token")
-        fun plaidProcessorToken(): Optional<String> = Optional.ofNullable(plaidProcessorToken)
+        @ExcludeMissing
+        fun _plaidProcessorToken(): JsonField<String> = plaidProcessorToken
 
         @JsonProperty("routing_details")
-        fun routingDetails(): Optional<List<RoutingDetail>> = Optional.ofNullable(routingDetails)
+        @ExcludeMissing
+        fun _routingDetails(): JsonField<List<RoutingDetail>> = routingDetails
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ExternalAccountCreateBody = apply {
+            if (!validated) {
+                counterpartyId()
+                accountDetails().map { it.forEach { it.validate() } }
+                accountType()
+                contactDetails().map { it.forEach { it.validate() } }
+                ledgerAccount().map { it.validate() }
+                metadata().map { it.validate() }
+                name()
+                partyAddress().map { it.validate() }
+                partyIdentifier()
+                partyName()
+                partyType()
+                plaidProcessorToken()
+                routingDetails().map { it.forEach { it.validate() } }
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -180,27 +337,27 @@ constructor(
 
         class Builder {
 
-            private var counterpartyId: String? = null
-            private var accountDetails: MutableList<AccountDetail>? = null
-            private var accountType: ExternalAccountType? = null
-            private var contactDetails: MutableList<ContactDetailCreateRequest>? = null
-            private var ledgerAccount: LedgerAccountCreateRequest? = null
-            private var metadata: Metadata? = null
-            private var name: String? = null
-            private var partyAddress: AddressRequest? = null
-            private var partyIdentifier: String? = null
-            private var partyName: String? = null
-            private var partyType: PartyType? = null
-            private var plaidProcessorToken: String? = null
-            private var routingDetails: MutableList<RoutingDetail>? = null
+            private var counterpartyId: JsonField<String>? = null
+            private var accountDetails: JsonField<MutableList<AccountDetail>>? = null
+            private var accountType: JsonField<ExternalAccountType> = JsonMissing.of()
+            private var contactDetails: JsonField<MutableList<ContactDetailCreateRequest>>? = null
+            private var ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
+            private var partyAddress: JsonField<AddressRequest> = JsonMissing.of()
+            private var partyIdentifier: JsonField<String> = JsonMissing.of()
+            private var partyName: JsonField<String> = JsonMissing.of()
+            private var partyType: JsonField<PartyType> = JsonMissing.of()
+            private var plaidProcessorToken: JsonField<String> = JsonMissing.of()
+            private var routingDetails: JsonField<MutableList<RoutingDetail>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(externalAccountCreateBody: ExternalAccountCreateBody) = apply {
                 counterpartyId = externalAccountCreateBody.counterpartyId
-                accountDetails = externalAccountCreateBody.accountDetails?.toMutableList()
+                accountDetails = externalAccountCreateBody.accountDetails.map { it.toMutableList() }
                 accountType = externalAccountCreateBody.accountType
-                contactDetails = externalAccountCreateBody.contactDetails?.toMutableList()
+                contactDetails = externalAccountCreateBody.contactDetails.map { it.toMutableList() }
                 ledgerAccount = externalAccountCreateBody.ledgerAccount
                 metadata = externalAccountCreateBody.metadata
                 name = externalAccountCreateBody.name
@@ -209,46 +366,68 @@ constructor(
                 partyName = externalAccountCreateBody.partyName
                 partyType = externalAccountCreateBody.partyType
                 plaidProcessorToken = externalAccountCreateBody.plaidProcessorToken
-                routingDetails = externalAccountCreateBody.routingDetails?.toMutableList()
+                routingDetails = externalAccountCreateBody.routingDetails.map { it.toMutableList() }
                 additionalProperties = externalAccountCreateBody.additionalProperties.toMutableMap()
             }
 
-            fun counterpartyId(counterpartyId: String?) = apply {
-                this.counterpartyId = counterpartyId
-            }
+            fun counterpartyId(counterpartyId: String?) =
+                counterpartyId(JsonField.ofNullable(counterpartyId))
 
             fun counterpartyId(counterpartyId: Optional<String>) =
                 counterpartyId(counterpartyId.orElse(null))
 
-            fun accountDetails(accountDetails: List<AccountDetail>?) = apply {
-                this.accountDetails = accountDetails?.toMutableList()
+            fun counterpartyId(counterpartyId: JsonField<String>) = apply {
+                this.counterpartyId = counterpartyId
             }
 
-            fun accountDetails(accountDetails: Optional<List<AccountDetail>>) =
-                accountDetails(accountDetails.orElse(null))
+            fun accountDetails(accountDetails: List<AccountDetail>) =
+                accountDetails(JsonField.of(accountDetails))
+
+            fun accountDetails(accountDetails: JsonField<List<AccountDetail>>) = apply {
+                this.accountDetails = accountDetails.map { it.toMutableList() }
+            }
 
             fun addAccountDetail(accountDetail: AccountDetail) = apply {
-                accountDetails = (accountDetails ?: mutableListOf()).apply { add(accountDetail) }
+                accountDetails =
+                    (accountDetails ?: JsonField.of(mutableListOf())).apply {
+                        asKnown()
+                            .orElseThrow {
+                                IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                )
+                            }
+                            .add(accountDetail)
+                    }
             }
 
             /** Can be `checking`, `savings` or `other`. */
-            fun accountType(accountType: ExternalAccountType?) = apply {
+            fun accountType(accountType: ExternalAccountType) =
+                accountType(JsonField.of(accountType))
+
+            /** Can be `checking`, `savings` or `other`. */
+            fun accountType(accountType: JsonField<ExternalAccountType>) = apply {
                 this.accountType = accountType
             }
 
-            /** Can be `checking`, `savings` or `other`. */
-            fun accountType(accountType: Optional<ExternalAccountType>) =
-                accountType(accountType.orElse(null))
+            fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) =
+                contactDetails(JsonField.of(contactDetails))
 
-            fun contactDetails(contactDetails: List<ContactDetailCreateRequest>?) = apply {
-                this.contactDetails = contactDetails?.toMutableList()
-            }
-
-            fun contactDetails(contactDetails: Optional<List<ContactDetailCreateRequest>>) =
-                contactDetails(contactDetails.orElse(null))
+            fun contactDetails(contactDetails: JsonField<List<ContactDetailCreateRequest>>) =
+                apply {
+                    this.contactDetails = contactDetails.map { it.toMutableList() }
+                }
 
             fun addContactDetail(contactDetail: ContactDetailCreateRequest) = apply {
-                contactDetails = (contactDetails ?: mutableListOf()).apply { add(contactDetail) }
+                contactDetails =
+                    (contactDetails ?: JsonField.of(mutableListOf())).apply {
+                        asKnown()
+                            .orElseThrow {
+                                IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                )
+                            }
+                            .add(contactDetail)
+                    }
             }
 
             /**
@@ -258,37 +437,37 @@ constructor(
              * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for
              * more details.
              */
-            fun ledgerAccount(ledgerAccount: LedgerAccountCreateRequest?) = apply {
+            fun ledgerAccount(ledgerAccount: LedgerAccountCreateRequest) =
+                ledgerAccount(JsonField.of(ledgerAccount))
+
+            /**
+             * Specifies a ledger account object that will be created with the external account. The
+             * resulting ledger account is linked to the external account for auto-ledgering Payment
+             * objects. See
+             * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for
+             * more details.
+             */
+            fun ledgerAccount(ledgerAccount: JsonField<LedgerAccountCreateRequest>) = apply {
                 this.ledgerAccount = ledgerAccount
             }
 
             /**
-             * Specifies a ledger account object that will be created with the external account. The
-             * resulting ledger account is linked to the external account for auto-ledgering Payment
-             * objects. See
-             * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for
-             * more details.
+             * Additional data represented as key-value pairs. Both the key and value must be
+             * strings.
              */
-            fun ledgerAccount(ledgerAccount: Optional<LedgerAccountCreateRequest>) =
-                ledgerAccount(ledgerAccount.orElse(null))
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /**
              * A nickname for the external account. This is only for internal usage and won't affect
              * any payments
              */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String?) = name(JsonField.ofNullable(name))
 
             /**
              * A nickname for the external account. This is only for internal usage and won't affect
@@ -296,58 +475,76 @@ constructor(
              */
             fun name(name: Optional<String>) = name(name.orElse(null))
 
+            /**
+             * A nickname for the external account. This is only for internal usage and won't affect
+             * any payments
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
             /** Required if receiving wire payments. */
-            fun partyAddress(partyAddress: AddressRequest?) = apply {
+            fun partyAddress(partyAddress: AddressRequest) =
+                partyAddress(JsonField.of(partyAddress))
+
+            /** Required if receiving wire payments. */
+            fun partyAddress(partyAddress: JsonField<AddressRequest>) = apply {
                 this.partyAddress = partyAddress
             }
 
-            /** Required if receiving wire payments. */
-            fun partyAddress(partyAddress: Optional<AddressRequest>) =
-                partyAddress(partyAddress.orElse(null))
+            fun partyIdentifier(partyIdentifier: String) =
+                partyIdentifier(JsonField.of(partyIdentifier))
 
-            fun partyIdentifier(partyIdentifier: String?) = apply {
+            fun partyIdentifier(partyIdentifier: JsonField<String>) = apply {
                 this.partyIdentifier = partyIdentifier
             }
 
-            fun partyIdentifier(partyIdentifier: Optional<String>) =
-                partyIdentifier(partyIdentifier.orElse(null))
+            /** If this value isn't provided, it will be inherited from the counterparty's name. */
+            fun partyName(partyName: String) = partyName(JsonField.of(partyName))
 
             /** If this value isn't provided, it will be inherited from the counterparty's name. */
-            fun partyName(partyName: String?) = apply { this.partyName = partyName }
-
-            /** If this value isn't provided, it will be inherited from the counterparty's name. */
-            fun partyName(partyName: Optional<String>) = partyName(partyName.orElse(null))
+            fun partyName(partyName: JsonField<String>) = apply { this.partyName = partyName }
 
             /** Either `individual` or `business`. */
-            fun partyType(partyType: PartyType?) = apply { this.partyType = partyType }
+            fun partyType(partyType: PartyType?) = partyType(JsonField.ofNullable(partyType))
 
             /** Either `individual` or `business`. */
             fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
 
+            /** Either `individual` or `business`. */
+            fun partyType(partyType: JsonField<PartyType>) = apply { this.partyType = partyType }
+
             /**
              * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you
              * can pass the processor token in this field.
              */
-            fun plaidProcessorToken(plaidProcessorToken: String?) = apply {
+            fun plaidProcessorToken(plaidProcessorToken: String) =
+                plaidProcessorToken(JsonField.of(plaidProcessorToken))
+
+            /**
+             * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you
+             * can pass the processor token in this field.
+             */
+            fun plaidProcessorToken(plaidProcessorToken: JsonField<String>) = apply {
                 this.plaidProcessorToken = plaidProcessorToken
             }
 
-            /**
-             * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you
-             * can pass the processor token in this field.
-             */
-            fun plaidProcessorToken(plaidProcessorToken: Optional<String>) =
-                plaidProcessorToken(plaidProcessorToken.orElse(null))
+            fun routingDetails(routingDetails: List<RoutingDetail>) =
+                routingDetails(JsonField.of(routingDetails))
 
-            fun routingDetails(routingDetails: List<RoutingDetail>?) = apply {
-                this.routingDetails = routingDetails?.toMutableList()
+            fun routingDetails(routingDetails: JsonField<List<RoutingDetail>>) = apply {
+                this.routingDetails = routingDetails.map { it.toMutableList() }
             }
 
-            fun routingDetails(routingDetails: Optional<List<RoutingDetail>>) =
-                routingDetails(routingDetails.orElse(null))
-
             fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
-                routingDetails = (routingDetails ?: mutableListOf()).apply { add(routingDetail) }
+                routingDetails =
+                    (routingDetails ?: JsonField.of(mutableListOf())).apply {
+                        asKnown()
+                            .orElseThrow {
+                                IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                )
+                            }
+                            .add(routingDetail)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -371,10 +568,10 @@ constructor(
 
             fun build(): ExternalAccountCreateBody =
                 ExternalAccountCreateBody(
-                    counterpartyId,
-                    accountDetails?.toImmutable(),
+                    checkNotNull(counterpartyId) { "`counterpartyId` is required but was not set" },
+                    (accountDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     accountType,
-                    contactDetails?.toImmutable(),
+                    (contactDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     ledgerAccount,
                     metadata,
                     name,
@@ -383,7 +580,7 @@ constructor(
                     partyName,
                     partyType,
                     plaidProcessorToken,
-                    routingDetails?.toImmutable(),
+                    (routingDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -432,30 +629,37 @@ constructor(
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.orElse(null))
 
-        fun accountDetails(accountDetails: List<AccountDetail>?) = apply {
+        fun counterpartyId(counterpartyId: JsonField<String>) = apply {
+            body.counterpartyId(counterpartyId)
+        }
+
+        fun accountDetails(accountDetails: List<AccountDetail>) = apply {
             body.accountDetails(accountDetails)
         }
 
-        fun accountDetails(accountDetails: Optional<List<AccountDetail>>) =
-            accountDetails(accountDetails.orElse(null))
+        fun accountDetails(accountDetails: JsonField<List<AccountDetail>>) = apply {
+            body.accountDetails(accountDetails)
+        }
 
         fun addAccountDetail(accountDetail: AccountDetail) = apply {
             body.addAccountDetail(accountDetail)
         }
 
         /** Can be `checking`, `savings` or `other`. */
-        fun accountType(accountType: ExternalAccountType?) = apply { body.accountType(accountType) }
+        fun accountType(accountType: ExternalAccountType) = apply { body.accountType(accountType) }
 
         /** Can be `checking`, `savings` or `other`. */
-        fun accountType(accountType: Optional<ExternalAccountType>) =
-            accountType(accountType.orElse(null))
+        fun accountType(accountType: JsonField<ExternalAccountType>) = apply {
+            body.accountType(accountType)
+        }
 
-        fun contactDetails(contactDetails: List<ContactDetailCreateRequest>?) = apply {
+        fun contactDetails(contactDetails: List<ContactDetailCreateRequest>) = apply {
             body.contactDetails(contactDetails)
         }
 
-        fun contactDetails(contactDetails: Optional<List<ContactDetailCreateRequest>>) =
-            contactDetails(contactDetails.orElse(null))
+        fun contactDetails(contactDetails: JsonField<List<ContactDetailCreateRequest>>) = apply {
+            body.contactDetails(contactDetails)
+        }
 
         fun addContactDetail(contactDetail: ContactDetailCreateRequest) = apply {
             body.addContactDetail(contactDetail)
@@ -468,7 +672,7 @@ constructor(
          * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for more
          * details.
          */
-        fun ledgerAccount(ledgerAccount: LedgerAccountCreateRequest?) = apply {
+        fun ledgerAccount(ledgerAccount: LedgerAccountCreateRequest) = apply {
             body.ledgerAccount(ledgerAccount)
         }
 
@@ -479,18 +683,19 @@ constructor(
          * https://docs.moderntreasury.com/docs/linking-to-other-modern-treasury-objects for more
          * details.
          */
-        fun ledgerAccount(ledgerAccount: Optional<LedgerAccountCreateRequest>) =
-            ledgerAccount(ledgerAccount.orElse(null))
+        fun ledgerAccount(ledgerAccount: JsonField<LedgerAccountCreateRequest>) = apply {
+            body.ledgerAccount(ledgerAccount)
+        }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
@@ -504,25 +709,33 @@ constructor(
          */
         fun name(name: Optional<String>) = name(name.orElse(null))
 
-        /** Required if receiving wire payments. */
-        fun partyAddress(partyAddress: AddressRequest?) = apply { body.partyAddress(partyAddress) }
+        /**
+         * A nickname for the external account. This is only for internal usage and won't affect any
+         * payments
+         */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** Required if receiving wire payments. */
-        fun partyAddress(partyAddress: Optional<AddressRequest>) =
-            partyAddress(partyAddress.orElse(null))
+        fun partyAddress(partyAddress: AddressRequest) = apply { body.partyAddress(partyAddress) }
 
-        fun partyIdentifier(partyIdentifier: String?) = apply {
+        /** Required if receiving wire payments. */
+        fun partyAddress(partyAddress: JsonField<AddressRequest>) = apply {
+            body.partyAddress(partyAddress)
+        }
+
+        fun partyIdentifier(partyIdentifier: String) = apply {
             body.partyIdentifier(partyIdentifier)
         }
 
-        fun partyIdentifier(partyIdentifier: Optional<String>) =
-            partyIdentifier(partyIdentifier.orElse(null))
+        fun partyIdentifier(partyIdentifier: JsonField<String>) = apply {
+            body.partyIdentifier(partyIdentifier)
+        }
 
         /** If this value isn't provided, it will be inherited from the counterparty's name. */
-        fun partyName(partyName: String?) = apply { body.partyName(partyName) }
+        fun partyName(partyName: String) = apply { body.partyName(partyName) }
 
         /** If this value isn't provided, it will be inherited from the counterparty's name. */
-        fun partyName(partyName: Optional<String>) = partyName(partyName.orElse(null))
+        fun partyName(partyName: JsonField<String>) = apply { body.partyName(partyName) }
 
         /** Either `individual` or `business`. */
         fun partyType(partyType: PartyType?) = apply { body.partyType(partyType) }
@@ -530,11 +743,14 @@ constructor(
         /** Either `individual` or `business`. */
         fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
 
+        /** Either `individual` or `business`. */
+        fun partyType(partyType: JsonField<PartyType>) = apply { body.partyType(partyType) }
+
         /**
          * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
          * pass the processor token in this field.
          */
-        fun plaidProcessorToken(plaidProcessorToken: String?) = apply {
+        fun plaidProcessorToken(plaidProcessorToken: String) = apply {
             body.plaidProcessorToken(plaidProcessorToken)
         }
 
@@ -542,18 +758,39 @@ constructor(
          * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
          * pass the processor token in this field.
          */
-        fun plaidProcessorToken(plaidProcessorToken: Optional<String>) =
-            plaidProcessorToken(plaidProcessorToken.orElse(null))
+        fun plaidProcessorToken(plaidProcessorToken: JsonField<String>) = apply {
+            body.plaidProcessorToken(plaidProcessorToken)
+        }
 
-        fun routingDetails(routingDetails: List<RoutingDetail>?) = apply {
+        fun routingDetails(routingDetails: List<RoutingDetail>) = apply {
             body.routingDetails(routingDetails)
         }
 
-        fun routingDetails(routingDetails: Optional<List<RoutingDetail>>) =
-            routingDetails(routingDetails.orElse(null))
+        fun routingDetails(routingDetails: JsonField<List<RoutingDetail>>) = apply {
+            body.routingDetails(routingDetails)
+        }
 
         fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
             body.addRoutingDetail(routingDetail)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -654,25 +891,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): ExternalAccountCreateParams =
             ExternalAccountCreateParams(
                 body.build(),
@@ -685,21 +903,42 @@ constructor(
     class AccountDetail
     @JsonCreator
     private constructor(
-        @JsonProperty("account_number") private val accountNumber: String,
-        @JsonProperty("account_number_type") private val accountNumberType: AccountNumberType?,
+        @JsonProperty("account_number")
+        @ExcludeMissing
+        private val accountNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("account_number_type")
+        @ExcludeMissing
+        private val accountNumberType: JsonField<AccountNumberType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("account_number") fun accountNumber(): String = accountNumber
+        fun accountNumber(): String = accountNumber.getRequired("account_number")
+
+        fun accountNumberType(): Optional<AccountNumberType> =
+            Optional.ofNullable(accountNumberType.getNullable("account_number_type"))
+
+        @JsonProperty("account_number")
+        @ExcludeMissing
+        fun _accountNumber(): JsonField<String> = accountNumber
 
         @JsonProperty("account_number_type")
-        fun accountNumberType(): Optional<AccountNumberType> =
-            Optional.ofNullable(accountNumberType)
+        @ExcludeMissing
+        fun _accountNumberType(): JsonField<AccountNumberType> = accountNumberType
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountDetail = apply {
+            if (!validated) {
+                accountNumber()
+                accountNumberType()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -710,8 +949,8 @@ constructor(
 
         class Builder {
 
-            private var accountNumber: String? = null
-            private var accountNumberType: AccountNumberType? = null
+            private var accountNumber: JsonField<String>? = null
+            private var accountNumberType: JsonField<AccountNumberType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -721,14 +960,18 @@ constructor(
                 additionalProperties = accountDetail.additionalProperties.toMutableMap()
             }
 
-            fun accountNumber(accountNumber: String) = apply { this.accountNumber = accountNumber }
+            fun accountNumber(accountNumber: String) = accountNumber(JsonField.of(accountNumber))
 
-            fun accountNumberType(accountNumberType: AccountNumberType?) = apply {
-                this.accountNumberType = accountNumberType
+            fun accountNumber(accountNumber: JsonField<String>) = apply {
+                this.accountNumber = accountNumber
             }
 
-            fun accountNumberType(accountNumberType: Optional<AccountNumberType>) =
-                accountNumberType(accountNumberType.orElse(null))
+            fun accountNumberType(accountNumberType: AccountNumberType) =
+                accountNumberType(JsonField.of(accountNumberType))
+
+            fun accountNumberType(accountNumberType: JsonField<AccountNumberType>) = apply {
+                this.accountNumberType = accountNumberType
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -887,23 +1130,43 @@ constructor(
     class ContactDetailCreateRequest
     @JsonCreator
     private constructor(
-        @JsonProperty("contact_identifier") private val contactIdentifier: String?,
+        @JsonProperty("contact_identifier")
+        @ExcludeMissing
+        private val contactIdentifier: JsonField<String> = JsonMissing.of(),
         @JsonProperty("contact_identifier_type")
-        private val contactIdentifierType: ContactIdentifierType?,
+        @ExcludeMissing
+        private val contactIdentifierType: JsonField<ContactIdentifierType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        fun contactIdentifier(): Optional<String> =
+            Optional.ofNullable(contactIdentifier.getNullable("contact_identifier"))
+
+        fun contactIdentifierType(): Optional<ContactIdentifierType> =
+            Optional.ofNullable(contactIdentifierType.getNullable("contact_identifier_type"))
+
         @JsonProperty("contact_identifier")
-        fun contactIdentifier(): Optional<String> = Optional.ofNullable(contactIdentifier)
+        @ExcludeMissing
+        fun _contactIdentifier(): JsonField<String> = contactIdentifier
 
         @JsonProperty("contact_identifier_type")
-        fun contactIdentifierType(): Optional<ContactIdentifierType> =
-            Optional.ofNullable(contactIdentifierType)
+        @ExcludeMissing
+        fun _contactIdentifierType(): JsonField<ContactIdentifierType> = contactIdentifierType
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ContactDetailCreateRequest = apply {
+            if (!validated) {
+                contactIdentifier()
+                contactIdentifierType()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -914,8 +1177,8 @@ constructor(
 
         class Builder {
 
-            private var contactIdentifier: String? = null
-            private var contactIdentifierType: ContactIdentifierType? = null
+            private var contactIdentifier: JsonField<String> = JsonMissing.of()
+            private var contactIdentifierType: JsonField<ContactIdentifierType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -926,19 +1189,20 @@ constructor(
                     contactDetailCreateRequest.additionalProperties.toMutableMap()
             }
 
-            fun contactIdentifier(contactIdentifier: String?) = apply {
+            fun contactIdentifier(contactIdentifier: String) =
+                contactIdentifier(JsonField.of(contactIdentifier))
+
+            fun contactIdentifier(contactIdentifier: JsonField<String>) = apply {
                 this.contactIdentifier = contactIdentifier
             }
 
-            fun contactIdentifier(contactIdentifier: Optional<String>) =
-                contactIdentifier(contactIdentifier.orElse(null))
+            fun contactIdentifierType(contactIdentifierType: ContactIdentifierType) =
+                contactIdentifierType(JsonField.of(contactIdentifierType))
 
-            fun contactIdentifierType(contactIdentifierType: ContactIdentifierType?) = apply {
-                this.contactIdentifierType = contactIdentifierType
-            }
-
-            fun contactIdentifierType(contactIdentifierType: Optional<ContactIdentifierType>) =
-                contactIdentifierType(contactIdentifierType.orElse(null))
+            fun contactIdentifierType(contactIdentifierType: JsonField<ContactIdentifierType>) =
+                apply {
+                    this.contactIdentifierType = contactIdentifierType
+                }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1061,70 +1325,158 @@ constructor(
     class LedgerAccountCreateRequest
     @JsonCreator
     private constructor(
-        @JsonProperty("currency") private val currency: String,
-        @JsonProperty("ledger_id") private val ledgerId: String,
-        @JsonProperty("name") private val name: String,
-        @JsonProperty("normal_balance") private val normalBalance: TransactionDirection,
-        @JsonProperty("currency_exponent") private val currencyExponent: Long?,
-        @JsonProperty("description") private val description: String?,
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_id")
+        @ExcludeMissing
+        private val ledgerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("normal_balance")
+        @ExcludeMissing
+        private val normalBalance: JsonField<TransactionDirection> = JsonMissing.of(),
+        @JsonProperty("currency_exponent")
+        @ExcludeMissing
+        private val currencyExponent: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("ledger_account_category_ids")
-        private val ledgerAccountCategoryIds: List<String>?,
-        @JsonProperty("ledgerable_id") private val ledgerableId: String?,
-        @JsonProperty("ledgerable_type") private val ledgerableType: LedgerableType?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
+        @ExcludeMissing
+        private val ledgerAccountCategoryIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("ledgerable_id")
+        @ExcludeMissing
+        private val ledgerableId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledgerable_type")
+        @ExcludeMissing
+        private val ledgerableType: JsonField<LedgerableType> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The currency of the ledger account. */
-        @JsonProperty("currency") fun currency(): String = currency
+        fun currency(): String = currency.getRequired("currency")
 
         /** The id of the ledger that this account belongs to. */
-        @JsonProperty("ledger_id") fun ledgerId(): String = ledgerId
+        fun ledgerId(): String = ledgerId.getRequired("ledger_id")
 
         /** The name of the ledger account. */
-        @JsonProperty("name") fun name(): String = name
+        fun name(): String = name.getRequired("name")
 
         /** The normal balance of the ledger account. */
-        @JsonProperty("normal_balance") fun normalBalance(): TransactionDirection = normalBalance
+        fun normalBalance(): TransactionDirection = normalBalance.getRequired("normal_balance")
+
+        /** The currency exponent of the ledger account. */
+        fun currencyExponent(): Optional<Long> =
+            Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
+
+        /** The description of the ledger account. */
+        fun description(): Optional<String> =
+            Optional.ofNullable(description.getNullable("description"))
+
+        /**
+         * The array of ledger account category ids that this ledger account should be a child of.
+         */
+        fun ledgerAccountCategoryIds(): Optional<List<String>> =
+            Optional.ofNullable(ledgerAccountCategoryIds.getNullable("ledger_account_category_ids"))
+
+        /**
+         * If the ledger account links to another object in Modern Treasury, the id will be
+         * populated here, otherwise null.
+         */
+        fun ledgerableId(): Optional<String> =
+            Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+
+        /**
+         * If the ledger account links to another object in Modern Treasury, the type will be
+         * populated here, otherwise null. The value is one of internal_account or external_account.
+         */
+        fun ledgerableType(): Optional<LedgerableType> =
+            Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+
+        /** The currency of the ledger account. */
+        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+        /** The id of the ledger that this account belongs to. */
+        @JsonProperty("ledger_id") @ExcludeMissing fun _ledgerId(): JsonField<String> = ledgerId
+
+        /** The name of the ledger account. */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /** The normal balance of the ledger account. */
+        @JsonProperty("normal_balance")
+        @ExcludeMissing
+        fun _normalBalance(): JsonField<TransactionDirection> = normalBalance
 
         /** The currency exponent of the ledger account. */
         @JsonProperty("currency_exponent")
-        fun currencyExponent(): Optional<Long> = Optional.ofNullable(currencyExponent)
+        @ExcludeMissing
+        fun _currencyExponent(): JsonField<Long> = currencyExponent
 
         /** The description of the ledger account. */
         @JsonProperty("description")
-        fun description(): Optional<String> = Optional.ofNullable(description)
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
          */
         @JsonProperty("ledger_account_category_ids")
-        fun ledgerAccountCategoryIds(): Optional<List<String>> =
-            Optional.ofNullable(ledgerAccountCategoryIds)
+        @ExcludeMissing
+        fun _ledgerAccountCategoryIds(): JsonField<List<String>> = ledgerAccountCategoryIds
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
          * populated here, otherwise null.
          */
         @JsonProperty("ledgerable_id")
-        fun ledgerableId(): Optional<String> = Optional.ofNullable(ledgerableId)
+        @ExcludeMissing
+        fun _ledgerableId(): JsonField<String> = ledgerableId
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
          * populated here, otherwise null. The value is one of internal_account or external_account.
          */
         @JsonProperty("ledgerable_type")
-        fun ledgerableType(): Optional<LedgerableType> = Optional.ofNullable(ledgerableType)
+        @ExcludeMissing
+        fun _ledgerableType(): JsonField<LedgerableType> = ledgerableType
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): LedgerAccountCreateRequest = apply {
+            if (!validated) {
+                currency()
+                ledgerId()
+                name()
+                normalBalance()
+                currencyExponent()
+                description()
+                ledgerAccountCategoryIds()
+                ledgerableId()
+                ledgerableType()
+                metadata().map { it.validate() }
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -1135,16 +1487,16 @@ constructor(
 
         class Builder {
 
-            private var currency: String? = null
-            private var ledgerId: String? = null
-            private var name: String? = null
-            private var normalBalance: TransactionDirection? = null
-            private var currencyExponent: Long? = null
-            private var description: String? = null
-            private var ledgerAccountCategoryIds: MutableList<String>? = null
-            private var ledgerableId: String? = null
-            private var ledgerableType: LedgerableType? = null
-            private var metadata: Metadata? = null
+            private var currency: JsonField<String>? = null
+            private var ledgerId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var normalBalance: JsonField<TransactionDirection>? = null
+            private var currencyExponent: JsonField<Long> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var ledgerAccountCategoryIds: JsonField<MutableList<String>>? = null
+            private var ledgerableId: JsonField<String> = JsonMissing.of()
+            private var ledgerableType: JsonField<LedgerableType> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -1156,7 +1508,7 @@ constructor(
                 currencyExponent = ledgerAccountCreateRequest.currencyExponent
                 description = ledgerAccountCreateRequest.description
                 ledgerAccountCategoryIds =
-                    ledgerAccountCreateRequest.ledgerAccountCategoryIds?.toMutableList()
+                    ledgerAccountCreateRequest.ledgerAccountCategoryIds.map { it.toMutableList() }
                 ledgerableId = ledgerAccountCreateRequest.ledgerableId
                 ledgerableType = ledgerAccountCreateRequest.ledgerableType
                 metadata = ledgerAccountCreateRequest.metadata
@@ -1165,23 +1517,35 @@ constructor(
             }
 
             /** The currency of the ledger account. */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            /** The currency of the ledger account. */
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /** The id of the ledger that this account belongs to. */
-            fun ledgerId(ledgerId: String) = apply { this.ledgerId = ledgerId }
+            fun ledgerId(ledgerId: String) = ledgerId(JsonField.of(ledgerId))
+
+            /** The id of the ledger that this account belongs to. */
+            fun ledgerId(ledgerId: JsonField<String>) = apply { this.ledgerId = ledgerId }
 
             /** The name of the ledger account. */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** The name of the ledger account. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The normal balance of the ledger account. */
-            fun normalBalance(normalBalance: TransactionDirection) = apply {
+            fun normalBalance(normalBalance: TransactionDirection) =
+                normalBalance(JsonField.of(normalBalance))
+
+            /** The normal balance of the ledger account. */
+            fun normalBalance(normalBalance: JsonField<TransactionDirection>) = apply {
                 this.normalBalance = normalBalance
             }
 
             /** The currency exponent of the ledger account. */
-            fun currencyExponent(currencyExponent: Long?) = apply {
-                this.currencyExponent = currencyExponent
-            }
+            fun currencyExponent(currencyExponent: Long?) =
+                currencyExponent(JsonField.ofNullable(currencyExponent))
 
             /** The currency exponent of the ledger account. */
             fun currencyExponent(currencyExponent: Long) =
@@ -1192,26 +1556,38 @@ constructor(
             fun currencyExponent(currencyExponent: Optional<Long>) =
                 currencyExponent(currencyExponent.orElse(null) as Long?)
 
+            /** The currency exponent of the ledger account. */
+            fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
+                this.currencyExponent = currencyExponent
+            }
+
             /** The description of the ledger account. */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account. */
             fun description(description: Optional<String>) = description(description.orElse(null))
 
-            /**
-             * The array of ledger account category ids that this ledger account should be a child
-             * of.
-             */
-            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>?) = apply {
-                this.ledgerAccountCategoryIds = ledgerAccountCategoryIds?.toMutableList()
+            /** The description of the ledger account. */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
             }
 
             /**
              * The array of ledger account category ids that this ledger account should be a child
              * of.
              */
-            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: Optional<List<String>>) =
-                ledgerAccountCategoryIds(ledgerAccountCategoryIds.orElse(null))
+            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: List<String>) =
+                ledgerAccountCategoryIds(JsonField.of(ledgerAccountCategoryIds))
+
+            /**
+             * The array of ledger account category ids that this ledger account should be a child
+             * of.
+             */
+            fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: JsonField<List<String>>) =
+                apply {
+                    this.ledgerAccountCategoryIds =
+                        ledgerAccountCategoryIds.map { it.toMutableList() }
+                }
 
             /**
              * The array of ledger account category ids that this ledger account should be a child
@@ -1219,8 +1595,14 @@ constructor(
              */
             fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
                 ledgerAccountCategoryIds =
-                    (ledgerAccountCategoryIds ?: mutableListOf()).apply {
-                        add(ledgerAccountCategoryId)
+                    (ledgerAccountCategoryIds ?: JsonField.of(mutableListOf())).apply {
+                        asKnown()
+                            .orElseThrow {
+                                IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                )
+                            }
+                            .add(ledgerAccountCategoryId)
                     }
             }
 
@@ -1228,22 +1610,14 @@ constructor(
              * If the ledger account links to another object in Modern Treasury, the id will be
              * populated here, otherwise null.
              */
-            fun ledgerableId(ledgerableId: String?) = apply { this.ledgerableId = ledgerableId }
+            fun ledgerableId(ledgerableId: String) = ledgerableId(JsonField.of(ledgerableId))
 
             /**
              * If the ledger account links to another object in Modern Treasury, the id will be
              * populated here, otherwise null.
              */
-            fun ledgerableId(ledgerableId: Optional<String>) =
-                ledgerableId(ledgerableId.orElse(null))
-
-            /**
-             * If the ledger account links to another object in Modern Treasury, the type will be
-             * populated here, otherwise null. The value is one of internal_account or
-             * external_account.
-             */
-            fun ledgerableType(ledgerableType: LedgerableType?) = apply {
-                this.ledgerableType = ledgerableType
+            fun ledgerableId(ledgerableId: JsonField<String>) = apply {
+                this.ledgerableId = ledgerableId
             }
 
             /**
@@ -1251,20 +1625,29 @@ constructor(
              * populated here, otherwise null. The value is one of internal_account or
              * external_account.
              */
-            fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
-                ledgerableType(ledgerableType.orElse(null))
+            fun ledgerableType(ledgerableType: LedgerableType) =
+                ledgerableType(JsonField.of(ledgerableType))
+
+            /**
+             * If the ledger account links to another object in Modern Treasury, the type will be
+             * populated here, otherwise null. The value is one of internal_account or
+             * external_account.
+             */
+            fun ledgerableType(ledgerableType: JsonField<LedgerableType>) = apply {
+                this.ledgerableType = ledgerableType
+            }
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1293,7 +1676,7 @@ constructor(
                     checkNotNull(normalBalance) { "`normalBalance` is required but was not set" },
                     currencyExponent,
                     description,
-                    ledgerAccountCategoryIds?.toImmutable(),
+                    (ledgerAccountCategoryIds ?: JsonMissing.of()).map { it.toImmutable() },
                     ledgerableId,
                     ledgerableType,
                     metadata,
@@ -1386,6 +1769,14 @@ constructor(
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+            private var validated: Boolean = false
+
+            fun validate(): Metadata = apply {
+                if (!validated) {
+                    validated = true
+                }
+            }
+
             fun toBuilder() = Builder().from(this)
 
             companion object {
@@ -1475,6 +1866,14 @@ constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
+
         fun toBuilder() = Builder().from(this)
 
         companion object {
@@ -1535,36 +1934,80 @@ constructor(
     class AddressRequest
     @JsonCreator
     private constructor(
-        @JsonProperty("country") private val country: String?,
-        @JsonProperty("line1") private val line1: String?,
-        @JsonProperty("line2") private val line2: String?,
-        @JsonProperty("locality") private val locality: String?,
-        @JsonProperty("postal_code") private val postalCode: String?,
-        @JsonProperty("region") private val region: String?,
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line1")
+        @ExcludeMissing
+        private val line1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line2")
+        @ExcludeMissing
+        private val line2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("locality")
+        @ExcludeMissing
+        private val locality: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        private val postalCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("region")
+        @ExcludeMissing
+        private val region: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Country code conforms to [ISO 3166-1 alpha-2] */
-        @JsonProperty("country") fun country(): Optional<String> = Optional.ofNullable(country)
+        fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
 
-        @JsonProperty("line1") fun line1(): Optional<String> = Optional.ofNullable(line1)
+        fun line1(): Optional<String> = Optional.ofNullable(line1.getNullable("line1"))
 
-        @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
+        fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
 
         /** Locality or City. */
-        @JsonProperty("locality") fun locality(): Optional<String> = Optional.ofNullable(locality)
+        fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
+
+        /** The postal code of the address. */
+        fun postalCode(): Optional<String> =
+            Optional.ofNullable(postalCode.getNullable("postal_code"))
+
+        /** Region or State. */
+        fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
+
+        /** Country code conforms to [ISO 3166-1 alpha-2] */
+        @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
+
+        @JsonProperty("line1") @ExcludeMissing fun _line1(): JsonField<String> = line1
+
+        @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
+
+        /** Locality or City. */
+        @JsonProperty("locality") @ExcludeMissing fun _locality(): JsonField<String> = locality
 
         /** The postal code of the address. */
         @JsonProperty("postal_code")
-        fun postalCode(): Optional<String> = Optional.ofNullable(postalCode)
+        @ExcludeMissing
+        fun _postalCode(): JsonField<String> = postalCode
 
         /** Region or State. */
-        @JsonProperty("region") fun region(): Optional<String> = Optional.ofNullable(region)
+        @JsonProperty("region") @ExcludeMissing fun _region(): JsonField<String> = region
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): AddressRequest = apply {
+            if (!validated) {
+                country()
+                line1()
+                line2()
+                locality()
+                postalCode()
+                region()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -1575,12 +2018,12 @@ constructor(
 
         class Builder {
 
-            private var country: String? = null
-            private var line1: String? = null
-            private var line2: String? = null
-            private var locality: String? = null
-            private var postalCode: String? = null
-            private var region: String? = null
+            private var country: JsonField<String> = JsonMissing.of()
+            private var line1: JsonField<String> = JsonMissing.of()
+            private var line2: JsonField<String> = JsonMissing.of()
+            private var locality: JsonField<String> = JsonMissing.of()
+            private var postalCode: JsonField<String> = JsonMissing.of()
+            private var region: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -1595,36 +2038,52 @@ constructor(
             }
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: String?) = apply { this.country = country }
+            fun country(country: String?) = country(JsonField.ofNullable(country))
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
             fun country(country: Optional<String>) = country(country.orElse(null))
 
-            fun line1(line1: String?) = apply { this.line1 = line1 }
+            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            fun country(country: JsonField<String>) = apply { this.country = country }
+
+            fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
             fun line1(line1: Optional<String>) = line1(line1.orElse(null))
 
-            fun line2(line2: String?) = apply { this.line2 = line2 }
+            fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
+
+            fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
             fun line2(line2: Optional<String>) = line2(line2.orElse(null))
 
+            fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
+
             /** Locality or City. */
-            fun locality(locality: String?) = apply { this.locality = locality }
+            fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
             /** Locality or City. */
             fun locality(locality: Optional<String>) = locality(locality.orElse(null))
 
+            /** Locality or City. */
+            fun locality(locality: JsonField<String>) = apply { this.locality = locality }
+
             /** The postal code of the address. */
-            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
             /** The postal code of the address. */
             fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
 
+            /** The postal code of the address. */
+            fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
+
             /** Region or State. */
-            fun region(region: String?) = apply { this.region = region }
+            fun region(region: String?) = region(JsonField.ofNullable(region))
 
             /** Region or State. */
             fun region(region: Optional<String>) = region(region.orElse(null))
+
+            /** Region or State. */
+            fun region(region: JsonField<String>) = apply { this.region = region }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1736,24 +2195,53 @@ constructor(
     class RoutingDetail
     @JsonCreator
     private constructor(
-        @JsonProperty("routing_number") private val routingNumber: String,
-        @JsonProperty("routing_number_type") private val routingNumberType: RoutingNumberType,
-        @JsonProperty("payment_type") private val paymentType: PaymentType?,
+        @JsonProperty("routing_number")
+        @ExcludeMissing
+        private val routingNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("routing_number_type")
+        @ExcludeMissing
+        private val routingNumberType: JsonField<RoutingNumberType> = JsonMissing.of(),
+        @JsonProperty("payment_type")
+        @ExcludeMissing
+        private val paymentType: JsonField<PaymentType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("routing_number") fun routingNumber(): String = routingNumber
+        fun routingNumber(): String = routingNumber.getRequired("routing_number")
+
+        fun routingNumberType(): RoutingNumberType =
+            routingNumberType.getRequired("routing_number_type")
+
+        fun paymentType(): Optional<PaymentType> =
+            Optional.ofNullable(paymentType.getNullable("payment_type"))
+
+        @JsonProperty("routing_number")
+        @ExcludeMissing
+        fun _routingNumber(): JsonField<String> = routingNumber
 
         @JsonProperty("routing_number_type")
-        fun routingNumberType(): RoutingNumberType = routingNumberType
+        @ExcludeMissing
+        fun _routingNumberType(): JsonField<RoutingNumberType> = routingNumberType
 
         @JsonProperty("payment_type")
-        fun paymentType(): Optional<PaymentType> = Optional.ofNullable(paymentType)
+        @ExcludeMissing
+        fun _paymentType(): JsonField<PaymentType> = paymentType
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): RoutingDetail = apply {
+            if (!validated) {
+                routingNumber()
+                routingNumberType()
+                paymentType()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -1764,9 +2252,9 @@ constructor(
 
         class Builder {
 
-            private var routingNumber: String? = null
-            private var routingNumberType: RoutingNumberType? = null
-            private var paymentType: PaymentType? = null
+            private var routingNumber: JsonField<String>? = null
+            private var routingNumberType: JsonField<RoutingNumberType>? = null
+            private var paymentType: JsonField<PaymentType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -1777,16 +2265,24 @@ constructor(
                 additionalProperties = routingDetail.additionalProperties.toMutableMap()
             }
 
-            fun routingNumber(routingNumber: String) = apply { this.routingNumber = routingNumber }
+            fun routingNumber(routingNumber: String) = routingNumber(JsonField.of(routingNumber))
 
-            fun routingNumberType(routingNumberType: RoutingNumberType) = apply {
+            fun routingNumber(routingNumber: JsonField<String>) = apply {
+                this.routingNumber = routingNumber
+            }
+
+            fun routingNumberType(routingNumberType: RoutingNumberType) =
+                routingNumberType(JsonField.of(routingNumberType))
+
+            fun routingNumberType(routingNumberType: JsonField<RoutingNumberType>) = apply {
                 this.routingNumberType = routingNumberType
             }
 
-            fun paymentType(paymentType: PaymentType?) = apply { this.paymentType = paymentType }
+            fun paymentType(paymentType: PaymentType) = paymentType(JsonField.of(paymentType))
 
-            fun paymentType(paymentType: Optional<PaymentType>) =
-                paymentType(paymentType.orElse(null))
+            fun paymentType(paymentType: JsonField<PaymentType>) = apply {
+                this.paymentType = paymentType
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
