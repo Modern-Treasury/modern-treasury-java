@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** create payment_flow */
 class PaymentFlowCreateParams
 constructor(
     private val body: PaymentFlowCreateBody,

@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** Get all balance reports for a given internal account. */
 class BalanceReportListParams
 constructor(
     private val internalAccountId: String,

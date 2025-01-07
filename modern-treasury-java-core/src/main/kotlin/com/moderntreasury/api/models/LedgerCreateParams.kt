@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger. */
 class LedgerCreateParams
 constructor(
     private val body: LedgerCreateBody,

@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** delete transaction */
 class TransactionDeleteParams
 constructor(
     private val id: String,

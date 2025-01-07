@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Create a routing detail for a single external account. */
 class RoutingDetailCreateParams
 constructor(
     private val accountsType: AccountsType,

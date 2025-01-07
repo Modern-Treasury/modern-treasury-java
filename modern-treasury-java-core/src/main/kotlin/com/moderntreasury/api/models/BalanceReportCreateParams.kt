@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** create balance reports */
 class BalanceReportCreateParams
 constructor(
     private val internalAccountId: String,

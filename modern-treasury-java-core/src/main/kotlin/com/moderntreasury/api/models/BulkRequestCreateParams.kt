@@ -31,6 +31,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** create bulk_request */
 class BulkRequestCreateParams
 constructor(
     private val body: BulkRequestCreateBody,

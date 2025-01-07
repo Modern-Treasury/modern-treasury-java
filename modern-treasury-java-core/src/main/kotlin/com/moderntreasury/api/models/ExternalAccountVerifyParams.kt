@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** verify external account */
 class ExternalAccountVerifyParams
 constructor(
     private val id: String,

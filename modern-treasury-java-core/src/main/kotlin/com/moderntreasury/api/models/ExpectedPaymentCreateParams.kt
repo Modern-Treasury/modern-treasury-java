@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** create expected payment */
 class ExpectedPaymentCreateParams
 constructor(
     private val body: ExpectedPaymentCreateBody,

@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 
+/** list expected_payments */
 class ExpectedPaymentListParams
 constructor(
     private val afterCursor: String?,

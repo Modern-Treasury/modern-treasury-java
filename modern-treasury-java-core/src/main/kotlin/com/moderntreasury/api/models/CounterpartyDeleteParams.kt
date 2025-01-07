@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Deletes a given counterparty. */
 class CounterpartyDeleteParams
 constructor(
     private val id: String,

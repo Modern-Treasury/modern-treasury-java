@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Add a payment order to an invoice. */
 class InvoiceAddPaymentOrderParams
 constructor(
     private val id: String,
