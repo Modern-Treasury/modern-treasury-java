@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -57,11 +58,41 @@ constructor(
      */
     fun vendorAttributes(): Optional<VendorAttributes> = body.vendorAttributes()
 
+    /** The identifier of the financial institution the account belongs to. */
+    fun _connectionId(): JsonField<String> = body._connectionId()
+
+    /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+    fun _currency(): JsonField<Currency> = body._currency()
+
+    /** The nickname of the account. */
+    fun _name(): JsonField<String> = body._name()
+
+    /** The legal name of the entity which owns the account. */
+    fun _partyName(): JsonField<String> = body._partyName()
+
+    /** The Counterparty associated to this account. */
+    fun _counterpartyId(): JsonField<String> = body._counterpartyId()
+
+    /** The LegalEntity associated to this account. */
+    fun _legalEntityId(): JsonField<String> = body._legalEntityId()
+
+    /** The parent internal account of this new account. */
+    fun _parentAccountId(): JsonField<String> = body._parentAccountId()
+
+    /** The address associated with the owner or null. */
+    fun _partyAddress(): JsonField<PartyAddress> = body._partyAddress()
+
+    /**
+     * A hash of vendor specific attributes that will be used when creating the account at the
+     * vendor specified by the given connection.
+     */
+    fun _vendorAttributes(): JsonField<VendorAttributes> = body._vendorAttributes()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): InternalAccountCreateBody = body
 
@@ -73,57 +104,134 @@ constructor(
     class InternalAccountCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("connection_id") private val connectionId: String,
-        @JsonProperty("currency") private val currency: Currency,
-        @JsonProperty("name") private val name: String,
-        @JsonProperty("party_name") private val partyName: String,
-        @JsonProperty("counterparty_id") private val counterpartyId: String?,
-        @JsonProperty("legal_entity_id") private val legalEntityId: String?,
-        @JsonProperty("parent_account_id") private val parentAccountId: String?,
-        @JsonProperty("party_address") private val partyAddress: PartyAddress?,
-        @JsonProperty("vendor_attributes") private val vendorAttributes: VendorAttributes?,
+        @JsonProperty("connection_id")
+        @ExcludeMissing
+        private val connectionId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<Currency> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("party_name")
+        @ExcludeMissing
+        private val partyName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("counterparty_id")
+        @ExcludeMissing
+        private val counterpartyId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("legal_entity_id")
+        @ExcludeMissing
+        private val legalEntityId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("parent_account_id")
+        @ExcludeMissing
+        private val parentAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("party_address")
+        @ExcludeMissing
+        private val partyAddress: JsonField<PartyAddress> = JsonMissing.of(),
+        @JsonProperty("vendor_attributes")
+        @ExcludeMissing
+        private val vendorAttributes: JsonField<VendorAttributes> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The identifier of the financial institution the account belongs to. */
-        @JsonProperty("connection_id") fun connectionId(): String = connectionId
+        fun connectionId(): String = connectionId.getRequired("connection_id")
 
         /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
-        @JsonProperty("currency") fun currency(): Currency = currency
+        fun currency(): Currency = currency.getRequired("currency")
 
         /** The nickname of the account. */
-        @JsonProperty("name") fun name(): String = name
+        fun name(): String = name.getRequired("name")
 
         /** The legal name of the entity which owns the account. */
-        @JsonProperty("party_name") fun partyName(): String = partyName
+        fun partyName(): String = partyName.getRequired("party_name")
+
+        /** The Counterparty associated to this account. */
+        fun counterpartyId(): Optional<String> =
+            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+
+        /** The LegalEntity associated to this account. */
+        fun legalEntityId(): Optional<String> =
+            Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
+
+        /** The parent internal account of this new account. */
+        fun parentAccountId(): Optional<String> =
+            Optional.ofNullable(parentAccountId.getNullable("parent_account_id"))
+
+        /** The address associated with the owner or null. */
+        fun partyAddress(): Optional<PartyAddress> =
+            Optional.ofNullable(partyAddress.getNullable("party_address"))
+
+        /**
+         * A hash of vendor specific attributes that will be used when creating the account at the
+         * vendor specified by the given connection.
+         */
+        fun vendorAttributes(): Optional<VendorAttributes> =
+            Optional.ofNullable(vendorAttributes.getNullable("vendor_attributes"))
+
+        /** The identifier of the financial institution the account belongs to. */
+        @JsonProperty("connection_id")
+        @ExcludeMissing
+        fun _connectionId(): JsonField<String> = connectionId
+
+        /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<Currency> = currency
+
+        /** The nickname of the account. */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /** The legal name of the entity which owns the account. */
+        @JsonProperty("party_name") @ExcludeMissing fun _partyName(): JsonField<String> = partyName
 
         /** The Counterparty associated to this account. */
         @JsonProperty("counterparty_id")
-        fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+        @ExcludeMissing
+        fun _counterpartyId(): JsonField<String> = counterpartyId
 
         /** The LegalEntity associated to this account. */
         @JsonProperty("legal_entity_id")
-        fun legalEntityId(): Optional<String> = Optional.ofNullable(legalEntityId)
+        @ExcludeMissing
+        fun _legalEntityId(): JsonField<String> = legalEntityId
 
         /** The parent internal account of this new account. */
         @JsonProperty("parent_account_id")
-        fun parentAccountId(): Optional<String> = Optional.ofNullable(parentAccountId)
+        @ExcludeMissing
+        fun _parentAccountId(): JsonField<String> = parentAccountId
 
         /** The address associated with the owner or null. */
         @JsonProperty("party_address")
-        fun partyAddress(): Optional<PartyAddress> = Optional.ofNullable(partyAddress)
+        @ExcludeMissing
+        fun _partyAddress(): JsonField<PartyAddress> = partyAddress
 
         /**
          * A hash of vendor specific attributes that will be used when creating the account at the
          * vendor specified by the given connection.
          */
         @JsonProperty("vendor_attributes")
-        fun vendorAttributes(): Optional<VendorAttributes> = Optional.ofNullable(vendorAttributes)
+        @ExcludeMissing
+        fun _vendorAttributes(): JsonField<VendorAttributes> = vendorAttributes
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): InternalAccountCreateBody = apply {
+            if (!validated) {
+                connectionId()
+                currency()
+                name()
+                partyName()
+                counterpartyId()
+                legalEntityId()
+                parentAccountId()
+                partyAddress().map { it.validate() }
+                vendorAttributes().map { it.validate() }
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -134,15 +242,15 @@ constructor(
 
         class Builder {
 
-            private var connectionId: String? = null
-            private var currency: Currency? = null
-            private var name: String? = null
-            private var partyName: String? = null
-            private var counterpartyId: String? = null
-            private var legalEntityId: String? = null
-            private var parentAccountId: String? = null
-            private var partyAddress: PartyAddress? = null
-            private var vendorAttributes: VendorAttributes? = null
+            private var connectionId: JsonField<String>? = null
+            private var currency: JsonField<Currency>? = null
+            private var name: JsonField<String>? = null
+            private var partyName: JsonField<String>? = null
+            private var counterpartyId: JsonField<String> = JsonMissing.of()
+            private var legalEntityId: JsonField<String> = JsonMissing.of()
+            private var parentAccountId: JsonField<String> = JsonMissing.of()
+            private var partyAddress: JsonField<PartyAddress> = JsonMissing.of()
+            private var vendorAttributes: JsonField<VendorAttributes> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -160,65 +268,79 @@ constructor(
             }
 
             /** The identifier of the financial institution the account belongs to. */
-            fun connectionId(connectionId: String) = apply { this.connectionId = connectionId }
+            fun connectionId(connectionId: String) = connectionId(JsonField.of(connectionId))
+
+            /** The identifier of the financial institution the account belongs to. */
+            fun connectionId(connectionId: JsonField<String>) = apply {
+                this.connectionId = connectionId
+            }
 
             /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
-            fun currency(currency: Currency) = apply { this.currency = currency }
+            fun currency(currency: Currency) = currency(JsonField.of(currency))
+
+            /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+            fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
             /** The nickname of the account. */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** The nickname of the account. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The legal name of the entity which owns the account. */
-            fun partyName(partyName: String) = apply { this.partyName = partyName }
+            fun partyName(partyName: String) = partyName(JsonField.of(partyName))
+
+            /** The legal name of the entity which owns the account. */
+            fun partyName(partyName: JsonField<String>) = apply { this.partyName = partyName }
 
             /** The Counterparty associated to this account. */
-            fun counterpartyId(counterpartyId: String?) = apply {
+            fun counterpartyId(counterpartyId: String) =
+                counterpartyId(JsonField.of(counterpartyId))
+
+            /** The Counterparty associated to this account. */
+            fun counterpartyId(counterpartyId: JsonField<String>) = apply {
                 this.counterpartyId = counterpartyId
             }
 
-            /** The Counterparty associated to this account. */
-            fun counterpartyId(counterpartyId: Optional<String>) =
-                counterpartyId(counterpartyId.orElse(null))
+            /** The LegalEntity associated to this account. */
+            fun legalEntityId(legalEntityId: String) = legalEntityId(JsonField.of(legalEntityId))
 
             /** The LegalEntity associated to this account. */
-            fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
-
-            /** The LegalEntity associated to this account. */
-            fun legalEntityId(legalEntityId: Optional<String>) =
-                legalEntityId(legalEntityId.orElse(null))
+            fun legalEntityId(legalEntityId: JsonField<String>) = apply {
+                this.legalEntityId = legalEntityId
+            }
 
             /** The parent internal account of this new account. */
-            fun parentAccountId(parentAccountId: String?) = apply {
+            fun parentAccountId(parentAccountId: String) =
+                parentAccountId(JsonField.of(parentAccountId))
+
+            /** The parent internal account of this new account. */
+            fun parentAccountId(parentAccountId: JsonField<String>) = apply {
                 this.parentAccountId = parentAccountId
             }
 
-            /** The parent internal account of this new account. */
-            fun parentAccountId(parentAccountId: Optional<String>) =
-                parentAccountId(parentAccountId.orElse(null))
+            /** The address associated with the owner or null. */
+            fun partyAddress(partyAddress: PartyAddress) = partyAddress(JsonField.of(partyAddress))
 
             /** The address associated with the owner or null. */
-            fun partyAddress(partyAddress: PartyAddress?) = apply {
+            fun partyAddress(partyAddress: JsonField<PartyAddress>) = apply {
                 this.partyAddress = partyAddress
             }
 
-            /** The address associated with the owner or null. */
-            fun partyAddress(partyAddress: Optional<PartyAddress>) =
-                partyAddress(partyAddress.orElse(null))
+            /**
+             * A hash of vendor specific attributes that will be used when creating the account at
+             * the vendor specified by the given connection.
+             */
+            fun vendorAttributes(vendorAttributes: VendorAttributes) =
+                vendorAttributes(JsonField.of(vendorAttributes))
 
             /**
              * A hash of vendor specific attributes that will be used when creating the account at
              * the vendor specified by the given connection.
              */
-            fun vendorAttributes(vendorAttributes: VendorAttributes?) = apply {
+            fun vendorAttributes(vendorAttributes: JsonField<VendorAttributes>) = apply {
                 this.vendorAttributes = vendorAttributes
             }
-
-            /**
-             * A hash of vendor specific attributes that will be used when creating the account at
-             * the vendor specified by the given connection.
-             */
-            fun vendorAttributes(vendorAttributes: Optional<VendorAttributes>) =
-                vendorAttributes(vendorAttributes.orElse(null))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -296,50 +418,68 @@ constructor(
         /** The identifier of the financial institution the account belongs to. */
         fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
 
+        /** The identifier of the financial institution the account belongs to. */
+        fun connectionId(connectionId: JsonField<String>) = apply {
+            body.connectionId(connectionId)
+        }
+
         /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
         fun currency(currency: Currency) = apply { body.currency(currency) }
+
+        /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+        fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
 
         /** The nickname of the account. */
         fun name(name: String) = apply { body.name(name) }
 
+        /** The nickname of the account. */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
+
         /** The legal name of the entity which owns the account. */
         fun partyName(partyName: String) = apply { body.partyName(partyName) }
 
-        /** The Counterparty associated to this account. */
-        fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
+        /** The legal name of the entity which owns the account. */
+        fun partyName(partyName: JsonField<String>) = apply { body.partyName(partyName) }
 
         /** The Counterparty associated to this account. */
-        fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
+
+        /** The Counterparty associated to this account. */
+        fun counterpartyId(counterpartyId: JsonField<String>) = apply {
+            body.counterpartyId(counterpartyId)
+        }
 
         /** The LegalEntity associated to this account. */
-        fun legalEntityId(legalEntityId: String?) = apply { body.legalEntityId(legalEntityId) }
+        fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
 
         /** The LegalEntity associated to this account. */
-        fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+        fun legalEntityId(legalEntityId: JsonField<String>) = apply {
+            body.legalEntityId(legalEntityId)
+        }
 
         /** The parent internal account of this new account. */
-        fun parentAccountId(parentAccountId: String?) = apply {
+        fun parentAccountId(parentAccountId: String) = apply {
             body.parentAccountId(parentAccountId)
         }
 
         /** The parent internal account of this new account. */
-        fun parentAccountId(parentAccountId: Optional<String>) =
-            parentAccountId(parentAccountId.orElse(null))
+        fun parentAccountId(parentAccountId: JsonField<String>) = apply {
+            body.parentAccountId(parentAccountId)
+        }
 
         /** The address associated with the owner or null. */
-        fun partyAddress(partyAddress: PartyAddress?) = apply { body.partyAddress(partyAddress) }
+        fun partyAddress(partyAddress: PartyAddress) = apply { body.partyAddress(partyAddress) }
 
         /** The address associated with the owner or null. */
-        fun partyAddress(partyAddress: Optional<PartyAddress>) =
-            partyAddress(partyAddress.orElse(null))
+        fun partyAddress(partyAddress: JsonField<PartyAddress>) = apply {
+            body.partyAddress(partyAddress)
+        }
 
         /**
          * A hash of vendor specific attributes that will be used when creating the account at the
          * vendor specified by the given connection.
          */
-        fun vendorAttributes(vendorAttributes: VendorAttributes?) = apply {
+        fun vendorAttributes(vendorAttributes: VendorAttributes) = apply {
             body.vendorAttributes(vendorAttributes)
         }
 
@@ -347,8 +487,28 @@ constructor(
          * A hash of vendor specific attributes that will be used when creating the account at the
          * vendor specified by the given connection.
          */
-        fun vendorAttributes(vendorAttributes: Optional<VendorAttributes>) =
-            vendorAttributes(vendorAttributes.orElse(null))
+        fun vendorAttributes(vendorAttributes: JsonField<VendorAttributes>) = apply {
+            body.vendorAttributes(vendorAttributes)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -448,25 +608,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): InternalAccountCreateParams =
             InternalAccountCreateParams(
                 body.build(),
@@ -537,35 +678,79 @@ constructor(
     class PartyAddress
     @JsonCreator
     private constructor(
-        @JsonProperty("country") private val country: String,
-        @JsonProperty("line1") private val line1: String,
-        @JsonProperty("locality") private val locality: String,
-        @JsonProperty("postal_code") private val postalCode: String,
-        @JsonProperty("region") private val region: String,
-        @JsonProperty("line2") private val line2: String?,
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line1")
+        @ExcludeMissing
+        private val line1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("locality")
+        @ExcludeMissing
+        private val locality: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        private val postalCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("region")
+        @ExcludeMissing
+        private val region: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line2")
+        @ExcludeMissing
+        private val line2: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Country code conforms to [ISO 3166-1 alpha-2] */
-        @JsonProperty("country") fun country(): String = country
+        fun country(): String = country.getRequired("country")
 
-        @JsonProperty("line1") fun line1(): String = line1
+        fun line1(): String = line1.getRequired("line1")
 
         /** Locality or City. */
-        @JsonProperty("locality") fun locality(): String = locality
+        fun locality(): String = locality.getRequired("locality")
 
         /** The postal code of the address. */
-        @JsonProperty("postal_code") fun postalCode(): String = postalCode
+        fun postalCode(): String = postalCode.getRequired("postal_code")
 
         /** Region or State. */
-        @JsonProperty("region") fun region(): String = region
+        fun region(): String = region.getRequired("region")
 
-        @JsonProperty("line2") fun line2(): Optional<String> = Optional.ofNullable(line2)
+        fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
+
+        /** Country code conforms to [ISO 3166-1 alpha-2] */
+        @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
+
+        @JsonProperty("line1") @ExcludeMissing fun _line1(): JsonField<String> = line1
+
+        /** Locality or City. */
+        @JsonProperty("locality") @ExcludeMissing fun _locality(): JsonField<String> = locality
+
+        /** The postal code of the address. */
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        fun _postalCode(): JsonField<String> = postalCode
+
+        /** Region or State. */
+        @JsonProperty("region") @ExcludeMissing fun _region(): JsonField<String> = region
+
+        @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): PartyAddress = apply {
+            if (!validated) {
+                country()
+                line1()
+                locality()
+                postalCode()
+                region()
+                line2()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -576,12 +761,12 @@ constructor(
 
         class Builder {
 
-            private var country: String? = null
-            private var line1: String? = null
-            private var locality: String? = null
-            private var postalCode: String? = null
-            private var region: String? = null
-            private var line2: String? = null
+            private var country: JsonField<String>? = null
+            private var line1: JsonField<String>? = null
+            private var locality: JsonField<String>? = null
+            private var postalCode: JsonField<String>? = null
+            private var region: JsonField<String>? = null
+            private var line2: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -596,22 +781,36 @@ constructor(
             }
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: String) = apply { this.country = country }
+            fun country(country: String) = country(JsonField.of(country))
 
-            fun line1(line1: String) = apply { this.line1 = line1 }
+            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            fun country(country: JsonField<String>) = apply { this.country = country }
+
+            fun line1(line1: String) = line1(JsonField.of(line1))
+
+            fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             /** Locality or City. */
-            fun locality(locality: String) = apply { this.locality = locality }
+            fun locality(locality: String) = locality(JsonField.of(locality))
+
+            /** Locality or City. */
+            fun locality(locality: JsonField<String>) = apply { this.locality = locality }
 
             /** The postal code of the address. */
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
+
+            /** The postal code of the address. */
+            fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             /** Region or State. */
-            fun region(region: String) = apply { this.region = region }
+            fun region(region: String) = region(JsonField.of(region))
 
-            fun line2(line2: String?) = apply { this.line2 = line2 }
+            /** Region or State. */
+            fun region(region: JsonField<String>) = apply { this.region = region }
 
-            fun line2(line2: Optional<String>) = line2(line2.orElse(null))
+            fun line2(line2: String) = line2(JsonField.of(line2))
+
+            fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -677,6 +876,14 @@ constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): VendorAttributes = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
