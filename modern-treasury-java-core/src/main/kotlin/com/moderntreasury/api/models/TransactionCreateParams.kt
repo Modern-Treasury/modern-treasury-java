@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** create transaction */
 class TransactionCreateParams
 constructor(
     private val body: TransactionCreateBody,

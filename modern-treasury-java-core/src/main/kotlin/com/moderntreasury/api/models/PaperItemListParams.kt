@@ -9,6 +9,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of all paper items. */
 class PaperItemListParams
 constructor(
     private val afterCursor: String?,

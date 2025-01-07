@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Delete a ledger account category from a ledger account category. */
 class LedgerAccountCategoryRemoveNestedCategoryParams
 constructor(
     private val id: String,

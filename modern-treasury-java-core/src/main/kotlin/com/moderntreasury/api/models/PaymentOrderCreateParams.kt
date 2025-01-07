@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Create a new Payment Order */
 class PaymentOrderCreateParams
 constructor(
     private val body: PaymentOrderCreateBody,

@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** update virtual_account */
 class VirtualAccountUpdateParams
 constructor(
     private val id: String,

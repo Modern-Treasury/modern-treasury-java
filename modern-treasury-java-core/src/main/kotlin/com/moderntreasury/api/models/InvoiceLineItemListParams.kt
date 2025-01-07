@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
 
+/** list invoice_line_items */
 class InvoiceLineItemListParams
 constructor(
     private val invoiceId: String,

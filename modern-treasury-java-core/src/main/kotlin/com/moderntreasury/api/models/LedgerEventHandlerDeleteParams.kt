@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Archive a ledger event handler. */
 class LedgerEventHandlerDeleteParams
 constructor(
     private val id: String,

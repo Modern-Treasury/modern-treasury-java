@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of all reversals of a payment order. */
 class PaymentOrderReversalListParams
 constructor(
     private val paymentOrderId: String,

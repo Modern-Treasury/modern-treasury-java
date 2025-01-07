@@ -20,6 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger transaction reversal. */
 class LedgerTransactionCreateReversalParams
 constructor(
     private val id: String,

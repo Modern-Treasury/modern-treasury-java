@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** delete invoice_line_item */
 class InvoiceLineItemDeleteParams
 constructor(
     private val invoiceId: String,

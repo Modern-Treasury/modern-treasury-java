@@ -17,6 +17,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** create foreign_exchange_quote */
 class ForeignExchangeQuoteCreateParams
 constructor(
     private val body: ForeignExchangeQuoteCreateBody,

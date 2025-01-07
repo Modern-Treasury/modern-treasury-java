@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** update invoice_line_item */
 class InvoiceLineItemUpdateParams
 constructor(
     private val invoiceId: String,

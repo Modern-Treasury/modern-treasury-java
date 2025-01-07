@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** create legal_entity_association */
 class LegalEntityAssociationCreateParams
 constructor(
     private val body: LegalEntityAssociationCreateBody,

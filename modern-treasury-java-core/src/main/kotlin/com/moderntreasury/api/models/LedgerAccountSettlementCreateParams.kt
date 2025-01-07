@@ -20,6 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger account settlement. */
 class LedgerAccountSettlementCreateParams
 constructor(
     private val body: LedgerAccountSettlementCreateBody,

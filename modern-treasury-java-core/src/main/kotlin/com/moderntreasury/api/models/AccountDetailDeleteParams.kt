@@ -14,6 +14,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Delete a single account detail for an external account. */
 class AccountDetailDeleteParams
 constructor(
     private val accountsType: AccountsType,
