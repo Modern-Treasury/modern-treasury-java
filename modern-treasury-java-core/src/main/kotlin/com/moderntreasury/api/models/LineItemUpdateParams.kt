@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** update line item */
 class LineItemUpdateParams
 constructor(
     private val itemizableType: ItemizableType,

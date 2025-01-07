@@ -12,6 +12,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of all legal entities. */
 class LegalEntityListParams
 constructor(
     private val afterCursor: String?,

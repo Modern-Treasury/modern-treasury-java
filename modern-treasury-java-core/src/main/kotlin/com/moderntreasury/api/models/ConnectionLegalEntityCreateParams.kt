@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** Create a connection legal entity. */
 class ConnectionLegalEntityCreateParams
 constructor(
     private val body: ConnectionLegalEntityCreateBody,

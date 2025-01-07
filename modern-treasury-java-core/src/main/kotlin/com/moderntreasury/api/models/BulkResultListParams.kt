@@ -12,6 +12,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** list bulk_results */
 class BulkResultListParams
 constructor(
     private val afterCursor: String?,

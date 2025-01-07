@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** create invoice */
 class InvoiceCreateParams
 constructor(
     private val body: InvoiceCreateBody,

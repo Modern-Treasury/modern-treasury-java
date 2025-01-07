@@ -13,6 +13,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of all ledger entries. */
 class LedgerEntryListParams
 constructor(
     private val id: List<String>?,

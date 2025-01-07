@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** create account_collection_flow */
 class AccountCollectionFlowCreateParams
 constructor(
     private val body: AccountCollectionFlowCreateBody,

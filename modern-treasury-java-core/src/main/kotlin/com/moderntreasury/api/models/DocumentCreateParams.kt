@@ -15,6 +15,7 @@ import java.util.Objects
 import java.util.Optional
 import org.apache.hc.core5.http.ContentType
 
+/** Create a document. */
 class DocumentCreateParams
 constructor(
     private val documentableId: MultipartFormValue<String>,

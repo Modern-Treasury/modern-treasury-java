@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger account. */
 class LedgerAccountCreateParams
 constructor(
     private val body: LedgerAccountCreateBody,

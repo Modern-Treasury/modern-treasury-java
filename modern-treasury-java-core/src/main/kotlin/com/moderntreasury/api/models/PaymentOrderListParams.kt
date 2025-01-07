@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of all payment orders */
 class PaymentOrderListParams
 constructor(
     private val afterCursor: String?,

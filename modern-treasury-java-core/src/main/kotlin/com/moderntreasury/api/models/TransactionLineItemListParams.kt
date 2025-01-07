@@ -12,6 +12,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** list transaction_line_items */
 class TransactionLineItemListParams
 constructor(
     private val id: Id?,

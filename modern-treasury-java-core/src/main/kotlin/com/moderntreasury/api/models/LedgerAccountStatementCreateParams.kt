@@ -17,6 +17,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger account statement. */
 class LedgerAccountStatementCreateParams
 constructor(
     private val body: LedgerAccountStatementCreateBody,

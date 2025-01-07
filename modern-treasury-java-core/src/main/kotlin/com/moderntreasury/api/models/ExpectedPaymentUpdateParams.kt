@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** update expected payment */
 class ExpectedPaymentUpdateParams
 constructor(
     private val id: String,

@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** Simulate Incoming Payment Detail */
 class IncomingPaymentDetailCreateAsyncParams
 constructor(
     private val body: IncomingPaymentDetailCreateAsyncBody,

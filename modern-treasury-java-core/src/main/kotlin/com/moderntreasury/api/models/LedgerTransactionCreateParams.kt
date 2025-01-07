@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Create a ledger transaction. */
 class LedgerTransactionCreateParams
 constructor(
     private val body: LedgerTransactionCreateBody,

@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Add a ledger account to a ledger account category. */
 class LedgerAccountCategoryAddLedgerAccountParams
 constructor(
     private val id: String,

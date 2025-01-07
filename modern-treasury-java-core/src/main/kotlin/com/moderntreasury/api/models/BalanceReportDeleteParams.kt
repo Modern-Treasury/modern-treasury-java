@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Deletes a given balance report. */
 class BalanceReportDeleteParams
 constructor(
     private val internalAccountId: String,

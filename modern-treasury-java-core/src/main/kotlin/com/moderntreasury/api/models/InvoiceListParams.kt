@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** list invoices */
 class InvoiceListParams
 constructor(
     private val afterCursor: String?,
