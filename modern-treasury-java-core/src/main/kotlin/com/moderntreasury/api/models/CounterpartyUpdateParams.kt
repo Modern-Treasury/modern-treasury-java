@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.ExcludeMissing
+import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -51,11 +53,35 @@ constructor(
     /** Either a valid SSN or EIN. */
     fun taxpayerIdentifier(): Optional<String> = body.taxpayerIdentifier()
 
+    /** A new email for the counterparty. */
+    fun _email(): JsonField<String> = body._email()
+
+    /** The id of the legal entity. */
+    fun _legalEntityId(): JsonField<String> = body._legalEntityId()
+
+    /**
+     * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+     * string or `null` as the value.
+     */
+    fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /** A new name for the counterparty. Will only update if passed. */
+    fun _name(): JsonField<String> = body._name()
+
+    /**
+     * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+     * associated payment order is sent to the bank.
+     */
+    fun _sendRemittanceAdvice(): JsonField<Boolean> = body._sendRemittanceAdvice()
+
+    /** Either a valid SSN or EIN. */
+    fun _taxpayerIdentifier(): JsonField<String> = body._taxpayerIdentifier()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): CounterpartyUpdateBody = body
 
@@ -74,46 +100,102 @@ constructor(
     class CounterpartyUpdateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("email") private val email: String?,
-        @JsonProperty("legal_entity_id") private val legalEntityId: String?,
-        @JsonProperty("metadata") private val metadata: Metadata?,
-        @JsonProperty("name") private val name: String?,
-        @JsonProperty("send_remittance_advice") private val sendRemittanceAdvice: Boolean?,
-        @JsonProperty("taxpayer_identifier") private val taxpayerIdentifier: String?,
+        @JsonProperty("email")
+        @ExcludeMissing
+        private val email: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("legal_entity_id")
+        @ExcludeMissing
+        private val legalEntityId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("send_remittance_advice")
+        @ExcludeMissing
+        private val sendRemittanceAdvice: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("taxpayer_identifier")
+        @ExcludeMissing
+        private val taxpayerIdentifier: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A new email for the counterparty. */
-        @JsonProperty("email") fun email(): Optional<String> = Optional.ofNullable(email)
+        fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
 
         /** The id of the legal entity. */
-        @JsonProperty("legal_entity_id")
-        fun legalEntityId(): Optional<String> = Optional.ofNullable(legalEntityId)
+        fun legalEntityId(): Optional<String> =
+            Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        @JsonProperty("metadata") fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
+        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
 
         /** A new name for the counterparty. Will only update if passed. */
-        @JsonProperty("name") fun name(): Optional<String> = Optional.ofNullable(name)
+        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+
+        /**
+         * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
+         * associated payment order is sent to the bank.
+         */
+        fun sendRemittanceAdvice(): Optional<Boolean> =
+            Optional.ofNullable(sendRemittanceAdvice.getNullable("send_remittance_advice"))
+
+        /** Either a valid SSN or EIN. */
+        fun taxpayerIdentifier(): Optional<String> =
+            Optional.ofNullable(taxpayerIdentifier.getNullable("taxpayer_identifier"))
+
+        /** A new email for the counterparty. */
+        @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
+
+        /** The id of the legal entity. */
+        @JsonProperty("legal_entity_id")
+        @ExcludeMissing
+        fun _legalEntityId(): JsonField<String> = legalEntityId
+
+        /**
+         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+         * string or `null` as the value.
+         */
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /** A new name for the counterparty. Will only update if passed. */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
          * associated payment order is sent to the bank.
          */
         @JsonProperty("send_remittance_advice")
-        fun sendRemittanceAdvice(): Optional<Boolean> = Optional.ofNullable(sendRemittanceAdvice)
+        @ExcludeMissing
+        fun _sendRemittanceAdvice(): JsonField<Boolean> = sendRemittanceAdvice
 
         /** Either a valid SSN or EIN. */
         @JsonProperty("taxpayer_identifier")
-        fun taxpayerIdentifier(): Optional<String> = Optional.ofNullable(taxpayerIdentifier)
+        @ExcludeMissing
+        fun _taxpayerIdentifier(): JsonField<String> = taxpayerIdentifier
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): CounterpartyUpdateBody = apply {
+            if (!validated) {
+                email()
+                legalEntityId()
+                metadata().map { it.validate() }
+                name()
+                sendRemittanceAdvice()
+                taxpayerIdentifier()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -124,12 +206,12 @@ constructor(
 
         class Builder {
 
-            private var email: String? = null
-            private var legalEntityId: String? = null
-            private var metadata: Metadata? = null
-            private var name: String? = null
-            private var sendRemittanceAdvice: Boolean? = null
-            private var taxpayerIdentifier: String? = null
+            private var email: JsonField<String> = JsonMissing.of()
+            private var legalEntityId: JsonField<String> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
+            private var sendRemittanceAdvice: JsonField<Boolean> = JsonMissing.of()
+            private var taxpayerIdentifier: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -144,67 +226,65 @@ constructor(
             }
 
             /** A new email for the counterparty. */
-            fun email(email: String?) = apply { this.email = email }
+            fun email(email: String) = email(JsonField.of(email))
 
             /** A new email for the counterparty. */
-            fun email(email: Optional<String>) = email(email.orElse(null))
+            fun email(email: JsonField<String>) = apply { this.email = email }
 
             /** The id of the legal entity. */
-            fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
+            fun legalEntityId(legalEntityId: String?) =
+                legalEntityId(JsonField.ofNullable(legalEntityId))
 
             /** The id of the legal entity. */
             fun legalEntityId(legalEntityId: Optional<String>) =
                 legalEntityId(legalEntityId.orElse(null))
 
-            /**
-             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
-             * empty string or `null` as the value.
-             */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
-
-            /**
-             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
-             * empty string or `null` as the value.
-             */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
-
-            /** A new name for the counterparty. Will only update if passed. */
-            fun name(name: String?) = apply { this.name = name }
-
-            /** A new name for the counterparty. Will only update if passed. */
-            fun name(name: Optional<String>) = name(name.orElse(null))
-
-            /**
-             * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
-             * associated payment order is sent to the bank.
-             */
-            fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean?) = apply {
-                this.sendRemittanceAdvice = sendRemittanceAdvice
+            /** The id of the legal entity. */
+            fun legalEntityId(legalEntityId: JsonField<String>) = apply {
+                this.legalEntityId = legalEntityId
             }
+
+            /**
+             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
+             * empty string or `null` as the value.
+             */
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+            /**
+             * Additional data in the form of key-value pairs. Pairs can be removed by passing an
+             * empty string or `null` as the value.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /** A new name for the counterparty. Will only update if passed. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** A new name for the counterparty. Will only update if passed. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
              * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
              * associated payment order is sent to the bank.
              */
             fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) =
-                sendRemittanceAdvice(sendRemittanceAdvice as Boolean?)
+                sendRemittanceAdvice(JsonField.of(sendRemittanceAdvice))
 
             /**
              * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
              * associated payment order is sent to the bank.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun sendRemittanceAdvice(sendRemittanceAdvice: Optional<Boolean>) =
-                sendRemittanceAdvice(sendRemittanceAdvice.orElse(null) as Boolean?)
-
-            /** Either a valid SSN or EIN. */
-            fun taxpayerIdentifier(taxpayerIdentifier: String?) = apply {
-                this.taxpayerIdentifier = taxpayerIdentifier
+            fun sendRemittanceAdvice(sendRemittanceAdvice: JsonField<Boolean>) = apply {
+                this.sendRemittanceAdvice = sendRemittanceAdvice
             }
 
             /** Either a valid SSN or EIN. */
-            fun taxpayerIdentifier(taxpayerIdentifier: Optional<String>) =
-                taxpayerIdentifier(taxpayerIdentifier.orElse(null))
+            fun taxpayerIdentifier(taxpayerIdentifier: String) =
+                taxpayerIdentifier(JsonField.of(taxpayerIdentifier))
+
+            /** Either a valid SSN or EIN. */
+            fun taxpayerIdentifier(taxpayerIdentifier: JsonField<String>) = apply {
+                this.taxpayerIdentifier = taxpayerIdentifier
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -281,10 +361,10 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** A new email for the counterparty. */
-        fun email(email: String?) = apply { body.email(email) }
+        fun email(email: String) = apply { body.email(email) }
 
         /** A new email for the counterparty. */
-        fun email(email: Optional<String>) = email(email.orElse(null))
+        fun email(email: JsonField<String>) = apply { body.email(email) }
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: String?) = apply { body.legalEntityId(legalEntityId) }
@@ -293,29 +373,34 @@ constructor(
         fun legalEntityId(legalEntityId: Optional<String>) =
             legalEntityId(legalEntityId.orElse(null))
 
-        /**
-         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
-         * string or `null` as the value.
-         */
-        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+        /** The id of the legal entity. */
+        fun legalEntityId(legalEntityId: JsonField<String>) = apply {
+            body.legalEntityId(legalEntityId)
+        }
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
          * string or `null` as the value.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+
+        /**
+         * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
+         * string or `null` as the value.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
         /** A new name for the counterparty. Will only update if passed. */
-        fun name(name: String?) = apply { body.name(name) }
+        fun name(name: String) = apply { body.name(name) }
 
         /** A new name for the counterparty. Will only update if passed. */
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
          * associated payment order is sent to the bank.
          */
-        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean?) = apply {
+        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) = apply {
             body.sendRemittanceAdvice(sendRemittanceAdvice)
         }
 
@@ -323,25 +408,38 @@ constructor(
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
          * associated payment order is sent to the bank.
          */
-        fun sendRemittanceAdvice(sendRemittanceAdvice: Boolean) =
-            sendRemittanceAdvice(sendRemittanceAdvice as Boolean?)
-
-        /**
-         * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
-         * associated payment order is sent to the bank.
-         */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun sendRemittanceAdvice(sendRemittanceAdvice: Optional<Boolean>) =
-            sendRemittanceAdvice(sendRemittanceAdvice.orElse(null) as Boolean?)
+        fun sendRemittanceAdvice(sendRemittanceAdvice: JsonField<Boolean>) = apply {
+            body.sendRemittanceAdvice(sendRemittanceAdvice)
+        }
 
         /** Either a valid SSN or EIN. */
-        fun taxpayerIdentifier(taxpayerIdentifier: String?) = apply {
+        fun taxpayerIdentifier(taxpayerIdentifier: String) = apply {
             body.taxpayerIdentifier(taxpayerIdentifier)
         }
 
         /** Either a valid SSN or EIN. */
-        fun taxpayerIdentifier(taxpayerIdentifier: Optional<String>) =
-            taxpayerIdentifier(taxpayerIdentifier.orElse(null))
+        fun taxpayerIdentifier(taxpayerIdentifier: JsonField<String>) = apply {
+            body.taxpayerIdentifier(taxpayerIdentifier)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -441,25 +539,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): CounterpartyUpdateParams =
             CounterpartyUpdateParams(
                 checkNotNull(id) { "`id` is required but was not set" },
@@ -484,6 +563,14 @@ constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
