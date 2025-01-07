@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 
+/** Update a legal entity. */
 class LegalEntityUpdateParams
 constructor(
     private val id: String,

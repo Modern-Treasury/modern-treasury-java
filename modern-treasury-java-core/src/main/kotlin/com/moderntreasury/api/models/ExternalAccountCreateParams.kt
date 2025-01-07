@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** create external account */
 class ExternalAccountCreateParams
 constructor(
     private val body: ExternalAccountCreateBody,

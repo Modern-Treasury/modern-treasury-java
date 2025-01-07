@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of routing details for a single internal or external account. */
 class RoutingDetailListParams
 constructor(
     private val accountsType: AccountsType,

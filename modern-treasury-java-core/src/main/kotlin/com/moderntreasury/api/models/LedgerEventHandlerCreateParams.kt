@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** create ledger_event_handler */
 class LedgerEventHandlerCreateParams
 constructor(
     private val body: LedgerEventHandlerCreateBody,

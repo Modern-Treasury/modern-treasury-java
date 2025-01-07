@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** Update a payment order */
 class PaymentOrderUpdateParams
 constructor(
     private val id: String,

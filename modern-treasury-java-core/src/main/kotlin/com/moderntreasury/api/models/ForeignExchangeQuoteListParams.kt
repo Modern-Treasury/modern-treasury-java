@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 
+/** list foreign_exchange_quotes */
 class ForeignExchangeQuoteListParams
 constructor(
     private val afterCursor: String?,

@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListParams
 constructor(
     private val id: List<String>?,

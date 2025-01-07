@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
+/** complete verification of external account */
 class ExternalAccountCompleteVerificationParams
 constructor(
     private val id: String,

@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 
+/** Get details on a single ledger account. */
 class LedgerAccountRetrieveParams
 constructor(
     private val id: String,

@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 
+/** list events */
 class EventListParams
 constructor(
     private val afterCursor: String?,

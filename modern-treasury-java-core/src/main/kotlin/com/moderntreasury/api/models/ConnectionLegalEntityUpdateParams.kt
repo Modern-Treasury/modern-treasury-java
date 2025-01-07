@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Update a connection legal entity. */
 class ConnectionLegalEntityUpdateParams
 constructor(
     private val id: String,

@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
+/** Update the details of a ledger account settlement. */
 class LedgerAccountSettlementUpdateParams
 constructor(
     private val id: String,

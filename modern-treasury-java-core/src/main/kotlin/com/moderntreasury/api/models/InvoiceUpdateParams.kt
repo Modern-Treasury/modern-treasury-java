@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+/** update invoice */
 class InvoiceUpdateParams
 constructor(
     private val id: String,
