@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.http.Headers
@@ -33,11 +34,14 @@ constructor(
     /** The status of the connection legal entity. */
     fun status(): Optional<Status> = body.status()
 
+    /** The status of the connection legal entity. */
+    fun _status(): JsonField<Status> = body._status()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     @JvmSynthetic internal fun getBody(): ConnectionLegalEntityUpdateBody = body
 
@@ -56,17 +60,31 @@ constructor(
     class ConnectionLegalEntityUpdateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("status") private val status: Status?,
+        @JsonProperty("status")
+        @ExcludeMissing
+        private val status: JsonField<Status> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The status of the connection legal entity. */
-        @JsonProperty("status") fun status(): Optional<Status> = Optional.ofNullable(status)
+        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+
+        /** The status of the connection legal entity. */
+        @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ConnectionLegalEntityUpdateBody = apply {
+            if (!validated) {
+                status()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -77,7 +95,7 @@ constructor(
 
         class Builder {
 
-            private var status: Status? = null
+            private var status: JsonField<Status> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -89,10 +107,10 @@ constructor(
                 }
 
             /** The status of the connection legal entity. */
-            fun status(status: Status?) = apply { this.status = status }
+            fun status(status: Status) = status(JsonField.of(status))
 
             /** The status of the connection legal entity. */
-            fun status(status: Optional<Status>) = status(status.orElse(null))
+            fun status(status: JsonField<Status>) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -164,10 +182,29 @@ constructor(
         fun id(id: String) = apply { this.id = id }
 
         /** The status of the connection legal entity. */
-        fun status(status: Status?) = apply { body.status(status) }
+        fun status(status: Status) = apply { body.status(status) }
 
         /** The status of the connection legal entity. */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: JsonField<Status>) = apply { body.status(status) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -265,25 +302,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ConnectionLegalEntityUpdateParams =

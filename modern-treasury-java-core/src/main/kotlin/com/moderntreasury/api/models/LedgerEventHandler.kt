@@ -99,41 +99,52 @@ private constructor(
     fun variables(): Optional<LedgerEventHandlerVariables> =
         Optional.ofNullable(variables.getNullable("variables"))
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    @JsonProperty("conditions") @ExcludeMissing fun _conditions() = conditions
+    @JsonProperty("conditions")
+    @ExcludeMissing
+    fun _conditions(): JsonField<LedgerEventHandlerConditions> = conditions
 
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /** An optional description. */
-    @JsonProperty("description") @ExcludeMissing fun _description() = description
+    @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
-    @JsonProperty("discarded_at") @ExcludeMissing fun _discardedAt() = discardedAt
+    @JsonProperty("discarded_at")
+    @ExcludeMissing
+    fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
 
     /** The id of the ledger that this event handler belongs to. */
-    @JsonProperty("ledger_id") @ExcludeMissing fun _ledgerId() = ledgerId
+    @JsonProperty("ledger_id") @ExcludeMissing fun _ledgerId(): JsonField<String> = ledgerId
 
     @JsonProperty("ledger_transaction_template")
     @ExcludeMissing
-    fun _ledgerTransactionTemplate() = ledgerTransactionTemplate
+    fun _ledgerTransactionTemplate(): JsonField<LedgerEventHandlerLedgerTransactionTemplate> =
+        ledgerTransactionTemplate
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
      * in the test environment.
      */
-    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode() = liveMode
+    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode(): JsonField<Boolean> = liveMode
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
     /** Name of the ledger event handler. */
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    @JsonProperty("object") @ExcludeMissing fun _object_() = object_
+    @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
 
-    @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
+    @JsonProperty("updated_at")
+    @ExcludeMissing
+    fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
 
-    @JsonProperty("variables") @ExcludeMissing fun _variables() = variables
+    @JsonProperty("variables")
+    @ExcludeMissing
+    fun _variables(): JsonField<LedgerEventHandlerVariables> = variables
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -169,21 +180,21 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var conditions: JsonField<LedgerEventHandlerConditions> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var description: JsonField<String> = JsonMissing.of()
-        private var discardedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var ledgerId: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var conditions: JsonField<LedgerEventHandlerConditions>? = null
+        private var createdAt: JsonField<OffsetDateTime>? = null
+        private var description: JsonField<String>? = null
+        private var discardedAt: JsonField<OffsetDateTime>? = null
+        private var ledgerId: JsonField<String>? = null
         private var ledgerTransactionTemplate:
-            JsonField<LedgerEventHandlerLedgerTransactionTemplate> =
-            JsonMissing.of()
-        private var liveMode: JsonField<Boolean> = JsonMissing.of()
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
-        private var object_: JsonField<String> = JsonMissing.of()
-        private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var variables: JsonField<LedgerEventHandlerVariables> = JsonMissing.of()
+            JsonField<LedgerEventHandlerLedgerTransactionTemplate>? =
+            null
+        private var liveMode: JsonField<Boolean>? = null
+        private var metadata: JsonField<Metadata>? = null
+        private var name: JsonField<String>? = null
+        private var object_: JsonField<String>? = null
+        private var updatedAt: JsonField<OffsetDateTime>? = null
+        private var variables: JsonField<LedgerEventHandlerVariables>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -208,8 +219,11 @@ private constructor(
 
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun conditions(conditions: LedgerEventHandlerConditions) =
-            conditions(JsonField.of(conditions))
+        fun conditions(conditions: LedgerEventHandlerConditions?) =
+            conditions(JsonField.ofNullable(conditions))
+
+        fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
+            conditions(conditions.orElse(null))
 
         fun conditions(conditions: JsonField<LedgerEventHandlerConditions>) = apply {
             this.conditions = conditions
@@ -220,19 +234,29 @@ private constructor(
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** An optional description. */
-        fun description(description: String) = description(JsonField.of(description))
+        fun description(description: String?) = description(JsonField.ofNullable(description))
+
+        /** An optional description. */
+        fun description(description: Optional<String>) = description(description.orElse(null))
 
         /** An optional description. */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        fun discardedAt(discardedAt: OffsetDateTime) = discardedAt(JsonField.of(discardedAt))
+        fun discardedAt(discardedAt: OffsetDateTime?) =
+            discardedAt(JsonField.ofNullable(discardedAt))
+
+        fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
+            discardedAt(discardedAt.orElse(null))
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
         }
 
         /** The id of the ledger that this event handler belongs to. */
-        fun ledgerId(ledgerId: String) = ledgerId(JsonField.of(ledgerId))
+        fun ledgerId(ledgerId: String?) = ledgerId(JsonField.ofNullable(ledgerId))
+
+        /** The id of the ledger that this event handler belongs to. */
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
 
         /** The id of the ledger that this event handler belongs to. */
         fun ledgerId(ledgerId: JsonField<String>) = apply { this.ledgerId = ledgerId }
@@ -260,7 +284,12 @@ private constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+        fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -281,7 +310,11 @@ private constructor(
 
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
-        fun variables(variables: LedgerEventHandlerVariables) = variables(JsonField.of(variables))
+        fun variables(variables: LedgerEventHandlerVariables?) =
+            variables(JsonField.ofNullable(variables))
+
+        fun variables(variables: Optional<LedgerEventHandlerVariables>) =
+            variables(variables.orElse(null))
 
         fun variables(variables: JsonField<LedgerEventHandlerVariables>) = apply {
             this.variables = variables
@@ -308,19 +341,21 @@ private constructor(
 
         fun build(): LedgerEventHandler =
             LedgerEventHandler(
-                id,
-                conditions,
-                createdAt,
-                description,
-                discardedAt,
-                ledgerId,
-                ledgerTransactionTemplate,
-                liveMode,
-                metadata,
-                name,
-                object_,
-                updatedAt,
-                variables,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(conditions) { "`conditions` is required but was not set" },
+                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
+                checkNotNull(description) { "`description` is required but was not set" },
+                checkNotNull(discardedAt) { "`discardedAt` is required but was not set" },
+                checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
+                checkNotNull(ledgerTransactionTemplate) {
+                    "`ledgerTransactionTemplate` is required but was not set"
+                },
+                checkNotNull(liveMode) { "`liveMode` is required but was not set" },
+                checkNotNull(metadata) { "`metadata` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
+                checkNotNull(object_) { "`object_` is required but was not set" },
+                checkNotNull(updatedAt) { "`updatedAt` is required but was not set" },
+                checkNotNull(variables) { "`variables` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }
@@ -352,13 +387,13 @@ private constructor(
         fun value(): String = value.getRequired("value")
 
         /** The LHS of the conditional. */
-        @JsonProperty("field") @ExcludeMissing fun _field() = field
+        @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<String> = field
 
         /** What the operator between the `field` and `value` is. */
-        @JsonProperty("operator") @ExcludeMissing fun _operator() = operator
+        @JsonProperty("operator") @ExcludeMissing fun _operator(): JsonField<String> = operator
 
         /** The RHS of the conditional. */
-        @JsonProperty("value") @ExcludeMissing fun _value() = value
+        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -384,9 +419,9 @@ private constructor(
 
         class Builder {
 
-            private var field: JsonField<String> = JsonMissing.of()
-            private var operator: JsonField<String> = JsonMissing.of()
-            private var value: JsonField<String> = JsonMissing.of()
+            private var field: JsonField<String>? = null
+            private var operator: JsonField<String>? = null
+            private var value: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -437,9 +472,9 @@ private constructor(
 
             fun build(): LedgerEventHandlerConditions =
                 LedgerEventHandlerConditions(
-                    field,
-                    operator,
-                    value,
+                    checkNotNull(field) { "`field` is required but was not set" },
+                    checkNotNull(operator) { "`operator` is required but was not set" },
+                    checkNotNull(value) { "`value` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -502,19 +537,25 @@ private constructor(
         fun status(): Optional<String> = Optional.ofNullable(status.getNullable("status"))
 
         /** An optional description for internal use. */
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
          * purposes.
          */
-        @JsonProperty("effective_at") @ExcludeMissing fun _effectiveAt() = effectiveAt
+        @JsonProperty("effective_at")
+        @ExcludeMissing
+        fun _effectiveAt(): JsonField<String> = effectiveAt
 
         /** An array of ledger entry objects. */
-        @JsonProperty("ledger_entries") @ExcludeMissing fun _ledgerEntries() = ledgerEntries
+        @JsonProperty("ledger_entries")
+        @ExcludeMissing
+        fun _ledgerEntries(): JsonField<List<LedgerEventHandlerLedgerEntries>> = ledgerEntries
 
         /** To post a ledger transaction at creation, use `posted`. */
-        @JsonProperty("status") @ExcludeMissing fun _status() = status
+        @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<String> = status
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -541,11 +582,11 @@ private constructor(
 
         class Builder {
 
-            private var description: JsonField<String> = JsonMissing.of()
-            private var effectiveAt: JsonField<String> = JsonMissing.of()
-            private var ledgerEntries: JsonField<List<LedgerEventHandlerLedgerEntries>> =
-                JsonMissing.of()
-            private var status: JsonField<String> = JsonMissing.of()
+            private var description: JsonField<String>? = null
+            private var effectiveAt: JsonField<String>? = null
+            private var ledgerEntries: JsonField<MutableList<LedgerEventHandlerLedgerEntries>>? =
+                null
+            private var status: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -555,14 +596,20 @@ private constructor(
             ) = apply {
                 description = ledgerEventHandlerLedgerTransactionTemplate.description
                 effectiveAt = ledgerEventHandlerLedgerTransactionTemplate.effectiveAt
-                ledgerEntries = ledgerEventHandlerLedgerTransactionTemplate.ledgerEntries
+                ledgerEntries =
+                    ledgerEventHandlerLedgerTransactionTemplate.ledgerEntries.map {
+                        it.toMutableList()
+                    }
                 status = ledgerEventHandlerLedgerTransactionTemplate.status
                 additionalProperties =
                     ledgerEventHandlerLedgerTransactionTemplate.additionalProperties.toMutableMap()
             }
 
             /** An optional description for internal use. */
-            fun description(description: String) = description(JsonField.of(description))
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /** An optional description for internal use. */
+            fun description(description: Optional<String>) = description(description.orElse(null))
 
             /** An optional description for internal use. */
             fun description(description: JsonField<String>) = apply {
@@ -573,7 +620,13 @@ private constructor(
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveAt(effectiveAt: String) = effectiveAt(JsonField.of(effectiveAt))
+            fun effectiveAt(effectiveAt: String?) = effectiveAt(JsonField.ofNullable(effectiveAt))
+
+            /**
+             * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+             * purposes.
+             */
+            fun effectiveAt(effectiveAt: Optional<String>) = effectiveAt(effectiveAt.orElse(null))
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -590,11 +643,28 @@ private constructor(
             /** An array of ledger entry objects. */
             fun ledgerEntries(ledgerEntries: JsonField<List<LedgerEventHandlerLedgerEntries>>) =
                 apply {
-                    this.ledgerEntries = ledgerEntries
+                    this.ledgerEntries = ledgerEntries.map { it.toMutableList() }
                 }
 
+            /** An array of ledger entry objects. */
+            fun addLedgerEntry(ledgerEntry: LedgerEventHandlerLedgerEntries) = apply {
+                ledgerEntries =
+                    (ledgerEntries ?: JsonField.of(mutableListOf())).apply {
+                        asKnown()
+                            .orElseThrow {
+                                IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                )
+                            }
+                            .add(ledgerEntry)
+                    }
+            }
+
             /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: String) = status(JsonField.of(status))
+            fun status(status: String?) = status(JsonField.ofNullable(status))
+
+            /** To post a ledger transaction at creation, use `posted`. */
+            fun status(status: Optional<String>) = status(status.orElse(null))
 
             /** To post a ledger transaction at creation, use `posted`. */
             fun status(status: JsonField<String>) = apply { this.status = status }
@@ -620,10 +690,11 @@ private constructor(
 
             fun build(): LedgerEventHandlerLedgerTransactionTemplate =
                 LedgerEventHandlerLedgerTransactionTemplate(
-                    description,
-                    effectiveAt,
-                    ledgerEntries.map { it.toImmutable() },
-                    status,
+                    checkNotNull(description) { "`description` is required but was not set" },
+                    checkNotNull(effectiveAt) { "`effectiveAt` is required but was not set" },
+                    checkNotNull(ledgerEntries) { "`ledgerEntries` is required but was not set" }
+                        .map { it.toImmutable() },
+                    checkNotNull(status) { "`status` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -655,15 +726,17 @@ private constructor(
             fun ledgerAccountId(): String = ledgerAccountId.getRequired("ledger_account_id")
 
             /** The LHS of the conditional. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
             /** What the operator between the `field` and `value` is. */
-            @JsonProperty("direction") @ExcludeMissing fun _direction() = direction
+            @JsonProperty("direction")
+            @ExcludeMissing
+            fun _direction(): JsonField<String> = direction
 
             /** The RHS of the conditional. */
             @JsonProperty("ledger_account_id")
             @ExcludeMissing
-            fun _ledgerAccountId() = ledgerAccountId
+            fun _ledgerAccountId(): JsonField<String> = ledgerAccountId
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -689,9 +762,9 @@ private constructor(
 
             class Builder {
 
-                private var amount: JsonField<String> = JsonMissing.of()
-                private var direction: JsonField<String> = JsonMissing.of()
-                private var ledgerAccountId: JsonField<String> = JsonMissing.of()
+                private var amount: JsonField<String>? = null
+                private var direction: JsonField<String>? = null
+                private var ledgerAccountId: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
@@ -750,9 +823,11 @@ private constructor(
 
                 fun build(): LedgerEventHandlerLedgerEntries =
                     LedgerEventHandlerLedgerEntries(
-                        amount,
-                        direction,
-                        ledgerAccountId,
+                        checkNotNull(amount) { "`amount` is required but was not set" },
+                        checkNotNull(direction) { "`direction` is required but was not set" },
+                        checkNotNull(ledgerAccountId) {
+                            "`ledgerAccountId` is required but was not set"
+                        },
                         additionalProperties.toImmutable(),
                     )
             }
