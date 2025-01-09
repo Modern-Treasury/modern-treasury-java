@@ -129,12 +129,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerAccountSettlementUpdateBody = apply {
-            if (!validated) {
-                description()
-                metadata().map { it.validate() }
-                status()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            description()
+            metadata().ifPresent { it.validate() }
+            status()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -445,9 +447,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

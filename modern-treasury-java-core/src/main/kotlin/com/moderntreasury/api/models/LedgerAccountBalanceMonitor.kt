@@ -147,20 +147,22 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): LedgerAccountBalanceMonitor = apply {
-        if (!validated) {
-            id()
-            alertCondition().validate()
-            createdAt()
-            currentLedgerAccountBalanceState().validate()
-            description()
-            discardedAt()
-            ledgerAccountId()
-            liveMode()
-            metadata().validate()
-            object_()
-            updatedAt()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        alertCondition().validate()
+        createdAt()
+        currentLedgerAccountBalanceState().validate()
+        description()
+        discardedAt()
+        ledgerAccountId()
+        liveMode()
+        metadata().validate()
+        object_()
+        updatedAt()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -393,12 +395,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): AlertCondition = apply {
-            if (!validated) {
-                field()
-                operator()
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            field()
+            operator()
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -560,12 +564,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CurrentLedgerAccountBalanceState = apply {
-            if (!validated) {
-                balances().validate()
-                ledgerAccountLockVersion()
-                triggered()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            balances().validate()
+            ledgerAccountLockVersion()
+            triggered()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -705,12 +711,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): LedgerBalances = apply {
-                if (!validated) {
-                    availableBalance().validate()
-                    pendingBalance().validate()
-                    postedBalance().validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                availableBalance().validate()
+                pendingBalance().validate()
+                postedBalance().validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -872,14 +880,16 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): LedgerBalance = apply {
-                    if (!validated) {
-                        amount()
-                        credits()
-                        currency()
-                        currencyExponent()
-                        debits()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    amount()
+                    credits()
+                    currency()
+                    currencyExponent()
+                    debits()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -1040,9 +1050,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

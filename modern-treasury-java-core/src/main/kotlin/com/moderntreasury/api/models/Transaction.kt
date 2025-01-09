@@ -339,34 +339,36 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Transaction = apply {
-        if (!validated) {
-            id()
-            amount()
-            asOfDate()
-            asOfTime()
-            asOfTimezone()
-            createdAt()
-            currency()
-            customIdentifiers().validate()
-            direction()
-            discardedAt()
-            foreignExchangeRate().map { it.validate() }
-            internalAccountId()
-            liveMode()
-            metadata().validate()
-            object_()
-            posted()
-            reconciled()
-            type()
-            updatedAt()
-            vendorCode()
-            vendorCodeType()
-            vendorCustomerId()
-            vendorId()
-            details().map { it.validate() }
-            vendorDescription()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        amount()
+        asOfDate()
+        asOfTime()
+        asOfTimezone()
+        createdAt()
+        currency()
+        customIdentifiers().validate()
+        direction()
+        discardedAt()
+        foreignExchangeRate().ifPresent { it.validate() }
+        internalAccountId()
+        liveMode()
+        metadata().validate()
+        object_()
+        posted()
+        reconciled()
+        type()
+        updatedAt()
+        vendorCode()
+        vendorCodeType()
+        vendorCustomerId()
+        vendorId()
+        details().ifPresent { it.validate() }
+        vendorDescription()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -800,9 +802,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CustomIdentifiers = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -971,16 +975,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): ForeignExchangeRate = apply {
-            if (!validated) {
-                baseAmount()
-                baseCurrency()
-                exponent()
-                rateString()
-                targetAmount()
-                targetCurrency()
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            baseAmount()
+            baseCurrency()
+            exponent()
+            rateString()
+            targetAmount()
+            targetCurrency()
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1152,9 +1158,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1643,9 +1651,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Details = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

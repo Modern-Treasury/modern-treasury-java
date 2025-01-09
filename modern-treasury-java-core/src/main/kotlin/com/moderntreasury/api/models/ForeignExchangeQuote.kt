@@ -157,21 +157,23 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): ForeignExchangeQuote = apply {
-        if (!validated) {
-            id()
-            createdAt()
-            effectiveAt()
-            expiresAt()
-            foreignExchangeIndicator()
-            foreignExchangeRate().validate()
-            internalAccountId()
-            liveMode()
-            metadata().validate()
-            object_()
-            updatedAt()
-            vendorId()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        createdAt()
+        effectiveAt()
+        expiresAt()
+        foreignExchangeIndicator()
+        foreignExchangeRate().validate()
+        internalAccountId()
+        liveMode()
+        metadata().validate()
+        object_()
+        updatedAt()
+        vendorId()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -459,16 +461,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): ForeignExchangeRate = apply {
-            if (!validated) {
-                baseAmount()
-                baseCurrency()
-                exponent()
-                rateString()
-                targetAmount()
-                targetCurrency()
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            baseAmount()
+            baseCurrency()
+            exponent()
+            rateString()
+            targetAmount()
+            targetCurrency()
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -640,9 +644,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

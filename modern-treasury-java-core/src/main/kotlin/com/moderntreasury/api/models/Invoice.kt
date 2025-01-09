@@ -503,46 +503,48 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Invoice = apply {
-        if (!validated) {
-            id()
-            amountPaid()
-            amountRemaining()
-            contactDetails().forEach { it.validate() }
-            counterpartyBillingAddress().map { it.validate() }
-            counterpartyId()
-            counterpartyShippingAddress().map { it.validate() }
-            createdAt()
-            currency()
-            description()
-            dueDate()
-            expectedPayments().forEach { it.validate() }
-            fallbackPaymentMethod()
-            hostedUrl()
-            invoicerAddress().map { it.validate() }
-            ledgerAccountSettlementId()
-            liveMode()
-            metadata().map { it.validate() }
-            notificationEmailAddresses()
-            notificationsEnabled()
-            number()
-            object_()
-            originatingAccountId()
-            paymentEffectiveDate()
-            paymentMethod()
-            paymentOrders().forEach { it.validate() }
-            paymentType()
-            pdfUrl()
-            receivingAccountId()
-            recipientEmail()
-            recipientName()
-            remindAfterOverdueDays()
-            status()
-            totalAmount()
-            transactionLineItemIds()
-            updatedAt()
-            virtualAccountId()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        amountPaid()
+        amountRemaining()
+        contactDetails().forEach { it.validate() }
+        counterpartyBillingAddress().ifPresent { it.validate() }
+        counterpartyId()
+        counterpartyShippingAddress().ifPresent { it.validate() }
+        createdAt()
+        currency()
+        description()
+        dueDate()
+        expectedPayments().forEach { it.validate() }
+        fallbackPaymentMethod()
+        hostedUrl()
+        invoicerAddress().ifPresent { it.validate() }
+        ledgerAccountSettlementId()
+        liveMode()
+        metadata().ifPresent { it.validate() }
+        notificationEmailAddresses()
+        notificationsEnabled()
+        number()
+        object_()
+        originatingAccountId()
+        paymentEffectiveDate()
+        paymentMethod()
+        paymentOrders().forEach { it.validate() }
+        paymentType()
+        pdfUrl()
+        receivingAccountId()
+        recipientEmail()
+        recipientName()
+        remindAfterOverdueDays()
+        status()
+        totalAmount()
+        transactionLineItemIds()
+        updatedAt()
+        virtualAccountId()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1353,17 +1355,19 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): ContactDetail = apply {
-            if (!validated) {
-                id()
-                contactIdentifier()
-                contactIdentifierType()
-                createdAt()
-                discardedAt()
-                liveMode()
-                object_()
-                updatedAt()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            contactIdentifier()
+            contactIdentifierType()
+            createdAt()
+            discardedAt()
+            liveMode()
+            object_()
+            updatedAt()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1644,15 +1648,17 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CounterpartyBillingAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1833,15 +1839,17 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CounterpartyShippingAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2022,15 +2030,17 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoicerAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2158,9 +2168,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
