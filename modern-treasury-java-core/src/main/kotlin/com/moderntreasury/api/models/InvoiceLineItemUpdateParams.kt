@@ -233,16 +233,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceLineItemUpdateBody = apply {
-            if (!validated) {
-                description()
-                direction()
-                metadata().map { it.validate() }
-                name()
-                quantity()
-                unitAmount()
-                unitAmountDecimal()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            description()
+            direction()
+            metadata().ifPresent { it.validate() }
+            name()
+            quantity()
+            unitAmount()
+            unitAmountDecimal()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -652,9 +654,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

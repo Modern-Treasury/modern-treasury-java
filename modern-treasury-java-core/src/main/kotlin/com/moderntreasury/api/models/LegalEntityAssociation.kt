@@ -140,20 +140,22 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): LegalEntityAssociation = apply {
-        if (!validated) {
-            id()
-            childLegalEntity().validate()
-            createdAt()
-            discardedAt()
-            liveMode()
-            object_()
-            ownershipPercentage()
-            parentLegalEntityId()
-            relationshipTypes()
-            title()
-            updatedAt()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        childLegalEntity().validate()
+        createdAt()
+        discardedAt()
+        liveMode()
+        object_()
+        ownershipPercentage()
+        parentLegalEntityId()
+        relationshipTypes()
+        title()
+        updatedAt()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -662,38 +664,40 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): ChildLegalEntity = apply {
-            if (!validated) {
-                id()
-                addresses().forEach { it.validate() }
-                bankSettings().map { it.validate() }
-                businessName()
-                citizenshipCountry()
-                createdAt()
-                dateFormed()
-                dateOfBirth()
-                discardedAt()
-                doingBusinessAsNames()
-                email()
-                firstName()
-                identifications().forEach { it.validate() }
-                lastName()
-                legalEntityType()
-                legalStructure()
-                liveMode()
-                metadata().validate()
-                middleName()
-                object_()
-                phoneNumbers().forEach { it.validate() }
-                politicallyExposedPerson()
-                preferredName()
-                prefix()
-                riskRating()
-                suffix()
-                updatedAt()
-                wealthAndEmploymentDetails().map { it.validate() }
-                website()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            addresses().forEach { it.validate() }
+            bankSettings().ifPresent { it.validate() }
+            businessName()
+            citizenshipCountry()
+            createdAt()
+            dateFormed()
+            dateOfBirth()
+            discardedAt()
+            doingBusinessAsNames()
+            email()
+            firstName()
+            identifications().forEach { it.validate() }
+            lastName()
+            legalEntityType()
+            legalStructure()
+            liveMode()
+            metadata().validate()
+            middleName()
+            object_()
+            phoneNumbers().forEach { it.validate() }
+            politicallyExposedPerson()
+            preferredName()
+            prefix()
+            riskRating()
+            suffix()
+            updatedAt()
+            wealthAndEmploymentDetails().ifPresent { it.validate() }
+            website()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1317,22 +1321,24 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): LegalEntityAddress = apply {
-                if (!validated) {
-                    id()
-                    addressTypes()
-                    country()
-                    createdAt()
-                    discardedAt()
-                    line1()
-                    line2()
-                    liveMode()
-                    locality()
-                    object_()
-                    postalCode()
-                    region()
-                    updatedAt()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                addressTypes()
+                country()
+                createdAt()
+                discardedAt()
+                line1()
+                line2()
+                liveMode()
+                locality()
+                object_()
+                postalCode()
+                region()
+                updatedAt()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1723,17 +1729,19 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Identification = apply {
-                if (!validated) {
-                    id()
-                    createdAt()
-                    discardedAt()
-                    idType()
-                    issuingCountry()
-                    liveMode()
-                    object_()
-                    updatedAt()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                createdAt()
+                discardedAt()
+                idType()
+                issuingCountry()
+                liveMode()
+                object_()
+                updatedAt()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2226,9 +2234,11 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2315,10 +2325,12 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): PhoneNumber = apply {
-                if (!validated) {
-                    phoneNumber()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                phoneNumber()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

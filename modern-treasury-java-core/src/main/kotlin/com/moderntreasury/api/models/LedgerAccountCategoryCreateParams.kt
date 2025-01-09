@@ -200,17 +200,19 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerAccountCategoryCreateBody = apply {
-            if (!validated) {
-                currency()
-                ledgerId()
-                name()
-                normalBalance()
-                currencyExponent()
-                description()
-                ledgerAccountCategoryIds()
-                metadata().map { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            currency()
+            ledgerId()
+            name()
+            normalBalance()
+            currencyExponent()
+            description()
+            ledgerAccountCategoryIds()
+            metadata().ifPresent { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -657,9 +659,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

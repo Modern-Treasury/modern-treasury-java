@@ -116,11 +116,13 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AccountDetailCreateBody = apply {
-            if (!validated) {
-                accountNumber()
-                accountNumberType()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountNumber()
+            accountNumberType()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

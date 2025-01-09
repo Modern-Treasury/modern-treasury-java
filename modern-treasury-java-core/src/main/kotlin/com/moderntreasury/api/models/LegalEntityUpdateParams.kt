@@ -436,31 +436,33 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LegalEntityUpdateBody = apply {
-            if (!validated) {
-                addresses().map { it.forEach { it.validate() } }
-                bankSettings().map { it.validate() }
-                businessName()
-                citizenshipCountry()
-                dateFormed()
-                dateOfBirth()
-                doingBusinessAsNames()
-                email()
-                firstName()
-                identifications().map { it.forEach { it.validate() } }
-                lastName()
-                legalStructure()
-                metadata().map { it.validate() }
-                middleName()
-                phoneNumbers().map { it.forEach { it.validate() } }
-                politicallyExposedPerson()
-                preferredName()
-                prefix()
-                riskRating()
-                suffix()
-                wealthAndEmploymentDetails().map { it.validate() }
-                website()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            addresses().ifPresent { it.forEach { it.validate() } }
+            bankSettings().ifPresent { it.validate() }
+            businessName()
+            citizenshipCountry()
+            dateFormed()
+            dateOfBirth()
+            doingBusinessAsNames()
+            email()
+            firstName()
+            identifications().ifPresent { it.forEach { it.validate() } }
+            lastName()
+            legalStructure()
+            metadata().ifPresent { it.validate() }
+            middleName()
+            phoneNumbers().ifPresent { it.forEach { it.validate() } }
+            politicallyExposedPerson()
+            preferredName()
+            prefix()
+            riskRating()
+            suffix()
+            wealthAndEmploymentDetails().ifPresent { it.validate() }
+            website()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1354,16 +1356,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LegalEntityAddressCreateRequest = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                addressTypes()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            addressTypes()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1640,12 +1644,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): IdentificationCreateRequest = apply {
-            if (!validated) {
-                idNumber()
-                idType()
-                issuingCountry()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            idNumber()
+            idType()
+            issuingCountry()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2010,9 +2016,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2096,10 +2104,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PhoneNumber = apply {
-            if (!validated) {
-                phoneNumber()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            phoneNumber()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
