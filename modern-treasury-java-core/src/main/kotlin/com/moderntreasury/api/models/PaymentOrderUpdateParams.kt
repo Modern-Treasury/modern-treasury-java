@@ -1078,43 +1078,45 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PaymentOrderUpdateBody = apply {
-            if (!validated) {
-                accounting().map { it.validate() }
-                accountingCategoryId()
-                accountingLedgerClassId()
-                amount()
-                chargeBearer()
-                counterpartyId()
-                currency()
-                description()
-                direction()
-                effectiveDate()
-                expiresAt()
-                fallbackType()
-                foreignExchangeContract()
-                foreignExchangeIndicator()
-                lineItems().map { it.forEach { it.validate() } }
-                metadata().map { it.validate() }
-                nsfProtected()
-                originatingAccountId()
-                originatingPartyName()
-                priority()
-                processAfter()
-                purpose()
-                receivingAccount().map { it.validate() }
-                receivingAccountId()
-                remittanceInformation()
-                sendRemittanceAdvice()
-                statementDescriptor()
-                status()
-                subtype()
-                type()
-                ultimateOriginatingPartyIdentifier()
-                ultimateOriginatingPartyName()
-                ultimateReceivingPartyIdentifier()
-                ultimateReceivingPartyName()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accounting().ifPresent { it.validate() }
+            accountingCategoryId()
+            accountingLedgerClassId()
+            amount()
+            chargeBearer()
+            counterpartyId()
+            currency()
+            description()
+            direction()
+            effectiveDate()
+            expiresAt()
+            fallbackType()
+            foreignExchangeContract()
+            foreignExchangeIndicator()
+            lineItems().ifPresent { it.forEach { it.validate() } }
+            metadata().ifPresent { it.validate() }
+            nsfProtected()
+            originatingAccountId()
+            originatingPartyName()
+            priority()
+            processAfter()
+            purpose()
+            receivingAccount().ifPresent { it.validate() }
+            receivingAccountId()
+            remittanceInformation()
+            sendRemittanceAdvice()
+            statementDescriptor()
+            status()
+            subtype()
+            type()
+            ultimateOriginatingPartyIdentifier()
+            ultimateOriginatingPartyName()
+            ultimateReceivingPartyIdentifier()
+            ultimateReceivingPartyName()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2763,11 +2765,13 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Accounting = apply {
-            if (!validated) {
-                accountId()
-                classId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountId()
+            classId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3172,13 +3176,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LineItemRequest = apply {
-            if (!validated) {
-                amount()
-                accountingCategoryId()
-                description()
-                metadata().map { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            accountingCategoryId()
+            description()
+            metadata().ifPresent { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3307,9 +3313,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3404,9 +3412,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3695,21 +3705,23 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ReceivingAccount = apply {
-            if (!validated) {
-                accountDetails().map { it.forEach { it.validate() } }
-                accountType()
-                contactDetails().map { it.forEach { it.validate() } }
-                ledgerAccount().map { it.validate() }
-                metadata().map { it.validate() }
-                name()
-                partyAddress().map { it.validate() }
-                partyIdentifier()
-                partyName()
-                partyType()
-                plaidProcessorToken()
-                routingDetails().map { it.forEach { it.validate() } }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountDetails().ifPresent { it.forEach { it.validate() } }
+            accountType()
+            contactDetails().ifPresent { it.forEach { it.validate() } }
+            ledgerAccount().ifPresent { it.validate() }
+            metadata().ifPresent { it.validate() }
+            name()
+            partyAddress().ifPresent { it.validate() }
+            partyIdentifier()
+            partyName()
+            partyType()
+            plaidProcessorToken()
+            routingDetails().ifPresent { it.forEach { it.validate() } }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3990,11 +4002,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): AccountDetail = apply {
-                if (!validated) {
-                    accountNumber()
-                    accountNumberType()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                accountNumber()
+                accountNumberType()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4224,11 +4238,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): ContactDetailCreateRequest = apply {
-                if (!validated) {
-                    contactIdentifier()
-                    contactIdentifierType()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                contactIdentifier()
+                contactIdentifierType()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4542,19 +4558,21 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): LedgerAccountCreateRequest = apply {
-                if (!validated) {
-                    currency()
-                    ledgerId()
-                    name()
-                    normalBalance()
-                    currencyExponent()
-                    description()
-                    ledgerAccountCategoryIds()
-                    ledgerableId()
-                    ledgerableType()
-                    metadata().map { it.validate() }
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                currency()
+                ledgerId()
+                name()
+                normalBalance()
+                currencyExponent()
+                description()
+                ledgerAccountCategoryIds()
+                ledgerableId()
+                ledgerableType()
+                metadata().ifPresent { it.validate() }
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4863,9 +4881,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -4962,9 +4982,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -5094,15 +5116,17 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): AddressRequest = apply {
-                if (!validated) {
-                    country()
-                    line1()
-                    line2()
-                    locality()
-                    postalCode()
-                    region()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                country()
+                line1()
+                line2()
+                locality()
+                postalCode()
+                region()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -5336,12 +5360,14 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): RoutingDetail = apply {
-                if (!validated) {
-                    routingNumber()
-                    routingNumberType()
-                    paymentType()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                routingNumber()
+                routingNumberType()
+                paymentType()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

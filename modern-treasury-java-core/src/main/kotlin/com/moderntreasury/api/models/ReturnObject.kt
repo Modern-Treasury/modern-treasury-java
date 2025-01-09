@@ -300,32 +300,34 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): ReturnObject = apply {
-        if (!validated) {
-            id()
-            amount()
-            code()
-            createdAt()
-            currency()
-            currentReturn().map { it.validate() }
-            dateOfDeath()
-            failureReason()
-            internalAccountId()
-            ledgerTransactionId()
-            liveMode()
-            object_()
-            reason()
-            referenceNumbers().forEach { it.validate() }
-            returnableId()
-            returnableType()
-            role()
-            status()
-            transactionId()
-            transactionLineItemId()
-            type()
-            updatedAt()
-            additionalInformation()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        amount()
+        code()
+        createdAt()
+        currency()
+        currentReturn().ifPresent { it.validate() }
+        dateOfDeath()
+        failureReason()
+        internalAccountId()
+        ledgerTransactionId()
+        liveMode()
+        object_()
+        reason()
+        referenceNumbers().forEach { it.validate() }
+        returnableId()
+        returnableType()
+        role()
+        status()
+        transactionId()
+        transactionLineItemId()
+        type()
+        updatedAt()
+        additionalInformation()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1167,16 +1169,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): PaymentReference = apply {
-            if (!validated) {
-                id()
-                createdAt()
-                liveMode()
-                object_()
-                referenceNumber()
-                referenceNumberType()
-                updatedAt()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            createdAt()
+            liveMode()
+            object_()
+            referenceNumber()
+            referenceNumberType()
+            updatedAt()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

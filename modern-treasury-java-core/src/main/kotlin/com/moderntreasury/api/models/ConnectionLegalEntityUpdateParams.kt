@@ -80,10 +80,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ConnectionLegalEntityUpdateBody = apply {
-            if (!validated) {
-                status()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            status()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

@@ -109,12 +109,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ConnectionLegalEntityCreateBody = apply {
-            if (!validated) {
-                connectionId()
-                legalEntity().map { it.validate() }
-                legalEntityId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            connectionId()
+            legalEntity().ifPresent { it.validate() }
+            legalEntityId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -671,33 +673,35 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LegalEntity = apply {
-            if (!validated) {
-                addresses().map { it.forEach { it.validate() } }
-                bankSettings().map { it.validate() }
-                businessName()
-                citizenshipCountry()
-                dateFormed()
-                dateOfBirth()
-                doingBusinessAsNames()
-                email()
-                firstName()
-                identifications().map { it.forEach { it.validate() } }
-                lastName()
-                legalEntityAssociations().map { it.forEach { it.validate() } }
-                legalEntityType()
-                legalStructure()
-                metadata().map { it.validate() }
-                middleName()
-                phoneNumbers().map { it.forEach { it.validate() } }
-                politicallyExposedPerson()
-                preferredName()
-                prefix()
-                riskRating()
-                suffix()
-                wealthAndEmploymentDetails().map { it.validate() }
-                website()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            addresses().ifPresent { it.forEach { it.validate() } }
+            bankSettings().ifPresent { it.validate() }
+            businessName()
+            citizenshipCountry()
+            dateFormed()
+            dateOfBirth()
+            doingBusinessAsNames()
+            email()
+            firstName()
+            identifications().ifPresent { it.forEach { it.validate() } }
+            lastName()
+            legalEntityAssociations().ifPresent { it.forEach { it.validate() } }
+            legalEntityType()
+            legalStructure()
+            metadata().ifPresent { it.validate() }
+            middleName()
+            phoneNumbers().ifPresent { it.forEach { it.validate() } }
+            politicallyExposedPerson()
+            preferredName()
+            prefix()
+            riskRating()
+            suffix()
+            wealthAndEmploymentDetails().ifPresent { it.validate() }
+            website()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1228,16 +1232,18 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): LegalEntityAddressCreateRequest = apply {
-                if (!validated) {
-                    country()
-                    line1()
-                    locality()
-                    postalCode()
-                    region()
-                    addressTypes()
-                    line2()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                country()
+                line1()
+                locality()
+                postalCode()
+                region()
+                addressTypes()
+                line2()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1521,12 +1527,14 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): IdentificationCreateRequest = apply {
-                if (!validated) {
-                    idNumber()
-                    idType()
-                    issuingCountry()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                idNumber()
+                idType()
+                issuingCountry()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1874,14 +1882,16 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): LegalEntityAssociationInlineCreateRequest = apply {
-                if (!validated) {
-                    relationshipTypes()
-                    childLegalEntity().map { it.validate() }
-                    childLegalEntityId()
-                    ownershipPercentage()
-                    title()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                relationshipTypes()
+                childLegalEntity().ifPresent { it.validate() }
+                childLegalEntityId()
+                ownershipPercentage()
+                title()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2370,32 +2380,34 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): ChildLegalEntityCreate = apply {
-                    if (!validated) {
-                        addresses().map { it.forEach { it.validate() } }
-                        bankSettings().map { it.validate() }
-                        businessName()
-                        citizenshipCountry()
-                        dateFormed()
-                        dateOfBirth()
-                        doingBusinessAsNames()
-                        email()
-                        firstName()
-                        identifications().map { it.forEach { it.validate() } }
-                        lastName()
-                        legalEntityType()
-                        legalStructure()
-                        metadata().map { it.validate() }
-                        middleName()
-                        phoneNumbers().map { it.forEach { it.validate() } }
-                        politicallyExposedPerson()
-                        preferredName()
-                        prefix()
-                        riskRating()
-                        suffix()
-                        wealthAndEmploymentDetails().map { it.validate() }
-                        website()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    addresses().ifPresent { it.forEach { it.validate() } }
+                    bankSettings().ifPresent { it.validate() }
+                    businessName()
+                    citizenshipCountry()
+                    dateFormed()
+                    dateOfBirth()
+                    doingBusinessAsNames()
+                    email()
+                    firstName()
+                    identifications().ifPresent { it.forEach { it.validate() } }
+                    lastName()
+                    legalEntityType()
+                    legalStructure()
+                    metadata().ifPresent { it.validate() }
+                    middleName()
+                    phoneNumbers().ifPresent { it.forEach { it.validate() } }
+                    politicallyExposedPerson()
+                    preferredName()
+                    prefix()
+                    riskRating()
+                    suffix()
+                    wealthAndEmploymentDetails().ifPresent { it.validate() }
+                    website()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -2921,16 +2933,18 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): LegalEntityAddressCreateRequest = apply {
-                        if (!validated) {
-                            country()
-                            line1()
-                            locality()
-                            postalCode()
-                            region()
-                            addressTypes()
-                            line2()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        country()
+                        line1()
+                        locality()
+                        postalCode()
+                        region()
+                        addressTypes()
+                        line2()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -3236,12 +3250,14 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): IdentificationCreateRequest = apply {
-                        if (!validated) {
-                            idNumber()
-                            idType()
-                            issuingCountry()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        idNumber()
+                        idType()
+                        issuingCountry()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -3695,9 +3711,11 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): Metadata = apply {
-                        if (!validated) {
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -3785,10 +3803,12 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): PhoneNumber = apply {
-                        if (!validated) {
-                            phoneNumber()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        phoneNumber()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -4122,9 +4142,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4211,10 +4233,12 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): PhoneNumber = apply {
-                if (!validated) {
-                    phoneNumber()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                phoneNumber()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

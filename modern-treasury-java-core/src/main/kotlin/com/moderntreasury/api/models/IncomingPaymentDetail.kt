@@ -309,34 +309,36 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): IncomingPaymentDetail = apply {
-        if (!validated) {
-            id()
-            amount()
-            asOfDate()
-            createdAt()
-            currency()
-            data().validate()
-            direction()
-            internalAccountId()
-            ledgerTransactionId()
-            liveMode()
-            metadata().validate()
-            object_()
-            originatingAccountNumberSafe()
-            originatingAccountNumberType()
-            originatingRoutingNumber()
-            originatingRoutingNumberType()
-            status()
-            transactionId()
-            transactionLineItemId()
-            type()
-            updatedAt()
-            vendorId()
-            virtualAccount().map { it.validate() }
-            virtualAccountId()
-            originatingAccountNumber()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        amount()
+        asOfDate()
+        createdAt()
+        currency()
+        data().validate()
+        direction()
+        internalAccountId()
+        ledgerTransactionId()
+        liveMode()
+        metadata().validate()
+        object_()
+        originatingAccountNumberSafe()
+        originatingAccountNumberType()
+        originatingRoutingNumber()
+        originatingRoutingNumberType()
+        status()
+        transactionId()
+        transactionLineItemId()
+        type()
+        updatedAt()
+        vendorId()
+        virtualAccount().ifPresent { it.validate() }
+        virtualAccountId()
+        originatingAccountNumber()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -744,9 +746,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Data = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -820,9 +824,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
