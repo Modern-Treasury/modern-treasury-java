@@ -708,34 +708,36 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceUpdateBody = apply {
-            if (!validated) {
-                contactDetails().map { it.forEach { it.validate() } }
-                counterpartyBillingAddress().map { it.validate() }
-                counterpartyId()
-                counterpartyShippingAddress().map { it.validate() }
-                currency()
-                description()
-                dueDate()
-                fallbackPaymentMethod()
-                ingestLedgerEntries()
-                invoiceLineItems().map { it.forEach { it.validate() } }
-                invoicerAddress().map { it.validate() }
-                ledgerAccountSettlementId()
-                metadata().map { it.validate() }
-                notificationEmailAddresses()
-                notificationsEnabled()
-                originatingAccountId()
-                paymentEffectiveDate()
-                paymentMethod()
-                paymentType()
-                receivingAccountId()
-                recipientEmail()
-                recipientName()
-                remindAfterOverdueDays()
-                status()
-                virtualAccountId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            contactDetails().ifPresent { it.forEach { it.validate() } }
+            counterpartyBillingAddress().ifPresent { it.validate() }
+            counterpartyId()
+            counterpartyShippingAddress().ifPresent { it.validate() }
+            currency()
+            description()
+            dueDate()
+            fallbackPaymentMethod()
+            ingestLedgerEntries()
+            invoiceLineItems().ifPresent { it.forEach { it.validate() } }
+            invoicerAddress().ifPresent { it.validate() }
+            ledgerAccountSettlementId()
+            metadata().ifPresent { it.validate() }
+            notificationEmailAddresses()
+            notificationsEnabled()
+            originatingAccountId()
+            paymentEffectiveDate()
+            paymentMethod()
+            paymentType()
+            receivingAccountId()
+            recipientEmail()
+            recipientName()
+            remindAfterOverdueDays()
+            status()
+            virtualAccountId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2024,17 +2026,19 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ContactDetail = apply {
-            if (!validated) {
-                id()
-                contactIdentifier()
-                contactIdentifierType()
-                createdAt()
-                discardedAt()
-                liveMode()
-                object_()
-                updatedAt()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            contactIdentifier()
+            contactIdentifierType()
+            createdAt()
+            discardedAt()
+            liveMode()
+            object_()
+            updatedAt()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2315,15 +2319,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CounterpartyBillingAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2504,15 +2510,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CounterpartyShippingAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2739,16 +2747,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceLineItemCreateRequest = apply {
-            if (!validated) {
-                name()
-                unitAmount()
-                description()
-                direction()
-                metadata().map { it.validate() }
-                quantity()
-                unitAmountDecimal()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            name()
+            unitAmount()
+            description()
+            direction()
+            metadata().ifPresent { it.validate() }
+            quantity()
+            unitAmountDecimal()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2911,9 +2921,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3060,15 +3072,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoicerAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3196,9 +3210,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

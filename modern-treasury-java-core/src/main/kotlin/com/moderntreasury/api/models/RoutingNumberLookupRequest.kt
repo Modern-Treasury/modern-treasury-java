@@ -122,15 +122,17 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): RoutingNumberLookupRequest = apply {
-        if (!validated) {
-            bankAddress().map { it.validate() }
-            bankName()
-            routingNumber()
-            routingNumberType()
-            sanctions().map { it.validate() }
-            supportedPaymentTypes()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        bankAddress().ifPresent { it.validate() }
+        bankName()
+        routingNumber()
+        routingNumberType()
+        sanctions().ifPresent { it.validate() }
+        supportedPaymentTypes()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -350,15 +352,17 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): AddressRequest = apply {
-            if (!validated) {
-                country()
-                line1()
-                line2()
-                locality()
-                postalCode()
-                region()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            line2()
+            locality()
+            postalCode()
+            region()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -600,9 +604,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Sanctions = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

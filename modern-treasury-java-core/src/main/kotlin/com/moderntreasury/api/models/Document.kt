@@ -153,21 +153,23 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Document = apply {
-        if (!validated) {
-            id()
-            createdAt()
-            discardedAt()
-            documentDetails().forEach { it.validate() }
-            documentType()
-            documentableId()
-            documentableType()
-            file().validate()
-            liveMode()
-            object_()
-            source()
-            updatedAt()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        createdAt()
+        discardedAt()
+        documentDetails().forEach { it.validate() }
+        documentType()
+        documentableId()
+        documentableType()
+        file().validate()
+        liveMode()
+        object_()
+        source()
+        updatedAt()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -441,17 +443,19 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): DocumentDetail = apply {
-            if (!validated) {
-                id()
-                createdAt()
-                discardedAt()
-                documentIdentifier()
-                documentIdentifierType()
-                liveMode()
-                object_()
-                updatedAt()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            createdAt()
+            discardedAt()
+            documentIdentifier()
+            documentIdentifierType()
+            liveMode()
+            object_()
+            updatedAt()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -757,12 +761,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): File = apply {
-            if (!validated) {
-                contentType()
-                filename()
-                size()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            contentType()
+            filename()
+            size()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

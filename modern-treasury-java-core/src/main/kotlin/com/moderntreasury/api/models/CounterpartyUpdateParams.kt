@@ -186,15 +186,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CounterpartyUpdateBody = apply {
-            if (!validated) {
-                email()
-                legalEntityId()
-                metadata().map { it.validate() }
-                name()
-                sendRemittanceAdvice()
-                taxpayerIdentifier()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            email()
+            legalEntityId()
+            metadata().ifPresent { it.validate() }
+            name()
+            sendRemittanceAdvice()
+            taxpayerIdentifier()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -567,9 +569,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

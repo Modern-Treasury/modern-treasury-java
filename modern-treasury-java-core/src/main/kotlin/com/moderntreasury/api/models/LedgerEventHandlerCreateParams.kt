@@ -167,16 +167,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerEventHandlerCreateBody = apply {
-            if (!validated) {
-                ledgerTransactionTemplate().validate()
-                name()
-                conditions().map { it.validate() }
-                description()
-                ledgerId()
-                metadata().map { it.validate() }
-                variables().map { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            ledgerTransactionTemplate().validate()
+            name()
+            conditions().ifPresent { it.validate() }
+            description()
+            ledgerId()
+            metadata().ifPresent { it.validate() }
+            variables().ifPresent { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -611,13 +613,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerEventHandlerLedgerTransactionTemplate = apply {
-            if (!validated) {
-                description()
-                effectiveAt()
-                ledgerEntries().forEach { it.validate() }
-                status()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            description()
+            effectiveAt()
+            ledgerEntries().forEach { it.validate() }
+            status()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -792,12 +796,14 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): LedgerEventHandlerLedgerEntries = apply {
-                if (!validated) {
-                    amount()
-                    direction()
-                    ledgerAccountId()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                direction()
+                ledgerAccountId()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -957,12 +963,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerEventHandlerConditions = apply {
-            if (!validated) {
-                field()
-                operator()
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            field()
+            operator()
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1068,9 +1076,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1143,9 +1153,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): LedgerEventHandlerVariables = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

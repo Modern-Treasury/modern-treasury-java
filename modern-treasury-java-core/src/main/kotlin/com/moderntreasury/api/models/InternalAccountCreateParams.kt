@@ -219,18 +219,20 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InternalAccountCreateBody = apply {
-            if (!validated) {
-                connectionId()
-                currency()
-                name()
-                partyName()
-                counterpartyId()
-                legalEntityId()
-                parentAccountId()
-                partyAddress().map { it.validate() }
-                vendorAttributes().map { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            connectionId()
+            currency()
+            name()
+            partyName()
+            counterpartyId()
+            legalEntityId()
+            parentAccountId()
+            partyAddress().ifPresent { it.validate() }
+            vendorAttributes().ifPresent { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -741,15 +743,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PartyAddress = apply {
-            if (!validated) {
-                country()
-                line1()
-                locality()
-                postalCode()
-                region()
-                line2()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -880,9 +884,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): VendorAttributes = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

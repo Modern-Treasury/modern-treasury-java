@@ -198,16 +198,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ExternalAccountUpdateBody = apply {
-            if (!validated) {
-                accountType()
-                counterpartyId()
-                metadata().map { it.validate() }
-                name()
-                partyAddress().map { it.validate() }
-                partyName()
-                partyType()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountType()
+            counterpartyId()
+            metadata().ifPresent { it.validate() }
+            name()
+            partyAddress().ifPresent { it.validate() }
+            partyName()
+            partyType()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -599,9 +601,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -727,15 +731,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddressRequest = apply {
-            if (!validated) {
-                country()
-                line1()
-                line2()
-                locality()
-                postalCode()
-                region()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            line1()
+            line2()
+            locality()
+            postalCode()
+            region()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
