@@ -1,5 +1,66 @@
 # Changelog
 
+## 4.0.0 (2025-01-14)
+
+Full Changelog: [v3.1.0...v4.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.1.0...v4.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** switch query params objects to use `QueryParams` ([#293](https://github.com/Modern-Treasury/modern-treasury-java/issues/293))
+
+### Features
+
+* **client:** add more builder convenience methods for lists ([#304](https://github.com/Modern-Treasury/modern-treasury-java/issues/304)) ([4c7cecf](https://github.com/Modern-Treasury/modern-treasury-java/commit/4c7cecf7f681181f37a7355b866db75611ea8315))
+* **client:** add various convenience setters to models ([#301](https://github.com/Modern-Treasury/modern-treasury-java/issues/301)) ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **client:** allow passing null or optional for nullable fields ([#299](https://github.com/Modern-Treasury/modern-treasury-java/issues/299)) ([7754377](https://github.com/Modern-Treasury/modern-treasury-java/commit/7754377bd323f7e94402ec0c17be826637f76b8c))
+* **client:** allow setting arbitrary JSON for top-level body params ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **client:** expose getters for `JsonField` of body params ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **client:** put body field in params, add more convenience methods, and add missing docs ([#296](https://github.com/Modern-Treasury/modern-treasury-java/issues/296)) ([99b10f6](https://github.com/Modern-Treasury/modern-treasury-java/commit/99b10f6382d841f8d329efb3480f13419eb7e547))
+
+
+### Bug Fixes
+
+* **client:** add some missing `validate()` calls ([#306](https://github.com/Modern-Treasury/modern-treasury-java/issues/306)) ([214c60d](https://github.com/Modern-Treasury/modern-treasury-java/commit/214c60d7fc7f49aca8d02e9f741cff1e2f2711e6))
+* **client:** consider header properties in page equality ([#302](https://github.com/Modern-Treasury/modern-treasury-java/issues/302)) ([ca111de](https://github.com/Modern-Treasury/modern-treasury-java/commit/ca111deb7662ae7a2bb33caea19107f75d487758))
+* **client:** consistently throw on omitting required fields ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **client:** convert `JsonField` containing list type to mutable in builder ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+
+
+### Chores
+
+* bump license year ([#295](https://github.com/Modern-Treasury/modern-treasury-java/issues/295)) ([e129315](https://github.com/Modern-Treasury/modern-treasury-java/commit/e129315a07c64b4b64cc815ec656e4124c08aef9))
+* **docs:** add example project ([#291](https://github.com/Modern-Treasury/modern-treasury-java/issues/291)) ([592ed0b](https://github.com/Modern-Treasury/modern-treasury-java/commit/592ed0b45702cfd57b95cd724e3756581ef23673))
+* **docs:** fix code block language ([#292](https://github.com/Modern-Treasury/modern-treasury-java/issues/292)) ([028e31e](https://github.com/Modern-Treasury/modern-treasury-java/commit/028e31ec837380ed09b40c40e14813b18806f619))
+* **docs:** update readme ([#289](https://github.com/Modern-Treasury/modern-treasury-java/issues/289)) ([7ace870](https://github.com/Modern-Treasury/modern-treasury-java/commit/7ace870a1ec171ab32b8a7c3207ddee00f5c9828))
+* fix example path ([e736e61](https://github.com/Modern-Treasury/modern-treasury-java/commit/e736e617b8b5eadbde0b0967291de7acd586f3e7))
+* **internal:** extract a `checkRequired` function ([#309](https://github.com/Modern-Treasury/modern-treasury-java/issues/309)) ([f6d536c](https://github.com/Modern-Treasury/modern-treasury-java/commit/f6d536c1d266af424cd48a8c0caf61b07b6e8081))
+* **internal:** refactor `validate` methods ([214c60d](https://github.com/Modern-Treasury/modern-treasury-java/commit/214c60d7fc7f49aca8d02e9f741cff1e2f2711e6))
+* **internal:** remove unused Gradle imports ([#307](https://github.com/Modern-Treasury/modern-treasury-java/issues/307)) ([62848d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/62848d560a7e4185f7e10c23c6d61054cf711dfa))
+* **internal:** remove unused or unnecessary Gradle imports ([#308](https://github.com/Modern-Treasury/modern-treasury-java/issues/308)) ([1d5c50a](https://github.com/Modern-Treasury/modern-treasury-java/commit/1d5c50a947ccc1c47cf214e4b9270590a1f44e5d))
+* update parameter examples in tests and docs ([#287](https://github.com/Modern-Treasury/modern-treasury-java/issues/287)) ([c45218f](https://github.com/Modern-Treasury/modern-treasury-java/commit/c45218f7bdc624f0cbf5e73da00ebacf94adba05))
+
+
+### Documentation
+
+* add params class javadocs ([#300](https://github.com/Modern-Treasury/modern-treasury-java/issues/300)) ([29e9fe1](https://github.com/Modern-Treasury/modern-treasury-java/commit/29e9fe1fe49e60c188b9daeb6426bea764a1de22))
+* add some missing javadocs ([#297](https://github.com/Modern-Treasury/modern-treasury-java/issues/297)) ([503bf07](https://github.com/Modern-Treasury/modern-treasury-java/commit/503bf07bc199bd8f33987afa4d697acd51b14abc))
+* **readme:** fix misplaced period ([#303](https://github.com/Modern-Treasury/modern-treasury-java/issues/303)) ([a8e9765](https://github.com/Modern-Treasury/modern-treasury-java/commit/a8e97652dc0604bd86a801435e441223c0ed07a4))
+* update some builder method javadocs ([#305](https://github.com/Modern-Treasury/modern-treasury-java/issues/305)) ([b13afd8](https://github.com/Modern-Treasury/modern-treasury-java/commit/b13afd8f39cf4de5d2d0e96c41312bfce248ba91))
+
+
+### Styles
+
+* **internal:** explicitly add some method return types ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **internal:** move headers and query params setters below others ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **internal:** simplify existing convenience setters on params ([536a4cf](https://github.com/Modern-Treasury/modern-treasury-java/commit/536a4cfe59e88f0546d9738a5d7a9bd7f8eaa0eb))
+* **internal:** sort fields ([#298](https://github.com/Modern-Treasury/modern-treasury-java/issues/298)) ([c10ab38](https://github.com/Modern-Treasury/modern-treasury-java/commit/c10ab3880d9b0cebcbacb2d612f65df4dc0f3e05))
+
+
+### Refactors
+
+* **client:** switch query params objects to use `QueryParams` ([#293](https://github.com/Modern-Treasury/modern-treasury-java/issues/293)) ([15ccd7f](https://github.com/Modern-Treasury/modern-treasury-java/commit/15ccd7f842763d6ef7f2ff564dc83d748059b8bf))
+* **internal:** use constructor to deserialize json ([#294](https://github.com/Modern-Treasury/modern-treasury-java/issues/294)) ([e0242e2](https://github.com/Modern-Treasury/modern-treasury-java/commit/e0242e2fd7ffb150688d2e314cb84160e706ff68))
+
 ## 3.1.0 (2024-12-16)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.0.0...v3.1.0)
