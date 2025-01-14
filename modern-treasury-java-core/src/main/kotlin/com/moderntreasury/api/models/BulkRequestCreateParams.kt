@@ -21,6 +21,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.getOrThrow
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -354,10 +355,9 @@ constructor(
 
             fun build(): BulkRequestCreateBody =
                 BulkRequestCreateBody(
-                    checkNotNull(actionType) { "`actionType` is required but was not set" },
-                    checkNotNull(resourceType) { "`resourceType` is required but was not set" },
-                    checkNotNull(resources) { "`resources` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("actionType", actionType),
+                    checkRequired("resourceType", resourceType),
+                    checkRequired("resources", resources).map { it.toImmutable() },
                     metadata,
                     additionalProperties.toImmutable(),
                 )
@@ -2637,12 +2637,10 @@ constructor(
 
                 fun build(): PaymentOrderAsyncCreateRequest =
                     PaymentOrderAsyncCreateRequest(
-                        checkNotNull(amount) { "`amount` is required but was not set" },
-                        checkNotNull(direction) { "`direction` is required but was not set" },
-                        checkNotNull(originatingAccountId) {
-                            "`originatingAccountId` is required but was not set"
-                        },
-                        checkNotNull(type) { "`type` is required but was not set" },
+                        checkRequired("amount", amount),
+                        checkRequired("direction", direction),
+                        checkRequired("originatingAccountId", originatingAccountId),
+                        checkRequired("type", type),
                         accounting,
                         accountingCategoryId,
                         accountingLedgerClassId,
@@ -3461,10 +3459,7 @@ constructor(
 
                     fun build(): LedgerTransactionCreateRequest =
                         LedgerTransactionCreateRequest(
-                            checkNotNull(ledgerEntries) {
-                                    "`ledgerEntries` is required but was not set"
-                                }
-                                .map { it.toImmutable() },
+                            checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
                             description,
                             effectiveAt,
                             effectiveDate,
@@ -3985,13 +3980,9 @@ constructor(
 
                         fun build(): LedgerEntryCreateRequest =
                             LedgerEntryCreateRequest(
-                                checkNotNull(amount) { "`amount` is required but was not set" },
-                                checkNotNull(direction) {
-                                    "`direction` is required but was not set"
-                                },
-                                checkNotNull(ledgerAccountId) {
-                                    "`ledgerAccountId` is required but was not set"
-                                },
+                                checkRequired("amount", amount),
+                                checkRequired("direction", direction),
+                                checkRequired("ledgerAccountId", ledgerAccountId),
                                 availableBalanceAmount,
                                 lockVersion,
                                 metadata,
@@ -4827,7 +4818,7 @@ constructor(
 
                     fun build(): LineItemRequest =
                         LineItemRequest(
-                            checkNotNull(amount) { "`amount` is required but was not set" },
+                            checkRequired("amount", amount),
                             accountingCategoryId,
                             description,
                             metadata,
@@ -5652,9 +5643,7 @@ constructor(
 
                         fun build(): AccountDetail =
                             AccountDetail(
-                                checkNotNull(accountNumber) {
-                                    "`accountNumber` is required but was not set"
-                                },
+                                checkRequired("accountNumber", accountNumber),
                                 accountNumberType,
                                 additionalProperties.toImmutable(),
                             )
@@ -6386,12 +6375,10 @@ constructor(
 
                         fun build(): LedgerAccountCreateRequest =
                             LedgerAccountCreateRequest(
-                                checkNotNull(currency) { "`currency` is required but was not set" },
-                                checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
-                                checkNotNull(name) { "`name` is required but was not set" },
-                                checkNotNull(normalBalance) {
-                                    "`normalBalance` is required but was not set"
-                                },
+                                checkRequired("currency", currency),
+                                checkRequired("ledgerId", ledgerId),
+                                checkRequired("name", name),
+                                checkRequired("normalBalance", normalBalance),
                                 currencyExponent,
                                 description,
                                 (ledgerAccountCategoryIds ?: JsonMissing.of()).map {
@@ -7078,12 +7065,8 @@ constructor(
 
                         fun build(): RoutingDetail =
                             RoutingDetail(
-                                checkNotNull(routingNumber) {
-                                    "`routingNumber` is required but was not set"
-                                },
-                                checkNotNull(routingNumberType) {
-                                    "`routingNumberType` is required but was not set"
-                                },
+                                checkRequired("routingNumber", routingNumber),
+                                checkRequired("routingNumberType", routingNumberType),
                                 paymentType,
                                 additionalProperties.toImmutable(),
                             )
@@ -8759,10 +8742,7 @@ constructor(
 
                     fun build(): LedgerTransactionCreateRequest =
                         LedgerTransactionCreateRequest(
-                            checkNotNull(ledgerEntries) {
-                                    "`ledgerEntries` is required but was not set"
-                                }
-                                .map { it.toImmutable() },
+                            checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
                             description,
                             effectiveAt,
                             effectiveDate,
@@ -9283,13 +9263,9 @@ constructor(
 
                         fun build(): LedgerEntryCreateRequest =
                             LedgerEntryCreateRequest(
-                                checkNotNull(amount) { "`amount` is required but was not set" },
-                                checkNotNull(direction) {
-                                    "`direction` is required but was not set"
-                                },
-                                checkNotNull(ledgerAccountId) {
-                                    "`ledgerAccountId` is required but was not set"
-                                },
+                                checkRequired("amount", amount),
+                                checkRequired("direction", direction),
+                                checkRequired("ledgerAccountId", ledgerAccountId),
                                 availableBalanceAmount,
                                 lockVersion,
                                 metadata,
@@ -10125,7 +10101,7 @@ constructor(
 
                     fun build(): LineItemRequest =
                         LineItemRequest(
-                            checkNotNull(amount) { "`amount` is required but was not set" },
+                            checkRequired("amount", amount),
                             accountingCategoryId,
                             description,
                             metadata,
@@ -10705,10 +10681,7 @@ constructor(
 
                 fun build(): LedgerTransactionCreateRequest =
                     LedgerTransactionCreateRequest(
-                        checkNotNull(ledgerEntries) {
-                                "`ledgerEntries` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
+                        checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
                         description,
                         effectiveAt,
                         effectiveDate,
@@ -11202,11 +11175,9 @@ constructor(
 
                     fun build(): LedgerEntryCreateRequest =
                         LedgerEntryCreateRequest(
-                            checkNotNull(amount) { "`amount` is required but was not set" },
-                            checkNotNull(direction) { "`direction` is required but was not set" },
-                            checkNotNull(ledgerAccountId) {
-                                "`ledgerAccountId` is required but was not set"
-                            },
+                            checkRequired("amount", amount),
+                            checkRequired("direction", direction),
+                            checkRequired("ledgerAccountId", ledgerAccountId),
                             availableBalanceAmount,
                             lockVersion,
                             metadata,
@@ -12218,16 +12189,12 @@ constructor(
 
                 fun build(): TransactionCreateRequest =
                     TransactionCreateRequest(
-                        checkNotNull(amount) { "`amount` is required but was not set" },
-                        checkNotNull(asOfDate) { "`asOfDate` is required but was not set" },
-                        checkNotNull(direction) { "`direction` is required but was not set" },
-                        checkNotNull(internalAccountId) {
-                            "`internalAccountId` is required but was not set"
-                        },
-                        checkNotNull(vendorCode) { "`vendorCode` is required but was not set" },
-                        checkNotNull(vendorCodeType) {
-                            "`vendorCodeType` is required but was not set"
-                        },
+                        checkRequired("amount", amount),
+                        checkRequired("asOfDate", asOfDate),
+                        checkRequired("direction", direction),
+                        checkRequired("internalAccountId", internalAccountId),
+                        checkRequired("vendorCode", vendorCode),
+                        checkRequired("vendorCodeType", vendorCodeType),
                         metadata,
                         posted,
                         type,
@@ -14800,7 +14767,7 @@ constructor(
 
                     fun build(): LineItemRequest =
                         LineItemRequest(
-                            checkNotNull(amount) { "`amount` is required but was not set" },
+                            checkRequired("amount", amount),
                             accountingCategoryId,
                             description,
                             metadata,
@@ -15625,9 +15592,7 @@ constructor(
 
                         fun build(): AccountDetail =
                             AccountDetail(
-                                checkNotNull(accountNumber) {
-                                    "`accountNumber` is required but was not set"
-                                },
+                                checkRequired("accountNumber", accountNumber),
                                 accountNumberType,
                                 additionalProperties.toImmutable(),
                             )
@@ -16359,12 +16324,10 @@ constructor(
 
                         fun build(): LedgerAccountCreateRequest =
                             LedgerAccountCreateRequest(
-                                checkNotNull(currency) { "`currency` is required but was not set" },
-                                checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
-                                checkNotNull(name) { "`name` is required but was not set" },
-                                checkNotNull(normalBalance) {
-                                    "`normalBalance` is required but was not set"
-                                },
+                                checkRequired("currency", currency),
+                                checkRequired("ledgerId", ledgerId),
+                                checkRequired("name", name),
+                                checkRequired("normalBalance", normalBalance),
                                 currencyExponent,
                                 description,
                                 (ledgerAccountCategoryIds ?: JsonMissing.of()).map {
@@ -17051,12 +17014,8 @@ constructor(
 
                         fun build(): RoutingDetail =
                             RoutingDetail(
-                                checkNotNull(routingNumber) {
-                                    "`routingNumber` is required but was not set"
-                                },
-                                checkNotNull(routingNumberType) {
-                                    "`routingNumberType` is required but was not set"
-                                },
+                                checkRequired("routingNumber", routingNumber),
+                                checkRequired("routingNumberType", routingNumberType),
                                 paymentType,
                                 additionalProperties.toImmutable(),
                             )
@@ -19567,11 +19526,9 @@ constructor(
 
                     fun build(): LedgerEntryCreateRequest =
                         LedgerEntryCreateRequest(
-                            checkNotNull(amount) { "`amount` is required but was not set" },
-                            checkNotNull(direction) { "`direction` is required but was not set" },
-                            checkNotNull(ledgerAccountId) {
-                                "`ledgerAccountId` is required but was not set"
-                            },
+                            checkRequired("amount", amount),
+                            checkRequired("direction", direction),
+                            checkRequired("ledgerAccountId", ledgerAccountId),
                             availableBalanceAmount,
                             lockVersion,
                             metadata,
