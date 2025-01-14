@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.immutableEmptyMap
@@ -189,7 +190,7 @@ constructor(
 
             fun build(): AccountDetailCreateBody =
                 AccountDetailCreateBody(
-                    checkNotNull(accountNumber) { "`accountNumber` is required but was not set" },
+                    checkRequired("accountNumber", accountNumber),
                     accountNumberType,
                     additionalProperties.toImmutable(),
                 )
@@ -385,8 +386,8 @@ constructor(
 
         fun build(): AccountDetailCreateParams =
             AccountDetailCreateParams(
-                checkNotNull(accountsType) { "`accountsType` is required but was not set" },
-                checkNotNull(accountId) { "`accountId` is required but was not set" },
+                checkRequired("accountsType", accountsType),
+                checkRequired("accountId", accountId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

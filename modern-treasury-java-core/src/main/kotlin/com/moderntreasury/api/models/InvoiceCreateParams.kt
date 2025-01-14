@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.immutableEmptyMap
@@ -1311,11 +1312,9 @@ constructor(
 
             fun build(): InvoiceCreateBody =
                 InvoiceCreateBody(
-                    checkNotNull(counterpartyId) { "`counterpartyId` is required but was not set" },
-                    checkNotNull(dueDate) { "`dueDate` is required but was not set" },
-                    checkNotNull(originatingAccountId) {
-                        "`originatingAccountId` is required but was not set"
-                    },
+                    checkRequired("counterpartyId", counterpartyId),
+                    checkRequired("dueDate", dueDate),
+                    checkRequired("originatingAccountId", originatingAccountId),
                     autoAdvance,
                     (contactDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     counterpartyBillingAddress,
@@ -2173,18 +2172,14 @@ constructor(
 
             fun build(): ContactDetail =
                 ContactDetail(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(contactIdentifier) {
-                        "`contactIdentifier` is required but was not set"
-                    },
-                    checkNotNull(contactIdentifierType) {
-                        "`contactIdentifierType` is required but was not set"
-                    },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(discardedAt) { "`discardedAt` is required but was not set" },
-                    checkNotNull(liveMode) { "`liveMode` is required but was not set" },
-                    checkNotNull(object_) { "`object_` is required but was not set" },
-                    checkNotNull(updatedAt) { "`updatedAt` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("contactIdentifier", contactIdentifier),
+                    checkRequired("contactIdentifierType", contactIdentifierType),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("discardedAt", discardedAt),
+                    checkRequired("liveMode", liveMode),
+                    checkRequired("object_", object_),
+                    checkRequired("updatedAt", updatedAt),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2436,11 +2431,11 @@ constructor(
 
             fun build(): CounterpartyBillingAddress =
                 CounterpartyBillingAddress(
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(line1) { "`line1` is required but was not set" },
-                    checkNotNull(locality) { "`locality` is required but was not set" },
-                    checkNotNull(postalCode) { "`postalCode` is required but was not set" },
-                    checkNotNull(region) { "`region` is required but was not set" },
+                    checkRequired("country", country),
+                    checkRequired("line1", line1),
+                    checkRequired("locality", locality),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("region", region),
                     line2,
                     additionalProperties.toImmutable(),
                 )
@@ -2627,11 +2622,11 @@ constructor(
 
             fun build(): CounterpartyShippingAddress =
                 CounterpartyShippingAddress(
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(line1) { "`line1` is required but was not set" },
-                    checkNotNull(locality) { "`locality` is required but was not set" },
-                    checkNotNull(postalCode) { "`postalCode` is required but was not set" },
-                    checkNotNull(region) { "`region` is required but was not set" },
+                    checkRequired("country", country),
+                    checkRequired("line1", line1),
+                    checkRequired("locality", locality),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("region", region),
                     line2,
                     additionalProperties.toImmutable(),
                 )
@@ -2914,8 +2909,8 @@ constructor(
 
             fun build(): InvoiceLineItemCreateRequest =
                 InvoiceLineItemCreateRequest(
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                    checkRequired("name", name),
+                    checkRequired("unitAmount", unitAmount),
                     description,
                     direction,
                     metadata,
@@ -3188,11 +3183,11 @@ constructor(
 
             fun build(): InvoicerAddress =
                 InvoicerAddress(
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(line1) { "`line1` is required but was not set" },
-                    checkNotNull(locality) { "`locality` is required but was not set" },
-                    checkNotNull(postalCode) { "`postalCode` is required but was not set" },
-                    checkNotNull(region) { "`region` is required but was not set" },
+                    checkRequired("country", country),
+                    checkRequired("line1", line1),
+                    checkRequired("locality", locality),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("region", region),
                     line2,
                     additionalProperties.toImmutable(),
                 )
