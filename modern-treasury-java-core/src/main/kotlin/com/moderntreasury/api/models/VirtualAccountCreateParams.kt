@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.immutableEmptyMap
@@ -487,10 +488,8 @@ constructor(
 
             fun build(): VirtualAccountCreateBody =
                 VirtualAccountCreateBody(
-                    checkNotNull(internalAccountId) {
-                        "`internalAccountId` is required but was not set"
-                    },
-                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkRequired("internalAccountId", internalAccountId),
+                    checkRequired("name", name),
                     (accountDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     counterpartyId,
                     creditLedgerAccountId,
@@ -907,7 +906,7 @@ constructor(
 
             fun build(): AccountDetailCreateRequest =
                 AccountDetailCreateRequest(
-                    checkNotNull(accountNumber) { "`accountNumber` is required but was not set" },
+                    checkRequired("accountNumber", accountNumber),
                     accountNumberType,
                     additionalProperties.toImmutable(),
                 )
@@ -1394,10 +1393,10 @@ constructor(
 
             fun build(): LedgerAccountCreateRequest =
                 LedgerAccountCreateRequest(
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(ledgerId) { "`ledgerId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(normalBalance) { "`normalBalance` is required but was not set" },
+                    checkRequired("currency", currency),
+                    checkRequired("ledgerId", ledgerId),
+                    checkRequired("name", name),
+                    checkRequired("normalBalance", normalBalance),
                     currencyExponent,
                     description,
                     (ledgerAccountCategoryIds ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1822,10 +1821,8 @@ constructor(
 
             fun build(): RoutingDetailCreateRequest =
                 RoutingDetailCreateRequest(
-                    checkNotNull(routingNumber) { "`routingNumber` is required but was not set" },
-                    checkNotNull(routingNumberType) {
-                        "`routingNumberType` is required but was not set"
-                    },
+                    checkRequired("routingNumber", routingNumber),
+                    checkRequired("routingNumberType", routingNumberType),
                     paymentType,
                     additionalProperties.toImmutable(),
                 )
