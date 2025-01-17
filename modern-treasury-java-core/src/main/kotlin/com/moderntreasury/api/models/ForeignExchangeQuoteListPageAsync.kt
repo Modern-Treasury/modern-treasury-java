@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list foreign_exchange_quotes */
 class ForeignExchangeQuoteListPageAsync
 private constructor(
     private val foreignExchangeQuotesService: ForeignExchangeQuoteServiceAsync,

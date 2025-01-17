@@ -316,6 +316,7 @@ constructor(
             )
     }
 
+    /** The status of the connection legal entity. */
     class Status
     @JsonCreator
     private constructor(

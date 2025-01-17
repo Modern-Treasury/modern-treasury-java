@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** list foreign_exchange_quotes */
 class ForeignExchangeQuoteListPage
 private constructor(
     private val foreignExchangeQuotesService: ForeignExchangeQuoteService,

@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list account_collection_flows */
 class AccountCollectionFlowListPageAsync
 private constructor(
     private val accountCollectionFlowsService: AccountCollectionFlowServiceAsync,

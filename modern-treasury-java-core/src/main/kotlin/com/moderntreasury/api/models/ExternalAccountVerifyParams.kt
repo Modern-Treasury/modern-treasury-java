@@ -541,6 +541,7 @@ constructor(
             )
     }
 
+    /** Can be `ach`, `eft`, or `rtp`. */
     class PaymentType
     @JsonCreator
     private constructor(
@@ -766,6 +767,11 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * A payment type to fallback to if the original type is not valid for the receiving account.
+     * Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
+     * fallback_type=ach)
+     */
     class FallbackType
     @JsonCreator
     private constructor(
@@ -817,6 +823,10 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer. This
+     * will apply to both `payment_type` and `fallback_type`.
+     */
     class Priority
     @JsonCreator
     private constructor(

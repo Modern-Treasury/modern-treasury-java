@@ -337,6 +337,10 @@ constructor(
             )
     }
 
+    /**
+     * Required. The updated status of the payment flow. Can only be used to mark a flow as
+     * `cancelled`.
+     */
     class Status
     @JsonCreator
     private constructor(

@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a list of ledger transaction versions. */
 class LedgerTransactionVersionListPageAsync
 private constructor(
     private val versionsService: VersionServiceAsync,

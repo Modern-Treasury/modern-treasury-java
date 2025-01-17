@@ -673,6 +673,10 @@ private constructor(
             )
     }
 
+    /**
+     * Describes the direction money is flowing in the transaction. Can only be `debit`. A `debit`
+     * pulls money from someone else's account to your own.
+     */
     class Direction
     @JsonCreator
     private constructor(
@@ -730,6 +734,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * When `verified` and `external_account_collection` is `enabled`, filters the list of external
+     * accounts your end-user can select to those with a `verification_status` of `verified`.
+     */
     class ExistingExternalAccountsFilter
     @JsonCreator
     private constructor(
@@ -784,6 +792,11 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * When `enabled`, your end-user can select from an existing external account when completing
+     * the flow. When `disabled`, your end-user must add new payment details when completing the
+     * flow.
+     */
     class ExternalAccountCollection
     @JsonCreator
     private constructor(
@@ -844,6 +857,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * The current status of the payment flow. One of `pending`, `completed`, `expired`, or
+     * `cancelled`.
+     */
     class Status
     @JsonCreator
     private constructor(

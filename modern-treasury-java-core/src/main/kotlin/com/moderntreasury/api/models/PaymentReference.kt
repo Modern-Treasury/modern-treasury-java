@@ -295,6 +295,7 @@ private constructor(
             )
     }
 
+    /** The type of reference number. */
     class ReferenceNumberType
     @JsonCreator
     private constructor(
@@ -785,6 +786,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * One of the referenceable types. This must be accompanied by the id of the referenceable or
+     * will return an error.
+     */
     class ReferenceableType
     @JsonCreator
     private constructor(

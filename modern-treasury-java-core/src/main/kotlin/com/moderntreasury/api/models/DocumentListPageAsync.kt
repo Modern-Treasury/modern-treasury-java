@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a list of documents. */
 class DocumentListPageAsync
 private constructor(
     private val documentsService: DocumentServiceAsync,

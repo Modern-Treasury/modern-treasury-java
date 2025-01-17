@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list events */
 class EventListPageAsync
 private constructor(
     private val eventsService: EventServiceAsync,

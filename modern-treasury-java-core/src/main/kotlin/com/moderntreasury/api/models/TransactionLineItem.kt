@@ -500,6 +500,10 @@ private constructor(
             )
     }
 
+    /**
+     * If a matching object exists in Modern Treasury, the type will be populated here, otherwise
+     * `null`.
+     */
     class TransactableType
     @JsonCreator
     private constructor(
@@ -581,6 +585,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Indicates whether the line item is `originating` or `receiving` (see
+     * https://www.moderntreasury.com/journal/beginners-guide-to-ach for more).
+     */
     class Type
     @JsonCreator
     private constructor(

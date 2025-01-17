@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** list bulk_requests */
 class BulkRequestListPage
 private constructor(
     private val bulkRequestsService: BulkRequestService,

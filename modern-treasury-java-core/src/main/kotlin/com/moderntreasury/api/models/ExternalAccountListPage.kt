@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** list external accounts */
 class ExternalAccountListPage
 private constructor(
     private val externalAccountsService: ExternalAccountService,
