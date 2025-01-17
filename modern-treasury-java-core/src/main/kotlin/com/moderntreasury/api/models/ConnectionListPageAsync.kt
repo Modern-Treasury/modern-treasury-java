@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a list of all connections. */
 class ConnectionListPageAsync
 private constructor(
     private val connectionsService: ConnectionServiceAsync,

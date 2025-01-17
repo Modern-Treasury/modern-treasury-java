@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** Get a list of all paper items. */
 class PaperItemListPage
 private constructor(
     private val paperItemsService: PaperItemService,

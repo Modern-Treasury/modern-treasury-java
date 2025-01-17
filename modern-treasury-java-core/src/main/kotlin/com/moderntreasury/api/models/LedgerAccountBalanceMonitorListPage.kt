@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListPage
 private constructor(
     private val ledgerAccountBalanceMonitorsService: LedgerAccountBalanceMonitorService,

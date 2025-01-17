@@ -60,12 +60,14 @@ constructor(
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun accountingCategoryId(): Optional<String> = body.accountingCategoryId()
 
     /**
      * The ID of one of your accounting ledger classes. Note that these will only be accessible if
      * your accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun accountingLedgerClassId(): Optional<String> = body.accountingLedgerClassId()
 
     /**
@@ -260,12 +262,14 @@ constructor(
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun _accountingCategoryId(): JsonField<String> = body._accountingCategoryId()
 
     /**
      * The ID of one of your accounting ledger classes. Note that these will only be accessible if
      * your accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun _accountingLedgerClassId(): JsonField<String> = body._accountingLedgerClassId()
 
     /**
@@ -592,6 +596,7 @@ constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(): Optional<String> =
             Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
 
@@ -599,6 +604,7 @@ constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(): Optional<String> =
             Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
 
@@ -842,6 +848,7 @@ constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         @JsonProperty("accounting_category_id")
         @ExcludeMissing
         fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
@@ -850,6 +857,7 @@ constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         @JsonProperty("accounting_ledger_class_id")
         @ExcludeMissing
         fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
@@ -1277,6 +1285,7 @@ constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingCategoryId(accountingCategoryId: String?) =
                 accountingCategoryId(JsonField.ofNullable(accountingCategoryId))
 
@@ -1284,6 +1293,7 @@ constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingCategoryId(accountingCategoryId: Optional<String>) =
                 accountingCategoryId(accountingCategoryId.orElse(null))
 
@@ -1291,6 +1301,7 @@ constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
                 this.accountingCategoryId = accountingCategoryId
             }
@@ -1299,6 +1310,7 @@ constructor(
              * The ID of one of your accounting ledger classes. Note that these will only be
              * accessible if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingLedgerClassId(accountingLedgerClassId: String?) =
                 accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
 
@@ -1306,6 +1318,7 @@ constructor(
              * The ID of one of your accounting ledger classes. Note that these will only be
              * accessible if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
                 accountingLedgerClassId(accountingLedgerClassId.orElse(null))
 
@@ -1313,6 +1326,7 @@ constructor(
              * The ID of one of your accounting ledger classes. Note that these will only be
              * accessible if your accounting system has been connected.
              */
+            @Deprecated("deprecated")
             fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
                 this.accountingLedgerClassId = accountingLedgerClassId
             }
@@ -2036,6 +2050,7 @@ constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: String?) = apply {
             body.accountingCategoryId(accountingCategoryId)
         }
@@ -2044,6 +2059,7 @@ constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: Optional<String>) =
             accountingCategoryId(accountingCategoryId.orElse(null))
 
@@ -2051,6 +2067,7 @@ constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             body.accountingCategoryId(accountingCategoryId)
         }
@@ -2059,6 +2076,7 @@ constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: String?) = apply {
             body.accountingLedgerClassId(accountingLedgerClassId)
         }
@@ -2067,6 +2085,7 @@ constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
             accountingLedgerClassId(accountingLedgerClassId.orElse(null))
 
@@ -2074,6 +2093,7 @@ constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
             body.accountingLedgerClassId(accountingLedgerClassId)
         }
@@ -2734,6 +2754,11 @@ constructor(
             )
     }
 
+    /**
+     * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
+     * `credit` moves money from your account to someone else's. A `debit` pulls money from someone
+     * else's account to your own. Note that wire, rtp, and check payments will always be `credit`.
+     */
     class Direction
     @JsonCreator
     private constructor(
@@ -2951,6 +2976,11 @@ constructor(
             "Accounting{accountId=$accountId, classId=$classId, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * The party that will pay the fees for the payment order. Only applies to wire payment orders.
+     * Can be one of shared, sender, or receiver, which correspond respectively with the SWIFT 71A
+     * values `SHA`, `OUR`, `BEN`.
+     */
     class ChargeBearer
     @JsonCreator
     private constructor(
@@ -3296,6 +3326,10 @@ constructor(
             "DocumentCreateRequest{documentableId=$documentableId, documentableType=$documentableType, file=$file, documentType=$documentType, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * A payment type to fallback to if the original type is not valid for the receiving account.
+     * Currently, this only supports falling back from RTP to ACH (type=rtp and fallback_type=ach)
+     */
     class FallbackType
     @JsonCreator
     private constructor(
@@ -3347,6 +3381,11 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Indicates the type of FX transfer to initiate, can be either `variable_to_fixed`,
+     * `fixed_to_variable`, or `null` if the payment order currency matches the originating account
+     * currency.
+     */
     class ForeignExchangeIndicator
     @JsonCreator
     private constructor(
@@ -4626,6 +4665,11 @@ constructor(
                 "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
         }
 
+        /**
+         * If the ledger transaction can be reconciled to another object in Modern Treasury, the
+         * type will be populated here, otherwise null. This can be one of payment_order,
+         * incoming_payment_detail, expected_payment, return, paper_item, or reversal.
+         */
         class LedgerableType
         @JsonCreator
         private constructor(
@@ -4791,6 +4835,7 @@ constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
+        /** To post a ledger transaction at creation, use `posted`. */
         class Status
         @JsonCreator
         private constructor(
@@ -5237,6 +5282,11 @@ constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
+     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
+     * standard mail.
+     */
     class Priority
     @JsonCreator
     private constructor(
@@ -6549,6 +6599,11 @@ constructor(
                     )
             }
 
+            /**
+             * If the ledger account links to another object in Modern Treasury, the type will be
+             * populated here, otherwise null. The value is one of internal_account or
+             * external_account.
+             */
             class LedgerableType
             @JsonCreator
             private constructor(
@@ -7018,6 +7073,7 @@ constructor(
                 "AddressRequest{country=$country, line1=$line1, line2=$line2, locality=$locality, postalCode=$postalCode, region=$region, additionalProperties=$additionalProperties}"
         }
 
+        /** Either `individual` or `business`. */
         class PartyType
         @JsonCreator
         private constructor(

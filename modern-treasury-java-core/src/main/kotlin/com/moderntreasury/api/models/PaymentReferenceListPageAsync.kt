@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list payment_references */
 class PaymentReferenceListPageAsync
 private constructor(
     private val paymentReferencesService: PaymentReferenceServiceAsync,

@@ -873,6 +873,7 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /** The type of the originating account number for the incoming payment detail. */
     class OriginatingAccountNumberType
     @JsonCreator
     private constructor(
@@ -981,6 +982,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The type of the originating routing number for the incoming payment detail. */
     class OriginatingRoutingNumberType
     @JsonCreator
     private constructor(
@@ -1149,6 +1151,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * The current status of the incoming payment order. One of `pending`, `completed`, or
+     * `returned`.
+     */
     class Status
     @JsonCreator
     private constructor(
@@ -1212,6 +1218,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
     class Type
     @JsonCreator
     private constructor(

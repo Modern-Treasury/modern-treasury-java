@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list expected_payments */
 class ExpectedPaymentListPageAsync
 private constructor(
     private val expectedPaymentsService: ExpectedPaymentServiceAsync,

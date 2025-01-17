@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListPageAsync
 private constructor(
     private val ledgerAccountBalanceMonitorsService: LedgerAccountBalanceMonitorServiceAsync,

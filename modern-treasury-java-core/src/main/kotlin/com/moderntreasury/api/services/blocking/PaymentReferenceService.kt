@@ -28,8 +28,8 @@ interface PaymentReferenceService {
     ): PaymentReferenceListPage
 
     /** get payment_reference */
-    @JvmOverloads
     @Deprecated("use `retrieve` instead")
+    @JvmOverloads
     fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none()

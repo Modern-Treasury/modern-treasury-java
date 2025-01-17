@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a paginated list of all counterparties. */
 class CounterpartyListPageAsync
 private constructor(
     private val counterpartiesService: CounterpartyServiceAsync,
