@@ -560,6 +560,7 @@ private constructor(
             )
     }
 
+    /** Can be checking, savings or other. */
     class AccountType
     @JsonCreator
     private constructor(
@@ -1035,6 +1036,7 @@ private constructor(
             "Address{id=$id, country=$country, createdAt=$createdAt, line1=$line1, line2=$line2, liveMode=$liveMode, locality=$locality, object_=$object_, postalCode=$postalCode, region=$region, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
+    /** Either individual or business. */
     class PartyType
     @JsonCreator
     private constructor(

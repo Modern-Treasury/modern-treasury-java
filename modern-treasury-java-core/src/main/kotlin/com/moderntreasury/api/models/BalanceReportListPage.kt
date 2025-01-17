@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** Get all balance reports for a given internal account. */
 class BalanceReportListPage
 private constructor(
     private val balanceReportsService: BalanceReportService,

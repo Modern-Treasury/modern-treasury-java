@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list external accounts */
 class ExternalAccountListPageAsync
 private constructor(
     private val externalAccountsService: ExternalAccountServiceAsync,

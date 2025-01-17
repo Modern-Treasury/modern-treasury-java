@@ -44,7 +44,7 @@ constructor(
     /**
      * An optional type to auto-sync the counterparty to your ledger. Either `customer` or `vendor`.
      */
-    fun ledgerType(): Optional<LedgerType> = body.ledgerType()
+    @Deprecated("deprecated") fun ledgerType(): Optional<LedgerType> = body.ledgerType()
 
     fun legalEntity(): Optional<LegalEntityCreateRequest> = body.legalEntity()
 
@@ -79,7 +79,7 @@ constructor(
     /**
      * An optional type to auto-sync the counterparty to your ledger. Either `customer` or `vendor`.
      */
-    fun _ledgerType(): JsonField<LedgerType> = body._ledgerType()
+    @Deprecated("deprecated") fun _ledgerType(): JsonField<LedgerType> = body._ledgerType()
 
     fun _legalEntity(): JsonField<LegalEntityCreateRequest> = body._legalEntity()
 
@@ -170,6 +170,7 @@ constructor(
          * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
          * `vendor`.
          */
+        @Deprecated("deprecated")
         fun ledgerType(): Optional<LedgerType> =
             Optional.ofNullable(ledgerType.getNullable("ledger_type"))
 
@@ -219,6 +220,7 @@ constructor(
          * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
          * `vendor`.
          */
+        @Deprecated("deprecated")
         @JsonProperty("ledger_type")
         @ExcludeMissing
         fun _ledgerType(): JsonField<LedgerType> = ledgerType
@@ -368,12 +370,14 @@ constructor(
              * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
              * `vendor`.
              */
+            @Deprecated("deprecated")
             fun ledgerType(ledgerType: LedgerType) = ledgerType(JsonField.of(ledgerType))
 
             /**
              * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
              * `vendor`.
              */
+            @Deprecated("deprecated")
             fun ledgerType(ledgerType: JsonField<LedgerType>) = apply {
                 this.ledgerType = ledgerType
             }
@@ -553,12 +557,14 @@ constructor(
          * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
          * `vendor`.
          */
+        @Deprecated("deprecated")
         fun ledgerType(ledgerType: LedgerType) = apply { body.ledgerType(ledgerType) }
 
         /**
          * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
          * `vendor`.
          */
+        @Deprecated("deprecated")
         fun ledgerType(ledgerType: JsonField<LedgerType>) = apply { body.ledgerType(ledgerType) }
 
         fun legalEntity(legalEntity: LegalEntityCreateRequest) = apply {
@@ -840,6 +846,10 @@ constructor(
             fun build(): Accounting = Accounting(type, additionalProperties.toImmutable())
         }
 
+        /**
+         * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
+         * `vendor`.
+         */
         class Type
         @JsonCreator
         private constructor(
@@ -2166,6 +2176,11 @@ constructor(
                     )
             }
 
+            /**
+             * If the ledger account links to another object in Modern Treasury, the type will be
+             * populated here, otherwise null. The value is one of internal_account or
+             * external_account.
+             */
             class LedgerableType
             @JsonCreator
             private constructor(
@@ -2635,6 +2650,7 @@ constructor(
                 "AddressRequest{country=$country, line1=$line1, line2=$line2, locality=$locality, postalCode=$postalCode, region=$region, additionalProperties=$additionalProperties}"
         }
 
+        /** Either `individual` or `business`. */
         class PartyType
         @JsonCreator
         private constructor(
@@ -3249,6 +3265,10 @@ constructor(
             "Account{accountDetails=$accountDetails, accountType=$accountType, contactDetails=$contactDetails, ledgerAccount=$ledgerAccount, metadata=$metadata, name=$name, partyAddress=$partyAddress, partyIdentifier=$partyIdentifier, partyName=$partyName, partyType=$partyType, plaidProcessorToken=$plaidProcessorToken, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * An optional type to auto-sync the counterparty to your ledger. Either `customer` or `vendor`.
+     */
+    @Deprecated("deprecated")
     class LedgerType
     @JsonCreator
     private constructor(
@@ -4072,6 +4092,7 @@ constructor(
                 )
         }
 
+        /** The type of legal entity. */
         class LegalEntityType
         @JsonCreator
         private constructor(
@@ -4601,6 +4622,7 @@ constructor(
                     )
             }
 
+            /** The type of ID number. */
             class IdType
             @JsonCreator
             private constructor(
@@ -5009,6 +5031,7 @@ constructor(
                     )
             }
 
+            /** A list of relationship types for how the child entity relates to parent entity. */
             class RelationshipType
             @JsonCreator
             private constructor(
@@ -6328,6 +6351,7 @@ constructor(
                             )
                     }
 
+                    /** The type of ID number. */
                     class IdType
                     @JsonCreator
                     private constructor(
@@ -6521,6 +6545,7 @@ constructor(
                         "IdentificationCreateRequest{idNumber=$idNumber, idType=$idType, issuingCountry=$issuingCountry, additionalProperties=$additionalProperties}"
                 }
 
+                /** The type of legal entity. */
                 class LegalEntityType
                 @JsonCreator
                 private constructor(
@@ -6582,6 +6607,7 @@ constructor(
                     override fun toString() = value.toString()
                 }
 
+                /** The business's legal structure. */
                 class LegalStructure
                 @JsonCreator
                 private constructor(
@@ -6856,6 +6882,7 @@ constructor(
                         "PhoneNumber{phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
                 }
 
+                /** The risk rating of the legal entity. One of low, medium, high. */
                 class RiskRating
                 @JsonCreator
                 private constructor(
@@ -6959,6 +6986,7 @@ constructor(
                 "LegalEntityAssociationInlineCreateRequest{relationshipTypes=$relationshipTypes, childLegalEntity=$childLegalEntity, childLegalEntityId=$childLegalEntityId, ownershipPercentage=$ownershipPercentage, title=$title, additionalProperties=$additionalProperties}"
         }
 
+        /** The business's legal structure. */
         class LegalStructure
         @JsonCreator
         private constructor(
@@ -7226,6 +7254,7 @@ constructor(
                 "PhoneNumber{phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
         }
 
+        /** The risk rating of the legal entity. One of low, medium, high. */
         class RiskRating
         @JsonCreator
         private constructor(
@@ -7385,6 +7414,7 @@ constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /** The verification status of the counterparty. */
     class VerificationStatus
     @JsonCreator
     private constructor(

@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** Get a list of all legal entities. */
 class LegalEntityListPageAsync
 private constructor(
     private val legalEntitiesService: LegalEntityServiceAsync,

@@ -18,6 +18,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+@Deprecated("deprecated")
 @NoAutoDetect
 class LedgerEventHandler
 @JsonCreator
@@ -63,6 +64,7 @@ private constructor(
 
     fun id(): String = id.getRequired("id")
 
+    @Deprecated("deprecated")
     fun conditions(): Optional<LedgerEventHandlerConditions> =
         Optional.ofNullable(conditions.getNullable("conditions"))
 
@@ -78,6 +80,7 @@ private constructor(
     /** The id of the ledger that this event handler belongs to. */
     fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId.getNullable("ledger_id"))
 
+    @Deprecated("deprecated")
     fun ledgerTransactionTemplate(): LedgerEventHandlerLedgerTransactionTemplate =
         ledgerTransactionTemplate.getRequired("ledger_transaction_template")
 
@@ -97,11 +100,13 @@ private constructor(
 
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
+    @Deprecated("deprecated")
     fun variables(): Optional<LedgerEventHandlerVariables> =
         Optional.ofNullable(variables.getNullable("variables"))
 
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+    @Deprecated("deprecated")
     @JsonProperty("conditions")
     @ExcludeMissing
     fun _conditions(): JsonField<LedgerEventHandlerConditions> = conditions
@@ -120,6 +125,7 @@ private constructor(
     /** The id of the ledger that this event handler belongs to. */
     @JsonProperty("ledger_id") @ExcludeMissing fun _ledgerId(): JsonField<String> = ledgerId
 
+    @Deprecated("deprecated")
     @JsonProperty("ledger_transaction_template")
     @ExcludeMissing
     fun _ledgerTransactionTemplate(): JsonField<LedgerEventHandlerLedgerTransactionTemplate> =
@@ -143,6 +149,7 @@ private constructor(
     @ExcludeMissing
     fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
 
+    @Deprecated("deprecated")
     @JsonProperty("variables")
     @ExcludeMissing
     fun _variables(): JsonField<LedgerEventHandlerVariables> = variables
@@ -222,12 +229,15 @@ private constructor(
 
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        @Deprecated("deprecated")
         fun conditions(conditions: LedgerEventHandlerConditions?) =
             conditions(JsonField.ofNullable(conditions))
 
+        @Deprecated("deprecated")
         fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
             conditions(conditions.orElse(null))
 
+        @Deprecated("deprecated")
         fun conditions(conditions: JsonField<LedgerEventHandlerConditions>) = apply {
             this.conditions = conditions
         }
@@ -264,10 +274,12 @@ private constructor(
         /** The id of the ledger that this event handler belongs to. */
         fun ledgerId(ledgerId: JsonField<String>) = apply { this.ledgerId = ledgerId }
 
+        @Deprecated("deprecated")
         fun ledgerTransactionTemplate(
             ledgerTransactionTemplate: LedgerEventHandlerLedgerTransactionTemplate
         ) = ledgerTransactionTemplate(JsonField.of(ledgerTransactionTemplate))
 
+        @Deprecated("deprecated")
         fun ledgerTransactionTemplate(
             ledgerTransactionTemplate: JsonField<LedgerEventHandlerLedgerTransactionTemplate>
         ) = apply { this.ledgerTransactionTemplate = ledgerTransactionTemplate }
@@ -313,12 +325,15 @@ private constructor(
 
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
+        @Deprecated("deprecated")
         fun variables(variables: LedgerEventHandlerVariables?) =
             variables(JsonField.ofNullable(variables))
 
+        @Deprecated("deprecated")
         fun variables(variables: Optional<LedgerEventHandlerVariables>) =
             variables(variables.orElse(null))
 
+        @Deprecated("deprecated")
         fun variables(variables: JsonField<LedgerEventHandlerVariables>) = apply {
             this.variables = variables
         }
@@ -361,6 +376,7 @@ private constructor(
             )
     }
 
+    @Deprecated("deprecated")
     @NoAutoDetect
     class LedgerEventHandlerConditions
     @JsonCreator
@@ -500,6 +516,7 @@ private constructor(
             "LedgerEventHandlerConditions{field=$field, operator=$operator, value=$value, additionalProperties=$additionalProperties}"
     }
 
+    @Deprecated("deprecated")
     @NoAutoDetect
     class LedgerEventHandlerLedgerTransactionTemplate
     @JsonCreator
@@ -703,6 +720,7 @@ private constructor(
                 )
         }
 
+        @Deprecated("deprecated")
         @NoAutoDetect
         class LedgerEventHandlerLedgerEntries
         @JsonCreator
@@ -950,6 +968,7 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    @Deprecated("deprecated")
     @NoAutoDetect
     class LedgerEventHandlerVariables
     @JsonCreator

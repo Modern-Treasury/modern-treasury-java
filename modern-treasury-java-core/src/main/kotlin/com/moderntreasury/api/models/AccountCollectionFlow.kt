@@ -372,6 +372,7 @@ private constructor(
             )
     }
 
+    /** An account created with this flow will support payments of one of these types. */
     class PaymentType
     @JsonCreator
     private constructor(
@@ -429,6 +430,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** An account created with this flow will support wires from the US to these countries. */
     class ReceivingCountry
     @JsonCreator
     private constructor(
@@ -582,6 +584,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * The current status of the account collection flow. One of `pending`, `completed`, `expired`,
+     * or `cancelled`.
+     */
     class Status
     @JsonCreator
     private constructor(

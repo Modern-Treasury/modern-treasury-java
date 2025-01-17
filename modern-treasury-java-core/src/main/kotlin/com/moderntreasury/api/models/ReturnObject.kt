@@ -717,6 +717,7 @@ private constructor(
             )
     }
 
+    /** The return code. For ACH returns, this is the required ACH return code. */
     class Code
     @JsonCreator
     private constructor(
@@ -1289,6 +1290,7 @@ private constructor(
                 )
         }
 
+        /** The type of the reference number. Referring to the vendor payment id. */
         class ReferenceNumberType
         @JsonCreator
         private constructor(
@@ -1803,6 +1805,7 @@ private constructor(
             "PaymentReference{id=$id, createdAt=$createdAt, liveMode=$liveMode, object_=$object_, referenceNumber=$referenceNumber, referenceNumberType=$referenceNumberType, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
+    /** The type of object being returned or `null`. */
     class ReturnableType
     @JsonCreator
     private constructor(
@@ -1878,6 +1881,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The role of the return, can be `originating` or `receiving`. */
     class Role
     @JsonCreator
     private constructor(
@@ -1935,6 +1939,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The current status of the return. */
     class Status
     @JsonCreator
     private constructor(
@@ -2016,6 +2021,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * The type of return. Can be one of: `ach`, `ach_noc`, `au_becs`, `bacs`, `eft`, `interac`,
+     * `manual`, `paper_item`, `wire`.
+     */
     class Type
     @JsonCreator
     private constructor(

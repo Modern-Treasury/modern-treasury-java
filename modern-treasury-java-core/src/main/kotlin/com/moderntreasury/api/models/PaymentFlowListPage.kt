@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** list payment_flows */
 class PaymentFlowListPage
 private constructor(
     private val paymentFlowsService: PaymentFlowService,

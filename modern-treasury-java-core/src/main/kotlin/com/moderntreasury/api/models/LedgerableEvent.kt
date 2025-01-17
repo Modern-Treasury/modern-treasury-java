@@ -18,6 +18,7 @@ import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
+@Deprecated("deprecated")
 @NoAutoDetect
 class LedgerableEvent
 @JsonCreator

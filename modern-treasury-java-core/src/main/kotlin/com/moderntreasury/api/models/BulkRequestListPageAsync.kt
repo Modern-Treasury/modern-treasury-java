@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list bulk_requests */
 class BulkRequestListPageAsync
 private constructor(
     private val bulkRequestsService: BulkRequestServiceAsync,

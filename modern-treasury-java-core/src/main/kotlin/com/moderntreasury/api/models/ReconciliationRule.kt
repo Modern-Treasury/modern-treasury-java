@@ -379,6 +379,10 @@ private constructor(
             )
     }
 
+    /**
+     * One of credit or debit. When you are receiving money, use credit. When you are being charged,
+     * use debit.
+     */
     class Direction
     @JsonCreator
     private constructor(
@@ -514,6 +518,10 @@ private constructor(
         override fun toString() = "CustomIdentifiers{additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * One of ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet
+     * wire
+     */
     class Type
     @JsonCreator
     private constructor(

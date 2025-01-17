@@ -194,6 +194,7 @@ private constructor(
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun accountingCategoryId(): Optional<String> =
         Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
 
@@ -201,6 +202,7 @@ private constructor(
      * The ID of one of your accounting ledger classes. Note that these will only be accessible if
      * your accounting system has been connected.
      */
+    @Deprecated("deprecated")
     fun accountingLedgerClassId(): Optional<String> =
         Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
 
@@ -472,6 +474,7 @@ private constructor(
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      */
+    @Deprecated("deprecated")
     @JsonProperty("accounting_category_id")
     @ExcludeMissing
     fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
@@ -480,6 +483,7 @@ private constructor(
      * The ID of one of your accounting ledger classes. Note that these will only be accessible if
      * your accounting system has been connected.
      */
+    @Deprecated("deprecated")
     @JsonProperty("accounting_ledger_class_id")
     @ExcludeMissing
     fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
@@ -958,6 +962,7 @@ private constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: String?) =
             accountingCategoryId(JsonField.ofNullable(accountingCategoryId))
 
@@ -965,6 +970,7 @@ private constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: Optional<String>) =
             accountingCategoryId(accountingCategoryId.orElse(null))
 
@@ -972,6 +978,7 @@ private constructor(
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             this.accountingCategoryId = accountingCategoryId
         }
@@ -980,6 +987,7 @@ private constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: String?) =
             accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
 
@@ -987,6 +995,7 @@ private constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
             accountingLedgerClassId(accountingLedgerClassId.orElse(null))
 
@@ -994,6 +1003,7 @@ private constructor(
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
          * if your accounting system has been connected.
          */
+        @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
             this.accountingLedgerClassId = accountingLedgerClassId
         }
@@ -1993,6 +2003,11 @@ private constructor(
             "Accounting{accountId=$accountId, classId=$classId, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * The party that will pay the fees for the payment order. Only applies to wire payment orders.
+     * Can be one of shared, sender, or receiver, which correspond respectively with the SWIFT 71A
+     * values `SHA`, `OUR`, `BEN`.
+     */
     class ChargeBearer
     @JsonCreator
     private constructor(
@@ -2139,6 +2154,11 @@ private constructor(
             "ComplianceRuleMetadata{additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
+     * `credit` moves money from your account to someone else's. A `debit` pulls money from someone
+     * else's account to your own. Note that wire, rtp, and check payments will always be `credit`.
+     */
     class Direction
     @JsonCreator
     private constructor(
@@ -2196,6 +2216,11 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Indicates the type of FX transfer to initiate, can be either `variable_to_fixed`,
+     * `fixed_to_variable`, or `null` if the payment order currency matches the originating account
+     * currency.
+     */
     class ForeignExchangeIndicator
     @JsonCreator
     private constructor(
@@ -2612,6 +2637,11 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
+     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
+     * standard mail.
+     */
     class Priority
     @JsonCreator
     private constructor(
@@ -2936,6 +2966,7 @@ private constructor(
                 )
         }
 
+        /** The type of the reference number. Referring to the vendor payment id. */
         class ReferenceNumberType
         @JsonCreator
         private constructor(
@@ -3450,6 +3481,7 @@ private constructor(
             "PaymentReference{id=$id, createdAt=$createdAt, liveMode=$liveMode, object_=$object_, referenceNumber=$referenceNumber, referenceNumberType=$referenceNumberType, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
+    /** The current status of the payment order. */
     class Status
     @JsonCreator
     private constructor(

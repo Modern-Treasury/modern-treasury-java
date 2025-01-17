@@ -438,6 +438,7 @@ constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /** One of unreconciled, reconciled, or archived. */
     class Status
     @JsonCreator
     private constructor(
@@ -507,6 +508,10 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa, signet,
+     * wire
+     */
     class Type
     @JsonCreator
     private constructor(
