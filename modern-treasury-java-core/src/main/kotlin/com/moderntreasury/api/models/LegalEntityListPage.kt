@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** Get a list of all legal entities. */
 class LegalEntityListPage
 private constructor(
     private val legalEntitiesService: LegalEntityService,

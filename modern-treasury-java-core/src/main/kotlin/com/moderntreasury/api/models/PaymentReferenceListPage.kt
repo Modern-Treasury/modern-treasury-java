@@ -19,6 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/** list payment_references */
 class PaymentReferenceListPage
 private constructor(
     private val paymentReferencesService: PaymentReferenceService,

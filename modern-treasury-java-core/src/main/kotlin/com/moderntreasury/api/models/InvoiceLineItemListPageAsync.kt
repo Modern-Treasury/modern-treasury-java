@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
+/** list invoice_line_items */
 class InvoiceLineItemListPageAsync
 private constructor(
     private val lineItemsService: LineItemServiceAsync,

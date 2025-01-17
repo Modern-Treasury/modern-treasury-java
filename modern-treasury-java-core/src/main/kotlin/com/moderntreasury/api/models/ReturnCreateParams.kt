@@ -622,6 +622,7 @@ constructor(
             )
     }
 
+    /** The type of object being returned. Currently, this may only be incoming_payment_detail. */
     class ReturnableType
     @JsonCreator
     private constructor(
@@ -673,6 +674,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** The return code. For ACH returns, this is the required ACH return code. */
     class Code
     @JsonCreator
     private constructor(
