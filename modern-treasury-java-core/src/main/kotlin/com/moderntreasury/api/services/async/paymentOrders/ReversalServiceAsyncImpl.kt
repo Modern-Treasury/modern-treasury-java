@@ -20,7 +20,7 @@ import com.moderntreasury.api.models.Reversal
 import java.util.concurrent.CompletableFuture
 
 class ReversalServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ReversalServiceAsync {
 

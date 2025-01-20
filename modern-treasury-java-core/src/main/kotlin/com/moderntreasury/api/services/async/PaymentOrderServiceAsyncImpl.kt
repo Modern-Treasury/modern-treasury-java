@@ -25,7 +25,7 @@ import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsyncI
 import java.util.concurrent.CompletableFuture
 
 class PaymentOrderServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PaymentOrderServiceAsync {
 

@@ -25,7 +25,7 @@ import com.moderntreasury.api.services.async.invoices.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
 class InvoiceServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : InvoiceServiceAsync {
 

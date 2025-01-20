@@ -26,7 +26,7 @@ import com.moderntreasury.api.models.ExternalAccountVerifyResponse
 import java.util.concurrent.CompletableFuture
 
 class ExternalAccountServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExternalAccountServiceAsync {
 

@@ -16,7 +16,7 @@ import com.moderntreasury.api.models.ValidationValidateRoutingNumberParams
 import java.util.concurrent.CompletableFuture
 
 class ValidationServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ValidationServiceAsync {
 

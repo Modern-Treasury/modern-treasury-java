@@ -23,7 +23,7 @@ import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServi
 import java.util.concurrent.CompletableFuture
 
 class InternalAccountServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : InternalAccountServiceAsync {
 

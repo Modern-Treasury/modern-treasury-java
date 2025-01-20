@@ -20,7 +20,7 @@ import com.moderntreasury.api.models.ReturnRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class ReturnServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ReturnServiceAsync {
 
