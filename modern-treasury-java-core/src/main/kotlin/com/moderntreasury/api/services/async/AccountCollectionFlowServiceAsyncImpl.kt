@@ -21,7 +21,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class AccountCollectionFlowServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AccountCollectionFlowServiceAsync {
 

@@ -20,7 +20,7 @@ import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class ForeignExchangeQuoteServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ForeignExchangeQuoteServiceAsync {
 

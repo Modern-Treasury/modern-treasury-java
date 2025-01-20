@@ -20,7 +20,7 @@ import com.moderntreasury.api.models.LedgerEntryUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerEntryServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerEntryServiceAsync {
 

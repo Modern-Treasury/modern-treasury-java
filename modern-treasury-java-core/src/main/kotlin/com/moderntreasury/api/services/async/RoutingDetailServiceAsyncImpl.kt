@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.RoutingDetailRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class RoutingDetailServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : RoutingDetailServiceAsync {
 

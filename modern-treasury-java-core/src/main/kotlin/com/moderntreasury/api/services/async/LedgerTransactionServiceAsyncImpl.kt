@@ -24,7 +24,7 @@ import com.moderntreasury.api.services.async.ledgerTransactions.VersionServiceAs
 import java.util.concurrent.CompletableFuture
 
 class LedgerTransactionServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerTransactionServiceAsync {
 

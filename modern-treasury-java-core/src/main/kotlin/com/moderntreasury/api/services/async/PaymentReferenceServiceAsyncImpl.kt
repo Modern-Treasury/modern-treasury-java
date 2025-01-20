@@ -19,7 +19,7 @@ import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class PaymentReferenceServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PaymentReferenceServiceAsync {
 

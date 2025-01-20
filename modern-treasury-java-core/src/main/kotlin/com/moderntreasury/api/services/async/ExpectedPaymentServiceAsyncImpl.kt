@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class ExpectedPaymentServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExpectedPaymentServiceAsync {
 
