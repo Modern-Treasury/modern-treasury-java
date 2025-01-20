@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class LineItemServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LineItemServiceAsync {
 

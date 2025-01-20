@@ -19,7 +19,7 @@ import com.moderntreasury.api.models.LedgerAccountStatementRetrieveResponse
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountStatementServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerAccountStatementServiceAsync {
 

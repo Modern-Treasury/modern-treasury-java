@@ -27,7 +27,7 @@ import com.moderntreasury.api.models.LedgerAccountCategoryUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountCategoryServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerAccountCategoryServiceAsync {
 

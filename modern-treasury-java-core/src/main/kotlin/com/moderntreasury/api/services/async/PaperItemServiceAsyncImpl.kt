@@ -18,7 +18,7 @@ import com.moderntreasury.api.models.PaperItemRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class PaperItemServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PaperItemServiceAsync {
 

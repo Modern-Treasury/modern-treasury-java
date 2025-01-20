@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class BalanceReportServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : BalanceReportServiceAsync {
 
