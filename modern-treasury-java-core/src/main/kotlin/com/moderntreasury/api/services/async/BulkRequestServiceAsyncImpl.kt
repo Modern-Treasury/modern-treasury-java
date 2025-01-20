@@ -20,7 +20,7 @@ import com.moderntreasury.api.models.BulkRequestRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class BulkRequestServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : BulkRequestServiceAsync {
 

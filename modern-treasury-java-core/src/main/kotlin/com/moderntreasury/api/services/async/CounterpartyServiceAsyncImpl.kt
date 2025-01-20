@@ -25,7 +25,7 @@ import com.moderntreasury.api.models.CounterpartyUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class CounterpartyServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CounterpartyServiceAsync {
 

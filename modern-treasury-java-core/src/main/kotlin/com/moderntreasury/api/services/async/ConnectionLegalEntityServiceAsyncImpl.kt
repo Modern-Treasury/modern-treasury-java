@@ -21,7 +21,7 @@ import com.moderntreasury.api.models.ConnectionLegalEntityUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class ConnectionLegalEntityServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ConnectionLegalEntityServiceAsync {
 

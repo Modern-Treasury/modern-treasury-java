@@ -21,7 +21,7 @@ import com.moderntreasury.api.models.PaymentFlowUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class PaymentFlowServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PaymentFlowServiceAsync {
 

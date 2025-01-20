@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.IncomingPaymentDetailUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class IncomingPaymentDetailServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : IncomingPaymentDetailServiceAsync {
 

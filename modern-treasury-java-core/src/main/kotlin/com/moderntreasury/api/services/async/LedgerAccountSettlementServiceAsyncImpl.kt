@@ -21,7 +21,7 @@ import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountSettlementServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerAccountSettlementServiceAsync {
 

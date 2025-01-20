@@ -22,7 +22,7 @@ import com.moderntreasury.api.models.LedgerAccountBalanceMonitorUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountBalanceMonitorServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerAccountBalanceMonitorServiceAsync {
 

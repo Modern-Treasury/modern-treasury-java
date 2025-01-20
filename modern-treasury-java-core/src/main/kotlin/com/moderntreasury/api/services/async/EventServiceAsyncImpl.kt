@@ -18,7 +18,7 @@ import com.moderntreasury.api.models.EventRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class EventServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : EventServiceAsync {
 

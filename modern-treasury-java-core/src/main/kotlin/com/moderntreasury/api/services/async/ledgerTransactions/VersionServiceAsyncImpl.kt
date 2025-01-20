@@ -17,7 +17,7 @@ import com.moderntreasury.api.models.LedgerTransactionVersionListParams
 import java.util.concurrent.CompletableFuture
 
 class VersionServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : VersionServiceAsync {
 

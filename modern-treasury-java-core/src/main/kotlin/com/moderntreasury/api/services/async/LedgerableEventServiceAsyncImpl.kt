@@ -18,7 +18,7 @@ import com.moderntreasury.api.models.LedgerableEventRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerableEventServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerableEventServiceAsync {
 
