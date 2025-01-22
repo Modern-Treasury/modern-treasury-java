@@ -72,7 +72,7 @@ private constructor(
 
     /**
      * An array of payment types that are supported for this routing number. This can include `ach`,
-     * `wire`, `rtp`, `sepa`, `bacs`, `au_becs` currently.
+     * `wire`, `rtp`, `sepa`, `bacs`, `au_becs`, and 'fednow' currently.
      */
     fun supportedPaymentTypes(): Optional<List<SupportedPaymentType>> =
         Optional.ofNullable(supportedPaymentTypes.getNullable("supported_payment_types"))
@@ -109,7 +109,7 @@ private constructor(
 
     /**
      * An array of payment types that are supported for this routing number. This can include `ach`,
-     * `wire`, `rtp`, `sepa`, `bacs`, `au_becs` currently.
+     * `wire`, `rtp`, `sepa`, `bacs`, `au_becs`, and 'fednow' currently.
      */
     @JsonProperty("supported_payment_types")
     @ExcludeMissing
@@ -221,14 +221,14 @@ private constructor(
 
         /**
          * An array of payment types that are supported for this routing number. This can include
-         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs` currently.
+         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs`, and 'fednow' currently.
          */
         fun supportedPaymentTypes(supportedPaymentTypes: List<SupportedPaymentType>) =
             supportedPaymentTypes(JsonField.of(supportedPaymentTypes))
 
         /**
          * An array of payment types that are supported for this routing number. This can include
-         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs` currently.
+         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs`, and 'fednow' currently.
          */
         fun supportedPaymentTypes(supportedPaymentTypes: JsonField<List<SupportedPaymentType>>) =
             apply {
@@ -237,7 +237,7 @@ private constructor(
 
         /**
          * An array of payment types that are supported for this routing number. This can include
-         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs` currently.
+         * `ach`, `wire`, `rtp`, `sepa`, `bacs`, `au_becs`, and 'fednow' currently.
          */
         fun addSupportedPaymentType(supportedPaymentType: SupportedPaymentType) = apply {
             supportedPaymentTypes =
