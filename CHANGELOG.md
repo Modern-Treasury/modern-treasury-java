@@ -1,5 +1,31 @@
 # Changelog
 
+## 4.0.1 (2025-01-22)
+
+Full Changelog: [v4.0.0...v4.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v4.0.0...v4.0.1)
+
+### Bug Fixes
+
+* **client:** make service impl constructors internal ([#316](https://github.com/Modern-Treasury/modern-treasury-java/issues/316)) ([1b1c1b3](https://github.com/Modern-Treasury/modern-treasury-java/commit/1b1c1b3098fc430323e726ff43772e9feaddffd7))
+
+
+### Chores
+
+* **api:** adds new APIs for LedgerAccountSettlement LedgerEntries ([#318](https://github.com/Modern-Treasury/modern-treasury-java/issues/318)) ([5f77282](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f77282a93fdd0641477a1f66219628d28d37baa))
+* change casing of organization in license ([#317](https://github.com/Modern-Treasury/modern-treasury-java/issues/317)) ([45fa3de](https://github.com/Modern-Treasury/modern-treasury-java/commit/45fa3de11b33be4dfa3117b5ab4ff20777d1acec))
+* **internal:** add and tweak check functions ([#310](https://github.com/Modern-Treasury/modern-treasury-java/issues/310)) ([9edca46](https://github.com/Modern-Treasury/modern-treasury-java/commit/9edca468973334a2f4de6c24aa7e0f0459f9996d))
+* **internal:** tweak client options nullability handling ([9edca46](https://github.com/Modern-Treasury/modern-treasury-java/commit/9edca468973334a2f4de6c24aa7e0f0459f9996d))
+* **internal:** upgrade kotlin compiler and gradle ([#314](https://github.com/Modern-Treasury/modern-treasury-java/issues/314)) ([ea7bc1b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ea7bc1b1d2c3d1e7a6a1b3d9523648ba1b1cff27))
+* simplify examples involving lists ([#312](https://github.com/Modern-Treasury/modern-treasury-java/issues/312)) ([c2db3bc](https://github.com/Modern-Treasury/modern-treasury-java/commit/c2db3bc75129898e9caa25120dca63e6f336da24))
+* simplify examples involving unions ([#313](https://github.com/Modern-Treasury/modern-treasury-java/issues/313)) ([c586d5b](https://github.com/Modern-Treasury/modern-treasury-java/commit/c586d5bca399028dcab29fd3dcf8309751c8c705))
+
+
+### Documentation
+
+* add more documentation ([#315](https://github.com/Modern-Treasury/modern-treasury-java/issues/315)) ([dbf635a](https://github.com/Modern-Treasury/modern-treasury-java/commit/dbf635a618784f3612c9116c6b64ea244e3dcb3b))
+* move up requirements section ([#320](https://github.com/Modern-Treasury/modern-treasury-java/issues/320)) ([3cf79ca](https://github.com/Modern-Treasury/modern-treasury-java/commit/3cf79cab69e4f5680d59c7aab0e5c9f88c5cfaf8))
+* update readme ([#319](https://github.com/Modern-Treasury/modern-treasury-java/issues/319)) ([45d107f](https://github.com/Modern-Treasury/modern-treasury-java/commit/45d107f04b61af73a5e51ddc7b2263d1e4fe49a0))
+
 ## 4.0.0 (2025-01-14)
 
 Full Changelog: [v3.1.0...v4.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v3.1.0...v4.0.0)
