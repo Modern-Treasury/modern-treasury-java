@@ -11,9 +11,12 @@ import com.moderntreasury.api.models.LedgerAccountSettlementListPageAsync
 import com.moderntreasury.api.models.LedgerAccountSettlementListParams
 import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
+import com.moderntreasury.api.services.async.ledgerAccountSettlements.AccountEntryServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface LedgerAccountSettlementServiceAsync {
+
+    fun accountEntries(): AccountEntryServiceAsync
 
     /** Create a ledger account settlement. */
     @JvmOverloads

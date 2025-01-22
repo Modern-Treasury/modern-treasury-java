@@ -62,6 +62,9 @@ private constructor(
     @JsonProperty("object")
     @ExcludeMissing
     private val object_: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("partially_posts_ledger_transaction_id")
+    @ExcludeMissing
+    private val partiallyPostsLedgerTransactionId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("posted_at")
     @ExcludeMissing
     private val postedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -134,6 +137,12 @@ private constructor(
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
     fun object_(): String = object_.getRequired("object")
+
+    /** The ID of the ledger transaction that this ledger transaction partially posts. */
+    fun partiallyPostsLedgerTransactionId(): Optional<String> =
+        Optional.ofNullable(
+            partiallyPostsLedgerTransactionId.getNullable("partially_posts_ledger_transaction_id")
+        )
 
     /**
      * The time on which the ledger transaction posted. This is null if the ledger transaction is
@@ -223,6 +232,11 @@ private constructor(
 
     @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
 
+    /** The ID of the ledger transaction that this ledger transaction partially posts. */
+    @JsonProperty("partially_posts_ledger_transaction_id")
+    @ExcludeMissing
+    fun _partiallyPostsLedgerTransactionId(): JsonField<String> = partiallyPostsLedgerTransactionId
+
     /**
      * The time on which the ledger transaction posted. This is null if the ledger transaction is
      * pending.
@@ -270,6 +284,7 @@ private constructor(
         liveMode()
         metadata().validate()
         object_()
+        partiallyPostsLedgerTransactionId()
         postedAt()
         reversedByLedgerTransactionId()
         reversesLedgerTransactionId()
@@ -300,6 +315,7 @@ private constructor(
         private var liveMode: JsonField<Boolean>? = null
         private var metadata: JsonField<Metadata>? = null
         private var object_: JsonField<String>? = null
+        private var partiallyPostsLedgerTransactionId: JsonField<String>? = null
         private var postedAt: JsonField<OffsetDateTime>? = null
         private var reversedByLedgerTransactionId: JsonField<String>? = null
         private var reversesLedgerTransactionId: JsonField<String>? = null
@@ -322,6 +338,7 @@ private constructor(
             liveMode = ledgerTransaction.liveMode
             metadata = ledgerTransaction.metadata
             object_ = ledgerTransaction.object_
+            partiallyPostsLedgerTransactionId = ledgerTransaction.partiallyPostsLedgerTransactionId
             postedAt = ledgerTransaction.postedAt
             reversedByLedgerTransactionId = ledgerTransaction.reversedByLedgerTransactionId
             reversesLedgerTransactionId = ledgerTransaction.reversesLedgerTransactionId
@@ -491,6 +508,21 @@ private constructor(
 
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
+        /** The ID of the ledger transaction that this ledger transaction partially posts. */
+        fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: String?) =
+            partiallyPostsLedgerTransactionId(
+                JsonField.ofNullable(partiallyPostsLedgerTransactionId)
+            )
+
+        /** The ID of the ledger transaction that this ledger transaction partially posts. */
+        fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: Optional<String>) =
+            partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.orElse(null))
+
+        /** The ID of the ledger transaction that this ledger transaction partially posts. */
+        fun partiallyPostsLedgerTransactionId(
+            partiallyPostsLedgerTransactionId: JsonField<String>
+        ) = apply { this.partiallyPostsLedgerTransactionId = partiallyPostsLedgerTransactionId }
+
         /**
          * The time on which the ledger transaction posted. This is null if the ledger transaction
          * is pending.
@@ -580,6 +612,10 @@ private constructor(
                 checkRequired("liveMode", liveMode),
                 checkRequired("metadata", metadata),
                 checkRequired("object_", object_),
+                checkRequired(
+                    "partiallyPostsLedgerTransactionId",
+                    partiallyPostsLedgerTransactionId
+                ),
                 checkRequired("postedAt", postedAt),
                 checkRequired("reversedByLedgerTransactionId", reversedByLedgerTransactionId),
                 checkRequired("reversesLedgerTransactionId", reversesLedgerTransactionId),
@@ -822,15 +858,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerTransaction && id == other.id && createdAt == other.createdAt && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerEntries == other.ledgerEntries && ledgerId == other.ledgerId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && postedAt == other.postedAt && reversedByLedgerTransactionId == other.reversedByLedgerTransactionId && reversesLedgerTransactionId == other.reversesLedgerTransactionId && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LedgerTransaction && id == other.id && createdAt == other.createdAt && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerEntries == other.ledgerEntries && ledgerId == other.ledgerId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && partiallyPostsLedgerTransactionId == other.partiallyPostsLedgerTransactionId && postedAt == other.postedAt && reversedByLedgerTransactionId == other.reversedByLedgerTransactionId && reversesLedgerTransactionId == other.reversesLedgerTransactionId && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, description, effectiveAt, effectiveDate, externalId, ledgerEntries, ledgerId, ledgerableId, ledgerableType, liveMode, metadata, object_, postedAt, reversedByLedgerTransactionId, reversesLedgerTransactionId, status, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, description, effectiveAt, effectiveDate, externalId, ledgerEntries, ledgerId, ledgerableId, ledgerableType, liveMode, metadata, object_, partiallyPostsLedgerTransactionId, postedAt, reversedByLedgerTransactionId, reversesLedgerTransactionId, status, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerTransaction{id=$id, createdAt=$createdAt, description=$description, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, externalId=$externalId, ledgerEntries=$ledgerEntries, ledgerId=$ledgerId, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, postedAt=$postedAt, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, reversesLedgerTransactionId=$reversesLedgerTransactionId, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LedgerTransaction{id=$id, createdAt=$createdAt, description=$description, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, externalId=$externalId, ledgerEntries=$ledgerEntries, ledgerId=$ledgerId, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, partiallyPostsLedgerTransactionId=$partiallyPostsLedgerTransactionId, postedAt=$postedAt, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, reversesLedgerTransactionId=$reversesLedgerTransactionId, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
