@@ -14,6 +14,7 @@ import com.moderntreasury.api.core.json
 import com.moderntreasury.api.errors.ModernTreasuryError
 import com.moderntreasury.api.models.LedgerTransaction
 import com.moderntreasury.api.models.LedgerTransactionCreateParams
+import com.moderntreasury.api.models.LedgerTransactionCreatePartialPostParams
 import com.moderntreasury.api.models.LedgerTransactionCreateReversalParams
 import com.moderntreasury.api.models.LedgerTransactionListPageAsync
 import com.moderntreasury.api.models.LedgerTransactionListParams
@@ -158,6 +159,41 @@ internal constructor(
                         .build()
                 }
                 .let { LedgerTransactionListPageAsync.of(this, params, it) }
+        }
+    }
+
+    private val createPartialPostHandler: Handler<LedgerTransaction> =
+        jsonHandler<LedgerTransaction>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Create a ledger transaction that partially posts another ledger transaction. */
+    override fun createPartialPost(
+        params: LedgerTransactionCreatePartialPostParams,
+        requestOptions: RequestOptions
+    ): CompletableFuture<LedgerTransaction> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments(
+                    "api",
+                    "ledger_transactions",
+                    params.getPathParam(0),
+                    "partial_post"
+                )
+                .putAllQueryParams(clientOptions.queryParams)
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .replaceAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
+            ->
+            response
+                .use { createPartialPostHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
         }
     }
 

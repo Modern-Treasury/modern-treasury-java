@@ -7,6 +7,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.models.LedgerTransaction
 import com.moderntreasury.api.models.LedgerTransactionCreateParams
+import com.moderntreasury.api.models.LedgerTransactionCreatePartialPostParams
 import com.moderntreasury.api.models.LedgerTransactionCreateReversalParams
 import com.moderntreasury.api.models.LedgerTransactionListPageAsync
 import com.moderntreasury.api.models.LedgerTransactionListParams
@@ -46,6 +47,13 @@ interface LedgerTransactionServiceAsync {
         params: LedgerTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<LedgerTransactionListPageAsync>
+
+    /** Create a ledger transaction that partially posts another ledger transaction. */
+    @JvmOverloads
+    fun createPartialPost(
+        params: LedgerTransactionCreatePartialPostParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompletableFuture<LedgerTransaction>
 
     /** Create a ledger transaction reversal. */
     @JvmOverloads

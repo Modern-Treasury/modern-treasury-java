@@ -7,6 +7,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.models.LedgerTransaction
 import com.moderntreasury.api.models.LedgerTransactionCreateParams
+import com.moderntreasury.api.models.LedgerTransactionCreatePartialPostParams
 import com.moderntreasury.api.models.LedgerTransactionCreateReversalParams
 import com.moderntreasury.api.models.LedgerTransactionListPage
 import com.moderntreasury.api.models.LedgerTransactionListParams
@@ -45,6 +46,13 @@ interface LedgerTransactionService {
         params: LedgerTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): LedgerTransactionListPage
+
+    /** Create a ledger transaction that partially posts another ledger transaction. */
+    @JvmOverloads
+    fun createPartialPost(
+        params: LedgerTransactionCreatePartialPostParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): LedgerTransaction
 
     /** Create a ledger transaction reversal. */
     @JvmOverloads
