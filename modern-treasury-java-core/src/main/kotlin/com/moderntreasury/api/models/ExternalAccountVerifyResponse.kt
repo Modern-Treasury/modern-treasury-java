@@ -35,31 +35,30 @@ import java.util.Optional
 class ExternalAccountVerifyResponse
 private constructor(
     private val externalAccount: ExternalAccount? = null,
-    private val externalAccountVerificationAttempt: ExternalAccountVerificationAttempt? = null,
+    private val verificationAttempt: ExternalAccountVerificationAttempt? = null,
     private val _json: JsonValue? = null,
 ) {
 
     fun externalAccount(): Optional<ExternalAccount> = Optional.ofNullable(externalAccount)
 
-    fun externalAccountVerificationAttempt(): Optional<ExternalAccountVerificationAttempt> =
-        Optional.ofNullable(externalAccountVerificationAttempt)
+    fun verificationAttempt(): Optional<ExternalAccountVerificationAttempt> =
+        Optional.ofNullable(verificationAttempt)
 
     fun isExternalAccount(): Boolean = externalAccount != null
 
-    fun isExternalAccountVerificationAttempt(): Boolean = externalAccountVerificationAttempt != null
+    fun isVerificationAttempt(): Boolean = verificationAttempt != null
 
     fun asExternalAccount(): ExternalAccount = externalAccount.getOrThrow("externalAccount")
 
-    fun asExternalAccountVerificationAttempt(): ExternalAccountVerificationAttempt =
-        externalAccountVerificationAttempt.getOrThrow("externalAccountVerificationAttempt")
+    fun asVerificationAttempt(): ExternalAccountVerificationAttempt =
+        verificationAttempt.getOrThrow("verificationAttempt")
 
     fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
     fun <T> accept(visitor: Visitor<T>): T {
         return when {
             externalAccount != null -> visitor.visitExternalAccount(externalAccount)
-            externalAccountVerificationAttempt != null ->
-                visitor.visitExternalAccountVerificationAttempt(externalAccountVerificationAttempt)
+            verificationAttempt != null -> visitor.visitVerificationAttempt(verificationAttempt)
             else -> visitor.unknown(_json)
         }
     }
@@ -77,10 +76,10 @@ private constructor(
                     externalAccount.validate()
                 }
 
-                override fun visitExternalAccountVerificationAttempt(
-                    externalAccountVerificationAttempt: ExternalAccountVerificationAttempt
+                override fun visitVerificationAttempt(
+                    verificationAttempt: ExternalAccountVerificationAttempt
                 ) {
-                    externalAccountVerificationAttempt.validate()
+                    verificationAttempt.validate()
                 }
             }
         )
@@ -92,17 +91,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalAccountVerifyResponse && externalAccount == other.externalAccount && externalAccountVerificationAttempt == other.externalAccountVerificationAttempt /* spotless:on */
+        return /* spotless:off */ other is ExternalAccountVerifyResponse && externalAccount == other.externalAccount && verificationAttempt == other.verificationAttempt /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalAccount, externalAccountVerificationAttempt) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalAccount, verificationAttempt) /* spotless:on */
 
     override fun toString(): String =
         when {
             externalAccount != null ->
                 "ExternalAccountVerifyResponse{externalAccount=$externalAccount}"
-            externalAccountVerificationAttempt != null ->
-                "ExternalAccountVerifyResponse{externalAccountVerificationAttempt=$externalAccountVerificationAttempt}"
+            verificationAttempt != null ->
+                "ExternalAccountVerifyResponse{verificationAttempt=$verificationAttempt}"
             _json != null -> "ExternalAccountVerifyResponse{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid ExternalAccountVerifyResponse")
         }
@@ -114,21 +113,15 @@ private constructor(
             ExternalAccountVerifyResponse(externalAccount = externalAccount)
 
         @JvmStatic
-        fun ofExternalAccountVerificationAttempt(
-            externalAccountVerificationAttempt: ExternalAccountVerificationAttempt
-        ) =
-            ExternalAccountVerifyResponse(
-                externalAccountVerificationAttempt = externalAccountVerificationAttempt
-            )
+        fun ofVerificationAttempt(verificationAttempt: ExternalAccountVerificationAttempt) =
+            ExternalAccountVerifyResponse(verificationAttempt = verificationAttempt)
     }
 
     interface Visitor<out T> {
 
         fun visitExternalAccount(externalAccount: ExternalAccount): T
 
-        fun visitExternalAccountVerificationAttempt(
-            externalAccountVerificationAttempt: ExternalAccountVerificationAttempt
-        ): T
+        fun visitVerificationAttempt(verificationAttempt: ExternalAccountVerificationAttempt): T
 
         fun unknown(json: JsonValue?): T {
             throw ModernTreasuryInvalidDataException("Unknown ExternalAccountVerifyResponse: $json")
@@ -149,10 +142,7 @@ private constructor(
                     it.validate()
                 }
                 ?.let {
-                    return ExternalAccountVerifyResponse(
-                        externalAccountVerificationAttempt = it,
-                        _json = json
-                    )
+                    return ExternalAccountVerifyResponse(verificationAttempt = it, _json = json)
                 }
 
             return ExternalAccountVerifyResponse(_json = json)
@@ -169,8 +159,8 @@ private constructor(
         ) {
             when {
                 value.externalAccount != null -> generator.writeObject(value.externalAccount)
-                value.externalAccountVerificationAttempt != null ->
-                    generator.writeObject(value.externalAccountVerificationAttempt)
+                value.verificationAttempt != null ->
+                    generator.writeObject(value.verificationAttempt)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid ExternalAccountVerifyResponse")
             }
