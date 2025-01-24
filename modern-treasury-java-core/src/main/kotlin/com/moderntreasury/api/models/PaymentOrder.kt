@@ -1638,8 +1638,8 @@ private constructor(
          * The account to which the originating of this payment should be attributed to. Can be a
          * `virtual_account` or `internal_account`.
          */
-        fun ultimateOriginatingAccount(virtualAccount: VirtualAccount) =
-            ultimateOriginatingAccount(UltimateOriginatingAccount.ofVirtualAccount(virtualAccount))
+        fun ultimateOriginatingAccount(virtual: VirtualAccount) =
+            ultimateOriginatingAccount(UltimateOriginatingAccount.ofVirtual(virtual))
 
         /**
          * The account to which the originating of this payment should be attributed to. Can be a
@@ -3601,20 +3601,20 @@ private constructor(
     @JsonSerialize(using = UltimateOriginatingAccount.Serializer::class)
     class UltimateOriginatingAccount
     private constructor(
-        private val virtualAccount: VirtualAccount? = null,
+        private val virtual: VirtualAccount? = null,
         private val internalAccount: InternalAccount? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun virtualAccount(): Optional<VirtualAccount> = Optional.ofNullable(virtualAccount)
+        fun virtual(): Optional<VirtualAccount> = Optional.ofNullable(virtual)
 
         fun internalAccount(): Optional<InternalAccount> = Optional.ofNullable(internalAccount)
 
-        fun isVirtualAccount(): Boolean = virtualAccount != null
+        fun isVirtual(): Boolean = virtual != null
 
         fun isInternalAccount(): Boolean = internalAccount != null
 
-        fun asVirtualAccount(): VirtualAccount = virtualAccount.getOrThrow("virtualAccount")
+        fun asVirtual(): VirtualAccount = virtual.getOrThrow("virtual")
 
         fun asInternalAccount(): InternalAccount = internalAccount.getOrThrow("internalAccount")
 
@@ -3622,7 +3622,7 @@ private constructor(
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                virtualAccount != null -> visitor.visitVirtualAccount(virtualAccount)
+                virtual != null -> visitor.visitVirtual(virtual)
                 internalAccount != null -> visitor.visitInternalAccount(internalAccount)
                 else -> visitor.unknown(_json)
             }
@@ -3637,8 +3637,8 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitVirtualAccount(virtualAccount: VirtualAccount) {
-                        virtualAccount.validate()
+                    override fun visitVirtual(virtual: VirtualAccount) {
+                        virtual.validate()
                     }
 
                     override fun visitInternalAccount(internalAccount: InternalAccount) {
@@ -3654,15 +3654,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UltimateOriginatingAccount && virtualAccount == other.virtualAccount && internalAccount == other.internalAccount /* spotless:on */
+            return /* spotless:off */ other is UltimateOriginatingAccount && virtual == other.virtual && internalAccount == other.internalAccount /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(virtualAccount, internalAccount) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(virtual, internalAccount) /* spotless:on */
 
         override fun toString(): String =
             when {
-                virtualAccount != null ->
-                    "UltimateOriginatingAccount{virtualAccount=$virtualAccount}"
+                virtual != null -> "UltimateOriginatingAccount{virtual=$virtual}"
                 internalAccount != null ->
                     "UltimateOriginatingAccount{internalAccount=$internalAccount}"
                 _json != null -> "UltimateOriginatingAccount{_unknown=$_json}"
@@ -3672,8 +3671,7 @@ private constructor(
         companion object {
 
             @JvmStatic
-            fun ofVirtualAccount(virtualAccount: VirtualAccount) =
-                UltimateOriginatingAccount(virtualAccount = virtualAccount)
+            fun ofVirtual(virtual: VirtualAccount) = UltimateOriginatingAccount(virtual = virtual)
 
             @JvmStatic
             fun ofInternalAccount(internalAccount: InternalAccount) =
@@ -3682,7 +3680,7 @@ private constructor(
 
         interface Visitor<out T> {
 
-            fun visitVirtualAccount(virtualAccount: VirtualAccount): T
+            fun visitVirtual(virtual: VirtualAccount): T
 
             fun visitInternalAccount(internalAccount: InternalAccount): T
 
@@ -3701,7 +3699,7 @@ private constructor(
 
                 tryDeserialize(node, jacksonTypeRef<VirtualAccount>()) { it.validate() }
                     ?.let {
-                        return UltimateOriginatingAccount(virtualAccount = it, _json = json)
+                        return UltimateOriginatingAccount(virtual = it, _json = json)
                     }
                 tryDeserialize(node, jacksonTypeRef<InternalAccount>()) { it.validate() }
                     ?.let {
@@ -3721,7 +3719,7 @@ private constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.virtualAccount != null -> generator.writeObject(value.virtualAccount)
+                    value.virtual != null -> generator.writeObject(value.virtual)
                     value.internalAccount != null -> generator.writeObject(value.internalAccount)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid UltimateOriginatingAccount")
