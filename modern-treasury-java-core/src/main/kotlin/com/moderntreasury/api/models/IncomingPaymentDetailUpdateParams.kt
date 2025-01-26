@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** Update an existing Incoming Payment Detail. */
 class IncomingPaymentDetailUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: IncomingPaymentDetailUpdateBody,
     private val additionalHeaders: Headers,
@@ -106,7 +106,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -180,7 +180,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: IncomingPaymentDetailUpdateBody.Builder =
@@ -371,7 +371,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

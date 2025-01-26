@@ -24,7 +24,7 @@ import java.util.Optional
 
 /** Create a new counterparty. */
 class CounterpartyCreateParams
-constructor(
+private constructor(
     private val body: CounterpartyCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -289,7 +289,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
             private var accounting: JsonField<Accounting> = JsonMissing.of()
@@ -509,7 +509,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: CounterpartyCreateBody.Builder = CounterpartyCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -801,7 +801,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1121,7 +1121,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountDetails: JsonField<MutableList<AccountDetail>>? = null
             private var accountType: JsonField<ExternalAccountType> = JsonMissing.of()
@@ -1408,7 +1408,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var accountNumber: JsonField<String>? = null
                 private var accountNumberType: JsonField<AccountNumberType> = JsonMissing.of()
@@ -1642,7 +1642,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var contactIdentifier: JsonField<String> = JsonMissing.of()
                 private var contactIdentifierType: JsonField<ContactIdentifierType> =
@@ -1970,7 +1970,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var currency: JsonField<String>? = null
                 private var ledgerId: JsonField<String>? = null
@@ -2286,7 +2286,7 @@ constructor(
                     @JvmStatic fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2387,7 +2387,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2527,7 +2527,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var country: JsonField<String> = JsonMissing.of()
                 private var line1: JsonField<String> = JsonMissing.of()
@@ -2769,7 +2769,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var routingNumber: JsonField<String>? = null
                 private var routingNumberType: JsonField<RoutingNumberType>? = null
@@ -3655,7 +3655,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var legalEntityType: JsonField<LegalEntityType>? = null
             private var addresses: JsonField<MutableList<LegalEntityAddressCreateRequest>>? = null
@@ -4258,7 +4258,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var country: JsonField<String>? = null
                 private var line1: JsonField<String>? = null
@@ -4549,7 +4549,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var idNumber: JsonField<String>? = null
                 private var idType: JsonField<IdType>? = null
@@ -4907,7 +4907,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var relationshipTypes: JsonField<MutableList<RelationshipType>>? = null
                 private var childLegalEntity: JsonField<ChildLegalEntityCreate> = JsonMissing.of()
@@ -5423,7 +5423,7 @@ constructor(
                     @JvmStatic fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var addresses:
                         JsonField<MutableList<LegalEntityAddressCreateRequest>>? =
@@ -5960,7 +5960,7 @@ constructor(
                         @JvmStatic fun builder() = Builder()
                     }
 
-                    class Builder {
+                    class Builder internal constructor() {
 
                         private var country: JsonField<String>? = null
                         private var line1: JsonField<String>? = null
@@ -6271,7 +6271,7 @@ constructor(
                         @JvmStatic fun builder() = Builder()
                     }
 
-                    class Builder {
+                    class Builder internal constructor() {
 
                         private var idNumber: JsonField<String>? = null
                         private var idType: JsonField<IdType>? = null
@@ -6732,7 +6732,7 @@ constructor(
                         @JvmStatic fun builder() = Builder()
                     }
 
-                    class Builder {
+                    class Builder internal constructor() {
 
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
@@ -6825,7 +6825,7 @@ constructor(
                         @JvmStatic fun builder() = Builder()
                     }
 
-                    class Builder {
+                    class Builder internal constructor() {
 
                         private var phoneNumber: JsonField<String> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
@@ -7107,7 +7107,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -7199,7 +7199,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var phoneNumber: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -7372,7 +7372,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

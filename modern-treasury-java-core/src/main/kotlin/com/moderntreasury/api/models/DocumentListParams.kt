@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** Get a list of documents. */
 class DocumentListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val documentableId: String?,
     private val documentableType: DocumentableType?,
@@ -62,7 +62,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var documentableId: String? = null

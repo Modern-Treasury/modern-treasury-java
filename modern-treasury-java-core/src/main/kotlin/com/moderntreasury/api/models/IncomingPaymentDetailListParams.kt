@@ -15,7 +15,7 @@ import java.util.Optional
 
 /** Get a list of Incoming Payment Details. */
 class IncomingPaymentDetailListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val asOfDateEnd: LocalDate?,
     private val asOfDateStart: LocalDate?,
@@ -98,7 +98,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var asOfDateEnd: LocalDate? = null
@@ -351,7 +351,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

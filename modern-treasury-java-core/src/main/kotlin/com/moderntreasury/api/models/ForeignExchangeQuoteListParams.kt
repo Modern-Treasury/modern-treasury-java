@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** list foreign_exchange_quotes */
 class ForeignExchangeQuoteListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val baseCurrency: String?,
     private val effectiveAtEnd: LocalDate?,
@@ -91,7 +91,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var baseCurrency: String? = null
@@ -326,7 +326,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

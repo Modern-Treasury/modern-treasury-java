@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** Create an account detail for an external account. */
 class AccountDetailCreateParams
-constructor(
+private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
     private val body: AccountDetailCreateBody,
@@ -133,7 +133,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountNumber: JsonField<String>? = null
             private var accountNumberType: JsonField<AccountNumberType> = JsonMissing.of()
@@ -222,7 +222,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountsType: AccountsType? = null
         private var accountId: String? = null

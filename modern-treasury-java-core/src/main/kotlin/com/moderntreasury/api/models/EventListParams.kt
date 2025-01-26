@@ -12,7 +12,7 @@ import java.util.Optional
 
 /** list events */
 class EventListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val entityId: String?,
     private val eventName: String?,
@@ -78,7 +78,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var entityId: String? = null

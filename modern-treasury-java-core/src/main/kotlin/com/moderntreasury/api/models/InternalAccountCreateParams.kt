@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** create internal account */
 class InternalAccountCreateParams
-constructor(
+private constructor(
     private val body: InternalAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -243,7 +243,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var connectionId: JsonField<String>? = null
             private var currency: JsonField<Currency>? = null
@@ -405,7 +405,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: InternalAccountCreateBody.Builder = InternalAccountCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -765,7 +765,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<String>? = null
             private var line1: JsonField<String>? = null
@@ -900,7 +900,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

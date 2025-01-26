@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** delete invoice_line_item */
 class InvoiceLineItemDeleteParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val id: String,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var id: String? = null

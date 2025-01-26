@@ -11,7 +11,7 @@ import java.util.Optional
 
 /** Get a list of all reversals of a payment order. */
 class PaymentOrderReversalListParams
-constructor(
+private constructor(
     private val paymentOrderId: String,
     private val afterCursor: String?,
     private val perPage: Long?,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var paymentOrderId: String? = null
         private var afterCursor: String? = null

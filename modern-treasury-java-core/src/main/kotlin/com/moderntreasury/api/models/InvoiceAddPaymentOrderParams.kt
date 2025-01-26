@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Add a payment order to an invoice. */
 class InvoiceAddPaymentOrderParams
-constructor(
+private constructor(
     private val id: String,
     private val paymentOrderId: String,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var paymentOrderId: String? = null

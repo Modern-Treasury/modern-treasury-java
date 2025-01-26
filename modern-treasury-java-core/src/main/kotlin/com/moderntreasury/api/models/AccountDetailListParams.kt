@@ -11,7 +11,7 @@ import java.util.Optional
 
 /** Get a list of account details for a single internal or external account. */
 class AccountDetailListParams
-constructor(
+private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
     private val afterCursor: String?,
@@ -59,7 +59,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountsType: AccountsType? = null
         private var accountId: String? = null

@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** Create a ledger account category. */
 class LedgerAccountCategoryCreateParams
-constructor(
+private constructor(
     private val body: LedgerAccountCategoryCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -223,7 +223,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
             private var ledgerId: JsonField<String>? = null
@@ -414,7 +414,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: LedgerAccountCategoryCreateBody.Builder =
             LedgerAccountCategoryCreateBody.builder()
@@ -674,7 +674,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

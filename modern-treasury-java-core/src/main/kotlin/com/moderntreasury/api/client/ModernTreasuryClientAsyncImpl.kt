@@ -90,8 +90,7 @@ import com.moderntreasury.api.services.async.VirtualAccountServiceAsync
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class ModernTreasuryClientAsyncImpl
-constructor(
+class ModernTreasuryClientAsyncImpl(
     private val clientOptions: ClientOptions,
 ) : ModernTreasuryClientAsync {
 

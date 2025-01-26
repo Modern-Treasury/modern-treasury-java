@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** Get a list of all legal entities. */
 class LegalEntityListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val legalEntityType: LegalEntityType?,
     private val metadata: Metadata?,
@@ -66,7 +66,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var legalEntityType: LegalEntityType? = null
@@ -311,7 +311,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

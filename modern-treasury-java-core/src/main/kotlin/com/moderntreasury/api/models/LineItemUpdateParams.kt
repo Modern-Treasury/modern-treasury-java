@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** update line item */
 class LineItemUpdateParams
-constructor(
+private constructor(
     private val itemizableType: ItemizableType,
     private val itemizableId: String,
     private val id: String,
@@ -108,7 +108,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -180,7 +180,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var itemizableType: ItemizableType? = null
         private var itemizableId: String? = null
@@ -375,7 +375,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
