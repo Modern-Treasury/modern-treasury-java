@@ -24,7 +24,7 @@ import java.util.Optional
 
 /** create transaction */
 class TransactionCreateParams
-constructor(
+private constructor(
     private val body: TransactionCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -299,7 +299,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var asOfDate: JsonField<LocalDate>? = null
@@ -527,7 +527,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: TransactionCreateBody.Builder = TransactionCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -828,7 +828,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

@@ -840,7 +840,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var accounting: JsonField<Accounting>? = null
@@ -1906,7 +1906,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountId: JsonField<String> = JsonMissing.of()
             private var classId: JsonField<String> = JsonMissing.of()
@@ -2104,7 +2104,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2413,7 +2413,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var baseAmount: JsonField<Long>? = null
             private var baseCurrency: JsonField<Currency>? = null
@@ -2589,7 +2589,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2861,7 +2861,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
@@ -3691,7 +3691,7 @@ private constructor(
             }
         }
 
-        class Deserializer :
+        internal class Deserializer :
             BaseDeserializer<UltimateOriginatingAccount>(UltimateOriginatingAccount::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): UltimateOriginatingAccount {
@@ -3710,7 +3710,7 @@ private constructor(
             }
         }
 
-        class Serializer :
+        internal class Serializer :
             BaseSerializer<UltimateOriginatingAccount>(UltimateOriginatingAccount::class) {
 
             override fun serialize(

@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** Get a list of all connection legal entities. */
 class ConnectionLegalEntityListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val connectionId: String?,
     private val legalEntityId: String?,
@@ -60,7 +60,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var connectionId: String? = null

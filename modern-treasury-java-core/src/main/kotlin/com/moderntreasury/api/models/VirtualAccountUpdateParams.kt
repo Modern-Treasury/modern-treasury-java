@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** update virtual_account */
 class VirtualAccountUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: VirtualAccountUpdateBody,
     private val additionalHeaders: Headers,
@@ -136,7 +136,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var counterpartyId: JsonField<String> = JsonMissing.of()
             private var ledgerAccountId: JsonField<String> = JsonMissing.of()
@@ -234,7 +234,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: VirtualAccountUpdateBody.Builder = VirtualAccountUpdateBody.builder()
@@ -432,7 +432,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Delete a ledger account category from a ledger account category. */
 class LedgerAccountCategoryRemoveNestedCategoryParams
-constructor(
+private constructor(
     private val id: String,
     private val subCategoryId: String,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var subCategoryId: String? = null

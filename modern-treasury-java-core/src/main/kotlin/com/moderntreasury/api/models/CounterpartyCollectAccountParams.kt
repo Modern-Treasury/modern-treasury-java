@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** Send an email requesting account details. */
 class CounterpartyCollectAccountParams
-constructor(
+private constructor(
     private val id: String,
     private val body: CounterpartyCollectAccountBody,
     private val additionalHeaders: Headers,
@@ -222,7 +222,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var direction: JsonField<TransactionDirection>? = null
             private var customRedirect: JsonField<String> = JsonMissing.of()
@@ -385,7 +385,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: CounterpartyCollectAccountBody.Builder =

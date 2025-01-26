@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** create account_collection_flow */
 class AccountCollectionFlowCreateParams
-constructor(
+private constructor(
     private val body: AccountCollectionFlowCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -117,7 +117,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var counterpartyId: JsonField<String>? = null
             private var paymentTypes: JsonField<MutableList<String>>? = null
@@ -240,7 +240,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: AccountCollectionFlowCreateBody.Builder =
             AccountCollectionFlowCreateBody.builder()

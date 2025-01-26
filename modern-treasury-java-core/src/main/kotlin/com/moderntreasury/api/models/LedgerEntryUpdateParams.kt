@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** Update the details of a ledger entry. */
 class LedgerEntryUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: LedgerEntryUpdateBody,
     private val additionalHeaders: Headers,
@@ -98,7 +98,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -170,7 +170,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: LedgerEntryUpdateBody.Builder = LedgerEntryUpdateBody.builder()
@@ -353,7 +353,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

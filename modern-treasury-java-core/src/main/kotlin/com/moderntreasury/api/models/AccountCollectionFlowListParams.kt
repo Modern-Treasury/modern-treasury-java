@@ -10,7 +10,7 @@ import java.util.Optional
 
 /** list account_collection_flows */
 class AccountCollectionFlowListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val clientToken: String?,
     private val counterpartyId: String?,
@@ -62,7 +62,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var clientToken: String? = null

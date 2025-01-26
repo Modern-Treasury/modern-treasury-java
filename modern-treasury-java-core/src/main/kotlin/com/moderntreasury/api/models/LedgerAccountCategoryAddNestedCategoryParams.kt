@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Add a ledger account category to a ledger account category. */
 class LedgerAccountCategoryAddNestedCategoryParams
-constructor(
+private constructor(
     private val id: String,
     private val subCategoryId: String,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var subCategoryId: String? = null

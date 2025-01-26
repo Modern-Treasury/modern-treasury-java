@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** update invoice_line_item */
 class InvoiceLineItemUpdateParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val id: String,
     private val body: InvoiceLineItemUpdateBody,
@@ -255,7 +255,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
             private var direction: JsonField<String> = JsonMissing.of()
@@ -415,7 +415,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var id: String? = null
@@ -669,7 +669,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

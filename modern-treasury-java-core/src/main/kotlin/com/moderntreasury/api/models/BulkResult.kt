@@ -215,7 +215,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
@@ -582,7 +582,7 @@ private constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<Entity>(Entity::class) {
+        internal class Deserializer : BaseDeserializer<Entity>(Entity::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Entity {
                 val json = JsonValue.fromJsonNode(node)
@@ -612,7 +612,7 @@ private constructor(
             }
         }
 
-        class Serializer : BaseSerializer<Entity>(Entity::class) {
+        internal class Serializer : BaseSerializer<Entity>(Entity::class) {
 
             override fun serialize(
                 value: Entity,
@@ -725,7 +725,7 @@ private constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var id: JsonField<String>? = null
                 private var createdAt: JsonField<OffsetDateTime>? = null
@@ -889,7 +889,7 @@ private constructor(
                     @JvmStatic fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var code: JsonField<String> = JsonMissing.of()
                     private var message: JsonField<String> = JsonMissing.of()
@@ -1098,7 +1098,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
