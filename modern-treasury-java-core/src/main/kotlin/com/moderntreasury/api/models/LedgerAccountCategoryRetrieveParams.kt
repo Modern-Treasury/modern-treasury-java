@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** Get the details on a single ledger account category. */
 class LedgerAccountCategoryRetrieveParams
-constructor(
+private constructor(
     private val id: String,
     private val balances: Balances?,
     private val additionalHeaders: Headers,
@@ -61,7 +61,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var balances: Balances? = null
@@ -236,7 +236,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var asOfDate: LocalDate? = null
             private var effectiveAt: OffsetDateTime? = null

@@ -11,7 +11,7 @@ import java.util.Optional
 
 /** Get a list of all paper items. */
 class PaperItemListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val depositDateEnd: LocalDate?,
     private val depositDateStart: LocalDate?,
@@ -63,7 +63,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var depositDateEnd: LocalDate? = null

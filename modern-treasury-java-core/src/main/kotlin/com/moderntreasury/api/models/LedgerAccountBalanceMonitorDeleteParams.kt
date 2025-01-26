@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Delete a ledger account balance monitor. */
 class LedgerAccountBalanceMonitorDeleteParams
-constructor(
+private constructor(
     private val id: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -51,7 +51,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

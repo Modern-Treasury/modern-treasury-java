@@ -92,8 +92,7 @@ import com.moderntreasury.api.services.async.WebhookServiceAsync
 import com.moderntreasury.api.services.async.WebhookServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class ModernTreasuryClientAsyncImpl
-constructor(
+class ModernTreasuryClientAsyncImpl(
     private val clientOptions: ClientOptions,
 ) : ModernTreasuryClientAsync {
 

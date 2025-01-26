@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** list bulk_requests */
 class BulkRequestListParams
-constructor(
+private constructor(
     private val actionType: ActionType?,
     private val afterCursor: String?,
     private val metadata: Metadata?,
@@ -73,7 +73,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var actionType: ActionType? = null
         private var afterCursor: String? = null
@@ -336,7 +336,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

@@ -11,7 +11,7 @@ import java.util.Optional
 
 /** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListParams
-constructor(
+private constructor(
     private val id: List<String>?,
     private val afterCursor: String?,
     private val ledgerAccountId: String?,
@@ -68,7 +68,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: MutableList<String>? = null
         private var afterCursor: String? = null
@@ -275,7 +275,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

@@ -16,7 +16,7 @@ import java.util.Optional
 
 /** list expected_payments */
 class ExpectedPaymentListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
     private val createdAtLowerBound: OffsetDateTime?,
@@ -110,7 +110,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
@@ -360,7 +360,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

@@ -11,7 +11,7 @@ import java.util.Optional
 
 /** Get details on a single ledger entry. */
 class LedgerEntryRetrieveParams
-constructor(
+private constructor(
     private val id: String,
     private val showBalances: Boolean?,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var showBalances: Boolean? = null

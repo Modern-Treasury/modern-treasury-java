@@ -17,7 +17,7 @@ import java.util.Optional
 
 /** Delete a routing detail for a single external account. */
 class RoutingDetailDeleteParams
-constructor(
+private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
     private val id: String,
@@ -63,7 +63,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountsType: AccountsType? = null
         private var accountId: String? = null

@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** list transaction_line_items */
 class TransactionLineItemListParams
-constructor(
+private constructor(
     private val id: Id?,
     private val afterCursor: String?,
     private val perPage: Long?,
@@ -60,7 +60,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: Id? = null
         private var afterCursor: String? = null
@@ -234,7 +234,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

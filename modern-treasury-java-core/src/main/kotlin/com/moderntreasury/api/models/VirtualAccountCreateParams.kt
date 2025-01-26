@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** create virtual_account */
 class VirtualAccountCreateParams
-constructor(
+private constructor(
     private val body: VirtualAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -297,7 +297,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var internalAccountId: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -528,7 +528,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: VirtualAccountCreateBody.Builder = VirtualAccountCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -848,7 +848,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountNumber: JsonField<String>? = null
             private var accountNumberType: JsonField<AccountNumberType> = JsonMissing.of()
@@ -1212,7 +1212,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
             private var ledgerId: JsonField<String>? = null
@@ -1517,7 +1517,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1616,7 +1616,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1745,7 +1745,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var routingNumber: JsonField<String>? = null
             private var routingNumberType: JsonField<RoutingNumberType>? = null
