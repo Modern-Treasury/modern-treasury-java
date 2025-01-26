@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** list internal accounts */
 class InternalAccountListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
     private val currency: Currency?,
@@ -83,7 +83,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
@@ -304,7 +304,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

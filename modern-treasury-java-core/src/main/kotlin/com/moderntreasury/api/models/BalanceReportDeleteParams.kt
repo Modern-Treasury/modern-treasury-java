@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Deletes a given balance report. */
 class BalanceReportDeleteParams
-constructor(
+private constructor(
     private val internalAccountId: String,
     private val id: String,
     private val additionalHeaders: Headers,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var internalAccountId: String? = null
         private var id: String? = null

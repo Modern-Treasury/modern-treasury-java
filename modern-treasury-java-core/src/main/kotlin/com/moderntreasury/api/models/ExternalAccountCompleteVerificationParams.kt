@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** complete verification of external account */
 class ExternalAccountCompleteVerificationParams
-constructor(
+private constructor(
     private val id: String,
     private val body: ExternalAccountCompleteVerificationBody,
     private val additionalHeaders: Headers,
@@ -90,7 +90,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amounts: JsonField<MutableList<Long>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -175,7 +175,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: ExternalAccountCompleteVerificationBody.Builder =

@@ -10,7 +10,7 @@ import java.util.Optional
 
 /** Get a list of all connections. */
 class ConnectionListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val entity: String?,
     private val perPage: Long?,
@@ -54,7 +54,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var entity: String? = null

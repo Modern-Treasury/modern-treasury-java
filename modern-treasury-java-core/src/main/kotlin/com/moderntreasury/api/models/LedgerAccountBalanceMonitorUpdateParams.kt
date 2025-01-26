@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** Update a ledger account balance monitor. */
 class LedgerAccountBalanceMonitorUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: LedgerAccountBalanceMonitorUpdateBody,
     private val additionalHeaders: Headers,
@@ -117,7 +117,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -206,7 +206,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: LedgerAccountBalanceMonitorUpdateBody.Builder =
@@ -400,7 +400,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

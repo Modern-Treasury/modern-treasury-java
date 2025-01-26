@@ -25,7 +25,7 @@ import java.util.Optional
 
 /** update invoice */
 class InvoiceUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: InvoiceUpdateBody,
     private val additionalHeaders: Headers,
@@ -748,7 +748,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var contactDetails: JsonField<MutableList<ContactDetail>>? = null
             private var counterpartyBillingAddress: JsonField<CounterpartyBillingAddress> =
@@ -1358,7 +1358,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: InvoiceUpdateBody.Builder = InvoiceUpdateBody.builder()
@@ -2049,7 +2049,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var contactIdentifier: JsonField<String>? = null
@@ -2336,7 +2336,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<String>? = null
             private var line1: JsonField<String>? = null
@@ -2527,7 +2527,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<String>? = null
             private var line1: JsonField<String>? = null
@@ -2765,7 +2765,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
             private var unitAmount: JsonField<Long>? = null
@@ -2932,7 +2932,7 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -3089,7 +3089,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<String>? = null
             private var line1: JsonField<String>? = null
@@ -3221,7 +3221,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

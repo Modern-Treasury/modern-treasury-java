@@ -10,7 +10,7 @@ import java.util.Optional
 
 /** Get a list of ledger transaction versions. */
 class LedgerTransactionVersionListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val createdAt: CreatedAt?,
     private val ledgerAccountStatementId: String?,
@@ -77,7 +77,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var createdAt: CreatedAt? = null
@@ -301,7 +301,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
@@ -402,7 +402,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

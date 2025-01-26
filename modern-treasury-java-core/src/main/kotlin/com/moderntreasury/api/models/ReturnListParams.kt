@@ -14,7 +14,7 @@ import java.util.Optional
 
 /** Get a list of returns. */
 class ReturnListParams
-constructor(
+private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
     private val internalAccountId: String?,
@@ -76,7 +76,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
