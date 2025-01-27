@@ -50,6 +50,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [PingResponse]. */
     class Builder internal constructor() {
 
         private var ping: JsonField<String>? = null

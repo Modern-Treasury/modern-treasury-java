@@ -53,6 +53,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ConnectionListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

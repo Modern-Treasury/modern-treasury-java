@@ -90,6 +90,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ForeignExchangeQuoteListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -326,6 +327,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()

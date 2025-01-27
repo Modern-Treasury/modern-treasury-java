@@ -200,6 +200,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerAccountStatementCreateBody]. */
         class Builder internal constructor() {
 
             private var effectiveAtLowerBound: JsonField<OffsetDateTime>? = null
@@ -344,6 +345,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountStatementCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -583,6 +585,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

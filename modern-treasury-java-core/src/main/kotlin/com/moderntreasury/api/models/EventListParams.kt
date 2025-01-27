@@ -77,6 +77,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [EventListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

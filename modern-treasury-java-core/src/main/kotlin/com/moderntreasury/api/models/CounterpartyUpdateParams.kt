@@ -207,6 +207,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [CounterpartyUpdateBody]. */
         class Builder internal constructor() {
 
             private var email: JsonField<String> = JsonMissing.of()
@@ -345,6 +346,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CounterpartyUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -584,6 +586,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

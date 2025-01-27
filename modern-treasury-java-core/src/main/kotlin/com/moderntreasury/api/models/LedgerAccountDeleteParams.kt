@@ -50,6 +50,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountDeleteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
