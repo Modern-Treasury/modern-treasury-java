@@ -48,6 +48,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [RoutingDetailRetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

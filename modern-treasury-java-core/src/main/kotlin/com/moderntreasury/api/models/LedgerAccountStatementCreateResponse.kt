@@ -257,6 +257,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountStatementCreateResponse]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -578,6 +579,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerBalances]. */
         class Builder internal constructor() {
 
             private var availableBalance: JsonField<LedgerBalance>? = null
@@ -736,6 +738,7 @@ private constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
+            /** A builder for [LedgerBalance]. */
             class Builder internal constructor() {
 
                 private var amount: JsonField<Long>? = null
@@ -881,6 +884,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

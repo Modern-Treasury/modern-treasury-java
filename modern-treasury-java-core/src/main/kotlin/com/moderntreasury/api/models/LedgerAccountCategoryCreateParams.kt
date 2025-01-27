@@ -223,6 +223,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerAccountCategoryCreateBody]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -413,6 +414,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountCategoryCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -674,6 +676,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

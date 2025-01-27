@@ -179,6 +179,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [InternalAccountUpdateBody]. */
         class Builder internal constructor() {
 
             private var counterpartyId: JsonField<String> = JsonMissing.of()
@@ -298,6 +299,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [InternalAccountUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -521,6 +523,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

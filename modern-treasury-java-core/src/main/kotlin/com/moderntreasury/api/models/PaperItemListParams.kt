@@ -62,6 +62,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [PaperItemListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

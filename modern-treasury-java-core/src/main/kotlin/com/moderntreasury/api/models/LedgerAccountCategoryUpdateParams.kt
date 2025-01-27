@@ -133,6 +133,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerAccountCategoryUpdateBody]. */
         class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
@@ -232,6 +233,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountCategoryUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -434,6 +436,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

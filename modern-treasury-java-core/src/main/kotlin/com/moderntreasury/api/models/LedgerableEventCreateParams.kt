@@ -133,6 +133,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerableEventCreateBody]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -236,6 +237,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerableEventCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -433,6 +435,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

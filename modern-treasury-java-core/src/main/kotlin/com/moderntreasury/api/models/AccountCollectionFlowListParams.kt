@@ -61,6 +61,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [AccountCollectionFlowListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

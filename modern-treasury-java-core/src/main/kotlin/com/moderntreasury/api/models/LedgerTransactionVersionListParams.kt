@@ -76,6 +76,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerTransactionVersionListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -301,6 +302,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [CreatedAt]. */
         class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
@@ -402,6 +404,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [Version]. */
         class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
