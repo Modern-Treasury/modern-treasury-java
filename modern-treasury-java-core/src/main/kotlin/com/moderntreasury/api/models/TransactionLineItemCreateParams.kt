@@ -131,6 +131,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [TransactionLineItemCreateBody]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -230,6 +231,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [TransactionLineItemCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

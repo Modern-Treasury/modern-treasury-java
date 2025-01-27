@@ -54,6 +54,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountCategoryRemoveNestedCategoryParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

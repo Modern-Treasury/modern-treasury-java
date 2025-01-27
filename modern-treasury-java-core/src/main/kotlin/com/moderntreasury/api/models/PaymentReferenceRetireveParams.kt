@@ -41,6 +41,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [PaymentReferenceRetireveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -40,6 +40,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [InvoiceRetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
