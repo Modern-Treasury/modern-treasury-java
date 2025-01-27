@@ -109,6 +109,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [LedgerAccountSettlementAccountEntryDeleteBody]. */
         class Builder internal constructor() {
 
             private var ledgerEntryIds: JsonField<MutableList<JsonValue>>? = null
@@ -218,6 +219,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountSettlementAccountEntryDeleteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
