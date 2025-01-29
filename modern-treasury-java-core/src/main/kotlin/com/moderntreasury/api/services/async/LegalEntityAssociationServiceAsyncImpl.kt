@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.json
+import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.errors.ModernTreasuryError
 import com.moderntreasury.api.models.LegalEntityAssociation
 import com.moderntreasury.api.models.LegalEntityAssociationCreateParams
@@ -35,21 +36,19 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("api", "legal_entity_associations")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
-            ->
-            response
-                .use { createHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { createHandler.handle(it) }
+                    .apply {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            validate()
+                        }
                     }
-                }
-        }
+            }
     }
 }

@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -27,7 +28,7 @@ private constructor(
     private val body: VirtualAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /** The ID of the internal account that this virtual account is associated with. */
     fun internalAccountId(): String = body.internalAccountId()
@@ -113,11 +114,11 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): VirtualAccountCreateBody = body
+    @JvmSynthetic internal fun _body(): VirtualAccountCreateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
     class VirtualAccountCreateBody

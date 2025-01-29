@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
@@ -19,7 +20,7 @@ private constructor(
     private val updatedAt: UpdatedAt?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /**
      * If you have specific IDs to retrieve in bulk, you can pass them as query parameters delimited
@@ -48,10 +49,9 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.id?.let { queryParams.put("id[]", it.map(Any::toString)) }
         this.afterCursor?.let { queryParams.put("after_cursor", listOf(it.toString())) }

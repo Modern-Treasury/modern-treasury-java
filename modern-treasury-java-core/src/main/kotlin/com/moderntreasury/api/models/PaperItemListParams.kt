@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.time.LocalDate
@@ -19,7 +20,7 @@ private constructor(
     private val perPage: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
@@ -41,10 +42,9 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.afterCursor?.let { queryParams.put("after_cursor", listOf(it.toString())) }
         this.depositDateEnd?.let { queryParams.put("deposit_date_end", listOf(it.toString())) }
