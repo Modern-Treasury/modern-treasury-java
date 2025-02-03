@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
@@ -14,7 +15,7 @@ import java.util.Optional
 
 /** Get a list of ledger accounts. */
 class LedgerAccountListParams
-constructor(
+private constructor(
     private val id: List<String>?,
     private val afterCursor: String?,
     private val availableBalanceAmount: AvailableBalanceAmount?,
@@ -31,7 +32,7 @@ constructor(
     private val updatedAt: UpdatedAt?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /**
      * If you have specific IDs to retrieve in bulk, you can pass them as query parameters delimited
@@ -108,10 +109,9 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.id?.let { queryParams.put("id[]", it.map(Any::toString)) }
         this.afterCursor?.let { queryParams.put("after_cursor", listOf(it.toString())) }
@@ -154,8 +154,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerAccountListParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: MutableList<String>? = null
         private var afterCursor: String? = null
@@ -525,7 +526,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [AvailableBalanceAmount]. */
+        class Builder internal constructor() {
 
             private var eq: Long? = null
             private var gt: Long? = null
@@ -722,7 +724,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Balances]. */
+        class Builder internal constructor() {
 
             private var asOfDate: LocalDate? = null
             private var effectiveAt: OffsetDateTime? = null
@@ -863,7 +866,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [CreatedAt]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
@@ -964,7 +968,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
@@ -1089,7 +1094,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [PendingBalanceAmount]. */
+        class Builder internal constructor() {
 
             private var eq: Long? = null
             private var gt: Long? = null
@@ -1278,7 +1284,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [PostedBalanceAmount]. */
+        class Builder internal constructor() {
 
             private var eq: Long? = null
             private var gt: Long? = null
@@ -1444,7 +1451,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [UpdatedAt]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 

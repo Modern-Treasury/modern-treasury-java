@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -21,13 +22,13 @@ import java.util.Optional
 
 /** update invoice_line_item */
 class InvoiceLineItemUpdateParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val id: String,
     private val body: InvoiceLineItemUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun invoiceId(): String = invoiceId
 
@@ -105,11 +106,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): InvoiceLineItemUpdateBody = body
+    @JvmSynthetic internal fun _body(): InvoiceLineItemUpdateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -255,7 +256,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [InvoiceLineItemUpdateBody]. */
+        class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
             private var direction: JsonField<String> = JsonMissing.of()
@@ -414,8 +416,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [InvoiceLineItemUpdateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var id: String? = null
@@ -669,7 +672,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

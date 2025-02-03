@@ -177,7 +177,8 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    /** A builder for [BankSettings]. */
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var backupWithholdingPercentage: JsonField<Long>? = null

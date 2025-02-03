@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -21,12 +22,12 @@ import java.util.Optional
 
 /** update virtual_account */
 class VirtualAccountUpdateParams
-constructor(
+private constructor(
     private val id: String,
     private val body: VirtualAccountUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun id(): String = id
 
@@ -54,11 +55,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): VirtualAccountUpdateBody = body
+    @JvmSynthetic internal fun _body(): VirtualAccountUpdateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -136,7 +137,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [VirtualAccountUpdateBody]. */
+        class Builder internal constructor() {
 
             private var counterpartyId: JsonField<String> = JsonMissing.of()
             private var ledgerAccountId: JsonField<String> = JsonMissing.of()
@@ -233,8 +235,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [VirtualAccountUpdateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: VirtualAccountUpdateBody.Builder = VirtualAccountUpdateBody.builder()
@@ -432,7 +435,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
+import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.errors.ModernTreasuryError
 import com.moderntreasury.api.models.ClientPingParams
 import com.moderntreasury.api.models.PingResponse
@@ -91,8 +92,7 @@ import com.moderntreasury.api.services.blocking.VirtualAccountServiceImpl
 import com.moderntreasury.api.services.blocking.WebhookService
 import com.moderntreasury.api.services.blocking.WebhookServiceImpl
 
-class ModernTreasuryClientImpl
-constructor(
+class ModernTreasuryClientImpl(
     private val clientOptions: ClientOptions,
 ) : ModernTreasuryClient {
 
@@ -344,11 +344,8 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("api", "ping")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepare(clientOptions, params)
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
                 .use { pingHandler.handle(it) }
@@ -359,4 +356,6 @@ constructor(
                 }
         }
     }
+
+    override fun close() = clientOptions.httpClient.close()
 }

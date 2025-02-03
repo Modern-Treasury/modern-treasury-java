@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -21,11 +22,11 @@ import java.util.Optional
 
 /** create ledger_event_handler */
 class LedgerEventHandlerCreateParams
-constructor(
+private constructor(
     private val body: LedgerEventHandlerCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     @Deprecated("deprecated")
     fun ledgerTransactionTemplate(): LedgerEventHandlerLedgerTransactionTemplate =
@@ -77,11 +78,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): LedgerEventHandlerCreateBody = body
+    @JvmSynthetic internal fun _body(): LedgerEventHandlerCreateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
     class LedgerEventHandlerCreateBody
@@ -201,7 +202,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerCreateBody]. */
+        class Builder internal constructor() {
 
             private var ledgerTransactionTemplate:
                 JsonField<LedgerEventHandlerLedgerTransactionTemplate>? =
@@ -361,8 +363,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerEventHandlerCreateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: LedgerEventHandlerCreateBody.Builder =
             LedgerEventHandlerCreateBody.builder()
@@ -659,7 +662,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerLedgerTransactionTemplate]. */
+        class Builder internal constructor() {
 
             private var description: JsonField<String>? = null
             private var effectiveAt: JsonField<String>? = null
@@ -841,7 +845,8 @@ constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            /** A builder for [LedgerEventHandlerLedgerEntries]. */
+            class Builder internal constructor() {
 
                 private var amount: JsonField<String>? = null
                 private var direction: JsonField<String>? = null
@@ -1007,7 +1012,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerConditions]. */
+        class Builder internal constructor() {
 
             private var field: JsonField<String>? = null
             private var operator: JsonField<String>? = null
@@ -1117,7 +1123,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1195,7 +1202,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerVariables]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
+import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.errors.ModernTreasuryError
 import com.moderntreasury.api.models.LedgerTransactionVersion
 import com.moderntreasury.api.models.LedgerTransactionVersionListPageAsync
@@ -36,28 +37,28 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("api", "ledger_transaction_versions")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).thenApply { response
-            ->
-            response
-                .use { listHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        forEach { it.validate() }
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { listHandler.handle(it) }
+                    .apply {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            forEach { it.validate() }
+                        }
                     }
-                }
-                .let {
-                    LedgerTransactionVersionListPageAsync.Response.Builder()
-                        .items(it)
-                        .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                        .afterCursor(response.headers().values("X-After-Cursor").getOrNull(0) ?: "")
-                        .build()
-                }
-                .let { LedgerTransactionVersionListPageAsync.of(this, params, it) }
-        }
+                    .let {
+                        LedgerTransactionVersionListPageAsync.Response.Builder()
+                            .items(it)
+                            .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
+                            .afterCursor(
+                                response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                            )
+                            .build()
+                    }
+                    .let { LedgerTransactionVersionListPageAsync.of(this, params, it) }
+            }
     }
 }

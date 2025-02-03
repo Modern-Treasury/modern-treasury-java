@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -21,12 +22,12 @@ import java.util.Optional
 
 /** complete verification of external account */
 class ExternalAccountCompleteVerificationParams
-constructor(
+private constructor(
     private val id: String,
     private val body: ExternalAccountCompleteVerificationBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun id(): String = id
 
@@ -40,11 +41,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): ExternalAccountCompleteVerificationBody = body
+    @JvmSynthetic internal fun _body(): ExternalAccountCompleteVerificationBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -90,7 +91,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [ExternalAccountCompleteVerificationBody]. */
+        class Builder internal constructor() {
 
             private var amounts: JsonField<MutableList<Long>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -174,8 +176,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ExternalAccountCompleteVerificationParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: String? = null
         private var body: ExternalAccountCompleteVerificationBody.Builder =

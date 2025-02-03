@@ -1,6 +1,7 @@
 package com.moderntreasury.api.core.http
 
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.errors.ModernTreasuryIoException
 import java.io.IOException
 import java.time.Clock
@@ -56,15 +57,17 @@ private constructor(
                     }
 
                     response
-                } catch (t: Throwable) {
-                    if (++retries > maxRetries || !shouldRetry(t)) {
-                        throw t
+                } catch (throwable: Throwable) {
+                    if (++retries > maxRetries || !shouldRetry(throwable)) {
+                        throw throwable
                     }
 
                     null
                 }
 
             val backoffMillis = getRetryBackoffMillis(retries, response)
+            // All responses must be closed, so close the failed one before retrying.
+            response?.close()
             Thread.sleep(backoffMillis.toMillis())
         }
     }
@@ -112,6 +115,8 @@ private constructor(
                         }
 
                         val backoffMillis = getRetryBackoffMillis(retries, response)
+                        // All responses must be closed, so close the failed one before retrying.
+                        response?.close()
                         return sleepAsync(backoffMillis.toMillis()).thenCompose {
                             executeWithRetries(requestWithRetryCount, requestOptions)
                         }
@@ -223,27 +228,27 @@ private constructor(
         return Duration.ofNanos((TimeUnit.SECONDS.toNanos(1) * backoffSeconds * jitter).toLong())
     }
 
-    private fun sleepAsync(millis: Long): CompletableFuture<Void> {
-        val future = CompletableFuture<Void>()
-        TIMER.schedule(
-            object : TimerTask() {
-                override fun run() {
-                    future.complete(null)
-                }
-            },
-            millis
-        )
-        return future
-    }
-
     companion object {
 
         private val TIMER = Timer("RetryingHttpClient", true)
 
+        private fun sleepAsync(millis: Long): CompletableFuture<Void> {
+            val future = CompletableFuture<Void>()
+            TIMER.schedule(
+                object : TimerTask() {
+                    override fun run() {
+                        future.complete(null)
+                    }
+                },
+                millis
+            )
+            return future
+        }
+
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var httpClient: HttpClient? = null
         private var clock: Clock = Clock.systemUTC()
@@ -260,7 +265,7 @@ private constructor(
 
         fun build(): HttpClient =
             RetryingHttpClient(
-                checkNotNull(httpClient) { "`httpClient` is required but was not set" },
+                checkRequired("httpClient", httpClient),
                 clock,
                 maxRetries,
                 idempotencyHeader,

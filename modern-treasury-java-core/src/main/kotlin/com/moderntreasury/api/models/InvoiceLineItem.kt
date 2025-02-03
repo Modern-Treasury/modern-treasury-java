@@ -197,7 +197,8 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    /** A builder for [InvoiceLineItem]. */
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
@@ -413,7 +414,8 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

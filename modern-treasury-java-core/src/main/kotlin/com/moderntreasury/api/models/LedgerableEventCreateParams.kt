@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -21,11 +22,11 @@ import java.util.Optional
 
 /** Create a ledgerable event. */
 class LedgerableEventCreateParams
-constructor(
+private constructor(
     private val body: LedgerableEventCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /** Name of the ledgerable event. */
     fun name(): String = body.name()
@@ -54,11 +55,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): LedgerableEventCreateBody = body
+    @JvmSynthetic internal fun _body(): LedgerableEventCreateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @Deprecated("deprecated")
     @NoAutoDetect
@@ -133,7 +134,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerableEventCreateBody]. */
+        class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
             private var customData: JsonValue = JsonMissing.of()
@@ -236,8 +238,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [LedgerableEventCreateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: LedgerableEventCreateBody.Builder = LedgerableEventCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -433,7 +436,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

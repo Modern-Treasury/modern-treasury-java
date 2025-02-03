@@ -188,7 +188,8 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    /** A builder for [LedgerEventHandler]. */
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var conditions: JsonField<LedgerEventHandlerConditions>? = null
@@ -436,7 +437,8 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerConditions]. */
+        class Builder internal constructor() {
 
             private var field: JsonField<String>? = null
             private var operator: JsonField<String>? = null
@@ -602,7 +604,8 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerLedgerTransactionTemplate]. */
+        class Builder internal constructor() {
 
             private var description: JsonField<String>? = null
             private var effectiveAt: JsonField<String>? = null
@@ -784,7 +787,8 @@ private constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            class Builder {
+            /** A builder for [LedgerEventHandlerLedgerEntries]. */
+            class Builder internal constructor() {
 
                 private var amount: JsonField<String>? = null
                 private var direction: JsonField<String>? = null
@@ -920,7 +924,8 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -998,7 +1003,8 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [LedgerEventHandlerVariables]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
