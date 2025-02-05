@@ -54,9 +54,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -87,9 +87,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -119,21 +119,24 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            forEach { it.validate() }
+                            it.forEach { it.validate() }
                         }
                     }
                     .let {
-                        BalanceReportListPageAsync.Response.Builder()
-                            .items(it)
-                            .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                            .afterCursor(
-                                response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
-                            )
-                            .build()
+                        BalanceReportListPageAsync.of(
+                            this,
+                            params,
+                            BalanceReportListPageAsync.Response.builder()
+                                .items(it)
+                                .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
+                                .afterCursor(
+                                    response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                                )
+                                .build()
+                        )
                     }
-                    .let { BalanceReportListPageAsync.of(this, params, it) }
             }
     }
 
@@ -143,7 +146,7 @@ internal constructor(
     override fun delete(
         params: BalanceReportDeleteParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<Void> {
+    ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)

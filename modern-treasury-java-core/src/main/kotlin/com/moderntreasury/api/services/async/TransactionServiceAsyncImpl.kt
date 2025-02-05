@@ -56,9 +56,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -83,9 +83,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -111,9 +111,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { updateHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -138,21 +138,24 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            forEach { it.validate() }
+                            it.forEach { it.validate() }
                         }
                     }
                     .let {
-                        TransactionListPageAsync.Response.Builder()
-                            .items(it)
-                            .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                            .afterCursor(
-                                response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
-                            )
-                            .build()
+                        TransactionListPageAsync.of(
+                            this,
+                            params,
+                            TransactionListPageAsync.Response.builder()
+                                .items(it)
+                                .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
+                                .afterCursor(
+                                    response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                                )
+                                .build()
+                        )
                     }
-                    .let { TransactionListPageAsync.of(this, params, it) }
             }
     }
 
@@ -162,7 +165,7 @@ internal constructor(
     override fun delete(
         params: TransactionDeleteParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<Void> {
+    ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)

@@ -60,26 +60,26 @@ interface LedgerAccountCategoryServiceAsync {
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     /** Add a ledger account category to a ledger account category. */
     @JvmOverloads
     fun addNestedCategory(
         params: LedgerAccountCategoryAddNestedCategoryParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     /** Remove a ledger account from a ledger account category. */
     @JvmOverloads
     fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     /** Delete a ledger account category from a ledger account category. */
     @JvmOverloads
     fun removeNestedCategory(
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 }

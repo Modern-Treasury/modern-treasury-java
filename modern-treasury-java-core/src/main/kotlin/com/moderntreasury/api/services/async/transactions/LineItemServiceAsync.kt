@@ -41,5 +41,5 @@ interface LineItemServiceAsync {
     fun delete(
         params: TransactionLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 }
