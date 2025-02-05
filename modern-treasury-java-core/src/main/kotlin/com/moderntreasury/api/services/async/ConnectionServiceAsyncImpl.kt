@@ -43,21 +43,24 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            forEach { it.validate() }
+                            it.forEach { it.validate() }
                         }
                     }
                     .let {
-                        ConnectionListPageAsync.Response.Builder()
-                            .items(it)
-                            .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                            .afterCursor(
-                                response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
-                            )
-                            .build()
+                        ConnectionListPageAsync.of(
+                            this,
+                            params,
+                            ConnectionListPageAsync.Response.builder()
+                                .items(it)
+                                .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
+                                .afterCursor(
+                                    response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                                )
+                                .build()
+                        )
                     }
-                    .let { ConnectionListPageAsync.of(this, params, it) }
             }
     }
 }

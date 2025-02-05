@@ -52,7 +52,7 @@ interface ExternalAccountServiceAsync {
     fun delete(
         params: ExternalAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     /** complete verification of external account */
     @JvmOverloads
