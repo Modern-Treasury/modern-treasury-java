@@ -51,7 +51,7 @@ interface CounterpartyServiceAsync {
     fun delete(
         params: CounterpartyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     /** Send an email requesting account details. */
     @JvmOverloads

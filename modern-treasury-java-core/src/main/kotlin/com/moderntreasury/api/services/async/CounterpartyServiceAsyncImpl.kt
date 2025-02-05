@@ -52,9 +52,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -79,9 +79,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -107,9 +107,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { updateHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -134,21 +134,24 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            forEach { it.validate() }
+                            it.forEach { it.validate() }
                         }
                     }
                     .let {
-                        CounterpartyListPageAsync.Response.Builder()
-                            .items(it)
-                            .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                            .afterCursor(
-                                response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
-                            )
-                            .build()
+                        CounterpartyListPageAsync.of(
+                            this,
+                            params,
+                            CounterpartyListPageAsync.Response.builder()
+                                .items(it)
+                                .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
+                                .afterCursor(
+                                    response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                                )
+                                .build()
+                        )
                     }
-                    .let { CounterpartyListPageAsync.of(this, params, it) }
             }
     }
 
@@ -158,7 +161,7 @@ internal constructor(
     override fun delete(
         params: CounterpartyDeleteParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<Void> {
+    ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)
@@ -192,9 +195,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { collectAccountHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }

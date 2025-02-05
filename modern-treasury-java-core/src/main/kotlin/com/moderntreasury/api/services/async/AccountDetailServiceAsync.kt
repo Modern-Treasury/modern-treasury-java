@@ -45,7 +45,7 @@ interface AccountDetailServiceAsync {
     fun delete(
         params: AccountDetailDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<Void>
+    ): CompletableFuture<Void?>
 
     class AccountsType
     @JsonCreator
