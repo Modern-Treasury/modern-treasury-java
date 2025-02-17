@@ -24,7 +24,7 @@ import java.util.Optional
 class ExternalAccountCompleteVerificationParams
 private constructor(
     private val id: String,
-    private val body: ExternalAccountCompleteVerificationBody,
+    private val body: ExternalAccountCompleteVerificationRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -41,7 +41,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ExternalAccountCompleteVerificationBody = body
+    @JvmSynthetic internal fun _body(): ExternalAccountCompleteVerificationRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -55,9 +55,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ExternalAccountCompleteVerificationBody
+    class ExternalAccountCompleteVerificationRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amounts")
         @ExcludeMissing
         private val amounts: JsonField<List<Long>> = JsonMissing.of(),
@@ -75,7 +75,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ExternalAccountCompleteVerificationBody = apply {
+        fun validate(): ExternalAccountCompleteVerificationRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -91,7 +91,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ExternalAccountCompleteVerificationBody]. */
+        /** A builder for [ExternalAccountCompleteVerificationRequest]. */
         class Builder internal constructor() {
 
             private var amounts: JsonField<MutableList<Long>>? = null
@@ -99,11 +99,13 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(
-                externalAccountCompleteVerificationBody: ExternalAccountCompleteVerificationBody
+                externalAccountCompleteVerificationRequest:
+                    ExternalAccountCompleteVerificationRequest
             ) = apply {
-                amounts = externalAccountCompleteVerificationBody.amounts.map { it.toMutableList() }
+                amounts =
+                    externalAccountCompleteVerificationRequest.amounts.map { it.toMutableList() }
                 additionalProperties =
-                    externalAccountCompleteVerificationBody.additionalProperties.toMutableMap()
+                    externalAccountCompleteVerificationRequest.additionalProperties.toMutableMap()
             }
 
             fun amounts(amounts: List<Long>) = amounts(JsonField.of(amounts))
@@ -144,8 +146,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ExternalAccountCompleteVerificationBody =
-                ExternalAccountCompleteVerificationBody(
+            fun build(): ExternalAccountCompleteVerificationRequest =
+                ExternalAccountCompleteVerificationRequest(
                     (amounts ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
@@ -156,7 +158,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalAccountCompleteVerificationBody && amounts == other.amounts && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExternalAccountCompleteVerificationRequest && amounts == other.amounts && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -166,7 +168,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExternalAccountCompleteVerificationBody{amounts=$amounts, additionalProperties=$additionalProperties}"
+            "ExternalAccountCompleteVerificationRequest{amounts=$amounts, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -181,8 +183,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: ExternalAccountCompleteVerificationBody.Builder =
-            ExternalAccountCompleteVerificationBody.builder()
+        private var body: ExternalAccountCompleteVerificationRequest.Builder =
+            ExternalAccountCompleteVerificationRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

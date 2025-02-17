@@ -27,7 +27,7 @@ class AccountDetailCreateParams
 private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
-    private val body: AccountDetailCreateBody,
+    private val body: AccountDetailCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -60,7 +60,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): AccountDetailCreateBody = body
+    @JvmSynthetic internal fun _body(): AccountDetailCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -75,9 +75,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AccountDetailCreateBody
+    class AccountDetailCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("account_number")
         @ExcludeMissing
         private val accountNumber: JsonField<String> = JsonMissing.of(),
@@ -117,7 +117,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AccountDetailCreateBody = apply {
+        fun validate(): AccountDetailCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -134,7 +134,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [AccountDetailCreateBody]. */
+        /** A builder for [AccountDetailCreateRequest]. */
         class Builder internal constructor() {
 
             private var accountNumber: JsonField<String>? = null
@@ -142,10 +142,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(accountDetailCreateBody: AccountDetailCreateBody) = apply {
-                accountNumber = accountDetailCreateBody.accountNumber
-                accountNumberType = accountDetailCreateBody.accountNumberType
-                additionalProperties = accountDetailCreateBody.additionalProperties.toMutableMap()
+            internal fun from(accountDetailCreateRequest: AccountDetailCreateRequest) = apply {
+                accountNumber = accountDetailCreateRequest.accountNumber
+                accountNumberType = accountDetailCreateRequest.accountNumberType
+                additionalProperties =
+                    accountDetailCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The account number for the bank account. */
@@ -190,8 +191,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AccountDetailCreateBody =
-                AccountDetailCreateBody(
+            fun build(): AccountDetailCreateRequest =
+                AccountDetailCreateRequest(
                     checkRequired("accountNumber", accountNumber),
                     accountNumberType,
                     additionalProperties.toImmutable(),
@@ -203,7 +204,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountDetailCreateBody && accountNumber == other.accountNumber && accountNumberType == other.accountNumberType && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountDetailCreateRequest && accountNumber == other.accountNumber && accountNumberType == other.accountNumberType && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -213,7 +214,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountDetailCreateBody{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
+            "AccountDetailCreateRequest{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -229,7 +230,7 @@ private constructor(
 
         private var accountsType: AccountsType? = null
         private var accountId: String? = null
-        private var body: AccountDetailCreateBody.Builder = AccountDetailCreateBody.builder()
+        private var body: AccountDetailCreateRequest.Builder = AccountDetailCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

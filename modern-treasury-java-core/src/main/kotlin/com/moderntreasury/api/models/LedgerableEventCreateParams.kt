@@ -23,7 +23,7 @@ import java.util.Optional
 /** Create a ledgerable event. */
 class LedgerableEventCreateParams
 private constructor(
-    private val body: LedgerableEventCreateBody,
+    private val body: LedgerableEventCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -55,7 +55,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): LedgerableEventCreateBody = body
+    @JvmSynthetic internal fun _body(): LedgerableEventCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -63,9 +63,9 @@ private constructor(
 
     @Deprecated("deprecated")
     @NoAutoDetect
-    class LedgerableEventCreateBody
+    class LedgerableEventCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("name")
         @ExcludeMissing
         private val name: JsonField<String> = JsonMissing.of(),
@@ -116,7 +116,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LedgerableEventCreateBody = apply {
+        fun validate(): LedgerableEventCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -134,7 +134,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LedgerableEventCreateBody]. */
+        /** A builder for [LedgerableEventCreateRequest]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -144,12 +144,13 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(ledgerableEventCreateBody: LedgerableEventCreateBody) = apply {
-                name = ledgerableEventCreateBody.name
-                customData = ledgerableEventCreateBody.customData
-                description = ledgerableEventCreateBody.description
-                metadata = ledgerableEventCreateBody.metadata
-                additionalProperties = ledgerableEventCreateBody.additionalProperties.toMutableMap()
+            internal fun from(ledgerableEventCreateRequest: LedgerableEventCreateRequest) = apply {
+                name = ledgerableEventCreateRequest.name
+                customData = ledgerableEventCreateRequest.customData
+                description = ledgerableEventCreateRequest.description
+                metadata = ledgerableEventCreateRequest.metadata
+                additionalProperties =
+                    ledgerableEventCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** Name of the ledgerable event. */
@@ -203,8 +204,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): LedgerableEventCreateBody =
-                LedgerableEventCreateBody(
+            fun build(): LedgerableEventCreateRequest =
+                LedgerableEventCreateRequest(
                     checkRequired("name", name),
                     customData,
                     description,
@@ -218,7 +219,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerableEventCreateBody && name == other.name && customData == other.customData && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerableEventCreateRequest && name == other.name && customData == other.customData && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -228,7 +229,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerableEventCreateBody{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerableEventCreateRequest{name=$name, customData=$customData, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -242,7 +243,8 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: LedgerableEventCreateBody.Builder = LedgerableEventCreateBody.builder()
+        private var body: LedgerableEventCreateRequest.Builder =
+            LedgerableEventCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
