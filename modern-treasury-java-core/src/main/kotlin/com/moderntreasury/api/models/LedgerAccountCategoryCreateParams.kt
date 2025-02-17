@@ -23,7 +23,7 @@ import java.util.Optional
 /** Create a ledger account category. */
 class LedgerAccountCategoryCreateParams
 private constructor(
-    private val body: LedgerAccountCategoryCreateBody,
+    private val body: LedgerAccountCategoryCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -88,16 +88,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): LedgerAccountCategoryCreateBody = body
+    @JvmSynthetic internal fun _body(): LedgerAccountCategoryCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class LedgerAccountCategoryCreateBody
+    class LedgerAccountCategoryCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("currency")
         @ExcludeMissing
         private val currency: JsonField<String> = JsonMissing.of(),
@@ -201,7 +201,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LedgerAccountCategoryCreateBody = apply {
+        fun validate(): LedgerAccountCategoryCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -224,7 +224,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LedgerAccountCategoryCreateBody]. */
+        /** A builder for [LedgerAccountCategoryCreateRequest]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -238,22 +238,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(ledgerAccountCategoryCreateBody: LedgerAccountCategoryCreateBody) =
-                apply {
-                    currency = ledgerAccountCategoryCreateBody.currency
-                    ledgerId = ledgerAccountCategoryCreateBody.ledgerId
-                    name = ledgerAccountCategoryCreateBody.name
-                    normalBalance = ledgerAccountCategoryCreateBody.normalBalance
-                    currencyExponent = ledgerAccountCategoryCreateBody.currencyExponent
-                    description = ledgerAccountCategoryCreateBody.description
-                    ledgerAccountCategoryIds =
-                        ledgerAccountCategoryCreateBody.ledgerAccountCategoryIds.map {
-                            it.toMutableList()
-                        }
-                    metadata = ledgerAccountCategoryCreateBody.metadata
-                    additionalProperties =
-                        ledgerAccountCategoryCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                ledgerAccountCategoryCreateRequest: LedgerAccountCategoryCreateRequest
+            ) = apply {
+                currency = ledgerAccountCategoryCreateRequest.currency
+                ledgerId = ledgerAccountCategoryCreateRequest.ledgerId
+                name = ledgerAccountCategoryCreateRequest.name
+                normalBalance = ledgerAccountCategoryCreateRequest.normalBalance
+                currencyExponent = ledgerAccountCategoryCreateRequest.currencyExponent
+                description = ledgerAccountCategoryCreateRequest.description
+                ledgerAccountCategoryIds =
+                    ledgerAccountCategoryCreateRequest.ledgerAccountCategoryIds.map {
+                        it.toMutableList()
+                    }
+                metadata = ledgerAccountCategoryCreateRequest.metadata
+                additionalProperties =
+                    ledgerAccountCategoryCreateRequest.additionalProperties.toMutableMap()
+            }
 
             /** The currency of the ledger account category. */
             fun currency(currency: String) = currency(JsonField.of(currency))
@@ -376,8 +377,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): LedgerAccountCategoryCreateBody =
-                LedgerAccountCategoryCreateBody(
+            fun build(): LedgerAccountCategoryCreateRequest =
+                LedgerAccountCategoryCreateRequest(
                     checkRequired("currency", currency),
                     checkRequired("ledgerId", ledgerId),
                     checkRequired("name", name),
@@ -395,7 +396,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerAccountCategoryCreateBody && currency == other.currency && ledgerId == other.ledgerId && name == other.name && normalBalance == other.normalBalance && currencyExponent == other.currencyExponent && description == other.description && ledgerAccountCategoryIds == other.ledgerAccountCategoryIds && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerAccountCategoryCreateRequest && currency == other.currency && ledgerId == other.ledgerId && name == other.name && normalBalance == other.normalBalance && currencyExponent == other.currencyExponent && description == other.description && ledgerAccountCategoryIds == other.ledgerAccountCategoryIds && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -405,7 +406,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerAccountCategoryCreateBody{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerAccountCategoryCreateRequest{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -419,8 +420,8 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: LedgerAccountCategoryCreateBody.Builder =
-            LedgerAccountCategoryCreateBody.builder()
+        private var body: LedgerAccountCategoryCreateRequest.Builder =
+            LedgerAccountCategoryCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

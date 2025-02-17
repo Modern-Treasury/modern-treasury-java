@@ -24,7 +24,7 @@ import java.util.Optional
 /** create foreign_exchange_quote */
 class ForeignExchangeQuoteCreateParams
 private constructor(
-    private val body: ForeignExchangeQuoteCreateBody,
+    private val body: ForeignExchangeQuoteCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -81,16 +81,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ForeignExchangeQuoteCreateBody = body
+    @JvmSynthetic internal fun _body(): ForeignExchangeQuoteCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class ForeignExchangeQuoteCreateBody
+    class ForeignExchangeQuoteCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("internal_account_id")
         @ExcludeMissing
         private val internalAccountId: JsonField<String> = JsonMissing.of(),
@@ -181,7 +181,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ForeignExchangeQuoteCreateBody = apply {
+        fun validate(): ForeignExchangeQuoteCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -202,7 +202,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ForeignExchangeQuoteCreateBody]. */
+        /** A builder for [ForeignExchangeQuoteCreateRequest]. */
         class Builder internal constructor() {
 
             private var internalAccountId: JsonField<String>? = null
@@ -214,17 +214,18 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(foreignExchangeQuoteCreateBody: ForeignExchangeQuoteCreateBody) =
-                apply {
-                    internalAccountId = foreignExchangeQuoteCreateBody.internalAccountId
-                    targetCurrency = foreignExchangeQuoteCreateBody.targetCurrency
-                    baseAmount = foreignExchangeQuoteCreateBody.baseAmount
-                    baseCurrency = foreignExchangeQuoteCreateBody.baseCurrency
-                    effectiveAt = foreignExchangeQuoteCreateBody.effectiveAt
-                    targetAmount = foreignExchangeQuoteCreateBody.targetAmount
-                    additionalProperties =
-                        foreignExchangeQuoteCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                foreignExchangeQuoteCreateRequest: ForeignExchangeQuoteCreateRequest
+            ) = apply {
+                internalAccountId = foreignExchangeQuoteCreateRequest.internalAccountId
+                targetCurrency = foreignExchangeQuoteCreateRequest.targetCurrency
+                baseAmount = foreignExchangeQuoteCreateRequest.baseAmount
+                baseCurrency = foreignExchangeQuoteCreateRequest.baseCurrency
+                effectiveAt = foreignExchangeQuoteCreateRequest.effectiveAt
+                targetAmount = foreignExchangeQuoteCreateRequest.targetAmount
+                additionalProperties =
+                    foreignExchangeQuoteCreateRequest.additionalProperties.toMutableMap()
+            }
 
             /** The ID for the `InternalAccount` this quote is associated with. */
             fun internalAccountId(internalAccountId: String) =
@@ -305,8 +306,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ForeignExchangeQuoteCreateBody =
-                ForeignExchangeQuoteCreateBody(
+            fun build(): ForeignExchangeQuoteCreateRequest =
+                ForeignExchangeQuoteCreateRequest(
                     checkRequired("internalAccountId", internalAccountId),
                     checkRequired("targetCurrency", targetCurrency),
                     baseAmount,
@@ -322,7 +323,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ForeignExchangeQuoteCreateBody && internalAccountId == other.internalAccountId && targetCurrency == other.targetCurrency && baseAmount == other.baseAmount && baseCurrency == other.baseCurrency && effectiveAt == other.effectiveAt && targetAmount == other.targetAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ForeignExchangeQuoteCreateRequest && internalAccountId == other.internalAccountId && targetCurrency == other.targetCurrency && baseAmount == other.baseAmount && baseCurrency == other.baseCurrency && effectiveAt == other.effectiveAt && targetAmount == other.targetAmount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -332,7 +333,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ForeignExchangeQuoteCreateBody{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalProperties=$additionalProperties}"
+            "ForeignExchangeQuoteCreateRequest{internalAccountId=$internalAccountId, targetCurrency=$targetCurrency, baseAmount=$baseAmount, baseCurrency=$baseCurrency, effectiveAt=$effectiveAt, targetAmount=$targetAmount, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -346,8 +347,8 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: ForeignExchangeQuoteCreateBody.Builder =
-            ForeignExchangeQuoteCreateBody.builder()
+        private var body: ForeignExchangeQuoteCreateRequest.Builder =
+            ForeignExchangeQuoteCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

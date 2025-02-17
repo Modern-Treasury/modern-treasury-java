@@ -24,7 +24,7 @@ import java.util.Optional
 class InvoiceLineItemCreateParams
 private constructor(
     private val invoiceId: String,
-    private val body: InvoiceLineItemCreateBody,
+    private val body: InvoiceLineItemCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -103,7 +103,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): InvoiceLineItemCreateBody = body
+    @JvmSynthetic internal fun _body(): InvoiceLineItemCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -117,9 +117,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class InvoiceLineItemCreateBody
+    class InvoiceLineItemCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("name")
         @ExcludeMissing
         private val name: JsonField<String> = JsonMissing.of(),
@@ -229,7 +229,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): InvoiceLineItemCreateBody = apply {
+        fun validate(): InvoiceLineItemCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -251,7 +251,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [InvoiceLineItemCreateBody]. */
+        /** A builder for [InvoiceLineItemCreateRequest]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -264,15 +264,16 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(invoiceLineItemCreateBody: InvoiceLineItemCreateBody) = apply {
-                name = invoiceLineItemCreateBody.name
-                unitAmount = invoiceLineItemCreateBody.unitAmount
-                description = invoiceLineItemCreateBody.description
-                direction = invoiceLineItemCreateBody.direction
-                metadata = invoiceLineItemCreateBody.metadata
-                quantity = invoiceLineItemCreateBody.quantity
-                unitAmountDecimal = invoiceLineItemCreateBody.unitAmountDecimal
-                additionalProperties = invoiceLineItemCreateBody.additionalProperties.toMutableMap()
+            internal fun from(invoiceLineItemCreateRequest: InvoiceLineItemCreateRequest) = apply {
+                name = invoiceLineItemCreateRequest.name
+                unitAmount = invoiceLineItemCreateRequest.unitAmount
+                description = invoiceLineItemCreateRequest.description
+                direction = invoiceLineItemCreateRequest.direction
+                metadata = invoiceLineItemCreateRequest.metadata
+                quantity = invoiceLineItemCreateRequest.quantity
+                unitAmountDecimal = invoiceLineItemCreateRequest.unitAmountDecimal
+                additionalProperties =
+                    invoiceLineItemCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The name of the line item, typically a product or SKU name. */
@@ -373,8 +374,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): InvoiceLineItemCreateBody =
-                InvoiceLineItemCreateBody(
+            fun build(): InvoiceLineItemCreateRequest =
+                InvoiceLineItemCreateRequest(
                     checkRequired("name", name),
                     checkRequired("unitAmount", unitAmount),
                     description,
@@ -391,7 +392,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceLineItemCreateBody && name == other.name && unitAmount == other.unitAmount && description == other.description && direction == other.direction && metadata == other.metadata && quantity == other.quantity && unitAmountDecimal == other.unitAmountDecimal && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is InvoiceLineItemCreateRequest && name == other.name && unitAmount == other.unitAmount && description == other.description && direction == other.direction && metadata == other.metadata && quantity == other.quantity && unitAmountDecimal == other.unitAmountDecimal && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -401,7 +402,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InvoiceLineItemCreateBody{name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, metadata=$metadata, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
+            "InvoiceLineItemCreateRequest{name=$name, unitAmount=$unitAmount, description=$description, direction=$direction, metadata=$metadata, quantity=$quantity, unitAmountDecimal=$unitAmountDecimal, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -416,7 +417,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
-        private var body: InvoiceLineItemCreateBody.Builder = InvoiceLineItemCreateBody.builder()
+        private var body: InvoiceLineItemCreateRequest.Builder =
+            InvoiceLineItemCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

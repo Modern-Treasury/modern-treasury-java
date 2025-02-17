@@ -28,7 +28,7 @@ private constructor(
     private val itemizableType: ItemizableType,
     private val itemizableId: String,
     private val id: String,
-    private val body: LineItemUpdateBody,
+    private val body: LineItemUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -51,7 +51,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): LineItemUpdateBody = body
+    @JvmSynthetic internal fun _body(): LineItemUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -67,9 +67,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class LineItemUpdateBody
+    class LineItemUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -93,7 +93,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LineItemUpdateBody = apply {
+        fun validate(): LineItemUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -109,16 +109,16 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LineItemUpdateBody]. */
+        /** A builder for [LineItemUpdateRequest]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(lineItemUpdateBody: LineItemUpdateBody) = apply {
-                metadata = lineItemUpdateBody.metadata
-                additionalProperties = lineItemUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(lineItemUpdateRequest: LineItemUpdateRequest) = apply {
+                metadata = lineItemUpdateRequest.metadata
+                additionalProperties = lineItemUpdateRequest.additionalProperties.toMutableMap()
             }
 
             /**
@@ -152,8 +152,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): LineItemUpdateBody =
-                LineItemUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): LineItemUpdateRequest =
+                LineItemUpdateRequest(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -161,7 +161,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItemUpdateRequest && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -171,7 +171,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItemUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LineItemUpdateRequest{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -188,7 +188,7 @@ private constructor(
         private var itemizableType: ItemizableType? = null
         private var itemizableId: String? = null
         private var id: String? = null
-        private var body: LineItemUpdateBody.Builder = LineItemUpdateBody.builder()
+        private var body: LineItemUpdateRequest.Builder = LineItemUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

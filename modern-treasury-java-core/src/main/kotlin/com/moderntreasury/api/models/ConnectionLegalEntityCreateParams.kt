@@ -26,7 +26,7 @@ import java.util.Optional
 /** Create a connection legal entity. */
 class ConnectionLegalEntityCreateParams
 private constructor(
-    private val body: ConnectionLegalEntityCreateBody,
+    private val body: ConnectionLegalEntityCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -55,16 +55,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ConnectionLegalEntityCreateBody = body
+    @JvmSynthetic internal fun _body(): ConnectionLegalEntityCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class ConnectionLegalEntityCreateBody
+    class ConnectionLegalEntityCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("connection_id")
         @ExcludeMissing
         private val connectionId: JsonField<String> = JsonMissing.of(),
@@ -110,7 +110,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ConnectionLegalEntityCreateBody = apply {
+        fun validate(): ConnectionLegalEntityCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -128,7 +128,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ConnectionLegalEntityCreateBody]. */
+        /** A builder for [ConnectionLegalEntityCreateRequest]. */
         class Builder internal constructor() {
 
             private var connectionId: JsonField<String>? = null
@@ -137,14 +137,15 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(connectionLegalEntityCreateBody: ConnectionLegalEntityCreateBody) =
-                apply {
-                    connectionId = connectionLegalEntityCreateBody.connectionId
-                    legalEntity = connectionLegalEntityCreateBody.legalEntity
-                    legalEntityId = connectionLegalEntityCreateBody.legalEntityId
-                    additionalProperties =
-                        connectionLegalEntityCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                connectionLegalEntityCreateRequest: ConnectionLegalEntityCreateRequest
+            ) = apply {
+                connectionId = connectionLegalEntityCreateRequest.connectionId
+                legalEntity = connectionLegalEntityCreateRequest.legalEntity
+                legalEntityId = connectionLegalEntityCreateRequest.legalEntityId
+                additionalProperties =
+                    connectionLegalEntityCreateRequest.additionalProperties.toMutableMap()
+            }
 
             /** The ID of the connection. */
             fun connectionId(connectionId: String) = connectionId(JsonField.of(connectionId))
@@ -189,8 +190,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ConnectionLegalEntityCreateBody =
-                ConnectionLegalEntityCreateBody(
+            fun build(): ConnectionLegalEntityCreateRequest =
+                ConnectionLegalEntityCreateRequest(
                     checkRequired("connectionId", connectionId),
                     legalEntity,
                     legalEntityId,
@@ -203,7 +204,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ConnectionLegalEntityCreateBody && connectionId == other.connectionId && legalEntity == other.legalEntity && legalEntityId == other.legalEntityId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ConnectionLegalEntityCreateRequest && connectionId == other.connectionId && legalEntity == other.legalEntity && legalEntityId == other.legalEntityId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -213,7 +214,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ConnectionLegalEntityCreateBody{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalProperties=$additionalProperties}"
+            "ConnectionLegalEntityCreateRequest{connectionId=$connectionId, legalEntity=$legalEntity, legalEntityId=$legalEntityId, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -227,8 +228,8 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: ConnectionLegalEntityCreateBody.Builder =
-            ConnectionLegalEntityCreateBody.builder()
+        private var body: ConnectionLegalEntityCreateRequest.Builder =
+            ConnectionLegalEntityCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
