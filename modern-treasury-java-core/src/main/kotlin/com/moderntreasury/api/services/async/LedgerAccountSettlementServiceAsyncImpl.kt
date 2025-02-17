@@ -24,9 +24,8 @@ import com.moderntreasury.api.services.async.ledgerAccountSettlements.AccountEnt
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountSettlementServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerAccountSettlementServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) :
+    LedgerAccountSettlementServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -43,7 +42,7 @@ internal constructor(
     /** Create a ledger account settlement. */
     override fun create(
         params: LedgerAccountSettlementCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountSettlement> {
         val request =
             HttpRequest.builder()
@@ -72,7 +71,7 @@ internal constructor(
     /** Get details on a single ledger account settlement. */
     override fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountSettlement> {
         val request =
             HttpRequest.builder()
@@ -100,7 +99,7 @@ internal constructor(
     /** Update the details of a ledger account settlement. */
     override fun update(
         params: LedgerAccountSettlementUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountSettlement> {
         val request =
             HttpRequest.builder()
@@ -129,7 +128,7 @@ internal constructor(
     /** Get a list of ledger account settlements. */
     override fun list(
         params: LedgerAccountSettlementListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountSettlementListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -157,7 +156,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

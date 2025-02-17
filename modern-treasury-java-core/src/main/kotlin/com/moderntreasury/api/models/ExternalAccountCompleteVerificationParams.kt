@@ -147,7 +147,7 @@ private constructor(
             fun build(): ExternalAccountCompleteVerificationBody =
                 ExternalAccountCompleteVerificationBody(
                     (amounts ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

@@ -17,13 +17,13 @@ interface EventServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: EventRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Event>
 
     /** list events */
     @JvmOverloads
     fun list(
         params: EventListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventListPageAsync>
 }

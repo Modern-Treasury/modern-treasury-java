@@ -20,34 +20,34 @@ interface LineItemServiceAsync {
     @JvmOverloads
     fun create(
         params: InvoiceLineItemCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItem>
 
     /** get invoice_line_item */
     @JvmOverloads
     fun retrieve(
         params: InvoiceLineItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItem>
 
     /** update invoice_line_item */
     @JvmOverloads
     fun update(
         params: InvoiceLineItemUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItem>
 
     /** list invoice_line_items */
     @JvmOverloads
     fun list(
         params: InvoiceLineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItemListPageAsync>
 
     /** delete invoice_line_item */
     @JvmOverloads
     fun delete(
         params: InvoiceLineItemDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItem>
 }

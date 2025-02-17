@@ -21,41 +21,41 @@ interface CounterpartyService {
     @JvmOverloads
     fun create(
         params: CounterpartyCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Get details on a single counterparty. */
     @JvmOverloads
     fun retrieve(
         params: CounterpartyRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Updates a given counterparty with new information. */
     @JvmOverloads
     fun update(
         params: CounterpartyUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Get a paginated list of all counterparties. */
     @JvmOverloads
     fun list(
         params: CounterpartyListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterpartyListPage
 
     /** Deletes a given counterparty. */
     @JvmOverloads
     fun delete(
         params: CounterpartyDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Send an email requesting account details. */
     @JvmOverloads
     fun collectAccount(
         params: CounterpartyCollectAccountParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterpartyCollectAccountResponse
 }

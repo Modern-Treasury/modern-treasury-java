@@ -22,9 +22,7 @@ import com.moderntreasury.api.models.ConnectionLegalEntityUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class ConnectionLegalEntityServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ConnectionLegalEntityServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ConnectionLegalEntityServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
     /** Create a connection legal entity. */
     override fun create(
         params: ConnectionLegalEntityCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ConnectionLegalEntity> {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
     /** Get details on a single connection legal entity. */
     override fun retrieve(
         params: ConnectionLegalEntityRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ConnectionLegalEntity> {
         val request =
             HttpRequest.builder()
@@ -89,7 +87,7 @@ internal constructor(
     /** Update a connection legal entity. */
     override fun update(
         params: ConnectionLegalEntityUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ConnectionLegalEntity> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
     /** Get a list of all connection legal entities. */
     override fun list(
         params: ConnectionLegalEntityListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ConnectionLegalEntityListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

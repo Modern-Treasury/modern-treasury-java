@@ -16,13 +16,13 @@ interface EventService {
     @JvmOverloads
     fun retrieve(
         params: EventRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
     /** list events */
     @JvmOverloads
     fun list(
         params: EventListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 }

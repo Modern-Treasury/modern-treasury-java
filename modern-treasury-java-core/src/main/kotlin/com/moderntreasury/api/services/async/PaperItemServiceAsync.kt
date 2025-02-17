@@ -17,13 +17,13 @@ interface PaperItemServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: PaperItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItem>
 
     /** Get a list of all paper items. */
     @JvmOverloads
     fun list(
         params: PaperItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItemListPageAsync>
 }

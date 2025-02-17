@@ -23,48 +23,48 @@ interface ExternalAccountServiceAsync {
     @JvmOverloads
     fun create(
         params: ExternalAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** show external account */
     @JvmOverloads
     fun retrieve(
         params: ExternalAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** update external account */
     @JvmOverloads
     fun update(
         params: ExternalAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** list external accounts */
     @JvmOverloads
     fun list(
         params: ExternalAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccountListPageAsync>
 
     /** delete external account */
     @JvmOverloads
     fun delete(
         params: ExternalAccountDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** complete verification of external account */
     @JvmOverloads
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** verify external account */
     @JvmOverloads
     fun verify(
         params: ExternalAccountVerifyParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccountVerifyResponse>
 }

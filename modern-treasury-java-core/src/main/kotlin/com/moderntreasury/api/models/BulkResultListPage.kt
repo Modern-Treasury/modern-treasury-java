@@ -74,13 +74,8 @@ private constructor(
         fun of(
             bulkResultsService: BulkResultService,
             params: BulkResultListParams,
-            response: Response
-        ) =
-            BulkResultListPage(
-                bulkResultsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = BulkResultListPage(bulkResultsService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: BulkResultListPage,
-    ) : Iterable<BulkResult> {
+    class AutoPager(private val firstPage: BulkResultListPage) : Iterable<BulkResult> {
 
         override fun iterator(): Iterator<BulkResult> = iterator {
             var page = firstPage

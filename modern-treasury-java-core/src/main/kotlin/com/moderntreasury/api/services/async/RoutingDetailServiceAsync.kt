@@ -23,35 +23,32 @@ interface RoutingDetailServiceAsync {
     @JvmOverloads
     fun create(
         params: RoutingDetailCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetail>
 
     /** Get a single routing detail for a single internal or external account. */
     @JvmOverloads
     fun retrieve(
         params: RoutingDetailRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetail>
 
     /** Get a list of routing details for a single internal or external account. */
     @JvmOverloads
     fun list(
         params: RoutingDetailListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetailListPageAsync>
 
     /** Delete a routing detail for a single external account. */
     @JvmOverloads
     fun delete(
         params: RoutingDetailDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
-    class AccountsType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class AccountsType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -72,7 +69,7 @@ interface RoutingDetailServiceAsync {
 
         /** An enum containing [AccountsType]'s known values. */
         enum class Known {
-            EXTERNAL_ACCOUNTS,
+            EXTERNAL_ACCOUNTS
         }
 
         /**

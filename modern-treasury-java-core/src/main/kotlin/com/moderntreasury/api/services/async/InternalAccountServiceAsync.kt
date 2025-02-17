@@ -22,27 +22,27 @@ interface InternalAccountServiceAsync {
     @JvmOverloads
     fun create(
         params: InternalAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** get internal account */
     @JvmOverloads
     fun retrieve(
         params: InternalAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** update internal account */
     @JvmOverloads
     fun update(
         params: InternalAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** list internal accounts */
     @JvmOverloads
     fun list(
         params: InternalAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccountListPageAsync>
 }

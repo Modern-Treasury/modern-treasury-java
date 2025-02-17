@@ -72,11 +72,7 @@ private constructor(
 
         @JvmStatic
         fun of(documentsService: DocumentService, params: DocumentListParams, response: Response) =
-            DocumentListPage(
-                documentsService,
-                params,
-                response,
-            )
+            DocumentListPage(documentsService, params, response)
     }
 
     @NoAutoDetect
@@ -162,18 +158,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DocumentListPage,
-    ) : Iterable<Document> {
+    class AutoPager(private val firstPage: DocumentListPage) : Iterable<Document> {
 
         override fun iterator(): Iterator<Document> = iterator {
             var page = firstPage

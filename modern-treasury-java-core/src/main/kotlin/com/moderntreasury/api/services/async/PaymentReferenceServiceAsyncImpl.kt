@@ -20,9 +20,7 @@ import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class PaymentReferenceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PaymentReferenceServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : PaymentReferenceServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -32,7 +30,7 @@ internal constructor(
     /** get payment_reference */
     override fun retrieve(
         params: PaymentReferenceRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentReference> {
         val request =
             HttpRequest.builder()
@@ -59,7 +57,7 @@ internal constructor(
     /** list payment_references */
     override fun list(
         params: PaymentReferenceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentReferenceListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -87,7 +85,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -100,7 +98,7 @@ internal constructor(
     @Deprecated("use `retrieve` instead")
     override fun retireve(
         params: PaymentReferenceRetireveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentReference> {
         val request =
             HttpRequest.builder()

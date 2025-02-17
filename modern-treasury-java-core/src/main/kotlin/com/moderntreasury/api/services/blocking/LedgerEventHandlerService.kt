@@ -18,27 +18,27 @@ interface LedgerEventHandlerService {
     @JvmOverloads
     fun create(
         params: LedgerEventHandlerCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandler
 
     /** Get details on a single ledger event handler. */
     @JvmOverloads
     fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandler
 
     /** Get a list of ledger event handlers. */
     @JvmOverloads
     fun list(
         params: LedgerEventHandlerListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandlerListPage
 
     /** Archive a ledger event handler. */
     @JvmOverloads
     fun delete(
         params: LedgerEventHandlerDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandler
 }

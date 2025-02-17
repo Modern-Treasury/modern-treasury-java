@@ -14,6 +14,6 @@ interface ValidationService {
     @JvmOverloads
     fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): RoutingNumberLookupRequest
 }

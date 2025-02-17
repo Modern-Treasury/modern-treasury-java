@@ -72,11 +72,7 @@ private constructor(
 
         @JvmStatic
         fun of(invoicesService: InvoiceService, params: InvoiceListParams, response: Response) =
-            InvoiceListPage(
-                invoicesService,
-                params,
-                response,
-            )
+            InvoiceListPage(invoicesService, params, response)
     }
 
     @NoAutoDetect
@@ -162,18 +158,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: InvoiceListPage,
-    ) : Iterable<Invoice> {
+    class AutoPager(private val firstPage: InvoiceListPage) : Iterable<Invoice> {
 
         override fun iterator(): Iterator<Invoice> = iterator {
             var page = firstPage

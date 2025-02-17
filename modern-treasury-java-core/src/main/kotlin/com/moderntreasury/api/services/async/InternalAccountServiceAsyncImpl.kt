@@ -24,9 +24,7 @@ import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServi
 import java.util.concurrent.CompletableFuture
 
 class InternalAccountServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : InternalAccountServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : InternalAccountServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** create internal account */
     override fun create(
         params: InternalAccountCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InternalAccount> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** get internal account */
     override fun retrieve(
         params: InternalAccountRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InternalAccount> {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
     /** update internal account */
     override fun update(
         params: InternalAccountUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InternalAccount> {
         val request =
             HttpRequest.builder()
@@ -125,7 +123,7 @@ internal constructor(
     /** list internal accounts */
     override fun list(
         params: InternalAccountListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InternalAccountListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

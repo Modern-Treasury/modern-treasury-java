@@ -22,9 +22,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class AccountCollectionFlowServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AccountCollectionFlowServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : AccountCollectionFlowServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
     /** create account_collection_flow */
     override fun create(
         params: AccountCollectionFlowCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
     /** get account_collection_flow */
     override fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
@@ -89,7 +87,7 @@ internal constructor(
     /** update account_collection_flow */
     override fun update(
         params: AccountCollectionFlowUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountCollectionFlow> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
     /** list account_collection_flows */
     override fun list(
         params: AccountCollectionFlowListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountCollectionFlowListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

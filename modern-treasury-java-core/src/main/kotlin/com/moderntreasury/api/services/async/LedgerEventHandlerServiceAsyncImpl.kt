@@ -22,9 +22,7 @@ import com.moderntreasury.api.models.LedgerEventHandlerRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerEventHandlerServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerEventHandlerServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : LedgerEventHandlerServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
     /** create ledger_event_handler */
     override fun create(
         params: LedgerEventHandlerCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
     /** Get details on a single ledger event handler. */
     override fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
@@ -90,7 +88,7 @@ internal constructor(
     /** Get a list of ledger event handlers. */
     override fun list(
         params: LedgerEventHandlerListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEventHandlerListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -130,7 +128,7 @@ internal constructor(
     /** Archive a ledger event handler. */
     override fun delete(
         params: LedgerEventHandlerDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEventHandler> {
         val request =
             HttpRequest.builder()
