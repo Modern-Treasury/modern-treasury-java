@@ -27,7 +27,7 @@ import java.util.Optional
 class BalanceReportCreateParams
 private constructor(
     private val internalAccountId: String,
-    private val body: BalanceReportCreateBody,
+    private val body: BalanceReportCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -70,7 +70,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): BalanceReportCreateBody = body
+    @JvmSynthetic internal fun _body(): BalanceReportCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -84,9 +84,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class BalanceReportCreateBody
+    class BalanceReportCreateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("as_of_date")
         @ExcludeMissing
         private val asOfDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -144,7 +144,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): BalanceReportCreateBody = apply {
+        fun validate(): BalanceReportCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -163,7 +163,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [BalanceReportCreateBody]. */
+        /** A builder for [BalanceReportCreateRequest]. */
         class Builder internal constructor() {
 
             private var asOfDate: JsonField<LocalDate>? = null
@@ -173,12 +173,13 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(balanceReportCreateBody: BalanceReportCreateBody) = apply {
-                asOfDate = balanceReportCreateBody.asOfDate
-                asOfTime = balanceReportCreateBody.asOfTime
-                balanceReportType = balanceReportCreateBody.balanceReportType
-                balances = balanceReportCreateBody.balances.map { it.toMutableList() }
-                additionalProperties = balanceReportCreateBody.additionalProperties.toMutableMap()
+            internal fun from(balanceReportCreateRequest: BalanceReportCreateRequest) = apply {
+                asOfDate = balanceReportCreateRequest.asOfDate
+                asOfTime = balanceReportCreateRequest.asOfTime
+                balanceReportType = balanceReportCreateRequest.balanceReportType
+                balances = balanceReportCreateRequest.balances.map { it.toMutableList() }
+                additionalProperties =
+                    balanceReportCreateRequest.additionalProperties.toMutableMap()
             }
 
             /** The date of the balance report in local time. */
@@ -249,8 +250,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): BalanceReportCreateBody =
-                BalanceReportCreateBody(
+            fun build(): BalanceReportCreateRequest =
+                BalanceReportCreateRequest(
                     checkRequired("asOfDate", asOfDate),
                     checkRequired("asOfTime", asOfTime),
                     checkRequired("balanceReportType", balanceReportType),
@@ -264,7 +265,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceReportCreateBody && asOfDate == other.asOfDate && asOfTime == other.asOfTime && balanceReportType == other.balanceReportType && balances == other.balances && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BalanceReportCreateRequest && asOfDate == other.asOfDate && asOfTime == other.asOfTime && balanceReportType == other.balanceReportType && balances == other.balances && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -274,7 +275,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BalanceReportCreateBody{asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalProperties=$additionalProperties}"
+            "BalanceReportCreateRequest{asOfDate=$asOfDate, asOfTime=$asOfTime, balanceReportType=$balanceReportType, balances=$balances, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -289,7 +290,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var internalAccountId: String? = null
-        private var body: BalanceReportCreateBody.Builder = BalanceReportCreateBody.builder()
+        private var body: BalanceReportCreateRequest.Builder = BalanceReportCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

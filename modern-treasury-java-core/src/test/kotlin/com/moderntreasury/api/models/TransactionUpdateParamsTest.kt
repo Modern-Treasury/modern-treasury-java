@@ -31,7 +31,9 @@ class TransactionUpdateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .contains(
@@ -44,7 +46,9 @@ class TransactionUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = TransactionUpdateParams.builder().id("id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

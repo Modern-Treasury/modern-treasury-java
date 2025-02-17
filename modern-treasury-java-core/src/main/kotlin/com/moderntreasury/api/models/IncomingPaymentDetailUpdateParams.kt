@@ -24,7 +24,7 @@ import java.util.Optional
 class IncomingPaymentDetailUpdateParams
 private constructor(
     private val id: String,
-    private val body: IncomingPaymentDetailUpdateBody,
+    private val body: IncomingPaymentDetailUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -49,7 +49,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): IncomingPaymentDetailUpdateBody = body
+    @JvmSynthetic internal fun _body(): IncomingPaymentDetailUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -63,9 +63,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class IncomingPaymentDetailUpdateBody
+    class IncomingPaymentDetailUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -91,7 +91,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): IncomingPaymentDetailUpdateBody = apply {
+        fun validate(): IncomingPaymentDetailUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -107,19 +107,20 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [IncomingPaymentDetailUpdateBody]. */
+        /** A builder for [IncomingPaymentDetailUpdateRequest]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(incomingPaymentDetailUpdateBody: IncomingPaymentDetailUpdateBody) =
-                apply {
-                    metadata = incomingPaymentDetailUpdateBody.metadata
-                    additionalProperties =
-                        incomingPaymentDetailUpdateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                incomingPaymentDetailUpdateRequest: IncomingPaymentDetailUpdateRequest
+            ) = apply {
+                metadata = incomingPaymentDetailUpdateRequest.metadata
+                additionalProperties =
+                    incomingPaymentDetailUpdateRequest.additionalProperties.toMutableMap()
+            }
 
             /**
              * Additional data in the form of key-value pairs. Pairs can be removed by passing an
@@ -152,8 +153,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): IncomingPaymentDetailUpdateBody =
-                IncomingPaymentDetailUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): IncomingPaymentDetailUpdateRequest =
+                IncomingPaymentDetailUpdateRequest(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -161,7 +162,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is IncomingPaymentDetailUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is IncomingPaymentDetailUpdateRequest && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -171,7 +172,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IncomingPaymentDetailUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "IncomingPaymentDetailUpdateRequest{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -186,8 +187,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: IncomingPaymentDetailUpdateBody.Builder =
-            IncomingPaymentDetailUpdateBody.builder()
+        private var body: IncomingPaymentDetailUpdateRequest.Builder =
+            IncomingPaymentDetailUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

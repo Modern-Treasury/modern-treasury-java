@@ -26,7 +26,7 @@ import java.util.Optional
 class CounterpartyCollectAccountParams
 private constructor(
     private val id: String,
-    private val body: CounterpartyCollectAccountBody,
+    private val body: CounterpartyCollectAccountRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -99,7 +99,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CounterpartyCollectAccountBody = body
+    @JvmSynthetic internal fun _body(): CounterpartyCollectAccountRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -113,9 +113,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CounterpartyCollectAccountBody
+    class CounterpartyCollectAccountRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("direction")
         @ExcludeMissing
         private val direction: JsonField<TransactionDirection> = JsonMissing.of(),
@@ -204,7 +204,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CounterpartyCollectAccountBody = apply {
+        fun validate(): CounterpartyCollectAccountRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -223,7 +223,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CounterpartyCollectAccountBody]. */
+        /** A builder for [CounterpartyCollectAccountRequest]. */
         class Builder internal constructor() {
 
             private var direction: JsonField<TransactionDirection>? = null
@@ -233,15 +233,16 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(counterpartyCollectAccountBody: CounterpartyCollectAccountBody) =
-                apply {
-                    direction = counterpartyCollectAccountBody.direction
-                    customRedirect = counterpartyCollectAccountBody.customRedirect
-                    fields = counterpartyCollectAccountBody.fields.map { it.toMutableList() }
-                    sendEmail = counterpartyCollectAccountBody.sendEmail
-                    additionalProperties =
-                        counterpartyCollectAccountBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                counterpartyCollectAccountRequest: CounterpartyCollectAccountRequest
+            ) = apply {
+                direction = counterpartyCollectAccountRequest.direction
+                customRedirect = counterpartyCollectAccountRequest.customRedirect
+                fields = counterpartyCollectAccountRequest.fields.map { it.toMutableList() }
+                sendEmail = counterpartyCollectAccountRequest.sendEmail
+                additionalProperties =
+                    counterpartyCollectAccountRequest.additionalProperties.toMutableMap()
+            }
 
             /**
              * One of `credit` or `debit`. Use `credit` when you want to pay a counterparty. Use
@@ -351,8 +352,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CounterpartyCollectAccountBody =
-                CounterpartyCollectAccountBody(
+            fun build(): CounterpartyCollectAccountRequest =
+                CounterpartyCollectAccountRequest(
                     checkRequired("direction", direction),
                     customRedirect,
                     (fields ?: JsonMissing.of()).map { it.toImmutable() },
@@ -366,7 +367,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterpartyCollectAccountBody && direction == other.direction && customRedirect == other.customRedirect && fields == other.fields && sendEmail == other.sendEmail && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CounterpartyCollectAccountRequest && direction == other.direction && customRedirect == other.customRedirect && fields == other.fields && sendEmail == other.sendEmail && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -376,7 +377,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterpartyCollectAccountBody{direction=$direction, customRedirect=$customRedirect, fields=$fields, sendEmail=$sendEmail, additionalProperties=$additionalProperties}"
+            "CounterpartyCollectAccountRequest{direction=$direction, customRedirect=$customRedirect, fields=$fields, sendEmail=$sendEmail, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -391,8 +392,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: CounterpartyCollectAccountBody.Builder =
-            CounterpartyCollectAccountBody.builder()
+        private var body: CounterpartyCollectAccountRequest.Builder =
+            CounterpartyCollectAccountRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

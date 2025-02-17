@@ -26,7 +26,7 @@ import java.util.Optional
 class ExternalAccountVerifyParams
 private constructor(
     private val id: String,
-    private val body: ExternalAccountVerifyBody,
+    private val body: ExternalAccountVerifyRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -89,7 +89,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ExternalAccountVerifyBody = body
+    @JvmSynthetic internal fun _body(): ExternalAccountVerifyRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -103,9 +103,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ExternalAccountVerifyBody
+    class ExternalAccountVerifyRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("originating_account_id")
         @ExcludeMissing
         private val originatingAccountId: JsonField<String> = JsonMissing.of(),
@@ -189,7 +189,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ExternalAccountVerifyBody = apply {
+        fun validate(): ExternalAccountVerifyRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -209,7 +209,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ExternalAccountVerifyBody]. */
+        /** A builder for [ExternalAccountVerifyRequest]. */
         class Builder internal constructor() {
 
             private var originatingAccountId: JsonField<String>? = null
@@ -220,13 +220,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(externalAccountVerifyBody: ExternalAccountVerifyBody) = apply {
-                originatingAccountId = externalAccountVerifyBody.originatingAccountId
-                paymentType = externalAccountVerifyBody.paymentType
-                currency = externalAccountVerifyBody.currency
-                fallbackType = externalAccountVerifyBody.fallbackType
-                priority = externalAccountVerifyBody.priority
-                additionalProperties = externalAccountVerifyBody.additionalProperties.toMutableMap()
+            internal fun from(externalAccountVerifyRequest: ExternalAccountVerifyRequest) = apply {
+                originatingAccountId = externalAccountVerifyRequest.originatingAccountId
+                paymentType = externalAccountVerifyRequest.paymentType
+                currency = externalAccountVerifyRequest.currency
+                fallbackType = externalAccountVerifyRequest.fallbackType
+                priority = externalAccountVerifyRequest.priority
+                additionalProperties =
+                    externalAccountVerifyRequest.additionalProperties.toMutableMap()
             }
 
             /**
@@ -305,8 +306,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ExternalAccountVerifyBody =
-                ExternalAccountVerifyBody(
+            fun build(): ExternalAccountVerifyRequest =
+                ExternalAccountVerifyRequest(
                     checkRequired("originatingAccountId", originatingAccountId),
                     checkRequired("paymentType", paymentType),
                     currency,
@@ -321,7 +322,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalAccountVerifyBody && originatingAccountId == other.originatingAccountId && paymentType == other.paymentType && currency == other.currency && fallbackType == other.fallbackType && priority == other.priority && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExternalAccountVerifyRequest && originatingAccountId == other.originatingAccountId && paymentType == other.paymentType && currency == other.currency && fallbackType == other.fallbackType && priority == other.priority && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -331,7 +332,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExternalAccountVerifyBody{originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, fallbackType=$fallbackType, priority=$priority, additionalProperties=$additionalProperties}"
+            "ExternalAccountVerifyRequest{originatingAccountId=$originatingAccountId, paymentType=$paymentType, currency=$currency, fallbackType=$fallbackType, priority=$priority, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -346,7 +347,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: ExternalAccountVerifyBody.Builder = ExternalAccountVerifyBody.builder()
+        private var body: ExternalAccountVerifyRequest.Builder =
+            ExternalAccountVerifyRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
