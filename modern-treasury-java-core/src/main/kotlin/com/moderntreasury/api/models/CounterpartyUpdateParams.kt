@@ -24,7 +24,7 @@ import java.util.Optional
 class CounterpartyUpdateParams
 private constructor(
     private val id: String,
-    private val body: CounterpartyUpdateBody,
+    private val body: CounterpartyUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -85,7 +85,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CounterpartyUpdateBody = body
+    @JvmSynthetic internal fun _body(): CounterpartyUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -99,9 +99,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CounterpartyUpdateBody
+    class CounterpartyUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("email")
         @ExcludeMissing
         private val email: JsonField<String> = JsonMissing.of(),
@@ -187,7 +187,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CounterpartyUpdateBody = apply {
+        fun validate(): CounterpartyUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -208,7 +208,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CounterpartyUpdateBody]. */
+        /** A builder for [CounterpartyUpdateRequest]. */
         class Builder internal constructor() {
 
             private var email: JsonField<String> = JsonMissing.of()
@@ -220,14 +220,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(counterpartyUpdateBody: CounterpartyUpdateBody) = apply {
-                email = counterpartyUpdateBody.email
-                legalEntityId = counterpartyUpdateBody.legalEntityId
-                metadata = counterpartyUpdateBody.metadata
-                name = counterpartyUpdateBody.name
-                sendRemittanceAdvice = counterpartyUpdateBody.sendRemittanceAdvice
-                taxpayerIdentifier = counterpartyUpdateBody.taxpayerIdentifier
-                additionalProperties = counterpartyUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(counterpartyUpdateRequest: CounterpartyUpdateRequest) = apply {
+                email = counterpartyUpdateRequest.email
+                legalEntityId = counterpartyUpdateRequest.legalEntityId
+                metadata = counterpartyUpdateRequest.metadata
+                name = counterpartyUpdateRequest.name
+                sendRemittanceAdvice = counterpartyUpdateRequest.sendRemittanceAdvice
+                taxpayerIdentifier = counterpartyUpdateRequest.taxpayerIdentifier
+                additionalProperties = counterpartyUpdateRequest.additionalProperties.toMutableMap()
             }
 
             /** A new email for the counterparty. */
@@ -310,8 +310,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CounterpartyUpdateBody =
-                CounterpartyUpdateBody(
+            fun build(): CounterpartyUpdateRequest =
+                CounterpartyUpdateRequest(
                     email,
                     legalEntityId,
                     metadata,
@@ -327,7 +327,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterpartyUpdateBody && email == other.email && legalEntityId == other.legalEntityId && metadata == other.metadata && name == other.name && sendRemittanceAdvice == other.sendRemittanceAdvice && taxpayerIdentifier == other.taxpayerIdentifier && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CounterpartyUpdateRequest && email == other.email && legalEntityId == other.legalEntityId && metadata == other.metadata && name == other.name && sendRemittanceAdvice == other.sendRemittanceAdvice && taxpayerIdentifier == other.taxpayerIdentifier && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -337,7 +337,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterpartyUpdateBody{email=$email, legalEntityId=$legalEntityId, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
+            "CounterpartyUpdateRequest{email=$email, legalEntityId=$legalEntityId, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -352,7 +352,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: CounterpartyUpdateBody.Builder = CounterpartyUpdateBody.builder()
+        private var body: CounterpartyUpdateRequest.Builder = CounterpartyUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

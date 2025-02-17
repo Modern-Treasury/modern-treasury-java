@@ -24,7 +24,7 @@ import java.util.Optional
 class LedgerUpdateParams
 private constructor(
     private val id: String,
-    private val body: LedgerUpdateBody,
+    private val body: LedgerUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -55,7 +55,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): LedgerUpdateBody = body
+    @JvmSynthetic internal fun _body(): LedgerUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -69,9 +69,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class LedgerUpdateBody
+    class LedgerUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("description")
         @ExcludeMissing
         private val description: JsonField<String> = JsonMissing.of(),
@@ -116,7 +116,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LedgerUpdateBody = apply {
+        fun validate(): LedgerUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -134,7 +134,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LedgerUpdateBody]. */
+        /** A builder for [LedgerUpdateRequest]. */
         class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
@@ -143,11 +143,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(ledgerUpdateBody: LedgerUpdateBody) = apply {
-                description = ledgerUpdateBody.description
-                metadata = ledgerUpdateBody.metadata
-                name = ledgerUpdateBody.name
-                additionalProperties = ledgerUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(ledgerUpdateRequest: LedgerUpdateRequest) = apply {
+                description = ledgerUpdateRequest.description
+                metadata = ledgerUpdateRequest.metadata
+                name = ledgerUpdateRequest.name
+                additionalProperties = ledgerUpdateRequest.additionalProperties.toMutableMap()
             }
 
             /** An optional free-form description for internal use. */
@@ -198,8 +198,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): LedgerUpdateBody =
-                LedgerUpdateBody(description, metadata, name, additionalProperties.toImmutable())
+            fun build(): LedgerUpdateRequest =
+                LedgerUpdateRequest(description, metadata, name, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -207,7 +207,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerUpdateBody && description == other.description && metadata == other.metadata && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerUpdateRequest && description == other.description && metadata == other.metadata && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -217,7 +217,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerUpdateBody{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+            "LedgerUpdateRequest{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -232,7 +232,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: LedgerUpdateBody.Builder = LedgerUpdateBody.builder()
+        private var body: LedgerUpdateRequest.Builder = LedgerUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

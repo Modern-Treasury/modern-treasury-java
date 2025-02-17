@@ -24,7 +24,7 @@ import java.util.Optional
 class TransactionUpdateParams
 private constructor(
     private val id: String,
-    private val body: TransactionUpdateBody,
+    private val body: TransactionUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -49,7 +49,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): TransactionUpdateBody = body
+    @JvmSynthetic internal fun _body(): TransactionUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -63,9 +63,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class TransactionUpdateBody
+    class TransactionUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -91,7 +91,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): TransactionUpdateBody = apply {
+        fun validate(): TransactionUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -107,16 +107,16 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [TransactionUpdateBody]. */
+        /** A builder for [TransactionUpdateRequest]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(transactionUpdateBody: TransactionUpdateBody) = apply {
-                metadata = transactionUpdateBody.metadata
-                additionalProperties = transactionUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(transactionUpdateRequest: TransactionUpdateRequest) = apply {
+                metadata = transactionUpdateRequest.metadata
+                additionalProperties = transactionUpdateRequest.additionalProperties.toMutableMap()
             }
 
             /**
@@ -150,8 +150,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): TransactionUpdateBody =
-                TransactionUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): TransactionUpdateRequest =
+                TransactionUpdateRequest(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -159,7 +159,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TransactionUpdateRequest && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -169,7 +169,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransactionUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "TransactionUpdateRequest{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -184,7 +184,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: TransactionUpdateBody.Builder = TransactionUpdateBody.builder()
+        private var body: TransactionUpdateRequest.Builder = TransactionUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

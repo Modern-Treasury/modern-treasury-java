@@ -27,7 +27,7 @@ import java.util.Optional
 class LedgerTransactionUpdateParams
 private constructor(
     private val id: String,
-    private val body: LedgerTransactionUpdateBody,
+    private val body: LedgerTransactionUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -102,7 +102,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): LedgerTransactionUpdateBody = body
+    @JvmSynthetic internal fun _body(): LedgerTransactionUpdateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -116,9 +116,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class LedgerTransactionUpdateBody
+    class LedgerTransactionUpdateRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("description")
         @ExcludeMissing
         private val description: JsonField<String> = JsonMissing.of(),
@@ -231,7 +231,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): LedgerTransactionUpdateBody = apply {
+        fun validate(): LedgerTransactionUpdateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -253,7 +253,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LedgerTransactionUpdateBody]. */
+        /** A builder for [LedgerTransactionUpdateRequest]. */
         class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
@@ -266,17 +266,19 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(ledgerTransactionUpdateBody: LedgerTransactionUpdateBody) = apply {
-                description = ledgerTransactionUpdateBody.description
-                effectiveAt = ledgerTransactionUpdateBody.effectiveAt
-                ledgerEntries = ledgerTransactionUpdateBody.ledgerEntries.map { it.toMutableList() }
-                ledgerableId = ledgerTransactionUpdateBody.ledgerableId
-                ledgerableType = ledgerTransactionUpdateBody.ledgerableType
-                metadata = ledgerTransactionUpdateBody.metadata
-                status = ledgerTransactionUpdateBody.status
-                additionalProperties =
-                    ledgerTransactionUpdateBody.additionalProperties.toMutableMap()
-            }
+            internal fun from(ledgerTransactionUpdateRequest: LedgerTransactionUpdateRequest) =
+                apply {
+                    description = ledgerTransactionUpdateRequest.description
+                    effectiveAt = ledgerTransactionUpdateRequest.effectiveAt
+                    ledgerEntries =
+                        ledgerTransactionUpdateRequest.ledgerEntries.map { it.toMutableList() }
+                    ledgerableId = ledgerTransactionUpdateRequest.ledgerableId
+                    ledgerableType = ledgerTransactionUpdateRequest.ledgerableType
+                    metadata = ledgerTransactionUpdateRequest.metadata
+                    status = ledgerTransactionUpdateRequest.status
+                    additionalProperties =
+                        ledgerTransactionUpdateRequest.additionalProperties.toMutableMap()
+                }
 
             /** An optional description for internal use. */
             fun description(description: String?) = description(JsonField.ofNullable(description))
@@ -394,8 +396,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): LedgerTransactionUpdateBody =
-                LedgerTransactionUpdateBody(
+            fun build(): LedgerTransactionUpdateRequest =
+                LedgerTransactionUpdateRequest(
                     description,
                     effectiveAt,
                     (ledgerEntries ?: JsonMissing.of()).map { it.toImmutable() },
@@ -412,7 +414,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerTransactionUpdateBody && description == other.description && effectiveAt == other.effectiveAt && ledgerEntries == other.ledgerEntries && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && metadata == other.metadata && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LedgerTransactionUpdateRequest && description == other.description && effectiveAt == other.effectiveAt && ledgerEntries == other.ledgerEntries && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && metadata == other.metadata && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -422,7 +424,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerTransactionUpdateBody{description=$description, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
+            "LedgerTransactionUpdateRequest{description=$description, effectiveAt=$effectiveAt, ledgerEntries=$ledgerEntries, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -437,8 +439,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: LedgerTransactionUpdateBody.Builder =
-            LedgerTransactionUpdateBody.builder()
+        private var body: LedgerTransactionUpdateRequest.Builder =
+            LedgerTransactionUpdateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
