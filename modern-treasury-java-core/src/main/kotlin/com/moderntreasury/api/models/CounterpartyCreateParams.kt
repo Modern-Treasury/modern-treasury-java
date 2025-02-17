@@ -854,11 +854,7 @@ private constructor(
          * An optional type to auto-sync the counterparty to your ledger. Either `customer` or
          * `vendor`.
          */
-        class Type
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1508,9 +1504,7 @@ private constructor(
 
             class AccountNumberType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1786,9 +1780,7 @@ private constructor(
 
             class ContactIdentifierType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2306,9 +2298,7 @@ private constructor(
              */
             class LedgerableType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2425,7 +2415,7 @@ private constructor(
             @JsonCreator
             private constructor(
                 @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
             ) {
 
                 @JsonAnyGetter
@@ -2527,7 +2517,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -2817,11 +2807,8 @@ private constructor(
         }
 
         /** Either `individual` or `business`. */
-        class PartyType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class PartyType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3042,9 +3029,7 @@ private constructor(
 
             class RoutingNumberType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3256,9 +3241,7 @@ private constructor(
 
             class PaymentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3558,11 +3541,7 @@ private constructor(
      * An optional type to auto-sync the counterparty to your ledger. Either `customer` or `vendor`.
      */
     @Deprecated("deprecated")
-    class LedgerType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class LedgerType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -4422,9 +4401,7 @@ private constructor(
         /** The type of legal entity. */
         class LegalEntityType
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -4755,9 +4732,7 @@ private constructor(
 
             class AddressType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5028,11 +5003,8 @@ private constructor(
             }
 
             /** The type of ID number. */
-            class IdType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class IdType @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5478,9 +5450,7 @@ private constructor(
             /** A list of relationship types for how the child entity relates to parent entity. */
             class RelationshipType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -6584,9 +6554,7 @@ private constructor(
 
                     class AddressType
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -6881,9 +6849,7 @@ private constructor(
                     /** The type of ID number. */
                     class IdType
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -7115,9 +7081,7 @@ private constructor(
                 /** The type of legal entity. */
                 class LegalEntityType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -7217,9 +7181,7 @@ private constructor(
                 /** The business's legal structure. */
                 class LegalStructure
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -7349,7 +7311,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -7534,9 +7496,7 @@ private constructor(
                 /** The risk rating of the legal entity. One of low, medium, high. */
                 class RiskRating
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -7678,9 +7638,7 @@ private constructor(
         /** The business's legal structure. */
         class LegalStructure
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -7804,7 +7762,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -7984,11 +7942,8 @@ private constructor(
         }
 
         /** The risk rating of the legal entity. One of low, medium, high. */
-        class RiskRating
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class RiskRating @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -8109,7 +8064,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -8185,9 +8140,7 @@ private constructor(
     /** The verification status of the counterparty. */
     class VerificationStatus
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

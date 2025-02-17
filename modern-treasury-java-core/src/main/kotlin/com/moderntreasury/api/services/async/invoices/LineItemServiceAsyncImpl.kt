@@ -22,10 +22,8 @@ import com.moderntreasury.api.models.InvoiceLineItemRetrieveParams
 import com.moderntreasury.api.models.InvoiceLineItemUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class LineItemServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LineItemServiceAsync {
+class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LineItemServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** create invoice_line_item */
     override fun create(
         params: InvoiceLineItemCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceLineItem> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** get invoice_line_item */
     override fun retrieve(
         params: InvoiceLineItemRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceLineItem> {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
                     "invoices",
                     params.getPathParam(0),
                     "invoice_line_items",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -96,7 +94,7 @@ internal constructor(
     /** update invoice_line_item */
     override fun update(
         params: InvoiceLineItemUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceLineItem> {
         val request =
             HttpRequest.builder()
@@ -106,7 +104,7 @@ internal constructor(
                     "invoices",
                     params.getPathParam(0),
                     "invoice_line_items",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -130,7 +128,7 @@ internal constructor(
     /** list invoice_line_items */
     override fun list(
         params: InvoiceLineItemListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceLineItemListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -158,7 +156,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -170,7 +168,7 @@ internal constructor(
     /** delete invoice_line_item */
     override fun delete(
         params: InvoiceLineItemDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceLineItem> {
         val request =
             HttpRequest.builder()
@@ -180,7 +178,7 @@ internal constructor(
                     "invoices",
                     params.getPathParam(0),
                     "invoice_line_items",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

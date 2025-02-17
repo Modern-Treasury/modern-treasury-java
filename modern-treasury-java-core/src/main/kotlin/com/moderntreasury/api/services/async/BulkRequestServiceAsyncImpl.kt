@@ -20,10 +20,8 @@ import com.moderntreasury.api.models.BulkRequestListParams
 import com.moderntreasury.api.models.BulkRequestRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class BulkRequestServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BulkRequestServiceAsync {
+class BulkRequestServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    BulkRequestServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** create bulk_request */
     override fun create(
         params: BulkRequestCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BulkRequest> {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** get bulk_request */
     override fun retrieve(
         params: BulkRequestRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BulkRequest> {
         val request =
             HttpRequest.builder()
@@ -88,7 +86,7 @@ internal constructor(
     /** list bulk_requests */
     override fun list(
         params: BulkRequestListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BulkRequestListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -116,7 +114,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

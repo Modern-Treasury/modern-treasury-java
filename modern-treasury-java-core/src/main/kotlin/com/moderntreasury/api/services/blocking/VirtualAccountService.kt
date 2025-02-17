@@ -19,34 +19,34 @@ interface VirtualAccountService {
     @JvmOverloads
     fun create(
         params: VirtualAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** get virtual_account */
     @JvmOverloads
     fun retrieve(
         params: VirtualAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** update virtual_account */
     @JvmOverloads
     fun update(
         params: VirtualAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** Get a list of virtual accounts. */
     @JvmOverloads
     fun list(
         params: VirtualAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccountListPage
 
     /** delete virtual_account */
     @JvmOverloads
     fun delete(
         params: VirtualAccountDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 }

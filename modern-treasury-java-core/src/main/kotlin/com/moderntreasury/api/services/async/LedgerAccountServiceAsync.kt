@@ -20,34 +20,34 @@ interface LedgerAccountServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
     /** Get details on a single ledger account. */
     @JvmOverloads
     fun retrieve(
         params: LedgerAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
     /** Update the details of a ledger account. */
     @JvmOverloads
     fun update(
         params: LedgerAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
     /** Get a list of ledger accounts. */
     @JvmOverloads
     fun list(
         params: LedgerAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountListPageAsync>
 
     /** Delete a ledger account. */
     @JvmOverloads
     fun delete(
         params: LedgerAccountDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 }

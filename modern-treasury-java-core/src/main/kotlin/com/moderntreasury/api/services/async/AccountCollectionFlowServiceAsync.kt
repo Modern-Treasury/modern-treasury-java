@@ -19,27 +19,27 @@ interface AccountCollectionFlowServiceAsync {
     @JvmOverloads
     fun create(
         params: AccountCollectionFlowCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** get account_collection_flow */
     @JvmOverloads
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** update account_collection_flow */
     @JvmOverloads
     fun update(
         params: AccountCollectionFlowUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** list account_collection_flows */
     @JvmOverloads
     fun list(
         params: AccountCollectionFlowListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlowListPageAsync>
 }

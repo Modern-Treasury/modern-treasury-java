@@ -74,13 +74,8 @@ private constructor(
         fun of(
             virtualAccountsService: VirtualAccountService,
             params: VirtualAccountListParams,
-            response: Response
-        ) =
-            VirtualAccountListPage(
-                virtualAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = VirtualAccountListPage(virtualAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -167,18 +162,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: VirtualAccountListPage,
-    ) : Iterable<VirtualAccount> {
+    class AutoPager(private val firstPage: VirtualAccountListPage) : Iterable<VirtualAccount> {
 
         override fun iterator(): Iterator<VirtualAccount> = iterator {
             var page = firstPage

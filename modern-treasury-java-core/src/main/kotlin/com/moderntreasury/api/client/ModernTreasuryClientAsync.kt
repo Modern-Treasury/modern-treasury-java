@@ -150,7 +150,7 @@ interface ModernTreasuryClientAsync {
     @JvmOverloads
     fun ping(
         params: ClientPingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PingResponse>
 
     /**

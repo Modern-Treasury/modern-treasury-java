@@ -24,41 +24,41 @@ interface LedgerTransactionServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerTransactionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Get details on a single ledger transaction. */
     @JvmOverloads
     fun retrieve(
         params: LedgerTransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Update the details of a ledger transaction. */
     @JvmOverloads
     fun update(
         params: LedgerTransactionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Get a list of ledger transactions. */
     @JvmOverloads
     fun list(
         params: LedgerTransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransactionListPageAsync>
 
     /** Create a ledger transaction that partially posts another ledger transaction. */
     @JvmOverloads
     fun createPartialPost(
         params: LedgerTransactionCreatePartialPostParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Create a ledger transaction reversal. */
     @JvmOverloads
     fun createReversal(
         params: LedgerTransactionCreateReversalParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 }

@@ -77,13 +77,8 @@ private constructor(
         fun of(
             reversalsService: ReversalServiceAsync,
             params: PaymentOrderReversalListParams,
-            response: Response
-        ) =
-            PaymentOrderReversalListPageAsync(
-                reversalsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PaymentOrderReversalListPageAsync(reversalsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PaymentOrderReversalListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: PaymentOrderReversalListPageAsync) {
 
         fun forEach(action: Predicate<Reversal>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<PaymentOrderReversalListPageAsync>>.forEach(
                 action: (Reversal) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

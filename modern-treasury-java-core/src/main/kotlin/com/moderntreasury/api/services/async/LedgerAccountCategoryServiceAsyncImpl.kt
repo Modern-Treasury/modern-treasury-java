@@ -28,9 +28,7 @@ import com.moderntreasury.api.models.LedgerAccountCategoryUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountCategoryServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerAccountCategoryServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCategoryServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
     /** Create a ledger account category. */
     override fun create(
         params: LedgerAccountCategoryCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountCategory> {
         val request =
             HttpRequest.builder()
@@ -68,7 +66,7 @@ internal constructor(
     /** Get the details on a single ledger account category. */
     override fun retrieve(
         params: LedgerAccountCategoryRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountCategory> {
         val request =
             HttpRequest.builder()
@@ -95,7 +93,7 @@ internal constructor(
     /** Update the details of a ledger account category. */
     override fun update(
         params: LedgerAccountCategoryUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountCategory> {
         val request =
             HttpRequest.builder()
@@ -124,7 +122,7 @@ internal constructor(
     /** Get a list of ledger account categories. */
     override fun list(
         params: LedgerAccountCategoryListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountCategoryListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -152,7 +150,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -164,7 +162,7 @@ internal constructor(
     /** Delete a ledger account category. */
     override fun delete(
         params: LedgerAccountCategoryDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountCategory> {
         val request =
             HttpRequest.builder()
@@ -192,7 +190,7 @@ internal constructor(
     /** Add a ledger account to a ledger account category. */
     override fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -202,7 +200,7 @@ internal constructor(
                     "ledger_account_categories",
                     params.getPathParam(0),
                     "ledger_accounts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -218,7 +216,7 @@ internal constructor(
     /** Add a ledger account category to a ledger account category. */
     override fun addNestedCategory(
         params: LedgerAccountCategoryAddNestedCategoryParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -228,7 +226,7 @@ internal constructor(
                     "ledger_account_categories",
                     params.getPathParam(0),
                     "ledger_account_categories",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -244,7 +242,7 @@ internal constructor(
     /** Remove a ledger account from a ledger account category. */
     override fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -254,7 +252,7 @@ internal constructor(
                     "ledger_account_categories",
                     params.getPathParam(0),
                     "ledger_accounts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -270,7 +268,7 @@ internal constructor(
     /** Delete a ledger account category from a ledger account category. */
     override fun removeNestedCategory(
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -280,7 +278,7 @@ internal constructor(
                     "ledger_account_categories",
                     params.getPathParam(0),
                     "ledger_account_categories",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

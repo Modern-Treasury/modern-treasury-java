@@ -18,20 +18,20 @@ interface ReversalServiceAsync {
     @JvmOverloads
     fun create(
         params: PaymentOrderReversalCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Reversal>
 
     /** Get details on a single reversal of a payment order. */
     @JvmOverloads
     fun retrieve(
         params: PaymentOrderReversalRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Reversal>
 
     /** Get a list of all reversals of a payment order. */
     @JvmOverloads
     fun list(
         params: PaymentOrderReversalListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrderReversalListPageAsync>
 }

@@ -80,13 +80,8 @@ private constructor(
         fun of(
             ledgerAccountSettlementsService: LedgerAccountSettlementServiceAsync,
             params: LedgerAccountSettlementListParams,
-            response: Response
-        ) =
-            LedgerAccountSettlementListPageAsync(
-                ledgerAccountSettlementsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LedgerAccountSettlementListPageAsync(ledgerAccountSettlementsService, params, response)
     }
 
     @NoAutoDetect
@@ -176,26 +171,19 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerAccountSettlementListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: LedgerAccountSettlementListPageAsync) {
 
         fun forEach(
             action: Predicate<LedgerAccountSettlement>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<LedgerAccountSettlementListPageAsync>>.forEach(
                 action: (LedgerAccountSettlement) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -204,7 +192,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

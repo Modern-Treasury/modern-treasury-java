@@ -21,10 +21,8 @@ import com.moderntreasury.api.models.LegalEntityRetrieveParams
 import com.moderntreasury.api.models.LegalEntityUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class LegalEntityServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LegalEntityServiceAsync {
+class LegalEntityServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LegalEntityServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
     /** create legal_entity */
     override fun create(
         params: LegalEntityCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LegalEntity> {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
     /** Get details on a single legal entity. */
     override fun retrieve(
         params: LegalEntityRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LegalEntity> {
         val request =
             HttpRequest.builder()
@@ -89,7 +87,7 @@ internal constructor(
     /** Update a legal entity. */
     override fun update(
         params: LegalEntityUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LegalEntity> {
         val request =
             HttpRequest.builder()
@@ -117,7 +115,7 @@ internal constructor(
     /** Get a list of all legal entities. */
     override fun list(
         params: LegalEntityListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LegalEntityListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -145,7 +143,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

@@ -91,9 +91,8 @@ import com.moderntreasury.api.services.async.VirtualAccountServiceAsync
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class ModernTreasuryClientAsyncImpl(
-    private val clientOptions: ClientOptions,
-) : ModernTreasuryClientAsync {
+class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
+    ModernTreasuryClientAsync {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions
@@ -348,7 +347,7 @@ class ModernTreasuryClientAsyncImpl(
      */
     override fun ping(
         params: ClientPingParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PingResponse> {
         val request =
             HttpRequest.builder()

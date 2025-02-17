@@ -21,9 +21,7 @@ import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class ForeignExchangeQuoteServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ForeignExchangeQuoteServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ForeignExchangeQuoteServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** create foreign_exchange_quote */
     override fun create(
         params: ForeignExchangeQuoteCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ForeignExchangeQuote> {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** get foreign_exchange_quote */
     override fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ForeignExchangeQuote> {
         val request =
             HttpRequest.builder()
@@ -89,7 +87,7 @@ internal constructor(
     /** list foreign_exchange_quotes */
     override fun list(
         params: ForeignExchangeQuoteListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ForeignExchangeQuoteListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -117,7 +115,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

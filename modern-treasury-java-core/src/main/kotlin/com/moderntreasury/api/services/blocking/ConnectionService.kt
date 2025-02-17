@@ -14,6 +14,6 @@ interface ConnectionService {
     @JvmOverloads
     fun list(
         params: ConnectionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionListPage
 }

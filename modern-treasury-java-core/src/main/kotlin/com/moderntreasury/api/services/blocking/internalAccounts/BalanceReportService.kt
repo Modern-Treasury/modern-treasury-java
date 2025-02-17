@@ -18,27 +18,27 @@ interface BalanceReportService {
     @JvmOverloads
     fun create(
         params: BalanceReportCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReport
 
     /** Get a single balance report for a given internal account. */
     @JvmOverloads
     fun retrieve(
         params: BalanceReportRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReport
 
     /** Get all balance reports for a given internal account. */
     @JvmOverloads
     fun list(
         params: BalanceReportListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReportListPage
 
     /** Deletes a given balance report. */
     @JvmOverloads
     fun delete(
         params: BalanceReportDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

@@ -80,13 +80,8 @@ private constructor(
         fun of(
             versionsService: VersionServiceAsync,
             params: LedgerTransactionVersionListParams,
-            response: Response
-        ) =
-            LedgerTransactionVersionListPageAsync(
-                versionsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LedgerTransactionVersionListPageAsync(versionsService, params, response)
     }
 
     @NoAutoDetect
@@ -176,26 +171,19 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerTransactionVersionListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: LedgerTransactionVersionListPageAsync) {
 
         fun forEach(
             action: Predicate<LedgerTransactionVersion>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<LedgerTransactionVersionListPageAsync>>.forEach(
                 action: (LedgerTransactionVersion) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -204,7 +192,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

@@ -19,27 +19,27 @@ interface LegalEntityServiceAsync {
     @JvmOverloads
     fun create(
         params: LegalEntityCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Get details on a single legal entity. */
     @JvmOverloads
     fun retrieve(
         params: LegalEntityRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Update a legal entity. */
     @JvmOverloads
     fun update(
         params: LegalEntityUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Get a list of all legal entities. */
     @JvmOverloads
     fun list(
         params: LegalEntityListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntityListPageAsync>
 }

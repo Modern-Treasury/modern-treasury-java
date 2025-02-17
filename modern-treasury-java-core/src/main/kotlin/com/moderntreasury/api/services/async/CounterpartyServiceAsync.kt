@@ -22,41 +22,41 @@ interface CounterpartyServiceAsync {
     @JvmOverloads
     fun create(
         params: CounterpartyCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Get details on a single counterparty. */
     @JvmOverloads
     fun retrieve(
         params: CounterpartyRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Updates a given counterparty with new information. */
     @JvmOverloads
     fun update(
         params: CounterpartyUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Get a paginated list of all counterparties. */
     @JvmOverloads
     fun list(
         params: CounterpartyListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterpartyListPageAsync>
 
     /** Deletes a given counterparty. */
     @JvmOverloads
     fun delete(
         params: CounterpartyDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Send an email requesting account details. */
     @JvmOverloads
     fun collectAccount(
         params: CounterpartyCollectAccountParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterpartyCollectAccountResponse>
 }

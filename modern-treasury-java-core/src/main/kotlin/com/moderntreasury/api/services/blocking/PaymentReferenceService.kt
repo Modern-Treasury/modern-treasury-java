@@ -17,14 +17,14 @@ interface PaymentReferenceService {
     @JvmOverloads
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference
 
     /** list payment_references */
     @JvmOverloads
     fun list(
         params: PaymentReferenceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReferenceListPage
 
     /** get payment_reference */
@@ -32,6 +32,6 @@ interface PaymentReferenceService {
     @JvmOverloads
     fun retireve(
         params: PaymentReferenceRetireveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference
 }

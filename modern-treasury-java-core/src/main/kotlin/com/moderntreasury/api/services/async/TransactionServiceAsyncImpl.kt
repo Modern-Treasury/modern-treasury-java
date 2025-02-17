@@ -25,10 +25,8 @@ import com.moderntreasury.api.services.async.transactions.LineItemServiceAsync
 import com.moderntreasury.api.services.async.transactions.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class TransactionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TransactionServiceAsync {
+class TransactionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    TransactionServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** create transaction */
     override fun create(
         params: TransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Transaction> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** Get details on a single transaction. */
     override fun retrieve(
         params: TransactionRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Transaction> {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
     /** Update a single transaction. */
     override fun update(
         params: TransactionUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Transaction> {
         val request =
             HttpRequest.builder()
@@ -125,7 +123,7 @@ internal constructor(
     /** Get a list of all transactions. */
     override fun list(
         params: TransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<TransactionListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -164,7 +162,7 @@ internal constructor(
     /** delete transaction */
     override fun delete(
         params: TransactionDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()

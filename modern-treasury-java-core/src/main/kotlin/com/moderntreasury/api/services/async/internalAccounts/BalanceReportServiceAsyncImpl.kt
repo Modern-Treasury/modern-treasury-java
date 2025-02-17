@@ -22,10 +22,8 @@ import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class BalanceReportServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BalanceReportServiceAsync {
+class BalanceReportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    BalanceReportServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** create balance reports */
     override fun create(
         params: BalanceReportCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BalanceReport> {
         val request =
             HttpRequest.builder()
@@ -44,7 +42,7 @@ internal constructor(
                     "api",
                     "internal_accounts",
                     params.getPathParam(0),
-                    "balance_reports"
+                    "balance_reports",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -68,7 +66,7 @@ internal constructor(
     /** Get a single balance report for a given internal account. */
     override fun retrieve(
         params: BalanceReportRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BalanceReport> {
         val request =
             HttpRequest.builder()
@@ -78,7 +76,7 @@ internal constructor(
                     "internal_accounts",
                     params.getPathParam(0),
                     "balance_reports",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -101,7 +99,7 @@ internal constructor(
     /** Get all balance reports for a given internal account. */
     override fun list(
         params: BalanceReportListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BalanceReportListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -110,7 +108,7 @@ internal constructor(
                     "api",
                     "internal_accounts",
                     params.getPathParam(0),
-                    "balance_reports"
+                    "balance_reports",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -134,7 +132,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -145,7 +143,7 @@ internal constructor(
     /** Deletes a given balance report. */
     override fun delete(
         params: BalanceReportDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -155,7 +153,7 @@ internal constructor(
                     "internal_accounts",
                     params.getPathParam(0),
                     "balance_reports",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

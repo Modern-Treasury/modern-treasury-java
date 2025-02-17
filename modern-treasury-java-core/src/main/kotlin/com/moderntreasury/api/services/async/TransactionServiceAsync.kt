@@ -23,34 +23,34 @@ interface TransactionServiceAsync {
     @JvmOverloads
     fun create(
         params: TransactionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Get details on a single transaction. */
     @JvmOverloads
     fun retrieve(
         params: TransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Update a single transaction. */
     @JvmOverloads
     fun update(
         params: TransactionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Get a list of all transactions. */
     @JvmOverloads
     fun list(
         params: TransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionListPageAsync>
 
     /** delete transaction */
     @JvmOverloads
     fun delete(
         params: TransactionDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 }

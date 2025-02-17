@@ -196,7 +196,7 @@ private constructor(
                     if (!username.isEmpty() && !password.isEmpty()) {
                         headers.put(
                             "Authorization",
-                            "Basic ${Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
+                            "Basic ${Base64.getEncoder().encodeToString("$username:$password".toByteArray())}",
                         )
                     }
                 }

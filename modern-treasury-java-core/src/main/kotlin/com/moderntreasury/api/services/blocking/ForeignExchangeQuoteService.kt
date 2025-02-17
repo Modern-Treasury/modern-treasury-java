@@ -17,20 +17,20 @@ interface ForeignExchangeQuoteService {
     @JvmOverloads
     fun create(
         params: ForeignExchangeQuoteCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
 
     /** get foreign_exchange_quote */
     @JvmOverloads
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
 
     /** list foreign_exchange_quotes */
     @JvmOverloads
     fun list(
         params: ForeignExchangeQuoteListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuoteListPage
 }

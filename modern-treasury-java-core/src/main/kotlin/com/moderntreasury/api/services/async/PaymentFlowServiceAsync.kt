@@ -19,27 +19,27 @@ interface PaymentFlowServiceAsync {
     @JvmOverloads
     fun create(
         params: PaymentFlowCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** get payment_flow */
     @JvmOverloads
     fun retrieve(
         params: PaymentFlowRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** update payment_flow */
     @JvmOverloads
     fun update(
         params: PaymentFlowUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** list payment_flows */
     @JvmOverloads
     fun list(
         params: PaymentFlowListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlowListPageAsync>
 }

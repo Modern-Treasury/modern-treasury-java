@@ -24,62 +24,62 @@ interface LedgerAccountCategoryServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerAccountCategoryCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
     /** Get the details on a single ledger account category. */
     @JvmOverloads
     fun retrieve(
         params: LedgerAccountCategoryRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
     /** Update the details of a ledger account category. */
     @JvmOverloads
     fun update(
         params: LedgerAccountCategoryUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
     /** Get a list of ledger account categories. */
     @JvmOverloads
     fun list(
         params: LedgerAccountCategoryListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategoryListPageAsync>
 
     /** Delete a ledger account category. */
     @JvmOverloads
     fun delete(
         params: LedgerAccountCategoryDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
     /** Add a ledger account to a ledger account category. */
     @JvmOverloads
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Add a ledger account category to a ledger account category. */
     @JvmOverloads
     fun addNestedCategory(
         params: LedgerAccountCategoryAddNestedCategoryParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Remove a ledger account from a ledger account category. */
     @JvmOverloads
     fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Delete a ledger account category from a ledger account category. */
     @JvmOverloads
     fun removeNestedCategory(
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 }
