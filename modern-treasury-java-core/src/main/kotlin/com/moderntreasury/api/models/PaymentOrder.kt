@@ -1832,7 +1832,7 @@ private constructor(
                 checkRequired("ultimateOriginatingAccountType", ultimateOriginatingAccountType),
                 checkRequired(
                     "ultimateOriginatingPartyIdentifier",
-                    ultimateOriginatingPartyIdentifier
+                    ultimateOriginatingPartyIdentifier,
                 ),
                 checkRequired("ultimateOriginatingPartyName", ultimateOriginatingPartyName),
                 checkRequired("ultimateReceivingPartyIdentifier", ultimateReceivingPartyIdentifier),
@@ -1980,11 +1980,7 @@ private constructor(
             }
 
             fun build(): Accounting =
-                Accounting(
-                    accountId,
-                    classId,
-                    additionalProperties.toImmutable(),
-                )
+                Accounting(accountId, classId, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2010,11 +2006,8 @@ private constructor(
      * Can be one of shared, sender, or receiver, which correspond respectively with the SWIFT 71A
      * values `SHA`, `OUR`, `BEN`.
      */
-    class ChargeBearer
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ChargeBearer @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2119,7 +2112,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -2199,11 +2192,7 @@ private constructor(
      * `credit` moves money from your account to someone else's. A `debit` pulls money from someone
      * else's account to your own. Note that wire, rtp, and check payments will always be `credit`.
      */
-    class Direction
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Direction @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2300,9 +2289,7 @@ private constructor(
      */
     class ForeignExchangeIndicator
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2683,7 +2670,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -2761,11 +2748,7 @@ private constructor(
      * transfer, respectively. For check payments, `high` can mean an overnight check rather than
      * standard mail.
      */
-    class Priority
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Priority @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2855,9 +2838,7 @@ private constructor(
 
     class ReceivingAccountType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -3163,9 +3144,7 @@ private constructor(
         /** The type of the reference number. Referring to the vendor payment id. */
         class ReferenceNumberType
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3716,11 +3695,7 @@ private constructor(
     }
 
     /** The current status of the payment order. */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -3999,7 +3974,7 @@ private constructor(
             override fun serialize(
                 value: UltimateOriginatingAccount,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.virtual != null -> generator.writeObject(value.virtual)
@@ -4013,9 +3988,7 @@ private constructor(
 
     class UltimateOriginatingAccountType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

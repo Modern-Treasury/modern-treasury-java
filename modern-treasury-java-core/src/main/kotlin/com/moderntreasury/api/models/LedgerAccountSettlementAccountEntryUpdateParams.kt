@@ -191,7 +191,7 @@ private constructor(
             fun build(): LedgerAccountSettlementAccountEntryUpdateBody =
                 LedgerAccountSettlementAccountEntryUpdateBody(
                     checkRequired("ledgerEntryIds", ledgerEntryIds).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

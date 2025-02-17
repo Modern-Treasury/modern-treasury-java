@@ -77,13 +77,8 @@ private constructor(
         fun of(
             foreignExchangeQuotesService: ForeignExchangeQuoteServiceAsync,
             params: ForeignExchangeQuoteListParams,
-            response: Response
-        ) =
-            ForeignExchangeQuoteListPageAsync(
-                foreignExchangeQuotesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ForeignExchangeQuoteListPageAsync(foreignExchangeQuotesService, params, response)
     }
 
     @NoAutoDetect
@@ -170,26 +165,19 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ForeignExchangeQuoteListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: ForeignExchangeQuoteListPageAsync) {
 
         fun forEach(
             action: Predicate<ForeignExchangeQuote>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<ForeignExchangeQuoteListPageAsync>>.forEach(
                 action: (ForeignExchangeQuote) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -198,7 +186,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

@@ -20,10 +20,8 @@ import com.moderntreasury.api.models.LedgerEntryRetrieveParams
 import com.moderntreasury.api.models.LedgerEntryUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class LedgerEntryServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerEntryServiceAsync {
+class LedgerEntryServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LedgerEntryServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** Get details on a single ledger entry. */
     override fun retrieve(
         params: LedgerEntryRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEntry> {
         val request =
             HttpRequest.builder()
@@ -60,7 +58,7 @@ internal constructor(
     /** Update the details of a ledger entry. */
     override fun update(
         params: LedgerEntryUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEntry> {
         val request =
             HttpRequest.builder()
@@ -88,7 +86,7 @@ internal constructor(
     /** Get a list of all ledger entries. */
     override fun list(
         params: LedgerEntryListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerEntryListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -116,7 +114,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

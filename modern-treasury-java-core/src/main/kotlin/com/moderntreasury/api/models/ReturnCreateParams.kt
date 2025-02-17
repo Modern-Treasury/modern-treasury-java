@@ -626,11 +626,8 @@ private constructor(
     }
 
     /** The type of object being returned. Currently, this may only be incoming_payment_detail. */
-    class ReturnableType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ReturnableType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -651,7 +648,7 @@ private constructor(
 
         /** An enum containing [ReturnableType]'s known values. */
         enum class Known {
-            INCOMING_PAYMENT_DETAIL,
+            INCOMING_PAYMENT_DETAIL
         }
 
         /**
@@ -716,11 +713,7 @@ private constructor(
     }
 
     /** The return code. For ACH returns, this is the required ACH return code. */
-    class Code
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Code @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -20,9 +20,8 @@ import com.moderntreasury.api.models.LedgerAccountStatementRetrieveResponse
 import java.util.concurrent.CompletableFuture
 
 class LedgerAccountStatementServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerAccountStatementServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) :
+    LedgerAccountStatementServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +32,7 @@ internal constructor(
     /** Create a ledger account statement. */
     override fun create(
         params: LedgerAccountStatementCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountStatementCreateResponse> {
         val request =
             HttpRequest.builder()
@@ -62,7 +61,7 @@ internal constructor(
     /** Get details on a single ledger account statement. */
     override fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse> {
         val request =
             HttpRequest.builder()

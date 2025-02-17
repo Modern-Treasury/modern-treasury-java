@@ -19,34 +19,34 @@ interface LedgerService {
     @JvmOverloads
     fun create(
         params: LedgerCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
     /** Get details on a single ledger. */
     @JvmOverloads
     fun retrieve(
         params: LedgerRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
     /** Update the details of a ledger. */
     @JvmOverloads
     fun update(
         params: LedgerUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
     /** Get a list of ledgers. */
     @JvmOverloads
     fun list(
         params: LedgerListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerListPage
 
     /** Delete a ledger. */
     @JvmOverloads
     fun delete(
         params: LedgerDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 }

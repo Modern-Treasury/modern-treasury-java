@@ -17,13 +17,13 @@ interface LedgerAccountStatementServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerAccountStatementCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountStatementCreateResponse>
 
     /** Get details on a single ledger account statement. */
     @JvmOverloads
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse>
 }

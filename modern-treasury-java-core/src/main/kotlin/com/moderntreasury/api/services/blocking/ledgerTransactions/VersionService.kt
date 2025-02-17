@@ -14,6 +14,6 @@ interface VersionService {
     @JvmOverloads
     fun list(
         params: LedgerTransactionVersionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionVersionListPage
 }

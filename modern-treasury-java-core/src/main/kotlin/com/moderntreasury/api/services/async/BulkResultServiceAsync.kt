@@ -17,13 +17,13 @@ interface BulkResultServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: BulkResultRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResult>
 
     /** list bulk_results */
     @JvmOverloads
     fun list(
         params: BulkResultListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResultListPageAsync>
 }

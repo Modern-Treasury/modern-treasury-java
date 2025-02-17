@@ -20,34 +20,34 @@ interface LedgerAccountBalanceMonitorServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerAccountBalanceMonitorCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 
     /** Get details on a single ledger account balance monitor. */
     @JvmOverloads
     fun retrieve(
         params: LedgerAccountBalanceMonitorRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 
     /** Update a ledger account balance monitor. */
     @JvmOverloads
     fun update(
         params: LedgerAccountBalanceMonitorUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 
     /** Get a list of ledger account balance monitors. */
     @JvmOverloads
     fun list(
         params: LedgerAccountBalanceMonitorListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitorListPageAsync>
 
     /** Delete a ledger account balance monitor. */
     @JvmOverloads
     fun delete(
         params: LedgerAccountBalanceMonitorDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 }

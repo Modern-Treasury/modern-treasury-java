@@ -22,34 +22,34 @@ interface InvoiceService {
     @JvmOverloads
     fun create(
         params: InvoiceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** get invoice */
     @JvmOverloads
     fun retrieve(
         params: InvoiceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** update invoice */
     @JvmOverloads
     fun update(
         params: InvoiceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** list invoices */
     @JvmOverloads
     fun list(
         params: InvoiceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceListPage
 
     /** Add a payment order to an invoice. */
     @JvmOverloads
     fun addPaymentOrder(
         params: InvoiceAddPaymentOrderParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

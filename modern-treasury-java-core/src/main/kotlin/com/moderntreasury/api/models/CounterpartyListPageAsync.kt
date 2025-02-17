@@ -77,13 +77,8 @@ private constructor(
         fun of(
             counterpartiesService: CounterpartyServiceAsync,
             params: CounterpartyListParams,
-            response: Response
-        ) =
-            CounterpartyListPageAsync(
-                counterpartiesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CounterpartyListPageAsync(counterpartiesService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CounterpartyListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: CounterpartyListPageAsync) {
 
         fun forEach(action: Predicate<Counterparty>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<CounterpartyListPageAsync>>.forEach(
                 action: (Counterparty) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

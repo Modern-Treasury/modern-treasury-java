@@ -19,9 +19,7 @@ import com.moderntreasury.api.models.LedgerableEventRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 class LedgerableEventServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerableEventServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : LedgerableEventServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Create a ledgerable event. */
     override fun create(
         params: LedgerableEventCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerableEvent> {
         val request =
             HttpRequest.builder()
@@ -59,7 +57,7 @@ internal constructor(
     /** Get details on a single ledgerable event. */
     override fun retrieve(
         params: LedgerableEventRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerableEvent> {
         val request =
             HttpRequest.builder()

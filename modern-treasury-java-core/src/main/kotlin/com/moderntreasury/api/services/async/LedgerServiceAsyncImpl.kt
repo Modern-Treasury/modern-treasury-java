@@ -22,10 +22,8 @@ import com.moderntreasury.api.models.LedgerRetrieveParams
 import com.moderntreasury.api.models.LedgerUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class LedgerServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerServiceAsync {
+class LedgerServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LedgerServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** Create a ledger. */
     override fun create(
         params: LedgerCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Ledger> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** Get details on a single ledger. */
     override fun retrieve(
         params: LedgerRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Ledger> {
         val request =
             HttpRequest.builder()
@@ -90,7 +88,7 @@ internal constructor(
     /** Update the details of a ledger. */
     override fun update(
         params: LedgerUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Ledger> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
     /** Get a list of ledgers. */
     override fun list(
         params: LedgerListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -158,7 +156,7 @@ internal constructor(
     /** Delete a ledger. */
     override fun delete(
         params: LedgerDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Ledger> {
         val request =
             HttpRequest.builder()

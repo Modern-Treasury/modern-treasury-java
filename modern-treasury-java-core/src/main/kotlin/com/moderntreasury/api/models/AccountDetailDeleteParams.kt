@@ -222,11 +222,8 @@ private constructor(
             )
     }
 
-    class AccountsType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class AccountsType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -247,7 +244,7 @@ private constructor(
 
         /** An enum containing [AccountsType]'s known values. */
         enum class Known {
-            EXTERNAL_ACCOUNTS,
+            EXTERNAL_ACCOUNTS
         }
 
         /**

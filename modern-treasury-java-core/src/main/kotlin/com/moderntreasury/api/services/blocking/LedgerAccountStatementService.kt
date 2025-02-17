@@ -16,13 +16,13 @@ interface LedgerAccountStatementService {
     @JvmOverloads
     fun create(
         params: LedgerAccountStatementCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountStatementCreateResponse
 
     /** Get details on a single ledger account statement. */
     @JvmOverloads
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountStatementRetrieveResponse
 }

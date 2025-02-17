@@ -19,27 +19,27 @@ interface LineItemServiceAsync {
     @JvmOverloads
     fun create(
         params: TransactionLineItemCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionLineItem>
 
     /** get transaction line item */
     @JvmOverloads
     fun retrieve(
         params: TransactionLineItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionLineItem>
 
     /** list transaction_line_items */
     @JvmOverloads
     fun list(
         params: TransactionLineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionLineItemListPageAsync>
 
     /** delete transaction line item */
     @JvmOverloads
     fun delete(
         params: TransactionLineItemDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 }

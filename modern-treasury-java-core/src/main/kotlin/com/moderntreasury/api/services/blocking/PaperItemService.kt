@@ -16,13 +16,13 @@ interface PaperItemService {
     @JvmOverloads
     fun retrieve(
         params: PaperItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaperItem
 
     /** Get a list of all paper items. */
     @JvmOverloads
     fun list(
         params: PaperItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaperItemListPage
 }

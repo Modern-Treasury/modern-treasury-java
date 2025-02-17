@@ -18,20 +18,20 @@ interface DocumentServiceAsync {
     @JvmOverloads
     fun create(
         params: DocumentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
 
     /** Get an existing document. */
     @JvmOverloads
     fun retrieve(
         params: DocumentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
 
     /** Get a list of documents. */
     @JvmOverloads
     fun list(
         params: DocumentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DocumentListPageAsync>
 }

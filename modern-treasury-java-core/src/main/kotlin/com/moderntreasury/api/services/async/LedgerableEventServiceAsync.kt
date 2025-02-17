@@ -16,13 +16,13 @@ interface LedgerableEventServiceAsync {
     @JvmOverloads
     fun create(
         params: LedgerableEventCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerableEvent>
 
     /** Get details on a single ledgerable event. */
     @JvmOverloads
     fun retrieve(
         params: LedgerableEventRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerableEvent>
 }

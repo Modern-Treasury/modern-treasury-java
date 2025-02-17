@@ -77,13 +77,8 @@ private constructor(
         fun of(
             routingDetailsService: RoutingDetailServiceAsync,
             params: RoutingDetailListParams,
-            response: Response
-        ) =
-            RoutingDetailListPageAsync(
-                routingDetailsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = RoutingDetailListPageAsync(routingDetailsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: RoutingDetailListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: RoutingDetailListPageAsync) {
 
         fun forEach(action: Predicate<RoutingDetail>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<RoutingDetailListPageAsync>>.forEach(
                 action: (RoutingDetail) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

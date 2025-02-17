@@ -23,34 +23,34 @@ interface InvoiceServiceAsync {
     @JvmOverloads
     fun create(
         params: InvoiceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** get invoice */
     @JvmOverloads
     fun retrieve(
         params: InvoiceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** update invoice */
     @JvmOverloads
     fun update(
         params: InvoiceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** list invoices */
     @JvmOverloads
     fun list(
         params: InvoiceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceListPageAsync>
 
     /** Add a payment order to an invoice. */
     @JvmOverloads
     fun addPaymentOrder(
         params: InvoiceAddPaymentOrderParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 }

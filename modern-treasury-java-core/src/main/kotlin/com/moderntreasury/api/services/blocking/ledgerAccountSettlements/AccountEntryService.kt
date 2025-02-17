@@ -14,13 +14,13 @@ interface AccountEntryService {
     @JvmOverloads
     fun update(
         params: LedgerAccountSettlementAccountEntryUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Remove ledger entries from a draft ledger account settlement. */
     @JvmOverloads
     fun delete(
         params: LedgerAccountSettlementAccountEntryDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

@@ -77,13 +77,8 @@ private constructor(
         fun of(
             legalEntitiesService: LegalEntityServiceAsync,
             params: LegalEntityListParams,
-            response: Response
-        ) =
-            LegalEntityListPageAsync(
-                legalEntitiesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LegalEntityListPageAsync(legalEntitiesService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LegalEntityListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: LegalEntityListPageAsync) {
 
         fun forEach(action: Predicate<LegalEntity>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<LegalEntityListPageAsync>>.forEach(
                 action: (LegalEntity) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

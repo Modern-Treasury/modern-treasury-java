@@ -320,11 +320,7 @@ private constructor(
     }
 
     /** The status of the connection legal entity. */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -345,7 +341,7 @@ private constructor(
 
         /** An enum containing [Status]'s known values. */
         enum class Known {
-            PROCESSING,
+            PROCESSING
         }
 
         /**

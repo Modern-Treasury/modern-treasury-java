@@ -74,13 +74,8 @@ private constructor(
         fun of(
             ledgerAccountsService: LedgerAccountService,
             params: LedgerAccountListParams,
-            response: Response
-        ) =
-            LedgerAccountListPage(
-                ledgerAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LedgerAccountListPage(ledgerAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerAccountListPage,
-    ) : Iterable<LedgerAccount> {
+    class AutoPager(private val firstPage: LedgerAccountListPage) : Iterable<LedgerAccount> {
 
         override fun iterator(): Iterator<LedgerAccount> = iterator {
             var page = firstPage

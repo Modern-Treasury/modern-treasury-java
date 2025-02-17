@@ -72,11 +72,7 @@ private constructor(
 
         @JvmStatic
         fun of(lineItemsService: LineItemService, params: LineItemListParams, response: Response) =
-            LineItemListPage(
-                lineItemsService,
-                params,
-                response,
-            )
+            LineItemListPage(lineItemsService, params, response)
     }
 
     @NoAutoDetect
@@ -162,18 +158,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LineItemListPage,
-    ) : Iterable<LineItem> {
+    class AutoPager(private val firstPage: LineItemListPage) : Iterable<LineItem> {
 
         override fun iterator(): Iterator<LineItem> = iterator {
             var page = firstPage

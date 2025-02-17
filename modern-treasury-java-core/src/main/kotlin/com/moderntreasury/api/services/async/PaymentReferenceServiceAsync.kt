@@ -18,14 +18,14 @@ interface PaymentReferenceServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReference>
 
     /** list payment_references */
     @JvmOverloads
     fun list(
         params: PaymentReferenceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReferenceListPageAsync>
 
     /** get payment_reference */
@@ -33,6 +33,6 @@ interface PaymentReferenceServiceAsync {
     @JvmOverloads
     fun retireve(
         params: PaymentReferenceRetireveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReference>
 }

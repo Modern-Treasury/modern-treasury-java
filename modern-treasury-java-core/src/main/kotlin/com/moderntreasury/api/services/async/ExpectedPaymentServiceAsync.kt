@@ -20,34 +20,34 @@ interface ExpectedPaymentServiceAsync {
     @JvmOverloads
     fun create(
         params: ExpectedPaymentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
     /** get expected payment */
     @JvmOverloads
     fun retrieve(
         params: ExpectedPaymentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
     /** update expected payment */
     @JvmOverloads
     fun update(
         params: ExpectedPaymentUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
     /** list expected_payments */
     @JvmOverloads
     fun list(
         params: ExpectedPaymentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPaymentListPageAsync>
 
     /** delete expected payment */
     @JvmOverloads
     fun delete(
         params: ExpectedPaymentDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 }

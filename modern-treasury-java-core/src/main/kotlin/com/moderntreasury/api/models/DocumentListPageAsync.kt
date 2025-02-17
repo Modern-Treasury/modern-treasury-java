@@ -77,13 +77,8 @@ private constructor(
         fun of(
             documentsService: DocumentServiceAsync,
             params: DocumentListParams,
-            response: Response
-        ) =
-            DocumentListPageAsync(
-                documentsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = DocumentListPageAsync(documentsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DocumentListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: DocumentListPageAsync) {
 
         fun forEach(action: Predicate<Document>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<DocumentListPageAsync>>.forEach(
                 action: (Document) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

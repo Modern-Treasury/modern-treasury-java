@@ -74,13 +74,8 @@ private constructor(
         fun of(
             internalAccountsService: InternalAccountService,
             params: InternalAccountListParams,
-            response: Response
-        ) =
-            InternalAccountListPage(
-                internalAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = InternalAccountListPage(internalAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -167,18 +162,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: InternalAccountListPage,
-    ) : Iterable<InternalAccount> {
+    class AutoPager(private val firstPage: InternalAccountListPage) : Iterable<InternalAccount> {
 
         override fun iterator(): Iterator<InternalAccount> = iterator {
             var page = firstPage

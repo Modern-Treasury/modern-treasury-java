@@ -22,10 +22,8 @@ import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class AccountDetailServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AccountDetailServiceAsync {
+class AccountDetailServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    AccountDetailServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** Create an account detail for an external account. */
     override fun create(
         params: AccountDetailCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountDetail> {
         val request =
             HttpRequest.builder()
@@ -44,7 +42,7 @@ internal constructor(
                     "api",
                     params.getPathParam(0),
                     params.getPathParam(1),
-                    "account_details"
+                    "account_details",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -68,7 +66,7 @@ internal constructor(
     /** Get a single account detail for a single internal or external account. */
     override fun retrieve(
         params: AccountDetailRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountDetail> {
         val request =
             HttpRequest.builder()
@@ -78,7 +76,7 @@ internal constructor(
                     params.getPathParam(0),
                     params.getPathParam(1),
                     "account_details",
-                    params.getPathParam(2)
+                    params.getPathParam(2),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -101,7 +99,7 @@ internal constructor(
     /** Get a list of account details for a single internal or external account. */
     override fun list(
         params: AccountDetailListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountDetailListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -110,7 +108,7 @@ internal constructor(
                     "api",
                     params.getPathParam(0),
                     params.getPathParam(1),
-                    "account_details"
+                    "account_details",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -134,7 +132,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -145,7 +143,7 @@ internal constructor(
     /** Delete a single account detail for an external account. */
     override fun delete(
         params: AccountDetailDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -155,7 +153,7 @@ internal constructor(
                     params.getPathParam(0),
                     params.getPathParam(1),
                     "account_details",
-                    params.getPathParam(2)
+                    params.getPathParam(2),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

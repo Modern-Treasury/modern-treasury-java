@@ -74,13 +74,8 @@ private constructor(
         fun of(
             paymentReferencesService: PaymentReferenceService,
             params: PaymentReferenceListParams,
-            response: Response
-        ) =
-            PaymentReferenceListPage(
-                paymentReferencesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PaymentReferenceListPage(paymentReferencesService, params, response)
     }
 
     @NoAutoDetect
@@ -167,18 +162,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PaymentReferenceListPage,
-    ) : Iterable<PaymentReference> {
+    class AutoPager(private val firstPage: PaymentReferenceListPage) : Iterable<PaymentReference> {
 
         override fun iterator(): Iterator<PaymentReference> = iterator {
             var page = firstPage

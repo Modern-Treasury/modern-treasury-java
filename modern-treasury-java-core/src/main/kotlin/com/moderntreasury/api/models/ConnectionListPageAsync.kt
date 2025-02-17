@@ -77,13 +77,8 @@ private constructor(
         fun of(
             connectionsService: ConnectionServiceAsync,
             params: ConnectionListParams,
-            response: Response
-        ) =
-            ConnectionListPageAsync(
-                connectionsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ConnectionListPageAsync(connectionsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ConnectionListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: ConnectionListPageAsync) {
 
         fun forEach(action: Predicate<Connection>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<ConnectionListPageAsync>>.forEach(
                 action: (Connection) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

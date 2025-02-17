@@ -77,13 +77,8 @@ private constructor(
         fun of(
             bulkRequestsService: BulkRequestServiceAsync,
             params: BulkRequestListParams,
-            response: Response
-        ) =
-            BulkRequestListPageAsync(
-                bulkRequestsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = BulkRequestListPageAsync(bulkRequestsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: BulkRequestListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: BulkRequestListPageAsync) {
 
         fun forEach(action: Predicate<BulkRequest>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<BulkRequestListPageAsync>>.forEach(
                 action: (BulkRequest) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

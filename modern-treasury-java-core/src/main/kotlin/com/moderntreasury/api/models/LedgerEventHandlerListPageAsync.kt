@@ -77,13 +77,8 @@ private constructor(
         fun of(
             ledgerEventHandlersService: LedgerEventHandlerServiceAsync,
             params: LedgerEventHandlerListParams,
-            response: Response
-        ) =
-            LedgerEventHandlerListPageAsync(
-                ledgerEventHandlersService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LedgerEventHandlerListPageAsync(ledgerEventHandlersService, params, response)
     }
 
     @NoAutoDetect
@@ -170,26 +165,19 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerEventHandlerListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: LedgerEventHandlerListPageAsync) {
 
         fun forEach(
             action: Predicate<LedgerEventHandler>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<LedgerEventHandlerListPageAsync>>.forEach(
                 action: (LedgerEventHandler) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -198,7 +186,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

@@ -19,27 +19,27 @@ interface IncomingPaymentDetailService {
     @JvmOverloads
     fun retrieve(
         params: IncomingPaymentDetailRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetail
 
     /** Update an existing Incoming Payment Detail. */
     @JvmOverloads
     fun update(
         params: IncomingPaymentDetailUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetail
 
     /** Get a list of Incoming Payment Details. */
     @JvmOverloads
     fun list(
         params: IncomingPaymentDetailListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetailListPage
 
     /** Simulate Incoming Payment Detail */
     @JvmOverloads
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AsyncResponse
 }
