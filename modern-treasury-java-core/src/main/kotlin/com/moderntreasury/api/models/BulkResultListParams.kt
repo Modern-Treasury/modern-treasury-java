@@ -283,11 +283,7 @@ private constructor(
      * The type of the request that created this result. bulk_request is the only supported
      * `request_type`
      */
-    class EntityType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class EntityType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -399,11 +395,8 @@ private constructor(
      * The type of the request that created this result. bulk_request is the only supported
      * `request_type`
      */
-    class RequestType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class RequestType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -424,7 +417,7 @@ private constructor(
 
         /** An enum containing [RequestType]'s known values. */
         enum class Known {
-            BULK_REQUEST,
+            BULK_REQUEST
         }
 
         /**
@@ -488,11 +481,7 @@ private constructor(
     }
 
     /** One of successful or failed. */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

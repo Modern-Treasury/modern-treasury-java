@@ -23,34 +23,34 @@ interface PaymentOrderService {
     @JvmOverloads
     fun create(
         params: PaymentOrderCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Get details on a single payment order */
     @JvmOverloads
     fun retrieve(
         params: PaymentOrderRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Update a payment order */
     @JvmOverloads
     fun update(
         params: PaymentOrderUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Get a list of all payment orders */
     @JvmOverloads
     fun list(
         params: PaymentOrderListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrderListPage
 
     /** Create a new payment order asynchronously */
     @JvmOverloads
     fun createAsync(
         params: PaymentOrderCreateAsyncParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AsyncResponse
 }

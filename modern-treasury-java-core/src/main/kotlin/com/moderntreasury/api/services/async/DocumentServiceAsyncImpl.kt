@@ -20,10 +20,8 @@ import com.moderntreasury.api.models.DocumentListParams
 import com.moderntreasury.api.models.DocumentRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class DocumentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DocumentServiceAsync {
+class DocumentServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    DocumentServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** Create a document. */
     override fun create(
         params: DocumentCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Document> {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** Get an existing document. */
     override fun retrieve(
         params: DocumentRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Document> {
         val request =
             HttpRequest.builder()
@@ -88,7 +86,7 @@ internal constructor(
     /** Get a list of documents. */
     override fun list(
         params: DocumentListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<DocumentListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -116,7 +114,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

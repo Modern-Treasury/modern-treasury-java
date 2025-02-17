@@ -15,6 +15,6 @@ interface ConnectionServiceAsync {
     @JvmOverloads
     fun list(
         params: ConnectionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionListPageAsync>
 }

@@ -23,9 +23,7 @@ import com.moderntreasury.api.models.IncomingPaymentDetailUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class IncomingPaymentDetailServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : IncomingPaymentDetailServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : IncomingPaymentDetailServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** Get an existing Incoming Payment Detail. */
     override fun retrieve(
         params: IncomingPaymentDetailRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<IncomingPaymentDetail> {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
     /** Update an existing Incoming Payment Detail. */
     override fun update(
         params: IncomingPaymentDetailUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<IncomingPaymentDetail> {
         val request =
             HttpRequest.builder()
@@ -91,7 +89,7 @@ internal constructor(
     /** Get a list of Incoming Payment Details. */
     override fun list(
         params: IncomingPaymentDetailListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<IncomingPaymentDetailListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -119,7 +117,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -131,7 +129,7 @@ internal constructor(
     /** Simulate Incoming Payment Detail */
     override fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AsyncResponse> {
         val request =
             HttpRequest.builder()

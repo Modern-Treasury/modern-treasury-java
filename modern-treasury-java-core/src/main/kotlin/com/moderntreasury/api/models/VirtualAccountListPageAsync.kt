@@ -77,13 +77,8 @@ private constructor(
         fun of(
             virtualAccountsService: VirtualAccountServiceAsync,
             params: VirtualAccountListParams,
-            response: Response
-        ) =
-            VirtualAccountListPageAsync(
-                virtualAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = VirtualAccountListPageAsync(virtualAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -170,26 +165,19 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: VirtualAccountListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: VirtualAccountListPageAsync) {
 
         fun forEach(
             action: Predicate<VirtualAccount>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<VirtualAccountListPageAsync>>.forEach(
                 action: (VirtualAccount) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -198,7 +186,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

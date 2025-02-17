@@ -651,11 +651,8 @@ private constructor(
      * If the routing detail is to be used for a specific payment type this field will be populated,
      * otherwise null.
      */
-    class PaymentType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class PaymentType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -917,11 +914,8 @@ private constructor(
      * The type of routing number. See
      * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more details.
      */
-    class RoutingNumberType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class RoutingNumberType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

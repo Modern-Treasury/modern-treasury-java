@@ -247,11 +247,8 @@ private constructor(
      * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
      * `other`.
      */
-    class BalanceReportType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class BalanceReportType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

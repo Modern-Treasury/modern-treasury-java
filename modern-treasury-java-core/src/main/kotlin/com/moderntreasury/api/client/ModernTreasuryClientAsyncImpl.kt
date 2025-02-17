@@ -93,9 +93,8 @@ import com.moderntreasury.api.services.async.WebhookServiceAsync
 import com.moderntreasury.api.services.async.WebhookServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class ModernTreasuryClientAsyncImpl(
-    private val clientOptions: ClientOptions,
-) : ModernTreasuryClientAsync {
+class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
+    ModernTreasuryClientAsync {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions
@@ -354,7 +353,7 @@ class ModernTreasuryClientAsyncImpl(
      */
     override fun ping(
         params: ClientPingParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PingResponse> {
         val request =
             HttpRequest.builder()

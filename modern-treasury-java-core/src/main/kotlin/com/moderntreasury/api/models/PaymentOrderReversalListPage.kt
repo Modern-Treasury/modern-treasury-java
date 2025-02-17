@@ -74,13 +74,8 @@ private constructor(
         fun of(
             reversalsService: ReversalService,
             params: PaymentOrderReversalListParams,
-            response: Response
-        ) =
-            PaymentOrderReversalListPage(
-                reversalsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PaymentOrderReversalListPage(reversalsService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,11 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PaymentOrderReversalListPage,
-    ) : Iterable<Reversal> {
+    class AutoPager(private val firstPage: PaymentOrderReversalListPage) : Iterable<Reversal> {
 
         override fun iterator(): Iterator<Reversal> = iterator {
             var page = firstPage

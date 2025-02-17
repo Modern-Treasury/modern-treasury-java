@@ -20,10 +20,8 @@ import com.moderntreasury.api.models.PaymentOrderReversalRetrieveParams
 import com.moderntreasury.api.models.Reversal
 import java.util.concurrent.CompletableFuture
 
-class ReversalServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ReversalServiceAsync {
+class ReversalServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ReversalServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** Create a reversal for a payment order. */
     override fun create(
         params: PaymentOrderReversalCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Reversal> {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** Get details on a single reversal of a payment order. */
     override fun retrieve(
         params: PaymentOrderReversalRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Reversal> {
         val request =
             HttpRequest.builder()
@@ -71,7 +69,7 @@ internal constructor(
                     "payment_orders",
                     params.getPathParam(0),
                     "reversals",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -94,7 +92,7 @@ internal constructor(
     /** Get a list of all reversals of a payment order. */
     override fun list(
         params: PaymentOrderReversalListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentOrderReversalListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -122,7 +120,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

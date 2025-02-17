@@ -23,9 +23,7 @@ import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class ExpectedPaymentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExpectedPaymentServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ExpectedPaymentServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** create expected payment */
     override fun create(
         params: ExpectedPaymentCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ExpectedPayment> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** get expected payment */
     override fun retrieve(
         params: ExpectedPaymentRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ExpectedPayment> {
         val request =
             HttpRequest.builder()
@@ -90,7 +88,7 @@ internal constructor(
     /** update expected payment */
     override fun update(
         params: ExpectedPaymentUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ExpectedPayment> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
     /** list expected_payments */
     override fun list(
         params: ExpectedPaymentListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ExpectedPaymentListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -158,7 +156,7 @@ internal constructor(
     /** delete expected payment */
     override fun delete(
         params: ExpectedPaymentDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ExpectedPayment> {
         val request =
             HttpRequest.builder()

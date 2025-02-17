@@ -19,27 +19,27 @@ interface ConnectionLegalEntityServiceAsync {
     @JvmOverloads
     fun create(
         params: ConnectionLegalEntityCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
     /** Get details on a single connection legal entity. */
     @JvmOverloads
     fun retrieve(
         params: ConnectionLegalEntityRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
     /** Update a connection legal entity. */
     @JvmOverloads
     fun update(
         params: ConnectionLegalEntityUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
     /** Get a list of all connection legal entities. */
     @JvmOverloads
     fun list(
         params: ConnectionLegalEntityListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntityListPageAsync>
 }

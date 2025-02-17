@@ -25,10 +25,8 @@ import com.moderntreasury.api.services.async.invoices.LineItemServiceAsync
 import com.moderntreasury.api.services.async.invoices.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class InvoiceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : InvoiceServiceAsync {
+class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    InvoiceServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** create invoice */
     override fun create(
         params: InvoiceCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Invoice> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** get invoice */
     override fun retrieve(
         params: InvoiceRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Invoice> {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
     /** update invoice */
     override fun update(
         params: InvoiceUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Invoice> {
         val request =
             HttpRequest.builder()
@@ -125,7 +123,7 @@ internal constructor(
     /** list invoices */
     override fun list(
         params: InvoiceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<InvoiceListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -165,7 +163,7 @@ internal constructor(
     /** Add a payment order to an invoice. */
     override fun addPaymentOrder(
         params: InvoiceAddPaymentOrderParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Void?> {
         val request =
             HttpRequest.builder()
@@ -175,7 +173,7 @@ internal constructor(
                     "invoices",
                     params.getPathParam(0),
                     "payment_orders",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

@@ -18,20 +18,20 @@ interface LedgerEntryServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: LedgerEntryRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntry>
 
     /** Update the details of a ledger entry. */
     @JvmOverloads
     fun update(
         params: LedgerEntryUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntry>
 
     /** Get a list of all ledger entries. */
     @JvmOverloads
     fun list(
         params: LedgerEntryListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntryListPageAsync>
 }

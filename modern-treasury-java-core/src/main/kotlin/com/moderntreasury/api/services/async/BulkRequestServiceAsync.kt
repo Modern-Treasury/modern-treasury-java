@@ -18,20 +18,20 @@ interface BulkRequestServiceAsync {
     @JvmOverloads
     fun create(
         params: BulkRequestCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequest>
 
     /** get bulk_request */
     @JvmOverloads
     fun retrieve(
         params: BulkRequestRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequest>
 
     /** list bulk_requests */
     @JvmOverloads
     fun list(
         params: BulkRequestListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequestListPageAsync>
 }

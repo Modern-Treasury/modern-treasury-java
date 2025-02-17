@@ -26,9 +26,7 @@ import com.moderntreasury.api.services.async.ledgerTransactions.VersionServiceAs
 import java.util.concurrent.CompletableFuture
 
 class LedgerTransactionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerTransactionServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : LedgerTransactionServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** Create a ledger transaction. */
     override fun create(
         params: LedgerTransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransaction> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** Get details on a single ledger transaction. */
     override fun retrieve(
         params: LedgerTransactionRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransaction> {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
     /** Update the details of a ledger transaction. */
     override fun update(
         params: LedgerTransactionUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransaction> {
         val request =
             HttpRequest.builder()
@@ -126,7 +124,7 @@ internal constructor(
     /** Get a list of ledger transactions. */
     override fun list(
         params: LedgerTransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransactionListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -154,7 +152,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -166,7 +164,7 @@ internal constructor(
     /** Create a ledger transaction that partially posts another ledger transaction. */
     override fun createPartialPost(
         params: LedgerTransactionCreatePartialPostParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransaction> {
         val request =
             HttpRequest.builder()
@@ -175,7 +173,7 @@ internal constructor(
                     "api",
                     "ledger_transactions",
                     params.getPathParam(0),
-                    "partial_post"
+                    "partial_post",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -199,7 +197,7 @@ internal constructor(
     /** Create a ledger transaction reversal. */
     override fun createReversal(
         params: LedgerTransactionCreateReversalParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransaction> {
         val request =
             HttpRequest.builder()

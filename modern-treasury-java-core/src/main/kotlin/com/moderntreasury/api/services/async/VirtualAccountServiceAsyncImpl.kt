@@ -23,9 +23,7 @@ import com.moderntreasury.api.models.VirtualAccountUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class VirtualAccountServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : VirtualAccountServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : VirtualAccountServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** create virtual_account */
     override fun create(
         params: VirtualAccountCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<VirtualAccount> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** get virtual_account */
     override fun retrieve(
         params: VirtualAccountRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<VirtualAccount> {
         val request =
             HttpRequest.builder()
@@ -90,7 +88,7 @@ internal constructor(
     /** update virtual_account */
     override fun update(
         params: VirtualAccountUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<VirtualAccount> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
     /** Get a list of virtual accounts. */
     override fun list(
         params: VirtualAccountListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<VirtualAccountListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -158,7 +156,7 @@ internal constructor(
     /** delete virtual_account */
     override fun delete(
         params: VirtualAccountDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<VirtualAccount> {
         val request =
             HttpRequest.builder()

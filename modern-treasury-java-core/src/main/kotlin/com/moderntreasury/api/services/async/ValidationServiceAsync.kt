@@ -15,6 +15,6 @@ interface ValidationServiceAsync {
     @JvmOverloads
     fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingNumberLookupRequest>
 }

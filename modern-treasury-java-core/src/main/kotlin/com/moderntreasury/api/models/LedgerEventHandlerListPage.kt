@@ -74,13 +74,8 @@ private constructor(
         fun of(
             ledgerEventHandlersService: LedgerEventHandlerService,
             params: LedgerEventHandlerListParams,
-            response: Response
-        ) =
-            LedgerEventHandlerListPage(
-                ledgerEventHandlersService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = LedgerEventHandlerListPage(ledgerEventHandlersService, params, response)
     }
 
     @NoAutoDetect
@@ -167,18 +162,12 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerEventHandlerListPage,
-    ) : Iterable<LedgerEventHandler> {
+    class AutoPager(private val firstPage: LedgerEventHandlerListPage) :
+        Iterable<LedgerEventHandler> {
 
         override fun iterator(): Iterator<LedgerEventHandler> = iterator {
             var page = firstPage

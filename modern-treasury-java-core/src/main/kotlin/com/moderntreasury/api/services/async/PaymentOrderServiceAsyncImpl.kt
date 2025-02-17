@@ -25,10 +25,8 @@ import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsync
 import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class PaymentOrderServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PaymentOrderServiceAsync {
+class PaymentOrderServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PaymentOrderServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** Create a new Payment Order */
     override fun create(
         params: PaymentOrderCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentOrder> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** Get details on a single payment order */
     override fun retrieve(
         params: PaymentOrderRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentOrder> {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
     /** Update a payment order */
     override fun update(
         params: PaymentOrderUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentOrder> {
         val request =
             HttpRequest.builder()
@@ -125,7 +123,7 @@ internal constructor(
     /** Get a list of all payment orders */
     override fun list(
         params: PaymentOrderListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaymentOrderListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
@@ -165,7 +163,7 @@ internal constructor(
     /** Create a new payment order asynchronously */
     override fun createAsync(
         params: PaymentOrderCreateAsyncParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AsyncResponse> {
         val request =
             HttpRequest.builder()

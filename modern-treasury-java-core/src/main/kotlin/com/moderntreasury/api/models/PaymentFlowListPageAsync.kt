@@ -77,13 +77,8 @@ private constructor(
         fun of(
             paymentFlowsService: PaymentFlowServiceAsync,
             params: PaymentFlowListParams,
-            response: Response
-        ) =
-            PaymentFlowListPageAsync(
-                paymentFlowsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PaymentFlowListPageAsync(paymentFlowsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,23 +164,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PaymentFlowListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: PaymentFlowListPageAsync) {
 
         fun forEach(action: Predicate<PaymentFlow>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<PaymentFlowListPageAsync>>.forEach(
                 action: (PaymentFlow) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -194,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

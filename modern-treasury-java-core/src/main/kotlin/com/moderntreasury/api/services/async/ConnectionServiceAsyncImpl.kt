@@ -17,10 +17,8 @@ import com.moderntreasury.api.models.ConnectionListPageAsync
 import com.moderntreasury.api.models.ConnectionListParams
 import java.util.concurrent.CompletableFuture
 
-class ConnectionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ConnectionServiceAsync {
+class ConnectionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ConnectionServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Get a list of all connections. */
     override fun list(
         params: ConnectionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ConnectionListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -58,7 +56,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

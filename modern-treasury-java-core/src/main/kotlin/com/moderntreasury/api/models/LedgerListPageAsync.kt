@@ -75,11 +75,7 @@ private constructor(
 
         @JvmStatic
         fun of(ledgersService: LedgerServiceAsync, params: LedgerListParams, response: Response) =
-            LedgerListPageAsync(
-                ledgersService,
-                params,
-                response,
-            )
+            LedgerListPageAsync(ledgersService, params, response)
     }
 
     @NoAutoDetect
@@ -165,23 +161,16 @@ private constructor(
             }
 
             fun build() =
-                Response(
-                    items,
-                    perPage!!,
-                    afterCursor!!,
-                    additionalProperties.toImmutable(),
-                )
+                Response(items, perPage!!, afterCursor!!, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: LedgerListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: LedgerListPageAsync) {
 
         fun forEach(action: Predicate<Ledger>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<LedgerListPageAsync>>.forEach(
                 action: (Ledger) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -190,7 +179,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

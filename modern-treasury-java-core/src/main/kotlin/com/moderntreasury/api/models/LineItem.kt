@@ -532,11 +532,7 @@ private constructor(
             }
 
             fun build(): Accounting =
-                Accounting(
-                    accountId,
-                    classId,
-                    additionalProperties.toImmutable(),
-                )
+                Accounting(accountId, classId, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -558,11 +554,8 @@ private constructor(
     }
 
     /** One of `payment_orders` or `expected_payments`. */
-    class ItemizableType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ItemizableType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -659,7 +652,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter

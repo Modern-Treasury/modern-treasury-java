@@ -22,28 +22,25 @@ interface LineItemServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: LineItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem>
 
     /** update line item */
     @JvmOverloads
     fun update(
         params: LineItemUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem>
 
     /** Get a list of line items */
     @JvmOverloads
     fun list(
         params: LineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItemListPageAsync>
 
-    class ItemizableType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ItemizableType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

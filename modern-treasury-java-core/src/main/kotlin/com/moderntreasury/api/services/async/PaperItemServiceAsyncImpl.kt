@@ -18,10 +18,8 @@ import com.moderntreasury.api.models.PaperItemListParams
 import com.moderntreasury.api.models.PaperItemRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class PaperItemServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PaperItemServiceAsync {
+class PaperItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PaperItemServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Get details on a single paper item. */
     override fun retrieve(
         params: PaperItemRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaperItem> {
         val request =
             HttpRequest.builder()
@@ -58,7 +56,7 @@ internal constructor(
     /** Get a list of all paper items. */
     override fun list(
         params: PaperItemListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PaperItemListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -86,7 +84,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

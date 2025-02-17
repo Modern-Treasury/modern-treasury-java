@@ -20,10 +20,8 @@ import com.moderntreasury.api.models.ReturnObject
 import com.moderntreasury.api.models.ReturnRetrieveParams
 import java.util.concurrent.CompletableFuture
 
-class ReturnServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ReturnServiceAsync {
+class ReturnServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ReturnServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
     /** Create a return. */
     override fun create(
         params: ReturnCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ReturnObject> {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** Get a single return. */
     override fun retrieve(
         params: ReturnRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ReturnObject> {
         val request =
             HttpRequest.builder()
@@ -88,7 +86,7 @@ internal constructor(
     /** Get a list of returns. */
     override fun list(
         params: ReturnListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ReturnListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -116,7 +114,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }

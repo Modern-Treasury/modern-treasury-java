@@ -22,48 +22,48 @@ interface ExternalAccountService {
     @JvmOverloads
     fun create(
         params: ExternalAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** show external account */
     @JvmOverloads
     fun retrieve(
         params: ExternalAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** update external account */
     @JvmOverloads
     fun update(
         params: ExternalAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** list external accounts */
     @JvmOverloads
     fun list(
         params: ExternalAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccountListPage
 
     /** delete external account */
     @JvmOverloads
     fun delete(
         params: ExternalAccountDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** complete verification of external account */
     @JvmOverloads
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** verify external account */
     @JvmOverloads
     fun verify(
         params: ExternalAccountVerifyParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccountVerifyResponse
 }

@@ -17,10 +17,8 @@ import com.moderntreasury.api.models.LedgerTransactionVersionListPageAsync
 import com.moderntreasury.api.models.LedgerTransactionVersionListParams
 import java.util.concurrent.CompletableFuture
 
-class VersionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : VersionServiceAsync {
+class VersionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    VersionServiceAsync {
 
     private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Get a list of ledger transaction versions. */
     override fun list(
         params: LedgerTransactionVersionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<LedgerTransactionVersionListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -59,7 +57,7 @@ internal constructor(
                                 .afterCursor(
                                     response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
                                 )
-                                .build()
+                                .build(),
                         )
                     }
             }
