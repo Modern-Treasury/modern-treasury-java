@@ -1,5 +1,72 @@
 # Changelog
 
+## 5.0.0 (2025-02-19)
+
+Full Changelog: [v4.0.1...v5.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v4.0.1...v5.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** better union variant method and variable names ([#323](https://github.com/Modern-Treasury/modern-treasury-java/issues/323))
+
+### Features
+
+* **client:** add `_queryParams` and `_headers` methods ([#330](https://github.com/Modern-Treasury/modern-treasury-java/issues/330)) ([fc644d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/fc644d527d79ee6046376ac7855a6ed91e4fcd5f))
+* **client:** add `close` method ([#325](https://github.com/Modern-Treasury/modern-treasury-java/issues/325)) ([b1982e9](https://github.com/Modern-Treasury/modern-treasury-java/commit/b1982e9210525308247977b9c428e5baed276f9e))
+* **client:** better union variant method and variable names ([#323](https://github.com/Modern-Treasury/modern-treasury-java/issues/323)) ([92d26c3](https://github.com/Modern-Treasury/modern-treasury-java/commit/92d26c398b0e2b9e39afc31550d369bf85ce500e))
+* **client:** send client-side timeout headers ([#334](https://github.com/Modern-Treasury/modern-treasury-java/issues/334)) ([8422308](https://github.com/Modern-Treasury/modern-treasury-java/commit/842230869b0e393e651a20f5f318300899de68af))
+* **client:** support `JsonField#asX()` for known values ([#340](https://github.com/Modern-Treasury/modern-treasury-java/issues/340)) ([4932cd4](https://github.com/Modern-Treasury/modern-treasury-java/commit/4932cd42a2e9e76f41661dffbf4ed3c538304a16))
+* **client:** update enum `asX` methods ([#339](https://github.com/Modern-Treasury/modern-treasury-java/issues/339)) ([fdb890c](https://github.com/Modern-Treasury/modern-treasury-java/commit/fdb890c8aca56343773bd9c4b757891bb86fe915))
+
+
+### Bug Fixes
+
+* **api:** add missing `@MustBeClosed` annotations ([#335](https://github.com/Modern-Treasury/modern-treasury-java/issues/335)) ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **api:** switch `CompletableFuture&lt;Void&gt;` to `CompletableFuture<Void?>` ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **client:** add missing validation calls on response ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **client:** always provide a body for `PATCH` methods ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **client:** don't leak responses when retrying ([#332](https://github.com/Modern-Treasury/modern-treasury-java/issues/332)) ([e949ff8](https://github.com/Modern-Treasury/modern-treasury-java/commit/e949ff8485ad4b18938677ffbf0baec43ca419c4))
+* **client:** make some classes and constructors non-public ([#328](https://github.com/Modern-Treasury/modern-treasury-java/issues/328)) ([98d1aca](https://github.com/Modern-Treasury/modern-treasury-java/commit/98d1aca07116a31a1431bd968ef5827dedb26749))
+* format webhooks ([b0e204a](https://github.com/Modern-Treasury/modern-treasury-java/commit/b0e204a26d9d2369259dfcae7e9b6cfd3121ea82))
+
+
+### Chores
+
+* add max retries to test ([#324](https://github.com/Modern-Treasury/modern-treasury-java/issues/324)) ([120f5ce](https://github.com/Modern-Treasury/modern-treasury-java/commit/120f5ce9598efbd2d17ec672b31bc90bae4bd27e))
+* **docs:** reorganize readme ([#341](https://github.com/Modern-Treasury/modern-treasury-java/issues/341)) ([0dc8a9b](https://github.com/Modern-Treasury/modern-treasury-java/commit/0dc8a9b254dfbbf58447f2dba9cb690d3f88c950))
+* **internal:** improve `RetryingHttpClientTest` ([#331](https://github.com/Modern-Treasury/modern-treasury-java/issues/331)) ([ae3e2dd](https://github.com/Modern-Treasury/modern-treasury-java/commit/ae3e2ddf83b231e02aa2acf55aa3faca1fef6bb2))
+* **internal:** make body class constructors private ([3624954](https://github.com/Modern-Treasury/modern-treasury-java/commit/36249543fb110516ba754dac4ef1808fc948173a))
+* **internal:** make body class constructors private ([158411d](https://github.com/Modern-Treasury/modern-treasury-java/commit/158411d5db83b747f0fb4f3a8d6be8eb572139d8))
+* **internal:** make body classes for multipart requests ([3624954](https://github.com/Modern-Treasury/modern-treasury-java/commit/36249543fb110516ba754dac4ef1808fc948173a))
+* **internal:** make body classes for multipart requests ([158411d](https://github.com/Modern-Treasury/modern-treasury-java/commit/158411d5db83b747f0fb4f3a8d6be8eb572139d8))
+* **internal:** minor formatting/style changes ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **internal:** misc formatting changes ([3624954](https://github.com/Modern-Treasury/modern-treasury-java/commit/36249543fb110516ba754dac4ef1808fc948173a))
+* **internal:** misc formatting changes ([158411d](https://github.com/Modern-Treasury/modern-treasury-java/commit/158411d5db83b747f0fb4f3a8d6be8eb572139d8))
+* **internal:** optimize build and test perf ([9985146](https://github.com/Modern-Treasury/modern-treasury-java/commit/998514605d3236be78b580161fc36a250e6f9580))
+* **internal:** refactor `PhantomReachableClosingAsyncStreamResponse` impl ([#336](https://github.com/Modern-Treasury/modern-treasury-java/issues/336)) ([5445de6](https://github.com/Modern-Treasury/modern-treasury-java/commit/5445de650be8037848f9d01b2341f680e8a86a8c))
+* **internal:** remove some unnecessary `constructor` keywords ([98d1aca](https://github.com/Modern-Treasury/modern-treasury-java/commit/98d1aca07116a31a1431bd968ef5827dedb26749))
+* **internal:** rename internal body classes ([3624954](https://github.com/Modern-Treasury/modern-treasury-java/commit/36249543fb110516ba754dac4ef1808fc948173a))
+* **internal:** rename internal body classes ([158411d](https://github.com/Modern-Treasury/modern-treasury-java/commit/158411d5db83b747f0fb4f3a8d6be8eb572139d8))
+* **internal:** rename some tests ([ab0763b](https://github.com/Modern-Treasury/modern-treasury-java/commit/ab0763bff5f214b65f04f8b7280e4ca705eac514))
+* **internal:** swap `checkNotNull` to `checkRequired` ([#321](https://github.com/Modern-Treasury/modern-treasury-java/issues/321)) ([a5cacf6](https://github.com/Modern-Treasury/modern-treasury-java/commit/a5cacf6b824228abd81814630e8b4bc034ae5b20))
+* **internal:** update formatter ([#337](https://github.com/Modern-Treasury/modern-treasury-java/issues/337)) ([9985146](https://github.com/Modern-Treasury/modern-treasury-java/commit/998514605d3236be78b580161fc36a250e6f9580))
+* **internal:** update some formatting in `Values.kt` ([4932cd4](https://github.com/Modern-Treasury/modern-treasury-java/commit/4932cd42a2e9e76f41661dffbf4ed3c538304a16))
+* **internal:** use better test example values ([3624954](https://github.com/Modern-Treasury/modern-treasury-java/commit/36249543fb110516ba754dac4ef1808fc948173a))
+* **internal:** use better test example values ([#338](https://github.com/Modern-Treasury/modern-treasury-java/issues/338)) ([158411d](https://github.com/Modern-Treasury/modern-treasury-java/commit/158411d5db83b747f0fb4f3a8d6be8eb572139d8))
+
+
+### Documentation
+
+* `async` and `sync` method comments ([#327](https://github.com/Modern-Treasury/modern-treasury-java/issues/327)) ([fae2ea1](https://github.com/Modern-Treasury/modern-treasury-java/commit/fae2ea1af8d7d253bad11b2cbd1bdfd669231744))
+* add client documentation ([#326](https://github.com/Modern-Treasury/modern-treasury-java/issues/326)) ([2f65e9c](https://github.com/Modern-Treasury/modern-treasury-java/commit/2f65e9c11f349edb7122d717b6325c833342deec))
+* add more phantom reachability docs ([5445de6](https://github.com/Modern-Treasury/modern-treasury-java/commit/5445de650be8037848f9d01b2341f680e8a86a8c))
+* builder, enum, and union comments ([#329](https://github.com/Modern-Treasury/modern-treasury-java/issues/329)) ([42142b6](https://github.com/Modern-Treasury/modern-treasury-java/commit/42142b6442259523def83b98cc8b5cbfbfd4393f))
+* fix incorrect additional properties info ([#333](https://github.com/Modern-Treasury/modern-treasury-java/issues/333)) ([33bf053](https://github.com/Modern-Treasury/modern-treasury-java/commit/33bf05347a1bacee6b5dac57f3e5738855656f41))
+
+
+### Refactors
+
+* **internal:** extract request preparation logic ([fc644d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/fc644d527d79ee6046376ac7855a6ed91e4fcd5f))
+
 ## 4.0.1 (2025-01-22)
 
 Full Changelog: [v4.0.0...v4.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v4.0.0...v4.0.1)
