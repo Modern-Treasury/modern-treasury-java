@@ -13,7 +13,11 @@ interface ConnectionService {
     /** Get a list of all connections. */
     @JvmOverloads
     fun list(
-        params: ConnectionListParams,
+        params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionListPage
+
+    /** Get a list of all connections. */
+    fun list(requestOptions: RequestOptions): ConnectionListPage =
+        list(ConnectionListParams.none(), requestOptions)
 }

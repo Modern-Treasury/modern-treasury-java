@@ -58,6 +58,8 @@ private constructor(
 
     companion object {
 
+        fun none(): DocumentListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

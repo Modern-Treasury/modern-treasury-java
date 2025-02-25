@@ -64,6 +64,8 @@ private constructor(
 
     companion object {
 
+        fun none(): LedgerAccountBalanceMonitorListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

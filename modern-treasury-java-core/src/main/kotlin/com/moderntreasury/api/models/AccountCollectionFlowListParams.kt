@@ -58,6 +58,8 @@ private constructor(
 
     companion object {
 
+        fun none(): AccountCollectionFlowListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 
