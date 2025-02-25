@@ -31,7 +31,11 @@ interface ReturnServiceAsync {
     /** Get a list of returns. */
     @JvmOverloads
     fun list(
-        params: ReturnListParams,
+        params: ReturnListParams = ReturnListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ReturnListPageAsync>
+
+    /** Get a list of returns. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ReturnListPageAsync> =
+        list(ReturnListParams.none(), requestOptions)
 }

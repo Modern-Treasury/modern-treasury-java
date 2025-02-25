@@ -39,9 +39,14 @@ interface LedgerAccountBalanceMonitorService {
     /** Get a list of ledger account balance monitors. */
     @JvmOverloads
     fun list(
-        params: LedgerAccountBalanceMonitorListParams,
+        params: LedgerAccountBalanceMonitorListParams =
+            LedgerAccountBalanceMonitorListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountBalanceMonitorListPage
+
+    /** Get a list of ledger account balance monitors. */
+    fun list(requestOptions: RequestOptions): LedgerAccountBalanceMonitorListPage =
+        list(LedgerAccountBalanceMonitorListParams.none(), requestOptions)
 
     /** Delete a ledger account balance monitor. */
     @JvmOverloads

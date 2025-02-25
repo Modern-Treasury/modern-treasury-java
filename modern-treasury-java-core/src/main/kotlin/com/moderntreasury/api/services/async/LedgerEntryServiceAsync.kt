@@ -31,7 +31,11 @@ interface LedgerEntryServiceAsync {
     /** Get a list of all ledger entries. */
     @JvmOverloads
     fun list(
-        params: LedgerEntryListParams,
+        params: LedgerEntryListParams = LedgerEntryListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntryListPageAsync>
+
+    /** Get a list of all ledger entries. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<LedgerEntryListPageAsync> =
+        list(LedgerEntryListParams.none(), requestOptions)
 }

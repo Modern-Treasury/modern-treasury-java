@@ -39,7 +39,13 @@ interface ConnectionLegalEntityServiceAsync {
     /** Get a list of all connection legal entities. */
     @JvmOverloads
     fun list(
-        params: ConnectionLegalEntityListParams,
+        params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntityListPageAsync>
+
+    /** Get a list of all connection legal entities. */
+    fun list(
+        requestOptions: RequestOptions
+    ): CompletableFuture<ConnectionLegalEntityListPageAsync> =
+        list(ConnectionLegalEntityListParams.none(), requestOptions)
 }

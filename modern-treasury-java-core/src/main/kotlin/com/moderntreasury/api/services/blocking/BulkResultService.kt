@@ -22,7 +22,11 @@ interface BulkResultService {
     /** list bulk_results */
     @JvmOverloads
     fun list(
-        params: BulkResultListParams,
+        params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResultListPage
+
+    /** list bulk_results */
+    fun list(requestOptions: RequestOptions): BulkResultListPage =
+        list(BulkResultListParams.none(), requestOptions)
 }

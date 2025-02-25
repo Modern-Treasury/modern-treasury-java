@@ -32,9 +32,13 @@ interface LedgerEventHandlerServiceAsync {
     /** Get a list of ledger event handlers. */
     @JvmOverloads
     fun list(
-        params: LedgerEventHandlerListParams,
+        params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandlerListPageAsync>
+
+    /** Get a list of ledger event handlers. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<LedgerEventHandlerListPageAsync> =
+        list(LedgerEventHandlerListParams.none(), requestOptions)
 
     /** Archive a ledger event handler. */
     @JvmOverloads

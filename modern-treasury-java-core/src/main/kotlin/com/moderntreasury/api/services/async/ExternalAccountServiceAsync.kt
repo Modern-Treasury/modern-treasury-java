@@ -43,9 +43,13 @@ interface ExternalAccountServiceAsync {
     /** list external accounts */
     @JvmOverloads
     fun list(
-        params: ExternalAccountListParams,
+        params: ExternalAccountListParams = ExternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccountListPageAsync>
+
+    /** list external accounts */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ExternalAccountListPageAsync> =
+        list(ExternalAccountListParams.none(), requestOptions)
 
     /** delete external account */
     @JvmOverloads
