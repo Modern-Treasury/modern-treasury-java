@@ -42,9 +42,13 @@ interface CounterpartyServiceAsync {
     /** Get a paginated list of all counterparties. */
     @JvmOverloads
     fun list(
-        params: CounterpartyListParams,
+        params: CounterpartyListParams = CounterpartyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterpartyListPageAsync>
+
+    /** Get a paginated list of all counterparties. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CounterpartyListPageAsync> =
+        list(CounterpartyListParams.none(), requestOptions)
 
     /** Deletes a given counterparty. */
     @JvmOverloads

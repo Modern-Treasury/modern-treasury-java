@@ -42,7 +42,11 @@ interface InternalAccountServiceAsync {
     /** list internal accounts */
     @JvmOverloads
     fun list(
-        params: InternalAccountListParams,
+        params: InternalAccountListParams = InternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccountListPageAsync>
+
+    /** list internal accounts */
+    fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
+        list(InternalAccountListParams.none(), requestOptions)
 }

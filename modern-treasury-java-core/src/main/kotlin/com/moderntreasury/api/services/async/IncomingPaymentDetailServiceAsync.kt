@@ -33,14 +33,25 @@ interface IncomingPaymentDetailServiceAsync {
     /** Get a list of Incoming Payment Details. */
     @JvmOverloads
     fun list(
-        params: IncomingPaymentDetailListParams,
+        params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetailListPageAsync>
+
+    /** Get a list of Incoming Payment Details. */
+    fun list(
+        requestOptions: RequestOptions
+    ): CompletableFuture<IncomingPaymentDetailListPageAsync> =
+        list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
     @JvmOverloads
     fun createAsync(
-        params: IncomingPaymentDetailCreateAsyncParams,
+        params: IncomingPaymentDetailCreateAsyncParams =
+            IncomingPaymentDetailCreateAsyncParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AsyncResponse>
+
+    /** Simulate Incoming Payment Detail */
+    fun createAsync(requestOptions: RequestOptions): CompletableFuture<AsyncResponse> =
+        createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 }

@@ -40,9 +40,13 @@ interface VirtualAccountServiceAsync {
     /** Get a list of virtual accounts. */
     @JvmOverloads
     fun list(
-        params: VirtualAccountListParams,
+        params: VirtualAccountListParams = VirtualAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccountListPageAsync>
+
+    /** Get a list of virtual accounts. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<VirtualAccountListPageAsync> =
+        list(VirtualAccountListParams.none(), requestOptions)
 
     /** delete virtual_account */
     @JvmOverloads

@@ -38,7 +38,11 @@ interface AccountCollectionFlowService {
     /** list account_collection_flows */
     @JvmOverloads
     fun list(
-        params: AccountCollectionFlowListParams,
+        params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlowListPage
+
+    /** list account_collection_flows */
+    fun list(requestOptions: RequestOptions): AccountCollectionFlowListPage =
+        list(AccountCollectionFlowListParams.none(), requestOptions)
 }

@@ -60,6 +60,8 @@ private constructor(
 
     companion object {
 
+        fun none(): VirtualAccountListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

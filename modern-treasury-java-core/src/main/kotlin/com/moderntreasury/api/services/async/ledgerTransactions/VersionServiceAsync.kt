@@ -14,7 +14,13 @@ interface VersionServiceAsync {
     /** Get a list of ledger transaction versions. */
     @JvmOverloads
     fun list(
-        params: LedgerTransactionVersionListParams,
+        params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransactionVersionListPageAsync>
+
+    /** Get a list of ledger transaction versions. */
+    fun list(
+        requestOptions: RequestOptions
+    ): CompletableFuture<LedgerTransactionVersionListPageAsync> =
+        list(LedgerTransactionVersionListParams.none(), requestOptions)
 }

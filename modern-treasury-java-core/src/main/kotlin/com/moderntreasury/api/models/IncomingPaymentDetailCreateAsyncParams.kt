@@ -373,6 +373,8 @@ private constructor(
 
     companion object {
 
+        fun none(): IncomingPaymentDetailCreateAsyncParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

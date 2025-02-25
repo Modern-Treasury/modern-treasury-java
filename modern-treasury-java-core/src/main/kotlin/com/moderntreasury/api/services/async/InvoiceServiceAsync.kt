@@ -43,9 +43,13 @@ interface InvoiceServiceAsync {
     /** list invoices */
     @JvmOverloads
     fun list(
-        params: InvoiceListParams,
+        params: InvoiceListParams = InvoiceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceListPageAsync>
+
+    /** list invoices */
+    fun list(requestOptions: RequestOptions): CompletableFuture<InvoiceListPageAsync> =
+        list(InvoiceListParams.none(), requestOptions)
 
     /** Add a payment order to an invoice. */
     @JvmOverloads

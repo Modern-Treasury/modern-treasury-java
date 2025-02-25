@@ -23,7 +23,11 @@ interface PaperItemServiceAsync {
     /** Get a list of all paper items. */
     @JvmOverloads
     fun list(
-        params: PaperItemListParams,
+        params: PaperItemListParams = PaperItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItemListPageAsync>
+
+    /** Get a list of all paper items. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PaperItemListPageAsync> =
+        list(PaperItemListParams.none(), requestOptions)
 }

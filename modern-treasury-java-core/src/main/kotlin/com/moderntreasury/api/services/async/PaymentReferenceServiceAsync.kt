@@ -24,9 +24,13 @@ interface PaymentReferenceServiceAsync {
     /** list payment_references */
     @JvmOverloads
     fun list(
-        params: PaymentReferenceListParams,
+        params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReferenceListPageAsync>
+
+    /** list payment_references */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PaymentReferenceListPageAsync> =
+        list(PaymentReferenceListParams.none(), requestOptions)
 
     /** get payment_reference */
     @Deprecated("use `retrieve` instead")

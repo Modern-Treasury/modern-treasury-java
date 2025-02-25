@@ -43,9 +43,13 @@ interface LedgerTransactionService {
     /** Get a list of ledger transactions. */
     @JvmOverloads
     fun list(
-        params: LedgerTransactionListParams,
+        params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionListPage
+
+    /** Get a list of ledger transactions. */
+    fun list(requestOptions: RequestOptions): LedgerTransactionListPage =
+        list(LedgerTransactionListParams.none(), requestOptions)
 
     /** Create a ledger transaction that partially posts another ledger transaction. */
     @JvmOverloads
