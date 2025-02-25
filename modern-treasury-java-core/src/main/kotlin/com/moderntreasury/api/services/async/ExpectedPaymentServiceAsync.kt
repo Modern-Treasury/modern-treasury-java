@@ -19,9 +19,13 @@ interface ExpectedPaymentServiceAsync {
     /** create expected payment */
     @JvmOverloads
     fun create(
-        params: ExpectedPaymentCreateParams,
+        params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
+
+    /** create expected payment */
+    fun create(requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
+        create(ExpectedPaymentCreateParams.none(), requestOptions)
 
     /** get expected payment */
     @JvmOverloads
@@ -40,9 +44,13 @@ interface ExpectedPaymentServiceAsync {
     /** list expected_payments */
     @JvmOverloads
     fun list(
-        params: ExpectedPaymentListParams,
+        params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPaymentListPageAsync>
+
+    /** list expected_payments */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ExpectedPaymentListPageAsync> =
+        list(ExpectedPaymentListParams.none(), requestOptions)
 
     /** delete expected payment */
     @JvmOverloads

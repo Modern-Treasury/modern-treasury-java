@@ -79,6 +79,8 @@ private constructor(
 
     companion object {
 
+        fun none(): InternalAccountListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

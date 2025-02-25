@@ -23,7 +23,11 @@ interface BulkResultServiceAsync {
     /** list bulk_results */
     @JvmOverloads
     fun list(
-        params: BulkResultListParams,
+        params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResultListPageAsync>
+
+    /** list bulk_results */
+    fun list(requestOptions: RequestOptions): CompletableFuture<BulkResultListPageAsync> =
+        list(BulkResultListParams.none(), requestOptions)
 }

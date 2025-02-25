@@ -43,9 +43,13 @@ interface PaymentOrderService {
     /** Get a list of all payment orders */
     @JvmOverloads
     fun list(
-        params: PaymentOrderListParams,
+        params: PaymentOrderListParams = PaymentOrderListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrderListPage
+
+    /** Get a list of all payment orders */
+    fun list(requestOptions: RequestOptions): PaymentOrderListPage =
+        list(PaymentOrderListParams.none(), requestOptions)
 
     /** Create a new payment order asynchronously */
     @JvmOverloads
