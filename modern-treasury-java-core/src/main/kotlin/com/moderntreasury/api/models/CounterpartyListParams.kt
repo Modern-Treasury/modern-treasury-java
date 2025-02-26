@@ -87,7 +87,7 @@ private constructor(
 
     companion object {
 
-        fun none(): CounterpartyListParams = builder().build()
+        @JvmStatic fun none(): CounterpartyListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }

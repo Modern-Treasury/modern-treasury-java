@@ -192,7 +192,7 @@ private constructor(
 
     companion object {
 
-        fun none(): LedgerEntryListParams = builder().build()
+        @JvmStatic fun none(): LedgerEntryListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }

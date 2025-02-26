@@ -69,7 +69,7 @@ private constructor(
 
     companion object {
 
-        fun none(): BulkRequestListParams = builder().build()
+        @JvmStatic fun none(): BulkRequestListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }

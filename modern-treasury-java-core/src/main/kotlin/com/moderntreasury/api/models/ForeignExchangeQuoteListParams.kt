@@ -87,7 +87,7 @@ private constructor(
 
     companion object {
 
-        fun none(): ForeignExchangeQuoteListParams = builder().build()
+        @JvmStatic fun none(): ForeignExchangeQuoteListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }
