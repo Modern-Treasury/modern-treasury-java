@@ -74,6 +74,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): EventListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

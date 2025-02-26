@@ -78,6 +78,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BulkResultListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

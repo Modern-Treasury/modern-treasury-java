@@ -62,6 +62,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): LegalEntityListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

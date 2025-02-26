@@ -39,7 +39,11 @@ interface PaymentFlowServiceAsync {
     /** list payment_flows */
     @JvmOverloads
     fun list(
-        params: PaymentFlowListParams,
+        params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlowListPageAsync>
+
+    /** list payment_flows */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PaymentFlowListPageAsync> =
+        list(PaymentFlowListParams.none(), requestOptions)
 }

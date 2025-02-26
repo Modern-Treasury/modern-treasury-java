@@ -30,7 +30,11 @@ interface ReturnService {
     /** Get a list of returns. */
     @JvmOverloads
     fun list(
-        params: ReturnListParams,
+        params: ReturnListParams = ReturnListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnListPage
+
+    /** Get a list of returns. */
+    fun list(requestOptions: RequestOptions): ReturnListPage =
+        list(ReturnListParams.none(), requestOptions)
 }

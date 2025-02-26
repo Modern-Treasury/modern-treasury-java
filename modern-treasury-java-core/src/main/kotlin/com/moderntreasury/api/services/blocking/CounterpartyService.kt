@@ -41,9 +41,13 @@ interface CounterpartyService {
     /** Get a paginated list of all counterparties. */
     @JvmOverloads
     fun list(
-        params: CounterpartyListParams,
+        params: CounterpartyListParams = CounterpartyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterpartyListPage
+
+    /** Get a paginated list of all counterparties. */
+    fun list(requestOptions: RequestOptions): CounterpartyListPage =
+        list(CounterpartyListParams.none(), requestOptions)
 
     /** Deletes a given counterparty. */
     @JvmOverloads

@@ -39,9 +39,13 @@ interface LedgerAccountService {
     /** Get a list of ledger accounts. */
     @JvmOverloads
     fun list(
-        params: LedgerAccountListParams,
+        params: LedgerAccountListParams = LedgerAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountListPage
+
+    /** Get a list of ledger accounts. */
+    fun list(requestOptions: RequestOptions): LedgerAccountListPage =
+        list(LedgerAccountListParams.none(), requestOptions)
 
     /** Delete a ledger account. */
     @JvmOverloads

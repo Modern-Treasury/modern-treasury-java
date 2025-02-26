@@ -140,6 +140,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): PaymentOrderListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

@@ -166,6 +166,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): LedgerTransactionListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

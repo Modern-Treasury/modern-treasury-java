@@ -39,7 +39,13 @@ interface AccountCollectionFlowServiceAsync {
     /** list account_collection_flows */
     @JvmOverloads
     fun list(
-        params: AccountCollectionFlowListParams,
+        params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlowListPageAsync>
+
+    /** list account_collection_flows */
+    fun list(
+        requestOptions: RequestOptions
+    ): CompletableFuture<AccountCollectionFlowListPageAsync> =
+        list(AccountCollectionFlowListParams.none(), requestOptions)
 }

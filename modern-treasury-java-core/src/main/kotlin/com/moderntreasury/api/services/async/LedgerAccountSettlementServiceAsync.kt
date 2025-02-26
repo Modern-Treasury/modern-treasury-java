@@ -42,7 +42,13 @@ interface LedgerAccountSettlementServiceAsync {
     /** Get a list of ledger account settlements. */
     @JvmOverloads
     fun list(
-        params: LedgerAccountSettlementListParams,
+        params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlementListPageAsync>
+
+    /** Get a list of ledger account settlements. */
+    fun list(
+        requestOptions: RequestOptions
+    ): CompletableFuture<LedgerAccountSettlementListPageAsync> =
+        list(LedgerAccountSettlementListParams.none(), requestOptions)
 }

@@ -43,9 +43,13 @@ interface TransactionServiceAsync {
     /** Get a list of all transactions. */
     @JvmOverloads
     fun list(
-        params: TransactionListParams,
+        params: TransactionListParams = TransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionListPageAsync>
+
+    /** Get a list of all transactions. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<TransactionListPageAsync> =
+        list(TransactionListParams.none(), requestOptions)
 
     /** delete transaction */
     @JvmOverloads

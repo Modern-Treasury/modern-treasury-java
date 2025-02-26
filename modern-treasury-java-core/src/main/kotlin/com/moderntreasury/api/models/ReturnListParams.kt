@@ -72,6 +72,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): ReturnListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

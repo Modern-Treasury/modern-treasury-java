@@ -112,6 +112,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): TransactionListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

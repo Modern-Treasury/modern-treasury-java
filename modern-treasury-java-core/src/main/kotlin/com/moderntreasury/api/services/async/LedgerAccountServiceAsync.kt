@@ -40,9 +40,13 @@ interface LedgerAccountServiceAsync {
     /** Get a list of ledger accounts. */
     @JvmOverloads
     fun list(
-        params: LedgerAccountListParams,
+        params: LedgerAccountListParams = LedgerAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountListPageAsync>
+
+    /** Get a list of ledger accounts. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<LedgerAccountListPageAsync> =
+        list(LedgerAccountListParams.none(), requestOptions)
 
     /** Delete a ledger account. */
     @JvmOverloads

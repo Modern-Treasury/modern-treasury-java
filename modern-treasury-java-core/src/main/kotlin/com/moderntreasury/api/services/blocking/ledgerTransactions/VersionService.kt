@@ -13,7 +13,11 @@ interface VersionService {
     /** Get a list of ledger transaction versions. */
     @JvmOverloads
     fun list(
-        params: LedgerTransactionVersionListParams,
+        params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionVersionListPage
+
+    /** Get a list of ledger transaction versions. */
+    fun list(requestOptions: RequestOptions): LedgerTransactionVersionListPage =
+        list(LedgerTransactionVersionListParams.none(), requestOptions)
 }

@@ -38,7 +38,11 @@ interface PaymentFlowService {
     /** list payment_flows */
     @JvmOverloads
     fun list(
-        params: PaymentFlowListParams,
+        params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlowListPage
+
+    /** list payment_flows */
+    fun list(requestOptions: RequestOptions): PaymentFlowListPage =
+        list(PaymentFlowListParams.none(), requestOptions)
 }

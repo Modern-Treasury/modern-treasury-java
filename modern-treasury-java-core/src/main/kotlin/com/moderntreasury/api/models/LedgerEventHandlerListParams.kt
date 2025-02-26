@@ -65,6 +65,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): LedgerEventHandlerListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

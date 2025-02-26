@@ -50,6 +50,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): ConnectionListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

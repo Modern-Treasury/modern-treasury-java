@@ -31,7 +31,11 @@ interface DocumentServiceAsync {
     /** Get a list of documents. */
     @JvmOverloads
     fun list(
-        params: DocumentListParams,
+        params: DocumentListParams = DocumentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DocumentListPageAsync>
+
+    /** Get a list of documents. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<DocumentListPageAsync> =
+        list(DocumentListParams.none(), requestOptions)
 }

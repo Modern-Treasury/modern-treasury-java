@@ -14,7 +14,11 @@ interface ConnectionServiceAsync {
     /** Get a list of all connections. */
     @JvmOverloads
     fun list(
-        params: ConnectionListParams,
+        params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionListPageAsync>
+
+    /** Get a list of all connections. */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ConnectionListPageAsync> =
+        list(ConnectionListParams.none(), requestOptions)
 }

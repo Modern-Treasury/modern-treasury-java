@@ -31,7 +31,11 @@ interface ForeignExchangeQuoteServiceAsync {
     /** list foreign_exchange_quotes */
     @JvmOverloads
     fun list(
-        params: ForeignExchangeQuoteListParams,
+        params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuoteListPageAsync>
+
+    /** list foreign_exchange_quotes */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
+        list(ForeignExchangeQuoteListParams.none(), requestOptions)
 }

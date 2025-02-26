@@ -39,9 +39,13 @@ interface VirtualAccountService {
     /** Get a list of virtual accounts. */
     @JvmOverloads
     fun list(
-        params: VirtualAccountListParams,
+        params: VirtualAccountListParams = VirtualAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccountListPage
+
+    /** Get a list of virtual accounts. */
+    fun list(requestOptions: RequestOptions): VirtualAccountListPage =
+        list(VirtualAccountListParams.none(), requestOptions)
 
     /** delete virtual_account */
     @JvmOverloads

@@ -978,6 +978,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): ExpectedPaymentCreateParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

@@ -30,7 +30,11 @@ interface LedgerEntryService {
     /** Get a list of all ledger entries. */
     @JvmOverloads
     fun list(
-        params: LedgerEntryListParams,
+        params: LedgerEntryListParams = LedgerEntryListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntryListPage
+
+    /** Get a list of all ledger entries. */
+    fun list(requestOptions: RequestOptions): LedgerEntryListPage =
+        list(LedgerEntryListParams.none(), requestOptions)
 }

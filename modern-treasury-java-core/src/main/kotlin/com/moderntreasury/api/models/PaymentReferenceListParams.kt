@@ -65,6 +65,8 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): PaymentReferenceListParams = builder().build()
+
         @JvmStatic fun builder() = Builder()
     }
 

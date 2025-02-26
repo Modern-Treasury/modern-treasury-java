@@ -32,9 +32,13 @@ interface LineItemServiceAsync {
     /** list transaction_line_items */
     @JvmOverloads
     fun list(
-        params: TransactionLineItemListParams,
+        params: TransactionLineItemListParams = TransactionLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionLineItemListPageAsync>
+
+    /** list transaction_line_items */
+    fun list(requestOptions: RequestOptions): CompletableFuture<TransactionLineItemListPageAsync> =
+        list(TransactionLineItemListParams.none(), requestOptions)
 
     /** delete transaction line item */
     @JvmOverloads
