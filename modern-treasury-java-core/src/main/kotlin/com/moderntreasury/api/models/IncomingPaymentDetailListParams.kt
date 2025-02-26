@@ -94,7 +94,7 @@ private constructor(
 
     companion object {
 
-        fun none(): IncomingPaymentDetailListParams = builder().build()
+        @JvmStatic fun none(): IncomingPaymentDetailListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }

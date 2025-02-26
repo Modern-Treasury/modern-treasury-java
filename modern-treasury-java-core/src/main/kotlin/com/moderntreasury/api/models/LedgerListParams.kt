@@ -70,7 +70,7 @@ private constructor(
 
     companion object {
 
-        fun none(): LedgerListParams = builder().build()
+        @JvmStatic fun none(): LedgerListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }
