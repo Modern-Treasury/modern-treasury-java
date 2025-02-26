@@ -27,7 +27,7 @@ private constructor(
 
     companion object {
 
-        fun none(): ClientPingParams = builder().build()
+        @JvmStatic fun none(): ClientPingParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }
