@@ -1,5 +1,38 @@
 # Changelog
 
+## 5.1.0 (2025-02-26)
+
+Full Changelog: [v5.0.0...v5.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v5.0.0...v5.1.0)
+
+### Features
+
+* **client:** allow omitting params object when none required ([#350](https://github.com/Modern-Treasury/modern-treasury-java/issues/350)) ([8f75bcf](https://github.com/Modern-Treasury/modern-treasury-java/commit/8f75bcf3edfd416b8ba79caf5d9b1187a9bec82b))
+* **client:** get rid of annoying checked exceptions ([#345](https://github.com/Modern-Treasury/modern-treasury-java/issues/345)) ([f041471](https://github.com/Modern-Treasury/modern-treasury-java/commit/f041471e1aa9331193116beade1b9c8ecf1d092e))
+
+
+### Bug Fixes
+
+* **client:** add missing `@JvmStatic` ([#351](https://github.com/Modern-Treasury/modern-treasury-java/issues/351)) ([2580073](https://github.com/Modern-Treasury/modern-treasury-java/commit/25800731c8f5664f96f5dead9228bbcf89af30d2))
+* **client:** mark some request bodies as optional ([#347](https://github.com/Modern-Treasury/modern-treasury-java/issues/347)) ([46f9eac](https://github.com/Modern-Treasury/modern-treasury-java/commit/46f9eacd7e968a7d871a8b7a75acd1d4cc20ad86))
+
+
+### Chores
+
+* **ci:** update gradle actions to v4 ([#344](https://github.com/Modern-Treasury/modern-treasury-java/issues/344)) ([4477581](https://github.com/Modern-Treasury/modern-treasury-java/commit/447758145113d731e825a70813d2184f6edfafb8))
+* **docs:** add faq to readme ([#346](https://github.com/Modern-Treasury/modern-treasury-java/issues/346)) ([d1d4818](https://github.com/Modern-Treasury/modern-treasury-java/commit/d1d48185b2b216adfa7112629afa809be54ac295))
+* **internal:** add async service tests ([#352](https://github.com/Modern-Treasury/modern-treasury-java/issues/352)) ([27294e4](https://github.com/Modern-Treasury/modern-treasury-java/commit/27294e4a1c545e29db7fbbff258b4682c8fdcc1b))
+* **internal:** get rid of configuration cache ([#342](https://github.com/Modern-Treasury/modern-treasury-java/issues/342)) ([8acbd15](https://github.com/Modern-Treasury/modern-treasury-java/commit/8acbd15eef36035f8ae40262546c86e1ee10bae9))
+* **internal:** improve sync service tests ([27294e4](https://github.com/Modern-Treasury/modern-treasury-java/commit/27294e4a1c545e29db7fbbff258b4682c8fdcc1b))
+* **internal:** remove unnecessary non-null asserts in tests ([46f9eac](https://github.com/Modern-Treasury/modern-treasury-java/commit/46f9eacd7e968a7d871a8b7a75acd1d4cc20ad86))
+* **internal:** use `assertNotNull` in tests for type narrowing ([46f9eac](https://github.com/Modern-Treasury/modern-treasury-java/commit/46f9eacd7e968a7d871a8b7a75acd1d4cc20ad86))
+
+
+### Documentation
+
+* add immutability explanation to readme ([#348](https://github.com/Modern-Treasury/modern-treasury-java/issues/348)) ([8f6e885](https://github.com/Modern-Treasury/modern-treasury-java/commit/8f6e885f85b62780fa3863ca0e9426708ccfc00e))
+* add source file links to readme ([#349](https://github.com/Modern-Treasury/modern-treasury-java/issues/349)) ([fe1facc](https://github.com/Modern-Treasury/modern-treasury-java/commit/fe1facc4f402f997f3f6129cd88d1cd6783141b5))
+* readme parameter tweaks ([27294e4](https://github.com/Modern-Treasury/modern-treasury-java/commit/27294e4a1c545e29db7fbbff258b4682c8fdcc1b))
+
 ## 5.0.0 (2025-02-19)
 
 Full Changelog: [v4.0.1...v5.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v4.0.1...v5.0.0)
