@@ -59,7 +59,7 @@ private constructor(
 
     companion object {
 
-        fun none(): PaperItemListParams = builder().build()
+        @JvmStatic fun none(): PaperItemListParams = builder().build()
 
         @JvmStatic fun builder() = Builder()
     }
