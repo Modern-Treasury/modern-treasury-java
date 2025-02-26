@@ -1,4 +1,4 @@
-package com.moderntreasury.example;
+package com.moderntreasury.api.example;
 
 import com.moderntreasury.api.client.ModernTreasuryClient;
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
