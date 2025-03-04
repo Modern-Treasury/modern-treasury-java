@@ -346,6 +346,37 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [IncomingPaymentDetail].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .asOfDate()
+         * .createdAt()
+         * .currency()
+         * .data()
+         * .direction()
+         * .internalAccountId()
+         * .ledgerTransactionId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .originatingAccountNumberSafe()
+         * .originatingAccountNumberType()
+         * .originatingRoutingNumber()
+         * .originatingRoutingNumberType()
+         * .status()
+         * .transactionId()
+         * .transactionLineItemId()
+         * .type()
+         * .updatedAt()
+         * .vendorId()
+         * .virtualAccount()
+         * .virtualAccountId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -745,6 +776,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Data]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -824,6 +856,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -55,6 +55,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [RoutingDetailListParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .accountsType()
+         * .accountId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -130,6 +130,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [BulkRequestListPage]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -96,6 +96,10 @@ private constructor(
 
         @JvmStatic fun none(): IncomingPaymentDetailListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IncomingPaymentDetailListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -348,6 +352,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -246,6 +246,29 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [VirtualAccount].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accountDetails()
+         * .counterpartyId()
+         * .createdAt()
+         * .creditLedgerAccountId()
+         * .debitLedgerAccountId()
+         * .description()
+         * .discardedAt()
+         * .internalAccountId()
+         * .ledgerAccountId()
+         * .liveMode()
+         * .metadata()
+         * .name()
+         * .object_()
+         * .routingDetails()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -559,6 +582,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

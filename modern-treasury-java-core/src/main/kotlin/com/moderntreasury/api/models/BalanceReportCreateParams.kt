@@ -161,6 +161,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [BalanceReportCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .asOfDate()
+             * .asOfTime()
+             * .balanceReportType()
+             * .balances()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -277,6 +289,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BalanceReportCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .internalAccountId()
+         * .asOfDate()
+         * .asOfTime()
+         * .balanceReportType()
+         * .balances()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -676,6 +700,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [BalanceCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .balanceType()
+             * .vendorCode()
+             * .vendorCodeType()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -131,6 +131,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .accountNumber()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -221,6 +230,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountDetailCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .accountsType()
+         * .accountId()
+         * .accountNumber()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

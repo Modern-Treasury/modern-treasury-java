@@ -207,6 +207,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [IncomingPaymentDetailCreateRequest].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -375,6 +379,10 @@ private constructor(
 
         @JvmStatic fun none(): IncomingPaymentDetailCreateAsyncParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IncomingPaymentDetailCreateAsyncParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 

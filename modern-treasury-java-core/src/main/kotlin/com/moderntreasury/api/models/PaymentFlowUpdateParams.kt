@@ -105,6 +105,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [PaymentFlowUpdateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .status()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -180,6 +188,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentFlowUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .status()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

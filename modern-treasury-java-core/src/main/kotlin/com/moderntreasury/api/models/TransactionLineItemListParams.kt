@@ -58,6 +58,10 @@ private constructor(
 
         @JvmStatic fun none(): TransactionLineItemListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [TransactionLineItemListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -231,6 +235,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Id]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -61,6 +61,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerEventHandlerVariable].
+         *
+         * The following fields are required:
+         * ```java
+         * .query()
+         * .type()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -174,6 +183,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerEventHandlerConditions].
+             *
+             * The following fields are required:
+             * ```java
+             * .field()
+             * .operator()
+             * .value()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

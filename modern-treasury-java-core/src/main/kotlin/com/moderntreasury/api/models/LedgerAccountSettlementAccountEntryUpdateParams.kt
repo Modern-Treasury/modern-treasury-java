@@ -108,6 +108,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerAccountSettlementEntriesPatchRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .ledgerEntryIds()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -211,6 +220,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountSettlementAccountEntryUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .ledgerEntryIds()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
