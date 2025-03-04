@@ -29,6 +29,7 @@ private constructor(
 
         @JvmStatic fun none(): ClientPingParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [ClientPingParams]. */
         @JvmStatic fun builder() = Builder()
     }
 

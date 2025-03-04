@@ -153,6 +153,7 @@ private constructor(
 
         @JvmStatic fun none(): LedgerAccountListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [LedgerAccountListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -525,6 +526,9 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AvailableBalanceAmount].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -715,6 +719,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Balances]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -854,6 +859,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CreatedAt]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -953,6 +959,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1079,6 +1086,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [PendingBalanceAmount]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1261,6 +1269,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [PostedBalanceAmount]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1417,6 +1426,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [UpdatedAt]. */
             @JvmStatic fun builder() = Builder()
         }
 

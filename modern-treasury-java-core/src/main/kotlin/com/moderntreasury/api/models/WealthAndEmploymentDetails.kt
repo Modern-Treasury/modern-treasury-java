@@ -259,6 +259,31 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [WealthAndEmploymentDetails].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .annualIncome()
+         * .createdAt()
+         * .discardedAt()
+         * .employerCountry()
+         * .employerName()
+         * .employerState()
+         * .employmentStatus()
+         * .incomeCountry()
+         * .incomeSource()
+         * .incomeState()
+         * .industry()
+         * .liveMode()
+         * .object_()
+         * .occupation()
+         * .sourceOfFunds()
+         * .updatedAt()
+         * .wealthSource()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

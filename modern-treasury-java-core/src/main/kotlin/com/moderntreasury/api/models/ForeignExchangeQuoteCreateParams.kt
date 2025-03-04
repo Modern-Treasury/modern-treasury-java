@@ -199,6 +199,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ForeignExchangeQuoteCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .internalAccountId()
+             * .targetCurrency()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -340,6 +350,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ForeignExchangeQuoteCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .internalAccountId()
+         * .targetCurrency()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

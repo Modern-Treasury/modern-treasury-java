@@ -62,6 +62,7 @@ private constructor(
 
         @JvmStatic fun none(): VirtualAccountListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [VirtualAccountListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -250,6 +251,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

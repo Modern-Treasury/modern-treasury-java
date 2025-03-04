@@ -747,6 +747,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [InvoiceUpdateRequest]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1333,6 +1334,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -2026,6 +2035,21 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ContactDetail].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .contactIdentifier()
+             * .contactIdentifierType()
+             * .createdAt()
+             * .discardedAt()
+             * .liveMode()
+             * .object_()
+             * .updatedAt()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -2364,6 +2388,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CounterpartyBillingAddress].
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -2556,6 +2593,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CounterpartyShippingAddress].
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -2795,6 +2845,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [InvoiceLineItemCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * .unitAmount()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -2963,6 +3023,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -3121,6 +3182,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InvoicerAddress].
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -3254,6 +3327,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

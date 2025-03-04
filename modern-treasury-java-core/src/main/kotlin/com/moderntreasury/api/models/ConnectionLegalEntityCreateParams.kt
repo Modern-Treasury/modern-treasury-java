@@ -126,6 +126,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ConnectionLegalEntityCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .connectionId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -222,6 +231,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ConnectionLegalEntityCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .connectionId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -714,6 +732,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [LegalEntity]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1227,6 +1246,19 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [LegalEntityAddressCreateRequest].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .country()
+                 * .line1()
+                 * .locality()
+                 * .postalCode()
+                 * .region()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1561,6 +1593,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [IdentificationCreateRequest].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .idNumber()
+                 * .idType()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1967,6 +2009,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [LegalEntityAssociationInlineCreateRequest].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .relationshipTypes()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -2528,6 +2579,10 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [ChildLegalEntityCreate].
+                     */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -3042,6 +3097,19 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [LegalEntityAddressCreateRequest].
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .country()
+                         * .line1()
+                         * .locality()
+                         * .postalCode()
+                         * .region()
+                         * ```
+                         */
                         @JvmStatic fun builder() = Builder()
                     }
 
@@ -3398,6 +3466,16 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [IdentificationCreateRequest].
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .idNumber()
+                         * .idType()
+                         * ```
+                         */
                         @JvmStatic fun builder() = Builder()
                     }
 
@@ -4010,6 +4088,7 @@ private constructor(
 
                     companion object {
 
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
                         @JvmStatic fun builder() = Builder()
                     }
 
@@ -4104,6 +4183,9 @@ private constructor(
 
                     companion object {
 
+                        /**
+                         * Returns a mutable builder for constructing an instance of [PhoneNumber].
+                         */
                         @JvmStatic fun builder() = Builder()
                     }
 
@@ -4592,6 +4674,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -4685,6 +4768,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [PhoneNumber]. */
                 @JvmStatic fun builder() = Builder()
             }
 

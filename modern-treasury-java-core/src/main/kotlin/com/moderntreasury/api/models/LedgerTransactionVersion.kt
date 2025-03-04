@@ -311,6 +311,33 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerTransactionVersion].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .description()
+         * .effectiveAt()
+         * .effectiveDate()
+         * .externalId()
+         * .ledgerEntries()
+         * .ledgerId()
+         * .ledgerTransactionId()
+         * .ledgerableId()
+         * .ledgerableType()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .partiallyPostsLedgerTransactionId()
+         * .postedAt()
+         * .reversedByLedgerTransactionId()
+         * .reversesLedgerTransactionId()
+         * .status()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -884,6 +911,28 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerEntryOfTransactionVersion].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .direction()
+             * .ledgerAccountCurrency()
+             * .ledgerAccountCurrencyExponent()
+             * .ledgerAccountId()
+             * .ledgerAccountLockVersion()
+             * .ledgerTransactionId()
+             * .liveMode()
+             * .metadata()
+             * .object_()
+             * .resultingLedgerAccountBalances()
+             * .status()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1191,6 +1240,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1325,6 +1375,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [LedgerBalances].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .availableBalance()
+                 * .pendingBalance()
+                 * .postedBalance()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1491,6 +1551,18 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [LedgerBalance].
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * .credits()
+                     * .currency()
+                     * .currencyExponent()
+                     * .debits()
+                     * ```
+                     */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1900,6 +1972,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -155,6 +155,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentReference].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .liveMode()
+         * .object_()
+         * .referenceNumber()
+         * .referenceNumberType()
+         * .referenceableId()
+         * .referenceableType()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

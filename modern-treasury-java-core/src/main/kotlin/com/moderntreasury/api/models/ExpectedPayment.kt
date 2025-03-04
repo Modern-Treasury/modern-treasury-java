@@ -392,6 +392,39 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExpectedPayment].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amountLowerBound()
+         * .amountUpperBound()
+         * .counterpartyId()
+         * .createdAt()
+         * .currency()
+         * .dateLowerBound()
+         * .dateUpperBound()
+         * .description()
+         * .direction()
+         * .internalAccountId()
+         * .ledgerTransactionId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .reconciliationFilters()
+         * .reconciliationGroups()
+         * .reconciliationMethod()
+         * .reconciliationRuleVariables()
+         * .remittanceInformation()
+         * .statementDescriptor()
+         * .status()
+         * .transactionId()
+         * .transactionLineItemId()
+         * .type()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1001,6 +1034,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

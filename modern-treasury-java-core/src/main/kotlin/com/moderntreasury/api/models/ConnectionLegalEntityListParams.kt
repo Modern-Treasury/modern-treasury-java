@@ -58,6 +58,10 @@ private constructor(
 
         @JvmStatic fun none(): ConnectionLegalEntityListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ConnectionLegalEntityListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 

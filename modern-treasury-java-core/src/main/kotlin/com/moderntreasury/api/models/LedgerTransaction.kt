@@ -298,6 +298,32 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerTransaction].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .description()
+         * .effectiveAt()
+         * .effectiveDate()
+         * .externalId()
+         * .ledgerEntries()
+         * .ledgerId()
+         * .ledgerableId()
+         * .ledgerableType()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .partiallyPostsLedgerTransactionId()
+         * .postedAt()
+         * .reversedByLedgerTransactionId()
+         * .reversesLedgerTransactionId()
+         * .status()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -781,6 +807,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

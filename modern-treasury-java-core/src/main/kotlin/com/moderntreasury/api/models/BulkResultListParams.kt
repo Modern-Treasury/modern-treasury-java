@@ -80,6 +80,7 @@ private constructor(
 
         @JvmStatic fun none(): BulkResultListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [BulkResultListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 

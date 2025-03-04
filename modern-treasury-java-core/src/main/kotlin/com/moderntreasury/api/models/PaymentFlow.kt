@@ -331,6 +331,7 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [PaymentFlow]. */
         @JvmStatic fun builder() = Builder()
     }
 

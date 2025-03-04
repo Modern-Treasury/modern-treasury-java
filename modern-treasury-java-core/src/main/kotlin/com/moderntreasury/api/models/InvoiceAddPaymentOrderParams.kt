@@ -52,6 +52,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceAddPaymentOrderParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .paymentOrderId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -51,6 +51,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceLineItemListParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .invoiceId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

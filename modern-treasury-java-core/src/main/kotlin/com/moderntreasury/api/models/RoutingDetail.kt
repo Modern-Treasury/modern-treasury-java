@@ -177,6 +177,24 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [RoutingDetail].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .bankAddress()
+         * .bankName()
+         * .createdAt()
+         * .discardedAt()
+         * .liveMode()
+         * .object_()
+         * .paymentType()
+         * .routingNumber()
+         * .routingNumberType()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -478,6 +496,24 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Address].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .country()
+             * .createdAt()
+             * .line1()
+             * .line2()
+             * .liveMode()
+             * .locality()
+             * .object_()
+             * .postalCode()
+             * .region()
+             * .updatedAt()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -181,6 +181,24 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ForeignExchangeQuote].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .effectiveAt()
+         * .expiresAt()
+         * .foreignExchangeIndicator()
+         * .foreignExchangeRate()
+         * .internalAccountId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -475,6 +493,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ForeignExchangeRate].
+             *
+             * The following fields are required:
+             * ```java
+             * .baseAmount()
+             * .baseCurrency()
+             * .exponent()
+             * .rateString()
+             * .targetAmount()
+             * .targetCurrency()
+             * .value()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -652,6 +684,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

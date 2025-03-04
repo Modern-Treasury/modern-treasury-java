@@ -376,6 +376,36 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Transaction].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .asOfDate()
+         * .asOfTime()
+         * .asOfTimezone()
+         * .createdAt()
+         * .currency()
+         * .customIdentifiers()
+         * .direction()
+         * .discardedAt()
+         * .foreignExchangeRate()
+         * .internalAccountId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .posted()
+         * .reconciled()
+         * .type()
+         * .updatedAt()
+         * .vendorCode()
+         * .vendorCodeType()
+         * .vendorCustomerId()
+         * .vendorId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -809,6 +839,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomIdentifiers]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -990,6 +1021,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ForeignExchangeRate].
+             *
+             * The following fields are required:
+             * ```java
+             * .baseAmount()
+             * .baseCurrency()
+             * .exponent()
+             * .rateString()
+             * .targetAmount()
+             * .targetCurrency()
+             * .value()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1167,6 +1212,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1766,6 +1812,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Details]. */
             @JvmStatic fun builder() = Builder()
         }
 

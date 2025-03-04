@@ -199,6 +199,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerTransactionPartialPostCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .postedLedgerEntries()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -352,6 +361,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerTransactionCreatePartialPostParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .postedLedgerEntries()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -659,6 +678,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerEntryPartialPostCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .direction()
+             * .ledgerAccountId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -900,6 +930,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1000,6 +1031,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -150,6 +150,21 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountDetail].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accountNumberSafe()
+         * .accountNumberType()
+         * .createdAt()
+         * .discardedAt()
+         * .liveMode()
+         * .object_()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
