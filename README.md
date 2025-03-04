@@ -158,6 +158,35 @@ CompletableFuture<Counterparty> counterparty = client.counterparties().create(pa
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
 
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of Java classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
+
+```java
+import com.moderntreasury.api.core.http.Headers;
+import com.moderntreasury.api.core.http.HttpResponseFor;
+import com.moderntreasury.api.models.Counterparty;
+import com.moderntreasury.api.models.CounterpartyCreateParams;
+
+CounterpartyCreateParams params = CounterpartyCreateParams.builder()
+    .name("my first counterparty")
+    .build();
+HttpResponseFor<Counterparty> counterparty = client.counterparties().withRawResponse().create(params);
+
+int statusCode = counterparty.statusCode();
+Headers headers = counterparty.headers();
+```
+
+You can still deserialize the response into an instance of a Java class if needed:
+
+```java
+import com.moderntreasury.api.models.Counterparty;
+
+Counterparty parsedCounterparty = counterparty.parse();
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
