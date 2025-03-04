@@ -258,6 +258,30 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerAccountSettlement].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .contraLedgerAccountId()
+         * .createdAt()
+         * .currency()
+         * .currencyExponent()
+         * .description()
+         * .effectiveAtUpperBound()
+         * .ledgerId()
+         * .ledgerTransactionId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .settledLedgerAccountId()
+         * .settlementEntryDirection()
+         * .status()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -548,6 +572,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -213,6 +213,25 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BulkResult].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .entity()
+         * .entityId()
+         * .entityType()
+         * .liveMode()
+         * .object_()
+         * .requestId()
+         * .requestParams()
+         * .requestType()
+         * .status()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -735,6 +754,19 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [BulkError].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .id()
+                 * .createdAt()
+                 * .liveMode()
+                 * .object_()
+                 * .requestErrors()
+                 * .updatedAt()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -894,6 +926,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [RequestError]. */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1144,6 +1177,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [RequestParams]. */
             @JvmStatic fun builder() = Builder()
         }
 

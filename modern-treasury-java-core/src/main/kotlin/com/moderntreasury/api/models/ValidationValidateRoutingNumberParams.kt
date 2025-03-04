@@ -51,6 +51,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ValidationValidateRoutingNumberParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .routingNumber()
+         * .routingNumberType()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

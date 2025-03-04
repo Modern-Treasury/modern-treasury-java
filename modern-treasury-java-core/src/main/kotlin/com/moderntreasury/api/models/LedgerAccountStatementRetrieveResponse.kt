@@ -254,6 +254,29 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountStatementRetrieveResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .description()
+         * .effectiveAtLowerBound()
+         * .effectiveAtUpperBound()
+         * .endingBalance()
+         * .ledgerAccountId()
+         * .ledgerAccountLockVersion()
+         * .ledgerAccountNormalBalance()
+         * .ledgerId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .startingBalance()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -577,6 +600,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LedgerBalances].
+             *
+             * The following fields are required:
+             * ```java
+             * .availableBalance()
+             * .pendingBalance()
+             * .postedBalance()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -736,6 +769,18 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [LedgerBalance].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .credits()
+                 * .currency()
+                 * .currencyExponent()
+                 * .debits()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -882,6 +927,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

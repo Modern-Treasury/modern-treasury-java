@@ -178,6 +178,25 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Document].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .discardedAt()
+         * .documentDetails()
+         * .documentType()
+         * .documentableId()
+         * .documentableType()
+         * .file()
+         * .liveMode()
+         * .object_()
+         * .source()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -458,6 +477,21 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DocumentDetail].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .createdAt()
+             * .discardedAt()
+             * .documentIdentifier()
+             * .documentIdentifierType()
+             * .liveMode()
+             * .object_()
+             * .updatedAt()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -820,6 +854,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [File]. */
             @JvmStatic fun builder() = Builder()
         }
 

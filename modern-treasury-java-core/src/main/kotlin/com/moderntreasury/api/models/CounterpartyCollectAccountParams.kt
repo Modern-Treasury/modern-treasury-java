@@ -221,6 +221,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CounterpartyCollectAccountRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .direction()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -379,6 +388,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CounterpartyCollectAccountParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .direction()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

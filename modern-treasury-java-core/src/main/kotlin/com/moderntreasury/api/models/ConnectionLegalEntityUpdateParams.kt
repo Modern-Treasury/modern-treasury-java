@@ -94,6 +94,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ConnectionLegalEntityUpdateRequest].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -163,6 +167,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ConnectionLegalEntityUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

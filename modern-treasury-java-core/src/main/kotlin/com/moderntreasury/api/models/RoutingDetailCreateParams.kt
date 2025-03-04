@@ -164,6 +164,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [RoutingDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .routingNumber()
+             * .routingNumberType()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -281,6 +291,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [RoutingDetailCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .accountsType()
+         * .accountId()
+         * .routingNumber()
+         * .routingNumberType()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

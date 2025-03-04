@@ -106,6 +106,9 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LineItemUpdateRequest].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -178,6 +181,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LineItemUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .itemizableType()
+         * .itemizableId()
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -375,6 +388,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

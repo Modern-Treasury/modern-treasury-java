@@ -165,6 +165,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ReversalCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .reason()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -279,6 +287,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [PaymentOrderReversalCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .paymentOrderId()
+         * .reason()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -769,6 +787,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerTransactionCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .ledgerEntries()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1161,6 +1188,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [LedgerEntryCreateRequest].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .direction()
+                 * .ledgerAccountId()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1473,6 +1511,10 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [AvailableBalanceAmount].
+                     */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1561,6 +1603,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1647,6 +1690,10 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [PendingBalanceAmount].
+                     */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1736,6 +1783,10 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [PostedBalanceAmount].
+                     */
                     @JvmStatic fun builder() = Builder()
                 }
 
@@ -1976,6 +2027,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -2185,6 +2237,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

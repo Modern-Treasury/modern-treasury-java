@@ -248,6 +248,28 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [TransactionLineItem].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .counterpartyId()
+         * .createdAt()
+         * .description()
+         * .discardedAt()
+         * .expectedPaymentId()
+         * .liveMode()
+         * .object_()
+         * .reconcilable()
+         * .transactableId()
+         * .transactableType()
+         * .transactionId()
+         * .type()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

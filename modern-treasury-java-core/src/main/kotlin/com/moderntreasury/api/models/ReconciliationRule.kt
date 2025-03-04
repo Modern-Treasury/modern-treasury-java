@@ -185,6 +185,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ReconciliationRule].
+         *
+         * The following fields are required:
+         * ```java
+         * .amountLowerBound()
+         * .amountUpperBound()
+         * .direction()
+         * .internalAccountId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -513,6 +524,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomIdentifiers]. */
             @JvmStatic fun builder() = Builder()
         }
 

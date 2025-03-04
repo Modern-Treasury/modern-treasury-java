@@ -278,6 +278,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerAccountCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .currency()
+             * .ledgerId()
+             * .name()
+             * .normalBalance()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -497,6 +509,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerAccountCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .currency()
+         * .ledgerId()
+         * .name()
+         * .normalBalance()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -903,6 +926,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

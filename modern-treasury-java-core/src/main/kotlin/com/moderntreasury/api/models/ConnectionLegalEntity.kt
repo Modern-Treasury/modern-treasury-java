@@ -150,6 +150,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ConnectionLegalEntity].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .connectionId()
+         * .createdAt()
+         * .discardedAt()
+         * .legalEntityId()
+         * .liveMode()
+         * .object_()
+         * .status()
+         * .updatedAt()
+         * .vendorId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

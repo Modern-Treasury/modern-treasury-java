@@ -134,6 +134,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ConnectionLegalEntityListPage].
+             */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -50,6 +50,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LineItemRetrieveParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .itemizableType()
+         * .itemizableId()
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

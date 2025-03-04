@@ -248,6 +248,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [InvoiceLineItemCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * .unitAmount()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -409,6 +419,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceLineItemCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .invoiceId()
+         * .name()
+         * .unitAmount()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -661,6 +681,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

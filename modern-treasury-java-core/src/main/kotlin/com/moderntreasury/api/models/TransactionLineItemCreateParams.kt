@@ -129,6 +129,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [TransactionLineItemCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .expectedPaymentId()
+             * .transactionId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -229,6 +240,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [TransactionLineItemCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .amount()
+         * .expectedPaymentId()
+         * .transactionId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

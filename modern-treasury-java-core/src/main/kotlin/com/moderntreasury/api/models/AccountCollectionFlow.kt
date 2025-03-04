@@ -185,6 +185,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountCollectionFlow].
+         *
+         * The following fields are required:
+         * ```java
+         * .counterpartyId()
+         * .paymentTypes()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

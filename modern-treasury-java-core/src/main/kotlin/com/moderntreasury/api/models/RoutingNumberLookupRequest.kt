@@ -140,6 +140,9 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [RoutingNumberLookupRequest].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -365,6 +368,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [AddressRequest]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -665,6 +669,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Sanctions]. */
             @JvmStatic fun builder() = Builder()
         }
 
