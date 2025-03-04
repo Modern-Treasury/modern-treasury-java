@@ -4,7 +4,9 @@
 
 package com.moderntreasury.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerEventHandler
 import com.moderntreasury.api.models.LedgerEventHandlerCreateParams
 import com.moderntreasury.api.models.LedgerEventHandlerDeleteParams
@@ -14,6 +16,11 @@ import com.moderntreasury.api.models.LedgerEventHandlerRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface LedgerEventHandlerServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** create ledger_event_handler */
     @JvmOverloads
@@ -46,4 +53,65 @@ interface LedgerEventHandlerServiceAsync {
         params: LedgerEventHandlerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandler>
+
+    /**
+     * A view of [LedgerEventHandlerServiceAsync] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /api/ledger_event_handlers`, but is otherwise the
+         * same as [LedgerEventHandlerServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerEventHandlerCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+
+        /**
+         * Returns a raw HTTP response for `get /api/ledger_event_handlers/{id}`, but is otherwise
+         * the same as [LedgerEventHandlerServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerEventHandlerRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+
+        /**
+         * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
+         * same as [LedgerEventHandlerServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandlerListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
+         * same as [LedgerEventHandlerServiceAsync.list].
+         */
+        @MustBeClosed
+        fun list(
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandlerListPageAsync>> =
+            list(LedgerEventHandlerListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `delete /api/ledger_event_handlers/{id}`, but is
+         * otherwise the same as [LedgerEventHandlerServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: LedgerEventHandlerDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+    }
 }
