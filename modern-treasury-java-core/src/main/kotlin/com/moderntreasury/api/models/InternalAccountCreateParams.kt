@@ -241,6 +241,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [InternalAccountCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .connectionId()
+             * .currency()
+             * .name()
+             * .partyName()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -404,6 +416,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InternalAccountCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .connectionId()
+         * .currency()
+         * .name()
+         * .partyName()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -810,6 +833,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [PartyAddress].
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -946,6 +981,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [VendorAttributes]. */
             @JvmStatic fun builder() = Builder()
         }
 

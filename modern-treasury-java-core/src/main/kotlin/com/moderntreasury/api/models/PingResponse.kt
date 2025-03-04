@@ -47,6 +47,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PingResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .ping()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

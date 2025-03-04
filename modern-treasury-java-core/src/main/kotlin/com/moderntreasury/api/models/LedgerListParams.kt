@@ -72,6 +72,7 @@ private constructor(
 
         @JvmStatic fun none(): LedgerListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [LedgerListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -280,6 +281,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -380,6 +382,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [UpdatedAt]. */
             @JvmStatic fun builder() = Builder()
         }
 

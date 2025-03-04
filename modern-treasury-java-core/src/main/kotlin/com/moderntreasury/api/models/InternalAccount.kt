@@ -264,6 +264,32 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InternalAccount].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accountDetails()
+         * .accountType()
+         * .connection()
+         * .counterpartyId()
+         * .createdAt()
+         * .currency()
+         * .ledgerAccountId()
+         * .legalEntityId()
+         * .liveMode()
+         * .metadata()
+         * .name()
+         * .object_()
+         * .parentAccountId()
+         * .partyAddress()
+         * .partyName()
+         * .partyType()
+         * .routingDetails()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -717,6 +743,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -905,6 +932,24 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Address].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .country()
+             * .createdAt()
+             * .line1()
+             * .line2()
+             * .liveMode()
+             * .locality()
+             * .object_()
+             * .postalCode()
+             * .region()
+             * .updatedAt()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -296,6 +296,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [VirtualAccountCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .internalAccountId()
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -518,6 +528,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [VirtualAccountCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .internalAccountId()
+         * .name()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -841,6 +860,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .accountNumber()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1255,6 +1283,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerAccountCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .currency()
+             * .ledgerId()
+             * .name()
+             * .normalBalance()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1603,6 +1643,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1703,6 +1744,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1833,6 +1875,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [RoutingDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .routingNumber()
+             * .routingNumberType()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

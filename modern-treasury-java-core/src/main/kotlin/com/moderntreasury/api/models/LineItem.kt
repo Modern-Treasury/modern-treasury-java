@@ -198,6 +198,26 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LineItem].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accounting()
+         * .accountingCategoryId()
+         * .accountingLedgerClassId()
+         * .amount()
+         * .createdAt()
+         * .description()
+         * .itemizableId()
+         * .itemizableType()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -456,6 +476,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Accounting]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -685,6 +706,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -137,6 +137,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Connection].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .discardedAt()
+         * .liveMode()
+         * .object_()
+         * .updatedAt()
+         * .vendorCustomerId()
+         * .vendorId()
+         * .vendorName()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

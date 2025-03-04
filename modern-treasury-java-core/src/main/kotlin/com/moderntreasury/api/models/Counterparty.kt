@@ -185,6 +185,26 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Counterparty].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accounts()
+         * .createdAt()
+         * .discardedAt()
+         * .email()
+         * .legalEntityId()
+         * .liveMode()
+         * .metadata()
+         * .name()
+         * .object_()
+         * .sendRemittanceAdvice()
+         * .updatedAt()
+         * .verificationStatus()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -623,6 +643,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Account]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1017,6 +1038,21 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [ContactDetail].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .id()
+                 * .contactIdentifier()
+                 * .contactIdentifierType()
+                 * .createdAt()
+                 * .discardedAt()
+                 * .liveMode()
+                 * .object_()
+                 * .updatedAt()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1302,6 +1338,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1497,6 +1534,24 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Address].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .id()
+                 * .country()
+                 * .createdAt()
+                 * .line1()
+                 * .line2()
+                 * .liveMode()
+                 * .locality()
+                 * .object_()
+                 * .postalCode()
+                 * .region()
+                 * .updatedAt()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -2053,6 +2108,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

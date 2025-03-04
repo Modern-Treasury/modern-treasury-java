@@ -142,6 +142,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [LedgerAccountBalanceMonitorCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .alertCondition()
+             * .ledgerAccountId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -255,6 +265,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountBalanceMonitorCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .alertCondition()
+         * .ledgerAccountId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -514,6 +534,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AlertConditionCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .field()
+             * .operator()
+             * .value()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -643,6 +674,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

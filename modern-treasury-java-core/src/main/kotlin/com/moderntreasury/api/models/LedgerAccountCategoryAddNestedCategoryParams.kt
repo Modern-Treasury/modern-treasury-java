@@ -52,6 +52,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountCategoryAddNestedCategoryParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .subCategoryId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

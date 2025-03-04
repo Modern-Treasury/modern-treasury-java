@@ -212,6 +212,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ReturnCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .returnableId()
+             * .returnableType()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -389,6 +398,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ReturnCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .returnableId()
+         * .returnableType()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

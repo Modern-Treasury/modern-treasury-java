@@ -18,6 +18,10 @@ class ModernTreasuryOkHttpClientAsync private constructor() {
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ModernTreasuryOkHttpClientAsync].
+         */
         @JvmStatic fun builder() = Builder()
 
         @JvmStatic fun fromEnv(): ModernTreasuryClientAsync = builder().fromEnv().build()

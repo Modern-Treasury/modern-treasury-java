@@ -168,6 +168,9 @@ private constructor(
 
         @JvmStatic fun none(): LedgerTransactionListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of [LedgerTransactionListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -535,6 +538,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [EffectiveAt]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -634,6 +638,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [EffectiveDate]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -861,6 +866,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -972,6 +978,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [OrderBy]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1294,6 +1301,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [PostedAt]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1500,6 +1508,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [UpdatedAt]. */
             @JvmStatic fun builder() = Builder()
         }
 

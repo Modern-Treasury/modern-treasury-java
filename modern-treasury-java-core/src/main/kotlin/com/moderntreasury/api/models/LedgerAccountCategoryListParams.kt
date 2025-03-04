@@ -99,6 +99,10 @@ private constructor(
 
         @JvmStatic fun none(): LedgerAccountCategoryListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountCategoryListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -365,6 +369,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Balances]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -472,6 +477,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -133,6 +133,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [BalanceReportListPageAsync].
+             */
             @JvmStatic fun builder() = Builder()
         }
 

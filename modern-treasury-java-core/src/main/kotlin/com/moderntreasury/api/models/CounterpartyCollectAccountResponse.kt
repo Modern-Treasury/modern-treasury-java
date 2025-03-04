@@ -85,6 +85,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CounterpartyCollectAccountResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .formLink()
+         * .isResend()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

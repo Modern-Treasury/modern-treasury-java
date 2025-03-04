@@ -42,6 +42,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [PaymentOrderReversalRetrieveParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .paymentOrderId()
+         * .reversalId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

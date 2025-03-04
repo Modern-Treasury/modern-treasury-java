@@ -81,6 +81,9 @@ private constructor(
 
         @JvmStatic fun none(): InternalAccountListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InternalAccountListParams].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -301,6 +304,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

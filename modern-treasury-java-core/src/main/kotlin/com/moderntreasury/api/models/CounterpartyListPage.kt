@@ -130,6 +130,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CounterpartyListPage]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -180,6 +180,25 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BulkRequest].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .actionType()
+         * .createdAt()
+         * .failedResultCount()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .resourceType()
+         * .status()
+         * .successResultCount()
+         * .totalResourceCount()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -481,6 +500,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             @JvmStatic fun builder() = Builder()
         }
 

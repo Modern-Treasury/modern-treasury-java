@@ -61,6 +61,7 @@ private constructor(
 
         @JvmStatic fun none(): PaperItemListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [PaperItemListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 

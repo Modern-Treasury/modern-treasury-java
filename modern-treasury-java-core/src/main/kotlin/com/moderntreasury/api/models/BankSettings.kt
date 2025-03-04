@@ -174,6 +174,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BankSettings].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .backupWithholdingPercentage()
+         * .createdAt()
+         * .discardedAt()
+         * .enableBackupWithholding()
+         * .liveMode()
+         * .object_()
+         * .privacyOptOut()
+         * .regulationO()
+         * .updatedAt()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
