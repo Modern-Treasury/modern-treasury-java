@@ -10,6 +10,8 @@ import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse.Handler
+import com.moderntreasury.api.core.http.HttpResponseFor
+import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.json
 import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.errors.ModernTreasuryError
@@ -27,138 +29,196 @@ class LedgerAccountSettlementServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) :
     LedgerAccountSettlementServiceAsync {
 
-    private val errorHandler: Handler<ModernTreasuryError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: LedgerAccountSettlementServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val accountEntries: AccountEntryServiceAsync by lazy {
         AccountEntryServiceAsyncImpl(clientOptions)
     }
 
+    override fun withRawResponse(): LedgerAccountSettlementServiceAsync.WithRawResponse =
+        withRawResponse
+
     override fun accountEntries(): AccountEntryServiceAsync = accountEntries
 
-    private val createHandler: Handler<LedgerAccountSettlement> =
-        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Create a ledger account settlement. */
     override fun create(
         params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LedgerAccountSettlement> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("api", "ledger_account_settlements")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<LedgerAccountSettlement> =
+        // post /api/ledger_account_settlements
+        withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    private val retrieveHandler: Handler<LedgerAccountSettlement> =
-        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Get details on a single ledger account settlement. */
     override fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LedgerAccountSettlement> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<LedgerAccountSettlement> =
+        // get /api/ledger_account_settlements/{id}
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    private val updateHandler: Handler<LedgerAccountSettlement> =
-        jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Update the details of a ledger account settlement. */
     override fun update(
         params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LedgerAccountSettlement> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PATCH)
-                .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<LedgerAccountSettlement> =
+        // patch /api/ledger_account_settlements/{id}
+        withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    private val listHandler: Handler<List<LedgerAccountSettlement>> =
-        jsonHandler<List<LedgerAccountSettlement>>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Get a list of ledger account settlements. */
     override fun list(
         params: LedgerAccountSettlementListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LedgerAccountSettlementListPageAsync> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("api", "ledger_account_settlements")
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.forEach { it.validate() }
-                        }
+    ): CompletableFuture<LedgerAccountSettlementListPageAsync> =
+        // get /api/ledger_account_settlements
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        LedgerAccountSettlementServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<ModernTreasuryError> =
+            errorHandler(clientOptions.jsonMapper)
+
+        private val accountEntries: AccountEntryServiceAsync.WithRawResponse by lazy {
+            AccountEntryServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun accountEntries(): AccountEntryServiceAsync.WithRawResponse = accountEntries
+
+        private val createHandler: Handler<LedgerAccountSettlement> =
+            jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun create(
+            params: LedgerAccountSettlementCreateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("api", "ledger_account_settlements")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { createHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
                     }
-                    .let {
-                        LedgerAccountSettlementListPageAsync.of(
-                            this,
-                            params,
-                            LedgerAccountSettlementListPageAsync.Response.builder()
-                                .items(it)
-                                .perPage(response.headers().values("X-Per-Page").getOrNull(0) ?: "")
-                                .afterCursor(
-                                    response.headers().values("X-After-Cursor").getOrNull(0) ?: ""
+                }
+        }
+
+        private val retrieveHandler: Handler<LedgerAccountSettlement> =
+            jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: LedgerAccountSettlementRetrieveParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { retrieveHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val updateHandler: Handler<LedgerAccountSettlement> =
+            jsonHandler<LedgerAccountSettlement>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun update(
+            params: LedgerAccountSettlementUpdateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PATCH)
+                    .addPathSegments("api", "ledger_account_settlements", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { updateHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val listHandler: Handler<List<LedgerAccountSettlement>> =
+            jsonHandler<List<LedgerAccountSettlement>>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: LedgerAccountSettlementListParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("api", "ledger_account_settlements")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { listHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.forEach { it.validate() }
+                                }
+                            }
+                            .let {
+                                LedgerAccountSettlementListPageAsync.of(
+                                    LedgerAccountSettlementServiceAsyncImpl(clientOptions),
+                                    params,
+                                    LedgerAccountSettlementListPageAsync.Response.builder()
+                                        .items(it)
+                                        .perPage(
+                                            response.headers().values("X-Per-Page").getOrNull(0)
+                                                ?: ""
+                                        )
+                                        .afterCursor(
+                                            response.headers().values("X-After-Cursor").getOrNull(0)
+                                                ?: ""
+                                        )
+                                        .build(),
                                 )
-                                .build(),
-                        )
+                            }
                     }
-            }
+                }
+        }
     }
 }
