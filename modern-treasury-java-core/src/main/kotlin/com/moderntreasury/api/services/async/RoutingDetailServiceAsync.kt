@@ -5,9 +5,12 @@
 package com.moderntreasury.api.services.async
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.http.HttpResponse
+import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.models.RoutingDetail
 import com.moderntreasury.api.models.RoutingDetailCreateParams
@@ -18,6 +21,11 @@ import com.moderntreasury.api.models.RoutingDetailRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface RoutingDetailServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Create a routing detail for a single external account. */
     @JvmOverloads
@@ -142,5 +150,58 @@ interface RoutingDetailServiceAsync {
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
+    }
+
+    /**
+     * A view of [RoutingDetailServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/routing_details`,
+         * but is otherwise the same as [RoutingDetailServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: RoutingDetailCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
+         * [RoutingDetailServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: RoutingDetailRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>>
+
+        /**
+         * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/routing_details`,
+         * but is otherwise the same as [RoutingDetailServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: RoutingDetailListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetailListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
+         * [RoutingDetailServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: RoutingDetailDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse>
     }
 }
