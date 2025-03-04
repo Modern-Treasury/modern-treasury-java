@@ -26,8 +26,10 @@ private constructor(
     @get:JvmName("maxRetries") val maxRetries: Int,
     @get:JvmName("apiKey") val apiKey: String,
     @get:JvmName("organizationId") val organizationId: String,
-    @get:JvmName("webhookKey") val webhookKey: String?,
+    private val webhookKey: String?,
 ) {
+
+    fun webhookKey(): Optional<String> = Optional.ofNullable(webhookKey)
 
     fun toBuilder() = Builder().from(this)
 
