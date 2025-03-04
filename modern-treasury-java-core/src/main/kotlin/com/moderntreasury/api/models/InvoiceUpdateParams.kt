@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -826,14 +827,8 @@ private constructor(
             /** The invoicer's contact details displayed at the top of the invoice. */
             fun addContactDetail(contactDetail: ContactDetail) = apply {
                 contactDetails =
-                    (contactDetails ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(contactDetail)
+                    (contactDetails ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("contactDetails", it).add(contactDetail)
                     }
             }
 
@@ -985,14 +980,8 @@ private constructor(
              */
             fun addInvoiceLineItem(invoiceLineItem: InvoiceLineItemCreateRequest) = apply {
                 invoiceLineItems =
-                    (invoiceLineItems ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(invoiceLineItem)
+                    (invoiceLineItems ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("invoiceLineItems", it).add(invoiceLineItem)
                     }
             }
 
@@ -1074,14 +1063,8 @@ private constructor(
              */
             fun addNotificationEmailAddress(notificationEmailAddress: String) = apply {
                 notificationEmailAddresses =
-                    (notificationEmailAddresses ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(notificationEmailAddress)
+                    (notificationEmailAddresses ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("notificationEmailAddresses", it).add(notificationEmailAddress)
                     }
             }
 
@@ -1246,14 +1229,8 @@ private constructor(
              */
             fun addRemindAfterOverdueDay(remindAfterOverdueDay: Long) = apply {
                 remindAfterOverdueDays =
-                    (remindAfterOverdueDays ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(remindAfterOverdueDay)
+                    (remindAfterOverdueDays ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("remindAfterOverdueDays", it).add(remindAfterOverdueDay)
                     }
             }
 

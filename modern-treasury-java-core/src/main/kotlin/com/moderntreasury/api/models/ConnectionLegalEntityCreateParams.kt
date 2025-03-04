@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -790,14 +791,8 @@ private constructor(
             /** A list of addresses for the entity. */
             fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
                 addresses =
-                    (addresses ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(address)
+                    (addresses ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("addresses", it).add(address)
                     }
             }
 
@@ -870,14 +865,8 @@ private constructor(
 
             fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
                 doingBusinessAsNames =
-                    (doingBusinessAsNames ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(doingBusinessAsName)
+                    (doingBusinessAsNames ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("doingBusinessAsNames", it).add(doingBusinessAsName)
                     }
             }
 
@@ -912,14 +901,8 @@ private constructor(
             /** A list of identifications for the legal entity. */
             fun addIdentification(identification: IdentificationCreateRequest) = apply {
                 identifications =
-                    (identifications ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(identification)
+                    (identifications ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("identifications", it).add(identification)
                     }
             }
 
@@ -954,14 +937,8 @@ private constructor(
                 legalEntityAssociation: LegalEntityAssociationInlineCreateRequest
             ) = apply {
                 legalEntityAssociations =
-                    (legalEntityAssociations ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(legalEntityAssociation)
+                    (legalEntityAssociations ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("legalEntityAssociations", it).add(legalEntityAssociation)
                     }
             }
 
@@ -1017,14 +994,8 @@ private constructor(
 
             fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
                 phoneNumbers =
-                    (phoneNumbers ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(phoneNumber)
+                    (phoneNumbers ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("phoneNumbers", it).add(phoneNumber)
                     }
             }
 
@@ -1343,14 +1314,8 @@ private constructor(
                 /** The types of this address. */
                 fun addAddressType(addressType: AddressType) = apply {
                     addressTypes =
-                        (addressTypes ?: JsonField.of(mutableListOf())).apply {
-                            asKnown()
-                                .orElseThrow {
-                                    IllegalStateException(
-                                        "Field was set to non-list type: ${javaClass.simpleName}"
-                                    )
-                                }
-                                .add(addressType)
+                        (addressTypes ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("addressTypes", it).add(addressType)
                         }
                 }
 
@@ -2045,14 +2010,8 @@ private constructor(
 
                 fun addRelationshipType(relationshipType: RelationshipType) = apply {
                     relationshipTypes =
-                        (relationshipTypes ?: JsonField.of(mutableListOf())).apply {
-                            asKnown()
-                                .orElseThrow {
-                                    IllegalStateException(
-                                        "Field was set to non-list type: ${javaClass.simpleName}"
-                                    )
-                                }
-                                .add(relationshipType)
+                        (relationshipTypes ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("relationshipTypes", it).add(relationshipType)
                         }
                 }
 
@@ -2651,14 +2610,8 @@ private constructor(
                     /** A list of addresses for the entity. */
                     fun addAddress(address: LegalEntityAddressCreateRequest) = apply {
                         addresses =
-                            (addresses ?: JsonField.of(mutableListOf())).apply {
-                                asKnown()
-                                    .orElseThrow {
-                                        IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        )
-                                    }
-                                    .add(address)
+                            (addresses ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("addresses", it).add(address)
                             }
                     }
 
@@ -2735,14 +2688,8 @@ private constructor(
 
                     fun addDoingBusinessAsName(doingBusinessAsName: String) = apply {
                         doingBusinessAsNames =
-                            (doingBusinessAsNames ?: JsonField.of(mutableListOf())).apply {
-                                asKnown()
-                                    .orElseThrow {
-                                        IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        )
-                                    }
-                                    .add(doingBusinessAsName)
+                            (doingBusinessAsNames ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("doingBusinessAsNames", it).add(doingBusinessAsName)
                             }
                     }
 
@@ -2778,14 +2725,8 @@ private constructor(
                     /** A list of identifications for the legal entity. */
                     fun addIdentification(identification: IdentificationCreateRequest) = apply {
                         identifications =
-                            (identifications ?: JsonField.of(mutableListOf())).apply {
-                                asKnown()
-                                    .orElseThrow {
-                                        IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        )
-                                    }
-                                    .add(identification)
+                            (identifications ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("identifications", it).add(identification)
                             }
                     }
 
@@ -2854,14 +2795,8 @@ private constructor(
 
                     fun addPhoneNumber(phoneNumber: PhoneNumber) = apply {
                         phoneNumbers =
-                            (phoneNumbers ?: JsonField.of(mutableListOf())).apply {
-                                asKnown()
-                                    .orElseThrow {
-                                        IllegalStateException(
-                                            "Field was set to non-list type: ${javaClass.simpleName}"
-                                        )
-                                    }
-                                    .add(phoneNumber)
+                            (phoneNumbers ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("phoneNumbers", it).add(phoneNumber)
                             }
                     }
 
@@ -3201,14 +3136,8 @@ private constructor(
                         /** The types of this address. */
                         fun addAddressType(addressType: AddressType) = apply {
                             addressTypes =
-                                (addressTypes ?: JsonField.of(mutableListOf())).apply {
-                                    asKnown()
-                                        .orElseThrow {
-                                            IllegalStateException(
-                                                "Field was set to non-list type: ${javaClass.simpleName}"
-                                            )
-                                        }
-                                        .add(addressType)
+                                (addressTypes ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("addressTypes", it).add(addressType)
                                 }
                         }
 
