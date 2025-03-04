@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
@@ -242,14 +243,8 @@ private constructor(
          */
         fun addSupportedPaymentType(supportedPaymentType: SupportedPaymentType) = apply {
             supportedPaymentTypes =
-                (supportedPaymentTypes ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(supportedPaymentType)
+                (supportedPaymentTypes ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("supportedPaymentTypes", it).add(supportedPaymentType)
                 }
         }
 
