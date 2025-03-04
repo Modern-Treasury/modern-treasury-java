@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -156,14 +157,8 @@ private constructor(
 
             fun addPaymentType(paymentType: String) = apply {
                 paymentTypes =
-                    (paymentTypes ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(paymentType)
+                    (paymentTypes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("paymentTypes", it).add(paymentType)
                     }
             }
 
@@ -176,14 +171,8 @@ private constructor(
 
             fun addReceivingCountry(receivingCountry: ReceivingCountry) = apply {
                 receivingCountries =
-                    (receivingCountries ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(receivingCountry)
+                    (receivingCountries ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("receivingCountries", it).add(receivingCountry)
                     }
             }
 

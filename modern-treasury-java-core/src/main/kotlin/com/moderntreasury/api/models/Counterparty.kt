@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.NoAutoDetect
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
@@ -238,14 +239,8 @@ private constructor(
         /** The accounts for this counterparty. */
         fun addAccount(account: Account) = apply {
             accounts =
-                (accounts ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(account)
+                (accounts ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("accounts", it).add(account)
                 }
         }
 
@@ -690,14 +685,8 @@ private constructor(
 
             fun addAccountDetail(accountDetail: AccountDetail) = apply {
                 accountDetails =
-                    (accountDetails ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(accountDetail)
+                    (accountDetails ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("accountDetails", it).add(accountDetail)
                     }
             }
 
@@ -719,14 +708,8 @@ private constructor(
 
             fun addContactDetail(contactDetail: ContactDetail) = apply {
                 contactDetails =
-                    (contactDetails ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(contactDetail)
+                    (contactDetails ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("contactDetails", it).add(contactDetail)
                     }
             }
 
@@ -851,14 +834,8 @@ private constructor(
 
             fun addRoutingDetail(routingDetail: RoutingDetail) = apply {
                 routingDetails =
-                    (routingDetails ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(routingDetail)
+                    (routingDetails ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("routingDetails", it).add(routingDetail)
                     }
             }
 
