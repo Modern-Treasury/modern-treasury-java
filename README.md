@@ -158,6 +158,74 @@ CompletableFuture<Counterparty> counterparty = client.counterparties().create(pa
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
 
+## File uploads
+
+The SDK defines methods that accept files.
+
+To upload a file, pass a [`Path`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html):
+
+```java
+import com.moderntreasury.api.models.Document;
+import com.moderntreasury.api.models.DocumentCreateParams;
+import java.nio.file.Paths;
+
+DocumentCreateParams params = DocumentCreateParams.builder()
+    .documentableId("24c6b7a3-02...")
+    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .file(Paths.get("my/file.txt"))
+    .build();
+Document document = client.documents().create(params);
+```
+
+Or an arbitrary [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html):
+
+```java
+import com.moderntreasury.api.models.Document;
+import com.moderntreasury.api.models.DocumentCreateParams;
+import java.net.URL;
+
+DocumentCreateParams params = DocumentCreateParams.builder()
+    .documentableId("24c6b7a3-02...")
+    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .file(new URL("https://example.com").openStream())
+    .build();
+Document document = client.documents().create(params);
+```
+
+Or a `byte[]` array:
+
+```java
+import com.moderntreasury.api.models.Document;
+import com.moderntreasury.api.models.DocumentCreateParams;
+
+DocumentCreateParams params = DocumentCreateParams.builder()
+    .documentableId("24c6b7a3-02...")
+    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .file("content".getBytes())
+    .build();
+Document document = client.documents().create(params);
+```
+
+Note that when passing a non-`Path` its filename is unknown so it will not be included in the request. To manually set a filename, pass a `MultipartField`:
+
+```java
+import com.moderntreasury.api.core.MultipartField;
+import com.moderntreasury.api.models.Document;
+import com.moderntreasury.api.models.DocumentCreateParams;
+import java.io.InputStream;
+import java.net.URL;
+
+DocumentCreateParams params = DocumentCreateParams.builder()
+    .documentableId("24c6b7a3-02...")
+    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .file(MultipartField.<InputStream>builder()
+        .value(new URL("https://example.com").openStream())
+        .filename("my/file.txt")
+        .build())
+    .build();
+Document document = client.documents().create(params);
+```
+
 ## Raw responses
 
 The SDK defines methods that deserialize responses into instances of Java classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
