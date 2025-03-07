@@ -188,7 +188,7 @@ import java.net.URL;
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
     .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
-    .file(new URL("https://example.com").openStream())
+    .file(new URL("https://example.com/my/file.txt").openStream())
     .build();
 Document document = client.documents().create(params);
 ```
@@ -220,7 +220,7 @@ DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
     .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
     .file(MultipartField.<InputStream>builder()
-        .value(new URL("https://example.com").openStream())
+        .value(new URL("https://example.com/my/file.txt").openStream())
         .filename("my/file.txt")
         .build())
     .build();
