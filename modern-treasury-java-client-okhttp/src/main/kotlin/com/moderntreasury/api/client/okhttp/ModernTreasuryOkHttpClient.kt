@@ -13,6 +13,7 @@ import java.net.Proxy
 import java.time.Clock
 import java.time.Duration
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class ModernTreasuryOkHttpClient private constructor() {
 
@@ -153,7 +154,7 @@ class ModernTreasuryOkHttpClient private constructor() {
 
         fun webhookKey(webhookKey: String?) = apply { clientOptions.webhookKey(webhookKey) }
 
-        fun webhookKey(webhookKey: Optional<String>) = webhookKey(webhookKey.orElse(null))
+        fun webhookKey(webhookKey: Optional<String>) = webhookKey(webhookKey.getOrNull())
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 

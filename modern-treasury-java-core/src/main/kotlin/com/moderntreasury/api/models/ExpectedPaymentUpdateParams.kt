@@ -23,6 +23,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** update expected payment */
 class ExpectedPaymentUpdateParams
@@ -539,9 +540,8 @@ private constructor(
              * The lowest amount this expected payment may be equal to. Value in specified
              * currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun amountLowerBound(amountLowerBound: Optional<Long>) =
-                amountLowerBound(amountLowerBound.orElse(null) as Long?)
+                amountLowerBound(amountLowerBound.getOrNull())
 
             /**
              * The lowest amount this expected payment may be equal to. Value in specified
@@ -569,9 +569,8 @@ private constructor(
              * The highest amount this expected payment may be equal to. Value in specified
              * currency's smallest unit. e.g. $10 would be represented as 1000.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun amountUpperBound(amountUpperBound: Optional<Long>) =
-                amountUpperBound(amountUpperBound.orElse(null) as Long?)
+                amountUpperBound(amountUpperBound.getOrNull())
 
             /**
              * The highest amount this expected payment may be equal to. Value in specified
@@ -587,7 +586,7 @@ private constructor(
 
             /** The ID of the counterparty you expect for this payment. */
             fun counterpartyId(counterpartyId: Optional<String>) =
-                counterpartyId(counterpartyId.orElse(null))
+                counterpartyId(counterpartyId.getOrNull())
 
             /** The ID of the counterparty you expect for this payment. */
             fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -598,7 +597,7 @@ private constructor(
             fun currency(currency: Currency?) = currency(JsonField.ofNullable(currency))
 
             /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-            fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
+            fun currency(currency: Optional<Currency>) = currency(currency.getOrNull())
 
             /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
@@ -609,7 +608,7 @@ private constructor(
 
             /** The earliest date the payment may come in. Format: yyyy-mm-dd */
             fun dateLowerBound(dateLowerBound: Optional<LocalDate>) =
-                dateLowerBound(dateLowerBound.orElse(null))
+                dateLowerBound(dateLowerBound.getOrNull())
 
             /** The earliest date the payment may come in. Format: yyyy-mm-dd */
             fun dateLowerBound(dateLowerBound: JsonField<LocalDate>) = apply {
@@ -622,7 +621,7 @@ private constructor(
 
             /** The latest date the payment may come in. Format: yyyy-mm-dd */
             fun dateUpperBound(dateUpperBound: Optional<LocalDate>) =
-                dateUpperBound(dateUpperBound.orElse(null))
+                dateUpperBound(dateUpperBound.getOrNull())
 
             /** The latest date the payment may come in. Format: yyyy-mm-dd */
             fun dateUpperBound(dateUpperBound: JsonField<LocalDate>) = apply {
@@ -633,7 +632,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** An optional description for internal use. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** An optional description for internal use. */
             fun description(description: JsonField<String>) = apply {
@@ -650,7 +649,7 @@ private constructor(
              * One of credit or debit. When you are receiving money, use credit. When you are being
              * charged, use debit.
              */
-            fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
+            fun direction(direction: Optional<Direction>) = direction(direction.getOrNull())
 
             /**
              * One of credit or debit. When you are receiving money, use credit. When you are being
@@ -664,7 +663,7 @@ private constructor(
 
             /** The ID of the Internal Account for the expected payment. */
             fun internalAccountId(internalAccountId: Optional<String>) =
-                internalAccountId(internalAccountId.orElse(null))
+                internalAccountId(internalAccountId.getOrNull())
 
             /** The ID of the Internal Account for the expected payment. */
             fun internalAccountId(internalAccountId: JsonField<String>) = apply {
@@ -701,7 +700,7 @@ private constructor(
             /** An array of reconciliation rule variables for this payment. */
             fun reconciliationRuleVariables(
                 reconciliationRuleVariables: Optional<List<ReconciliationRule>>
-            ) = reconciliationRuleVariables(reconciliationRuleVariables.orElse(null))
+            ) = reconciliationRuleVariables(reconciliationRuleVariables.getOrNull())
 
             /** An array of reconciliation rule variables for this payment. */
             fun reconciliationRuleVariables(
@@ -735,7 +734,7 @@ private constructor(
              * Information", also known as OBI or Fedwire tag 6000.
              */
             fun remittanceInformation(remittanceInformation: Optional<String>) =
-                remittanceInformation(remittanceInformation.orElse(null))
+                remittanceInformation(remittanceInformation.getOrNull())
 
             /**
              * For `ach`, this field will be passed through on an addenda record. For `wire`
@@ -760,7 +759,7 @@ private constructor(
              * the OBI field on the wire. For check payments, this will be the memo field.
              */
             fun statementDescriptor(statementDescriptor: Optional<String>) =
-                statementDescriptor(statementDescriptor.orElse(null))
+                statementDescriptor(statementDescriptor.getOrNull())
 
             /**
              * The statement description you expect to see on the transaction. For ACH payments,
@@ -779,7 +778,7 @@ private constructor(
             /**
              * The Expected Payment's status can be updated from partially_reconciled to reconciled.
              */
-            fun status(status: Optional<Status>) = status(status.orElse(null))
+            fun status(status: Optional<Status>) = status(status.getOrNull())
 
             /**
              * The Expected Payment's status can be updated from partially_reconciled to reconciled.
@@ -796,7 +795,7 @@ private constructor(
              * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
              * signet, wire.
              */
-            fun type(type: Optional<ExpectedPaymentType>) = type(type.orElse(null))
+            fun type(type: Optional<ExpectedPaymentType>) = type(type.getOrNull())
 
             /**
              * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
@@ -917,9 +916,8 @@ private constructor(
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun amountLowerBound(amountLowerBound: Optional<Long>) =
-            amountLowerBound(amountLowerBound.orElse(null) as Long?)
+            amountLowerBound(amountLowerBound.getOrNull())
 
         /**
          * The lowest amount this expected payment may be equal to. Value in specified currency's
@@ -947,9 +945,8 @@ private constructor(
          * The highest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun amountUpperBound(amountUpperBound: Optional<Long>) =
-            amountUpperBound(amountUpperBound.orElse(null) as Long?)
+            amountUpperBound(amountUpperBound.getOrNull())
 
         /**
          * The highest amount this expected payment may be equal to. Value in specified currency's
@@ -964,7 +961,7 @@ private constructor(
 
         /** The ID of the counterparty you expect for this payment. */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** The ID of the counterparty you expect for this payment. */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -975,7 +972,7 @@ private constructor(
         fun currency(currency: Currency?) = apply { body.currency(currency) }
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
-        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
+        fun currency(currency: Optional<Currency>) = currency(currency.getOrNull())
 
         /** Must conform to ISO 4217. Defaults to the currency of the internal account. */
         fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
@@ -987,7 +984,7 @@ private constructor(
 
         /** The earliest date the payment may come in. Format: yyyy-mm-dd */
         fun dateLowerBound(dateLowerBound: Optional<LocalDate>) =
-            dateLowerBound(dateLowerBound.orElse(null))
+            dateLowerBound(dateLowerBound.getOrNull())
 
         /** The earliest date the payment may come in. Format: yyyy-mm-dd */
         fun dateLowerBound(dateLowerBound: JsonField<LocalDate>) = apply {
@@ -1001,7 +998,7 @@ private constructor(
 
         /** The latest date the payment may come in. Format: yyyy-mm-dd */
         fun dateUpperBound(dateUpperBound: Optional<LocalDate>) =
-            dateUpperBound(dateUpperBound.orElse(null))
+            dateUpperBound(dateUpperBound.getOrNull())
 
         /** The latest date the payment may come in. Format: yyyy-mm-dd */
         fun dateUpperBound(dateUpperBound: JsonField<LocalDate>) = apply {
@@ -1012,7 +1009,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** An optional description for internal use. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional description for internal use. */
         fun description(description: JsonField<String>) = apply { body.description(description) }
@@ -1027,7 +1024,7 @@ private constructor(
          * One of credit or debit. When you are receiving money, use credit. When you are being
          * charged, use debit.
          */
-        fun direction(direction: Optional<Direction>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<Direction>) = direction(direction.getOrNull())
 
         /**
          * One of credit or debit. When you are receiving money, use credit. When you are being
@@ -1042,7 +1039,7 @@ private constructor(
 
         /** The ID of the Internal Account for the expected payment. */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         /** The ID of the Internal Account for the expected payment. */
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
@@ -1078,7 +1075,7 @@ private constructor(
         /** An array of reconciliation rule variables for this payment. */
         fun reconciliationRuleVariables(
             reconciliationRuleVariables: Optional<List<ReconciliationRule>>
-        ) = reconciliationRuleVariables(reconciliationRuleVariables.orElse(null))
+        ) = reconciliationRuleVariables(reconciliationRuleVariables.getOrNull())
 
         /** An array of reconciliation rule variables for this payment. */
         fun reconciliationRuleVariables(
@@ -1105,7 +1102,7 @@ private constructor(
          * known as OBI or Fedwire tag 6000.
          */
         fun remittanceInformation(remittanceInformation: Optional<String>) =
-            remittanceInformation(remittanceInformation.orElse(null))
+            remittanceInformation(remittanceInformation.getOrNull())
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -1131,7 +1128,7 @@ private constructor(
          * field on the wire. For check payments, this will be the memo field.
          */
         fun statementDescriptor(statementDescriptor: Optional<String>) =
-            statementDescriptor(statementDescriptor.orElse(null))
+            statementDescriptor(statementDescriptor.getOrNull())
 
         /**
          * The statement description you expect to see on the transaction. For ACH payments, this
@@ -1146,7 +1143,7 @@ private constructor(
         fun status(status: Status?) = apply { body.status(status) }
 
         /** The Expected Payment's status can be updated from partially_reconciled to reconciled. */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** The Expected Payment's status can be updated from partially_reconciled to reconciled. */
         fun status(status: JsonField<Status>) = apply { body.status(status) }
@@ -1161,7 +1158,7 @@ private constructor(
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
          * signet, wire.
          */
-        fun type(type: Optional<ExpectedPaymentType>) = type(type.orElse(null))
+        fun type(type: Optional<ExpectedPaymentType>) = type(type.getOrNull())
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,

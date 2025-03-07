@@ -13,6 +13,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list invoices */
 class InvoiceListParams
@@ -137,32 +138,31 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** An inclusive upper bound for searching due_date */
         fun dueDateEnd(dueDateEnd: LocalDate?) = apply { this.dueDateEnd = dueDateEnd }
 
         /** An inclusive upper bound for searching due_date */
-        fun dueDateEnd(dueDateEnd: Optional<LocalDate>) = dueDateEnd(dueDateEnd.orElse(null))
+        fun dueDateEnd(dueDateEnd: Optional<LocalDate>) = dueDateEnd(dueDateEnd.getOrNull())
 
         /** An inclusive lower bound for searching due_date */
         fun dueDateStart(dueDateStart: LocalDate?) = apply { this.dueDateStart = dueDateStart }
 
         /** An inclusive lower bound for searching due_date */
-        fun dueDateStart(dueDateStart: Optional<LocalDate>) =
-            dueDateStart(dueDateStart.orElse(null))
+        fun dueDateStart(dueDateStart: Optional<LocalDate>) = dueDateStart(dueDateStart.getOrNull())
 
         fun expectedPaymentId(expectedPaymentId: String?) = apply {
             this.expectedPaymentId = expectedPaymentId
         }
 
         fun expectedPaymentId(expectedPaymentId: Optional<String>) =
-            expectedPaymentId(expectedPaymentId.orElse(null))
+            expectedPaymentId(expectedPaymentId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -174,36 +174,35 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /** A unique record number assigned to each invoice that is issued. */
         fun number(number: String?) = apply { this.number = number }
 
         /** A unique record number assigned to each invoice that is issued. */
-        fun number(number: Optional<String>) = number(number.orElse(null))
+        fun number(number: Optional<String>) = number(number.getOrNull())
 
         fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
         fun originatingAccountId(originatingAccountId: Optional<String>) =
-            originatingAccountId(originatingAccountId.orElse(null))
+            originatingAccountId(originatingAccountId.getOrNull())
 
         fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
 
         fun paymentOrderId(paymentOrderId: Optional<String>) =
-            paymentOrderId(paymentOrderId.orElse(null))
+            paymentOrderId(paymentOrderId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger transactions. */
 class LedgerTransactionListParams
@@ -236,7 +237,7 @@ private constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: Optional<List<String>>) = id(id.orElse(null))
+        fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -246,7 +247,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Use "gt" (>), "gte" (>=), "lt" (<), "lte" (<=), or "eq" (=) to filter by effective at.
@@ -260,7 +261,7 @@ private constructor(
          * For example, for all transactions after Jan 1 2000, use
          * effective_at%5Bgt%5D=2000-01-01T00:00:00:00.000Z.
          */
-        fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.orElse(null))
+        fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by effective date.
@@ -275,47 +276,47 @@ private constructor(
          * For example, for all dates after Jan 1 2000, use effective_date%5Bgt%5D=2000-01-01.
          */
         fun effectiveDate(effectiveDate: Optional<EffectiveDate>) =
-            effectiveDate(effectiveDate.orElse(null))
+            effectiveDate(effectiveDate.getOrNull())
 
         fun externalId(externalId: String?) = apply { this.externalId = externalId }
 
-        fun externalId(externalId: Optional<String>) = externalId(externalId.orElse(null))
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
-            ledgerAccountCategoryId(ledgerAccountCategoryId.orElse(null))
+            ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
         fun ledgerAccountId(ledgerAccountId: String?) = apply {
             this.ledgerAccountId = ledgerAccountId
         }
 
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) = apply {
             this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
 
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.orElse(null))
+            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
-        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         fun ledgerableId(ledgerableId: String?) = apply { this.ledgerableId = ledgerableId }
 
-        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.orElse(null))
+        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.getOrNull())
 
         fun ledgerableType(ledgerableType: LedgerableType?) = apply {
             this.ledgerableType = ledgerableType
         }
 
         fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
-            ledgerableType(ledgerableType.orElse(null))
+            ledgerableType(ledgerableType.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -327,7 +328,7 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * Order by `created_at` or `effective_at` in `asc` or `desc` order. For example, to order
@@ -341,21 +342,20 @@ private constructor(
          * by `effective_at asc`, use `order_by%5Beffective_at%5D=asc`. Ordering by only one field
          * at a time is supported.
          */
-        fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.orElse(null))
+        fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.getOrNull())
 
         fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: String?) = apply {
             this.partiallyPostsLedgerTransactionId = partiallyPostsLedgerTransactionId
         }
 
         fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: Optional<String>) =
-            partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.orElse(null))
+            partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
@@ -369,18 +369,18 @@ private constructor(
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * posted_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun postedAt(postedAt: Optional<PostedAt>) = postedAt(postedAt.orElse(null))
+        fun postedAt(postedAt: Optional<PostedAt>) = postedAt(postedAt.getOrNull())
 
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: String?) = apply {
             this.reversesLedgerTransactionId = reversesLedgerTransactionId
         }
 
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: Optional<String>) =
-            reversesLedgerTransactionId(reversesLedgerTransactionId.orElse(null))
+            reversesLedgerTransactionId(reversesLedgerTransactionId.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
@@ -394,7 +394,7 @@ private constructor(
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.orElse(null))
+        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -998,12 +998,12 @@ private constructor(
 
             fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-            fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
+            fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
             fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<EffectiveAt>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

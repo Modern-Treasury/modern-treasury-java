@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class AccountCollectionFlow
@@ -282,7 +283,7 @@ private constructor(
 
         /** If present, the ID of the external account created using this flow. */
         fun externalAccountId(externalAccountId: Optional<String>) =
-            externalAccountId(externalAccountId.orElse(null))
+            externalAccountId(externalAccountId.getOrNull())
 
         /** If present, the ID of the external account created using this flow. */
         fun externalAccountId(externalAccountId: JsonField<String>) = apply {

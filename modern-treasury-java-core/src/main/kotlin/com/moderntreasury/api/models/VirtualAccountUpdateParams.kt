@@ -19,6 +19,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** update virtual_account */
 class VirtualAccountUpdateParams
@@ -182,7 +183,7 @@ private constructor(
 
             fun name(name: String?) = name(JsonField.ofNullable(name))
 
-            fun name(name: Optional<String>) = name(name.orElse(null))
+            fun name(name: Optional<String>) = name(name.getOrNull())
 
             fun name(name: JsonField<String>) = apply { this.name = name }
 
@@ -290,7 +291,7 @@ private constructor(
 
         fun name(name: String?) = apply { body.name(name) }
 
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         fun name(name: JsonField<String>) = apply { body.name(name) }
 

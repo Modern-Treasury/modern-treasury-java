@@ -22,6 +22,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create transaction */
 class TransactionCreateParams
@@ -357,7 +358,7 @@ private constructor(
             fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
 
             /** The date on which the transaction occurred. */
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             /** The date on which the transaction occurred. */
             fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
@@ -387,7 +388,7 @@ private constructor(
              * When applicable, the bank-given code that determines the transaction's category. For
              * most banks this is the BAI2/BTRS transaction code.
              */
-            fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
+            fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.getOrNull())
 
             /**
              * When applicable, the bank-given code that determines the transaction's category. For
@@ -411,7 +412,7 @@ private constructor(
              * `us_bank`, or others.
              */
             fun vendorCodeType(vendorCodeType: Optional<String>) =
-                vendorCodeType(vendorCodeType.orElse(null))
+                vendorCodeType(vendorCodeType.getOrNull())
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
@@ -451,7 +452,7 @@ private constructor(
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
              * `book`, or `sen`.
              */
-            fun type(type: Optional<Type>) = type(type.orElse(null))
+            fun type(type: Optional<Type>) = type(type.getOrNull())
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
@@ -471,7 +472,7 @@ private constructor(
              * banking portal.
              */
             fun vendorDescription(vendorDescription: Optional<String>) =
-                vendorDescription(vendorDescription.orElse(null))
+                vendorDescription(vendorDescription.getOrNull())
 
             /**
              * The transaction detail text that often appears in on your bank statement and in your
@@ -579,7 +580,7 @@ private constructor(
         fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
 
         /** The date on which the transaction occurred. */
-        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
         /** The date on which the transaction occurred. */
         fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { body.asOfDate(asOfDate) }
@@ -610,7 +611,7 @@ private constructor(
          * When applicable, the bank-given code that determines the transaction's category. For most
          * banks this is the BAI2/BTRS transaction code.
          */
-        fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
+        fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.getOrNull())
 
         /**
          * When applicable, the bank-given code that determines the transaction's category. For most
@@ -633,7 +634,7 @@ private constructor(
          * others.
          */
         fun vendorCodeType(vendorCodeType: Optional<String>) =
-            vendorCodeType(vendorCodeType.orElse(null))
+            vendorCodeType(vendorCodeType.getOrNull())
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -671,7 +672,7 @@ private constructor(
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
          * `book`, or `sen`.
          */
-        fun type(type: Optional<Type>) = type(type.orElse(null))
+        fun type(type: Optional<Type>) = type(type.getOrNull())
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
@@ -692,7 +693,7 @@ private constructor(
          * banking portal.
          */
         fun vendorDescription(vendorDescription: Optional<String>) =
-            vendorDescription(vendorDescription.orElse(null))
+            vendorDescription(vendorDescription.getOrNull())
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your

@@ -15,6 +15,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all payment orders */
 class PaymentOrderListParams
@@ -195,19 +196,18 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** An inclusive upper bound for searching created_at */
         fun createdAtEnd(createdAtEnd: LocalDate?) = apply { this.createdAtEnd = createdAtEnd }
 
         /** An inclusive upper bound for searching created_at */
-        fun createdAtEnd(createdAtEnd: Optional<LocalDate>) =
-            createdAtEnd(createdAtEnd.orElse(null))
+        fun createdAtEnd(createdAtEnd: Optional<LocalDate>) = createdAtEnd(createdAtEnd.getOrNull())
 
         /** An inclusive lower bound for searching created_at */
         fun createdAtStart(createdAtStart: LocalDate?) = apply {
@@ -216,11 +216,11 @@ private constructor(
 
         /** An inclusive lower bound for searching created_at */
         fun createdAtStart(createdAtStart: Optional<LocalDate>) =
-            createdAtStart(createdAtStart.orElse(null))
+            createdAtStart(createdAtStart.getOrNull())
 
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
-        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /** An inclusive upper bound for searching effective_date */
         fun effectiveDateEnd(effectiveDateEnd: LocalDate?) = apply {
@@ -229,7 +229,7 @@ private constructor(
 
         /** An inclusive upper bound for searching effective_date */
         fun effectiveDateEnd(effectiveDateEnd: Optional<LocalDate>) =
-            effectiveDateEnd(effectiveDateEnd.orElse(null))
+            effectiveDateEnd(effectiveDateEnd.getOrNull())
 
         /** An inclusive lower bound for searching effective_date */
         fun effectiveDateStart(effectiveDateStart: LocalDate?) = apply {
@@ -238,7 +238,7 @@ private constructor(
 
         /** An inclusive lower bound for searching effective_date */
         fun effectiveDateStart(effectiveDateStart: Optional<LocalDate>) =
-            effectiveDateStart(effectiveDateStart.orElse(null))
+            effectiveDateStart(effectiveDateStart.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -250,21 +250,20 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
         fun originatingAccountId(originatingAccountId: Optional<String>) =
-            originatingAccountId(originatingAccountId.orElse(null))
+            originatingAccountId(originatingAccountId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or
@@ -278,7 +277,7 @@ private constructor(
          * EFT transfer, respectively. For check payments, `high` can mean an overnight check rather
          * than standard mail.
          */
-        fun priority(priority: Optional<Priority>) = priority(priority.orElse(null))
+        fun priority(priority: Optional<Priority>) = priority(priority.getOrNull())
 
         /** An inclusive upper bound for searching process_after */
         fun processAfterEnd(processAfterEnd: OffsetDateTime?) = apply {
@@ -287,7 +286,7 @@ private constructor(
 
         /** An inclusive upper bound for searching process_after */
         fun processAfterEnd(processAfterEnd: Optional<OffsetDateTime>) =
-            processAfterEnd(processAfterEnd.orElse(null))
+            processAfterEnd(processAfterEnd.getOrNull())
 
         /** An inclusive lower bound for searching process_after */
         fun processAfterStart(processAfterStart: OffsetDateTime?) = apply {
@@ -296,7 +295,7 @@ private constructor(
 
         /** An inclusive lower bound for searching process_after */
         fun processAfterStart(processAfterStart: Optional<OffsetDateTime>) =
-            processAfterStart(processAfterStart.orElse(null))
+            processAfterStart(processAfterStart.getOrNull())
 
         /** Query for records with the provided reference number */
         fun referenceNumber(referenceNumber: String?) = apply {
@@ -305,22 +304,22 @@ private constructor(
 
         /** Query for records with the provided reference number */
         fun referenceNumber(referenceNumber: Optional<String>) =
-            referenceNumber(referenceNumber.orElse(null))
+            referenceNumber(referenceNumber.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** The ID of a transaction that the payment order has been reconciled to. */
         fun transactionId(transactionId: String?) = apply { this.transactionId = transactionId }
 
         /** The ID of a transaction that the payment order has been reconciled to. */
         fun transactionId(transactionId: Optional<String>) =
-            transactionId(transactionId.orElse(null))
+            transactionId(transactionId.getOrNull())
 
         fun type(type: Type?) = apply { this.type = type }
 
-        fun type(type: Optional<Type>) = type(type.orElse(null))
+        fun type(type: Optional<Type>) = type(type.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

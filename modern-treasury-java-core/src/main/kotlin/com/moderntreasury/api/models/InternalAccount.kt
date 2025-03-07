@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class InternalAccount
@@ -366,7 +367,7 @@ private constructor(
         fun accountType(accountType: AccountType?) = accountType(JsonField.ofNullable(accountType))
 
         /** Can be checking, savings or other. */
-        fun accountType(accountType: Optional<AccountType>) = accountType(accountType.orElse(null))
+        fun accountType(accountType: Optional<AccountType>) = accountType(accountType.getOrNull())
 
         /** Can be checking, savings or other. */
         fun accountType(accountType: JsonField<AccountType>) = apply {
@@ -385,7 +386,7 @@ private constructor(
 
         /** The Counterparty associated to this account. */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** The Counterparty associated to this account. */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -414,7 +415,7 @@ private constructor(
          * ledger account will be populated here.
          */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         /**
          * If the internal account links to a ledger account in Modern Treasury, the id of the
@@ -430,7 +431,7 @@ private constructor(
 
         /** The Legal Entity associated to this account */
         fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+            legalEntityId(legalEntityId.getOrNull())
 
         /** The Legal Entity associated to this account */
         fun legalEntityId(legalEntityId: JsonField<String>) = apply {
@@ -463,7 +464,7 @@ private constructor(
         fun name(name: String?) = name(JsonField.ofNullable(name))
 
         /** A nickname for the account. */
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         /** A nickname for the account. */
         fun name(name: JsonField<String>) = apply { this.name = name }
@@ -478,7 +479,7 @@ private constructor(
 
         /** The parent InternalAccount of this account. */
         fun parentAccountId(parentAccountId: Optional<String>) =
-            parentAccountId(parentAccountId.orElse(null))
+            parentAccountId(parentAccountId.getOrNull())
 
         /** The parent InternalAccount of this account. */
         fun parentAccountId(parentAccountId: JsonField<String>) = apply {
@@ -489,7 +490,7 @@ private constructor(
         fun partyAddress(partyAddress: Address?) = partyAddress(JsonField.ofNullable(partyAddress))
 
         /** The address associated with the owner or null. */
-        fun partyAddress(partyAddress: Optional<Address>) = partyAddress(partyAddress.orElse(null))
+        fun partyAddress(partyAddress: Optional<Address>) = partyAddress(partyAddress.getOrNull())
 
         /** The address associated with the owner or null. */
         fun partyAddress(partyAddress: JsonField<Address>) = apply {
@@ -506,7 +507,7 @@ private constructor(
         fun partyType(partyType: PartyType?) = partyType(JsonField.ofNullable(partyType))
 
         /** Either individual or business. */
-        fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
+        fun partyType(partyType: Optional<PartyType>) = partyType(partyType.getOrNull())
 
         /** Either individual or business. */
         fun partyType(partyType: JsonField<PartyType>) = apply { this.partyType = partyType }
@@ -993,7 +994,7 @@ private constructor(
             fun country(country: String?) = country(JsonField.ofNullable(country))
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: Optional<String>) = country(country.orElse(null))
+            fun country(country: Optional<String>) = country(country.getOrNull())
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
             fun country(country: JsonField<String>) = apply { this.country = country }
@@ -1006,13 +1007,13 @@ private constructor(
 
             fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
-            fun line1(line1: Optional<String>) = line1(line1.orElse(null))
+            fun line1(line1: Optional<String>) = line1(line1.getOrNull())
 
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
-            fun line2(line2: Optional<String>) = line2(line2.orElse(null))
+            fun line2(line2: Optional<String>) = line2(line2.getOrNull())
 
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
@@ -1032,7 +1033,7 @@ private constructor(
             fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
             /** Locality or City. */
-            fun locality(locality: Optional<String>) = locality(locality.orElse(null))
+            fun locality(locality: Optional<String>) = locality(locality.getOrNull())
 
             /** Locality or City. */
             fun locality(locality: JsonField<String>) = apply { this.locality = locality }
@@ -1045,7 +1046,7 @@ private constructor(
             fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
             /** The postal code of the address. */
-            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
+            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
 
             /** The postal code of the address. */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
@@ -1054,7 +1055,7 @@ private constructor(
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
             /** Region or State. */
-            fun region(region: Optional<String>) = region(region.orElse(null))
+            fun region(region: Optional<String>) = region(region.getOrNull())
 
             /** Region or State. */
             fun region(region: JsonField<String>) = apply { this.region = region }

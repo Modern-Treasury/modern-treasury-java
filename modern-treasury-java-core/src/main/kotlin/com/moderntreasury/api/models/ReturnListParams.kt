@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of returns. */
 class ReturnListParams
@@ -105,7 +106,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Specify `counterparty_id` if you wish to see returns that occurred with a specific
@@ -118,7 +119,7 @@ private constructor(
          * counterparty.
          */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** Specify `internal_account_id` if you wish to see returns to/from a specific account. */
         fun internalAccountId(internalAccountId: String?) = apply {
@@ -127,20 +128,19 @@ private constructor(
 
         /** Specify `internal_account_id` if you wish to see returns to/from a specific account. */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
         fun returnableId(returnableId: String?) = apply { this.returnableId = returnableId }
 
         /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
-        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.orElse(null))
+        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.getOrNull())
 
         /**
          * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
@@ -155,7 +155,7 @@ private constructor(
          * accompanied by `returnable_id`.
          */
         fun returnableType(returnableType: Optional<ReturnableType>) =
-            returnableType(returnableType.orElse(null))
+            returnableType(returnableType.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

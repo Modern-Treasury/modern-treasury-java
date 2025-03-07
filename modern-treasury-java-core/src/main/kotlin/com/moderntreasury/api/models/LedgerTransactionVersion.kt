@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LedgerTransactionVersion
@@ -404,7 +405,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** An optional description for internal use. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional description for internal use. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -445,7 +446,7 @@ private constructor(
          * A unique string to represent the ledger transaction. Only one pending or posted ledger
          * transaction may have this ID in the ledger.
          */
-        fun externalId(externalId: Optional<String>) = externalId(externalId.orElse(null))
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /**
          * A unique string to represent the ledger transaction. Only one pending or posted ledger
@@ -495,7 +496,7 @@ private constructor(
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
          * will be populated here, otherwise null.
          */
-        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.orElse(null))
+        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.getOrNull())
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
@@ -519,7 +520,7 @@ private constructor(
          * incoming_payment_detail, expected_payment, return, or reversal.
          */
         fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
-            ledgerableType(ledgerableType.orElse(null))
+            ledgerableType(ledgerableType.getOrNull())
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
@@ -564,7 +565,7 @@ private constructor(
 
         /** The ID of the ledger transaction that this ledger transaction partially posts. */
         fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: Optional<String>) =
-            partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.orElse(null))
+            partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction that this ledger transaction partially posts. */
         fun partiallyPostsLedgerTransactionId(
@@ -581,7 +582,7 @@ private constructor(
          * The time on which the ledger transaction posted. This is null if the ledger transaction
          * is pending.
          */
-        fun postedAt(postedAt: Optional<OffsetDateTime>) = postedAt(postedAt.orElse(null))
+        fun postedAt(postedAt: Optional<OffsetDateTime>) = postedAt(postedAt.getOrNull())
 
         /**
          * The time on which the ledger transaction posted. This is null if the ledger transaction
@@ -595,7 +596,7 @@ private constructor(
 
         /** The ID of the ledger transaction that reversed this ledger transaction. */
         fun reversedByLedgerTransactionId(reversedByLedgerTransactionId: Optional<String>) =
-            reversedByLedgerTransactionId(reversedByLedgerTransactionId.orElse(null))
+            reversedByLedgerTransactionId(reversedByLedgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction that reversed this ledger transaction. */
         fun reversedByLedgerTransactionId(reversedByLedgerTransactionId: JsonField<String>) =
@@ -609,7 +610,7 @@ private constructor(
 
         /** The ID of the original ledger transaction. that this ledger transaction reverses. */
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: Optional<String>) =
-            reversesLedgerTransactionId(reversesLedgerTransactionId.orElse(null))
+            reversesLedgerTransactionId(reversesLedgerTransactionId.getOrNull())
 
         /** The ID of the original ledger transaction. that this ledger transaction reverses. */
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: JsonField<String>) = apply {
@@ -1071,9 +1072,8 @@ private constructor(
              * version. See our post about Designing the Ledgers API with Optimistic Locking for
              * more details.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun ledgerAccountLockVersion(ledgerAccountLockVersion: Optional<Long>) =
-                ledgerAccountLockVersion(ledgerAccountLockVersion.orElse(null) as Long?)
+                ledgerAccountLockVersion(ledgerAccountLockVersion.getOrNull())
 
             /**
              * Lock version of the ledger account. This can be passed when creating a ledger
@@ -1145,7 +1145,7 @@ private constructor(
              */
             fun resultingLedgerAccountBalances(
                 resultingLedgerAccountBalances: Optional<LedgerBalances>
-            ) = resultingLedgerAccountBalances(resultingLedgerAccountBalances.orElse(null))
+            ) = resultingLedgerAccountBalances(resultingLedgerAccountBalances.getOrNull())
 
             /**
              * The pending, posted, and available balances for this ledger entry's ledger account.

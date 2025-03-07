@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Transaction
@@ -483,7 +484,7 @@ private constructor(
         fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
 
         /** The date on which the transaction occurred. */
-        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
         /** The date on which the transaction occurred. */
         fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
@@ -498,7 +499,7 @@ private constructor(
          * The time on which the transaction occurred. Depending on the granularity of the timestamp
          * information received from the bank, it may be `null`.
          */
-        fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.orElse(null))
+        fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.getOrNull())
 
         /**
          * The time on which the transaction occurred. Depending on the granularity of the timestamp
@@ -516,7 +517,7 @@ private constructor(
          * The timezone in which the `as_of_time` is represented. Can be `null` if the bank does not
          * provide timezone info.
          */
-        fun asOfTimezone(asOfTimezone: Optional<String>) = asOfTimezone(asOfTimezone.orElse(null))
+        fun asOfTimezone(asOfTimezone: Optional<String>) = asOfTimezone(asOfTimezone.getOrNull())
 
         /**
          * The timezone in which the `as_of_time` is represented. Can be `null` if the bank does not
@@ -561,7 +562,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -573,7 +574,7 @@ private constructor(
 
         /** Associated serialized foreign exchange rate information. */
         fun foreignExchangeRate(foreignExchangeRate: Optional<ForeignExchangeRate>) =
-            foreignExchangeRate(foreignExchangeRate.orElse(null))
+            foreignExchangeRate(foreignExchangeRate.getOrNull())
 
         /** Associated serialized foreign exchange rate information. */
         fun foreignExchangeRate(foreignExchangeRate: JsonField<ForeignExchangeRate>) = apply {
@@ -659,7 +660,7 @@ private constructor(
          * When applicable, the bank-given code that determines the transaction's category. For most
          * banks this is the BAI2/BTRS transaction code.
          */
-        fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.orElse(null))
+        fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.getOrNull())
 
         /**
          * When applicable, the bank-given code that determines the transaction's category. For most
@@ -683,7 +684,7 @@ private constructor(
          * others.
          */
         fun vendorCodeType(vendorCodeType: Optional<VendorCodeType>) =
-            vendorCodeType(vendorCodeType.orElse(null))
+            vendorCodeType(vendorCodeType.getOrNull())
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -701,7 +702,7 @@ private constructor(
 
         /** An identifier given to this transaction by the bank, often `null`. */
         fun vendorCustomerId(vendorCustomerId: Optional<String>) =
-            vendorCustomerId(vendorCustomerId.orElse(null))
+            vendorCustomerId(vendorCustomerId.getOrNull())
 
         /** An identifier given to this transaction by the bank, often `null`. */
         fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {
@@ -712,7 +713,7 @@ private constructor(
         fun vendorId(vendorId: String?) = vendorId(JsonField.ofNullable(vendorId))
 
         /** An identifier given to this transaction by the bank. */
-        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.orElse(null))
+        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
 
         /** An identifier given to this transaction by the bank. */
         fun vendorId(vendorId: JsonField<String>) = apply { this.vendorId = vendorId }
@@ -749,7 +750,7 @@ private constructor(
          * banking portal.
          */
         fun vendorDescription(vendorDescription: Optional<String>) =
-            vendorDescription(vendorDescription.orElse(null))
+            vendorDescription(vendorDescription.getOrNull())
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your

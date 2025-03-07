@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LedgerAccountSettlement
@@ -340,8 +341,7 @@ private constructor(
         fun amount(amount: Long) = amount(amount as Long?)
 
         /** The amount of the ledger account settlement. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun amount(amount: Optional<Long>) = amount(amount.orElse(null) as Long?)
+        fun amount(amount: Optional<Long>) = amount(amount.getOrNull())
 
         /** The amount of the ledger account settlement. */
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
@@ -379,9 +379,8 @@ private constructor(
         fun currencyExponent(currencyExponent: Long) = currencyExponent(currencyExponent as Long?)
 
         /** The currency exponent of the ledger account settlement. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun currencyExponent(currencyExponent: Optional<Long>) =
-            currencyExponent(currencyExponent.orElse(null) as Long?)
+            currencyExponent(currencyExponent.getOrNull())
 
         /** The currency exponent of the ledger account settlement. */
         fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
@@ -392,7 +391,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** The description of the ledger account settlement. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** The description of the ledger account settlement. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -426,7 +425,7 @@ private constructor(
 
         /** The id of the ledger transaction that this settlement is associated with. */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /** The id of the ledger transaction that this settlement is associated with. */
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
@@ -480,7 +479,7 @@ private constructor(
 
         /** The direction of the ledger entry with the settlement_ledger_account. */
         fun settlementEntryDirection(settlementEntryDirection: Optional<String>) =
-            settlementEntryDirection(settlementEntryDirection.orElse(null))
+            settlementEntryDirection(settlementEntryDirection.getOrNull())
 
         /** The direction of the ledger entry with the settlement_ledger_account. */
         fun settlementEntryDirection(settlementEntryDirection: JsonField<String>) = apply {

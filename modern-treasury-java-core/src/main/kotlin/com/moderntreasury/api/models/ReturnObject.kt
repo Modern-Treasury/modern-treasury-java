@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class ReturnObject
@@ -438,7 +439,7 @@ private constructor(
         fun code(code: Code?) = code(JsonField.ofNullable(code))
 
         /** The return code. For ACH returns, this is the required ACH return code. */
-        fun code(code: Optional<Code>) = code(code.orElse(null))
+        fun code(code: Optional<Code>) = code(code.getOrNull())
 
         /** The return code. For ACH returns, this is the required ACH return code. */
         fun code(code: JsonField<Code>) = apply { this.code = code }
@@ -465,7 +466,7 @@ private constructor(
          * returning this return.
          */
         fun currentReturn(currentReturn: Optional<ReturnObject>) =
-            currentReturn(currentReturn.orElse(null))
+            currentReturn(currentReturn.getOrNull())
 
         /**
          * If the return's status is `returned`, this will include the return object's data that is
@@ -485,7 +486,7 @@ private constructor(
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
          * away.
          */
-        fun dateOfDeath(dateOfDeath: Optional<LocalDate>) = dateOfDeath(dateOfDeath.orElse(null))
+        fun dateOfDeath(dateOfDeath: Optional<LocalDate>) = dateOfDeath(dateOfDeath.getOrNull())
 
         /**
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
@@ -507,7 +508,7 @@ private constructor(
          * reason will be available.
          */
         fun failureReason(failureReason: Optional<String>) =
-            failureReason(failureReason.orElse(null))
+            failureReason(failureReason.getOrNull())
 
         /**
          * If an originating return failed to be processed by the bank, a description of the failure
@@ -523,7 +524,7 @@ private constructor(
 
         /** The ID of the relevant Internal Account. */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         /** The ID of the relevant Internal Account. */
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
@@ -536,7 +537,7 @@ private constructor(
 
         /** The ID of the ledger transaction linked to the return. */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction linked to the return. */
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
@@ -569,7 +570,7 @@ private constructor(
          * Often the bank will provide an explanation for the return, which is a short human
          * readable string.
          */
-        fun reason(reason: Optional<String>) = reason(reason.orElse(null))
+        fun reason(reason: Optional<String>) = reason(reason.getOrNull())
 
         /**
          * Often the bank will provide an explanation for the return, which is a short human
@@ -598,7 +599,7 @@ private constructor(
         fun returnableId(returnableId: String?) = returnableId(JsonField.ofNullable(returnableId))
 
         /** The ID of the object being returned or `null`. */
-        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.orElse(null))
+        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.getOrNull())
 
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: JsonField<String>) = apply {
@@ -611,7 +612,7 @@ private constructor(
 
         /** The type of object being returned or `null`. */
         fun returnableType(returnableType: Optional<ReturnableType>) =
-            returnableType(returnableType.orElse(null))
+            returnableType(returnableType.getOrNull())
 
         /** The type of object being returned or `null`. */
         fun returnableType(returnableType: JsonField<ReturnableType>) = apply {
@@ -636,7 +637,7 @@ private constructor(
 
         /** The ID of the relevant Transaction or `null`. */
         fun transactionId(transactionId: Optional<String>) =
-            transactionId(transactionId.orElse(null))
+            transactionId(transactionId.getOrNull())
 
         /** The ID of the relevant Transaction or `null`. */
         fun transactionId(transactionId: JsonField<String>) = apply {
@@ -649,7 +650,7 @@ private constructor(
 
         /** The ID of the relevant Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: Optional<String>) =
-            transactionLineItemId(transactionLineItemId.orElse(null))
+            transactionLineItemId(transactionLineItemId.getOrNull())
 
         /** The ID of the relevant Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: JsonField<String>) = apply {
@@ -684,7 +685,7 @@ private constructor(
          * string will be present.
          */
         fun additionalInformation(additionalInformation: Optional<String>) =
-            additionalInformation(additionalInformation.orElse(null))
+            additionalInformation(additionalInformation.getOrNull())
 
         /**
          * Some returns may include additional information from the bank. In these cases, this

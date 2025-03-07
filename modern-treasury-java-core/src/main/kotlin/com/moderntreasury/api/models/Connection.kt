@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Connection
@@ -196,7 +197,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -228,7 +229,7 @@ private constructor(
 
         /** An identifier given to this connection by the bank. */
         fun vendorCustomerId(vendorCustomerId: Optional<String>) =
-            vendorCustomerId(vendorCustomerId.orElse(null))
+            vendorCustomerId(vendorCustomerId.getOrNull())
 
         /** An identifier given to this connection by the bank. */
         fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {

@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all reversals of a payment order. */
 class PaymentOrderReversalListParams
@@ -86,14 +87,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
