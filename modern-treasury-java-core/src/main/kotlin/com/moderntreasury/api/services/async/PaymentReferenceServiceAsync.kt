@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,26 +20,41 @@ interface PaymentReferenceServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** get payment_reference */
-    @JvmOverloads
+    fun retrieve(params: PaymentReferenceRetrieveParams): CompletableFuture<PaymentReference> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReference>
 
     /** list payment_references */
-    @JvmOverloads
+    fun list(): CompletableFuture<PaymentReferenceListPageAsync> =
+        list(PaymentReferenceListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReferenceListPageAsync>
 
-    /** list payment_references */
+    /** @see [list] */
+    fun list(
+        params: PaymentReferenceListParams = PaymentReferenceListParams.none()
+    ): CompletableFuture<PaymentReferenceListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentReferenceListPageAsync> =
         list(PaymentReferenceListParams.none(), requestOptions)
 
     /** get payment_reference */
     @Deprecated("use `retrieve` instead")
-    @JvmOverloads
+    fun retireve(params: PaymentReferenceRetireveParams): CompletableFuture<PaymentReference> =
+        retireve(params, RequestOptions.none())
+
+    /** @see [retireve] */
+    @Deprecated("use `retrieve` instead")
     fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -57,7 +70,13 @@ interface PaymentReferenceServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_references/{id}`, but is otherwise the
          * same as [PaymentReferenceServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PaymentReferenceRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaymentReference>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentReferenceRetrieveParams,
@@ -68,17 +87,25 @@ interface PaymentReferenceServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_references`, but is otherwise the same
          * as [PaymentReferenceServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>> =
+            list(PaymentReferenceListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_references`, but is otherwise the same
-         * as [PaymentReferenceServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentReferenceListParams = PaymentReferenceListParams.none()
+        ): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -90,7 +117,14 @@ interface PaymentReferenceServiceAsync {
          * same as [PaymentReferenceServiceAsync.retireve].
          */
         @Deprecated("use `retrieve` instead")
-        @JvmOverloads
+        @MustBeClosed
+        fun retireve(
+            params: PaymentReferenceRetireveParams
+        ): CompletableFuture<HttpResponseFor<PaymentReference>> =
+            retireve(params, RequestOptions.none())
+
+        /** @see [retireve] */
+        @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(
             params: PaymentReferenceRetireveParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,53 +26,81 @@ interface ExternalAccountServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create external account */
-    @JvmOverloads
+    fun create(params: ExternalAccountCreateParams): CompletableFuture<ExternalAccount> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ExternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** show external account */
-    @JvmOverloads
+    fun retrieve(params: ExternalAccountRetrieveParams): CompletableFuture<ExternalAccount> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ExternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** update external account */
-    @JvmOverloads
+    fun update(params: ExternalAccountUpdateParams): CompletableFuture<ExternalAccount> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ExternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** list external accounts */
-    @JvmOverloads
+    fun list(): CompletableFuture<ExternalAccountListPageAsync> =
+        list(ExternalAccountListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ExternalAccountListParams = ExternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccountListPageAsync>
 
-    /** list external accounts */
+    /** @see [list] */
+    fun list(
+        params: ExternalAccountListParams = ExternalAccountListParams.none()
+    ): CompletableFuture<ExternalAccountListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<ExternalAccountListPageAsync> =
         list(ExternalAccountListParams.none(), requestOptions)
 
     /** delete external account */
-    @JvmOverloads
+    fun delete(params: ExternalAccountDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ExternalAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** complete verification of external account */
-    @JvmOverloads
+    fun completeVerification(
+        params: ExternalAccountCompleteVerificationParams
+    ): CompletableFuture<ExternalAccount> = completeVerification(params, RequestOptions.none())
+
+    /** @see [completeVerification] */
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
     /** verify external account */
-    @JvmOverloads
+    fun verify(
+        params: ExternalAccountVerifyParams
+    ): CompletableFuture<ExternalAccountVerifyResponse> = verify(params, RequestOptions.none())
+
+    /** @see [verify] */
     fun verify(
         params: ExternalAccountVerifyParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -90,7 +116,13 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ExternalAccountCreateParams
+        ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ExternalAccountCreateParams,
@@ -101,7 +133,13 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ExternalAccountRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ExternalAccountRetrieveParams,
@@ -112,7 +150,13 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `patch /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ExternalAccountUpdateParams
+        ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ExternalAccountUpdateParams,
@@ -123,17 +167,25 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
+            list(ExternalAccountListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/external_accounts`, but is otherwise the same
-         * as [ExternalAccountServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ExternalAccountListParams = ExternalAccountListParams.none()
+        ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -144,7 +196,11 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `delete /api/external_accounts/{id}`, but is otherwise
          * the same as [ExternalAccountServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ExternalAccountDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ExternalAccountDeleteParams,
@@ -155,7 +211,13 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/complete_verification`,
          * but is otherwise the same as [ExternalAccountServiceAsync.completeVerification].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun completeVerification(
+            params: ExternalAccountCompleteVerificationParams
+        ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
+            completeVerification(params, RequestOptions.none())
+
+        /** @see [completeVerification] */
         @MustBeClosed
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams,
@@ -166,7 +228,13 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/verify`, but is
          * otherwise the same as [ExternalAccountServiceAsync.verify].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun verify(
+            params: ExternalAccountVerifyParams
+        ): CompletableFuture<HttpResponseFor<ExternalAccountVerifyResponse>> =
+            verify(params, RequestOptions.none())
+
+        /** @see [verify] */
         @MustBeClosed
         fun verify(
             params: ExternalAccountVerifyParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,39 +21,58 @@ interface VirtualAccountService {
     fun withRawResponse(): WithRawResponse
 
     /** create virtual_account */
-    @JvmOverloads
+    fun create(params: VirtualAccountCreateParams): VirtualAccount =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: VirtualAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** get virtual_account */
-    @JvmOverloads
+    fun retrieve(params: VirtualAccountRetrieveParams): VirtualAccount =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: VirtualAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** update virtual_account */
-    @JvmOverloads
+    fun update(params: VirtualAccountUpdateParams): VirtualAccount =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: VirtualAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
     /** Get a list of virtual accounts. */
-    @JvmOverloads
+    fun list(): VirtualAccountListPage = list(VirtualAccountListParams.none())
+
+    /** @see [list] */
     fun list(
         params: VirtualAccountListParams = VirtualAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccountListPage
 
-    /** Get a list of virtual accounts. */
+    /** @see [list] */
+    fun list(
+        params: VirtualAccountListParams = VirtualAccountListParams.none()
+    ): VirtualAccountListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): VirtualAccountListPage =
         list(VirtualAccountListParams.none(), requestOptions)
 
     /** delete virtual_account */
-    @JvmOverloads
+    fun delete(params: VirtualAccountDeleteParams): VirtualAccount =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: VirtualAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +87,11 @@ interface VirtualAccountService {
          * Returns a raw HTTP response for `post /api/virtual_accounts`, but is otherwise the same
          * as [VirtualAccountService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: VirtualAccountCreateParams): HttpResponseFor<VirtualAccount> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: VirtualAccountCreateParams,
@@ -81,7 +102,11 @@ interface VirtualAccountService {
          * Returns a raw HTTP response for `get /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: VirtualAccountRetrieveParams): HttpResponseFor<VirtualAccount> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: VirtualAccountRetrieveParams,
@@ -92,7 +117,11 @@ interface VirtualAccountService {
          * Returns a raw HTTP response for `patch /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: VirtualAccountUpdateParams): HttpResponseFor<VirtualAccount> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: VirtualAccountUpdateParams,
@@ -103,17 +132,23 @@ interface VirtualAccountService {
          * Returns a raw HTTP response for `get /api/virtual_accounts`, but is otherwise the same as
          * [VirtualAccountService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<VirtualAccountListPage> = list(VirtualAccountListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<VirtualAccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/virtual_accounts`, but is otherwise the same as
-         * [VirtualAccountService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: VirtualAccountListParams = VirtualAccountListParams.none()
+        ): HttpResponseFor<VirtualAccountListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<VirtualAccountListPage> =
             list(VirtualAccountListParams.none(), requestOptions)
@@ -122,7 +157,11 @@ interface VirtualAccountService {
          * Returns a raw HTTP response for `delete /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: VirtualAccountDeleteParams): HttpResponseFor<VirtualAccount> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: VirtualAccountDeleteParams,

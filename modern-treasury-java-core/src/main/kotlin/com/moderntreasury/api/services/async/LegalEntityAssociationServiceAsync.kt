@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,7 +17,11 @@ interface LegalEntityAssociationServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create legal_entity_association */
-    @JvmOverloads
+    fun create(
+        params: LegalEntityAssociationCreateParams
+    ): CompletableFuture<LegalEntityAssociation> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LegalEntityAssociationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -35,7 +37,13 @@ interface LegalEntityAssociationServiceAsync {
          * Returns a raw HTTP response for `post /api/legal_entity_associations`, but is otherwise
          * the same as [LegalEntityAssociationServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LegalEntityAssociationCreateParams
+        ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LegalEntityAssociationCreateParams,

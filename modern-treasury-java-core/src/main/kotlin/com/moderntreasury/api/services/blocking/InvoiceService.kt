@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,39 +25,54 @@ interface InvoiceService {
     fun lineItems(): LineItemService
 
     /** create invoice */
-    @JvmOverloads
+    fun create(params: InvoiceCreateParams): Invoice = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: InvoiceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** get invoice */
-    @JvmOverloads
+    fun retrieve(params: InvoiceRetrieveParams): Invoice = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: InvoiceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** update invoice */
-    @JvmOverloads
+    fun update(params: InvoiceUpdateParams): Invoice = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /** list invoices */
-    @JvmOverloads
+    fun list(): InvoiceListPage = list(InvoiceListParams.none())
+
+    /** @see [list] */
     fun list(
         params: InvoiceListParams = InvoiceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceListPage
 
-    /** list invoices */
+    /** @see [list] */
+    fun list(params: InvoiceListParams = InvoiceListParams.none()): InvoiceListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): InvoiceListPage =
         list(InvoiceListParams.none(), requestOptions)
 
     /** Add a payment order to an invoice. */
-    @JvmOverloads
+    fun addPaymentOrder(params: InvoiceAddPaymentOrderParams) =
+        addPaymentOrder(params, RequestOptions.none())
+
+    /** @see [addPaymentOrder] */
     fun addPaymentOrder(
         params: InvoiceAddPaymentOrderParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +87,11 @@ interface InvoiceService {
          * Returns a raw HTTP response for `post /api/invoices`, but is otherwise the same as
          * [InvoiceService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: InvoiceCreateParams): HttpResponseFor<Invoice> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: InvoiceCreateParams,
@@ -85,7 +102,11 @@ interface InvoiceService {
          * Returns a raw HTTP response for `get /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: InvoiceRetrieveParams): HttpResponseFor<Invoice> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: InvoiceRetrieveParams,
@@ -96,7 +117,11 @@ interface InvoiceService {
          * Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: InvoiceUpdateParams): HttpResponseFor<Invoice> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: InvoiceUpdateParams,
@@ -107,17 +132,22 @@ interface InvoiceService {
          * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
          * [InvoiceService.list].
          */
-        @JvmOverloads
+        @MustBeClosed fun list(): HttpResponseFor<InvoiceListPage> = list(InvoiceListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: InvoiceListParams = InvoiceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvoiceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
-         * [InvoiceService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: InvoiceListParams = InvoiceListParams.none()
+        ): HttpResponseFor<InvoiceListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<InvoiceListPage> =
             list(InvoiceListParams.none(), requestOptions)
@@ -127,7 +157,11 @@ interface InvoiceService {
          * /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the same as
          * [InvoiceService.addPaymentOrder].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): HttpResponse =
+            addPaymentOrder(params, RequestOptions.none())
+
+        /** @see [addPaymentOrder] */
         @MustBeClosed
         fun addPaymentOrder(
             params: InvoiceAddPaymentOrderParams,

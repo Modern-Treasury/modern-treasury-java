@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,7 +17,12 @@ interface ValidationServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Validates the routing number information supplied without creating a routing detail */
-    @JvmOverloads
+    fun validateRoutingNumber(
+        params: ValidationValidateRoutingNumberParams
+    ): CompletableFuture<RoutingNumberLookupRequest> =
+        validateRoutingNumber(params, RequestOptions.none())
+
+    /** @see [validateRoutingNumber] */
     fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -35,7 +38,13 @@ interface ValidationServiceAsync {
          * Returns a raw HTTP response for `get /api/validations/routing_numbers`, but is otherwise
          * the same as [ValidationServiceAsync.validateRoutingNumber].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun validateRoutingNumber(
+            params: ValidationValidateRoutingNumberParams
+        ): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>> =
+            validateRoutingNumber(params, RequestOptions.none())
+
+        /** @see [validateRoutingNumber] */
         @MustBeClosed
         fun validateRoutingNumber(
             params: ValidationValidateRoutingNumberParams,

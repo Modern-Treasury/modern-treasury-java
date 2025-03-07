@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,32 +21,49 @@ interface LedgerEventHandlerServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create ledger_event_handler */
-    @JvmOverloads
+    fun create(params: LedgerEventHandlerCreateParams): CompletableFuture<LedgerEventHandler> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerEventHandlerCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandler>
 
     /** Get details on a single ledger event handler. */
-    @JvmOverloads
+    fun retrieve(params: LedgerEventHandlerRetrieveParams): CompletableFuture<LedgerEventHandler> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandler>
 
     /** Get a list of ledger event handlers. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LedgerEventHandlerListPageAsync> =
+        list(LedgerEventHandlerListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandlerListPageAsync>
 
-    /** Get a list of ledger event handlers. */
+    /** @see [list] */
+    fun list(
+        params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none()
+    ): CompletableFuture<LedgerEventHandlerListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<LedgerEventHandlerListPageAsync> =
         list(LedgerEventHandlerListParams.none(), requestOptions)
 
     /** Archive a ledger event handler. */
-    @JvmOverloads
+    fun delete(params: LedgerEventHandlerDeleteParams): CompletableFuture<LedgerEventHandler> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerEventHandlerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +79,13 @@ interface LedgerEventHandlerServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_event_handlers`, but is otherwise the
          * same as [LedgerEventHandlerServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerEventHandlerCreateParams
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerEventHandlerCreateParams,
@@ -75,7 +96,13 @@ interface LedgerEventHandlerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_event_handlers/{id}`, but is otherwise
          * the same as [LedgerEventHandlerServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerEventHandlerRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerEventHandlerRetrieveParams,
@@ -86,17 +113,25 @@ interface LedgerEventHandlerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
          * same as [LedgerEventHandlerServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LedgerEventHandlerListPageAsync>> =
+            list(LedgerEventHandlerListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerEventHandlerListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
-         * same as [LedgerEventHandlerServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none()
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandlerListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -107,7 +142,13 @@ interface LedgerEventHandlerServiceAsync {
          * Returns a raw HTTP response for `delete /api/ledger_event_handlers/{id}`, but is
          * otherwise the same as [LedgerEventHandlerServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: LedgerEventHandlerDeleteParams
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerEventHandlerDeleteParams,

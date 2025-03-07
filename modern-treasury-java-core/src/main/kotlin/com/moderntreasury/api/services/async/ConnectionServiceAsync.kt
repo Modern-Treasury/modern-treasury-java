@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,13 +17,20 @@ interface ConnectionServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get a list of all connections. */
-    @JvmOverloads
+    fun list(): CompletableFuture<ConnectionListPageAsync> = list(ConnectionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionListPageAsync>
 
-    /** Get a list of all connections. */
+    /** @see [list] */
+    fun list(
+        params: ConnectionListParams = ConnectionListParams.none()
+    ): CompletableFuture<ConnectionListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<ConnectionListPageAsync> =
         list(ConnectionListParams.none(), requestOptions)
 
@@ -39,17 +44,25 @@ interface ConnectionServiceAsync {
          * Returns a raw HTTP response for `get /api/connections`, but is otherwise the same as
          * [ConnectionServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>> =
+            list(ConnectionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ConnectionListParams = ConnectionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/connections`, but is otherwise the same as
-         * [ConnectionServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ConnectionListParams = ConnectionListParams.none()
+        ): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

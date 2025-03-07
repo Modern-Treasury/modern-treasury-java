@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,43 +22,67 @@ interface ExpectedPaymentServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create expected payment */
-    @JvmOverloads
+    fun create(): CompletableFuture<ExpectedPayment> = create(ExpectedPaymentCreateParams.none())
+
+    /** @see [create] */
     fun create(
         params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
-    /** create expected payment */
+    /** @see [create] */
+    fun create(
+        params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
+    ): CompletableFuture<ExpectedPayment> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
         create(ExpectedPaymentCreateParams.none(), requestOptions)
 
     /** get expected payment */
-    @JvmOverloads
+    fun retrieve(params: ExpectedPaymentRetrieveParams): CompletableFuture<ExpectedPayment> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ExpectedPaymentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
     /** update expected payment */
-    @JvmOverloads
+    fun update(params: ExpectedPaymentUpdateParams): CompletableFuture<ExpectedPayment> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ExpectedPaymentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
     /** list expected_payments */
-    @JvmOverloads
+    fun list(): CompletableFuture<ExpectedPaymentListPageAsync> =
+        list(ExpectedPaymentListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPaymentListPageAsync>
 
-    /** list expected_payments */
+    /** @see [list] */
+    fun list(
+        params: ExpectedPaymentListParams = ExpectedPaymentListParams.none()
+    ): CompletableFuture<ExpectedPaymentListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<ExpectedPaymentListPageAsync> =
         list(ExpectedPaymentListParams.none(), requestOptions)
 
     /** delete expected payment */
-    @JvmOverloads
+    fun delete(params: ExpectedPaymentDeleteParams): CompletableFuture<ExpectedPayment> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ExpectedPaymentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,17 +98,25 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `post /api/expected_payments`, but is otherwise the same
          * as [ExpectedPaymentServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
+            create(ExpectedPaymentCreateParams.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
-        /**
-         * Returns a raw HTTP response for `post /api/expected_payments`, but is otherwise the same
-         * as [ExpectedPaymentServiceAsync.create].
-         */
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
+        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             requestOptions: RequestOptions
@@ -97,7 +127,13 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `get /api/expected_payments/{id}`, but is otherwise the
          * same as [ExpectedPaymentServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ExpectedPaymentRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ExpectedPaymentRetrieveParams,
@@ -108,7 +144,13 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `patch /api/expected_payments/{id}`, but is otherwise the
          * same as [ExpectedPaymentServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ExpectedPaymentUpdateParams
+        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ExpectedPaymentUpdateParams,
@@ -119,17 +161,25 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `get /api/expected_payments`, but is otherwise the same
          * as [ExpectedPaymentServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
+            list(ExpectedPaymentListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/expected_payments`, but is otherwise the same
-         * as [ExpectedPaymentServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ExpectedPaymentListParams = ExpectedPaymentListParams.none()
+        ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -140,7 +190,13 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `delete /api/expected_payments/{id}`, but is otherwise
          * the same as [ExpectedPaymentServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ExpectedPaymentDeleteParams
+        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ExpectedPaymentDeleteParams,

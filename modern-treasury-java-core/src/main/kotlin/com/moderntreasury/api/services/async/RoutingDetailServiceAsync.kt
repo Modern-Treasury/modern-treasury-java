@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -28,28 +26,40 @@ interface RoutingDetailServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a routing detail for a single external account. */
-    @JvmOverloads
+    fun create(params: RoutingDetailCreateParams): CompletableFuture<RoutingDetail> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: RoutingDetailCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetail>
 
     /** Get a single routing detail for a single internal or external account. */
-    @JvmOverloads
+    fun retrieve(params: RoutingDetailRetrieveParams): CompletableFuture<RoutingDetail> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: RoutingDetailRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetail>
 
     /** Get a list of routing details for a single internal or external account. */
-    @JvmOverloads
+    fun list(params: RoutingDetailListParams): CompletableFuture<RoutingDetailListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: RoutingDetailListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<RoutingDetailListPageAsync>
 
     /** Delete a routing detail for a single external account. */
-    @JvmOverloads
+    fun delete(params: RoutingDetailDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: RoutingDetailDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -162,7 +172,12 @@ interface RoutingDetailServiceAsync {
          * Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/routing_details`,
          * but is otherwise the same as [RoutingDetailServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: RoutingDetailCreateParams
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: RoutingDetailCreateParams,
@@ -174,7 +189,13 @@ interface RoutingDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
          * [RoutingDetailServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: RoutingDetailRetrieveParams
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: RoutingDetailRetrieveParams,
@@ -185,7 +206,13 @@ interface RoutingDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/routing_details`,
          * but is otherwise the same as [RoutingDetailServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: RoutingDetailListParams
+        ): CompletableFuture<HttpResponseFor<RoutingDetailListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: RoutingDetailListParams,
@@ -197,7 +224,11 @@ interface RoutingDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
          * [RoutingDetailServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: RoutingDetailDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: RoutingDetailDeleteParams,

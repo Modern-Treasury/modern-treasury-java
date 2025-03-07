@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -20,20 +18,29 @@ interface BulkResultService {
     fun withRawResponse(): WithRawResponse
 
     /** get bulk_result */
-    @JvmOverloads
+    fun retrieve(params: BulkResultRetrieveParams): BulkResult =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResult
 
     /** list bulk_results */
-    @JvmOverloads
+    fun list(): BulkResultListPage = list(BulkResultListParams.none())
+
+    /** @see [list] */
     fun list(
         params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResultListPage
 
-    /** list bulk_results */
+    /** @see [list] */
+    fun list(params: BulkResultListParams = BulkResultListParams.none()): BulkResultListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): BulkResultListPage =
         list(BulkResultListParams.none(), requestOptions)
 
@@ -44,7 +51,11 @@ interface BulkResultService {
          * Returns a raw HTTP response for `get /api/bulk_results/{id}`, but is otherwise the same
          * as [BulkResultService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: BulkResultRetrieveParams): HttpResponseFor<BulkResult> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BulkResultRetrieveParams,
@@ -55,17 +66,23 @@ interface BulkResultService {
          * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as
          * [BulkResultService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<BulkResultListPage> = list(BulkResultListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkResultListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as
-         * [BulkResultService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BulkResultListParams = BulkResultListParams.none()
+        ): HttpResponseFor<BulkResultListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BulkResultListPage> =
             list(BulkResultListParams.none(), requestOptions)

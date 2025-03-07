@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,39 +26,58 @@ interface PaymentOrderServiceAsync {
     fun reversals(): ReversalServiceAsync
 
     /** Create a new Payment Order */
-    @JvmOverloads
+    fun create(params: PaymentOrderCreateParams): CompletableFuture<PaymentOrder> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PaymentOrderCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder>
 
     /** Get details on a single payment order */
-    @JvmOverloads
+    fun retrieve(params: PaymentOrderRetrieveParams): CompletableFuture<PaymentOrder> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentOrderRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder>
 
     /** Update a payment order */
-    @JvmOverloads
+    fun update(params: PaymentOrderUpdateParams): CompletableFuture<PaymentOrder> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PaymentOrderUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder>
 
     /** Get a list of all payment orders */
-    @JvmOverloads
+    fun list(): CompletableFuture<PaymentOrderListPageAsync> = list(PaymentOrderListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentOrderListParams = PaymentOrderListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrderListPageAsync>
 
-    /** Get a list of all payment orders */
+    /** @see [list] */
+    fun list(
+        params: PaymentOrderListParams = PaymentOrderListParams.none()
+    ): CompletableFuture<PaymentOrderListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentOrderListPageAsync> =
         list(PaymentOrderListParams.none(), requestOptions)
 
     /** Create a new payment order asynchronously */
-    @JvmOverloads
+    fun createAsync(params: PaymentOrderCreateAsyncParams): CompletableFuture<AsyncResponse> =
+        createAsync(params, RequestOptions.none())
+
+    /** @see [createAsync] */
     fun createAsync(
         params: PaymentOrderCreateAsyncParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -78,7 +95,12 @@ interface PaymentOrderServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_orders`, but is otherwise the same as
          * [PaymentOrderServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PaymentOrderCreateParams
+        ): CompletableFuture<HttpResponseFor<PaymentOrder>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PaymentOrderCreateParams,
@@ -89,7 +111,13 @@ interface PaymentOrderServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_orders/{id}`, but is otherwise the same
          * as [PaymentOrderServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PaymentOrderRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentOrderRetrieveParams,
@@ -100,7 +128,12 @@ interface PaymentOrderServiceAsync {
          * Returns a raw HTTP response for `patch /api/payment_orders/{id}`, but is otherwise the
          * same as [PaymentOrderServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PaymentOrderUpdateParams
+        ): CompletableFuture<HttpResponseFor<PaymentOrder>> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PaymentOrderUpdateParams,
@@ -111,17 +144,25 @@ interface PaymentOrderServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_orders`, but is otherwise the same as
          * [PaymentOrderServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>> =
+            list(PaymentOrderListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentOrderListParams = PaymentOrderListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_orders`, but is otherwise the same as
-         * [PaymentOrderServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentOrderListParams = PaymentOrderListParams.none()
+        ): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -132,7 +173,13 @@ interface PaymentOrderServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_orders/create_async`, but is otherwise
          * the same as [PaymentOrderServiceAsync.createAsync].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createAsync(
+            params: PaymentOrderCreateAsyncParams
+        ): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+            createAsync(params, RequestOptions.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(
             params: PaymentOrderCreateAsyncParams,

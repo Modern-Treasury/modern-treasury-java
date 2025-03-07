@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,39 +22,58 @@ interface LedgerServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledger. */
-    @JvmOverloads
+    fun create(params: LedgerCreateParams): CompletableFuture<Ledger> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Ledger>
 
     /** Get details on a single ledger. */
-    @JvmOverloads
+    fun retrieve(params: LedgerRetrieveParams): CompletableFuture<Ledger> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Ledger>
 
     /** Update the details of a ledger. */
-    @JvmOverloads
+    fun update(params: LedgerUpdateParams): CompletableFuture<Ledger> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Ledger>
 
     /** Get a list of ledgers. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LedgerListPageAsync> = list(LedgerListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerListParams = LedgerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerListPageAsync>
 
-    /** Get a list of ledgers. */
+    /** @see [list] */
+    fun list(
+        params: LedgerListParams = LedgerListParams.none()
+    ): CompletableFuture<LedgerListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<LedgerListPageAsync> =
         list(LedgerListParams.none(), requestOptions)
 
     /** Delete a ledger. */
-    @JvmOverloads
+    fun delete(params: LedgerDeleteParams): CompletableFuture<Ledger> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,7 +88,11 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `post /api/ledgers`, but is otherwise the same as
          * [LedgerServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LedgerCreateParams): CompletableFuture<HttpResponseFor<Ledger>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerCreateParams,
@@ -82,7 +103,11 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LedgerRetrieveParams): CompletableFuture<HttpResponseFor<Ledger>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerRetrieveParams,
@@ -93,7 +118,11 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LedgerUpdateParams): CompletableFuture<HttpResponseFor<Ledger>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerUpdateParams,
@@ -104,17 +133,25 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledgers`, but is otherwise the same as
          * [LedgerServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LedgerListPageAsync>> =
+            list(LedgerListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerListParams = LedgerListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledgers`, but is otherwise the same as
-         * [LedgerServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerListParams = LedgerListParams.none()
+        ): CompletableFuture<HttpResponseFor<LedgerListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -125,7 +162,11 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `delete /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: LedgerDeleteParams): CompletableFuture<HttpResponseFor<Ledger>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerDeleteParams,

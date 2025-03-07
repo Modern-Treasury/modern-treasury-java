@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,14 +19,24 @@ interface LedgerAccountStatementServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledger account statement. */
-    @JvmOverloads
+    fun create(
+        params: LedgerAccountStatementCreateParams
+    ): CompletableFuture<LedgerAccountStatementCreateResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountStatementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountStatementCreateResponse>
 
     /** Get details on a single ledger account statement. */
-    @JvmOverloads
+    fun retrieve(
+        params: LedgerAccountStatementRetrieveParams
+    ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,7 +52,13 @@ interface LedgerAccountStatementServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_account_statements`, but is otherwise
          * the same as [LedgerAccountStatementServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerAccountStatementCreateParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementCreateResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountStatementCreateParams,
@@ -55,7 +69,13 @@ interface LedgerAccountStatementServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_account_statements/{id}`, but is
          * otherwise the same as [LedgerAccountStatementServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountStatementRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams,

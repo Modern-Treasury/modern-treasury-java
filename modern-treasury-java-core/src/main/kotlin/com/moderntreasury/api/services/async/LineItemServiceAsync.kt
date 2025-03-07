@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -26,21 +24,30 @@ interface LineItemServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get a single line item */
-    @JvmOverloads
+    fun retrieve(params: LineItemRetrieveParams): CompletableFuture<LineItem> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem>
 
     /** update line item */
-    @JvmOverloads
+    fun update(params: LineItemUpdateParams): CompletableFuture<LineItem> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem>
 
     /** Get a list of line items */
-    @JvmOverloads
+    fun list(params: LineItemListParams): CompletableFuture<LineItemListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: LineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -160,7 +167,11 @@ interface LineItemServiceAsync {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LineItemRetrieveParams): CompletableFuture<HttpResponseFor<LineItem>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LineItemRetrieveParams,
@@ -172,7 +183,11 @@ interface LineItemServiceAsync {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LineItemUpdateParams): CompletableFuture<HttpResponseFor<LineItem>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LineItemUpdateParams,
@@ -183,7 +198,13 @@ interface LineItemServiceAsync {
          * Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items`,
          * but is otherwise the same as [LineItemServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: LineItemListParams
+        ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LineItemListParams,

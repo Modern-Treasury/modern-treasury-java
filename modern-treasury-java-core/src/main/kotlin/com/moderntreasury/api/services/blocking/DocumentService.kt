@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,27 +19,37 @@ interface DocumentService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a document. */
-    @JvmOverloads
+    fun create(params: DocumentCreateParams): Document = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DocumentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
 
     /** Get an existing document. */
-    @JvmOverloads
+    fun retrieve(params: DocumentRetrieveParams): Document = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DocumentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
 
     /** Get a list of documents. */
-    @JvmOverloads
+    fun list(): DocumentListPage = list(DocumentListParams.none())
+
+    /** @see [list] */
     fun list(
         params: DocumentListParams = DocumentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DocumentListPage
 
-    /** Get a list of documents. */
+    /** @see [list] */
+    fun list(params: DocumentListParams = DocumentListParams.none()): DocumentListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): DocumentListPage =
         list(DocumentListParams.none(), requestOptions)
 
@@ -52,7 +60,11 @@ interface DocumentService {
          * Returns a raw HTTP response for `post /api/documents`, but is otherwise the same as
          * [DocumentService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: DocumentCreateParams): HttpResponseFor<Document> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DocumentCreateParams,
@@ -63,7 +75,11 @@ interface DocumentService {
          * Returns a raw HTTP response for `get /api/documents/{id}`, but is otherwise the same as
          * [DocumentService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: DocumentRetrieveParams): HttpResponseFor<Document> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DocumentRetrieveParams,
@@ -74,17 +90,23 @@ interface DocumentService {
          * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as
          * [DocumentService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<DocumentListPage> = list(DocumentListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DocumentListParams = DocumentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DocumentListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as
-         * [DocumentService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DocumentListParams = DocumentListParams.none()
+        ): HttpResponseFor<DocumentListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DocumentListPage> =
             list(DocumentListParams.none(), requestOptions)

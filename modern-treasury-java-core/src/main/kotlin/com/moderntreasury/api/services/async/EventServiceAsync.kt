@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,20 +19,30 @@ interface EventServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** get event */
-    @JvmOverloads
+    fun retrieve(params: EventRetrieveParams): CompletableFuture<Event> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Event>
 
     /** list events */
-    @JvmOverloads
+    fun list(): CompletableFuture<EventListPageAsync> = list(EventListParams.none())
+
+    /** @see [list] */
     fun list(
         params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventListPageAsync>
 
-    /** list events */
+    /** @see [list] */
+    fun list(
+        params: EventListParams = EventListParams.none()
+    ): CompletableFuture<EventListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<EventListPageAsync> =
         list(EventListParams.none(), requestOptions)
 
@@ -45,7 +53,11 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /api/events/{id}`, but is otherwise the same as
          * [EventServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: EventRetrieveParams): CompletableFuture<HttpResponseFor<Event>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
@@ -56,17 +68,25 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /api/events`, but is otherwise the same as
          * [EventServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+            list(EventListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/events`, but is otherwise the same as
-         * [EventServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: EventListParams = EventListParams.none()
+        ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

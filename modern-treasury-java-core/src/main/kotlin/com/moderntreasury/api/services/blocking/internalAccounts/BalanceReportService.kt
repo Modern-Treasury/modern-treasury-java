@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking.internalAccounts
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,28 +21,39 @@ interface BalanceReportService {
     fun withRawResponse(): WithRawResponse
 
     /** create balance reports */
-    @JvmOverloads
+    fun create(params: BalanceReportCreateParams): BalanceReport =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BalanceReportCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReport
 
     /** Get a single balance report for a given internal account. */
-    @JvmOverloads
+    fun retrieve(params: BalanceReportRetrieveParams): BalanceReport =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BalanceReportRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReport
 
     /** Get all balance reports for a given internal account. */
-    @JvmOverloads
+    fun list(params: BalanceReportListParams): BalanceReportListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BalanceReportListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReportListPage
 
     /** Deletes a given balance report. */
-    @JvmOverloads
+    fun delete(params: BalanceReportDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BalanceReportDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +69,11 @@ interface BalanceReportService {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: BalanceReportCreateParams): HttpResponseFor<BalanceReport> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BalanceReportCreateParams,
@@ -72,7 +85,11 @@ interface BalanceReportService {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: BalanceReportRetrieveParams): HttpResponseFor<BalanceReport> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BalanceReportRetrieveParams,
@@ -84,7 +101,11 @@ interface BalanceReportService {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: BalanceReportListParams): HttpResponseFor<BalanceReportListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BalanceReportListParams,
@@ -96,7 +117,11 @@ interface BalanceReportService {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: BalanceReportDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BalanceReportDeleteParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,20 +19,30 @@ interface BulkResultServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** get bulk_result */
-    @JvmOverloads
+    fun retrieve(params: BulkResultRetrieveParams): CompletableFuture<BulkResult> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResult>
 
     /** list bulk_results */
-    @JvmOverloads
+    fun list(): CompletableFuture<BulkResultListPageAsync> = list(BulkResultListParams.none())
+
+    /** @see [list] */
     fun list(
         params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResultListPageAsync>
 
-    /** list bulk_results */
+    /** @see [list] */
+    fun list(
+        params: BulkResultListParams = BulkResultListParams.none()
+    ): CompletableFuture<BulkResultListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<BulkResultListPageAsync> =
         list(BulkResultListParams.none(), requestOptions)
 
@@ -48,7 +56,12 @@ interface BulkResultServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_results/{id}`, but is otherwise the same
          * as [BulkResultServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BulkResultRetrieveParams
+        ): CompletableFuture<HttpResponseFor<BulkResult>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BulkResultRetrieveParams,
@@ -59,17 +72,25 @@ interface BulkResultServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as
          * [BulkResultServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
+            list(BulkResultListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as
-         * [BulkResultServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BulkResultListParams = BulkResultListParams.none()
+        ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

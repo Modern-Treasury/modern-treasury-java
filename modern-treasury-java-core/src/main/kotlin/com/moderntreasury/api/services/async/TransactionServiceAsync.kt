@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,39 +26,58 @@ interface TransactionServiceAsync {
     fun lineItems(): LineItemServiceAsync
 
     /** create transaction */
-    @JvmOverloads
+    fun create(params: TransactionCreateParams): CompletableFuture<Transaction> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: TransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Get details on a single transaction. */
-    @JvmOverloads
+    fun retrieve(params: TransactionRetrieveParams): CompletableFuture<Transaction> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Update a single transaction. */
-    @JvmOverloads
+    fun update(params: TransactionUpdateParams): CompletableFuture<Transaction> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: TransactionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
 
     /** Get a list of all transactions. */
-    @JvmOverloads
+    fun list(): CompletableFuture<TransactionListPageAsync> = list(TransactionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: TransactionListParams = TransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionListPageAsync>
 
-    /** Get a list of all transactions. */
+    /** @see [list] */
+    fun list(
+        params: TransactionListParams = TransactionListParams.none()
+    ): CompletableFuture<TransactionListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<TransactionListPageAsync> =
         list(TransactionListParams.none(), requestOptions)
 
     /** delete transaction */
-    @JvmOverloads
+    fun delete(params: TransactionDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: TransactionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -78,7 +95,12 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: TransactionCreateParams
+        ): CompletableFuture<HttpResponseFor<Transaction>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: TransactionCreateParams,
@@ -89,7 +111,12 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the same
          * as [TransactionServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionRetrieveParams
+        ): CompletableFuture<HttpResponseFor<Transaction>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: TransactionRetrieveParams,
@@ -100,7 +127,12 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `patch /api/transactions/{id}`, but is otherwise the same
          * as [TransactionServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: TransactionUpdateParams
+        ): CompletableFuture<HttpResponseFor<Transaction>> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: TransactionUpdateParams,
@@ -111,17 +143,25 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<TransactionListPageAsync>> =
+            list(TransactionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: TransactionListParams = TransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TransactionListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/transactions`, but is otherwise the same as
-         * [TransactionServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: TransactionListParams = TransactionListParams.none()
+        ): CompletableFuture<HttpResponseFor<TransactionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -132,7 +172,11 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `delete /api/transactions/{id}`, but is otherwise the
          * same as [TransactionServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: TransactionDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: TransactionDeleteParams,

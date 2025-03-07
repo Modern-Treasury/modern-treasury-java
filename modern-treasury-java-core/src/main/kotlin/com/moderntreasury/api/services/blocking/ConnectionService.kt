@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -18,13 +16,19 @@ interface ConnectionService {
     fun withRawResponse(): WithRawResponse
 
     /** Get a list of all connections. */
-    @JvmOverloads
+    fun list(): ConnectionListPage = list(ConnectionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionListPage
 
-    /** Get a list of all connections. */
+    /** @see [list] */
+    fun list(params: ConnectionListParams = ConnectionListParams.none()): ConnectionListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ConnectionListPage =
         list(ConnectionListParams.none(), requestOptions)
 
@@ -35,17 +39,23 @@ interface ConnectionService {
          * Returns a raw HTTP response for `get /api/connections`, but is otherwise the same as
          * [ConnectionService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<ConnectionListPage> = list(ConnectionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ConnectionListParams = ConnectionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ConnectionListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/connections`, but is otherwise the same as
-         * [ConnectionService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ConnectionListParams = ConnectionListParams.none()
+        ): HttpResponseFor<ConnectionListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ConnectionListPage> =
             list(ConnectionListParams.none(), requestOptions)

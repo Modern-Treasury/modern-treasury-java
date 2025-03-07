@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,34 +24,54 @@ interface LedgerAccountSettlementServiceAsync {
     fun accountEntries(): AccountEntryServiceAsync
 
     /** Create a ledger account settlement. */
-    @JvmOverloads
+    fun create(
+        params: LedgerAccountSettlementCreateParams
+    ): CompletableFuture<LedgerAccountSettlement> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlement>
 
     /** Get details on a single ledger account settlement. */
-    @JvmOverloads
+    fun retrieve(
+        params: LedgerAccountSettlementRetrieveParams
+    ): CompletableFuture<LedgerAccountSettlement> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlement>
 
     /** Update the details of a ledger account settlement. */
-    @JvmOverloads
+    fun update(
+        params: LedgerAccountSettlementUpdateParams
+    ): CompletableFuture<LedgerAccountSettlement> = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlement>
 
     /** Get a list of ledger account settlements. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LedgerAccountSettlementListPageAsync> =
+        list(LedgerAccountSettlementListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlementListPageAsync>
 
-    /** Get a list of ledger account settlements. */
+    /** @see [list] */
+    fun list(
+        params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
+    ): CompletableFuture<LedgerAccountSettlementListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<LedgerAccountSettlementListPageAsync> =
@@ -71,7 +89,13 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerAccountSettlementCreateParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountSettlementCreateParams,
@@ -82,7 +106,13 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountSettlementRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams,
@@ -93,7 +123,13 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountSettlementUpdateParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams,
@@ -104,17 +140,25 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
+            list(LedgerAccountSettlementListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_account_settlements`, but is otherwise
-         * the same as [LedgerAccountSettlementServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
+        ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

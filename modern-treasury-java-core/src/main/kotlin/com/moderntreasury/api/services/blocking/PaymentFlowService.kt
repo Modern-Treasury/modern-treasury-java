@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,34 +20,47 @@ interface PaymentFlowService {
     fun withRawResponse(): WithRawResponse
 
     /** create payment_flow */
-    @JvmOverloads
+    fun create(params: PaymentFlowCreateParams): PaymentFlow = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow
 
     /** get payment_flow */
-    @JvmOverloads
+    fun retrieve(params: PaymentFlowRetrieveParams): PaymentFlow =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow
 
     /** update payment_flow */
-    @JvmOverloads
+    fun update(params: PaymentFlowUpdateParams): PaymentFlow = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow
 
     /** list payment_flows */
-    @JvmOverloads
+    fun list(): PaymentFlowListPage = list(PaymentFlowListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlowListPage
 
-    /** list payment_flows */
+    /** @see [list] */
+    fun list(params: PaymentFlowListParams = PaymentFlowListParams.none()): PaymentFlowListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PaymentFlowListPage =
         list(PaymentFlowListParams.none(), requestOptions)
 
@@ -62,7 +73,11 @@ interface PaymentFlowService {
          * Returns a raw HTTP response for `post /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PaymentFlowCreateParams): HttpResponseFor<PaymentFlow> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PaymentFlowCreateParams,
@@ -73,7 +88,11 @@ interface PaymentFlowService {
          * Returns a raw HTTP response for `get /api/payment_flows/{id}`, but is otherwise the same
          * as [PaymentFlowService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PaymentFlowRetrieveParams): HttpResponseFor<PaymentFlow> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentFlowRetrieveParams,
@@ -84,7 +103,11 @@ interface PaymentFlowService {
          * Returns a raw HTTP response for `patch /api/payment_flows/{id}`, but is otherwise the
          * same as [PaymentFlowService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PaymentFlowUpdateParams): HttpResponseFor<PaymentFlow> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams,
@@ -95,17 +118,23 @@ interface PaymentFlowService {
          * Returns a raw HTTP response for `get /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<PaymentFlowListPage> = list(PaymentFlowListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentFlowListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_flows`, but is otherwise the same as
-         * [PaymentFlowService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentFlowListParams = PaymentFlowListParams.none()
+        ): HttpResponseFor<PaymentFlowListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentFlowListPage> =
             list(PaymentFlowListParams.none(), requestOptions)

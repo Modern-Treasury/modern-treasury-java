@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,46 +25,68 @@ interface LedgerTransactionService {
     fun versions(): VersionService
 
     /** Create a ledger transaction. */
-    @JvmOverloads
+    fun create(params: LedgerTransactionCreateParams): LedgerTransaction =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransaction
 
     /** Get details on a single ledger transaction. */
-    @JvmOverloads
+    fun retrieve(params: LedgerTransactionRetrieveParams): LedgerTransaction =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransaction
 
     /** Update the details of a ledger transaction. */
-    @JvmOverloads
+    fun update(params: LedgerTransactionUpdateParams): LedgerTransaction =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerTransactionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransaction
 
     /** Get a list of ledger transactions. */
-    @JvmOverloads
+    fun list(): LedgerTransactionListPage = list(LedgerTransactionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionListPage
 
-    /** Get a list of ledger transactions. */
+    /** @see [list] */
+    fun list(
+        params: LedgerTransactionListParams = LedgerTransactionListParams.none()
+    ): LedgerTransactionListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerTransactionListPage =
         list(LedgerTransactionListParams.none(), requestOptions)
 
     /** Create a ledger transaction that partially posts another ledger transaction. */
-    @JvmOverloads
+    fun createPartialPost(params: LedgerTransactionCreatePartialPostParams): LedgerTransaction =
+        createPartialPost(params, RequestOptions.none())
+
+    /** @see [createPartialPost] */
     fun createPartialPost(
         params: LedgerTransactionCreatePartialPostParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransaction
 
     /** Create a ledger transaction reversal. */
-    @JvmOverloads
+    fun createReversal(params: LedgerTransactionCreateReversalParams): LedgerTransaction =
+        createReversal(params, RequestOptions.none())
+
+    /** @see [createReversal] */
     fun createReversal(
         params: LedgerTransactionCreateReversalParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +104,11 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `post /api/ledger_transactions`, but is otherwise the
          * same as [LedgerTransactionService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LedgerTransactionCreateParams): HttpResponseFor<LedgerTransaction> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerTransactionCreateParams,
@@ -95,7 +119,11 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `get /api/ledger_transactions/{id}`, but is otherwise the
          * same as [LedgerTransactionService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LedgerTransactionRetrieveParams): HttpResponseFor<LedgerTransaction> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerTransactionRetrieveParams,
@@ -106,7 +134,11 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `patch /api/ledger_transactions/{id}`, but is otherwise
          * the same as [LedgerTransactionService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LedgerTransactionUpdateParams): HttpResponseFor<LedgerTransaction> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerTransactionUpdateParams,
@@ -117,17 +149,24 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `get /api/ledger_transactions`, but is otherwise the same
          * as [LedgerTransactionService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerTransactionListPage> =
+            list(LedgerTransactionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerTransactionListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_transactions`, but is otherwise the same
-         * as [LedgerTransactionService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerTransactionListParams = LedgerTransactionListParams.none()
+        ): HttpResponseFor<LedgerTransactionListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerTransactionListPage> =
             list(LedgerTransactionListParams.none(), requestOptions)
@@ -136,7 +175,12 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/partial_post`, but is
          * otherwise the same as [LedgerTransactionService.createPartialPost].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createPartialPost(
+            params: LedgerTransactionCreatePartialPostParams
+        ): HttpResponseFor<LedgerTransaction> = createPartialPost(params, RequestOptions.none())
+
+        /** @see [createPartialPost] */
         @MustBeClosed
         fun createPartialPost(
             params: LedgerTransactionCreatePartialPostParams,
@@ -147,7 +191,12 @@ interface LedgerTransactionService {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/reversal`, but is
          * otherwise the same as [LedgerTransactionService.createReversal].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createReversal(
+            params: LedgerTransactionCreateReversalParams
+        ): HttpResponseFor<LedgerTransaction> = createReversal(params, RequestOptions.none())
+
+        /** @see [createReversal] */
         @MustBeClosed
         fun createReversal(
             params: LedgerTransactionCreateReversalParams,

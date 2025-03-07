@@ -44,6 +44,7 @@ internal constructor(private val clientOptions: ClientOptions) : PaymentReferenc
         // get /api/payment_references
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
+    @Deprecated("use `retrieve` instead")
     override fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions,
@@ -136,6 +137,7 @@ internal constructor(private val clientOptions: ClientOptions) : PaymentReferenc
         private val retireveHandler: Handler<PaymentReference> =
             jsonHandler<PaymentReference>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
+        @Deprecated("use `retrieve` instead")
         override fun retireve(
             params: PaymentReferenceRetireveParams,
             requestOptions: RequestOptions,
