@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all paper items. */
 class PaperItemListParams
@@ -90,7 +91,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
         fun depositDateEnd(depositDateEnd: LocalDate?) = apply {
@@ -99,7 +100,7 @@ private constructor(
 
         /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
         fun depositDateEnd(depositDateEnd: Optional<LocalDate>) =
-            depositDateEnd(depositDateEnd.orElse(null))
+            depositDateEnd(depositDateEnd.getOrNull())
 
         /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
         fun depositDateStart(depositDateStart: LocalDate?) = apply {
@@ -108,7 +109,7 @@ private constructor(
 
         /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
         fun depositDateStart(depositDateStart: Optional<LocalDate>) =
-            depositDateStart(depositDateStart.orElse(null))
+            depositDateStart(depositDateStart.getOrNull())
 
         /**
          * Specify `lockbox_number` if you wish to see paper items that are associated with a
@@ -121,14 +122,13 @@ private constructor(
          * specific lockbox number.
          */
         fun lockboxNumber(lockboxNumber: Optional<String>) =
-            lockboxNumber(lockboxNumber.orElse(null))
+            lockboxNumber(lockboxNumber.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

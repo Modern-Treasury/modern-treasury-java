@@ -22,6 +22,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a ledger account settlement. */
 class LedgerAccountSettlementCreateParams
@@ -390,9 +391,8 @@ private constructor(
              * If true, the settlement amount and settlement_entry_direction will bring the
              * settlement ledger account's balance closer to zero, even if the balance is negative.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun allowEitherDirection(allowEitherDirection: Optional<Boolean>) =
-                allowEitherDirection(allowEitherDirection.orElse(null) as Boolean?)
+                allowEitherDirection(allowEitherDirection.getOrNull())
 
             /**
              * If true, the settlement amount and settlement_entry_direction will bring the
@@ -406,7 +406,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account settlement. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** The description of the ledger account settlement. */
             fun description(description: JsonField<String>) = apply {
@@ -427,7 +427,7 @@ private constructor(
              * timestamp of the ledger account settlement.
              */
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
-                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+                effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
             /**
              * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
@@ -470,13 +470,9 @@ private constructor(
              * It is set to `false` by default. It should be set to `true` when migrating existing
              * settlements.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun skipSettlementLedgerTransaction(
                 skipSettlementLedgerTransaction: Optional<Boolean>
-            ) =
-                skipSettlementLedgerTransaction(
-                    skipSettlementLedgerTransaction.orElse(null) as Boolean?
-                )
+            ) = skipSettlementLedgerTransaction(skipSettlementLedgerTransaction.getOrNull())
 
             /**
              * It is set to `false` by default. It should be set to `true` when migrating existing
@@ -496,7 +492,7 @@ private constructor(
              * The status of the ledger account settlement. It is set to `pending` by default. To
              * post a ledger account settlement at creation, use `posted`.
              */
-            fun status(status: Optional<Status>) = status(status.orElse(null))
+            fun status(status: Optional<Status>) = status(status.getOrNull())
 
             /**
              * The status of the ledger account settlement. It is set to `pending` by default. To
@@ -642,9 +638,8 @@ private constructor(
          * If true, the settlement amount and settlement_entry_direction will bring the settlement
          * ledger account's balance closer to zero, even if the balance is negative.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun allowEitherDirection(allowEitherDirection: Optional<Boolean>) =
-            allowEitherDirection(allowEitherDirection.orElse(null) as Boolean?)
+            allowEitherDirection(allowEitherDirection.getOrNull())
 
         /**
          * If true, the settlement amount and settlement_entry_direction will bring the settlement
@@ -658,7 +653,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** The description of the ledger account settlement. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** The description of the ledger account settlement. */
         fun description(description: JsonField<String>) = apply { body.description(description) }
@@ -678,7 +673,7 @@ private constructor(
          * of the ledger account settlement.
          */
         fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
-            effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+            effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
@@ -718,11 +713,8 @@ private constructor(
          * It is set to `false` by default. It should be set to `true` when migrating existing
          * settlements.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Optional<Boolean>) =
-            skipSettlementLedgerTransaction(
-                skipSettlementLedgerTransaction.orElse(null) as Boolean?
-            )
+            skipSettlementLedgerTransaction(skipSettlementLedgerTransaction.getOrNull())
 
         /**
          * It is set to `false` by default. It should be set to `true` when migrating existing
@@ -743,7 +735,7 @@ private constructor(
          * The status of the ledger account settlement. It is set to `pending` by default. To post a
          * ledger account settlement at creation, use `posted`.
          */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
          * The status of the ledger account settlement. It is set to `pending` by default. To post a

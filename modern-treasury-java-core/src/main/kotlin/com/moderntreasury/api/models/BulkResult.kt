@@ -30,6 +30,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class BulkResult
@@ -381,7 +382,7 @@ private constructor(
          * this result. This is an item in the `resources` array for the bulk_request
          */
         fun requestParams(requestParams: Optional<RequestParams>) =
-            requestParams(requestParams.orElse(null))
+            requestParams(requestParams.getOrNull())
 
         /**
          * An optional object that contains the provided input params for the request that created

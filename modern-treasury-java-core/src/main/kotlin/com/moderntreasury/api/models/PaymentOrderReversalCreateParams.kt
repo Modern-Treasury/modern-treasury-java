@@ -24,6 +24,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a reversal for a payment order. */
 class PaymentOrderReversalCreateParams
@@ -851,7 +852,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** An optional description for internal use. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** An optional description for internal use. */
             fun description(description: JsonField<String>) = apply {
@@ -1288,7 +1289,7 @@ private constructor(
                  */
                 fun availableBalanceAmount(
                     availableBalanceAmount: Optional<AvailableBalanceAmount>
-                ) = availableBalanceAmount(availableBalanceAmount.orElse(null))
+                ) = availableBalanceAmount(availableBalanceAmount.getOrNull())
 
                 /**
                  * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
@@ -1321,9 +1322,7 @@ private constructor(
                  * version. See our post about Designing the Ledgers API with Optimistic Locking for
                  * more details.
                  */
-                @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-                fun lockVersion(lockVersion: Optional<Long>) =
-                    lockVersion(lockVersion.orElse(null) as Long?)
+                fun lockVersion(lockVersion: Optional<Long>) = lockVersion(lockVersion.getOrNull())
 
                 /**
                  * Lock version of the ledger account. This can be passed when creating a ledger
@@ -1361,7 +1360,7 @@ private constructor(
                  * transaction is created, the entire call will fail with error code 422.
                  */
                 fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
-                    pendingBalanceAmount(pendingBalanceAmount.orElse(null))
+                    pendingBalanceAmount(pendingBalanceAmount.getOrNull())
 
                 /**
                  * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
@@ -1387,7 +1386,7 @@ private constructor(
                  * transaction is created, the entire call will fail with error code 422.
                  */
                 fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
-                    postedBalanceAmount(postedBalanceAmount.orElse(null))
+                    postedBalanceAmount(postedBalanceAmount.getOrNull())
 
                 /**
                  * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the
@@ -1425,12 +1424,11 @@ private constructor(
                  * If true, response will include the balance of the associated ledger account for
                  * the entry.
                  */
-                @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
                 fun showResultingLedgerAccountBalances(
                     showResultingLedgerAccountBalances: Optional<Boolean>
                 ) =
                     showResultingLedgerAccountBalances(
-                        showResultingLedgerAccountBalances.orElse(null) as Boolean?
+                        showResultingLedgerAccountBalances.getOrNull()
                     )
 
                 /**

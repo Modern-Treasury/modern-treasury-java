@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list bulk_results */
 class BulkResultListParams
@@ -113,13 +114,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Unique identifier for the result entity object. */
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
         /** Unique identifier for the result entity object. */
-        fun entityId(entityId: Optional<String>) = entityId(entityId.orElse(null))
+        fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         /**
          * The type of the request that created this result. bulk_request is the only supported
@@ -131,14 +132,13 @@ private constructor(
          * The type of the request that created this result. bulk_request is the only supported
          * `request_type`
          */
-        fun entityType(entityType: Optional<EntityType>) = entityType(entityType.orElse(null))
+        fun entityType(entityType: Optional<EntityType>) = entityType(entityType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * Unique identifier for the request that created this bulk result. This is the ID of the
@@ -150,7 +150,7 @@ private constructor(
          * Unique identifier for the request that created this bulk result. This is the ID of the
          * bulk request when `request_type` is bulk_request
          */
-        fun requestId(requestId: Optional<String>) = requestId(requestId.orElse(null))
+        fun requestId(requestId: Optional<String>) = requestId(requestId.getOrNull())
 
         /**
          * The type of the request that created this result. bulk_request is the only supported
@@ -162,13 +162,13 @@ private constructor(
          * The type of the request that created this result. bulk_request is the only supported
          * `request_type`
          */
-        fun requestType(requestType: Optional<RequestType>) = requestType(requestType.orElse(null))
+        fun requestType(requestType: Optional<RequestType>) = requestType(requestType.getOrNull())
 
         /** One of successful or failed. */
         fun status(status: Status?) = apply { this.status = status }
 
         /** One of successful or failed. */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

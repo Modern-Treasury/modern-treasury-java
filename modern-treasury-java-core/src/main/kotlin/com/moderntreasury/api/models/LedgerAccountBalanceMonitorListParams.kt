@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListParams
@@ -109,7 +110,7 @@ private constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: Optional<List<String>>) = id(id.orElse(null))
+        fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -119,7 +120,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Query the balance monitors for a single ledger account. */
         fun ledgerAccountId(ledgerAccountId: String?) = apply {
@@ -128,7 +129,7 @@ private constructor(
 
         /** Query the balance monitors for a single ledger account. */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -140,14 +141,13 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

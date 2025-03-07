@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LegalEntity
@@ -519,7 +520,7 @@ private constructor(
             bankSettings(JsonField.ofNullable(bankSettings))
 
         fun bankSettings(bankSettings: Optional<BankSettings>) =
-            bankSettings(bankSettings.orElse(null))
+            bankSettings(bankSettings.getOrNull())
 
         fun bankSettings(bankSettings: JsonField<BankSettings>) = apply {
             this.bankSettings = bankSettings
@@ -529,7 +530,7 @@ private constructor(
         fun businessName(businessName: String?) = businessName(JsonField.ofNullable(businessName))
 
         /** The business's legal business name. */
-        fun businessName(businessName: Optional<String>) = businessName(businessName.orElse(null))
+        fun businessName(businessName: Optional<String>) = businessName(businessName.getOrNull())
 
         /** The business's legal business name. */
         fun businessName(businessName: JsonField<String>) = apply {
@@ -542,7 +543,7 @@ private constructor(
 
         /** The country of citizenship for an individual. */
         fun citizenshipCountry(citizenshipCountry: Optional<String>) =
-            citizenshipCountry(citizenshipCountry.orElse(null))
+            citizenshipCountry(citizenshipCountry.getOrNull())
 
         /** The country of citizenship for an individual. */
         fun citizenshipCountry(citizenshipCountry: JsonField<String>) = apply {
@@ -557,7 +558,7 @@ private constructor(
         fun dateFormed(dateFormed: LocalDate?) = dateFormed(JsonField.ofNullable(dateFormed))
 
         /** A business's formation date (YYYY-MM-DD). */
-        fun dateFormed(dateFormed: Optional<LocalDate>) = dateFormed(dateFormed.orElse(null))
+        fun dateFormed(dateFormed: Optional<LocalDate>) = dateFormed(dateFormed.getOrNull())
 
         /** A business's formation date (YYYY-MM-DD). */
         fun dateFormed(dateFormed: JsonField<LocalDate>) = apply { this.dateFormed = dateFormed }
@@ -566,7 +567,7 @@ private constructor(
         fun dateOfBirth(dateOfBirth: LocalDate?) = dateOfBirth(JsonField.ofNullable(dateOfBirth))
 
         /** An individual's date of birth (YYYY-MM-DD). */
-        fun dateOfBirth(dateOfBirth: Optional<LocalDate>) = dateOfBirth(dateOfBirth.orElse(null))
+        fun dateOfBirth(dateOfBirth: Optional<LocalDate>) = dateOfBirth(dateOfBirth.getOrNull())
 
         /** An individual's date of birth (YYYY-MM-DD). */
         fun dateOfBirth(dateOfBirth: JsonField<LocalDate>) = apply {
@@ -577,7 +578,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -601,7 +602,7 @@ private constructor(
         fun email(email: String?) = email(JsonField.ofNullable(email))
 
         /** The entity's primary email. */
-        fun email(email: Optional<String>) = email(email.orElse(null))
+        fun email(email: Optional<String>) = email(email.getOrNull())
 
         /** The entity's primary email. */
         fun email(email: JsonField<String>) = apply { this.email = email }
@@ -610,7 +611,7 @@ private constructor(
         fun firstName(firstName: String?) = firstName(JsonField.ofNullable(firstName))
 
         /** An individual's first name. */
-        fun firstName(firstName: Optional<String>) = firstName(firstName.orElse(null))
+        fun firstName(firstName: Optional<String>) = firstName(firstName.getOrNull())
 
         /** An individual's first name. */
         fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
@@ -636,7 +637,7 @@ private constructor(
         fun lastName(lastName: String?) = lastName(JsonField.ofNullable(lastName))
 
         /** An individual's last name. */
-        fun lastName(lastName: Optional<String>) = lastName(lastName.orElse(null))
+        fun lastName(lastName: Optional<String>) = lastName(lastName.getOrNull())
 
         /** An individual's last name. */
         fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
@@ -648,7 +649,7 @@ private constructor(
         /** The legal entity associations and its child legal entities. */
         fun legalEntityAssociations(
             legalEntityAssociations: Optional<List<LegalEntityAssociation>>
-        ) = legalEntityAssociations(legalEntityAssociations.orElse(null))
+        ) = legalEntityAssociations(legalEntityAssociations.getOrNull())
 
         /** The legal entity associations and its child legal entities. */
         fun legalEntityAssociations(
@@ -680,7 +681,7 @@ private constructor(
 
         /** The business's legal structure. */
         fun legalStructure(legalStructure: Optional<LegalStructure>) =
-            legalStructure(legalStructure.orElse(null))
+            legalStructure(legalStructure.getOrNull())
 
         /** The business's legal structure. */
         fun legalStructure(legalStructure: JsonField<LegalStructure>) = apply {
@@ -713,7 +714,7 @@ private constructor(
         fun middleName(middleName: String?) = middleName(JsonField.ofNullable(middleName))
 
         /** An individual's middle name. */
-        fun middleName(middleName: Optional<String>) = middleName(middleName.orElse(null))
+        fun middleName(middleName: Optional<String>) = middleName(middleName.getOrNull())
 
         /** An individual's middle name. */
         fun middleName(middleName: JsonField<String>) = apply { this.middleName = middleName }
@@ -744,9 +745,8 @@ private constructor(
             politicallyExposedPerson(politicallyExposedPerson as Boolean?)
 
         /** Whether the individual is a politically exposed person. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun politicallyExposedPerson(politicallyExposedPerson: Optional<Boolean>) =
-            politicallyExposedPerson(politicallyExposedPerson.orElse(null) as Boolean?)
+            politicallyExposedPerson(politicallyExposedPerson.getOrNull())
 
         /** Whether the individual is a politically exposed person. */
         fun politicallyExposedPerson(politicallyExposedPerson: JsonField<Boolean>) = apply {
@@ -759,7 +759,7 @@ private constructor(
 
         /** An individual's preferred name. */
         fun preferredName(preferredName: Optional<String>) =
-            preferredName(preferredName.orElse(null))
+            preferredName(preferredName.getOrNull())
 
         /** An individual's preferred name. */
         fun preferredName(preferredName: JsonField<String>) = apply {
@@ -770,7 +770,7 @@ private constructor(
         fun prefix(prefix: String?) = prefix(JsonField.ofNullable(prefix))
 
         /** An individual's prefix. */
-        fun prefix(prefix: Optional<String>) = prefix(prefix.orElse(null))
+        fun prefix(prefix: Optional<String>) = prefix(prefix.getOrNull())
 
         /** An individual's prefix. */
         fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
@@ -779,7 +779,7 @@ private constructor(
         fun riskRating(riskRating: RiskRating?) = riskRating(JsonField.ofNullable(riskRating))
 
         /** The risk rating of the legal entity. One of low, medium, high. */
-        fun riskRating(riskRating: Optional<RiskRating>) = riskRating(riskRating.orElse(null))
+        fun riskRating(riskRating: Optional<RiskRating>) = riskRating(riskRating.getOrNull())
 
         /** The risk rating of the legal entity. One of low, medium, high. */
         fun riskRating(riskRating: JsonField<RiskRating>) = apply { this.riskRating = riskRating }
@@ -788,7 +788,7 @@ private constructor(
         fun suffix(suffix: String?) = suffix(JsonField.ofNullable(suffix))
 
         /** An individual's suffix. */
-        fun suffix(suffix: Optional<String>) = suffix(suffix.orElse(null))
+        fun suffix(suffix: Optional<String>) = suffix(suffix.getOrNull())
 
         /** An individual's suffix. */
         fun suffix(suffix: JsonField<String>) = apply { this.suffix = suffix }
@@ -802,7 +802,7 @@ private constructor(
 
         fun wealthAndEmploymentDetails(
             wealthAndEmploymentDetails: Optional<WealthAndEmploymentDetails>
-        ) = wealthAndEmploymentDetails(wealthAndEmploymentDetails.orElse(null))
+        ) = wealthAndEmploymentDetails(wealthAndEmploymentDetails.getOrNull())
 
         fun wealthAndEmploymentDetails(
             wealthAndEmploymentDetails: JsonField<WealthAndEmploymentDetails>
@@ -812,7 +812,7 @@ private constructor(
         fun website(website: String?) = website(JsonField.ofNullable(website))
 
         /** The entity's primary website URL. */
-        fun website(website: Optional<String>) = website(website.orElse(null))
+        fun website(website: Optional<String>) = website(website.getOrNull())
 
         /** The entity's primary website URL. */
         fun website(website: JsonField<String>) = apply { this.website = website }
@@ -1118,7 +1118,7 @@ private constructor(
             fun country(country: String?) = country(JsonField.ofNullable(country))
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: Optional<String>) = country(country.orElse(null))
+            fun country(country: Optional<String>) = country(country.getOrNull())
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
             fun country(country: JsonField<String>) = apply { this.country = country }
@@ -1133,7 +1133,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt
@@ -1141,13 +1141,13 @@ private constructor(
 
             fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
-            fun line1(line1: Optional<String>) = line1(line1.orElse(null))
+            fun line1(line1: Optional<String>) = line1(line1.getOrNull())
 
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
-            fun line2(line2: Optional<String>) = line2(line2.orElse(null))
+            fun line2(line2: Optional<String>) = line2(line2.getOrNull())
 
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
@@ -1167,7 +1167,7 @@ private constructor(
             fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
             /** Locality or City. */
-            fun locality(locality: Optional<String>) = locality(locality.orElse(null))
+            fun locality(locality: Optional<String>) = locality(locality.getOrNull())
 
             /** Locality or City. */
             fun locality(locality: JsonField<String>) = apply { this.locality = locality }
@@ -1180,7 +1180,7 @@ private constructor(
             fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
             /** The postal code of the address. */
-            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
+            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
 
             /** The postal code of the address. */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
@@ -1189,7 +1189,7 @@ private constructor(
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
             /** Region or State. */
-            fun region(region: Optional<String>) = region(region.orElse(null))
+            fun region(region: Optional<String>) = region(region.getOrNull())
 
             /** Region or State. */
             fun region(region: JsonField<String>) = apply { this.region = region }
@@ -1546,7 +1546,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt
@@ -1564,7 +1564,7 @@ private constructor(
 
             /** The ISO 3166-1 alpha-2 country code of the country that issued the identification */
             fun issuingCountry(issuingCountry: Optional<String>) =
-                issuingCountry(issuingCountry.orElse(null))
+                issuingCountry(issuingCountry.getOrNull())
 
             /** The ISO 3166-1 alpha-2 country code of the country that issued the identification */
             fun issuingCountry(issuingCountry: JsonField<String>) = apply {

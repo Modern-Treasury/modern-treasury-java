@@ -21,6 +21,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Update the details of a ledger account settlement. */
 class LedgerAccountSettlementUpdateParams
@@ -175,7 +176,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account settlement. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** The description of the ledger account settlement. */
             fun description(description: JsonField<String>) = apply {
@@ -295,7 +296,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** The description of the ledger account settlement. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** The description of the ledger account settlement. */
         fun description(description: JsonField<String>) = apply { body.description(description) }

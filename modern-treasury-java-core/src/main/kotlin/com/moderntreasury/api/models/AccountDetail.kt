@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class AccountDetail
@@ -232,7 +233,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt

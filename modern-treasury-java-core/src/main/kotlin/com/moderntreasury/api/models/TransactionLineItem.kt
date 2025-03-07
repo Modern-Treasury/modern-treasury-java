@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class TransactionLineItem
@@ -335,7 +336,7 @@ private constructor(
 
         /** The ID for the counterparty for this transaction line item. */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** The ID for the counterparty for this transaction line item. */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -366,7 +367,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -378,7 +379,7 @@ private constructor(
 
         /** The ID of the reconciled Expected Payment, otherwise `null`. */
         fun expectedPaymentId(expectedPaymentId: Optional<String>) =
-            expectedPaymentId(expectedPaymentId.orElse(null))
+            expectedPaymentId(expectedPaymentId.getOrNull())
 
         /** The ID of the reconciled Expected Payment, otherwise `null`. */
         fun expectedPaymentId(expectedPaymentId: JsonField<String>) = apply {
@@ -427,7 +428,7 @@ private constructor(
          * `null`.
          */
         fun transactableId(transactableId: Optional<String>) =
-            transactableId(transactableId.orElse(null))
+            transactableId(transactableId.getOrNull())
 
         /**
          * If a matching object exists in Modern Treasury, the ID will be populated here, otherwise
@@ -449,7 +450,7 @@ private constructor(
          * otherwise `null`.
          */
         fun transactableType(transactableType: Optional<TransactableType>) =
-            transactableType(transactableType.orElse(null))
+            transactableType(transactableType.getOrNull())
 
         /**
          * If a matching object exists in Modern Treasury, the type will be populated here,

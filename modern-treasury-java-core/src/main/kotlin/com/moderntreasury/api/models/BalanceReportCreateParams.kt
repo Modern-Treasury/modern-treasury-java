@@ -23,6 +23,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create balance reports */
 class BalanceReportCreateParams
@@ -776,7 +777,7 @@ private constructor(
              * or `us_bank`.
              */
             fun vendorCodeType(vendorCodeType: Optional<String>) =
-                vendorCodeType(vendorCodeType.orElse(null))
+                vendorCodeType(vendorCodeType.getOrNull())
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,

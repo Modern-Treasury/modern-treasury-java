@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LineItem
@@ -277,7 +278,7 @@ private constructor(
          * your accounting system has been connected.
          */
         fun accountingCategoryId(accountingCategoryId: Optional<String>) =
-            accountingCategoryId(accountingCategoryId.orElse(null))
+            accountingCategoryId(accountingCategoryId.getOrNull())
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
@@ -301,7 +302,7 @@ private constructor(
          * accessible if your accounting system has been connected.
          */
         fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-            accountingLedgerClassId(accountingLedgerClassId.orElse(null))
+            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
 
         /**
          * The ID of one of the class objects in your accounting system. Class objects track
@@ -326,7 +327,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** A free-form description of the line item. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** A free-form description of the line item. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -504,7 +505,7 @@ private constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+            fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
@@ -524,7 +525,7 @@ private constructor(
              * segments of your business independent of client or project. Note that these will only
              * be accessible if your accounting system has been connected.
              */
-            fun classId(classId: Optional<String>) = classId(classId.orElse(null))
+            fun classId(classId: Optional<String>) = classId(classId.getOrNull())
 
             /**
              * The ID of one of the class objects in your accounting system. Class objects track

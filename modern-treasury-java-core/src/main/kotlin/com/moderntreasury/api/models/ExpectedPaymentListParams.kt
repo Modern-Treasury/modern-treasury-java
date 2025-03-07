@@ -14,6 +14,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list expected_payments */
 class ExpectedPaymentListParams
@@ -149,14 +150,14 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Specify counterparty_id to see expected_payments for a specific account. */
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
         /** Specify counterparty_id to see expected_payments for a specific account. */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** Used to return expected payments created after some datetime */
         fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) = apply {
@@ -165,7 +166,7 @@ private constructor(
 
         /** Used to return expected payments created after some datetime */
         fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
-            createdAtLowerBound(createdAtLowerBound.orElse(null))
+            createdAtLowerBound(createdAtLowerBound.getOrNull())
 
         /** Used to return expected payments created before some datetime */
         fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) = apply {
@@ -174,13 +175,13 @@ private constructor(
 
         /** Used to return expected payments created before some datetime */
         fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
-            createdAtUpperBound(createdAtUpperBound.orElse(null))
+            createdAtUpperBound(createdAtUpperBound.getOrNull())
 
         /** One of credit, debit */
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
         /** One of credit, debit */
-        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
         fun internalAccountId(internalAccountId: String?) = apply {
@@ -189,7 +190,7 @@ private constructor(
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -201,20 +202,19 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** One of unreconciled, reconciled, or archived. */
         fun status(status: Status?) = apply { this.status = status }
 
         /** One of unreconciled, reconciled, or archived. */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
@@ -226,7 +226,7 @@ private constructor(
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
          * signet, wire
          */
-        fun type(type: Optional<Type>) = type(type.orElse(null))
+        fun type(type: Optional<Type>) = type(type.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

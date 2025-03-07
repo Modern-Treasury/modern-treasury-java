@@ -22,6 +22,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create external account */
 class ExternalAccountCreateParams
@@ -393,7 +394,7 @@ private constructor(
                 counterpartyId(JsonField.ofNullable(counterpartyId))
 
             fun counterpartyId(counterpartyId: Optional<String>) =
-                counterpartyId(counterpartyId.orElse(null))
+                counterpartyId(counterpartyId.getOrNull())
 
             fun counterpartyId(counterpartyId: JsonField<String>) = apply {
                 this.counterpartyId = counterpartyId
@@ -480,7 +481,7 @@ private constructor(
              * A nickname for the external account. This is only for internal usage and won't affect
              * any payments
              */
-            fun name(name: Optional<String>) = name(name.orElse(null))
+            fun name(name: Optional<String>) = name(name.getOrNull())
 
             /**
              * A nickname for the external account. This is only for internal usage and won't affect
@@ -514,7 +515,7 @@ private constructor(
             fun partyType(partyType: PartyType?) = partyType(JsonField.ofNullable(partyType))
 
             /** Either `individual` or `business`. */
-            fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
+            fun partyType(partyType: Optional<PartyType>) = partyType(partyType.getOrNull())
 
             /** Either `individual` or `business`. */
             fun partyType(partyType: JsonField<PartyType>) = apply { this.partyType = partyType }
@@ -638,7 +639,7 @@ private constructor(
         fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
 
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             body.counterpartyId(counterpartyId)
@@ -718,7 +719,7 @@ private constructor(
          * A nickname for the external account. This is only for internal usage and won't affect any
          * payments
          */
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
@@ -752,7 +753,7 @@ private constructor(
         fun partyType(partyType: PartyType?) = apply { body.partyType(partyType) }
 
         /** Either `individual` or `business`. */
-        fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
+        fun partyType(partyType: Optional<PartyType>) = partyType(partyType.getOrNull())
 
         /** Either `individual` or `business`. */
         fun partyType(partyType: JsonField<PartyType>) = apply { body.partyType(partyType) }
@@ -1695,9 +1696,8 @@ private constructor(
                 currencyExponent(currencyExponent as Long?)
 
             /** The currency exponent of the ledger account. */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun currencyExponent(currencyExponent: Optional<Long>) =
-                currencyExponent(currencyExponent.orElse(null) as Long?)
+                currencyExponent(currencyExponent.getOrNull())
 
             /** The currency exponent of the ledger account. */
             fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
@@ -1708,7 +1708,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** The description of the ledger account. */
             fun description(description: JsonField<String>) = apply {
@@ -2242,20 +2242,20 @@ private constructor(
             fun country(country: String?) = country(JsonField.ofNullable(country))
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
-            fun country(country: Optional<String>) = country(country.orElse(null))
+            fun country(country: Optional<String>) = country(country.getOrNull())
 
             /** Country code conforms to [ISO 3166-1 alpha-2] */
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
-            fun line1(line1: Optional<String>) = line1(line1.orElse(null))
+            fun line1(line1: Optional<String>) = line1(line1.getOrNull())
 
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
-            fun line2(line2: Optional<String>) = line2(line2.orElse(null))
+            fun line2(line2: Optional<String>) = line2(line2.getOrNull())
 
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
@@ -2263,7 +2263,7 @@ private constructor(
             fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
             /** Locality or City. */
-            fun locality(locality: Optional<String>) = locality(locality.orElse(null))
+            fun locality(locality: Optional<String>) = locality(locality.getOrNull())
 
             /** Locality or City. */
             fun locality(locality: JsonField<String>) = apply { this.locality = locality }
@@ -2272,7 +2272,7 @@ private constructor(
             fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
             /** The postal code of the address. */
-            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
+            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
 
             /** The postal code of the address. */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
@@ -2281,7 +2281,7 @@ private constructor(
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
             /** Region or State. */
-            fun region(region: Optional<String>) = region(region.orElse(null))
+            fun region(region: Optional<String>) = region(region.getOrNull())
 
             /** Region or State. */
             fun region(region: JsonField<String>) = apply { this.region = region }

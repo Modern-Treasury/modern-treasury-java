@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all ledger entries. */
 class LedgerEntryListParams
@@ -261,7 +262,7 @@ private constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: Optional<List<String>>) = id(id.orElse(null))
+        fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -271,7 +272,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Shows all ledger entries that were present on a ledger account at a particular
@@ -291,9 +292,8 @@ private constructor(
          * Shows all ledger entries that were present on a ledger account at a particular
          * `lock_version`. You must also specify `ledger_account_id`.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun asOfLockVersion(asOfLockVersion: Optional<Long>) =
-            asOfLockVersion(asOfLockVersion.orElse(null) as Long?)
+            asOfLockVersion(asOfLockVersion.getOrNull())
 
         /**
          * If true, response will include ledger entries that were deleted. When you update a ledger
@@ -305,7 +305,7 @@ private constructor(
          * If true, response will include ledger entries that were deleted. When you update a ledger
          * transaction to specify a new set of entries, the previous entries are deleted.
          */
-        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
@@ -317,7 +317,7 @@ private constructor(
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
          * transaction's effective time. Format ISO8601
          */
-        fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.orElse(null))
+        fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
@@ -332,7 +332,7 @@ private constructor(
          * transaction's effective date. Format YYYY-MM-DD
          */
         fun effectiveDate(effectiveDate: Optional<EffectiveDate>) =
-            effectiveDate(effectiveDate.orElse(null))
+            effectiveDate(effectiveDate.getOrNull())
 
         /** Get all ledger entries that match the direction specified. One of `credit`, `debit`. */
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
@@ -341,14 +341,14 @@ private constructor(
 
         /** Get all ledger entries that match the direction specified. One of `credit`, `debit`. */
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
-            ledgerAccountCategoryId(ledgerAccountCategoryId.orElse(null))
+            ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
         fun ledgerAccountId(ledgerAccountId: String?) = apply {
             this.ledgerAccountId = ledgerAccountId
         }
 
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the lock_version
@@ -365,21 +365,21 @@ private constructor(
          * lock_version 1000 of a ledger account, use `ledger_account_lock_version%5Blte%5D=1000`.
          */
         fun ledgerAccountLockVersion(ledgerAccountLockVersion: Optional<LedgerAccountLockVersion>) =
-            ledgerAccountLockVersion(ledgerAccountLockVersion.orElse(null))
+            ledgerAccountLockVersion(ledgerAccountLockVersion.getOrNull())
 
         fun ledgerAccountPayoutId(ledgerAccountPayoutId: String?) = apply {
             this.ledgerAccountPayoutId = ledgerAccountPayoutId
         }
 
         fun ledgerAccountPayoutId(ledgerAccountPayoutId: Optional<String>) =
-            ledgerAccountPayoutId(ledgerAccountPayoutId.orElse(null))
+            ledgerAccountPayoutId(ledgerAccountPayoutId.getOrNull())
 
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) = apply {
             this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
 
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.orElse(null))
+            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
         /** Get all ledger entries that are included in the ledger account statement. */
         fun ledgerAccountStatementId(ledgerAccountStatementId: String?) = apply {
@@ -388,14 +388,14 @@ private constructor(
 
         /** Get all ledger entries that are included in the ledger account statement. */
         fun ledgerAccountStatementId(ledgerAccountStatementId: Optional<String>) =
-            ledgerAccountStatementId(ledgerAccountStatementId.orElse(null))
+            ledgerAccountStatementId(ledgerAccountStatementId.getOrNull())
 
         fun ledgerTransactionId(ledgerTransactionId: String?) = apply {
             this.ledgerTransactionId = ledgerTransactionId
         }
 
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -407,7 +407,7 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * Order by `created_at` or `effective_at` in `asc` or `desc` order. For example, to order
@@ -421,14 +421,13 @@ private constructor(
          * by `effective_at asc`, use `order_by%5Beffective_at%5D=asc`. Ordering by only one field
          * at a time is supported.
          */
-        fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.orElse(null))
+        fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * If true, response will include the balances attached to the ledger entry. If there is no
@@ -446,9 +445,7 @@ private constructor(
          * If true, response will include the balances attached to the ledger entry. If there is no
          * balance available, null will be returned instead.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun showBalances(showBalances: Optional<Boolean>) =
-            showBalances(showBalances.orElse(null) as Boolean?)
+        fun showBalances(showBalances: Optional<Boolean>) = showBalances(showBalances.getOrNull())
 
         /**
          * If true, response will include ledger entries that were deleted. When you update a ledger
@@ -466,9 +463,7 @@ private constructor(
          * If true, response will include ledger entries that were deleted. When you update a ledger
          * transaction to specify a new set of entries, the previous entries are deleted.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun showDeleted(showDeleted: Optional<Boolean>) =
-            showDeleted(showDeleted.orElse(null) as Boolean?)
+        fun showDeleted(showDeleted: Optional<Boolean>) = showDeleted(showDeleted.getOrNull())
 
         /**
          * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
@@ -480,7 +475,7 @@ private constructor(
          * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
          * `archived`.
          */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
@@ -494,7 +489,7 @@ private constructor(
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.orElse(null))
+        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -1076,12 +1071,12 @@ private constructor(
 
             fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-            fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
+            fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
             fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<EffectiveAt>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

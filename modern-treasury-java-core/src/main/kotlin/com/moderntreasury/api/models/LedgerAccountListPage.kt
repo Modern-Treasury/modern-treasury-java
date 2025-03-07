@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger accounts. */
 class LedgerAccountListPage
@@ -177,7 +178,7 @@ private constructor(
                 while (index < page.items().size) {
                     yield(page.items()[index++])
                 }
-                page = page.getNextPage().orElse(null) ?: break
+                page = page.getNextPage().getOrNull() ?: break
                 index = 0
             }
         }

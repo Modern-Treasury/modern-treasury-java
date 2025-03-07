@@ -10,6 +10,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a paginated list of all counterparties. */
 class CounterpartyListParams
@@ -124,7 +125,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Used to return counterparties created after some datetime. */
         fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) = apply {
@@ -133,7 +134,7 @@ private constructor(
 
         /** Used to return counterparties created after some datetime. */
         fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
-            createdAtLowerBound(createdAtLowerBound.orElse(null))
+            createdAtLowerBound(createdAtLowerBound.getOrNull())
 
         /** Used to return counterparties created before some datetime. */
         fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) = apply {
@@ -142,20 +143,20 @@ private constructor(
 
         /** Used to return counterparties created before some datetime. */
         fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
-            createdAtUpperBound(createdAtUpperBound.orElse(null))
+            createdAtUpperBound(createdAtUpperBound.getOrNull())
 
         /** Performs a partial string match of the email field. This is also case insensitive. */
         fun email(email: String?) = apply { this.email = email }
 
         /** Performs a partial string match of the email field. This is also case insensitive. */
-        fun email(email: Optional<String>) = email(email.orElse(null))
+        fun email(email: Optional<String>) = email(email.getOrNull())
 
         /** Filters for counterparties with the given legal entity ID. */
         fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
 
         /** Filters for counterparties with the given legal entity ID. */
         fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+            legalEntityId(legalEntityId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -167,20 +168,19 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /** Performs a partial string match of the name field. This is also case insensitive. */
         fun name(name: String?) = apply { this.name = name }
 
         /** Performs a partial string match of the name field. This is also case insensitive. */
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

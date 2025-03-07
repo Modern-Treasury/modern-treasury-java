@@ -19,6 +19,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class PaymentFlow
@@ -425,7 +426,7 @@ private constructor(
          * external account will be associated with this counterparty.
          */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /**
          * The ID of a counterparty associated with the payment. As part of the payment workflow an
@@ -467,7 +468,7 @@ private constructor(
          * The due date for the flow. Can only be passed in when `effective_date_selection_enabled`
          * is `true`.
          */
-        fun dueDate(dueDate: Optional<LocalDate>) = dueDate(dueDate.orElse(null))
+        fun dueDate(dueDate: Optional<LocalDate>) = dueDate(dueDate.getOrNull())
 
         /**
          * The due date for the flow. Can only be passed in when `effective_date_selection_enabled`
@@ -507,7 +508,7 @@ private constructor(
          */
         fun existingExternalAccountsFilter(
             existingExternalAccountsFilter: Optional<ExistingExternalAccountsFilter>
-        ) = existingExternalAccountsFilter(existingExternalAccountsFilter.orElse(null))
+        ) = existingExternalAccountsFilter(existingExternalAccountsFilter.getOrNull())
 
         /**
          * When `verified` and `external_account_collection` is `enabled`, filters the list of
@@ -557,7 +558,7 @@ private constructor(
 
         /** The ID of one of your organization's internal accounts. */
         fun originatingAccountId(originatingAccountId: Optional<String>) =
-            originatingAccountId(originatingAccountId.orElse(null))
+            originatingAccountId(originatingAccountId.getOrNull())
 
         /** The ID of one of your organization's internal accounts. */
         fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
@@ -570,7 +571,7 @@ private constructor(
 
         /** If present, the ID of the payment order created using this flow. */
         fun paymentOrderId(paymentOrderId: Optional<String>) =
-            paymentOrderId(paymentOrderId.orElse(null))
+            paymentOrderId(paymentOrderId.getOrNull())
 
         /** If present, the ID of the payment order created using this flow. */
         fun paymentOrderId(paymentOrderId: JsonField<String>) = apply {
@@ -583,7 +584,7 @@ private constructor(
 
         /** If present, the ID of the external account created using this flow. */
         fun receivingAccountId(receivingAccountId: Optional<String>) =
-            receivingAccountId(receivingAccountId.orElse(null))
+            receivingAccountId(receivingAccountId.getOrNull())
 
         /** If present, the ID of the external account created using this flow. */
         fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
@@ -604,7 +605,7 @@ private constructor(
          * `true`.
          */
         fun selectedEffectiveDate(selectedEffectiveDate: Optional<LocalDate>) =
-            selectedEffectiveDate(selectedEffectiveDate.orElse(null))
+            selectedEffectiveDate(selectedEffectiveDate.getOrNull())
 
         /**
          * This field is set after your end-user selects a payment date while completing the

@@ -22,6 +22,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create virtual_account */
 class VirtualAccountCreateParams
@@ -1366,9 +1367,8 @@ private constructor(
                 currencyExponent(currencyExponent as Long?)
 
             /** The currency exponent of the ledger account. */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun currencyExponent(currencyExponent: Optional<Long>) =
-                currencyExponent(currencyExponent.orElse(null) as Long?)
+                currencyExponent(currencyExponent.getOrNull())
 
             /** The currency exponent of the ledger account. */
             fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
@@ -1379,7 +1379,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** The description of the ledger account. */
             fun description(description: JsonField<String>) = apply {
@@ -1942,7 +1942,7 @@ private constructor(
              * populated, otherwise null.
              */
             fun paymentType(paymentType: Optional<PaymentType>) =
-                paymentType(paymentType.orElse(null))
+                paymentType(paymentType.getOrNull())
 
             /**
              * If the routing detail is to be used for a specific payment type this field will be

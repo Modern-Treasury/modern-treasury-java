@@ -20,6 +20,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Remove ledger entries from a draft ledger account settlement. */
 class LedgerAccountSettlementAccountEntryDeleteParams
@@ -151,7 +152,7 @@ private constructor(
              * settlement.
              */
             fun ledgerEntryIds(ledgerEntryIds: Optional<List<JsonValue>>) =
-                ledgerEntryIds(ledgerEntryIds.orElse(null))
+                ledgerEntryIds(ledgerEntryIds.getOrNull())
 
             /**
              * The ids of the ledger entries that are to be added or removed from the ledger account
@@ -271,7 +272,7 @@ private constructor(
          * settlement.
          */
         fun ledgerEntryIds(ledgerEntryIds: Optional<List<JsonValue>>) =
-            ledgerEntryIds(ledgerEntryIds.orElse(null))
+            ledgerEntryIds(ledgerEntryIds.getOrNull())
 
         /**
          * The ids of the ledger entries that are to be added or removed from the ledger account

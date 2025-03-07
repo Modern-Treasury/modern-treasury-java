@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class IncomingPaymentDetail
@@ -499,7 +500,7 @@ private constructor(
 
         /** The ID of the ledger transaction linked to the incoming payment detail or `null`. */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction linked to the incoming payment detail or `null`. */
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
@@ -538,7 +539,7 @@ private constructor(
 
         /** The last 4 digits of the originating account_number for the incoming payment detail. */
         fun originatingAccountNumberSafe(originatingAccountNumberSafe: Optional<String>) =
-            originatingAccountNumberSafe(originatingAccountNumberSafe.orElse(null))
+            originatingAccountNumberSafe(originatingAccountNumberSafe.getOrNull())
 
         /** The last 4 digits of the originating account_number for the incoming payment detail. */
         fun originatingAccountNumberSafe(originatingAccountNumberSafe: JsonField<String>) = apply {
@@ -553,7 +554,7 @@ private constructor(
         /** The type of the originating account number for the incoming payment detail. */
         fun originatingAccountNumberType(
             originatingAccountNumberType: Optional<OriginatingAccountNumberType>
-        ) = originatingAccountNumberType(originatingAccountNumberType.orElse(null))
+        ) = originatingAccountNumberType(originatingAccountNumberType.getOrNull())
 
         /** The type of the originating account number for the incoming payment detail. */
         fun originatingAccountNumberType(
@@ -566,7 +567,7 @@ private constructor(
 
         /** The routing number of the originating account for the incoming payment detail. */
         fun originatingRoutingNumber(originatingRoutingNumber: Optional<String>) =
-            originatingRoutingNumber(originatingRoutingNumber.orElse(null))
+            originatingRoutingNumber(originatingRoutingNumber.getOrNull())
 
         /** The routing number of the originating account for the incoming payment detail. */
         fun originatingRoutingNumber(originatingRoutingNumber: JsonField<String>) = apply {
@@ -581,7 +582,7 @@ private constructor(
         /** The type of the originating routing number for the incoming payment detail. */
         fun originatingRoutingNumberType(
             originatingRoutingNumberType: Optional<OriginatingRoutingNumberType>
-        ) = originatingRoutingNumberType(originatingRoutingNumberType.orElse(null))
+        ) = originatingRoutingNumberType(originatingRoutingNumberType.getOrNull())
 
         /** The type of the originating routing number for the incoming payment detail. */
         fun originatingRoutingNumberType(
@@ -606,7 +607,7 @@ private constructor(
 
         /** The ID of the reconciled Transaction or `null`. */
         fun transactionId(transactionId: Optional<String>) =
-            transactionId(transactionId.orElse(null))
+            transactionId(transactionId.getOrNull())
 
         /** The ID of the reconciled Transaction or `null`. */
         fun transactionId(transactionId: JsonField<String>) = apply {
@@ -619,7 +620,7 @@ private constructor(
 
         /** The ID of the reconciled Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: Optional<String>) =
-            transactionLineItemId(transactionLineItemId.orElse(null))
+            transactionLineItemId(transactionLineItemId.getOrNull())
 
         /** The ID of the reconciled Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: JsonField<String>) = apply {
@@ -640,7 +641,7 @@ private constructor(
         fun vendorId(vendorId: String?) = vendorId(JsonField.ofNullable(vendorId))
 
         /** The identifier of the vendor bank. */
-        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.orElse(null))
+        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
 
         /** The identifier of the vendor bank. */
         fun vendorId(vendorId: JsonField<String>) = apply { this.vendorId = vendorId }
@@ -657,7 +658,7 @@ private constructor(
          * object.
          */
         fun virtualAccount(virtualAccount: Optional<VirtualAccount>) =
-            virtualAccount(virtualAccount.orElse(null))
+            virtualAccount(virtualAccount.getOrNull())
 
         /**
          * If the incoming payment detail is in a virtual account, the serialized virtual account
@@ -677,7 +678,7 @@ private constructor(
          * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
          */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         /**
          * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
@@ -692,7 +693,7 @@ private constructor(
 
         /** The account number of the originating account for the incoming payment detail. */
         fun originatingAccountNumber(originatingAccountNumber: Optional<String>) =
-            originatingAccountNumber(originatingAccountNumber.orElse(null))
+            originatingAccountNumber(originatingAccountNumber.getOrNull())
 
         /** The account number of the originating account for the incoming payment detail. */
         fun originatingAccountNumber(originatingAccountNumber: JsonField<String>) = apply {
