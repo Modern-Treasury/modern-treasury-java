@@ -3,6 +3,7 @@
 <!-- x-release-please-start-version -->
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/2.12.0)
+[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/2.12.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/2.12.0)
 
 <!-- x-release-please-end -->
 
@@ -10,7 +11,7 @@ The Modern Treasury Java SDK provides convenient access to the Modern Treasury R
 
 The Modern Treasury Java SDK is similar to the Modern Treasury Kotlin SDK but with minor differences that make it more ergonomic for use in Java, such as `Optional` instead of nullable values, `Stream` instead of `Sequence`, and `CompletableFuture` instead of suspend functions.
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/2.12.0).
 
 ## Installation
 
