@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,27 +19,40 @@ interface ForeignExchangeQuoteService {
     fun withRawResponse(): WithRawResponse
 
     /** create foreign_exchange_quote */
-    @JvmOverloads
+    fun create(params: ForeignExchangeQuoteCreateParams): ForeignExchangeQuote =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ForeignExchangeQuoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
 
     /** get foreign_exchange_quote */
-    @JvmOverloads
+    fun retrieve(params: ForeignExchangeQuoteRetrieveParams): ForeignExchangeQuote =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
 
     /** list foreign_exchange_quotes */
-    @JvmOverloads
+    fun list(): ForeignExchangeQuoteListPage = list(ForeignExchangeQuoteListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuoteListPage
 
-    /** list foreign_exchange_quotes */
+    /** @see [list] */
+    fun list(
+        params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
+    ): ForeignExchangeQuoteListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ForeignExchangeQuoteListPage =
         list(ForeignExchangeQuoteListParams.none(), requestOptions)
 
@@ -55,7 +66,12 @@ interface ForeignExchangeQuoteService {
          * Returns a raw HTTP response for `post /api/foreign_exchange_quotes`, but is otherwise the
          * same as [ForeignExchangeQuoteService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ForeignExchangeQuoteCreateParams
+        ): HttpResponseFor<ForeignExchangeQuote> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ForeignExchangeQuoteCreateParams,
@@ -66,7 +82,12 @@ interface ForeignExchangeQuoteService {
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes/{id}`, but is otherwise
          * the same as [ForeignExchangeQuoteService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ForeignExchangeQuoteRetrieveParams
+        ): HttpResponseFor<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams,
@@ -77,17 +98,24 @@ interface ForeignExchangeQuoteService {
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the
          * same as [ForeignExchangeQuoteService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<ForeignExchangeQuoteListPage> =
+            list(ForeignExchangeQuoteListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ForeignExchangeQuoteListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the
-         * same as [ForeignExchangeQuoteService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
+        ): HttpResponseFor<ForeignExchangeQuoteListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ForeignExchangeQuoteListPage> =
             list(ForeignExchangeQuoteListParams.none(), requestOptions)

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,27 +20,42 @@ interface ForeignExchangeQuoteServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create foreign_exchange_quote */
-    @JvmOverloads
+    fun create(params: ForeignExchangeQuoteCreateParams): CompletableFuture<ForeignExchangeQuote> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ForeignExchangeQuoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuote>
 
     /** get foreign_exchange_quote */
-    @JvmOverloads
+    fun retrieve(
+        params: ForeignExchangeQuoteRetrieveParams
+    ): CompletableFuture<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuote>
 
     /** list foreign_exchange_quotes */
-    @JvmOverloads
+    fun list(): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
+        list(ForeignExchangeQuoteListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuoteListPageAsync>
 
-    /** list foreign_exchange_quotes */
+    /** @see [list] */
+    fun list(
+        params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
+    ): CompletableFuture<ForeignExchangeQuoteListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
         list(ForeignExchangeQuoteListParams.none(), requestOptions)
 
@@ -56,7 +69,13 @@ interface ForeignExchangeQuoteServiceAsync {
          * Returns a raw HTTP response for `post /api/foreign_exchange_quotes`, but is otherwise the
          * same as [ForeignExchangeQuoteServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ForeignExchangeQuoteCreateParams
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ForeignExchangeQuoteCreateParams,
@@ -67,7 +86,13 @@ interface ForeignExchangeQuoteServiceAsync {
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes/{id}`, but is otherwise
          * the same as [ForeignExchangeQuoteServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ForeignExchangeQuoteRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams,
@@ -78,17 +103,25 @@ interface ForeignExchangeQuoteServiceAsync {
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the
          * same as [ForeignExchangeQuoteServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>> =
+            list(ForeignExchangeQuoteListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the
-         * same as [ForeignExchangeQuoteServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

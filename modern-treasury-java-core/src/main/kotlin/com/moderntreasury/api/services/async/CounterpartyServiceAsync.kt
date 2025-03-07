@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,46 +25,70 @@ interface CounterpartyServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new counterparty. */
-    @JvmOverloads
+    fun create(params: CounterpartyCreateParams): CompletableFuture<Counterparty> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterpartyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Get details on a single counterparty. */
-    @JvmOverloads
+    fun retrieve(params: CounterpartyRetrieveParams): CompletableFuture<Counterparty> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterpartyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Updates a given counterparty with new information. */
-    @JvmOverloads
+    fun update(params: CounterpartyUpdateParams): CompletableFuture<Counterparty> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterpartyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
     /** Get a paginated list of all counterparties. */
-    @JvmOverloads
+    fun list(): CompletableFuture<CounterpartyListPageAsync> = list(CounterpartyListParams.none())
+
+    /** @see [list] */
     fun list(
         params: CounterpartyListParams = CounterpartyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterpartyListPageAsync>
 
-    /** Get a paginated list of all counterparties. */
+    /** @see [list] */
+    fun list(
+        params: CounterpartyListParams = CounterpartyListParams.none()
+    ): CompletableFuture<CounterpartyListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<CounterpartyListPageAsync> =
         list(CounterpartyListParams.none(), requestOptions)
 
     /** Deletes a given counterparty. */
-    @JvmOverloads
+    fun delete(params: CounterpartyDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterpartyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Send an email requesting account details. */
-    @JvmOverloads
+    fun collectAccount(
+        params: CounterpartyCollectAccountParams
+    ): CompletableFuture<CounterpartyCollectAccountResponse> =
+        collectAccount(params, RequestOptions.none())
+
+    /** @see [collectAccount] */
     fun collectAccount(
         params: CounterpartyCollectAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -82,7 +104,12 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `post /api/counterparties`, but is otherwise the same as
          * [CounterpartyServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterpartyCreateParams
+        ): CompletableFuture<HttpResponseFor<Counterparty>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterpartyCreateParams,
@@ -93,7 +120,13 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `get /api/counterparties/{id}`, but is otherwise the same
          * as [CounterpartyServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterpartyRetrieveParams
+        ): CompletableFuture<HttpResponseFor<Counterparty>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterpartyRetrieveParams,
@@ -104,7 +137,12 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `patch /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterpartyUpdateParams
+        ): CompletableFuture<HttpResponseFor<Counterparty>> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterpartyUpdateParams,
@@ -115,17 +153,25 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `get /api/counterparties`, but is otherwise the same as
          * [CounterpartyServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
+            list(CounterpartyListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/counterparties`, but is otherwise the same as
-         * [CounterpartyServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterpartyListParams = CounterpartyListParams.none()
+        ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -136,7 +182,11 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `delete /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CounterpartyDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterpartyDeleteParams,
@@ -147,7 +197,13 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `post /api/counterparties/{id}/collect_account`, but is
          * otherwise the same as [CounterpartyServiceAsync.collectAccount].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun collectAccount(
+            params: CounterpartyCollectAccountParams
+        ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> =
+            collectAccount(params, RequestOptions.none())
+
+        /** @see [collectAccount] */
         @MustBeClosed
         fun collectAccount(
             params: CounterpartyCollectAccountParams,

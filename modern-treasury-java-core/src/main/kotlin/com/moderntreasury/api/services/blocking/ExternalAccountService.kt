@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,53 +25,77 @@ interface ExternalAccountService {
     fun withRawResponse(): WithRawResponse
 
     /** create external account */
-    @JvmOverloads
+    fun create(params: ExternalAccountCreateParams): ExternalAccount =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ExternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** show external account */
-    @JvmOverloads
+    fun retrieve(params: ExternalAccountRetrieveParams): ExternalAccount =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ExternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** update external account */
-    @JvmOverloads
+    fun update(params: ExternalAccountUpdateParams): ExternalAccount =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ExternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** list external accounts */
-    @JvmOverloads
+    fun list(): ExternalAccountListPage = list(ExternalAccountListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ExternalAccountListParams = ExternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccountListPage
 
-    /** list external accounts */
+    /** @see [list] */
+    fun list(
+        params: ExternalAccountListParams = ExternalAccountListParams.none()
+    ): ExternalAccountListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ExternalAccountListPage =
         list(ExternalAccountListParams.none(), requestOptions)
 
     /** delete external account */
-    @JvmOverloads
+    fun delete(params: ExternalAccountDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ExternalAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** complete verification of external account */
-    @JvmOverloads
+    fun completeVerification(params: ExternalAccountCompleteVerificationParams): ExternalAccount =
+        completeVerification(params, RequestOptions.none())
+
+    /** @see [completeVerification] */
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalAccount
 
     /** verify external account */
-    @JvmOverloads
+    fun verify(params: ExternalAccountVerifyParams): ExternalAccountVerifyResponse =
+        verify(params, RequestOptions.none())
+
+    /** @see [verify] */
     fun verify(
         params: ExternalAccountVerifyParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -89,7 +111,11 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `post /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ExternalAccountCreateParams): HttpResponseFor<ExternalAccount> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ExternalAccountCreateParams,
@@ -100,7 +126,11 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `get /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: ExternalAccountRetrieveParams): HttpResponseFor<ExternalAccount> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ExternalAccountRetrieveParams,
@@ -111,7 +141,11 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `patch /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: ExternalAccountUpdateParams): HttpResponseFor<ExternalAccount> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ExternalAccountUpdateParams,
@@ -122,17 +156,24 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `get /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<ExternalAccountListPage> =
+            list(ExternalAccountListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalAccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/external_accounts`, but is otherwise the same
-         * as [ExternalAccountService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ExternalAccountListParams = ExternalAccountListParams.none()
+        ): HttpResponseFor<ExternalAccountListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ExternalAccountListPage> =
             list(ExternalAccountListParams.none(), requestOptions)
@@ -141,7 +182,11 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `delete /api/external_accounts/{id}`, but is otherwise
          * the same as [ExternalAccountService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ExternalAccountDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ExternalAccountDeleteParams,
@@ -152,7 +197,12 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/complete_verification`,
          * but is otherwise the same as [ExternalAccountService.completeVerification].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun completeVerification(
+            params: ExternalAccountCompleteVerificationParams
+        ): HttpResponseFor<ExternalAccount> = completeVerification(params, RequestOptions.none())
+
+        /** @see [completeVerification] */
         @MustBeClosed
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams,
@@ -163,7 +213,12 @@ interface ExternalAccountService {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/verify`, but is
          * otherwise the same as [ExternalAccountService.verify].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun verify(
+            params: ExternalAccountVerifyParams
+        ): HttpResponseFor<ExternalAccountVerifyResponse> = verify(params, RequestOptions.none())
+
+        /** @see [verify] */
         @MustBeClosed
         fun verify(
             params: ExternalAccountVerifyParams,

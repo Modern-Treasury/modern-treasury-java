@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -20,14 +18,21 @@ interface LedgerAccountStatementService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledger account statement. */
-    @JvmOverloads
+    fun create(params: LedgerAccountStatementCreateParams): LedgerAccountStatementCreateResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountStatementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountStatementCreateResponse
 
     /** Get details on a single ledger account statement. */
-    @JvmOverloads
+    fun retrieve(
+        params: LedgerAccountStatementRetrieveParams
+    ): LedgerAccountStatementRetrieveResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +48,13 @@ interface LedgerAccountStatementService {
          * Returns a raw HTTP response for `post /api/ledger_account_statements`, but is otherwise
          * the same as [LedgerAccountStatementService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerAccountStatementCreateParams
+        ): HttpResponseFor<LedgerAccountStatementCreateResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountStatementCreateParams,
@@ -54,7 +65,13 @@ interface LedgerAccountStatementService {
          * Returns a raw HTTP response for `get /api/ledger_account_statements/{id}`, but is
          * otherwise the same as [LedgerAccountStatementService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountStatementRetrieveParams
+        ): HttpResponseFor<LedgerAccountStatementRetrieveResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams,

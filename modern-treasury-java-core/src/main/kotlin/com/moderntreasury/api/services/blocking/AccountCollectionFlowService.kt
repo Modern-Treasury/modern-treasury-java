@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,34 +20,50 @@ interface AccountCollectionFlowService {
     fun withRawResponse(): WithRawResponse
 
     /** create account_collection_flow */
-    @JvmOverloads
+    fun create(params: AccountCollectionFlowCreateParams): AccountCollectionFlow =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlow
 
     /** get account_collection_flow */
-    @JvmOverloads
+    fun retrieve(params: AccountCollectionFlowRetrieveParams): AccountCollectionFlow =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlow
 
     /** update account_collection_flow */
-    @JvmOverloads
+    fun update(params: AccountCollectionFlowUpdateParams): AccountCollectionFlow =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: AccountCollectionFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlow
 
     /** list account_collection_flows */
-    @JvmOverloads
+    fun list(): AccountCollectionFlowListPage = list(AccountCollectionFlowListParams.none())
+
+    /** @see [list] */
     fun list(
         params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlowListPage
 
-    /** list account_collection_flows */
+    /** @see [list] */
+    fun list(
+        params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
+    ): AccountCollectionFlowListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): AccountCollectionFlowListPage =
         list(AccountCollectionFlowListParams.none(), requestOptions)
 
@@ -63,7 +77,12 @@ interface AccountCollectionFlowService {
          * Returns a raw HTTP response for `post /api/account_collection_flows`, but is otherwise
          * the same as [AccountCollectionFlowService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: AccountCollectionFlowCreateParams
+        ): HttpResponseFor<AccountCollectionFlow> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AccountCollectionFlowCreateParams,
@@ -74,7 +93,12 @@ interface AccountCollectionFlowService {
          * Returns a raw HTTP response for `get /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: AccountCollectionFlowRetrieveParams
+        ): HttpResponseFor<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AccountCollectionFlowRetrieveParams,
@@ -85,7 +109,12 @@ interface AccountCollectionFlowService {
          * Returns a raw HTTP response for `patch /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: AccountCollectionFlowUpdateParams
+        ): HttpResponseFor<AccountCollectionFlow> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountCollectionFlowUpdateParams,
@@ -96,17 +125,24 @@ interface AccountCollectionFlowService {
          * Returns a raw HTTP response for `get /api/account_collection_flows`, but is otherwise the
          * same as [AccountCollectionFlowService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<AccountCollectionFlowListPage> =
+            list(AccountCollectionFlowListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountCollectionFlowListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/account_collection_flows`, but is otherwise the
-         * same as [AccountCollectionFlowService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
+        ): HttpResponseFor<AccountCollectionFlowListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountCollectionFlowListPage> =
             list(AccountCollectionFlowListParams.none(), requestOptions)

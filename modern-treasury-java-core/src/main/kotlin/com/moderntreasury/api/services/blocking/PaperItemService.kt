@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -20,20 +18,29 @@ interface PaperItemService {
     fun withRawResponse(): WithRawResponse
 
     /** Get details on a single paper item. */
-    @JvmOverloads
+    fun retrieve(params: PaperItemRetrieveParams): PaperItem =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaperItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaperItem
 
     /** Get a list of all paper items. */
-    @JvmOverloads
+    fun list(): PaperItemListPage = list(PaperItemListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaperItemListParams = PaperItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaperItemListPage
 
-    /** Get a list of all paper items. */
+    /** @see [list] */
+    fun list(params: PaperItemListParams = PaperItemListParams.none()): PaperItemListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PaperItemListPage =
         list(PaperItemListParams.none(), requestOptions)
 
@@ -44,7 +51,11 @@ interface PaperItemService {
          * Returns a raw HTTP response for `get /api/paper_items/{id}`, but is otherwise the same as
          * [PaperItemService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PaperItemRetrieveParams): HttpResponseFor<PaperItem> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaperItemRetrieveParams,
@@ -55,17 +66,23 @@ interface PaperItemService {
          * Returns a raw HTTP response for `get /api/paper_items`, but is otherwise the same as
          * [PaperItemService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<PaperItemListPage> = list(PaperItemListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaperItemListParams = PaperItemListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaperItemListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/paper_items`, but is otherwise the same as
-         * [PaperItemService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaperItemListParams = PaperItemListParams.none()
+        ): HttpResponseFor<PaperItemListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaperItemListPage> =
             list(PaperItemListParams.none(), requestOptions)

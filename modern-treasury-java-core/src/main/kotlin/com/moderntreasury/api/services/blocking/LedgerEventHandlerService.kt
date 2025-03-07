@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,32 +20,48 @@ interface LedgerEventHandlerService {
     fun withRawResponse(): WithRawResponse
 
     /** create ledger_event_handler */
-    @JvmOverloads
+    fun create(params: LedgerEventHandlerCreateParams): LedgerEventHandler =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerEventHandlerCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandler
 
     /** Get details on a single ledger event handler. */
-    @JvmOverloads
+    fun retrieve(params: LedgerEventHandlerRetrieveParams): LedgerEventHandler =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandler
 
     /** Get a list of ledger event handlers. */
-    @JvmOverloads
+    fun list(): LedgerEventHandlerListPage = list(LedgerEventHandlerListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEventHandlerListPage
 
-    /** Get a list of ledger event handlers. */
+    /** @see [list] */
+    fun list(
+        params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none()
+    ): LedgerEventHandlerListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerEventHandlerListPage =
         list(LedgerEventHandlerListParams.none(), requestOptions)
 
     /** Archive a ledger event handler. */
-    @JvmOverloads
+    fun delete(params: LedgerEventHandlerDeleteParams): LedgerEventHandler =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerEventHandlerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -63,7 +77,11 @@ interface LedgerEventHandlerService {
          * Returns a raw HTTP response for `post /api/ledger_event_handlers`, but is otherwise the
          * same as [LedgerEventHandlerService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LedgerEventHandlerCreateParams): HttpResponseFor<LedgerEventHandler> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerEventHandlerCreateParams,
@@ -74,7 +92,12 @@ interface LedgerEventHandlerService {
          * Returns a raw HTTP response for `get /api/ledger_event_handlers/{id}`, but is otherwise
          * the same as [LedgerEventHandlerService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerEventHandlerRetrieveParams
+        ): HttpResponseFor<LedgerEventHandler> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerEventHandlerRetrieveParams,
@@ -85,17 +108,24 @@ interface LedgerEventHandlerService {
          * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
          * same as [LedgerEventHandlerService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerEventHandlerListPage> =
+            list(LedgerEventHandlerListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEventHandlerListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
-         * same as [LedgerEventHandlerService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerEventHandlerListParams = LedgerEventHandlerListParams.none()
+        ): HttpResponseFor<LedgerEventHandlerListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerEventHandlerListPage> =
             list(LedgerEventHandlerListParams.none(), requestOptions)
@@ -104,7 +134,11 @@ interface LedgerEventHandlerService {
          * Returns a raw HTTP response for `delete /api/ledger_event_handlers/{id}`, but is
          * otherwise the same as [LedgerEventHandlerService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: LedgerEventHandlerDeleteParams): HttpResponseFor<LedgerEventHandler> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerEventHandlerDeleteParams,

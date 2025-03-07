@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -25,21 +23,27 @@ interface LineItemService {
     fun withRawResponse(): WithRawResponse
 
     /** Get a single line item */
-    @JvmOverloads
+    fun retrieve(params: LineItemRetrieveParams): LineItem = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LineItem
 
     /** update line item */
-    @JvmOverloads
+    fun update(params: LineItemUpdateParams): LineItem = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LineItem
 
     /** Get a list of line items */
-    @JvmOverloads
+    fun list(params: LineItemListParams): LineItemListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: LineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -157,7 +161,11 @@ interface LineItemService {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LineItemRetrieveParams): HttpResponseFor<LineItem> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LineItemRetrieveParams,
@@ -169,7 +177,11 @@ interface LineItemService {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LineItemUpdateParams): HttpResponseFor<LineItem> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LineItemUpdateParams,
@@ -180,7 +192,11 @@ interface LineItemService {
          * Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items`,
          * but is otherwise the same as [LineItemService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: LineItemListParams): HttpResponseFor<LineItemListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LineItemListParams,

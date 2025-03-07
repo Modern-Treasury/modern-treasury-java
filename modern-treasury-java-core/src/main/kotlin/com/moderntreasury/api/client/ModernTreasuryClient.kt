@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.client
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -153,15 +151,19 @@ interface ModernTreasuryClient {
     /**
      * A test endpoint often used to confirm credentials and headers are being passed in correctly.
      */
-    @JvmOverloads
+    fun ping(): PingResponse = ping(ClientPingParams.none())
+
+    /** @see [ping] */
     fun ping(
         params: ClientPingParams = ClientPingParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PingResponse
 
-    /**
-     * A test endpoint often used to confirm credentials and headers are being passed in correctly.
-     */
+    /** @see [ping] */
+    fun ping(params: ClientPingParams = ClientPingParams.none()): PingResponse =
+        ping(params, RequestOptions.none())
+
+    /** @see [ping] */
     fun ping(requestOptions: RequestOptions): PingResponse =
         ping(ClientPingParams.none(), requestOptions)
 
@@ -261,17 +263,22 @@ interface ModernTreasuryClient {
          * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
          * [ModernTreasuryClient.ping].
          */
-        @JvmOverloads
+        @MustBeClosed fun ping(): HttpResponseFor<PingResponse> = ping(ClientPingParams.none())
+
+        /** @see [ping] */
         @MustBeClosed
         fun ping(
             params: ClientPingParams = ClientPingParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PingResponse>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
-         * [ModernTreasuryClient.ping].
-         */
+        /** @see [ping] */
+        @MustBeClosed
+        fun ping(
+            params: ClientPingParams = ClientPingParams.none()
+        ): HttpResponseFor<PingResponse> = ping(params, RequestOptions.none())
+
+        /** @see [ping] */
         @MustBeClosed
         fun ping(requestOptions: RequestOptions): HttpResponseFor<PingResponse> =
             ping(ClientPingParams.none(), requestOptions)
