@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,34 +21,54 @@ interface AccountCollectionFlowServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create account_collection_flow */
-    @JvmOverloads
+    fun create(
+        params: AccountCollectionFlowCreateParams
+    ): CompletableFuture<AccountCollectionFlow> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** get account_collection_flow */
-    @JvmOverloads
+    fun retrieve(
+        params: AccountCollectionFlowRetrieveParams
+    ): CompletableFuture<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** update account_collection_flow */
-    @JvmOverloads
+    fun update(
+        params: AccountCollectionFlowUpdateParams
+    ): CompletableFuture<AccountCollectionFlow> = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: AccountCollectionFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
     /** list account_collection_flows */
-    @JvmOverloads
+    fun list(): CompletableFuture<AccountCollectionFlowListPageAsync> =
+        list(AccountCollectionFlowListParams.none())
+
+    /** @see [list] */
     fun list(
         params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlowListPageAsync>
 
-    /** list account_collection_flows */
+    /** @see [list] */
+    fun list(
+        params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
+    ): CompletableFuture<AccountCollectionFlowListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<AccountCollectionFlowListPageAsync> =
@@ -66,7 +84,13 @@ interface AccountCollectionFlowServiceAsync {
          * Returns a raw HTTP response for `post /api/account_collection_flows`, but is otherwise
          * the same as [AccountCollectionFlowServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: AccountCollectionFlowCreateParams
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AccountCollectionFlowCreateParams,
@@ -77,7 +101,13 @@ interface AccountCollectionFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: AccountCollectionFlowRetrieveParams
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AccountCollectionFlowRetrieveParams,
@@ -88,7 +118,13 @@ interface AccountCollectionFlowServiceAsync {
          * Returns a raw HTTP response for `patch /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: AccountCollectionFlowUpdateParams
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountCollectionFlowUpdateParams,
@@ -99,17 +135,25 @@ interface AccountCollectionFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/account_collection_flows`, but is otherwise the
          * same as [AccountCollectionFlowServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>> =
+            list(AccountCollectionFlowListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/account_collection_flows`, but is otherwise the
-         * same as [AccountCollectionFlowServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

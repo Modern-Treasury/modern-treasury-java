@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,34 +20,47 @@ interface LegalEntityService {
     fun withRawResponse(): WithRawResponse
 
     /** create legal_entity */
-    @JvmOverloads
+    fun create(params: LegalEntityCreateParams): LegalEntity = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
 
     /** Get details on a single legal entity. */
-    @JvmOverloads
+    fun retrieve(params: LegalEntityRetrieveParams): LegalEntity =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LegalEntityRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
 
     /** Update a legal entity. */
-    @JvmOverloads
+    fun update(params: LegalEntityUpdateParams): LegalEntity = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
 
     /** Get a list of all legal entities. */
-    @JvmOverloads
+    fun list(): LegalEntityListPage = list(LegalEntityListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LegalEntityListParams = LegalEntityListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntityListPage
 
-    /** Get a list of all legal entities. */
+    /** @see [list] */
+    fun list(params: LegalEntityListParams = LegalEntityListParams.none()): LegalEntityListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LegalEntityListPage =
         list(LegalEntityListParams.none(), requestOptions)
 
@@ -62,7 +73,11 @@ interface LegalEntityService {
          * Returns a raw HTTP response for `post /api/legal_entities`, but is otherwise the same as
          * [LegalEntityService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LegalEntityCreateParams): HttpResponseFor<LegalEntity> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LegalEntityCreateParams,
@@ -73,7 +88,11 @@ interface LegalEntityService {
          * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same
          * as [LegalEntityService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LegalEntityRetrieveParams): HttpResponseFor<LegalEntity> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LegalEntityRetrieveParams,
@@ -84,7 +103,11 @@ interface LegalEntityService {
          * Returns a raw HTTP response for `patch /api/legal_entities/{id}`, but is otherwise the
          * same as [LegalEntityService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LegalEntityUpdateParams): HttpResponseFor<LegalEntity> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LegalEntityUpdateParams,
@@ -95,17 +118,23 @@ interface LegalEntityService {
          * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as
          * [LegalEntityService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LegalEntityListPage> = list(LegalEntityListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LegalEntityListParams = LegalEntityListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LegalEntityListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as
-         * [LegalEntityService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LegalEntityListParams = LegalEntityListParams.none()
+        ): HttpResponseFor<LegalEntityListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LegalEntityListPage> =
             list(LegalEntityListParams.none(), requestOptions)

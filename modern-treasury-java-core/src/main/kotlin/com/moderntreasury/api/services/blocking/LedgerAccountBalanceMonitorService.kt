@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,40 +21,60 @@ interface LedgerAccountBalanceMonitorService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledger account balance monitor. */
-    @JvmOverloads
+    fun create(params: LedgerAccountBalanceMonitorCreateParams): LedgerAccountBalanceMonitor =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountBalanceMonitorCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountBalanceMonitor
 
     /** Get details on a single ledger account balance monitor. */
-    @JvmOverloads
+    fun retrieve(params: LedgerAccountBalanceMonitorRetrieveParams): LedgerAccountBalanceMonitor =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountBalanceMonitorRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountBalanceMonitor
 
     /** Update a ledger account balance monitor. */
-    @JvmOverloads
+    fun update(params: LedgerAccountBalanceMonitorUpdateParams): LedgerAccountBalanceMonitor =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerAccountBalanceMonitorUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountBalanceMonitor
 
     /** Get a list of ledger account balance monitors. */
-    @JvmOverloads
+    fun list(): LedgerAccountBalanceMonitorListPage =
+        list(LedgerAccountBalanceMonitorListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerAccountBalanceMonitorListParams =
             LedgerAccountBalanceMonitorListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountBalanceMonitorListPage
 
-    /** Get a list of ledger account balance monitors. */
+    /** @see [list] */
+    fun list(
+        params: LedgerAccountBalanceMonitorListParams = LedgerAccountBalanceMonitorListParams.none()
+    ): LedgerAccountBalanceMonitorListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerAccountBalanceMonitorListPage =
         list(LedgerAccountBalanceMonitorListParams.none(), requestOptions)
 
     /** Delete a ledger account balance monitor. */
-    @JvmOverloads
+    fun delete(params: LedgerAccountBalanceMonitorDeleteParams): LedgerAccountBalanceMonitor =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerAccountBalanceMonitorDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +90,12 @@ interface LedgerAccountBalanceMonitorService {
          * Returns a raw HTTP response for `post /api/ledger_account_balance_monitors`, but is
          * otherwise the same as [LedgerAccountBalanceMonitorService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerAccountBalanceMonitorCreateParams
+        ): HttpResponseFor<LedgerAccountBalanceMonitor> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountBalanceMonitorCreateParams,
@@ -83,7 +106,12 @@ interface LedgerAccountBalanceMonitorService {
          * Returns a raw HTTP response for `get /api/ledger_account_balance_monitors/{id}`, but is
          * otherwise the same as [LedgerAccountBalanceMonitorService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountBalanceMonitorRetrieveParams
+        ): HttpResponseFor<LedgerAccountBalanceMonitor> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountBalanceMonitorRetrieveParams,
@@ -94,7 +122,12 @@ interface LedgerAccountBalanceMonitorService {
          * Returns a raw HTTP response for `patch /api/ledger_account_balance_monitors/{id}`, but is
          * otherwise the same as [LedgerAccountBalanceMonitorService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountBalanceMonitorUpdateParams
+        ): HttpResponseFor<LedgerAccountBalanceMonitor> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountBalanceMonitorUpdateParams,
@@ -105,7 +138,11 @@ interface LedgerAccountBalanceMonitorService {
          * Returns a raw HTTP response for `get /api/ledger_account_balance_monitors`, but is
          * otherwise the same as [LedgerAccountBalanceMonitorService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerAccountBalanceMonitorListPage> =
+            list(LedgerAccountBalanceMonitorListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerAccountBalanceMonitorListParams =
@@ -113,10 +150,15 @@ interface LedgerAccountBalanceMonitorService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountBalanceMonitorListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_account_balance_monitors`, but is
-         * otherwise the same as [LedgerAccountBalanceMonitorService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerAccountBalanceMonitorListParams =
+                LedgerAccountBalanceMonitorListParams.none()
+        ): HttpResponseFor<LedgerAccountBalanceMonitorListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -127,7 +169,12 @@ interface LedgerAccountBalanceMonitorService {
          * Returns a raw HTTP response for `delete /api/ledger_account_balance_monitors/{id}`, but
          * is otherwise the same as [LedgerAccountBalanceMonitorService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: LedgerAccountBalanceMonitorDeleteParams
+        ): HttpResponseFor<LedgerAccountBalanceMonitor> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerAccountBalanceMonitorDeleteParams,

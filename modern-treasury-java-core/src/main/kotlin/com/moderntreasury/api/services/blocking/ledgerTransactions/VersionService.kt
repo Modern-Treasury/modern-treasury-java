@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking.ledgerTransactions
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -18,13 +16,20 @@ interface VersionService {
     fun withRawResponse(): WithRawResponse
 
     /** Get a list of ledger transaction versions. */
-    @JvmOverloads
+    fun list(): LedgerTransactionVersionListPage = list(LedgerTransactionVersionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionVersionListPage
 
-    /** Get a list of ledger transaction versions. */
+    /** @see [list] */
+    fun list(
+        params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
+    ): LedgerTransactionVersionListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerTransactionVersionListPage =
         list(LedgerTransactionVersionListParams.none(), requestOptions)
 
@@ -35,17 +40,24 @@ interface VersionService {
          * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise
          * the same as [VersionService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerTransactionVersionListPage> =
+            list(LedgerTransactionVersionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerTransactionVersionListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise
-         * the same as [VersionService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
+        ): HttpResponseFor<LedgerTransactionVersionListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,34 +20,50 @@ interface ConnectionLegalEntityService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a connection legal entity. */
-    @JvmOverloads
+    fun create(params: ConnectionLegalEntityCreateParams): ConnectionLegalEntity =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ConnectionLegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionLegalEntity
 
     /** Get details on a single connection legal entity. */
-    @JvmOverloads
+    fun retrieve(params: ConnectionLegalEntityRetrieveParams): ConnectionLegalEntity =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ConnectionLegalEntityRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionLegalEntity
 
     /** Update a connection legal entity. */
-    @JvmOverloads
+    fun update(params: ConnectionLegalEntityUpdateParams): ConnectionLegalEntity =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ConnectionLegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionLegalEntity
 
     /** Get a list of all connection legal entities. */
-    @JvmOverloads
+    fun list(): ConnectionLegalEntityListPage = list(ConnectionLegalEntityListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionLegalEntityListPage
 
-    /** Get a list of all connection legal entities. */
+    /** @see [list] */
+    fun list(
+        params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none()
+    ): ConnectionLegalEntityListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ConnectionLegalEntityListPage =
         list(ConnectionLegalEntityListParams.none(), requestOptions)
 
@@ -63,7 +77,12 @@ interface ConnectionLegalEntityService {
          * Returns a raw HTTP response for `post /api/connection_legal_entities`, but is otherwise
          * the same as [ConnectionLegalEntityService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ConnectionLegalEntityCreateParams
+        ): HttpResponseFor<ConnectionLegalEntity> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ConnectionLegalEntityCreateParams,
@@ -74,7 +93,12 @@ interface ConnectionLegalEntityService {
          * Returns a raw HTTP response for `get /api/connection_legal_entities/{id}`, but is
          * otherwise the same as [ConnectionLegalEntityService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ConnectionLegalEntityRetrieveParams
+        ): HttpResponseFor<ConnectionLegalEntity> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ConnectionLegalEntityRetrieveParams,
@@ -85,7 +109,12 @@ interface ConnectionLegalEntityService {
          * Returns a raw HTTP response for `patch /api/connection_legal_entities/{id}`, but is
          * otherwise the same as [ConnectionLegalEntityService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ConnectionLegalEntityUpdateParams
+        ): HttpResponseFor<ConnectionLegalEntity> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ConnectionLegalEntityUpdateParams,
@@ -96,17 +125,24 @@ interface ConnectionLegalEntityService {
          * Returns a raw HTTP response for `get /api/connection_legal_entities`, but is otherwise
          * the same as [ConnectionLegalEntityService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<ConnectionLegalEntityListPage> =
+            list(ConnectionLegalEntityListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ConnectionLegalEntityListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/connection_legal_entities`, but is otherwise
-         * the same as [ConnectionLegalEntityService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none()
+        ): HttpResponseFor<ConnectionLegalEntityListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ConnectionLegalEntityListPage> =
             list(ConnectionLegalEntityListParams.none(), requestOptions)

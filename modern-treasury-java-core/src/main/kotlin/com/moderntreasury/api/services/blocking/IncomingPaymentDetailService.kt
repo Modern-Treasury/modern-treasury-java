@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,39 +21,60 @@ interface IncomingPaymentDetailService {
     fun withRawResponse(): WithRawResponse
 
     /** Get an existing Incoming Payment Detail. */
-    @JvmOverloads
+    fun retrieve(params: IncomingPaymentDetailRetrieveParams): IncomingPaymentDetail =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: IncomingPaymentDetailRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetail
 
     /** Update an existing Incoming Payment Detail. */
-    @JvmOverloads
+    fun update(params: IncomingPaymentDetailUpdateParams): IncomingPaymentDetail =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: IncomingPaymentDetailUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetail
 
     /** Get a list of Incoming Payment Details. */
-    @JvmOverloads
+    fun list(): IncomingPaymentDetailListPage = list(IncomingPaymentDetailListParams.none())
+
+    /** @see [list] */
     fun list(
         params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetailListPage
 
-    /** Get a list of Incoming Payment Details. */
+    /** @see [list] */
+    fun list(
+        params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none()
+    ): IncomingPaymentDetailListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): IncomingPaymentDetailListPage =
         list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
-    @JvmOverloads
+    fun createAsync(): AsyncResponse = createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+
+    /** @see [createAsync] */
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AsyncResponse
 
-    /** Simulate Incoming Payment Detail */
+    /** @see [createAsync] */
+    fun createAsync(
+        params: IncomingPaymentDetailCreateAsyncParams =
+            IncomingPaymentDetailCreateAsyncParams.none()
+    ): AsyncResponse = createAsync(params, RequestOptions.none())
+
+    /** @see [createAsync] */
     fun createAsync(requestOptions: RequestOptions): AsyncResponse =
         createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 
@@ -69,7 +88,12 @@ interface IncomingPaymentDetailService {
          * Returns a raw HTTP response for `get /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: IncomingPaymentDetailRetrieveParams
+        ): HttpResponseFor<IncomingPaymentDetail> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: IncomingPaymentDetailRetrieveParams,
@@ -80,7 +104,12 @@ interface IncomingPaymentDetailService {
          * Returns a raw HTTP response for `patch /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: IncomingPaymentDetailUpdateParams
+        ): HttpResponseFor<IncomingPaymentDetail> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: IncomingPaymentDetailUpdateParams,
@@ -91,17 +120,24 @@ interface IncomingPaymentDetailService {
          * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
          * same as [IncomingPaymentDetailService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<IncomingPaymentDetailListPage> =
+            list(IncomingPaymentDetailListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IncomingPaymentDetailListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
-         * same as [IncomingPaymentDetailService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none()
+        ): HttpResponseFor<IncomingPaymentDetailListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<IncomingPaymentDetailListPage> =
             list(IncomingPaymentDetailListParams.none(), requestOptions)
@@ -111,7 +147,11 @@ interface IncomingPaymentDetailService {
          * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
          * [IncomingPaymentDetailService.createAsync].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createAsync(): HttpResponseFor<AsyncResponse> =
+            createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
@@ -119,11 +159,14 @@ interface IncomingPaymentDetailService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AsyncResponse>
 
-        /**
-         * Returns a raw HTTP response for `post
-         * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
-         * [IncomingPaymentDetailService.createAsync].
-         */
+        /** @see [createAsync] */
+        @MustBeClosed
+        fun createAsync(
+            params: IncomingPaymentDetailCreateAsyncParams =
+                IncomingPaymentDetailCreateAsyncParams.none()
+        ): HttpResponseFor<AsyncResponse> = createAsync(params, RequestOptions.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(requestOptions: RequestOptions): HttpResponseFor<AsyncResponse> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)

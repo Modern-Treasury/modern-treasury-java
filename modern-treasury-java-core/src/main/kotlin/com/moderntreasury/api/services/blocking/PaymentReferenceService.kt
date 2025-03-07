@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,26 +19,40 @@ interface PaymentReferenceService {
     fun withRawResponse(): WithRawResponse
 
     /** get payment_reference */
-    @JvmOverloads
+    fun retrieve(params: PaymentReferenceRetrieveParams): PaymentReference =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference
 
     /** list payment_references */
-    @JvmOverloads
+    fun list(): PaymentReferenceListPage = list(PaymentReferenceListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReferenceListPage
 
-    /** list payment_references */
+    /** @see [list] */
+    fun list(
+        params: PaymentReferenceListParams = PaymentReferenceListParams.none()
+    ): PaymentReferenceListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PaymentReferenceListPage =
         list(PaymentReferenceListParams.none(), requestOptions)
 
     /** get payment_reference */
     @Deprecated("use `retrieve` instead")
-    @JvmOverloads
+    fun retireve(params: PaymentReferenceRetireveParams): PaymentReference =
+        retireve(params, RequestOptions.none())
+
+    /** @see [retireve] */
+    @Deprecated("use `retrieve` instead")
     fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -56,7 +68,11 @@ interface PaymentReferenceService {
          * Returns a raw HTTP response for `get /api/payment_references/{id}`, but is otherwise the
          * same as [PaymentReferenceService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PaymentReferenceRetrieveParams): HttpResponseFor<PaymentReference> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentReferenceRetrieveParams,
@@ -67,17 +83,24 @@ interface PaymentReferenceService {
          * Returns a raw HTTP response for `get /api/payment_references`, but is otherwise the same
          * as [PaymentReferenceService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<PaymentReferenceListPage> =
+            list(PaymentReferenceListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentReferenceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_references`, but is otherwise the same
-         * as [PaymentReferenceService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentReferenceListParams = PaymentReferenceListParams.none()
+        ): HttpResponseFor<PaymentReferenceListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentReferenceListPage> =
             list(PaymentReferenceListParams.none(), requestOptions)
@@ -87,7 +110,12 @@ interface PaymentReferenceService {
          * same as [PaymentReferenceService.retireve].
          */
         @Deprecated("use `retrieve` instead")
-        @JvmOverloads
+        @MustBeClosed
+        fun retireve(params: PaymentReferenceRetireveParams): HttpResponseFor<PaymentReference> =
+            retireve(params, RequestOptions.none())
+
+        /** @see [retireve] */
+        @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(
             params: PaymentReferenceRetireveParams,

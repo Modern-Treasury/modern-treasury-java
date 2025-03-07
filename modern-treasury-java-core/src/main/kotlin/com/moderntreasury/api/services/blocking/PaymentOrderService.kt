@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,39 +25,57 @@ interface PaymentOrderService {
     fun reversals(): ReversalService
 
     /** Create a new Payment Order */
-    @JvmOverloads
+    fun create(params: PaymentOrderCreateParams): PaymentOrder =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PaymentOrderCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Get details on a single payment order */
-    @JvmOverloads
+    fun retrieve(params: PaymentOrderRetrieveParams): PaymentOrder =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentOrderRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Update a payment order */
-    @JvmOverloads
+    fun update(params: PaymentOrderUpdateParams): PaymentOrder =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PaymentOrderUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrder
 
     /** Get a list of all payment orders */
-    @JvmOverloads
+    fun list(): PaymentOrderListPage = list(PaymentOrderListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentOrderListParams = PaymentOrderListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrderListPage
 
-    /** Get a list of all payment orders */
+    /** @see [list] */
+    fun list(params: PaymentOrderListParams = PaymentOrderListParams.none()): PaymentOrderListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PaymentOrderListPage =
         list(PaymentOrderListParams.none(), requestOptions)
 
     /** Create a new payment order asynchronously */
-    @JvmOverloads
+    fun createAsync(params: PaymentOrderCreateAsyncParams): AsyncResponse =
+        createAsync(params, RequestOptions.none())
+
+    /** @see [createAsync] */
     fun createAsync(
         params: PaymentOrderCreateAsyncParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,7 +92,11 @@ interface PaymentOrderService {
          * Returns a raw HTTP response for `post /api/payment_orders`, but is otherwise the same as
          * [PaymentOrderService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PaymentOrderCreateParams): HttpResponseFor<PaymentOrder> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PaymentOrderCreateParams,
@@ -87,7 +107,11 @@ interface PaymentOrderService {
          * Returns a raw HTTP response for `get /api/payment_orders/{id}`, but is otherwise the same
          * as [PaymentOrderService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PaymentOrderRetrieveParams): HttpResponseFor<PaymentOrder> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentOrderRetrieveParams,
@@ -98,7 +122,11 @@ interface PaymentOrderService {
          * Returns a raw HTTP response for `patch /api/payment_orders/{id}`, but is otherwise the
          * same as [PaymentOrderService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PaymentOrderUpdateParams): HttpResponseFor<PaymentOrder> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PaymentOrderUpdateParams,
@@ -109,17 +137,23 @@ interface PaymentOrderService {
          * Returns a raw HTTP response for `get /api/payment_orders`, but is otherwise the same as
          * [PaymentOrderService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<PaymentOrderListPage> = list(PaymentOrderListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentOrderListParams = PaymentOrderListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentOrderListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_orders`, but is otherwise the same as
-         * [PaymentOrderService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentOrderListParams = PaymentOrderListParams.none()
+        ): HttpResponseFor<PaymentOrderListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentOrderListPage> =
             list(PaymentOrderListParams.none(), requestOptions)
@@ -128,7 +162,11 @@ interface PaymentOrderService {
          * Returns a raw HTTP response for `post /api/payment_orders/create_async`, but is otherwise
          * the same as [PaymentOrderService.createAsync].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createAsync(params: PaymentOrderCreateAsyncParams): HttpResponseFor<AsyncResponse> =
+            createAsync(params, RequestOptions.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(
             params: PaymentOrderCreateAsyncParams,

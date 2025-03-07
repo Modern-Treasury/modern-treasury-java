@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,27 +20,40 @@ interface BulkRequestServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create bulk_request */
-    @JvmOverloads
+    fun create(params: BulkRequestCreateParams): CompletableFuture<BulkRequest> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BulkRequestCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequest>
 
     /** get bulk_request */
-    @JvmOverloads
+    fun retrieve(params: BulkRequestRetrieveParams): CompletableFuture<BulkRequest> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BulkRequestRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequest>
 
     /** list bulk_requests */
-    @JvmOverloads
+    fun list(): CompletableFuture<BulkRequestListPageAsync> = list(BulkRequestListParams.none())
+
+    /** @see [list] */
     fun list(
         params: BulkRequestListParams = BulkRequestListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkRequestListPageAsync>
 
-    /** list bulk_requests */
+    /** @see [list] */
+    fun list(
+        params: BulkRequestListParams = BulkRequestListParams.none()
+    ): CompletableFuture<BulkRequestListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<BulkRequestListPageAsync> =
         list(BulkRequestListParams.none(), requestOptions)
 
@@ -56,7 +67,12 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `post /api/bulk_requests`, but is otherwise the same as
          * [BulkRequestServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BulkRequestCreateParams
+        ): CompletableFuture<HttpResponseFor<BulkRequest>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BulkRequestCreateParams,
@@ -67,7 +83,12 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_requests/{id}`, but is otherwise the same
          * as [BulkRequestServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BulkRequestRetrieveParams
+        ): CompletableFuture<HttpResponseFor<BulkRequest>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BulkRequestRetrieveParams,
@@ -78,17 +99,25 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_requests`, but is otherwise the same as
          * [BulkRequestServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>> =
+            list(BulkRequestListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BulkRequestListParams = BulkRequestListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/bulk_requests`, but is otherwise the same as
-         * [BulkRequestServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BulkRequestListParams = BulkRequestListParams.none()
+        ): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

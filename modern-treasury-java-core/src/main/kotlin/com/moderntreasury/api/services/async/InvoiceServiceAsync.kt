@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,39 +26,58 @@ interface InvoiceServiceAsync {
     fun lineItems(): LineItemServiceAsync
 
     /** create invoice */
-    @JvmOverloads
+    fun create(params: InvoiceCreateParams): CompletableFuture<Invoice> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: InvoiceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** get invoice */
-    @JvmOverloads
+    fun retrieve(params: InvoiceRetrieveParams): CompletableFuture<Invoice> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: InvoiceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** update invoice */
-    @JvmOverloads
+    fun update(params: InvoiceUpdateParams): CompletableFuture<Invoice> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Invoice>
 
     /** list invoices */
-    @JvmOverloads
+    fun list(): CompletableFuture<InvoiceListPageAsync> = list(InvoiceListParams.none())
+
+    /** @see [list] */
     fun list(
         params: InvoiceListParams = InvoiceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceListPageAsync>
 
-    /** list invoices */
+    /** @see [list] */
+    fun list(
+        params: InvoiceListParams = InvoiceListParams.none()
+    ): CompletableFuture<InvoiceListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<InvoiceListPageAsync> =
         list(InvoiceListParams.none(), requestOptions)
 
     /** Add a payment order to an invoice. */
-    @JvmOverloads
+    fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): CompletableFuture<Void?> =
+        addPaymentOrder(params, RequestOptions.none())
+
+    /** @see [addPaymentOrder] */
     fun addPaymentOrder(
         params: InvoiceAddPaymentOrderParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +94,11 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `post /api/invoices`, but is otherwise the same as
          * [InvoiceServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: InvoiceCreateParams): CompletableFuture<HttpResponseFor<Invoice>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: InvoiceCreateParams,
@@ -88,7 +109,11 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `get /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: InvoiceRetrieveParams): CompletableFuture<HttpResponseFor<Invoice>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: InvoiceRetrieveParams,
@@ -99,7 +124,11 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: InvoiceUpdateParams): CompletableFuture<HttpResponseFor<Invoice>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: InvoiceUpdateParams,
@@ -110,17 +139,25 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
          * [InvoiceServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
+            list(InvoiceListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: InvoiceListParams = InvoiceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
-         * [InvoiceServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: InvoiceListParams = InvoiceListParams.none()
+        ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -132,7 +169,11 @@ interface InvoiceServiceAsync {
          * /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the same as
          * [InvoiceServiceAsync.addPaymentOrder].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): CompletableFuture<HttpResponse> =
+            addPaymentOrder(params, RequestOptions.none())
+
+        /** @see [addPaymentOrder] */
         @MustBeClosed
         fun addPaymentOrder(
             params: InvoiceAddPaymentOrderParams,

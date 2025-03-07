@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -25,34 +23,50 @@ interface LedgerAccountSettlementService {
     fun accountEntries(): AccountEntryService
 
     /** Create a ledger account settlement. */
-    @JvmOverloads
+    fun create(params: LedgerAccountSettlementCreateParams): LedgerAccountSettlement =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement
 
     /** Get details on a single ledger account settlement. */
-    @JvmOverloads
+    fun retrieve(params: LedgerAccountSettlementRetrieveParams): LedgerAccountSettlement =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement
 
     /** Update the details of a ledger account settlement. */
-    @JvmOverloads
+    fun update(params: LedgerAccountSettlementUpdateParams): LedgerAccountSettlement =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement
 
     /** Get a list of ledger account settlements. */
-    @JvmOverloads
+    fun list(): LedgerAccountSettlementListPage = list(LedgerAccountSettlementListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlementListPage
 
-    /** Get a list of ledger account settlements. */
+    /** @see [list] */
+    fun list(
+        params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
+    ): LedgerAccountSettlementListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerAccountSettlementListPage =
         list(LedgerAccountSettlementListParams.none(), requestOptions)
 
@@ -68,7 +82,12 @@ interface LedgerAccountSettlementService {
          * Returns a raw HTTP response for `post /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerAccountSettlementCreateParams
+        ): HttpResponseFor<LedgerAccountSettlement> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountSettlementCreateParams,
@@ -79,7 +98,12 @@ interface LedgerAccountSettlementService {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountSettlementRetrieveParams
+        ): HttpResponseFor<LedgerAccountSettlement> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams,
@@ -90,7 +114,12 @@ interface LedgerAccountSettlementService {
          * Returns a raw HTTP response for `patch /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountSettlementUpdateParams
+        ): HttpResponseFor<LedgerAccountSettlement> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams,
@@ -101,17 +130,24 @@ interface LedgerAccountSettlementService {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerAccountSettlementListPage> =
+            list(LedgerAccountSettlementListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountSettlementListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_account_settlements`, but is otherwise
-         * the same as [LedgerAccountSettlementService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
+        ): HttpResponseFor<LedgerAccountSettlementListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerAccountSettlementListPage> =
             list(LedgerAccountSettlementListParams.none(), requestOptions)

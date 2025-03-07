@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,27 +20,40 @@ interface ReturnServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a return. */
-    @JvmOverloads
+    fun create(params: ReturnCreateParams): CompletableFuture<ReturnObject> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ReturnCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ReturnObject>
 
     /** Get a single return. */
-    @JvmOverloads
+    fun retrieve(params: ReturnRetrieveParams): CompletableFuture<ReturnObject> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ReturnRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ReturnObject>
 
     /** Get a list of returns. */
-    @JvmOverloads
+    fun list(): CompletableFuture<ReturnListPageAsync> = list(ReturnListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ReturnListParams = ReturnListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ReturnListPageAsync>
 
-    /** Get a list of returns. */
+    /** @see [list] */
+    fun list(
+        params: ReturnListParams = ReturnListParams.none()
+    ): CompletableFuture<ReturnListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<ReturnListPageAsync> =
         list(ReturnListParams.none(), requestOptions)
 
@@ -55,7 +66,11 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `post /api/returns`, but is otherwise the same as
          * [ReturnServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ReturnCreateParams): CompletableFuture<HttpResponseFor<ReturnObject>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ReturnCreateParams,
@@ -66,7 +81,13 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `get /api/returns/{id}`, but is otherwise the same as
          * [ReturnServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ReturnRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ReturnObject>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ReturnRetrieveParams,
@@ -77,17 +98,25 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `get /api/returns`, but is otherwise the same as
          * [ReturnServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ReturnListPageAsync>> =
+            list(ReturnListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ReturnListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/returns`, but is otherwise the same as
-         * [ReturnServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ReturnListParams = ReturnListParams.none()
+        ): CompletableFuture<HttpResponseFor<ReturnListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

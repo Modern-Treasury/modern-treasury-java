@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,27 +19,38 @@ interface LedgerEntryService {
     fun withRawResponse(): WithRawResponse
 
     /** Get details on a single ledger entry. */
-    @JvmOverloads
+    fun retrieve(params: LedgerEntryRetrieveParams): LedgerEntry =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerEntryRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry
 
     /** Update the details of a ledger entry. */
-    @JvmOverloads
+    fun update(params: LedgerEntryUpdateParams): LedgerEntry = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry
 
     /** Get a list of all ledger entries. */
-    @JvmOverloads
+    fun list(): LedgerEntryListPage = list(LedgerEntryListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerEntryListParams = LedgerEntryListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntryListPage
 
-    /** Get a list of all ledger entries. */
+    /** @see [list] */
+    fun list(params: LedgerEntryListParams = LedgerEntryListParams.none()): LedgerEntryListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerEntryListPage =
         list(LedgerEntryListParams.none(), requestOptions)
 
@@ -54,7 +63,11 @@ interface LedgerEntryService {
          * Returns a raw HTTP response for `get /api/ledger_entries/{id}`, but is otherwise the same
          * as [LedgerEntryService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LedgerEntryRetrieveParams): HttpResponseFor<LedgerEntry> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerEntryRetrieveParams,
@@ -65,7 +78,11 @@ interface LedgerEntryService {
          * Returns a raw HTTP response for `patch /api/ledger_entries/{id}`, but is otherwise the
          * same as [LedgerEntryService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LedgerEntryUpdateParams): HttpResponseFor<LedgerEntry> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerEntryUpdateParams,
@@ -76,17 +93,23 @@ interface LedgerEntryService {
          * Returns a raw HTTP response for `get /api/ledger_entries`, but is otherwise the same as
          * [LedgerEntryService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerEntryListPage> = list(LedgerEntryListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerEntryListParams = LedgerEntryListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEntryListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_entries`, but is otherwise the same as
-         * [LedgerEntryService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerEntryListParams = LedgerEntryListParams.none()
+        ): HttpResponseFor<LedgerEntryListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerEntryListPage> =
             list(LedgerEntryListParams.none(), requestOptions)

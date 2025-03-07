@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,34 +24,51 @@ interface InternalAccountServiceAsync {
     fun balanceReports(): BalanceReportServiceAsync
 
     /** create internal account */
-    @JvmOverloads
+    fun create(params: InternalAccountCreateParams): CompletableFuture<InternalAccount> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: InternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** get internal account */
-    @JvmOverloads
+    fun retrieve(params: InternalAccountRetrieveParams): CompletableFuture<InternalAccount> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: InternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** update internal account */
-    @JvmOverloads
+    fun update(params: InternalAccountUpdateParams): CompletableFuture<InternalAccount> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: InternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** list internal accounts */
-    @JvmOverloads
+    fun list(): CompletableFuture<InternalAccountListPageAsync> =
+        list(InternalAccountListParams.none())
+
+    /** @see [list] */
     fun list(
         params: InternalAccountListParams = InternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccountListPageAsync>
 
-    /** list internal accounts */
+    /** @see [list] */
+    fun list(
+        params: InternalAccountListParams = InternalAccountListParams.none()
+    ): CompletableFuture<InternalAccountListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none(), requestOptions)
 
@@ -69,7 +84,13 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/internal_accounts`, but is otherwise the same
          * as [InternalAccountServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: InternalAccountCreateParams
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: InternalAccountCreateParams,
@@ -80,7 +101,13 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/internal_accounts/{id}`, but is otherwise the
          * same as [InternalAccountServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: InternalAccountRetrieveParams
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: InternalAccountRetrieveParams,
@@ -91,7 +118,13 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `patch /api/internal_accounts/{id}`, but is otherwise the
          * same as [InternalAccountServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: InternalAccountUpdateParams
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: InternalAccountUpdateParams,
@@ -102,17 +135,25 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/internal_accounts`, but is otherwise the same
          * as [InternalAccountServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
+            list(InternalAccountListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/internal_accounts`, but is otherwise the same
-         * as [InternalAccountServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: InternalAccountListParams = InternalAccountListParams.none()
+        ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

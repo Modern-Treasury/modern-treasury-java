@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async.internalAccounts
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,28 +22,40 @@ interface BalanceReportServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create balance reports */
-    @JvmOverloads
+    fun create(params: BalanceReportCreateParams): CompletableFuture<BalanceReport> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BalanceReportCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceReport>
 
     /** Get a single balance report for a given internal account. */
-    @JvmOverloads
+    fun retrieve(params: BalanceReportRetrieveParams): CompletableFuture<BalanceReport> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BalanceReportRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceReport>
 
     /** Get all balance reports for a given internal account. */
-    @JvmOverloads
+    fun list(params: BalanceReportListParams): CompletableFuture<BalanceReportListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BalanceReportListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceReportListPageAsync>
 
     /** Deletes a given balance report. */
-    @JvmOverloads
+    fun delete(params: BalanceReportDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BalanceReportDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -62,7 +72,12 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceReportCreateParams
+        ): CompletableFuture<HttpResponseFor<BalanceReport>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BalanceReportCreateParams,
@@ -74,7 +89,13 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BalanceReportRetrieveParams
+        ): CompletableFuture<HttpResponseFor<BalanceReport>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BalanceReportRetrieveParams,
@@ -86,7 +107,13 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceReportListParams
+        ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BalanceReportListParams,
@@ -98,7 +125,11 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: BalanceReportDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BalanceReportDeleteParams,
