@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,46 +26,71 @@ interface LedgerTransactionServiceAsync {
     fun versions(): VersionServiceAsync
 
     /** Create a ledger transaction. */
-    @JvmOverloads
+    fun create(params: LedgerTransactionCreateParams): CompletableFuture<LedgerTransaction> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Get details on a single ledger transaction. */
-    @JvmOverloads
+    fun retrieve(params: LedgerTransactionRetrieveParams): CompletableFuture<LedgerTransaction> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Update the details of a ledger transaction. */
-    @JvmOverloads
+    fun update(params: LedgerTransactionUpdateParams): CompletableFuture<LedgerTransaction> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerTransactionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Get a list of ledger transactions. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LedgerTransactionListPageAsync> =
+        list(LedgerTransactionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransactionListPageAsync>
 
-    /** Get a list of ledger transactions. */
+    /** @see [list] */
+    fun list(
+        params: LedgerTransactionListParams = LedgerTransactionListParams.none()
+    ): CompletableFuture<LedgerTransactionListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<LedgerTransactionListPageAsync> =
         list(LedgerTransactionListParams.none(), requestOptions)
 
     /** Create a ledger transaction that partially posts another ledger transaction. */
-    @JvmOverloads
+    fun createPartialPost(
+        params: LedgerTransactionCreatePartialPostParams
+    ): CompletableFuture<LedgerTransaction> = createPartialPost(params, RequestOptions.none())
+
+    /** @see [createPartialPost] */
     fun createPartialPost(
         params: LedgerTransactionCreatePartialPostParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
 
     /** Create a ledger transaction reversal. */
-    @JvmOverloads
+    fun createReversal(
+        params: LedgerTransactionCreateReversalParams
+    ): CompletableFuture<LedgerTransaction> = createReversal(params, RequestOptions.none())
+
+    /** @see [createReversal] */
     fun createReversal(
         params: LedgerTransactionCreateReversalParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -85,7 +108,13 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions`, but is otherwise the
          * same as [LedgerTransactionServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LedgerTransactionCreateParams
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerTransactionCreateParams,
@@ -96,7 +125,13 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transactions/{id}`, but is otherwise the
          * same as [LedgerTransactionServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerTransactionRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerTransactionRetrieveParams,
@@ -107,7 +142,13 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledger_transactions/{id}`, but is otherwise
          * the same as [LedgerTransactionServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LedgerTransactionUpdateParams
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerTransactionUpdateParams,
@@ -118,17 +159,25 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transactions`, but is otherwise the same
          * as [LedgerTransactionServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>> =
+            list(LedgerTransactionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_transactions`, but is otherwise the same
-         * as [LedgerTransactionServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerTransactionListParams = LedgerTransactionListParams.none()
+        ): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -139,7 +188,13 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/partial_post`, but is
          * otherwise the same as [LedgerTransactionServiceAsync.createPartialPost].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createPartialPost(
+            params: LedgerTransactionCreatePartialPostParams
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            createPartialPost(params, RequestOptions.none())
+
+        /** @see [createPartialPost] */
         @MustBeClosed
         fun createPartialPost(
             params: LedgerTransactionCreatePartialPostParams,
@@ -150,7 +205,13 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/reversal`, but is
          * otherwise the same as [LedgerTransactionServiceAsync.createReversal].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createReversal(
+            params: LedgerTransactionCreateReversalParams
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            createReversal(params, RequestOptions.none())
+
+        /** @see [createReversal] */
         @MustBeClosed
         fun createReversal(
             params: LedgerTransactionCreateReversalParams,

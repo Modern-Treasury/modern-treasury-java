@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -27,28 +25,39 @@ interface AccountDetailService {
     fun withRawResponse(): WithRawResponse
 
     /** Create an account detail for an external account. */
-    @JvmOverloads
+    fun create(params: AccountDetailCreateParams): AccountDetail =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AccountDetailCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountDetail
 
     /** Get a single account detail for a single internal or external account. */
-    @JvmOverloads
+    fun retrieve(params: AccountDetailRetrieveParams): AccountDetail =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AccountDetailRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountDetail
 
     /** Get a list of account details for a single internal or external account. */
-    @JvmOverloads
+    fun list(params: AccountDetailListParams): AccountDetailListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: AccountDetailListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountDetailListPage
 
     /** Delete a single account detail for an external account. */
-    @JvmOverloads
+    fun delete(params: AccountDetailDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: AccountDetailDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -160,7 +169,11 @@ interface AccountDetailService {
          * Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/account_details`,
          * but is otherwise the same as [AccountDetailService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: AccountDetailCreateParams): HttpResponseFor<AccountDetail> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AccountDetailCreateParams,
@@ -172,7 +185,11 @@ interface AccountDetailService {
          * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
          * [AccountDetailService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: AccountDetailRetrieveParams): HttpResponseFor<AccountDetail> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AccountDetailRetrieveParams,
@@ -183,7 +200,11 @@ interface AccountDetailService {
          * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/account_details`,
          * but is otherwise the same as [AccountDetailService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: AccountDetailListParams): HttpResponseFor<AccountDetailListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AccountDetailListParams,
@@ -195,7 +216,11 @@ interface AccountDetailService {
          * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
          * [AccountDetailService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: AccountDetailDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: AccountDetailDeleteParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,41 +22,66 @@ interface IncomingPaymentDetailServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get an existing Incoming Payment Detail. */
-    @JvmOverloads
+    fun retrieve(
+        params: IncomingPaymentDetailRetrieveParams
+    ): CompletableFuture<IncomingPaymentDetail> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: IncomingPaymentDetailRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetail>
 
     /** Update an existing Incoming Payment Detail. */
-    @JvmOverloads
+    fun update(
+        params: IncomingPaymentDetailUpdateParams
+    ): CompletableFuture<IncomingPaymentDetail> = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: IncomingPaymentDetailUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetail>
 
     /** Get a list of Incoming Payment Details. */
-    @JvmOverloads
+    fun list(): CompletableFuture<IncomingPaymentDetailListPageAsync> =
+        list(IncomingPaymentDetailListParams.none())
+
+    /** @see [list] */
     fun list(
         params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetailListPageAsync>
 
-    /** Get a list of Incoming Payment Details. */
+    /** @see [list] */
+    fun list(
+        params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none()
+    ): CompletableFuture<IncomingPaymentDetailListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<IncomingPaymentDetailListPageAsync> =
         list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
-    @JvmOverloads
+    fun createAsync(): CompletableFuture<AsyncResponse> =
+        createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+
+    /** @see [createAsync] */
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AsyncResponse>
 
-    /** Simulate Incoming Payment Detail */
+    /** @see [createAsync] */
+    fun createAsync(
+        params: IncomingPaymentDetailCreateAsyncParams =
+            IncomingPaymentDetailCreateAsyncParams.none()
+    ): CompletableFuture<AsyncResponse> = createAsync(params, RequestOptions.none())
+
+    /** @see [createAsync] */
     fun createAsync(requestOptions: RequestOptions): CompletableFuture<AsyncResponse> =
         createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 
@@ -72,7 +95,13 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: IncomingPaymentDetailRetrieveParams
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: IncomingPaymentDetailRetrieveParams,
@@ -83,7 +112,13 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `patch /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: IncomingPaymentDetailUpdateParams
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: IncomingPaymentDetailUpdateParams,
@@ -94,17 +129,25 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
          * same as [IncomingPaymentDetailServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>> =
+            list(IncomingPaymentDetailListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
-         * same as [IncomingPaymentDetailServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none()
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -116,7 +159,11 @@ interface IncomingPaymentDetailServiceAsync {
          * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
          * [IncomingPaymentDetailServiceAsync.createAsync].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createAsync(): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+            createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
@@ -124,11 +171,15 @@ interface IncomingPaymentDetailServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AsyncResponse>>
 
-        /**
-         * Returns a raw HTTP response for `post
-         * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
-         * [IncomingPaymentDetailServiceAsync.createAsync].
-         */
+        /** @see [createAsync] */
+        @MustBeClosed
+        fun createAsync(
+            params: IncomingPaymentDetailCreateAsyncParams =
+                IncomingPaymentDetailCreateAsyncParams.none()
+        ): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+            createAsync(params, RequestOptions.none())
+
+        /** @see [createAsync] */
         @MustBeClosed
         fun createAsync(
             requestOptions: RequestOptions

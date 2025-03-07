@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async.ledgerTransactions
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,13 +17,22 @@ interface VersionServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get a list of ledger transaction versions. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LedgerTransactionVersionListPageAsync> =
+        list(LedgerTransactionVersionListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransactionVersionListPageAsync>
 
-    /** Get a list of ledger transaction versions. */
+    /** @see [list] */
+    fun list(
+        params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
+    ): CompletableFuture<LedgerTransactionVersionListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<LedgerTransactionVersionListPageAsync> =
@@ -40,17 +47,25 @@ interface VersionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise
          * the same as [VersionServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
+            list(LedgerTransactionVersionListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise
-         * the same as [VersionServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
+        ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

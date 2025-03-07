@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking.paymentOrders
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,21 +19,30 @@ interface ReversalService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a reversal for a payment order. */
-    @JvmOverloads
+    fun create(params: PaymentOrderReversalCreateParams): Reversal =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PaymentOrderReversalCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Reversal
 
     /** Get details on a single reversal of a payment order. */
-    @JvmOverloads
+    fun retrieve(params: PaymentOrderReversalRetrieveParams): Reversal =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentOrderReversalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Reversal
 
     /** Get a list of all reversals of a payment order. */
-    @JvmOverloads
+    fun list(params: PaymentOrderReversalListParams): PaymentOrderReversalListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentOrderReversalListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,7 +55,11 @@ interface ReversalService {
          * Returns a raw HTTP response for `post /api/payment_orders/{payment_order_id}/reversals`,
          * but is otherwise the same as [ReversalService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PaymentOrderReversalCreateParams): HttpResponseFor<Reversal> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PaymentOrderReversalCreateParams,
@@ -60,7 +71,11 @@ interface ReversalService {
          * /api/payment_orders/{payment_order_id}/reversals/{reversal_id}`, but is otherwise the
          * same as [ReversalService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PaymentOrderReversalRetrieveParams): HttpResponseFor<Reversal> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentOrderReversalRetrieveParams,
@@ -71,7 +86,12 @@ interface ReversalService {
          * Returns a raw HTTP response for `get /api/payment_orders/{payment_order_id}/reversals`,
          * but is otherwise the same as [ReversalService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PaymentOrderReversalListParams
+        ): HttpResponseFor<PaymentOrderReversalListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentOrderReversalListParams,

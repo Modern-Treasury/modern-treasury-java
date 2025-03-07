@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking.transactions
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,32 +21,47 @@ interface LineItemService {
     fun withRawResponse(): WithRawResponse
 
     /** create transaction line items */
-    @JvmOverloads
+    fun create(params: TransactionLineItemCreateParams): TransactionLineItem =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: TransactionLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItem
 
     /** get transaction line item */
-    @JvmOverloads
+    fun retrieve(params: TransactionLineItemRetrieveParams): TransactionLineItem =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: TransactionLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItem
 
     /** list transaction_line_items */
-    @JvmOverloads
+    fun list(): TransactionLineItemListPage = list(TransactionLineItemListParams.none())
+
+    /** @see [list] */
     fun list(
         params: TransactionLineItemListParams = TransactionLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItemListPage
 
-    /** list transaction_line_items */
+    /** @see [list] */
+    fun list(
+        params: TransactionLineItemListParams = TransactionLineItemListParams.none()
+    ): TransactionLineItemListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): TransactionLineItemListPage =
         list(TransactionLineItemListParams.none(), requestOptions)
 
     /** delete transaction line item */
-    @JvmOverloads
+    fun delete(params: TransactionLineItemDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: TransactionLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -61,7 +74,11 @@ interface LineItemService {
          * Returns a raw HTTP response for `post /api/transaction_line_items`, but is otherwise the
          * same as [LineItemService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: TransactionLineItemCreateParams): HttpResponseFor<TransactionLineItem> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: TransactionLineItemCreateParams,
@@ -72,7 +89,12 @@ interface LineItemService {
          * Returns a raw HTTP response for `get /api/transaction_line_items/{id}`, but is otherwise
          * the same as [LineItemService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionLineItemRetrieveParams
+        ): HttpResponseFor<TransactionLineItem> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: TransactionLineItemRetrieveParams,
@@ -83,17 +105,24 @@ interface LineItemService {
          * Returns a raw HTTP response for `get /api/transaction_line_items`, but is otherwise the
          * same as [LineItemService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<TransactionLineItemListPage> =
+            list(TransactionLineItemListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: TransactionLineItemListParams = TransactionLineItemListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionLineItemListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/transaction_line_items`, but is otherwise the
-         * same as [LineItemService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: TransactionLineItemListParams = TransactionLineItemListParams.none()
+        ): HttpResponseFor<TransactionLineItemListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionLineItemListPage> =
             list(TransactionLineItemListParams.none(), requestOptions)
@@ -102,7 +131,11 @@ interface LineItemService {
          * Returns a raw HTTP response for `delete /api/transaction_line_items/{id}`, but is
          * otherwise the same as [LineItemService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: TransactionLineItemDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: TransactionLineItemDeleteParams,

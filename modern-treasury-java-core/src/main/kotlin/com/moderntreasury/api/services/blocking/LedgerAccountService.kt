@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,39 +21,58 @@ interface LedgerAccountService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledger account. */
-    @JvmOverloads
+    fun create(params: LedgerAccountCreateParams): LedgerAccount =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
 
     /** Get details on a single ledger account. */
-    @JvmOverloads
+    fun retrieve(params: LedgerAccountRetrieveParams): LedgerAccount =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
 
     /** Update the details of a ledger account. */
-    @JvmOverloads
+    fun update(params: LedgerAccountUpdateParams): LedgerAccount =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
 
     /** Get a list of ledger accounts. */
-    @JvmOverloads
+    fun list(): LedgerAccountListPage = list(LedgerAccountListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LedgerAccountListParams = LedgerAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountListPage
 
-    /** Get a list of ledger accounts. */
+    /** @see [list] */
+    fun list(
+        params: LedgerAccountListParams = LedgerAccountListParams.none()
+    ): LedgerAccountListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): LedgerAccountListPage =
         list(LedgerAccountListParams.none(), requestOptions)
 
     /** Delete a ledger account. */
-    @JvmOverloads
+    fun delete(params: LedgerAccountDeleteParams): LedgerAccount =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +87,11 @@ interface LedgerAccountService {
          * Returns a raw HTTP response for `post /api/ledger_accounts`, but is otherwise the same as
          * [LedgerAccountService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LedgerAccountCreateParams): HttpResponseFor<LedgerAccount> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerAccountCreateParams,
@@ -81,7 +102,11 @@ interface LedgerAccountService {
          * Returns a raw HTTP response for `get /api/ledger_accounts/{id}`, but is otherwise the
          * same as [LedgerAccountService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LedgerAccountRetrieveParams): HttpResponseFor<LedgerAccount> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountRetrieveParams,
@@ -92,7 +117,11 @@ interface LedgerAccountService {
          * Returns a raw HTTP response for `patch /api/ledger_accounts/{id}`, but is otherwise the
          * same as [LedgerAccountService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: LedgerAccountUpdateParams): HttpResponseFor<LedgerAccount> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountUpdateParams,
@@ -103,17 +132,23 @@ interface LedgerAccountService {
          * Returns a raw HTTP response for `get /api/ledger_accounts`, but is otherwise the same as
          * [LedgerAccountService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<LedgerAccountListPage> = list(LedgerAccountListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LedgerAccountListParams = LedgerAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/ledger_accounts`, but is otherwise the same as
-         * [LedgerAccountService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LedgerAccountListParams = LedgerAccountListParams.none()
+        ): HttpResponseFor<LedgerAccountListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerAccountListPage> =
             list(LedgerAccountListParams.none(), requestOptions)
@@ -122,7 +157,11 @@ interface LedgerAccountService {
          * Returns a raw HTTP response for `delete /api/ledger_accounts/{id}`, but is otherwise the
          * same as [LedgerAccountService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: LedgerAccountDeleteParams): HttpResponseFor<LedgerAccount> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerAccountDeleteParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,27 +19,38 @@ interface ReturnService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a return. */
-    @JvmOverloads
+    fun create(params: ReturnCreateParams): ReturnObject = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ReturnCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnObject
 
     /** Get a single return. */
-    @JvmOverloads
+    fun retrieve(params: ReturnRetrieveParams): ReturnObject =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ReturnRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnObject
 
     /** Get a list of returns. */
-    @JvmOverloads
+    fun list(): ReturnListPage = list(ReturnListParams.none())
+
+    /** @see [list] */
     fun list(
         params: ReturnListParams = ReturnListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnListPage
 
-    /** Get a list of returns. */
+    /** @see [list] */
+    fun list(params: ReturnListParams = ReturnListParams.none()): ReturnListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ReturnListPage =
         list(ReturnListParams.none(), requestOptions)
 
@@ -52,7 +61,11 @@ interface ReturnService {
          * Returns a raw HTTP response for `post /api/returns`, but is otherwise the same as
          * [ReturnService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ReturnCreateParams): HttpResponseFor<ReturnObject> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ReturnCreateParams,
@@ -63,7 +76,11 @@ interface ReturnService {
          * Returns a raw HTTP response for `get /api/returns/{id}`, but is otherwise the same as
          * [ReturnService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: ReturnRetrieveParams): HttpResponseFor<ReturnObject> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ReturnRetrieveParams,
@@ -74,17 +91,22 @@ interface ReturnService {
          * Returns a raw HTTP response for `get /api/returns`, but is otherwise the same as
          * [ReturnService.list].
          */
-        @JvmOverloads
+        @MustBeClosed fun list(): HttpResponseFor<ReturnListPage> = list(ReturnListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReturnListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/returns`, but is otherwise the same as
-         * [ReturnService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ReturnListParams = ReturnListParams.none()
+        ): HttpResponseFor<ReturnListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ReturnListPage> =
             list(ReturnListParams.none(), requestOptions)

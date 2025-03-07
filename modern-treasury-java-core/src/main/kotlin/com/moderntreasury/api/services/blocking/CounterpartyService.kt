@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,46 +24,67 @@ interface CounterpartyService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new counterparty. */
-    @JvmOverloads
+    fun create(params: CounterpartyCreateParams): Counterparty =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterpartyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Get details on a single counterparty. */
-    @JvmOverloads
+    fun retrieve(params: CounterpartyRetrieveParams): Counterparty =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterpartyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Updates a given counterparty with new information. */
-    @JvmOverloads
+    fun update(params: CounterpartyUpdateParams): Counterparty =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterpartyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Counterparty
 
     /** Get a paginated list of all counterparties. */
-    @JvmOverloads
+    fun list(): CounterpartyListPage = list(CounterpartyListParams.none())
+
+    /** @see [list] */
     fun list(
         params: CounterpartyListParams = CounterpartyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterpartyListPage
 
-    /** Get a paginated list of all counterparties. */
+    /** @see [list] */
+    fun list(params: CounterpartyListParams = CounterpartyListParams.none()): CounterpartyListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CounterpartyListPage =
         list(CounterpartyListParams.none(), requestOptions)
 
     /** Deletes a given counterparty. */
-    @JvmOverloads
+    fun delete(params: CounterpartyDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterpartyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Send an email requesting account details. */
-    @JvmOverloads
+    fun collectAccount(
+        params: CounterpartyCollectAccountParams
+    ): CounterpartyCollectAccountResponse = collectAccount(params, RequestOptions.none())
+
+    /** @see [collectAccount] */
     fun collectAccount(
         params: CounterpartyCollectAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +99,11 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `post /api/counterparties`, but is otherwise the same as
          * [CounterpartyService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CounterpartyCreateParams): HttpResponseFor<Counterparty> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterpartyCreateParams,
@@ -91,7 +114,11 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `get /api/counterparties/{id}`, but is otherwise the same
          * as [CounterpartyService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: CounterpartyRetrieveParams): HttpResponseFor<Counterparty> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterpartyRetrieveParams,
@@ -102,7 +129,11 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `patch /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CounterpartyUpdateParams): HttpResponseFor<Counterparty> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterpartyUpdateParams,
@@ -113,17 +144,23 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `get /api/counterparties`, but is otherwise the same as
          * [CounterpartyService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): HttpResponseFor<CounterpartyListPage> = list(CounterpartyListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterpartyListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/counterparties`, but is otherwise the same as
-         * [CounterpartyService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterpartyListParams = CounterpartyListParams.none()
+        ): HttpResponseFor<CounterpartyListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CounterpartyListPage> =
             list(CounterpartyListParams.none(), requestOptions)
@@ -132,7 +169,11 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `delete /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CounterpartyDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterpartyDeleteParams,
@@ -143,7 +184,13 @@ interface CounterpartyService {
          * Returns a raw HTTP response for `post /api/counterparties/{id}/collect_account`, but is
          * otherwise the same as [CounterpartyService.collectAccount].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun collectAccount(
+            params: CounterpartyCollectAccountParams
+        ): HttpResponseFor<CounterpartyCollectAccountResponse> =
+            collectAccount(params, RequestOptions.none())
+
+        /** @see [collectAccount] */
         @MustBeClosed
         fun collectAccount(
             params: CounterpartyCollectAccountParams,

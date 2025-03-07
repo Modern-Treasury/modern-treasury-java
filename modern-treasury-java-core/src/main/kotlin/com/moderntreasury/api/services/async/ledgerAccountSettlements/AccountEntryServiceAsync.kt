@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async.ledgerAccountSettlements
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,14 +17,20 @@ interface AccountEntryServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Add ledger entries to a draft ledger account settlement. */
-    @JvmOverloads
+    fun update(params: LedgerAccountSettlementAccountEntryUpdateParams): CompletableFuture<Void?> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LedgerAccountSettlementAccountEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
     /** Remove ledger entries from a draft ledger account settlement. */
-    @JvmOverloads
+    fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: LedgerAccountSettlementAccountEntryDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +47,12 @@ interface AccountEntryServiceAsync {
          * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
          * [AccountEntryServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountSettlementAccountEntryUpdateParams
+        ): CompletableFuture<HttpResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountSettlementAccountEntryUpdateParams,
@@ -55,7 +64,12 @@ interface AccountEntryServiceAsync {
          * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
          * [AccountEntryServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: LedgerAccountSettlementAccountEntryDeleteParams
+        ): CompletableFuture<HttpResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerAccountSettlementAccountEntryDeleteParams,

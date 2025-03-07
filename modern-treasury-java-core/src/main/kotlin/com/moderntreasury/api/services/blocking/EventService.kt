@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -20,20 +18,28 @@ interface EventService {
     fun withRawResponse(): WithRawResponse
 
     /** get event */
-    @JvmOverloads
+    fun retrieve(params: EventRetrieveParams): Event = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
     /** list events */
-    @JvmOverloads
+    fun list(): EventListPage = list(EventListParams.none())
+
+    /** @see [list] */
     fun list(
         params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 
-    /** list events */
+    /** @see [list] */
+    fun list(params: EventListParams = EventListParams.none()): EventListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): EventListPage =
         list(EventListParams.none(), requestOptions)
 
@@ -44,7 +50,11 @@ interface EventService {
          * Returns a raw HTTP response for `get /api/events/{id}`, but is otherwise the same as
          * [EventService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: EventRetrieveParams): HttpResponseFor<Event> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
@@ -55,17 +65,21 @@ interface EventService {
          * Returns a raw HTTP response for `get /api/events`, but is otherwise the same as
          * [EventService.list].
          */
-        @JvmOverloads
+        @MustBeClosed fun list(): HttpResponseFor<EventListPage> = list(EventListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /api/events`, but is otherwise the same as
-         * [EventService.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: EventListParams = EventListParams.none()): HttpResponseFor<EventListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPage> =
             list(EventListParams.none(), requestOptions)

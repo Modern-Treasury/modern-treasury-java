@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -21,20 +19,30 @@ interface PaperItemServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get details on a single paper item. */
-    @JvmOverloads
+    fun retrieve(params: PaperItemRetrieveParams): CompletableFuture<PaperItem> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaperItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItem>
 
     /** Get a list of all paper items. */
-    @JvmOverloads
+    fun list(): CompletableFuture<PaperItemListPageAsync> = list(PaperItemListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaperItemListParams = PaperItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItemListPageAsync>
 
-    /** Get a list of all paper items. */
+    /** @see [list] */
+    fun list(
+        params: PaperItemListParams = PaperItemListParams.none()
+    ): CompletableFuture<PaperItemListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaperItemListPageAsync> =
         list(PaperItemListParams.none(), requestOptions)
 
@@ -47,7 +55,12 @@ interface PaperItemServiceAsync {
          * Returns a raw HTTP response for `get /api/paper_items/{id}`, but is otherwise the same as
          * [PaperItemServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PaperItemRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaperItem>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaperItemRetrieveParams,
@@ -58,17 +71,25 @@ interface PaperItemServiceAsync {
          * Returns a raw HTTP response for `get /api/paper_items`, but is otherwise the same as
          * [PaperItemServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>> =
+            list(PaperItemListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaperItemListParams = PaperItemListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/paper_items`, but is otherwise the same as
-         * [PaperItemServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaperItemListParams = PaperItemListParams.none()
+        ): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

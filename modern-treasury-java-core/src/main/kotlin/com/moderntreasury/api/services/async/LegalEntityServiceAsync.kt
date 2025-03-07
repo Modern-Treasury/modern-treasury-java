@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,34 +21,50 @@ interface LegalEntityServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create legal_entity */
-    @JvmOverloads
+    fun create(params: LegalEntityCreateParams): CompletableFuture<LegalEntity> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Get details on a single legal entity. */
-    @JvmOverloads
+    fun retrieve(params: LegalEntityRetrieveParams): CompletableFuture<LegalEntity> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LegalEntityRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Update a legal entity. */
-    @JvmOverloads
+    fun update(params: LegalEntityUpdateParams): CompletableFuture<LegalEntity> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: LegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
 
     /** Get a list of all legal entities. */
-    @JvmOverloads
+    fun list(): CompletableFuture<LegalEntityListPageAsync> = list(LegalEntityListParams.none())
+
+    /** @see [list] */
     fun list(
         params: LegalEntityListParams = LegalEntityListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntityListPageAsync>
 
-    /** Get a list of all legal entities. */
+    /** @see [list] */
+    fun list(
+        params: LegalEntityListParams = LegalEntityListParams.none()
+    ): CompletableFuture<LegalEntityListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<LegalEntityListPageAsync> =
         list(LegalEntityListParams.none(), requestOptions)
 
@@ -64,7 +78,12 @@ interface LegalEntityServiceAsync {
          * Returns a raw HTTP response for `post /api/legal_entities`, but is otherwise the same as
          * [LegalEntityServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: LegalEntityCreateParams
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LegalEntityCreateParams,
@@ -75,7 +94,12 @@ interface LegalEntityServiceAsync {
          * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same
          * as [LegalEntityServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: LegalEntityRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LegalEntityRetrieveParams,
@@ -86,7 +110,12 @@ interface LegalEntityServiceAsync {
          * Returns a raw HTTP response for `patch /api/legal_entities/{id}`, but is otherwise the
          * same as [LegalEntityServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: LegalEntityUpdateParams
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LegalEntityUpdateParams,
@@ -97,17 +126,25 @@ interface LegalEntityServiceAsync {
          * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as
          * [LegalEntityServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<LegalEntityListPageAsync>> =
+            list(LegalEntityListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: LegalEntityListParams = LegalEntityListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LegalEntityListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as
-         * [LegalEntityServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: LegalEntityListParams = LegalEntityListParams.none()
+        ): CompletableFuture<HttpResponseFor<LegalEntityListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,14 +17,20 @@ interface LedgerableEventService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ledgerable event. */
-    @JvmOverloads
+    fun create(params: LedgerableEventCreateParams): LedgerableEvent =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: LedgerableEventCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerableEvent
 
     /** Get details on a single ledgerable event. */
-    @JvmOverloads
+    fun retrieve(params: LedgerableEventRetrieveParams): LedgerableEvent =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerableEventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,7 +46,11 @@ interface LedgerableEventService {
          * Returns a raw HTTP response for `post /api/ledgerable_events`, but is otherwise the same
          * as [LedgerableEventService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: LedgerableEventCreateParams): HttpResponseFor<LedgerableEvent> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: LedgerableEventCreateParams,
@@ -53,7 +61,11 @@ interface LedgerableEventService {
          * Returns a raw HTTP response for `get /api/ledgerable_events/{id}`, but is otherwise the
          * same as [LedgerableEventService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: LedgerableEventRetrieveParams): HttpResponseFor<LedgerableEvent> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: LedgerableEventRetrieveParams,

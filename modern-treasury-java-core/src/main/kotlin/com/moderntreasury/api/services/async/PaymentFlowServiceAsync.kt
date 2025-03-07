@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,34 +21,50 @@ interface PaymentFlowServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create payment_flow */
-    @JvmOverloads
+    fun create(params: PaymentFlowCreateParams): CompletableFuture<PaymentFlow> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** get payment_flow */
-    @JvmOverloads
+    fun retrieve(params: PaymentFlowRetrieveParams): CompletableFuture<PaymentFlow> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PaymentFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** update payment_flow */
-    @JvmOverloads
+    fun update(params: PaymentFlowUpdateParams): CompletableFuture<PaymentFlow> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
     /** list payment_flows */
-    @JvmOverloads
+    fun list(): CompletableFuture<PaymentFlowListPageAsync> = list(PaymentFlowListParams.none())
+
+    /** @see [list] */
     fun list(
         params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlowListPageAsync>
 
-    /** list payment_flows */
+    /** @see [list] */
+    fun list(
+        params: PaymentFlowListParams = PaymentFlowListParams.none()
+    ): CompletableFuture<PaymentFlowListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentFlowListPageAsync> =
         list(PaymentFlowListParams.none(), requestOptions)
 
@@ -64,7 +78,12 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PaymentFlowCreateParams
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PaymentFlowCreateParams,
@@ -75,7 +94,12 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_flows/{id}`, but is otherwise the same
          * as [PaymentFlowServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PaymentFlowRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PaymentFlowRetrieveParams,
@@ -86,7 +110,12 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `patch /api/payment_flows/{id}`, but is otherwise the
          * same as [PaymentFlowServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PaymentFlowUpdateParams
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams,
@@ -97,17 +126,25 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
+            list(PaymentFlowListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/payment_flows`, but is otherwise the same as
-         * [PaymentFlowServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PaymentFlowListParams = PaymentFlowListParams.none()
+        ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

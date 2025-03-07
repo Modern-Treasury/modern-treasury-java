@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.moderntreasury.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -22,27 +20,40 @@ interface DocumentServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a document. */
-    @JvmOverloads
+    fun create(params: DocumentCreateParams): CompletableFuture<Document> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DocumentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
 
     /** Get an existing document. */
-    @JvmOverloads
+    fun retrieve(params: DocumentRetrieveParams): CompletableFuture<Document> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DocumentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
 
     /** Get a list of documents. */
-    @JvmOverloads
+    fun list(): CompletableFuture<DocumentListPageAsync> = list(DocumentListParams.none())
+
+    /** @see [list] */
     fun list(
         params: DocumentListParams = DocumentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DocumentListPageAsync>
 
-    /** Get a list of documents. */
+    /** @see [list] */
+    fun list(
+        params: DocumentListParams = DocumentListParams.none()
+    ): CompletableFuture<DocumentListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<DocumentListPageAsync> =
         list(DocumentListParams.none(), requestOptions)
 
@@ -55,7 +66,11 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `post /api/documents`, but is otherwise the same as
          * [DocumentServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: DocumentCreateParams): CompletableFuture<HttpResponseFor<Document>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DocumentCreateParams,
@@ -66,7 +81,11 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `get /api/documents/{id}`, but is otherwise the same as
          * [DocumentServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: DocumentRetrieveParams): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DocumentRetrieveParams,
@@ -77,17 +96,25 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as
          * [DocumentServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
+            list(DocumentListParams.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DocumentListParams = DocumentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as
-         * [DocumentServiceAsync.list].
-         */
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DocumentListParams = DocumentListParams.none()
+        ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
