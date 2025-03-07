@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class BalanceReport
@@ -222,7 +223,7 @@ private constructor(
         fun asOfTime(asOfTime: String?) = asOfTime(JsonField.ofNullable(asOfTime))
 
         /** The time (24-hour clock) of the balance report in local time. */
-        fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.orElse(null))
+        fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.getOrNull())
 
         /** The time (24-hour clock) of the balance report in local time. */
         fun asOfTime(asOfTime: JsonField<String>) = apply { this.asOfTime = asOfTime }
@@ -703,7 +704,7 @@ private constructor(
             fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
 
             /** The date on which the balance became true for the account. */
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             /** The date on which the balance became true for the account. */
             fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
@@ -712,7 +713,7 @@ private constructor(
             fun asOfTime(asOfTime: String?) = asOfTime(JsonField.ofNullable(asOfTime))
 
             /** The time on which the balance became true for the account. */
-            fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.orElse(null))
+            fun asOfTime(asOfTime: Optional<String>) = asOfTime(asOfTime.getOrNull())
 
             /** The time on which the balance became true for the account. */
             fun asOfTime(asOfTime: JsonField<String>) = apply { this.asOfTime = asOfTime }
@@ -771,7 +772,7 @@ private constructor(
             fun valueDate(valueDate: LocalDate?) = valueDate(JsonField.ofNullable(valueDate))
 
             /** The date on which the balance becomes available. */
-            fun valueDate(valueDate: Optional<LocalDate>) = valueDate(valueDate.orElse(null))
+            fun valueDate(valueDate: Optional<LocalDate>) = valueDate(valueDate.getOrNull())
 
             /** The date on which the balance becomes available. */
             fun valueDate(valueDate: JsonField<LocalDate>) = apply { this.valueDate = valueDate }
@@ -798,7 +799,7 @@ private constructor(
              * or `us_bank`.
              */
             fun vendorCodeType(vendorCodeType: Optional<String>) =
-                vendorCodeType(vendorCodeType.orElse(null))
+                vendorCodeType(vendorCodeType.getOrNull())
 
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,

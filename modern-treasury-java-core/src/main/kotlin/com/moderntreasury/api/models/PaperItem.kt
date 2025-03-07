@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class PaperItem
@@ -333,7 +334,7 @@ private constructor(
 
         /** The account number on the paper item. */
         fun accountNumber(accountNumber: Optional<String>) =
-            accountNumber(accountNumber.orElse(null))
+            accountNumber(accountNumber.getOrNull())
 
         /** The account number on the paper item. */
         fun accountNumber(accountNumber: JsonField<String>) = apply {
@@ -346,7 +347,7 @@ private constructor(
 
         /** The last 4 digits of the account_number. */
         fun accountNumberSafe(accountNumberSafe: Optional<String>) =
-            accountNumberSafe(accountNumberSafe.orElse(null))
+            accountNumberSafe(accountNumberSafe.getOrNull())
 
         /** The last 4 digits of the account_number. */
         fun accountNumberSafe(accountNumberSafe: JsonField<String>) = apply {
@@ -363,7 +364,7 @@ private constructor(
         fun checkNumber(checkNumber: String?) = checkNumber(JsonField.ofNullable(checkNumber))
 
         /** The check number on the paper item. */
-        fun checkNumber(checkNumber: Optional<String>) = checkNumber(checkNumber.orElse(null))
+        fun checkNumber(checkNumber: Optional<String>) = checkNumber(checkNumber.getOrNull())
 
         /** The check number on the paper item. */
         fun checkNumber(checkNumber: JsonField<String>) = apply { this.checkNumber = checkNumber }
@@ -410,7 +411,7 @@ private constructor(
         fun memoField(memoField: String?) = memoField(JsonField.ofNullable(memoField))
 
         /** The memo field on the paper item. */
-        fun memoField(memoField: Optional<String>) = memoField(memoField.orElse(null))
+        fun memoField(memoField: Optional<String>) = memoField(memoField.getOrNull())
 
         /** The memo field on the paper item. */
         fun memoField(memoField: JsonField<String>) = apply { this.memoField = memoField }
@@ -423,7 +424,7 @@ private constructor(
         fun remitterName(remitterName: String?) = remitterName(JsonField.ofNullable(remitterName))
 
         /** The name of the remitter on the paper item. */
-        fun remitterName(remitterName: Optional<String>) = remitterName(remitterName.orElse(null))
+        fun remitterName(remitterName: Optional<String>) = remitterName(remitterName.getOrNull())
 
         /** The name of the remitter on the paper item. */
         fun remitterName(remitterName: JsonField<String>) = apply {
@@ -436,7 +437,7 @@ private constructor(
 
         /** The routing number on the paper item. */
         fun routingNumber(routingNumber: Optional<String>) =
-            routingNumber(routingNumber.orElse(null))
+            routingNumber(routingNumber.getOrNull())
 
         /** The routing number on the paper item. */
         fun routingNumber(routingNumber: JsonField<String>) = apply {
@@ -455,7 +456,7 @@ private constructor(
 
         /** The ID of the reconciled Transaction or `null`. */
         fun transactionId(transactionId: Optional<String>) =
-            transactionId(transactionId.orElse(null))
+            transactionId(transactionId.getOrNull())
 
         /** The ID of the reconciled Transaction or `null`. */
         fun transactionId(transactionId: JsonField<String>) = apply {
@@ -468,7 +469,7 @@ private constructor(
 
         /** The ID of the reconciled Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: Optional<String>) =
-            transactionLineItemId(transactionLineItemId.orElse(null))
+            transactionLineItemId(transactionLineItemId.getOrNull())
 
         /** The ID of the reconciled Transaction Line Item or `null`. */
         fun transactionLineItemId(transactionLineItemId: JsonField<String>) = apply {

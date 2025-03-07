@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all transactions. */
 class TransactionListParams
@@ -161,7 +162,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Filters transactions with an `as_of_date` starting on or before the specified date
@@ -173,7 +174,7 @@ private constructor(
          * Filters transactions with an `as_of_date` starting on or before the specified date
          * (YYYY-MM-DD).
          */
-        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.orElse(null))
+        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.getOrNull())
 
         /**
          * Filters transactions with an `as_of_date` starting on or after the specified date
@@ -186,22 +187,22 @@ private constructor(
          * (YYYY-MM-DD).
          */
         fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
-            asOfDateStart(asOfDateStart.orElse(null))
+            asOfDateStart(asOfDateStart.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** Filters for transactions including the queried string in the description. */
         fun description(description: String?) = apply { this.description = description }
 
         /** Filters for transactions including the queried string in the description. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         fun direction(direction: String?) = apply { this.direction = direction }
 
-        fun direction(direction: Optional<String>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<String>) = direction(direction.getOrNull())
 
         /**
          * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
@@ -214,7 +215,7 @@ private constructor(
          * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
          */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -226,18 +227,17 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun paymentType(paymentType: String?) = apply { this.paymentType = paymentType }
 
-        fun paymentType(paymentType: Optional<String>) = paymentType(paymentType.orElse(null))
+        fun paymentType(paymentType: Optional<String>) = paymentType(paymentType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** Either `true` or `false`. */
         fun posted(posted: Boolean?) = apply { this.posted = posted }
@@ -246,15 +246,14 @@ private constructor(
         fun posted(posted: Boolean) = posted(posted as Boolean?)
 
         /** Either `true` or `false`. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun posted(posted: Optional<Boolean>) = posted(posted.orElse(null) as Boolean?)
+        fun posted(posted: Optional<Boolean>) = posted(posted.getOrNull())
 
         fun transactableType(transactableType: String?) = apply {
             this.transactableType = transactableType
         }
 
         fun transactableType(transactableType: Optional<String>) =
-            transactableType(transactableType.orElse(null))
+            transactableType(transactableType.getOrNull())
 
         /**
          * Filters for transactions including the queried vendor id (an identifier given to
@@ -266,14 +265,14 @@ private constructor(
          * Filters for transactions including the queried vendor id (an identifier given to
          * transactions by the bank).
          */
-        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.orElse(null))
+        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
 
         fun virtualAccountId(virtualAccountId: String?) = apply {
             this.virtualAccountId = virtualAccountId
         }
 
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

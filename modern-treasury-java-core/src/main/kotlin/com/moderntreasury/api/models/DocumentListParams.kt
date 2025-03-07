@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of documents. */
 class DocumentListParams
@@ -87,14 +88,14 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** The unique identifier for the associated object. */
         fun documentableId(documentableId: String?) = apply { this.documentableId = documentableId }
 
         /** The unique identifier for the associated object. */
         fun documentableId(documentableId: Optional<String>) =
-            documentableId(documentableId.orElse(null))
+            documentableId(documentableId.getOrNull())
 
         /**
          * The type of the associated object. Currently can be one of `payment_order`,
@@ -111,14 +112,13 @@ private constructor(
          * `internal_account`, `decision`, or `external_account`.
          */
         fun documentableType(documentableType: Optional<DocumentableType>) =
-            documentableType(documentableType.orElse(null))
+            documentableType(documentableType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

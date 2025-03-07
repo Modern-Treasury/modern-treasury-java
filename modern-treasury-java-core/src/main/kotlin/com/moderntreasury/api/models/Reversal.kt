@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Reversal
@@ -229,7 +230,7 @@ private constructor(
 
         /** The ID of the ledger transaction linked to the reversal. */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction linked to the reversal. */
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
@@ -268,7 +269,7 @@ private constructor(
 
         /** The ID of the relevant Payment Order. */
         fun paymentOrderId(paymentOrderId: Optional<String>) =
-            paymentOrderId(paymentOrderId.orElse(null))
+            paymentOrderId(paymentOrderId.getOrNull())
 
         /** The ID of the relevant Payment Order. */
         fun paymentOrderId(paymentOrderId: JsonField<String>) = apply {

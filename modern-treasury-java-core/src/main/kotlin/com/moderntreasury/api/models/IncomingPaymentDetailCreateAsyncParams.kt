@@ -21,6 +21,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Simulate Incoming Payment Detail */
 class IncomingPaymentDetailCreateAsyncParams
@@ -257,7 +258,7 @@ private constructor(
             fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
 
             /** Defaults to today. */
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             /** Defaults to today. */
             fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
@@ -266,7 +267,7 @@ private constructor(
             fun currency(currency: Currency?) = currency(JsonField.ofNullable(currency))
 
             /** Defaults to the currency of the originating account. */
-            fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
+            fun currency(currency: Optional<Currency>) = currency(currency.getOrNull())
 
             /** Defaults to the currency of the originating account. */
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
@@ -275,7 +276,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** Defaults to a random description. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** Defaults to a random description. */
             fun description(description: JsonField<String>) = apply {
@@ -313,7 +314,7 @@ private constructor(
              * An optional parameter to associate the incoming payment detail to a virtual account.
              */
             fun virtualAccountId(virtualAccountId: Optional<String>) =
-                virtualAccountId(virtualAccountId.orElse(null))
+                virtualAccountId(virtualAccountId.getOrNull())
 
             /**
              * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -415,7 +416,7 @@ private constructor(
         fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
 
         /** Defaults to today. */
-        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+        fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
         /** Defaults to today. */
         fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { body.asOfDate(asOfDate) }
@@ -424,7 +425,7 @@ private constructor(
         fun currency(currency: Currency?) = apply { body.currency(currency) }
 
         /** Defaults to the currency of the originating account. */
-        fun currency(currency: Optional<Currency>) = currency(currency.orElse(null))
+        fun currency(currency: Optional<Currency>) = currency(currency.getOrNull())
 
         /** Defaults to the currency of the originating account. */
         fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
@@ -433,7 +434,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** Defaults to a random description. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** Defaults to a random description. */
         fun description(description: JsonField<String>) = apply { body.description(description) }
@@ -467,7 +468,7 @@ private constructor(
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
         fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {

@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list payment_references */
 class PaymentReferenceListParams
@@ -98,14 +99,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** The actual reference number assigned by the bank. */
         fun referenceNumber(referenceNumber: String?) = apply {
@@ -114,7 +114,7 @@ private constructor(
 
         /** The actual reference number assigned by the bank. */
         fun referenceNumber(referenceNumber: Optional<String>) =
-            referenceNumber(referenceNumber.orElse(null))
+            referenceNumber(referenceNumber.getOrNull())
 
         /**
          * The id of the referenceable to search for. Must be accompanied by the referenceable_type
@@ -129,7 +129,7 @@ private constructor(
          * or will return an error.
          */
         fun referenceableId(referenceableId: Optional<String>) =
-            referenceableId(referenceableId.orElse(null))
+            referenceableId(referenceableId.getOrNull())
 
         /**
          * One of the referenceable types. This must be accompanied by the id of the referenceable
@@ -144,7 +144,7 @@ private constructor(
          * or will return an error.
          */
         fun referenceableType(referenceableType: Optional<ReferenceableType>) =
-            referenceableType(referenceableType.orElse(null))
+            referenceableType(referenceableType.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -11,6 +11,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger account categories. */
 class LedgerAccountCategoryListParams
@@ -152,7 +153,7 @@ private constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: Optional<List<String>>) = id(id.orElse(null))
+        fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -162,7 +163,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * For example, if you want the balances as of a particular time (ISO8601), the encoded
@@ -176,11 +177,11 @@ private constructor(
          * query string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as
          * of a time are inclusive of entries with that exact time.
          */
-        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
+        fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun currency(currency: String?) = apply { this.currency = currency }
 
-        fun currency(currency: Optional<String>) = currency(currency.orElse(null))
+        fun currency(currency: Optional<String>) = currency(currency.getOrNull())
 
         /** Query categories which contain a ledger account directly or through child categories. */
         fun ledgerAccountId(ledgerAccountId: String?) = apply {
@@ -189,11 +190,11 @@ private constructor(
 
         /** Query categories which contain a ledger account directly or through child categories. */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
-        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -205,11 +206,11 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun name(name: String?) = apply { this.name = name }
 
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         /** Query categories that are nested underneath a parent category */
         fun parentLedgerAccountCategoryId(parentLedgerAccountCategoryId: String?) = apply {
@@ -218,14 +219,13 @@ private constructor(
 
         /** Query categories that are nested underneath a parent category */
         fun parentLedgerAccountCategoryId(parentLedgerAccountCategoryId: Optional<String>) =
-            parentLedgerAccountCategoryId(parentLedgerAccountCategoryId.orElse(null))
+            parentLedgerAccountCategoryId(parentLedgerAccountCategoryId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -388,7 +388,7 @@ private constructor(
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

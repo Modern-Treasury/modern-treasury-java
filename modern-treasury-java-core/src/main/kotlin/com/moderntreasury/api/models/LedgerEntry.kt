@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LedgerEntry
@@ -375,7 +376,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -429,9 +430,8 @@ private constructor(
          * to only succeed if no ledger transactions have posted since the given version. See our
          * post about Designing the Ledgers API with Optimistic Locking for more details.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun ledgerAccountLockVersion(ledgerAccountLockVersion: Optional<Long>) =
-            ledgerAccountLockVersion(ledgerAccountLockVersion.orElse(null) as Long?)
+            ledgerAccountLockVersion(ledgerAccountLockVersion.getOrNull())
 
         /**
          * Lock version of the ledger account. This can be passed when creating a ledger transaction
@@ -498,7 +498,7 @@ private constructor(
          */
         fun resultingLedgerAccountBalances(
             resultingLedgerAccountBalances: Optional<LedgerBalances>
-        ) = resultingLedgerAccountBalances(resultingLedgerAccountBalances.orElse(null))
+        ) = resultingLedgerAccountBalances(resultingLedgerAccountBalances.getOrNull())
 
         /**
          * The pending, posted, and available balances for this ledger entry's ledger account. The

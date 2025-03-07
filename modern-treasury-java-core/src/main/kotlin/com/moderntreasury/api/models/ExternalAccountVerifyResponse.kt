@@ -29,6 +29,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @JsonDeserialize(using = ExternalAccountVerifyResponse.Deserializer::class)
 @JsonSerialize(using = ExternalAccountVerifyResponse.Serializer::class)
@@ -434,7 +435,7 @@ private constructor(
             fun priority(priority: Priority?) = priority(JsonField.ofNullable(priority))
 
             /** The priority of the payment. Can be `normal` or `high`. */
-            fun priority(priority: Optional<Priority>) = priority(priority.orElse(null))
+            fun priority(priority: Optional<Priority>) = priority(priority.getOrNull())
 
             /** The priority of the payment. Can be `normal` or `high`. */
             fun priority(priority: JsonField<Priority>) = apply { this.priority = priority }

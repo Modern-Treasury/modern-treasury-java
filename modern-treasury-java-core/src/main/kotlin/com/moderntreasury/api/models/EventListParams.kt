@@ -10,6 +10,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list events */
 class EventListParams
@@ -109,22 +110,22 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
-        fun entityId(entityId: Optional<String>) = entityId(entityId.orElse(null))
+        fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
-        fun eventName(eventName: Optional<String>) = eventName(eventName.orElse(null))
+        fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         /** An inclusive upper bound for when the event occurred */
         fun eventTimeEnd(eventTimeEnd: OffsetDateTime?) = apply { this.eventTimeEnd = eventTimeEnd }
 
         /** An inclusive upper bound for when the event occurred */
         fun eventTimeEnd(eventTimeEnd: Optional<OffsetDateTime>) =
-            eventTimeEnd(eventTimeEnd.orElse(null))
+            eventTimeEnd(eventTimeEnd.getOrNull())
 
         /** An inclusive lower bound for when the event occurred */
         fun eventTimeStart(eventTimeStart: OffsetDateTime?) = apply {
@@ -133,18 +134,17 @@ private constructor(
 
         /** An inclusive lower bound for when the event occurred */
         fun eventTimeStart(eventTimeStart: Optional<OffsetDateTime>) =
-            eventTimeStart(eventTimeStart.orElse(null))
+            eventTimeStart(eventTimeStart.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun resource(resource: String?) = apply { this.resource = resource }
 
-        fun resource(resource: Optional<String>) = resource(resource.orElse(null))
+        fun resource(resource: Optional<String>) = resource(resource.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

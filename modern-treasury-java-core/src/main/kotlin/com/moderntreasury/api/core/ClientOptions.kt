@@ -11,6 +11,7 @@ import com.moderntreasury.api.core.http.RetryingHttpClient
 import java.time.Clock
 import java.util.Base64
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class ClientOptions
 private constructor(
@@ -106,7 +107,7 @@ private constructor(
 
         fun webhookKey(webhookKey: String?) = apply { this.webhookKey = webhookKey }
 
-        fun webhookKey(webhookKey: Optional<String>) = webhookKey(webhookKey.orElse(null))
+        fun webhookKey(webhookKey: Optional<String>) = webhookKey(webhookKey.getOrNull())
 
         fun headers(headers: Headers) = apply {
             this.headers.clear()

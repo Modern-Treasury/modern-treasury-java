@@ -21,6 +21,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Invoice
@@ -739,7 +740,7 @@ private constructor(
         /** The counterparty's billing address. */
         fun counterpartyBillingAddress(
             counterpartyBillingAddress: Optional<CounterpartyBillingAddress>
-        ) = counterpartyBillingAddress(counterpartyBillingAddress.orElse(null))
+        ) = counterpartyBillingAddress(counterpartyBillingAddress.getOrNull())
 
         /** The counterparty's billing address. */
         fun counterpartyBillingAddress(
@@ -761,7 +762,7 @@ private constructor(
         /** The counterparty's shipping address where physical goods should be delivered. */
         fun counterpartyShippingAddress(
             counterpartyShippingAddress: Optional<CounterpartyShippingAddress>
-        ) = counterpartyShippingAddress(counterpartyShippingAddress.orElse(null))
+        ) = counterpartyShippingAddress(counterpartyShippingAddress.getOrNull())
 
         /** The counterparty's shipping address where physical goods should be delivered. */
         fun counterpartyShippingAddress(
@@ -819,7 +820,7 @@ private constructor(
          * payment fails. One of `manual` or `ui`.
          */
         fun fallbackPaymentMethod(fallbackPaymentMethod: Optional<String>) =
-            fallbackPaymentMethod(fallbackPaymentMethod.orElse(null))
+            fallbackPaymentMethod(fallbackPaymentMethod.getOrNull())
 
         /**
          * When payment_method is automatic, the fallback payment method to use when an automatic
@@ -841,7 +842,7 @@ private constructor(
 
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: Optional<InvoicerAddress>) =
-            invoicerAddress(invoicerAddress.orElse(null))
+            invoicerAddress(invoicerAddress.getOrNull())
 
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
@@ -854,7 +855,7 @@ private constructor(
 
         /** The ledger account settlement object linked to the invoice. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.orElse(null))
+            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
         /** The ledger account settlement object linked to the invoice. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
@@ -881,7 +882,7 @@ private constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -902,7 +903,7 @@ private constructor(
          * have an email.
          */
         fun notificationEmailAddresses(notificationEmailAddresses: Optional<List<String>>) =
-            notificationEmailAddresses(notificationEmailAddresses.orElse(null))
+            notificationEmailAddresses(notificationEmailAddresses.getOrNull())
 
         /**
          * Emails in addition to the counterparty email to send invoice status notifications to. At
@@ -975,7 +976,7 @@ private constructor(
          * Format: yyyy-mm-dd.
          */
         fun paymentEffectiveDate(paymentEffectiveDate: Optional<LocalDate>) =
-            paymentEffectiveDate(paymentEffectiveDate.orElse(null))
+            paymentEffectiveDate(paymentEffectiveDate.getOrNull())
 
         /**
          * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -998,7 +999,7 @@ private constructor(
          * the recipient, or rely on manual payment from the recipient.
          */
         fun paymentMethod(paymentMethod: Optional<PaymentMethod>) =
-            paymentMethod(paymentMethod.orElse(null))
+            paymentMethod(paymentMethod.getOrNull())
 
         /**
          * When opening an invoice, whether to show the embedded payment UI , automatically debit
@@ -1029,7 +1030,7 @@ private constructor(
         fun paymentType(paymentType: PaymentType?) = paymentType(JsonField.ofNullable(paymentType))
 
         /** One of `ach` or `eft`. */
-        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.orElse(null))
+        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.getOrNull())
 
         /** One of `ach` or `eft`. */
         fun paymentType(paymentType: JsonField<PaymentType>) = apply {
@@ -1040,7 +1041,7 @@ private constructor(
         fun pdfUrl(pdfUrl: String?) = pdfUrl(JsonField.ofNullable(pdfUrl))
 
         /** The URL where the invoice PDF can be downloaded. */
-        fun pdfUrl(pdfUrl: Optional<String>) = pdfUrl(pdfUrl.orElse(null))
+        fun pdfUrl(pdfUrl: Optional<String>) = pdfUrl(pdfUrl.getOrNull())
 
         /** The URL where the invoice PDF can be downloaded. */
         fun pdfUrl(pdfUrl: JsonField<String>) = apply { this.pdfUrl = pdfUrl }
@@ -1051,7 +1052,7 @@ private constructor(
 
         /** The receiving account ID. Can be an `internal_account`. */
         fun receivingAccountId(receivingAccountId: Optional<String>) =
-            receivingAccountId(receivingAccountId.orElse(null))
+            receivingAccountId(receivingAccountId.getOrNull())
 
         /** The receiving account ID. Can be an `internal_account`. */
         fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
@@ -1070,7 +1071,7 @@ private constructor(
          * using the counterparty's name.
          */
         fun recipientEmail(recipientEmail: Optional<String>) =
-            recipientEmail(recipientEmail.orElse(null))
+            recipientEmail(recipientEmail.getOrNull())
 
         /**
          * The email of the recipient of the invoice. Leaving this value as null will fallback to
@@ -1092,7 +1093,7 @@ private constructor(
          * using the counterparty's name.
          */
         fun recipientName(recipientName: Optional<String>) =
-            recipientName(recipientName.orElse(null))
+            recipientName(recipientName.getOrNull())
 
         /**
          * The name of the recipient of the invoice. Leaving this value as null will fallback to
@@ -1114,7 +1115,7 @@ private constructor(
          * recipients.
          */
         fun remindAfterOverdueDays(remindAfterOverdueDays: Optional<List<Long>>) =
-            remindAfterOverdueDays(remindAfterOverdueDays.orElse(null))
+            remindAfterOverdueDays(remindAfterOverdueDays.getOrNull())
 
         /**
          * Number of days after due date when overdue reminder emails will be sent out to invoice
@@ -1180,7 +1181,7 @@ private constructor(
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
@@ -1436,7 +1437,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt

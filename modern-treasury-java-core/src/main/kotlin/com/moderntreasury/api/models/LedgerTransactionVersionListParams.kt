@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger transaction versions. */
 class LedgerTransactionVersionListParams
@@ -112,7 +113,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created_at
@@ -126,7 +127,7 @@ private constructor(
          * timestamp. For example, for all dates after Jan 1 2000 12:00 UTC, use
          * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
+        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
         /**
          * Get all ledger transaction versions that are included in the ledger account statement.
@@ -139,7 +140,7 @@ private constructor(
          * Get all ledger transaction versions that are included in the ledger account statement.
          */
         fun ledgerAccountStatementId(ledgerAccountStatementId: Optional<String>) =
-            ledgerAccountStatementId(ledgerAccountStatementId.orElse(null))
+            ledgerAccountStatementId(ledgerAccountStatementId.getOrNull())
 
         /**
          * Get all the ledger transaction versions corresponding to the ID of a ledger transaction.
@@ -152,14 +153,13 @@ private constructor(
          * Get all the ledger transaction versions corresponding to the ID of a ledger transaction.
          */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the version. For
@@ -171,7 +171,7 @@ private constructor(
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the version. For
          * example, for all versions after 2, use version%5Bgt%5D=2.
          */
-        fun version(version: Optional<Version>) = version(version.orElse(null))
+        fun version(version: Optional<Version>) = version(version.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

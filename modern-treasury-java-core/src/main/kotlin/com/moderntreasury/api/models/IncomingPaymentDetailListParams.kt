@@ -13,6 +13,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of Incoming Payment Details. */
 class IncomingPaymentDetailListParams
@@ -138,7 +139,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Filters incoming payment details with an as_of_date starting on or before the specified
@@ -150,7 +151,7 @@ private constructor(
          * Filters incoming payment details with an as_of_date starting on or before the specified
          * date (YYYY-MM-DD).
          */
-        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.orElse(null))
+        fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.getOrNull())
 
         /**
          * Filters incoming payment details with an as_of_date starting on or after the specified
@@ -163,13 +164,13 @@ private constructor(
          * date (YYYY-MM-DD).
          */
         fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
-            asOfDateStart(asOfDateStart.orElse(null))
+            asOfDateStart(asOfDateStart.getOrNull())
 
         /** One of `credit` or `debit`. */
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
         /** One of `credit` or `debit`. */
-        fun direction(direction: Optional<TransactionDirection>) = direction(direction.orElse(null))
+        fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -181,14 +182,13 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * The current status of the incoming payment order. One of `pending`, `completed`, or
@@ -200,13 +200,13 @@ private constructor(
          * The current status of the incoming payment order. One of `pending`, `completed`, or
          * `returned`.
          */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
         fun type(type: Type?) = apply { this.type = type }
 
         /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
-        fun type(type: Optional<Type>) = type(type.orElse(null))
+        fun type(type: Optional<Type>) = type(type.getOrNull())
 
         /**
          * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
@@ -219,7 +219,7 @@ private constructor(
          * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
          */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

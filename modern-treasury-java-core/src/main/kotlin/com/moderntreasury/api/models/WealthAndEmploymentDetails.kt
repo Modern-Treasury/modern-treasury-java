@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class WealthAndEmploymentDetails
@@ -344,9 +345,7 @@ private constructor(
         fun annualIncome(annualIncome: Long) = annualIncome(annualIncome as Long?)
 
         /** The annual income of the individual. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun annualIncome(annualIncome: Optional<Long>) =
-            annualIncome(annualIncome.orElse(null) as Long?)
+        fun annualIncome(annualIncome: Optional<Long>) = annualIncome(annualIncome.getOrNull())
 
         /** The annual income of the individual. */
         fun annualIncome(annualIncome: JsonField<Long>) = apply { this.annualIncome = annualIncome }
@@ -359,7 +358,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -371,7 +370,7 @@ private constructor(
 
         /** The country in which the employer is located. */
         fun employerCountry(employerCountry: Optional<String>) =
-            employerCountry(employerCountry.orElse(null))
+            employerCountry(employerCountry.getOrNull())
 
         /** The country in which the employer is located. */
         fun employerCountry(employerCountry: JsonField<String>) = apply {
@@ -382,7 +381,7 @@ private constructor(
         fun employerName(employerName: String?) = employerName(JsonField.ofNullable(employerName))
 
         /** The name of the employer. */
-        fun employerName(employerName: Optional<String>) = employerName(employerName.orElse(null))
+        fun employerName(employerName: Optional<String>) = employerName(employerName.getOrNull())
 
         /** The name of the employer. */
         fun employerName(employerName: JsonField<String>) = apply {
@@ -395,7 +394,7 @@ private constructor(
 
         /** The state in which the employer is located. */
         fun employerState(employerState: Optional<String>) =
-            employerState(employerState.orElse(null))
+            employerState(employerState.getOrNull())
 
         /** The state in which the employer is located. */
         fun employerState(employerState: JsonField<String>) = apply {
@@ -408,7 +407,7 @@ private constructor(
 
         /** The employment status of the individual. */
         fun employmentStatus(employmentStatus: Optional<EmploymentStatus>) =
-            employmentStatus(employmentStatus.orElse(null))
+            employmentStatus(employmentStatus.getOrNull())
 
         /** The employment status of the individual. */
         fun employmentStatus(employmentStatus: JsonField<EmploymentStatus>) = apply {
@@ -421,7 +420,7 @@ private constructor(
 
         /** The country in which the individual's income is earned. */
         fun incomeCountry(incomeCountry: Optional<String>) =
-            incomeCountry(incomeCountry.orElse(null))
+            incomeCountry(incomeCountry.getOrNull())
 
         /** The country in which the individual's income is earned. */
         fun incomeCountry(incomeCountry: JsonField<String>) = apply {
@@ -434,7 +433,7 @@ private constructor(
 
         /** The source of the individual's income. */
         fun incomeSource(incomeSource: Optional<IncomeSource>) =
-            incomeSource(incomeSource.orElse(null))
+            incomeSource(incomeSource.getOrNull())
 
         /** The source of the individual's income. */
         fun incomeSource(incomeSource: JsonField<IncomeSource>) = apply {
@@ -445,7 +444,7 @@ private constructor(
         fun incomeState(incomeState: String?) = incomeState(JsonField.ofNullable(incomeState))
 
         /** The state in which the individual's income is earned. */
-        fun incomeState(incomeState: Optional<String>) = incomeState(incomeState.orElse(null))
+        fun incomeState(incomeState: Optional<String>) = incomeState(incomeState.getOrNull())
 
         /** The state in which the individual's income is earned. */
         fun incomeState(incomeState: JsonField<String>) = apply { this.incomeState = incomeState }
@@ -454,7 +453,7 @@ private constructor(
         fun industry(industry: Industry?) = industry(JsonField.ofNullable(industry))
 
         /** The industry of the individual. */
-        fun industry(industry: Optional<Industry>) = industry(industry.orElse(null))
+        fun industry(industry: Optional<Industry>) = industry(industry.getOrNull())
 
         /** The industry of the individual. */
         fun industry(industry: JsonField<Industry>) = apply { this.industry = industry }
@@ -479,7 +478,7 @@ private constructor(
         fun occupation(occupation: Occupation?) = occupation(JsonField.ofNullable(occupation))
 
         /** The occupation of the individual. */
-        fun occupation(occupation: Optional<Occupation>) = occupation(occupation.orElse(null))
+        fun occupation(occupation: Optional<Occupation>) = occupation(occupation.getOrNull())
 
         /** The occupation of the individual. */
         fun occupation(occupation: JsonField<Occupation>) = apply { this.occupation = occupation }
@@ -490,7 +489,7 @@ private constructor(
 
         /** The source of the individual's funds. */
         fun sourceOfFunds(sourceOfFunds: Optional<SourceOfFunds>) =
-            sourceOfFunds(sourceOfFunds.orElse(null))
+            sourceOfFunds(sourceOfFunds.getOrNull())
 
         /** The source of the individual's funds. */
         fun sourceOfFunds(sourceOfFunds: JsonField<SourceOfFunds>) = apply {
@@ -507,7 +506,7 @@ private constructor(
 
         /** The source of the individual's wealth. */
         fun wealthSource(wealthSource: Optional<WealthSource>) =
-            wealthSource(wealthSource.orElse(null))
+            wealthSource(wealthSource.getOrNull())
 
         /** The source of the individual's wealth. */
         fun wealthSource(wealthSource: JsonField<WealthSource>) = apply {

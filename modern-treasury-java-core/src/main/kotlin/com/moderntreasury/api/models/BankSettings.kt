@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class BankSettings
@@ -237,9 +238,8 @@ private constructor(
             backupWithholdingPercentage(backupWithholdingPercentage as Long?)
 
         /** The percentage of backup withholding to apply to the legal entity. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun backupWithholdingPercentage(backupWithholdingPercentage: Optional<Long>) =
-            backupWithholdingPercentage(backupWithholdingPercentage.orElse(null) as Long?)
+            backupWithholdingPercentage(backupWithholdingPercentage.getOrNull())
 
         /** The percentage of backup withholding to apply to the legal entity. */
         fun backupWithholdingPercentage(backupWithholdingPercentage: JsonField<Long>) = apply {
@@ -254,7 +254,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -278,9 +278,8 @@ private constructor(
          * Whether backup withholding is enabled. See more here -
          * https://www.irs.gov/businesses/small-businesses-self-employed/backup-withholding.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun enableBackupWithholding(enableBackupWithholding: Optional<Boolean>) =
-            enableBackupWithholding(enableBackupWithholding.orElse(null) as Boolean?)
+            enableBackupWithholding(enableBackupWithholding.getOrNull())
 
         /**
          * Whether backup withholding is enabled. See more here -
@@ -314,9 +313,8 @@ private constructor(
         fun privacyOptOut(privacyOptOut: Boolean) = privacyOptOut(privacyOptOut as Boolean?)
 
         /** Cross River Bank specific setting to opt out of privacy policy. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun privacyOptOut(privacyOptOut: Optional<Boolean>) =
-            privacyOptOut(privacyOptOut.orElse(null) as Boolean?)
+            privacyOptOut(privacyOptOut.getOrNull())
 
         /** Cross River Bank specific setting to opt out of privacy policy. */
         fun privacyOptOut(privacyOptOut: JsonField<Boolean>) = apply {
@@ -345,9 +343,7 @@ private constructor(
          * holding company of which the member bank is a subsidiary; and any other subsidiary of
          * that bank holding company.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun regulationO(regulationO: Optional<Boolean>) =
-            regulationO(regulationO.orElse(null) as Boolean?)
+        fun regulationO(regulationO: Optional<Boolean>) = regulationO(regulationO.getOrNull())
 
         /**
          * It covers, among other types of insider loans, extensions of credit by a member bank to

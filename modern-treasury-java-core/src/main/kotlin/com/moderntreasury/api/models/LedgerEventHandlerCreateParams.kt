@@ -20,6 +20,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create ledger_event_handler */
 class LedgerEventHandlerCreateParams
@@ -264,7 +265,7 @@ private constructor(
 
             @Deprecated("deprecated")
             fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
-                conditions(conditions.orElse(null))
+                conditions(conditions.getOrNull())
 
             @Deprecated("deprecated")
             fun conditions(conditions: JsonField<LedgerEventHandlerConditions>) = apply {
@@ -275,7 +276,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** An optional description. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** An optional description. */
             fun description(description: JsonField<String>) = apply {
@@ -298,7 +299,7 @@ private constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
@@ -312,7 +313,7 @@ private constructor(
 
             @Deprecated("deprecated")
             fun variables(variables: Optional<LedgerEventHandlerVariables>) =
-                variables(variables.orElse(null))
+                variables(variables.getOrNull())
 
             @Deprecated("deprecated")
             fun variables(variables: JsonField<LedgerEventHandlerVariables>) = apply {
@@ -425,7 +426,7 @@ private constructor(
 
         @Deprecated("deprecated")
         fun conditions(conditions: Optional<LedgerEventHandlerConditions>) =
-            conditions(conditions.orElse(null))
+            conditions(conditions.getOrNull())
 
         @Deprecated("deprecated")
         fun conditions(conditions: JsonField<LedgerEventHandlerConditions>) = apply {
@@ -436,7 +437,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** An optional description. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional description. */
         fun description(description: JsonField<String>) = apply { body.description(description) }
@@ -455,7 +456,7 @@ private constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -467,7 +468,7 @@ private constructor(
 
         @Deprecated("deprecated")
         fun variables(variables: Optional<LedgerEventHandlerVariables>) =
-            variables(variables.orElse(null))
+            variables(variables.getOrNull())
 
         @Deprecated("deprecated")
         fun variables(variables: JsonField<LedgerEventHandlerVariables>) = apply {
@@ -727,7 +728,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** An optional description for internal use. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** An optional description for internal use. */
             fun description(description: JsonField<String>) = apply {
@@ -744,7 +745,7 @@ private constructor(
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
              * purposes.
              */
-            fun effectiveAt(effectiveAt: Optional<String>) = effectiveAt(effectiveAt.orElse(null))
+            fun effectiveAt(effectiveAt: Optional<String>) = effectiveAt(effectiveAt.getOrNull())
 
             /**
              * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -776,7 +777,7 @@ private constructor(
             fun status(status: String?) = status(JsonField.ofNullable(status))
 
             /** To post a ledger transaction at creation, use `posted`. */
-            fun status(status: Optional<String>) = status(status.orElse(null))
+            fun status(status: Optional<String>) = status(status.getOrNull())
 
             /** To post a ledger transaction at creation, use `posted`. */
             fun status(status: JsonField<String>) = apply { this.status = status }

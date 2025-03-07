@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all connection legal entities. */
 class ConnectionLegalEntityListParams
@@ -92,27 +93,26 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun connectionId(connectionId: String?) = apply { this.connectionId = connectionId }
 
-        fun connectionId(connectionId: Optional<String>) = connectionId(connectionId.orElse(null))
+        fun connectionId(connectionId: Optional<String>) = connectionId(connectionId.getOrNull())
 
         fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
 
         fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+            legalEntityId(legalEntityId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

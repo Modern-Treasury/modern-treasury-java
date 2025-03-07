@@ -18,6 +18,7 @@ import com.moderntreasury.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class VirtualAccount
@@ -341,7 +342,7 @@ private constructor(
 
         /** The ID of a counterparty that the virtual account belongs to. Optional. */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** The ID of a counterparty that the virtual account belongs to. Optional. */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -366,7 +367,7 @@ private constructor(
          * present.
          */
         fun creditLedgerAccountId(creditLedgerAccountId: Optional<String>) =
-            creditLedgerAccountId(creditLedgerAccountId.orElse(null))
+            creditLedgerAccountId(creditLedgerAccountId.getOrNull())
 
         /**
          * The ID of a credit normal ledger account. When money enters the virtual account, this
@@ -391,7 +392,7 @@ private constructor(
          * present.
          */
         fun debitLedgerAccountId(debitLedgerAccountId: Optional<String>) =
-            debitLedgerAccountId(debitLedgerAccountId.orElse(null))
+            debitLedgerAccountId(debitLedgerAccountId.getOrNull())
 
         /**
          * The ID of a debit normal ledger account. When money enters the virtual account, this
@@ -406,7 +407,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** An optional free-form description for internal use. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional free-form description for internal use. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -415,7 +416,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -442,7 +443,7 @@ private constructor(
          * account will be populated here.
          */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-            ledgerAccountId(ledgerAccountId.orElse(null))
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         /**
          * If the virtual account links to a ledger account in Modern Treasury, the id of the ledger

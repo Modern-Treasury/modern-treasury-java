@@ -24,6 +24,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create invoice */
 class InvoiceCreateParams
@@ -859,9 +860,7 @@ private constructor(
              * after entering that state. If the invoice fails to progress to unpaid, the errors
              * will be returned and the invoice will not be created.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun autoAdvance(autoAdvance: Optional<Boolean>) =
-                autoAdvance(autoAdvance.orElse(null) as Boolean?)
+            fun autoAdvance(autoAdvance: Optional<Boolean>) = autoAdvance(autoAdvance.getOrNull())
 
             /**
              * When true, the invoice will progress to unpaid automatically and cannot be edited
@@ -897,7 +896,7 @@ private constructor(
             /** The counterparty's billing address. */
             fun counterpartyBillingAddress(
                 counterpartyBillingAddress: Optional<CounterpartyBillingAddress>
-            ) = counterpartyBillingAddress(counterpartyBillingAddress.orElse(null))
+            ) = counterpartyBillingAddress(counterpartyBillingAddress.getOrNull())
 
             /** The counterparty's billing address. */
             fun counterpartyBillingAddress(
@@ -912,7 +911,7 @@ private constructor(
             /** The counterparty's shipping address where physical goods should be delivered. */
             fun counterpartyShippingAddress(
                 counterpartyShippingAddress: Optional<CounterpartyShippingAddress>
-            ) = counterpartyShippingAddress(counterpartyShippingAddress.orElse(null))
+            ) = counterpartyShippingAddress(counterpartyShippingAddress.getOrNull())
 
             /** The counterparty's shipping address where physical goods should be delivered. */
             fun counterpartyShippingAddress(
@@ -945,7 +944,7 @@ private constructor(
              * automatic payment fails. One of `manual` or `ui`.
              */
             fun fallbackPaymentMethod(fallbackPaymentMethod: Optional<String>) =
-                fallbackPaymentMethod(fallbackPaymentMethod.orElse(null))
+                fallbackPaymentMethod(fallbackPaymentMethod.getOrNull())
 
             /**
              * When payment_method is automatic, the fallback payment method to use when an
@@ -976,9 +975,8 @@ private constructor(
              * false, then a line item must be provided. If this is true, line_items must be empty.
              * Ignored if ledger_account_settlement_id is empty.
              */
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
-                ingestLedgerEntries(ingestLedgerEntries.orElse(null) as Boolean?)
+                ingestLedgerEntries(ingestLedgerEntries.getOrNull())
 
             /**
              * Whether to ingest the ledger_entries to populate the invoice line items. If this is
@@ -1003,7 +1001,7 @@ private constructor(
              * support.
              */
             fun invoiceLineItems(invoiceLineItems: Optional<List<InvoiceLineItemCreateRequest>>) =
-                invoiceLineItems(invoiceLineItems.orElse(null))
+                invoiceLineItems(invoiceLineItems.getOrNull())
 
             /**
              * An array of invoice line items. The API supports a maximum of 50 invoice line items
@@ -1033,7 +1031,7 @@ private constructor(
 
             /** The invoice issuer's business address. */
             fun invoicerAddress(invoicerAddress: Optional<InvoicerAddress>) =
-                invoicerAddress(invoicerAddress.orElse(null))
+                invoicerAddress(invoicerAddress.getOrNull())
 
             /** The invoice issuer's business address. */
             fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
@@ -1046,7 +1044,7 @@ private constructor(
 
             /** The ID of the virtual account the invoice should be paid to. */
             fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-                ledgerAccountSettlementId(ledgerAccountSettlementId.orElse(null))
+                ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
             /** The ID of the virtual account the invoice should be paid to. */
             fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
@@ -1063,7 +1061,7 @@ private constructor(
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
-            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+            fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
@@ -1085,7 +1083,7 @@ private constructor(
              * doesn't have an email.
              */
             fun notificationEmailAddresses(notificationEmailAddresses: Optional<List<String>>) =
-                notificationEmailAddresses(notificationEmailAddresses.orElse(null))
+                notificationEmailAddresses(notificationEmailAddresses.getOrNull())
 
             /**
              * Emails in addition to the counterparty email to send invoice status notifications to.
@@ -1202,7 +1200,7 @@ private constructor(
              * to using the counterparty's name.
              */
             fun recipientEmail(recipientEmail: Optional<String>) =
-                recipientEmail(recipientEmail.orElse(null))
+                recipientEmail(recipientEmail.getOrNull())
 
             /**
              * The email of the recipient of the invoice. Leaving this value as null will fallback
@@ -1224,7 +1222,7 @@ private constructor(
              * using the counterparty's name.
              */
             fun recipientName(recipientName: Optional<String>) =
-                recipientName(recipientName.orElse(null))
+                recipientName(recipientName.getOrNull())
 
             /**
              * The name of the recipient of the invoice. Leaving this value as null will fallback to
@@ -1246,7 +1244,7 @@ private constructor(
              * invoice recipients.
              */
             fun remindAfterOverdueDays(remindAfterOverdueDays: Optional<List<Long>>) =
-                remindAfterOverdueDays(remindAfterOverdueDays.orElse(null))
+                remindAfterOverdueDays(remindAfterOverdueDays.getOrNull())
 
             /**
              * Number of days after due date when overdue reminder emails will be sent out to
@@ -1273,7 +1271,7 @@ private constructor(
 
             /** The ID of the virtual account the invoice should be paid to. */
             fun virtualAccountId(virtualAccountId: Optional<String>) =
-                virtualAccountId(virtualAccountId.orElse(null))
+                virtualAccountId(virtualAccountId.getOrNull())
 
             /** The ID of the virtual account the invoice should be paid to. */
             fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
@@ -1423,9 +1421,7 @@ private constructor(
          * entering that state. If the invoice fails to progress to unpaid, the errors will be
          * returned and the invoice will not be created.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun autoAdvance(autoAdvance: Optional<Boolean>) =
-            autoAdvance(autoAdvance.orElse(null) as Boolean?)
+        fun autoAdvance(autoAdvance: Optional<Boolean>) = autoAdvance(autoAdvance.getOrNull())
 
         /**
          * When true, the invoice will progress to unpaid automatically and cannot be edited after
@@ -1458,7 +1454,7 @@ private constructor(
         /** The counterparty's billing address. */
         fun counterpartyBillingAddress(
             counterpartyBillingAddress: Optional<CounterpartyBillingAddress>
-        ) = counterpartyBillingAddress(counterpartyBillingAddress.orElse(null))
+        ) = counterpartyBillingAddress(counterpartyBillingAddress.getOrNull())
 
         /** The counterparty's billing address. */
         fun counterpartyBillingAddress(
@@ -1474,7 +1470,7 @@ private constructor(
         /** The counterparty's shipping address where physical goods should be delivered. */
         fun counterpartyShippingAddress(
             counterpartyShippingAddress: Optional<CounterpartyShippingAddress>
-        ) = counterpartyShippingAddress(counterpartyShippingAddress.orElse(null))
+        ) = counterpartyShippingAddress(counterpartyShippingAddress.getOrNull())
 
         /** The counterparty's shipping address where physical goods should be delivered. */
         fun counterpartyShippingAddress(
@@ -1506,7 +1502,7 @@ private constructor(
          * payment fails. One of `manual` or `ui`.
          */
         fun fallbackPaymentMethod(fallbackPaymentMethod: Optional<String>) =
-            fallbackPaymentMethod(fallbackPaymentMethod.orElse(null))
+            fallbackPaymentMethod(fallbackPaymentMethod.getOrNull())
 
         /**
          * When payment_method is automatic, the fallback payment method to use when an automatic
@@ -1538,9 +1534,8 @@ private constructor(
          * false, then a line item must be provided. If this is true, line_items must be empty.
          * Ignored if ledger_account_settlement_id is empty.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
-            ingestLedgerEntries(ingestLedgerEntries.orElse(null) as Boolean?)
+            ingestLedgerEntries(ingestLedgerEntries.getOrNull())
 
         /**
          * Whether to ingest the ledger_entries to populate the invoice line items. If this is
@@ -1564,7 +1559,7 @@ private constructor(
          * invoice. If a greater number of invoice line items is required, please contact support.
          */
         fun invoiceLineItems(invoiceLineItems: Optional<List<InvoiceLineItemCreateRequest>>) =
-            invoiceLineItems(invoiceLineItems.orElse(null))
+            invoiceLineItems(invoiceLineItems.getOrNull())
 
         /**
          * An array of invoice line items. The API supports a maximum of 50 invoice line items per
@@ -1590,7 +1585,7 @@ private constructor(
 
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: Optional<InvoicerAddress>) =
-            invoicerAddress(invoicerAddress.orElse(null))
+            invoicerAddress(invoicerAddress.getOrNull())
 
         /** The invoice issuer's business address. */
         fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
@@ -1604,7 +1599,7 @@ private constructor(
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.orElse(null))
+            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
@@ -1619,7 +1614,7 @@ private constructor(
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -1641,7 +1636,7 @@ private constructor(
          * have an email.
          */
         fun notificationEmailAddresses(notificationEmailAddresses: Optional<List<String>>) =
-            notificationEmailAddresses(notificationEmailAddresses.orElse(null))
+            notificationEmailAddresses(notificationEmailAddresses.getOrNull())
 
         /**
          * Emails in addition to the counterparty email to send invoice status notifications to. At
@@ -1757,7 +1752,7 @@ private constructor(
          * using the counterparty's name.
          */
         fun recipientEmail(recipientEmail: Optional<String>) =
-            recipientEmail(recipientEmail.orElse(null))
+            recipientEmail(recipientEmail.getOrNull())
 
         /**
          * The email of the recipient of the invoice. Leaving this value as null will fallback to
@@ -1778,7 +1773,7 @@ private constructor(
          * using the counterparty's name.
          */
         fun recipientName(recipientName: Optional<String>) =
-            recipientName(recipientName.orElse(null))
+            recipientName(recipientName.getOrNull())
 
         /**
          * The name of the recipient of the invoice. Leaving this value as null will fallback to
@@ -1801,7 +1796,7 @@ private constructor(
          * recipients.
          */
         fun remindAfterOverdueDays(remindAfterOverdueDays: Optional<List<Long>>) =
-            remindAfterOverdueDays(remindAfterOverdueDays.orElse(null))
+            remindAfterOverdueDays(remindAfterOverdueDays.getOrNull())
 
         /**
          * Number of days after due date when overdue reminder emails will be sent out to invoice
@@ -1826,7 +1821,7 @@ private constructor(
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.orElse(null))
+            virtualAccountId(virtualAccountId.getOrNull())
 
         /** The ID of the virtual account the invoice should be paid to. */
         fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
@@ -2139,7 +2134,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt
