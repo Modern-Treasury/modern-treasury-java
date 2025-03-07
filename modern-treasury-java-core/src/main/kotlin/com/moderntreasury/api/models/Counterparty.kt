@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Counterparty
@@ -272,7 +273,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -282,7 +283,7 @@ private constructor(
         fun email(email: String?) = email(JsonField.ofNullable(email))
 
         /** The counterparty's email. */
-        fun email(email: Optional<String>) = email(email.orElse(null))
+        fun email(email: Optional<String>) = email(email.getOrNull())
 
         /** The counterparty's email. */
         fun email(email: JsonField<String>) = apply { this.email = email }
@@ -293,7 +294,7 @@ private constructor(
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+            legalEntityId(legalEntityId.getOrNull())
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: JsonField<String>) = apply {
@@ -326,7 +327,7 @@ private constructor(
         fun name(name: String?) = name(JsonField.ofNullable(name))
 
         /** A human friendly name for this counterparty. */
-        fun name(name: Optional<String>) = name(name.orElse(null))
+        fun name(name: Optional<String>) = name(name.getOrNull())
 
         /** A human friendly name for this counterparty. */
         fun name(name: JsonField<String>) = apply { this.name = name }
@@ -744,7 +745,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt
@@ -762,7 +763,7 @@ private constructor(
              * ledger account will be populated here.
              */
             fun ledgerAccountId(ledgerAccountId: Optional<String>) =
-                ledgerAccountId(ledgerAccountId.orElse(null))
+                ledgerAccountId(ledgerAccountId.getOrNull())
 
             /**
              * If the external account links to a ledger account in Modern Treasury, the id of the
@@ -806,7 +807,7 @@ private constructor(
              * A nickname for the external account. This is only for internal usage and won't affect
              * any payments
              */
-            fun name(name: Optional<String>) = name(name.orElse(null))
+            fun name(name: Optional<String>) = name(name.getOrNull())
 
             /**
              * A nickname for the external account. This is only for internal usage and won't affect
@@ -824,7 +825,7 @@ private constructor(
 
             /** The address associated with the owner or `null`. */
             fun partyAddress(partyAddress: Optional<Address>) =
-                partyAddress(partyAddress.orElse(null))
+                partyAddress(partyAddress.getOrNull())
 
             /** The address associated with the owner or `null`. */
             fun partyAddress(partyAddress: JsonField<Address>) = apply {
@@ -841,7 +842,7 @@ private constructor(
             fun partyType(partyType: PartyType?) = partyType(JsonField.ofNullable(partyType))
 
             /** Either `individual` or `business`. */
-            fun partyType(partyType: Optional<PartyType>) = partyType(partyType.orElse(null))
+            fun partyType(partyType: Optional<PartyType>) = partyType(partyType.getOrNull())
 
             /** Either `individual` or `business`. */
             fun partyType(partyType: JsonField<PartyType>) = apply { this.partyType = partyType }
@@ -870,7 +871,7 @@ private constructor(
                 verificationSource(JsonField.ofNullable(verificationSource))
 
             fun verificationSource(verificationSource: Optional<VerificationSource>) =
-                verificationSource(verificationSource.orElse(null))
+                verificationSource(verificationSource.getOrNull())
 
             fun verificationSource(verificationSource: JsonField<VerificationSource>) = apply {
                 this.verificationSource = verificationSource
@@ -1111,7 +1112,7 @@ private constructor(
                     discardedAt(JsonField.ofNullable(discardedAt))
 
                 fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                    discardedAt(discardedAt.orElse(null))
+                    discardedAt(discardedAt.getOrNull())
 
                 fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                     this.discardedAt = discardedAt
@@ -1595,7 +1596,7 @@ private constructor(
                 fun country(country: String?) = country(JsonField.ofNullable(country))
 
                 /** Country code conforms to [ISO 3166-1 alpha-2] */
-                fun country(country: Optional<String>) = country(country.orElse(null))
+                fun country(country: Optional<String>) = country(country.getOrNull())
 
                 /** Country code conforms to [ISO 3166-1 alpha-2] */
                 fun country(country: JsonField<String>) = apply { this.country = country }
@@ -1608,13 +1609,13 @@ private constructor(
 
                 fun line1(line1: String?) = line1(JsonField.ofNullable(line1))
 
-                fun line1(line1: Optional<String>) = line1(line1.orElse(null))
+                fun line1(line1: Optional<String>) = line1(line1.getOrNull())
 
                 fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
                 fun line2(line2: String?) = line2(JsonField.ofNullable(line2))
 
-                fun line2(line2: Optional<String>) = line2(line2.orElse(null))
+                fun line2(line2: Optional<String>) = line2(line2.getOrNull())
 
                 fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
@@ -1634,7 +1635,7 @@ private constructor(
                 fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
                 /** Locality or City. */
-                fun locality(locality: Optional<String>) = locality(locality.orElse(null))
+                fun locality(locality: Optional<String>) = locality(locality.getOrNull())
 
                 /** Locality or City. */
                 fun locality(locality: JsonField<String>) = apply { this.locality = locality }
@@ -1647,7 +1648,7 @@ private constructor(
                 fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
 
                 /** The postal code of the address. */
-                fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.orElse(null))
+                fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
 
                 /** The postal code of the address. */
                 fun postalCode(postalCode: JsonField<String>) = apply {
@@ -1658,7 +1659,7 @@ private constructor(
                 fun region(region: String?) = region(JsonField.ofNullable(region))
 
                 /** Region or State. */
-                fun region(region: Optional<String>) = region(region.orElse(null))
+                fun region(region: Optional<String>) = region(region.getOrNull())
 
                 /** Region or State. */
                 fun region(region: JsonField<String>) = apply { this.region = region }

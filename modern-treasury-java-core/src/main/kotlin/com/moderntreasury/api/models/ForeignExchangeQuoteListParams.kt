@@ -11,6 +11,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list foreign_exchange_quotes */
 class ForeignExchangeQuoteListParams
@@ -129,13 +130,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Currency to convert, often called the "sell" currency. */
         fun baseCurrency(baseCurrency: String?) = apply { this.baseCurrency = baseCurrency }
 
         /** Currency to convert, often called the "sell" currency. */
-        fun baseCurrency(baseCurrency: Optional<String>) = baseCurrency(baseCurrency.orElse(null))
+        fun baseCurrency(baseCurrency: Optional<String>) = baseCurrency(baseCurrency.getOrNull())
 
         /** An inclusive upper bound for searching effective_at */
         fun effectiveAtEnd(effectiveAtEnd: LocalDate?) = apply {
@@ -144,7 +145,7 @@ private constructor(
 
         /** An inclusive upper bound for searching effective_at */
         fun effectiveAtEnd(effectiveAtEnd: Optional<LocalDate>) =
-            effectiveAtEnd(effectiveAtEnd.orElse(null))
+            effectiveAtEnd(effectiveAtEnd.getOrNull())
 
         /** An inclusive lower bound for searching effective_at */
         fun effectiveAtStart(effectiveAtStart: LocalDate?) = apply {
@@ -153,13 +154,13 @@ private constructor(
 
         /** An inclusive lower bound for searching effective_at */
         fun effectiveAtStart(effectiveAtStart: Optional<LocalDate>) =
-            effectiveAtStart(effectiveAtStart.orElse(null))
+            effectiveAtStart(effectiveAtStart.getOrNull())
 
         /** The timestamp until which the quote must be booked by. */
         fun expiresAt(expiresAt: OffsetDateTime?) = apply { this.expiresAt = expiresAt }
 
         /** The timestamp until which the quote must be booked by. */
-        fun expiresAt(expiresAt: Optional<OffsetDateTime>) = expiresAt(expiresAt.orElse(null))
+        fun expiresAt(expiresAt: Optional<OffsetDateTime>) = expiresAt(expiresAt.getOrNull())
 
         /** The ID for the `InternalAccount` this quote is associated with. */
         fun internalAccountId(internalAccountId: String?) = apply {
@@ -168,7 +169,7 @@ private constructor(
 
         /** The ID for the `InternalAccount` this quote is associated with. */
         fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.orElse(null))
+            internalAccountId(internalAccountId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -180,21 +181,20 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
         fun targetCurrency(targetCurrency: String?) = apply { this.targetCurrency = targetCurrency }
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
         fun targetCurrency(targetCurrency: Optional<String>) =
-            targetCurrency(targetCurrency.orElse(null))
+            targetCurrency(targetCurrency.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -19,6 +19,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a ledger. */
 class LedgerCreateParams
@@ -158,7 +159,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** An optional free-form description for internal use. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** An optional free-form description for internal use. */
             fun description(description: JsonField<String>) = apply {
@@ -263,7 +264,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** An optional free-form description for internal use. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional free-form description for internal use. */
         fun description(description: JsonField<String>) = apply { body.description(description) }

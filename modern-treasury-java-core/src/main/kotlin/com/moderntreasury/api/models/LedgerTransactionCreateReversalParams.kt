@@ -22,6 +22,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a ledger transaction reversal. */
 class LedgerTransactionCreateReversalParams
@@ -332,7 +333,7 @@ private constructor(
              * transaction if not provided.
              */
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             /**
              * The timestamp (ISO8601 format) at which the reversal ledger transaction happened for
@@ -514,7 +515,7 @@ private constructor(
          * if not provided.
          */
         fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-            effectiveAt(effectiveAt.orElse(null))
+            effectiveAt(effectiveAt.getOrNull())
 
         /**
          * The timestamp (ISO8601 format) at which the reversal ledger transaction happened for

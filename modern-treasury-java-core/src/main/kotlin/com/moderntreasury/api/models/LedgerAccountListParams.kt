@@ -12,6 +12,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger accounts. */
 class LedgerAccountListParams
@@ -208,7 +209,7 @@ private constructor(
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
          * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
          */
-        fun id(id: Optional<List<String>>) = id(id.orElse(null))
+        fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
          * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
@@ -218,7 +219,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
@@ -233,7 +234,7 @@ private constructor(
          * balance amount.
          */
         fun availableBalanceAmount(availableBalanceAmount: Optional<AvailableBalanceAmount>) =
-            availableBalanceAmount(availableBalanceAmount.orElse(null))
+            availableBalanceAmount(availableBalanceAmount.getOrNull())
 
         /**
          * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
@@ -249,7 +250,7 @@ private constructor(
          * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
          * will be retrieved not including that bound.
          */
-        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
+        fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
@@ -263,22 +264,22 @@ private constructor(
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.orElse(null))
+        fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
         fun currency(currency: String?) = apply { this.currency = currency }
 
-        fun currency(currency: Optional<String>) = currency(currency.orElse(null))
+        fun currency(currency: Optional<String>) = currency(currency.getOrNull())
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
-            ledgerAccountCategoryId(ledgerAccountCategoryId.orElse(null))
+            ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
-        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.orElse(null))
+        fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -290,7 +291,7 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
@@ -302,7 +303,7 @@ private constructor(
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
          * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
          */
-        fun name(name: Optional<List<String>>) = name(name.orElse(null))
+        fun name(name: Optional<List<String>>) = name(name.getOrNull())
 
         /**
          * If you have specific names to retrieve in bulk, you can pass them as query parameters
@@ -325,14 +326,13 @@ private constructor(
          * balance amount.
          */
         fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
-            pendingBalanceAmount(pendingBalanceAmount.orElse(null))
+            pendingBalanceAmount(pendingBalanceAmount.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
@@ -347,7 +347,7 @@ private constructor(
          * balance amount.
          */
         fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
-            postedBalanceAmount(postedBalanceAmount.orElse(null))
+            postedBalanceAmount(postedBalanceAmount.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
@@ -361,7 +361,7 @@ private constructor(
          * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
          * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
          */
-        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.orElse(null))
+        fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -558,43 +558,37 @@ private constructor(
 
             fun eq(eq: Long) = eq(eq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
+            fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
             fun gt(gt: Long) = gt(gt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+            fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
             fun gte(gte: Long) = gte(gte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+            fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
             fun lt(lt: Long) = lt(lt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+            fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
             fun lte(lte: Long) = lte(lte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+            fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -743,26 +737,26 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime?) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
             fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
-                effectiveAtLowerBound(effectiveAtLowerBound.orElse(null))
+                effectiveAtLowerBound(effectiveAtLowerBound.getOrNull())
 
             fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
 
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
-                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+                effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -1116,43 +1110,37 @@ private constructor(
 
             fun eq(eq: Long) = eq(eq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
+            fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
             fun gt(gt: Long) = gt(gt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+            fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
             fun gte(gte: Long) = gte(gte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+            fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
             fun lt(lt: Long) = lt(lt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+            fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
             fun lte(lte: Long) = lte(lte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+            fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()
@@ -1299,43 +1287,37 @@ private constructor(
 
             fun eq(eq: Long) = eq(eq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun eq(eq: Optional<Long>) = eq(eq.orElse(null) as Long?)
+            fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
             fun gt(gt: Long) = gt(gt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gt(gt: Optional<Long>) = gt(gt.orElse(null) as Long?)
+            fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
             fun gte(gte: Long) = gte(gte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun gte(gte: Optional<Long>) = gte(gte.orElse(null) as Long?)
+            fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
             fun lt(lt: Long) = lt(lt as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lt(lt: Optional<Long>) = lt(lt.orElse(null) as Long?)
+            fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
             fun lte(lte: Long) = lte(lte as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun lte(lte: Optional<Long>) = lte(lte.orElse(null) as Long?)
+            fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-            fun notEq(notEq: Optional<Long>) = notEq(notEq.orElse(null) as Long?)
+            fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

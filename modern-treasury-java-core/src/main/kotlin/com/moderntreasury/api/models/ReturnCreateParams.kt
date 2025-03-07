@@ -22,6 +22,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a return. */
 class ReturnCreateParams
@@ -252,7 +253,7 @@ private constructor(
 
             /** The ID of the object being returned or `null`. */
             fun returnableId(returnableId: Optional<String>) =
-                returnableId(returnableId.orElse(null))
+                returnableId(returnableId.getOrNull())
 
             /** The ID of the object being returned or `null`. */
             fun returnableId(returnableId: JsonField<String>) = apply {
@@ -286,7 +287,7 @@ private constructor(
              * string will be present.
              */
             fun additionalInformation(additionalInformation: Optional<String>) =
-                additionalInformation(additionalInformation.orElse(null))
+                additionalInformation(additionalInformation.getOrNull())
 
             /**
              * Some returns may include additional information from the bank. In these cases, this
@@ -300,7 +301,7 @@ private constructor(
             fun code(code: Code?) = code(JsonField.ofNullable(code))
 
             /** The return code. For ACH returns, this is the required ACH return code. */
-            fun code(code: Optional<Code>) = code(code.orElse(null))
+            fun code(code: Optional<Code>) = code(code.getOrNull())
 
             /** The return code. For ACH returns, this is the required ACH return code. */
             fun code(code: JsonField<Code>) = apply { this.code = code }
@@ -316,8 +317,7 @@ private constructor(
              * If the return code is `R14` or `R15` this is the date the deceased counterparty
              * passed away.
              */
-            fun dateOfDeath(dateOfDeath: Optional<LocalDate>) =
-                dateOfDeath(dateOfDeath.orElse(null))
+            fun dateOfDeath(dateOfDeath: Optional<LocalDate>) = dateOfDeath(dateOfDeath.getOrNull())
 
             /**
              * If the return code is `R14` or `R15` this is the date the deceased counterparty
@@ -337,7 +337,7 @@ private constructor(
              * An optional description of the reason for the return. This is for internal usage and
              * will not be transmitted to the bank.”
              */
-            fun reason(reason: Optional<String>) = reason(reason.orElse(null))
+            fun reason(reason: Optional<String>) = reason(reason.getOrNull())
 
             /**
              * An optional description of the reason for the return. This is for internal usage and
@@ -429,7 +429,7 @@ private constructor(
         fun returnableId(returnableId: String?) = apply { body.returnableId(returnableId) }
 
         /** The ID of the object being returned or `null`. */
-        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.orElse(null))
+        fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.getOrNull())
 
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: JsonField<String>) = apply {
@@ -463,7 +463,7 @@ private constructor(
          * string will be present.
          */
         fun additionalInformation(additionalInformation: Optional<String>) =
-            additionalInformation(additionalInformation.orElse(null))
+            additionalInformation(additionalInformation.getOrNull())
 
         /**
          * Some returns may include additional information from the bank. In these cases, this
@@ -477,7 +477,7 @@ private constructor(
         fun code(code: Code?) = apply { body.code(code) }
 
         /** The return code. For ACH returns, this is the required ACH return code. */
-        fun code(code: Optional<Code>) = code(code.orElse(null))
+        fun code(code: Optional<Code>) = code(code.getOrNull())
 
         /** The return code. For ACH returns, this is the required ACH return code. */
         fun code(code: JsonField<Code>) = apply { body.code(code) }
@@ -492,7 +492,7 @@ private constructor(
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
          * away.
          */
-        fun dateOfDeath(dateOfDeath: Optional<LocalDate>) = dateOfDeath(dateOfDeath.orElse(null))
+        fun dateOfDeath(dateOfDeath: Optional<LocalDate>) = dateOfDeath(dateOfDeath.getOrNull())
 
         /**
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
@@ -510,7 +510,7 @@ private constructor(
          * An optional description of the reason for the return. This is for internal usage and will
          * not be transmitted to the bank.”
          */
-        fun reason(reason: Optional<String>) = reason(reason.orElse(null))
+        fun reason(reason: Optional<String>) = reason(reason.getOrNull())
 
         /**
          * An optional description of the reason for the return. This is for internal usage and will

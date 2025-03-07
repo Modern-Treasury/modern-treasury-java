@@ -19,6 +19,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Update the details of a ledger account category. */
 class LedgerAccountCategoryUpdateParams
@@ -161,7 +162,7 @@ private constructor(
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
             /** The description of the ledger account category. */
-            fun description(description: Optional<String>) = description(description.orElse(null))
+            fun description(description: Optional<String>) = description(description.getOrNull())
 
             /** The description of the ledger account category. */
             fun description(description: JsonField<String>) = apply {
@@ -274,7 +275,7 @@ private constructor(
         fun description(description: String?) = apply { body.description(description) }
 
         /** The description of the ledger account category. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** The description of the ledger account category. */
         fun description(description: JsonField<String>) = apply { body.description(description) }

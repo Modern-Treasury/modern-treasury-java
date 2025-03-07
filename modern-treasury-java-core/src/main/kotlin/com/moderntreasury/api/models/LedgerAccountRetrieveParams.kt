@@ -12,6 +12,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get details on a single ledger account. */
 class LedgerAccountRetrieveParams
@@ -105,7 +106,7 @@ private constructor(
          * will be retrieved not including that bound. Use `balances[as_of_lock_version]` to
          * retrieve a balance as of a specific Ledger Account `lock_version`.
          */
-        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
+        fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -297,7 +298,7 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun asOfLockVersion(asOfLockVersion: Long?) = apply {
                 this.asOfLockVersion = asOfLockVersion
@@ -305,28 +306,27 @@ private constructor(
 
             fun asOfLockVersion(asOfLockVersion: Long) = asOfLockVersion(asOfLockVersion as Long?)
 
-            @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
             fun asOfLockVersion(asOfLockVersion: Optional<Long>) =
-                asOfLockVersion(asOfLockVersion.orElse(null) as Long?)
+                asOfLockVersion(asOfLockVersion.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun effectiveAtLowerBound(effectiveAtLowerBound: OffsetDateTime?) = apply {
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
             fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
-                effectiveAtLowerBound(effectiveAtLowerBound.orElse(null))
+                effectiveAtLowerBound(effectiveAtLowerBound.getOrNull())
 
             fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) = apply {
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
 
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
-                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+                effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

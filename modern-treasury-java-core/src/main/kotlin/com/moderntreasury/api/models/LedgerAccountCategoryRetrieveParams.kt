@@ -12,6 +12,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get the details on a single ledger account category. */
 class LedgerAccountCategoryRetrieveParams
@@ -103,7 +104,7 @@ private constructor(
          * query string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as
          * of a time are inclusive of entries with that exact time.
          */
-        fun balances(balances: Optional<Balances>) = balances(balances.orElse(null))
+        fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -263,12 +264,12 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.orElse(null))
+            fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
-                effectiveAt(effectiveAt.orElse(null))
+                effectiveAt(effectiveAt.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
                 this.additionalProperties.clear()

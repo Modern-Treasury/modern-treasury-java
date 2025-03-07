@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list bulk_requests */
 class BulkRequestListParams
@@ -104,11 +105,11 @@ private constructor(
         fun actionType(actionType: ActionType?) = apply { this.actionType = actionType }
 
         /** One of create, or update. */
-        fun actionType(actionType: Optional<ActionType>) = actionType(actionType.orElse(null))
+        fun actionType(actionType: Optional<ActionType>) = actionType(actionType.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -120,27 +121,26 @@ private constructor(
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
          * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
          */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.orElse(null))
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
         fun resourceType(resourceType: ResourceType?) = apply { this.resourceType = resourceType }
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
         fun resourceType(resourceType: Optional<ResourceType>) =
-            resourceType(resourceType.orElse(null))
+            resourceType(resourceType.getOrNull())
 
         /** One of pending, processing, or completed. */
         fun status(status: Status?) = apply { this.status = status }
 
         /** One of pending, processing, or completed. */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class LedgerAccount
@@ -322,7 +323,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** The description of the ledger account. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** The description of the ledger account. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -331,7 +332,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -353,7 +354,7 @@ private constructor(
          * If the ledger account links to another object in Modern Treasury, the id will be
          * populated here, otherwise null.
          */
-        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.orElse(null))
+        fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.getOrNull())
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
@@ -375,7 +376,7 @@ private constructor(
          * populated here, otherwise null. The value is one of internal_account or external_account.
          */
         fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
-            ledgerableType(ledgerableType.orElse(null))
+            ledgerableType(ledgerableType.getOrNull())
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
@@ -643,7 +644,7 @@ private constructor(
              * The inclusive lower bound of the effective_at timestamp for the returned balances.
              */
             fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
-                effectiveAtLowerBound(effectiveAtLowerBound.orElse(null))
+                effectiveAtLowerBound(effectiveAtLowerBound.getOrNull())
 
             /**
              * The inclusive lower bound of the effective_at timestamp for the returned balances.
@@ -662,7 +663,7 @@ private constructor(
              * The exclusive upper bound of the effective_at timestamp for the returned balances.
              */
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
-                effectiveAtUpperBound(effectiveAtUpperBound.orElse(null))
+                effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
             /**
              * The exclusive upper bound of the effective_at timestamp for the returned balances.

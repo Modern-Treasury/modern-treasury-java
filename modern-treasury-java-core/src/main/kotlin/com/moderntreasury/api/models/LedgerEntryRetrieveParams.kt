@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get details on a single ledger entry. */
 class LedgerEntryRetrieveParams
@@ -97,9 +98,7 @@ private constructor(
          * If true, response will include the balances attached to the ledger entry. If there is no
          * balance available, null will be returned instead.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun showBalances(showBalances: Optional<Boolean>) =
-            showBalances(showBalances.orElse(null) as Boolean?)
+        fun showBalances(showBalances: Optional<Boolean>) = showBalances(showBalances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

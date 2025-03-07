@@ -31,6 +31,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class PaymentOrder
@@ -1031,7 +1032,7 @@ private constructor(
          */
         @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: Optional<String>) =
-            accountingCategoryId(accountingCategoryId.orElse(null))
+            accountingCategoryId(accountingCategoryId.getOrNull())
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
@@ -1056,7 +1057,7 @@ private constructor(
          */
         @Deprecated("deprecated")
         fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-            accountingLedgerClassId(accountingLedgerClassId.orElse(null))
+            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
 
         /**
          * The ID of one of your accounting ledger classes. Note that these will only be accessible
@@ -1093,7 +1094,7 @@ private constructor(
          * SWIFT 71A values `SHA`, `OUR`, `BEN`.
          */
         fun chargeBearer(chargeBearer: Optional<ChargeBearer>) =
-            chargeBearer(chargeBearer.orElse(null))
+            chargeBearer(chargeBearer.getOrNull())
 
         /**
          * The party that will pay the fees for the payment order. Only applies to wire payment
@@ -1116,7 +1117,7 @@ private constructor(
          * changes to this field.
          */
         fun complianceRuleMetadata(complianceRuleMetadata: Optional<ComplianceRuleMetadata>) =
-            complianceRuleMetadata(complianceRuleMetadata.orElse(null))
+            complianceRuleMetadata(complianceRuleMetadata.getOrNull())
 
         /**
          * Custom key-value pair for usage in compliance rules. Please contact support before making
@@ -1139,7 +1140,7 @@ private constructor(
          * `null`.
          */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /**
          * If the payment order is tied to a specific Counterparty, their id will appear, otherwise
@@ -1169,7 +1170,7 @@ private constructor(
          * If the payment order's status is `returned`, this will include the return object's data.
          */
         fun currentReturn(currentReturn: Optional<ReturnObject>) =
-            currentReturn(currentReturn.orElse(null))
+            currentReturn(currentReturn.getOrNull())
 
         /**
          * If the payment order's status is `returned`, this will include the return object's data.
@@ -1188,7 +1189,7 @@ private constructor(
          * The ID of the compliance decision for the payment order, if transaction monitoring is
          * enabled.
          */
-        fun decisionId(decisionId: Optional<String>) = decisionId(decisionId.orElse(null))
+        fun decisionId(decisionId: Optional<String>) = decisionId(decisionId.getOrNull())
 
         /**
          * The ID of the compliance decision for the payment order, if transaction monitoring is
@@ -1200,7 +1201,7 @@ private constructor(
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
         /** An optional description for internal use. */
-        fun description(description: Optional<String>) = description(description.orElse(null))
+        fun description(description: Optional<String>) = description(description.getOrNull())
 
         /** An optional description for internal use. */
         fun description(description: JsonField<String>) = apply { this.description = description }
@@ -1241,7 +1242,7 @@ private constructor(
         fun expiresAt(expiresAt: OffsetDateTime?) = expiresAt(JsonField.ofNullable(expiresAt))
 
         /** RFP payments require an expires_at. This value must be past the effective_date. */
-        fun expiresAt(expiresAt: Optional<OffsetDateTime>) = expiresAt(expiresAt.orElse(null))
+        fun expiresAt(expiresAt: Optional<OffsetDateTime>) = expiresAt(expiresAt.getOrNull())
 
         /** RFP payments require an expires_at. This value must be past the effective_date. */
         fun expiresAt(expiresAt: JsonField<OffsetDateTime>) = apply { this.expiresAt = expiresAt }
@@ -1258,7 +1259,7 @@ private constructor(
          * by your financial institution.
          */
         fun foreignExchangeContract(foreignExchangeContract: Optional<String>) =
-            foreignExchangeContract(foreignExchangeContract.orElse(null))
+            foreignExchangeContract(foreignExchangeContract.getOrNull())
 
         /**
          * If present, indicates a specific foreign exchange contract number that has been generated
@@ -1282,7 +1283,7 @@ private constructor(
          * account currency.
          */
         fun foreignExchangeIndicator(foreignExchangeIndicator: Optional<ForeignExchangeIndicator>) =
-            foreignExchangeIndicator(foreignExchangeIndicator.orElse(null))
+            foreignExchangeIndicator(foreignExchangeIndicator.getOrNull())
 
         /**
          * Indicates the type of FX transfer to initiate, can be either `variable_to_fixed`,
@@ -1299,7 +1300,7 @@ private constructor(
 
         /** Associated serialized foreign exchange rate information. */
         fun foreignExchangeRate(foreignExchangeRate: Optional<ForeignExchangeRate>) =
-            foreignExchangeRate(foreignExchangeRate.orElse(null))
+            foreignExchangeRate(foreignExchangeRate.getOrNull())
 
         /** Associated serialized foreign exchange rate information. */
         fun foreignExchangeRate(foreignExchangeRate: JsonField<ForeignExchangeRate>) = apply {
@@ -1312,7 +1313,7 @@ private constructor(
 
         /** The ID of the ledger transaction linked to the payment order. */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
-            ledgerTransactionId(ledgerTransactionId.orElse(null))
+            ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         /** The ID of the ledger transaction linked to the payment order. */
         fun ledgerTransactionId(ledgerTransactionId: JsonField<String>) = apply {
@@ -1382,7 +1383,7 @@ private constructor(
          * characters of this string will be used. Any additional characters will be truncated.
          */
         fun originatingPartyName(originatingPartyName: Optional<String>) =
-            originatingPartyName(originatingPartyName.orElse(null))
+            originatingPartyName(originatingPartyName.getOrNull())
 
         /**
          * If present, this will replace your default company name on receiver's bank statement.
@@ -1423,7 +1424,7 @@ private constructor(
          * possible sending date after `process_after`. Format is ISO8601 timestamp.
          */
         fun processAfter(processAfter: Optional<OffsetDateTime>) =
-            processAfter(processAfter.orElse(null))
+            processAfter(processAfter.getOrNull())
 
         /**
          * If present, Modern Treasury will not process the payment until after this time. If
@@ -1447,7 +1448,7 @@ private constructor(
          * field in the ISO20022 file. For `eft`, this field is the 3 digit CPA Code that will be
          * attached to the payment.
          */
-        fun purpose(purpose: Optional<String>) = purpose(purpose.orElse(null))
+        fun purpose(purpose: Optional<String>) = purpose(purpose.getOrNull())
 
         /**
          * For `wire`, this is usually the purpose which is transmitted via the "InstrForDbtrAgt"
@@ -1500,7 +1501,7 @@ private constructor(
          * known as OBI or Fedwire tag 6000.
          */
         fun remittanceInformation(remittanceInformation: Optional<String>) =
-            remittanceInformation(remittanceInformation.orElse(null))
+            remittanceInformation(remittanceInformation.getOrNull())
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -1529,9 +1530,8 @@ private constructor(
          * Send an email to the counterparty when the payment order is sent to the bank. If `null`,
          * `send_remittance_advice` on the Counterparty is used.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun sendRemittanceAdvice(sendRemittanceAdvice: Optional<Boolean>) =
-            sendRemittanceAdvice(sendRemittanceAdvice.orElse(null) as Boolean?)
+            sendRemittanceAdvice(sendRemittanceAdvice.getOrNull())
 
         /**
          * Send an email to the counterparty when the payment order is sent to the bank. If `null`,
@@ -1559,7 +1559,7 @@ private constructor(
          * For `eft` the maximum length is 15 characters.
          */
         fun statementDescriptor(statementDescriptor: Optional<String>) =
-            statementDescriptor(statementDescriptor.orElse(null))
+            statementDescriptor(statementDescriptor.getOrNull())
 
         /**
          * An optional descriptor which will appear in the receiver's statement. For `check`
@@ -1592,7 +1592,7 @@ private constructor(
          * `subtype` represents the SEC code. We currently support `CCD`, `PPD`, `IAT`, `CTX`,
          * `WEB`, `CIE`, and `TEL`.
          */
-        fun subtype(subtype: Optional<PaymentOrderSubtype>) = subtype(subtype.orElse(null))
+        fun subtype(subtype: Optional<PaymentOrderSubtype>) = subtype(subtype.getOrNull())
 
         /**
          * An additional layer of classification for the type of payment order you are doing. This
@@ -1671,7 +1671,7 @@ private constructor(
          */
         fun ultimateOriginatingAccount(
             ultimateOriginatingAccount: Optional<UltimateOriginatingAccount>
-        ) = ultimateOriginatingAccount(ultimateOriginatingAccount.orElse(null))
+        ) = ultimateOriginatingAccount(ultimateOriginatingAccount.getOrNull())
 
         /**
          * The account to which the originating of this payment should be attributed to. Can be a
@@ -1707,7 +1707,7 @@ private constructor(
          * The ultimate originating account ID. Can be a `virtual_account` or `internal_account`.
          */
         fun ultimateOriginatingAccountId(ultimateOriginatingAccountId: Optional<String>) =
-            ultimateOriginatingAccountId(ultimateOriginatingAccountId.orElse(null))
+            ultimateOriginatingAccountId(ultimateOriginatingAccountId.getOrNull())
 
         /**
          * The ultimate originating account ID. Can be a `virtual_account` or `internal_account`.
@@ -1722,7 +1722,7 @@ private constructor(
 
         fun ultimateOriginatingAccountType(
             ultimateOriginatingAccountType: Optional<UltimateOriginatingAccountType>
-        ) = ultimateOriginatingAccountType(ultimateOriginatingAccountType.orElse(null))
+        ) = ultimateOriginatingAccountType(ultimateOriginatingAccountType.getOrNull())
 
         fun ultimateOriginatingAccountType(
             ultimateOriginatingAccountType: JsonField<UltimateOriginatingAccountType>
@@ -1737,7 +1737,7 @@ private constructor(
         /** Identifier of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyIdentifier(
             ultimateOriginatingPartyIdentifier: Optional<String>
-        ) = ultimateOriginatingPartyIdentifier(ultimateOriginatingPartyIdentifier.orElse(null))
+        ) = ultimateOriginatingPartyIdentifier(ultimateOriginatingPartyIdentifier.getOrNull())
 
         /** Identifier of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyIdentifier(
@@ -1750,7 +1750,7 @@ private constructor(
 
         /** Name of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyName(ultimateOriginatingPartyName: Optional<String>) =
-            ultimateOriginatingPartyName(ultimateOriginatingPartyName.orElse(null))
+            ultimateOriginatingPartyName(ultimateOriginatingPartyName.getOrNull())
 
         /** Name of the ultimate originator of the payment order. */
         fun ultimateOriginatingPartyName(ultimateOriginatingPartyName: JsonField<String>) = apply {
@@ -1761,7 +1761,7 @@ private constructor(
             ultimateReceivingPartyIdentifier(JsonField.ofNullable(ultimateReceivingPartyIdentifier))
 
         fun ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier: Optional<String>) =
-            ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier.orElse(null))
+            ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier.getOrNull())
 
         fun ultimateReceivingPartyIdentifier(ultimateReceivingPartyIdentifier: JsonField<String>) =
             apply {
@@ -1772,7 +1772,7 @@ private constructor(
             ultimateReceivingPartyName(JsonField.ofNullable(ultimateReceivingPartyName))
 
         fun ultimateReceivingPartyName(ultimateReceivingPartyName: Optional<String>) =
-            ultimateReceivingPartyName(ultimateReceivingPartyName.orElse(null))
+            ultimateReceivingPartyName(ultimateReceivingPartyName.getOrNull())
 
         fun ultimateReceivingPartyName(ultimateReceivingPartyName: JsonField<String>) = apply {
             this.ultimateReceivingPartyName = ultimateReceivingPartyName
@@ -1802,7 +1802,7 @@ private constructor(
          * value as it is free-form.
          */
         fun vendorFailureReason(vendorFailureReason: Optional<String>) =
-            vendorFailureReason(vendorFailureReason.orElse(null))
+            vendorFailureReason(vendorFailureReason.getOrNull())
 
         /**
          * This field will be populated if a vendor failure occurs. Logic shouldn't be built on its
@@ -1978,7 +1978,7 @@ private constructor(
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
              */
-            fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+            fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
@@ -1998,7 +1998,7 @@ private constructor(
              * segments of your business independent of client or project. Note that these will only
              * be accessible if your accounting system has been connected.
              */
-            fun classId(classId: Optional<String>) = classId(classId.orElse(null))
+            fun classId(classId: Optional<String>) = classId(classId.getOrNull())
 
             /**
              * The ID of one of the class objects in your accounting system. Class objects track

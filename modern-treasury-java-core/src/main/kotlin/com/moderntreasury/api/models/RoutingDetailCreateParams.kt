@@ -21,6 +21,7 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a routing detail for a single external account. */
 class RoutingDetailCreateParams
@@ -231,7 +232,7 @@ private constructor(
              * populated, otherwise null.
              */
             fun paymentType(paymentType: Optional<PaymentType>) =
-                paymentType(paymentType.orElse(null))
+                paymentType(paymentType.getOrNull())
 
             /**
              * If the routing detail is to be used for a specific payment type this field will be
@@ -364,7 +365,7 @@ private constructor(
          * If the routing detail is to be used for a specific payment type this field will be
          * populated, otherwise null.
          */
-        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.orElse(null))
+        fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.getOrNull())
 
         /**
          * If the routing detail is to be used for a specific payment type this field will be

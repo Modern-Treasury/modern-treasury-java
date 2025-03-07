@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class Document
@@ -246,7 +247,7 @@ private constructor(
             discardedAt(JsonField.ofNullable(discardedAt))
 
         fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-            discardedAt(discardedAt.orElse(null))
+            discardedAt(discardedAt.getOrNull())
 
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
@@ -270,7 +271,7 @@ private constructor(
         fun documentType(documentType: String?) = documentType(JsonField.ofNullable(documentType))
 
         /** A category given to the document, can be `null`. */
-        fun documentType(documentType: Optional<String>) = documentType(documentType.orElse(null))
+        fun documentType(documentType: Optional<String>) = documentType(documentType.getOrNull())
 
         /** A category given to the document, can be `null`. */
         fun documentType(documentType: JsonField<String>) = apply {
@@ -535,7 +536,7 @@ private constructor(
                 discardedAt(JsonField.ofNullable(discardedAt))
 
             fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.orElse(null))
+                discardedAt(discardedAt.getOrNull())
 
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt

@@ -19,6 +19,7 @@ import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Updates a given counterparty with new information. */
 class CounterpartyUpdateParams
@@ -246,7 +247,7 @@ private constructor(
 
             /** The id of the legal entity. */
             fun legalEntityId(legalEntityId: Optional<String>) =
-                legalEntityId(legalEntityId.orElse(null))
+                legalEntityId(legalEntityId.getOrNull())
 
             /** The id of the legal entity. */
             fun legalEntityId(legalEntityId: JsonField<String>) = apply {
@@ -389,7 +390,7 @@ private constructor(
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: Optional<String>) =
-            legalEntityId(legalEntityId.orElse(null))
+            legalEntityId(legalEntityId.getOrNull())
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: JsonField<String>) = apply {

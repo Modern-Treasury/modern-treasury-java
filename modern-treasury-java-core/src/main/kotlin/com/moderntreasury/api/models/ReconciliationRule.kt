@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @NoAutoDetect
 class ReconciliationRule
@@ -286,7 +287,7 @@ private constructor(
 
         /** The ID of the counterparty you expect for this payment */
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         /** The ID of the counterparty you expect for this payment */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
@@ -305,7 +306,7 @@ private constructor(
 
         /** A hash of custom identifiers for this payment */
         fun customIdentifiers(customIdentifiers: Optional<CustomIdentifiers>) =
-            customIdentifiers(customIdentifiers.orElse(null))
+            customIdentifiers(customIdentifiers.getOrNull())
 
         /** A hash of custom identifiers for this payment */
         fun customIdentifiers(customIdentifiers: JsonField<CustomIdentifiers>) = apply {
@@ -318,7 +319,7 @@ private constructor(
 
         /** The earliest date the payment may come in. Format is yyyy-mm-dd */
         fun dateLowerBound(dateLowerBound: Optional<LocalDate>) =
-            dateLowerBound(dateLowerBound.orElse(null))
+            dateLowerBound(dateLowerBound.getOrNull())
 
         /** The earliest date the payment may come in. Format is yyyy-mm-dd */
         fun dateLowerBound(dateLowerBound: JsonField<LocalDate>) = apply {
@@ -331,7 +332,7 @@ private constructor(
 
         /** The latest date the payment may come in. Format is yyyy-mm-dd */
         fun dateUpperBound(dateUpperBound: Optional<LocalDate>) =
-            dateUpperBound(dateUpperBound.orElse(null))
+            dateUpperBound(dateUpperBound.getOrNull())
 
         /** The latest date the payment may come in. Format is yyyy-mm-dd */
         fun dateUpperBound(dateUpperBound: JsonField<LocalDate>) = apply {
@@ -348,7 +349,7 @@ private constructor(
          * One of ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet
          * wire
          */
-        fun type(type: Optional<Type>) = type(type.orElse(null))
+        fun type(type: Optional<Type>) = type(type.getOrNull())
 
         /**
          * One of ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet

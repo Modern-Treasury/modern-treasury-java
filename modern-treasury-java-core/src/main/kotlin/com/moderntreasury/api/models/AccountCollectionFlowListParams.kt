@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** list account_collection_flows */
 class AccountCollectionFlowListParams
@@ -96,34 +97,33 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
-        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.orElse(null))
+        fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun clientToken(clientToken: String?) = apply { this.clientToken = clientToken }
 
-        fun clientToken(clientToken: Optional<String>) = clientToken(clientToken.orElse(null))
+        fun clientToken(clientToken: Optional<String>) = clientToken(clientToken.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
         fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.orElse(null))
+            counterpartyId(counterpartyId.getOrNull())
 
         fun externalAccountId(externalAccountId: String?) = apply {
             this.externalAccountId = externalAccountId
         }
 
         fun externalAccountId(externalAccountId: Optional<String>) =
-            externalAccountId(externalAccountId.orElse(null))
+            externalAccountId(externalAccountId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun perPage(perPage: Optional<Long>) = perPage(perPage.orElse(null) as Long?)
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun status(status: String?) = apply { this.status = status }
 
-        fun status(status: Optional<String>) = status(status.orElse(null))
+        fun status(status: Optional<String>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
