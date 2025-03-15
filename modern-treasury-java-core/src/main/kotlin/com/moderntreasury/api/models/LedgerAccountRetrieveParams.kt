@@ -99,13 +99,7 @@ private constructor(
          */
         fun balances(balances: Balances?) = apply { this.balances = balances }
 
-        /**
-         * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
-         * the balances change between the two timestamps. The lower bound is inclusive while the
-         * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
-         * will be retrieved not including that bound. Use `balances[as_of_lock_version]` to
-         * retrieve a balance as of a specific Ledger Account `lock_version`.
-         */
+        /** Alias for calling [Builder.balances] with `balances.orElse(null)`. */
         fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -298,19 +292,27 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
+            /** Alias for calling [Builder.asOfDate] with `asOfDate.orElse(null)`. */
             fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun asOfLockVersion(asOfLockVersion: Long?) = apply {
                 this.asOfLockVersion = asOfLockVersion
             }
 
+            /**
+             * Alias for [Builder.asOfLockVersion].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun asOfLockVersion(asOfLockVersion: Long) = asOfLockVersion(asOfLockVersion as Long?)
 
+            /** Alias for calling [Builder.asOfLockVersion] with `asOfLockVersion.orElse(null)`. */
             fun asOfLockVersion(asOfLockVersion: Optional<Long>) =
                 asOfLockVersion(asOfLockVersion.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
                 effectiveAt(effectiveAt.getOrNull())
 
@@ -318,6 +320,10 @@ private constructor(
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
+            /**
+             * Alias for calling [Builder.effectiveAtLowerBound] with
+             * `effectiveAtLowerBound.orElse(null)`.
+             */
             fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
                 effectiveAtLowerBound(effectiveAtLowerBound.getOrNull())
 
@@ -325,6 +331,10 @@ private constructor(
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
 
+            /**
+             * Alias for calling [Builder.effectiveAtUpperBound] with
+             * `effectiveAtUpperBound.orElse(null)`.
+             */
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
                 effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 

@@ -104,11 +104,12 @@ private constructor(
         /** One of create, or update. */
         fun actionType(actionType: ActionType?) = apply { this.actionType = actionType }
 
-        /** One of create, or update. */
+        /** Alias for calling [Builder.actionType] with `actionType.orElse(null)`. */
         fun actionType(actionType: Optional<ActionType>) = actionType(actionType.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -117,29 +118,32 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** One of payment_order, expected_payment, or ledger_transaction. */
         fun resourceType(resourceType: ResourceType?) = apply { this.resourceType = resourceType }
 
-        /** One of payment_order, expected_payment, or ledger_transaction. */
+        /** Alias for calling [Builder.resourceType] with `resourceType.orElse(null)`. */
         fun resourceType(resourceType: Optional<ResourceType>) =
             resourceType(resourceType.getOrNull())
 
         /** One of pending, processing, or completed. */
         fun status(status: Status?) = apply { this.status = status }
 
-        /** One of pending, processing, or completed. */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

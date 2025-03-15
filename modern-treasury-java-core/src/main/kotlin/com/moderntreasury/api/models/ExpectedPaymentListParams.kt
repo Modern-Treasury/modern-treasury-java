@@ -150,12 +150,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Specify counterparty_id to see expected_payments for a specific account. */
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
-        /** Specify counterparty_id to see expected_payments for a specific account. */
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
@@ -164,7 +165,9 @@ private constructor(
             this.createdAtLowerBound = createdAtLowerBound
         }
 
-        /** Used to return expected payments created after some datetime */
+        /**
+         * Alias for calling [Builder.createdAtLowerBound] with `createdAtLowerBound.orElse(null)`.
+         */
         fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
             createdAtLowerBound(createdAtLowerBound.getOrNull())
 
@@ -173,14 +176,16 @@ private constructor(
             this.createdAtUpperBound = createdAtUpperBound
         }
 
-        /** Used to return expected payments created before some datetime */
+        /**
+         * Alias for calling [Builder.createdAtUpperBound] with `createdAtUpperBound.orElse(null)`.
+         */
         fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
             createdAtUpperBound(createdAtUpperBound.getOrNull())
 
         /** One of credit, debit */
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
-        /** One of credit, debit */
+        /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
@@ -188,7 +193,7 @@ private constructor(
             this.internalAccountId = internalAccountId
         }
 
-        /** Specify internal_account_id to see expected_payments for a specific account. */
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
         fun internalAccountId(internalAccountId: Optional<String>) =
             internalAccountId(internalAccountId.getOrNull())
 
@@ -198,22 +203,25 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** One of unreconciled, reconciled, or archived. */
         fun status(status: Status?) = apply { this.status = status }
 
-        /** One of unreconciled, reconciled, or archived. */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
@@ -222,10 +230,7 @@ private constructor(
          */
         fun type(type: Type?) = apply { this.type = type }
 
-        /**
-         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
-         * signet, wire
-         */
+        /** Alias for calling [Builder.type] with `type.orElse(null)`. */
         fun type(type: Optional<Type>) = type(type.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

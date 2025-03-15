@@ -88,12 +88,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** The unique identifier for the associated object. */
         fun documentableId(documentableId: String?) = apply { this.documentableId = documentableId }
 
-        /** The unique identifier for the associated object. */
+        /** Alias for calling [Builder.documentableId] with `documentableId.orElse(null)`. */
         fun documentableId(documentableId: Optional<String>) =
             documentableId(documentableId.getOrNull())
 
@@ -106,18 +107,20 @@ private constructor(
             this.documentableType = documentableType
         }
 
-        /**
-         * The type of the associated object. Currently can be one of `payment_order`,
-         * `transaction`, `paper_item`, `expected_payment`, `counterparty`, `organization`, `case`,
-         * `internal_account`, `decision`, or `external_account`.
-         */
+        /** Alias for calling [Builder.documentableType] with `documentableType.orElse(null)`. */
         fun documentableType(documentableType: Optional<DocumentableType>) =
             documentableType(documentableType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

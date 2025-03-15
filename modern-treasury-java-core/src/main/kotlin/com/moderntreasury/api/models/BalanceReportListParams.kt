@@ -112,12 +112,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** The date of the balance report in local time. */
         fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
-        /** The date of the balance report in local time. */
+        /** Alias for calling [Builder.asOfDate] with `asOfDate.orElse(null)`. */
         fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
         /**
@@ -128,17 +129,20 @@ private constructor(
             this.balanceReportType = balanceReportType
         }
 
-        /**
-         * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
-         * `other`.
-         */
+        /** Alias for calling [Builder.balanceReportType] with `balanceReportType.orElse(null)`. */
         fun balanceReportType(balanceReportType: Optional<BalanceReportType>) =
             balanceReportType(balanceReportType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

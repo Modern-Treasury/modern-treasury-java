@@ -106,14 +106,17 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun clientToken(clientToken: String?) = apply { this.clientToken = clientToken }
 
+        /** Alias for calling [Builder.clientToken] with `clientToken.orElse(null)`. */
         fun clientToken(clientToken: Optional<String>) = clientToken(clientToken.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
@@ -121,29 +124,44 @@ private constructor(
             this.originatingAccountId = originatingAccountId
         }
 
+        /**
+         * Alias for calling [Builder.originatingAccountId] with
+         * `originatingAccountId.orElse(null)`.
+         */
         fun originatingAccountId(originatingAccountId: Optional<String>) =
             originatingAccountId(originatingAccountId.getOrNull())
 
         fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
 
+        /** Alias for calling [Builder.paymentOrderId] with `paymentOrderId.orElse(null)`. */
         fun paymentOrderId(paymentOrderId: Optional<String>) =
             paymentOrderId(paymentOrderId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun receivingAccountId(receivingAccountId: String?) = apply {
             this.receivingAccountId = receivingAccountId
         }
 
+        /**
+         * Alias for calling [Builder.receivingAccountId] with `receivingAccountId.orElse(null)`.
+         */
         fun receivingAccountId(receivingAccountId: Optional<String>) =
             receivingAccountId(receivingAccountId.getOrNull())
 
         fun status(status: String?) = apply { this.status = status }
 
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<String>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

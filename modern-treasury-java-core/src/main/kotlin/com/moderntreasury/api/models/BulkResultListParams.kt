@@ -114,12 +114,13 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Unique identifier for the result entity object. */
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
-        /** Unique identifier for the result entity object. */
+        /** Alias for calling [Builder.entityId] with `entityId.orElse(null)`. */
         fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         /**
@@ -128,16 +129,19 @@ private constructor(
          */
         fun entityType(entityType: EntityType?) = apply { this.entityType = entityType }
 
-        /**
-         * The type of the request that created this result. bulk_request is the only supported
-         * `request_type`
-         */
+        /** Alias for calling [Builder.entityType] with `entityType.orElse(null)`. */
         fun entityType(entityType: Optional<EntityType>) = entityType(entityType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -146,10 +150,7 @@ private constructor(
          */
         fun requestId(requestId: String?) = apply { this.requestId = requestId }
 
-        /**
-         * Unique identifier for the request that created this bulk result. This is the ID of the
-         * bulk request when `request_type` is bulk_request
-         */
+        /** Alias for calling [Builder.requestId] with `requestId.orElse(null)`. */
         fun requestId(requestId: Optional<String>) = requestId(requestId.getOrNull())
 
         /**
@@ -158,16 +159,13 @@ private constructor(
          */
         fun requestType(requestType: RequestType?) = apply { this.requestType = requestType }
 
-        /**
-         * The type of the request that created this result. bulk_request is the only supported
-         * `request_type`
-         */
+        /** Alias for calling [Builder.requestType] with `requestType.orElse(null)`. */
         fun requestType(requestType: Optional<RequestType>) = requestType(requestType.getOrNull())
 
         /** One of successful or failed. */
         fun status(status: Status?) = apply { this.status = status }
 
-        /** One of successful or failed. */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

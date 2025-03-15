@@ -155,20 +155,19 @@ private constructor(
          */
         fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
 
-        /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
-         */
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         * Adds a single [String] to [Builder.id].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -178,21 +177,21 @@ private constructor(
          */
         fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.createdAt] with `createdAt.orElse(null)`. */
         fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
+        /** Alias for calling [Builder.ledgerId] with `ledgerId.orElse(null)`. */
         fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         fun ledgerTransactionId(ledgerTransactionId: String?) = apply {
             this.ledgerTransactionId = ledgerTransactionId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerTransactionId] with `ledgerTransactionId.orElse(null)`.
+         */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
             ledgerTransactionId(ledgerTransactionId.getOrNull())
 
@@ -202,22 +201,29 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun settledLedgerAccountId(settledLedgerAccountId: String?) = apply {
             this.settledLedgerAccountId = settledLedgerAccountId
         }
 
+        /**
+         * Alias for calling [Builder.settledLedgerAccountId] with
+         * `settledLedgerAccountId.orElse(null)`.
+         */
         fun settledLedgerAccountId(settledLedgerAccountId: Optional<String>) =
             settledLedgerAccountId(settledLedgerAccountId.getOrNull())
 
@@ -225,6 +231,10 @@ private constructor(
             this.settlementEntryDirection = settlementEntryDirection
         }
 
+        /**
+         * Alias for calling [Builder.settlementEntryDirection] with
+         * `settlementEntryDirection.orElse(null)`.
+         */
         fun settlementEntryDirection(settlementEntryDirection: Optional<String>) =
             settlementEntryDirection(settlementEntryDirection.getOrNull())
 
@@ -235,11 +245,7 @@ private constructor(
          */
         fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.updatedAt] with `updatedAt.orElse(null)`. */
         fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

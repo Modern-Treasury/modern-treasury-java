@@ -91,6 +91,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
@@ -98,7 +99,7 @@ private constructor(
             this.depositDateEnd = depositDateEnd
         }
 
-        /** Specify an inclusive end date (YYYY-MM-DD) when filtering by deposit_date */
+        /** Alias for calling [Builder.depositDateEnd] with `depositDateEnd.orElse(null)`. */
         fun depositDateEnd(depositDateEnd: Optional<LocalDate>) =
             depositDateEnd(depositDateEnd.getOrNull())
 
@@ -107,7 +108,7 @@ private constructor(
             this.depositDateStart = depositDateStart
         }
 
-        /** Specify an inclusive start date (YYYY-MM-DD) when filtering by deposit_date */
+        /** Alias for calling [Builder.depositDateStart] with `depositDateStart.orElse(null)`. */
         fun depositDateStart(depositDateStart: Optional<LocalDate>) =
             depositDateStart(depositDateStart.getOrNull())
 
@@ -117,17 +118,20 @@ private constructor(
          */
         fun lockboxNumber(lockboxNumber: String?) = apply { this.lockboxNumber = lockboxNumber }
 
-        /**
-         * Specify `lockbox_number` if you wish to see paper items that are associated with a
-         * specific lockbox number.
-         */
+        /** Alias for calling [Builder.lockboxNumber] with `lockboxNumber.orElse(null)`. */
         fun lockboxNumber(lockboxNumber: Optional<String>) =
             lockboxNumber(lockboxNumber.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

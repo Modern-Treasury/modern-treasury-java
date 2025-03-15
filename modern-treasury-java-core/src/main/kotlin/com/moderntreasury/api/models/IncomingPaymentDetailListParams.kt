@@ -139,6 +139,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -147,10 +148,7 @@ private constructor(
          */
         fun asOfDateEnd(asOfDateEnd: LocalDate?) = apply { this.asOfDateEnd = asOfDateEnd }
 
-        /**
-         * Filters incoming payment details with an as_of_date starting on or before the specified
-         * date (YYYY-MM-DD).
-         */
+        /** Alias for calling [Builder.asOfDateEnd] with `asOfDateEnd.orElse(null)`. */
         fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.getOrNull())
 
         /**
@@ -159,17 +157,14 @@ private constructor(
          */
         fun asOfDateStart(asOfDateStart: LocalDate?) = apply { this.asOfDateStart = asOfDateStart }
 
-        /**
-         * Filters incoming payment details with an as_of_date starting on or after the specified
-         * date (YYYY-MM-DD).
-         */
+        /** Alias for calling [Builder.asOfDateStart] with `asOfDateStart.orElse(null)`. */
         fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
             asOfDateStart(asOfDateStart.getOrNull())
 
         /** One of `credit` or `debit`. */
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
-        /** One of `credit` or `debit`. */
+        /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /**
@@ -178,16 +173,19 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -196,16 +194,13 @@ private constructor(
          */
         fun status(status: Status?) = apply { this.status = status }
 
-        /**
-         * The current status of the incoming payment order. One of `pending`, `completed`, or
-         * `returned`.
-         */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
         fun type(type: Type?) = apply { this.type = type }
 
-        /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
+        /** Alias for calling [Builder.type] with `type.orElse(null)`. */
         fun type(type: Optional<Type>) = type(type.getOrNull())
 
         /**
@@ -215,9 +210,7 @@ private constructor(
             this.virtualAccountId = virtualAccountId
         }
 
-        /**
-         * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
-         */
+        /** Alias for calling [Builder.virtualAccountId] with `virtualAccountId.orElse(null)`. */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
             virtualAccountId(virtualAccountId.getOrNull())
 

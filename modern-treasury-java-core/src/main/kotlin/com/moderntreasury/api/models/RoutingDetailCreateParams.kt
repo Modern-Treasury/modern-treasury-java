@@ -37,33 +37,51 @@ private constructor(
 
     fun accountId(): String = accountId
 
-    /** The routing number of the bank. */
+    /**
+     * The routing number of the bank.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun routingNumber(): String = body.routingNumber()
 
     /**
      * The type of routing number. See
      * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more details.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun routingNumberType(): RoutingNumberType = body.routingNumberType()
 
     /**
      * If the routing detail is to be used for a specific payment type this field will be populated,
      * otherwise null.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun paymentType(): Optional<PaymentType> = body.paymentType()
 
-    /** The routing number of the bank. */
+    /**
+     * Returns the raw JSON value of [routingNumber].
+     *
+     * Unlike [routingNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _routingNumber(): JsonField<String> = body._routingNumber()
 
     /**
-     * The type of routing number. See
-     * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more details.
+     * Returns the raw JSON value of [routingNumberType].
+     *
+     * Unlike [routingNumberType], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _routingNumberType(): JsonField<RoutingNumberType> = body._routingNumberType()
 
     /**
-     * If the routing detail is to be used for a specific payment type this field will be populated,
-     * otherwise null.
+     * Returns the raw JSON value of [paymentType].
+     *
+     * Unlike [paymentType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _paymentType(): JsonField<PaymentType> = body._paymentType()
 
@@ -104,13 +122,21 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The routing number of the bank. */
+        /**
+         * The routing number of the bank.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun routingNumber(): String = routingNumber.getRequired("routing_number")
 
         /**
          * The type of routing number. See
          * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
          * details.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun routingNumberType(): RoutingNumberType =
             routingNumberType.getRequired("routing_number_type")
@@ -118,27 +144,37 @@ private constructor(
         /**
          * If the routing detail is to be used for a specific payment type this field will be
          * populated, otherwise null.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun paymentType(): Optional<PaymentType> =
             Optional.ofNullable(paymentType.getNullable("payment_type"))
 
-        /** The routing number of the bank. */
+        /**
+         * Returns the raw JSON value of [routingNumber].
+         *
+         * Unlike [routingNumber], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("routing_number")
         @ExcludeMissing
         fun _routingNumber(): JsonField<String> = routingNumber
 
         /**
-         * The type of routing number. See
-         * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
-         * details.
+         * Returns the raw JSON value of [routingNumberType].
+         *
+         * Unlike [routingNumberType], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("routing_number_type")
         @ExcludeMissing
         fun _routingNumberType(): JsonField<RoutingNumberType> = routingNumberType
 
         /**
-         * If the routing detail is to be used for a specific payment type this field will be
-         * populated, otherwise null.
+         * Returns the raw JSON value of [paymentType].
+         *
+         * Unlike [paymentType], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("payment_type")
         @ExcludeMissing
@@ -198,7 +234,13 @@ private constructor(
             /** The routing number of the bank. */
             fun routingNumber(routingNumber: String) = routingNumber(JsonField.of(routingNumber))
 
-            /** The routing number of the bank. */
+            /**
+             * Sets [Builder.routingNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.routingNumber] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun routingNumber(routingNumber: JsonField<String>) = apply {
                 this.routingNumber = routingNumber
             }
@@ -212,9 +254,11 @@ private constructor(
                 routingNumberType(JsonField.of(routingNumberType))
 
             /**
-             * The type of routing number. See
-             * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
-             * details.
+             * Sets [Builder.routingNumberType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.routingNumberType] with a well-typed
+             * [RoutingNumberType] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun routingNumberType(routingNumberType: JsonField<RoutingNumberType>) = apply {
                 this.routingNumberType = routingNumberType
@@ -227,16 +271,16 @@ private constructor(
             fun paymentType(paymentType: PaymentType?) =
                 paymentType(JsonField.ofNullable(paymentType))
 
-            /**
-             * If the routing detail is to be used for a specific payment type this field will be
-             * populated, otherwise null.
-             */
+            /** Alias for calling [Builder.paymentType] with `paymentType.orElse(null)`. */
             fun paymentType(paymentType: Optional<PaymentType>) =
                 paymentType(paymentType.getOrNull())
 
             /**
-             * If the routing detail is to be used for a specific payment type this field will be
-             * populated, otherwise null.
+             * Sets [Builder.paymentType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentType] with a well-typed [PaymentType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun paymentType(paymentType: JsonField<PaymentType>) = apply {
                 this.paymentType = paymentType
@@ -332,7 +376,13 @@ private constructor(
         /** The routing number of the bank. */
         fun routingNumber(routingNumber: String) = apply { body.routingNumber(routingNumber) }
 
-        /** The routing number of the bank. */
+        /**
+         * Sets [Builder.routingNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.routingNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun routingNumber(routingNumber: JsonField<String>) = apply {
             body.routingNumber(routingNumber)
         }
@@ -347,9 +397,11 @@ private constructor(
         }
 
         /**
-         * The type of routing number. See
-         * https://docs.moderntreasury.com/platform/reference/routing-detail-object for more
-         * details.
+         * Sets [Builder.routingNumberType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.routingNumberType] with a well-typed [RoutingNumberType]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun routingNumberType(routingNumberType: JsonField<RoutingNumberType>) = apply {
             body.routingNumberType(routingNumberType)
@@ -361,15 +413,15 @@ private constructor(
          */
         fun paymentType(paymentType: PaymentType?) = apply { body.paymentType(paymentType) }
 
-        /**
-         * If the routing detail is to be used for a specific payment type this field will be
-         * populated, otherwise null.
-         */
+        /** Alias for calling [Builder.paymentType] with `paymentType.orElse(null)`. */
         fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.getOrNull())
 
         /**
-         * If the routing detail is to be used for a specific payment type this field will be
-         * populated, otherwise null.
+         * Sets [Builder.paymentType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentType] with a well-typed [PaymentType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun paymentType(paymentType: JsonField<PaymentType>) = apply {
             body.paymentType(paymentType)
