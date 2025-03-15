@@ -113,6 +113,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -122,11 +123,7 @@ private constructor(
          */
         fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created_at
-         * timestamp. For example, for all dates after Jan 1 2000 12:00 UTC, use
-         * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.createdAt] with `createdAt.orElse(null)`. */
         fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
         /**
@@ -137,7 +134,8 @@ private constructor(
         }
 
         /**
-         * Get all ledger transaction versions that are included in the ledger account statement.
+         * Alias for calling [Builder.ledgerAccountStatementId] with
+         * `ledgerAccountStatementId.orElse(null)`.
          */
         fun ledgerAccountStatementId(ledgerAccountStatementId: Optional<String>) =
             ledgerAccountStatementId(ledgerAccountStatementId.getOrNull())
@@ -150,15 +148,21 @@ private constructor(
         }
 
         /**
-         * Get all the ledger transaction versions corresponding to the ID of a ledger transaction.
+         * Alias for calling [Builder.ledgerTransactionId] with `ledgerTransactionId.orElse(null)`.
          */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
             ledgerTransactionId(ledgerTransactionId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -167,10 +171,7 @@ private constructor(
          */
         fun version(version: Version?) = apply { this.version = version }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the version. For
-         * example, for all versions after 2, use version%5Bgt%5D=2.
-         */
+        /** Alias for calling [Builder.version] with `version.orElse(null)`. */
         fun version(version: Optional<Version>) = version(version.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

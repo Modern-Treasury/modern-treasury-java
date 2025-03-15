@@ -149,20 +149,19 @@ private constructor(
          */
         fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
 
-        /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
-         */
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         * Adds a single [String] to [Builder.id].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -172,15 +171,12 @@ private constructor(
          */
         fun balances(balances: Balances?) = apply { this.balances = balances }
 
-        /**
-         * For example, if you want the balances as of a particular time (ISO8601), the encoded
-         * query string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as
-         * of a time are inclusive of entries with that exact time.
-         */
+        /** Alias for calling [Builder.balances] with `balances.orElse(null)`. */
         fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun currency(currency: String?) = apply { this.currency = currency }
 
+        /** Alias for calling [Builder.currency] with `currency.orElse(null)`. */
         fun currency(currency: Optional<String>) = currency(currency.getOrNull())
 
         /** Query categories which contain a ledger account directly or through child categories. */
@@ -188,12 +184,13 @@ private constructor(
             this.ledgerAccountId = ledgerAccountId
         }
 
-        /** Query categories which contain a ledger account directly or through child categories. */
+        /** Alias for calling [Builder.ledgerAccountId] with `ledgerAccountId.orElse(null)`. */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
             ledgerAccountId(ledgerAccountId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
+        /** Alias for calling [Builder.ledgerId] with `ledgerId.orElse(null)`. */
         fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         /**
@@ -202,14 +199,12 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun name(name: String?) = apply { this.name = name }
 
+        /** Alias for calling [Builder.name] with `name.orElse(null)`. */
         fun name(name: Optional<String>) = name(name.getOrNull())
 
         /** Query categories that are nested underneath a parent category */
@@ -217,14 +212,23 @@ private constructor(
             this.parentLedgerAccountCategoryId = parentLedgerAccountCategoryId
         }
 
-        /** Query categories that are nested underneath a parent category */
+        /**
+         * Alias for calling [Builder.parentLedgerAccountCategoryId] with
+         * `parentLedgerAccountCategoryId.orElse(null)`.
+         */
         fun parentLedgerAccountCategoryId(parentLedgerAccountCategoryId: Optional<String>) =
             parentLedgerAccountCategoryId(parentLedgerAccountCategoryId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -387,6 +391,7 @@ private constructor(
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
                 effectiveAt(effectiveAt.getOrNull())
 

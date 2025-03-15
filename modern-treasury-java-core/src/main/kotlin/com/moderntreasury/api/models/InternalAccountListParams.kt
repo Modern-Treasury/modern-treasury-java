@@ -119,25 +119,26 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Only return internal accounts associated with this counterparty. */
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
-        /** Only return internal accounts associated with this counterparty. */
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
         /** Only return internal accounts with this currency. */
         fun currency(currency: Currency?) = apply { this.currency = currency }
 
-        /** Only return internal accounts with this currency. */
+        /** Alias for calling [Builder.currency] with `currency.orElse(null)`. */
         fun currency(currency: Optional<Currency>) = currency(currency.getOrNull())
 
         /** Only return internal accounts associated with this legal entity. */
         fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
 
-        /** Only return internal accounts associated with this legal entity. */
+        /** Alias for calling [Builder.legalEntityId] with `legalEntityId.orElse(null)`. */
         fun legalEntityId(legalEntityId: Optional<String>) =
             legalEntityId(legalEntityId.getOrNull())
 
@@ -147,10 +148,7 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /** Only return internal accounts that can originate payments with this direction. */
@@ -158,20 +156,26 @@ private constructor(
             this.paymentDirection = paymentDirection
         }
 
-        /** Only return internal accounts that can originate payments with this direction. */
+        /** Alias for calling [Builder.paymentDirection] with `paymentDirection.orElse(null)`. */
         fun paymentDirection(paymentDirection: Optional<TransactionDirection>) =
             paymentDirection(paymentDirection.getOrNull())
 
         /** Only return internal accounts that can make this type of payment. */
         fun paymentType(paymentType: PaymentType?) = apply { this.paymentType = paymentType }
 
-        /** Only return internal accounts that can make this type of payment. */
+        /** Alias for calling [Builder.paymentType] with `paymentType.orElse(null)`. */
         fun paymentType(paymentType: Optional<PaymentType>) = paymentType(paymentType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

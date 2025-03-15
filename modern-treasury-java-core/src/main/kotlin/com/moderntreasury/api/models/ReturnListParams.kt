@@ -106,6 +106,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -114,10 +115,7 @@ private constructor(
          */
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
-        /**
-         * Specify `counterparty_id` if you wish to see returns that occurred with a specific
-         * counterparty.
-         */
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
@@ -126,20 +124,26 @@ private constructor(
             this.internalAccountId = internalAccountId
         }
 
-        /** Specify `internal_account_id` if you wish to see returns to/from a specific account. */
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
         fun internalAccountId(internalAccountId: Optional<String>) =
             internalAccountId(internalAccountId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
         fun returnableId(returnableId: String?) = apply { this.returnableId = returnableId }
 
-        /** The ID of a valid returnable. Must be accompanied by `returnable_type`. */
+        /** Alias for calling [Builder.returnableId] with `returnableId.orElse(null)`. */
         fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.getOrNull())
 
         /**
@@ -150,10 +154,7 @@ private constructor(
             this.returnableType = returnableType
         }
 
-        /**
-         * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
-         * accompanied by `returnable_id`.
-         */
+        /** Alias for calling [Builder.returnableType] with `returnableType.orElse(null)`. */
         fun returnableType(returnableType: Optional<ReturnableType>) =
             returnableType(returnableType.getOrNull())
 
