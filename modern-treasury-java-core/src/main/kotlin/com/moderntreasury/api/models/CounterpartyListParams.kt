@@ -125,6 +125,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Used to return counterparties created after some datetime. */
@@ -132,7 +133,9 @@ private constructor(
             this.createdAtLowerBound = createdAtLowerBound
         }
 
-        /** Used to return counterparties created after some datetime. */
+        /**
+         * Alias for calling [Builder.createdAtLowerBound] with `createdAtLowerBound.orElse(null)`.
+         */
         fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
             createdAtLowerBound(createdAtLowerBound.getOrNull())
 
@@ -141,20 +144,22 @@ private constructor(
             this.createdAtUpperBound = createdAtUpperBound
         }
 
-        /** Used to return counterparties created before some datetime. */
+        /**
+         * Alias for calling [Builder.createdAtUpperBound] with `createdAtUpperBound.orElse(null)`.
+         */
         fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
             createdAtUpperBound(createdAtUpperBound.getOrNull())
 
         /** Performs a partial string match of the email field. This is also case insensitive. */
         fun email(email: String?) = apply { this.email = email }
 
-        /** Performs a partial string match of the email field. This is also case insensitive. */
+        /** Alias for calling [Builder.email] with `email.orElse(null)`. */
         fun email(email: Optional<String>) = email(email.getOrNull())
 
         /** Filters for counterparties with the given legal entity ID. */
         fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
 
-        /** Filters for counterparties with the given legal entity ID. */
+        /** Alias for calling [Builder.legalEntityId] with `legalEntityId.orElse(null)`. */
         fun legalEntityId(legalEntityId: Optional<String>) =
             legalEntityId(legalEntityId.getOrNull())
 
@@ -164,22 +169,25 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /** Performs a partial string match of the name field. This is also case insensitive. */
         fun name(name: String?) = apply { this.name = name }
 
-        /** Performs a partial string match of the name field. This is also case insensitive. */
+        /** Alias for calling [Builder.name] with `name.orElse(null)`. */
         fun name(name: Optional<String>) = name(name.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

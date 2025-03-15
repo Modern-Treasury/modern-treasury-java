@@ -155,6 +155,7 @@ class ModernTreasuryOkHttpClientAsync private constructor() {
 
         fun webhookKey(webhookKey: String?) = apply { clientOptions.webhookKey(webhookKey) }
 
+        /** Alias for calling [Builder.webhookKey] with `webhookKey.orElse(null)`. */
         fun webhookKey(webhookKey: Optional<String>) = webhookKey(webhookKey.getOrNull())
 
         fun fromEnv() = apply { clientOptions.fromEnv() }

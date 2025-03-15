@@ -30,63 +30,140 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** The identifier of the financial institution the account belongs to. */
+    /**
+     * The identifier of the financial institution the account belongs to.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun connectionId(): String = body.connectionId()
 
-    /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+    /**
+     * Either "USD" or "CAD". Internal accounts created at Increase only supports "USD".
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun currency(): Currency = body.currency()
 
-    /** The nickname of the account. */
+    /**
+     * The nickname of the account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
-    /** The legal name of the entity which owns the account. */
+    /**
+     * The legal name of the entity which owns the account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun partyName(): String = body.partyName()
 
-    /** The Counterparty associated to this account. */
+    /**
+     * The Counterparty associated to this account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun counterpartyId(): Optional<String> = body.counterpartyId()
 
-    /** The LegalEntity associated to this account. */
+    /**
+     * The LegalEntity associated to this account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun legalEntityId(): Optional<String> = body.legalEntityId()
 
-    /** The parent internal account of this new account. */
+    /**
+     * The parent internal account of this new account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun parentAccountId(): Optional<String> = body.parentAccountId()
 
-    /** The address associated with the owner or null. */
+    /**
+     * The address associated with the owner or null.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun partyAddress(): Optional<PartyAddress> = body.partyAddress()
 
     /**
      * A hash of vendor specific attributes that will be used when creating the account at the
      * vendor specified by the given connection.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun vendorAttributes(): Optional<VendorAttributes> = body.vendorAttributes()
 
-    /** The identifier of the financial institution the account belongs to. */
+    /**
+     * Returns the raw JSON value of [connectionId].
+     *
+     * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _connectionId(): JsonField<String> = body._connectionId()
 
-    /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<Currency> = body._currency()
 
-    /** The nickname of the account. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** The legal name of the entity which owns the account. */
+    /**
+     * Returns the raw JSON value of [partyName].
+     *
+     * Unlike [partyName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _partyName(): JsonField<String> = body._partyName()
 
-    /** The Counterparty associated to this account. */
+    /**
+     * Returns the raw JSON value of [counterpartyId].
+     *
+     * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _counterpartyId(): JsonField<String> = body._counterpartyId()
 
-    /** The LegalEntity associated to this account. */
+    /**
+     * Returns the raw JSON value of [legalEntityId].
+     *
+     * Unlike [legalEntityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _legalEntityId(): JsonField<String> = body._legalEntityId()
 
-    /** The parent internal account of this new account. */
+    /**
+     * Returns the raw JSON value of [parentAccountId].
+     *
+     * Unlike [parentAccountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _parentAccountId(): JsonField<String> = body._parentAccountId()
 
-    /** The address associated with the owner or null. */
+    /**
+     * Returns the raw JSON value of [partyAddress].
+     *
+     * Unlike [partyAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _partyAddress(): JsonField<PartyAddress> = body._partyAddress()
 
     /**
-     * A hash of vendor specific attributes that will be used when creating the account at the
-     * vendor specified by the given connection.
+     * Returns the raw JSON value of [vendorAttributes].
+     *
+     * Unlike [vendorAttributes], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _vendorAttributes(): JsonField<VendorAttributes> = body._vendorAttributes()
 
@@ -137,78 +214,160 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The identifier of the financial institution the account belongs to. */
+        /**
+         * The identifier of the financial institution the account belongs to.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun connectionId(): String = connectionId.getRequired("connection_id")
 
-        /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+        /**
+         * Either "USD" or "CAD". Internal accounts created at Increase only supports "USD".
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): Currency = currency.getRequired("currency")
 
-        /** The nickname of the account. */
+        /**
+         * The nickname of the account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
-        /** The legal name of the entity which owns the account. */
+        /**
+         * The legal name of the entity which owns the account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun partyName(): String = partyName.getRequired("party_name")
 
-        /** The Counterparty associated to this account. */
+        /**
+         * The Counterparty associated to this account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun counterpartyId(): Optional<String> =
             Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
 
-        /** The LegalEntity associated to this account. */
+        /**
+         * The LegalEntity associated to this account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun legalEntityId(): Optional<String> =
             Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
 
-        /** The parent internal account of this new account. */
+        /**
+         * The parent internal account of this new account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun parentAccountId(): Optional<String> =
             Optional.ofNullable(parentAccountId.getNullable("parent_account_id"))
 
-        /** The address associated with the owner or null. */
+        /**
+         * The address associated with the owner or null.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun partyAddress(): Optional<PartyAddress> =
             Optional.ofNullable(partyAddress.getNullable("party_address"))
 
         /**
          * A hash of vendor specific attributes that will be used when creating the account at the
          * vendor specified by the given connection.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun vendorAttributes(): Optional<VendorAttributes> =
             Optional.ofNullable(vendorAttributes.getNullable("vendor_attributes"))
 
-        /** The identifier of the financial institution the account belongs to. */
+        /**
+         * Returns the raw JSON value of [connectionId].
+         *
+         * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("connection_id")
         @ExcludeMissing
         fun _connectionId(): JsonField<String> = connectionId
 
-        /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<Currency> = currency
 
-        /** The nickname of the account. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** The legal name of the entity which owns the account. */
+        /**
+         * Returns the raw JSON value of [partyName].
+         *
+         * Unlike [partyName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("party_name") @ExcludeMissing fun _partyName(): JsonField<String> = partyName
 
-        /** The Counterparty associated to this account. */
+        /**
+         * Returns the raw JSON value of [counterpartyId].
+         *
+         * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("counterparty_id")
         @ExcludeMissing
         fun _counterpartyId(): JsonField<String> = counterpartyId
 
-        /** The LegalEntity associated to this account. */
+        /**
+         * Returns the raw JSON value of [legalEntityId].
+         *
+         * Unlike [legalEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("legal_entity_id")
         @ExcludeMissing
         fun _legalEntityId(): JsonField<String> = legalEntityId
 
-        /** The parent internal account of this new account. */
+        /**
+         * Returns the raw JSON value of [parentAccountId].
+         *
+         * Unlike [parentAccountId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("parent_account_id")
         @ExcludeMissing
         fun _parentAccountId(): JsonField<String> = parentAccountId
 
-        /** The address associated with the owner or null. */
+        /**
+         * Returns the raw JSON value of [partyAddress].
+         *
+         * Unlike [partyAddress], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("party_address")
         @ExcludeMissing
         fun _partyAddress(): JsonField<PartyAddress> = partyAddress
 
         /**
-         * A hash of vendor specific attributes that will be used when creating the account at the
-         * vendor specified by the given connection.
+         * Returns the raw JSON value of [vendorAttributes].
+         *
+         * Unlike [vendorAttributes], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("vendor_attributes")
         @ExcludeMissing
@@ -288,7 +447,13 @@ private constructor(
             /** The identifier of the financial institution the account belongs to. */
             fun connectionId(connectionId: String) = connectionId(JsonField.of(connectionId))
 
-            /** The identifier of the financial institution the account belongs to. */
+            /**
+             * Sets [Builder.connectionId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.connectionId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun connectionId(connectionId: JsonField<String>) = apply {
                 this.connectionId = connectionId
             }
@@ -296,26 +461,50 @@ private constructor(
             /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
             fun currency(currency: Currency) = currency(JsonField.of(currency))
 
-            /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [Currency] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
             /** The nickname of the account. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The nickname of the account. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The legal name of the entity which owns the account. */
             fun partyName(partyName: String) = partyName(JsonField.of(partyName))
 
-            /** The legal name of the entity which owns the account. */
+            /**
+             * Sets [Builder.partyName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.partyName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun partyName(partyName: JsonField<String>) = apply { this.partyName = partyName }
 
             /** The Counterparty associated to this account. */
             fun counterpartyId(counterpartyId: String) =
                 counterpartyId(JsonField.of(counterpartyId))
 
-            /** The Counterparty associated to this account. */
+            /**
+             * Sets [Builder.counterpartyId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.counterpartyId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun counterpartyId(counterpartyId: JsonField<String>) = apply {
                 this.counterpartyId = counterpartyId
             }
@@ -323,7 +512,13 @@ private constructor(
             /** The LegalEntity associated to this account. */
             fun legalEntityId(legalEntityId: String) = legalEntityId(JsonField.of(legalEntityId))
 
-            /** The LegalEntity associated to this account. */
+            /**
+             * Sets [Builder.legalEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.legalEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun legalEntityId(legalEntityId: JsonField<String>) = apply {
                 this.legalEntityId = legalEntityId
             }
@@ -332,7 +527,13 @@ private constructor(
             fun parentAccountId(parentAccountId: String) =
                 parentAccountId(JsonField.of(parentAccountId))
 
-            /** The parent internal account of this new account. */
+            /**
+             * Sets [Builder.parentAccountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.parentAccountId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun parentAccountId(parentAccountId: JsonField<String>) = apply {
                 this.parentAccountId = parentAccountId
             }
@@ -340,7 +541,13 @@ private constructor(
             /** The address associated with the owner or null. */
             fun partyAddress(partyAddress: PartyAddress) = partyAddress(JsonField.of(partyAddress))
 
-            /** The address associated with the owner or null. */
+            /**
+             * Sets [Builder.partyAddress] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.partyAddress] with a well-typed [PartyAddress] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun partyAddress(partyAddress: JsonField<PartyAddress>) = apply {
                 this.partyAddress = partyAddress
             }
@@ -353,8 +560,11 @@ private constructor(
                 vendorAttributes(JsonField.of(vendorAttributes))
 
             /**
-             * A hash of vendor specific attributes that will be used when creating the account at
-             * the vendor specified by the given connection.
+             * Sets [Builder.vendorAttributes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.vendorAttributes] with a well-typed
+             * [VendorAttributes] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun vendorAttributes(vendorAttributes: JsonField<VendorAttributes>) = apply {
                 this.vendorAttributes = vendorAttributes
@@ -449,7 +659,13 @@ private constructor(
         /** The identifier of the financial institution the account belongs to. */
         fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
 
-        /** The identifier of the financial institution the account belongs to. */
+        /**
+         * Sets [Builder.connectionId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.connectionId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun connectionId(connectionId: JsonField<String>) = apply {
             body.connectionId(connectionId)
         }
@@ -457,25 +673,48 @@ private constructor(
         /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
         fun currency(currency: Currency) = apply { body.currency(currency) }
 
-        /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [Currency] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
 
         /** The nickname of the account. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The nickname of the account. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** The legal name of the entity which owns the account. */
         fun partyName(partyName: String) = apply { body.partyName(partyName) }
 
-        /** The legal name of the entity which owns the account. */
+        /**
+         * Sets [Builder.partyName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.partyName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun partyName(partyName: JsonField<String>) = apply { body.partyName(partyName) }
 
         /** The Counterparty associated to this account. */
         fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
 
-        /** The Counterparty associated to this account. */
+        /**
+         * Sets [Builder.counterpartyId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterpartyId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             body.counterpartyId(counterpartyId)
         }
@@ -483,7 +722,13 @@ private constructor(
         /** The LegalEntity associated to this account. */
         fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
 
-        /** The LegalEntity associated to this account. */
+        /**
+         * Sets [Builder.legalEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.legalEntityId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun legalEntityId(legalEntityId: JsonField<String>) = apply {
             body.legalEntityId(legalEntityId)
         }
@@ -493,7 +738,13 @@ private constructor(
             body.parentAccountId(parentAccountId)
         }
 
-        /** The parent internal account of this new account. */
+        /**
+         * Sets [Builder.parentAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.parentAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun parentAccountId(parentAccountId: JsonField<String>) = apply {
             body.parentAccountId(parentAccountId)
         }
@@ -501,7 +752,13 @@ private constructor(
         /** The address associated with the owner or null. */
         fun partyAddress(partyAddress: PartyAddress) = apply { body.partyAddress(partyAddress) }
 
-        /** The address associated with the owner or null. */
+        /**
+         * Sets [Builder.partyAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.partyAddress] with a well-typed [PartyAddress] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun partyAddress(partyAddress: JsonField<PartyAddress>) = apply {
             body.partyAddress(partyAddress)
         }
@@ -515,8 +772,11 @@ private constructor(
         }
 
         /**
-         * A hash of vendor specific attributes that will be used when creating the account at the
-         * vendor specified by the given connection.
+         * Sets [Builder.vendorAttributes] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.vendorAttributes] with a well-typed [VendorAttributes]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun vendorAttributes(vendorAttributes: JsonField<VendorAttributes>) = apply {
             body.vendorAttributes(vendorAttributes)
@@ -775,38 +1035,92 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Country code conforms to [ISO 3166-1 alpha-2] */
+        /**
+         * Country code conforms to [ISO 3166-1 alpha-2]
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun country(): String = country.getRequired("country")
 
+        /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun line1(): String = line1.getRequired("line1")
 
-        /** Locality or City. */
+        /**
+         * Locality or City.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun locality(): String = locality.getRequired("locality")
 
-        /** The postal code of the address. */
+        /**
+         * The postal code of the address.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun postalCode(): String = postalCode.getRequired("postal_code")
 
-        /** Region or State. */
+        /**
+         * Region or State.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun region(): String = region.getRequired("region")
 
+        /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
 
-        /** Country code conforms to [ISO 3166-1 alpha-2] */
+        /**
+         * Returns the raw JSON value of [country].
+         *
+         * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
+        /**
+         * Returns the raw JSON value of [line1].
+         *
+         * Unlike [line1], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line1") @ExcludeMissing fun _line1(): JsonField<String> = line1
 
-        /** Locality or City. */
+        /**
+         * Returns the raw JSON value of [locality].
+         *
+         * Unlike [locality], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("locality") @ExcludeMissing fun _locality(): JsonField<String> = locality
 
-        /** The postal code of the address. */
+        /**
+         * Returns the raw JSON value of [postalCode].
+         *
+         * Unlike [postalCode], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("postal_code")
         @ExcludeMissing
         fun _postalCode(): JsonField<String> = postalCode
 
-        /** Region or State. */
+        /**
+         * Returns the raw JSON value of [region].
+         *
+         * Unlike [region], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("region") @ExcludeMissing fun _region(): JsonField<String> = region
 
+        /**
+         * Returns the raw JSON value of [line2].
+         *
+         * Unlike [line2], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
         @JsonAnyGetter
@@ -873,33 +1187,71 @@ private constructor(
             /** Country code conforms to [ISO 3166-1 alpha-2] */
             fun country(country: String) = country(JsonField.of(country))
 
-            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            /**
+             * Sets [Builder.country] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.country] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String) = line1(JsonField.of(line1))
 
+            /**
+             * Sets [Builder.line1] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line1] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             /** Locality or City. */
             fun locality(locality: String) = locality(JsonField.of(locality))
 
-            /** Locality or City. */
+            /**
+             * Sets [Builder.locality] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.locality] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun locality(locality: JsonField<String>) = apply { this.locality = locality }
 
             /** The postal code of the address. */
             fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
-            /** The postal code of the address. */
+            /**
+             * Sets [Builder.postalCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.postalCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             /** Region or State. */
             fun region(region: String) = region(JsonField.of(region))
 
-            /** Region or State. */
+            /**
+             * Sets [Builder.region] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.region] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun region(region: JsonField<String>) = apply { this.region = region }
 
             fun line2(line2: String) = line2(JsonField.of(line2))
 
+            /**
+             * Sets [Builder.line2] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.line2] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -138,29 +138,32 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
         /** An inclusive upper bound for searching due_date */
         fun dueDateEnd(dueDateEnd: LocalDate?) = apply { this.dueDateEnd = dueDateEnd }
 
-        /** An inclusive upper bound for searching due_date */
+        /** Alias for calling [Builder.dueDateEnd] with `dueDateEnd.orElse(null)`. */
         fun dueDateEnd(dueDateEnd: Optional<LocalDate>) = dueDateEnd(dueDateEnd.getOrNull())
 
         /** An inclusive lower bound for searching due_date */
         fun dueDateStart(dueDateStart: LocalDate?) = apply { this.dueDateStart = dueDateStart }
 
-        /** An inclusive lower bound for searching due_date */
+        /** Alias for calling [Builder.dueDateStart] with `dueDateStart.orElse(null)`. */
         fun dueDateStart(dueDateStart: Optional<LocalDate>) = dueDateStart(dueDateStart.getOrNull())
 
         fun expectedPaymentId(expectedPaymentId: String?) = apply {
             this.expectedPaymentId = expectedPaymentId
         }
 
+        /** Alias for calling [Builder.expectedPaymentId] with `expectedPaymentId.orElse(null)`. */
         fun expectedPaymentId(expectedPaymentId: Optional<String>) =
             expectedPaymentId(expectedPaymentId.getOrNull())
 
@@ -170,38 +173,47 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /** A unique record number assigned to each invoice that is issued. */
         fun number(number: String?) = apply { this.number = number }
 
-        /** A unique record number assigned to each invoice that is issued. */
+        /** Alias for calling [Builder.number] with `number.orElse(null)`. */
         fun number(number: Optional<String>) = number(number.getOrNull())
 
         fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
+        /**
+         * Alias for calling [Builder.originatingAccountId] with
+         * `originatingAccountId.orElse(null)`.
+         */
         fun originatingAccountId(originatingAccountId: Optional<String>) =
             originatingAccountId(originatingAccountId.getOrNull())
 
         fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
 
+        /** Alias for calling [Builder.paymentOrderId] with `paymentOrderId.orElse(null)`. */
         fun paymentOrderId(paymentOrderId: Optional<String>) =
             paymentOrderId(paymentOrderId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

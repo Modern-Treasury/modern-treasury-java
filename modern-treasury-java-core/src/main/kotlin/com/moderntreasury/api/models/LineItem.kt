@@ -63,13 +63,24 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accounting(): Accounting = accounting.getRequired("accounting")
 
     /**
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun accountingCategoryId(): Optional<String> =
         Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
@@ -78,92 +89,184 @@ private constructor(
      * The ID of one of the class objects in your accounting system. Class objects track segments of
      * your business independent of client or project. Note that these will only be accessible if
      * your accounting system has been connected.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun accountingLedgerClassId(): Optional<String> =
         Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
 
-    /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+    /**
+     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): Long = amount.getRequired("amount")
 
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /** A free-form description of the line item. */
+    /**
+     * A free-form description of the line item.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun description(): Optional<String> =
         Optional.ofNullable(description.getNullable("description"))
 
-    /** The ID of the payment order or expected payment. */
+    /**
+     * The ID of the payment order or expected payment.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun itemizableId(): String = itemizableId.getRequired("itemizable_id")
 
-    /** One of `payment_orders` or `expected_payments`. */
+    /**
+     * One of `payment_orders` or `expected_payments`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun itemizableType(): ItemizableType = itemizableType.getRequired("itemizable_type")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
      * in the test environment.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    /**
+     * Additional data represented as key-value pairs. Both the key and value must be strings.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun object_(): String = object_.getRequired("object")
 
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
+    /**
+     * Returns the raw JSON value of [accounting].
+     *
+     * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("accounting")
     @ExcludeMissing
     fun _accounting(): JsonField<Accounting> = accounting
 
     /**
-     * The ID of one of your accounting categories. Note that these will only be accessible if your
-     * accounting system has been connected.
+     * Returns the raw JSON value of [accountingCategoryId].
+     *
+     * Unlike [accountingCategoryId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("accounting_category_id")
     @ExcludeMissing
     fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
 
     /**
-     * The ID of one of the class objects in your accounting system. Class objects track segments of
-     * your business independent of client or project. Note that these will only be accessible if
-     * your accounting system has been connected.
+     * Returns the raw JSON value of [accountingLedgerClassId].
+     *
+     * Unlike [accountingLedgerClassId], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("accounting_ledger_class_id")
     @ExcludeMissing
     fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
 
-    /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
 
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
-    /** A free-form description of the line item. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
-    /** The ID of the payment order or expected payment. */
+    /**
+     * Returns the raw JSON value of [itemizableId].
+     *
+     * Unlike [itemizableId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("itemizable_id")
     @ExcludeMissing
     fun _itemizableId(): JsonField<String> = itemizableId
 
-    /** One of `payment_orders` or `expected_payments`. */
+    /**
+     * Returns the raw JSON value of [itemizableType].
+     *
+     * Unlike [itemizableType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("itemizable_type")
     @ExcludeMissing
     fun _itemizableType(): JsonField<ItemizableType> = itemizableType
 
     /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
+     * Returns the raw JSON value of [liveMode].
+     *
+     * Unlike [liveMode], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("live_mode") @ExcludeMissing fun _liveMode(): JsonField<Boolean> = liveMode
 
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    /**
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+    /**
+     * Returns the raw JSON value of [object_].
+     *
+     * Unlike [object_], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
 
+    /**
+     * Returns the raw JSON value of [updatedAt].
+     *
+     * Unlike [updatedAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("updated_at")
     @ExcludeMissing
     fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
@@ -260,10 +363,23 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun accounting(accounting: Accounting) = accounting(JsonField.of(accounting))
 
+        /**
+         * Sets [Builder.accounting] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accounting] with a well-typed [Accounting] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accounting(accounting: JsonField<Accounting>) = apply { this.accounting = accounting }
 
         /**
@@ -274,15 +390,18 @@ private constructor(
             accountingCategoryId(JsonField.ofNullable(accountingCategoryId))
 
         /**
-         * The ID of one of your accounting categories. Note that these will only be accessible if
-         * your accounting system has been connected.
+         * Alias for calling [Builder.accountingCategoryId] with
+         * `accountingCategoryId.orElse(null)`.
          */
         fun accountingCategoryId(accountingCategoryId: Optional<String>) =
             accountingCategoryId(accountingCategoryId.getOrNull())
 
         /**
-         * The ID of one of your accounting categories. Note that these will only be accessible if
-         * your accounting system has been connected.
+         * Sets [Builder.accountingCategoryId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingCategoryId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             this.accountingCategoryId = accountingCategoryId
@@ -297,17 +416,18 @@ private constructor(
             accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
 
         /**
-         * The ID of one of the class objects in your accounting system. Class objects track
-         * segments of your business independent of client or project. Note that these will only be
-         * accessible if your accounting system has been connected.
+         * Alias for calling [Builder.accountingLedgerClassId] with
+         * `accountingLedgerClassId.orElse(null)`.
          */
         fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
             accountingLedgerClassId(accountingLedgerClassId.getOrNull())
 
         /**
-         * The ID of one of the class objects in your accounting system. Class objects track
-         * segments of your business independent of client or project. Note that these will only be
-         * accessible if your accounting system has been connected.
+         * Sets [Builder.accountingLedgerClassId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
             this.accountingLedgerClassId = accountingLedgerClassId
@@ -316,26 +436,50 @@ private constructor(
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = amount(JsonField.of(amount))
 
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** A free-form description of the line item. */
         fun description(description: String?) = description(JsonField.ofNullable(description))
 
-        /** A free-form description of the line item. */
+        /** Alias for calling [Builder.description] with `description.orElse(null)`. */
         fun description(description: Optional<String>) = description(description.getOrNull())
 
-        /** A free-form description of the line item. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
         /** The ID of the payment order or expected payment. */
         fun itemizableId(itemizableId: String) = itemizableId(JsonField.of(itemizableId))
 
-        /** The ID of the payment order or expected payment. */
+        /**
+         * Sets [Builder.itemizableId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.itemizableId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun itemizableId(itemizableId: JsonField<String>) = apply {
             this.itemizableId = itemizableId
         }
@@ -344,7 +488,13 @@ private constructor(
         fun itemizableType(itemizableType: ItemizableType) =
             itemizableType(JsonField.of(itemizableType))
 
-        /** One of `payment_orders` or `expected_payments`. */
+        /**
+         * Sets [Builder.itemizableType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.itemizableType] with a well-typed [ItemizableType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun itemizableType(itemizableType: JsonField<ItemizableType>) = apply {
             this.itemizableType = itemizableType
         }
@@ -356,8 +506,11 @@ private constructor(
         fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
 
         /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
+         * Sets [Builder.liveMode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.liveMode] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
@@ -367,16 +520,33 @@ private constructor(
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
+        /**
+         * Sets [Builder.object_] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.object_] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
+        /**
+         * Sets [Builder.updatedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.updatedAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -434,6 +604,9 @@ private constructor(
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("account_id"))
 
@@ -441,19 +614,23 @@ private constructor(
          * The ID of one of the class objects in your accounting system. Class objects track
          * segments of your business independent of client or project. Note that these will only be
          * accessible if your accounting system has been connected.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun classId(): Optional<String> = Optional.ofNullable(classId.getNullable("class_id"))
 
         /**
-         * The ID of one of your accounting categories. Note that these will only be accessible if
-         * your accounting system has been connected.
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("account_id") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
         /**
-         * The ID of one of the class objects in your accounting system. Class objects track
-         * segments of your business independent of client or project. Note that these will only be
-         * accessible if your accounting system has been connected.
+         * Returns the raw JSON value of [classId].
+         *
+         * Unlike [classId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("class_id") @ExcludeMissing fun _classId(): JsonField<String> = classId
 
@@ -501,15 +678,15 @@ private constructor(
              */
             fun accountId(accountId: String?) = accountId(JsonField.ofNullable(accountId))
 
-            /**
-             * The ID of one of your accounting categories. Note that these will only be accessible
-             * if your accounting system has been connected.
-             */
+            /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
             fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
             /**
-             * The ID of one of your accounting categories. Note that these will only be accessible
-             * if your accounting system has been connected.
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
@@ -520,17 +697,15 @@ private constructor(
              */
             fun classId(classId: String?) = classId(JsonField.ofNullable(classId))
 
-            /**
-             * The ID of one of the class objects in your accounting system. Class objects track
-             * segments of your business independent of client or project. Note that these will only
-             * be accessible if your accounting system has been connected.
-             */
+            /** Alias for calling [Builder.classId] with `classId.orElse(null)`. */
             fun classId(classId: Optional<String>) = classId(classId.getOrNull())
 
             /**
-             * The ID of one of the class objects in your accounting system. Class objects track
-             * segments of your business independent of client or project. Note that these will only
-             * be accessible if your accounting system has been connected.
+             * Sets [Builder.classId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.classId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun classId(classId: JsonField<String>) = apply { this.classId = classId }
 

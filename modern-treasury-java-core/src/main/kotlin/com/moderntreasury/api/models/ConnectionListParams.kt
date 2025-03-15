@@ -80,18 +80,25 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** A string code representing the vendor (i.e. bank). */
         fun entity(entity: String?) = apply { this.entity = entity }
 
-        /** A string code representing the vendor (i.e. bank). */
+        /** Alias for calling [Builder.entity] with `entity.orElse(null)`. */
         fun entity(entity: Optional<String>) = entity(entity.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** An identifier assigned by the vendor to your organization. */
@@ -99,7 +106,7 @@ private constructor(
             this.vendorCustomerId = vendorCustomerId
         }
 
-        /** An identifier assigned by the vendor to your organization. */
+        /** Alias for calling [Builder.vendorCustomerId] with `vendorCustomerId.orElse(null)`. */
         fun vendorCustomerId(vendorCustomerId: Optional<String>) =
             vendorCustomerId(vendorCustomerId.getOrNull())
 

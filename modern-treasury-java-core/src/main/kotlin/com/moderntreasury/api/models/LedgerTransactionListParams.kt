@@ -233,20 +233,19 @@ private constructor(
          */
         fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
 
-        /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
-         */
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         * Adds a single [String] to [Builder.id].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -256,11 +255,7 @@ private constructor(
          */
         fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
-        /**
-         * Use "gt" (>), "gte" (>=), "lt" (<), "lte" (<=), or "eq" (=) to filter by effective at.
-         * For example, for all transactions after Jan 1 2000, use
-         * effective_at%5Bgt%5D=2000-01-01T00:00:00:00.000Z.
-         */
+        /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
         fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.getOrNull())
 
         /**
@@ -271,21 +266,23 @@ private constructor(
             this.effectiveDate = effectiveDate
         }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by effective date.
-         * For example, for all dates after Jan 1 2000, use effective_date%5Bgt%5D=2000-01-01.
-         */
+        /** Alias for calling [Builder.effectiveDate] with `effectiveDate.orElse(null)`. */
         fun effectiveDate(effectiveDate: Optional<EffectiveDate>) =
             effectiveDate(effectiveDate.getOrNull())
 
         fun externalId(externalId: String?) = apply { this.externalId = externalId }
 
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
         fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerAccountCategoryId] with
+         * `ledgerAccountCategoryId.orElse(null)`.
+         */
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
             ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
@@ -293,6 +290,7 @@ private constructor(
             this.ledgerAccountId = ledgerAccountId
         }
 
+        /** Alias for calling [Builder.ledgerAccountId] with `ledgerAccountId.orElse(null)`. */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
             ledgerAccountId(ledgerAccountId.getOrNull())
 
@@ -300,21 +298,28 @@ private constructor(
             this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerAccountSettlementId] with
+         * `ledgerAccountSettlementId.orElse(null)`.
+         */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
             ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
+        /** Alias for calling [Builder.ledgerId] with `ledgerId.orElse(null)`. */
         fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         fun ledgerableId(ledgerableId: String?) = apply { this.ledgerableId = ledgerableId }
 
+        /** Alias for calling [Builder.ledgerableId] with `ledgerableId.orElse(null)`. */
         fun ledgerableId(ledgerableId: Optional<String>) = ledgerableId(ledgerableId.getOrNull())
 
         fun ledgerableType(ledgerableType: LedgerableType?) = apply {
             this.ledgerableType = ledgerableType
         }
 
+        /** Alias for calling [Builder.ledgerableType] with `ledgerableType.orElse(null)`. */
         fun ledgerableType(ledgerableType: Optional<LedgerableType>) =
             ledgerableType(ledgerableType.getOrNull())
 
@@ -324,10 +329,7 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
@@ -337,24 +339,30 @@ private constructor(
          */
         fun orderBy(orderBy: OrderBy?) = apply { this.orderBy = orderBy }
 
-        /**
-         * Order by `created_at` or `effective_at` in `asc` or `desc` order. For example, to order
-         * by `effective_at asc`, use `order_by%5Beffective_at%5D=asc`. Ordering by only one field
-         * at a time is supported.
-         */
+        /** Alias for calling [Builder.orderBy] with `orderBy.orElse(null)`. */
         fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.getOrNull())
 
         fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: String?) = apply {
             this.partiallyPostsLedgerTransactionId = partiallyPostsLedgerTransactionId
         }
 
+        /**
+         * Alias for calling [Builder.partiallyPostsLedgerTransactionId] with
+         * `partiallyPostsLedgerTransactionId.orElse(null)`.
+         */
         fun partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId: Optional<String>) =
             partiallyPostsLedgerTransactionId(partiallyPostsLedgerTransactionId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -364,22 +372,23 @@ private constructor(
          */
         fun postedAt(postedAt: PostedAt?) = apply { this.postedAt = postedAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * posted_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.postedAt] with `postedAt.orElse(null)`. */
         fun postedAt(postedAt: Optional<PostedAt>) = postedAt(postedAt.getOrNull())
 
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: String?) = apply {
             this.reversesLedgerTransactionId = reversesLedgerTransactionId
         }
 
+        /**
+         * Alias for calling [Builder.reversesLedgerTransactionId] with
+         * `reversesLedgerTransactionId.orElse(null)`.
+         */
         fun reversesLedgerTransactionId(reversesLedgerTransactionId: Optional<String>) =
             reversesLedgerTransactionId(reversesLedgerTransactionId.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
@@ -389,11 +398,7 @@ private constructor(
          */
         fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.updatedAt] with `updatedAt.orElse(null)`. */
         fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -998,10 +1003,12 @@ private constructor(
 
             fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
+            /** Alias for calling [Builder.createdAt] with `createdAt.orElse(null)`. */
             fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
             fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<EffectiveAt>) =
                 effectiveAt(effectiveAt.getOrNull())
 

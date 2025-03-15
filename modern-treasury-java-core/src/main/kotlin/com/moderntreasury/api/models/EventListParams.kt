@@ -110,20 +110,23 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
+        /** Alias for calling [Builder.entityId] with `entityId.orElse(null)`. */
         fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
+        /** Alias for calling [Builder.eventName] with `eventName.orElse(null)`. */
         fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         /** An inclusive upper bound for when the event occurred */
         fun eventTimeEnd(eventTimeEnd: OffsetDateTime?) = apply { this.eventTimeEnd = eventTimeEnd }
 
-        /** An inclusive upper bound for when the event occurred */
+        /** Alias for calling [Builder.eventTimeEnd] with `eventTimeEnd.orElse(null)`. */
         fun eventTimeEnd(eventTimeEnd: Optional<OffsetDateTime>) =
             eventTimeEnd(eventTimeEnd.getOrNull())
 
@@ -132,18 +135,25 @@ private constructor(
             this.eventTimeStart = eventTimeStart
         }
 
-        /** An inclusive lower bound for when the event occurred */
+        /** Alias for calling [Builder.eventTimeStart] with `eventTimeStart.orElse(null)`. */
         fun eventTimeStart(eventTimeStart: Optional<OffsetDateTime>) =
             eventTimeStart(eventTimeStart.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun resource(resource: String?) = apply { this.resource = resource }
 
+        /** Alias for calling [Builder.resource] with `resource.orElse(null)`. */
         fun resource(resource: Optional<String>) = resource(resource.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
