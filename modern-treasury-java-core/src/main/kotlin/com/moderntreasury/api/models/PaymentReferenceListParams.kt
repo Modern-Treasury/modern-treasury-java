@@ -99,12 +99,19 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** The actual reference number assigned by the bank. */
@@ -112,7 +119,7 @@ private constructor(
             this.referenceNumber = referenceNumber
         }
 
-        /** The actual reference number assigned by the bank. */
+        /** Alias for calling [Builder.referenceNumber] with `referenceNumber.orElse(null)`. */
         fun referenceNumber(referenceNumber: Optional<String>) =
             referenceNumber(referenceNumber.getOrNull())
 
@@ -124,10 +131,7 @@ private constructor(
             this.referenceableId = referenceableId
         }
 
-        /**
-         * The id of the referenceable to search for. Must be accompanied by the referenceable_type
-         * or will return an error.
-         */
+        /** Alias for calling [Builder.referenceableId] with `referenceableId.orElse(null)`. */
         fun referenceableId(referenceableId: Optional<String>) =
             referenceableId(referenceableId.getOrNull())
 
@@ -139,10 +143,7 @@ private constructor(
             this.referenceableType = referenceableType
         }
 
-        /**
-         * One of the referenceable types. This must be accompanied by the id of the referenceable
-         * or will return an error.
-         */
+        /** Alias for calling [Builder.referenceableType] with `referenceableType.orElse(null)`. */
         fun referenceableType(referenceableType: Optional<ReferenceableType>) =
             referenceableType(referenceableType.getOrNull())
 

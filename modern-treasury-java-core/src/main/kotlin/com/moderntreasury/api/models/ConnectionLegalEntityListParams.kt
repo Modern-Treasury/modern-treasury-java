@@ -93,25 +93,35 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun connectionId(connectionId: String?) = apply { this.connectionId = connectionId }
 
+        /** Alias for calling [Builder.connectionId] with `connectionId.orElse(null)`. */
         fun connectionId(connectionId: Optional<String>) = connectionId(connectionId.getOrNull())
 
         fun legalEntityId(legalEntityId: String?) = apply { this.legalEntityId = legalEntityId }
 
+        /** Alias for calling [Builder.legalEntityId] with `legalEntityId.orElse(null)`. */
         fun legalEntityId(legalEntityId: Optional<String>) =
             legalEntityId(legalEntityId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

@@ -196,17 +196,19 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
         /** An inclusive upper bound for searching created_at */
         fun createdAtEnd(createdAtEnd: LocalDate?) = apply { this.createdAtEnd = createdAtEnd }
 
-        /** An inclusive upper bound for searching created_at */
+        /** Alias for calling [Builder.createdAtEnd] with `createdAtEnd.orElse(null)`. */
         fun createdAtEnd(createdAtEnd: Optional<LocalDate>) = createdAtEnd(createdAtEnd.getOrNull())
 
         /** An inclusive lower bound for searching created_at */
@@ -214,12 +216,13 @@ private constructor(
             this.createdAtStart = createdAtStart
         }
 
-        /** An inclusive lower bound for searching created_at */
+        /** Alias for calling [Builder.createdAtStart] with `createdAtStart.orElse(null)`. */
         fun createdAtStart(createdAtStart: Optional<LocalDate>) =
             createdAtStart(createdAtStart.getOrNull())
 
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
+        /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /** An inclusive upper bound for searching effective_date */
@@ -227,7 +230,7 @@ private constructor(
             this.effectiveDateEnd = effectiveDateEnd
         }
 
-        /** An inclusive upper bound for searching effective_date */
+        /** Alias for calling [Builder.effectiveDateEnd] with `effectiveDateEnd.orElse(null)`. */
         fun effectiveDateEnd(effectiveDateEnd: Optional<LocalDate>) =
             effectiveDateEnd(effectiveDateEnd.getOrNull())
 
@@ -236,7 +239,9 @@ private constructor(
             this.effectiveDateStart = effectiveDateStart
         }
 
-        /** An inclusive lower bound for searching effective_date */
+        /**
+         * Alias for calling [Builder.effectiveDateStart] with `effectiveDateStart.orElse(null)`.
+         */
         fun effectiveDateStart(effectiveDateStart: Optional<LocalDate>) =
             effectiveDateStart(effectiveDateStart.getOrNull())
 
@@ -246,23 +251,30 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun originatingAccountId(originatingAccountId: String?) = apply {
             this.originatingAccountId = originatingAccountId
         }
 
+        /**
+         * Alias for calling [Builder.originatingAccountId] with
+         * `originatingAccountId.orElse(null)`.
+         */
         fun originatingAccountId(originatingAccountId: Optional<String>) =
             originatingAccountId(originatingAccountId.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -272,11 +284,7 @@ private constructor(
          */
         fun priority(priority: Priority?) = apply { this.priority = priority }
 
-        /**
-         * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or
-         * EFT transfer, respectively. For check payments, `high` can mean an overnight check rather
-         * than standard mail.
-         */
+        /** Alias for calling [Builder.priority] with `priority.orElse(null)`. */
         fun priority(priority: Optional<Priority>) = priority(priority.getOrNull())
 
         /** An inclusive upper bound for searching process_after */
@@ -284,7 +292,7 @@ private constructor(
             this.processAfterEnd = processAfterEnd
         }
 
-        /** An inclusive upper bound for searching process_after */
+        /** Alias for calling [Builder.processAfterEnd] with `processAfterEnd.orElse(null)`. */
         fun processAfterEnd(processAfterEnd: Optional<OffsetDateTime>) =
             processAfterEnd(processAfterEnd.getOrNull())
 
@@ -293,7 +301,7 @@ private constructor(
             this.processAfterStart = processAfterStart
         }
 
-        /** An inclusive lower bound for searching process_after */
+        /** Alias for calling [Builder.processAfterStart] with `processAfterStart.orElse(null)`. */
         fun processAfterStart(processAfterStart: Optional<OffsetDateTime>) =
             processAfterStart(processAfterStart.getOrNull())
 
@@ -302,23 +310,25 @@ private constructor(
             this.referenceNumber = referenceNumber
         }
 
-        /** Query for records with the provided reference number */
+        /** Alias for calling [Builder.referenceNumber] with `referenceNumber.orElse(null)`. */
         fun referenceNumber(referenceNumber: Optional<String>) =
             referenceNumber(referenceNumber.getOrNull())
 
         fun status(status: Status?) = apply { this.status = status }
 
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** The ID of a transaction that the payment order has been reconciled to. */
         fun transactionId(transactionId: String?) = apply { this.transactionId = transactionId }
 
-        /** The ID of a transaction that the payment order has been reconciled to. */
+        /** Alias for calling [Builder.transactionId] with `transactionId.orElse(null)`. */
         fun transactionId(transactionId: Optional<String>) =
             transactionId(transactionId.getOrNull())
 
         fun type(type: Type?) = apply { this.type = type }
 
+        /** Alias for calling [Builder.type] with `type.orElse(null)`. */
         fun type(type: Optional<Type>) = type(type.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

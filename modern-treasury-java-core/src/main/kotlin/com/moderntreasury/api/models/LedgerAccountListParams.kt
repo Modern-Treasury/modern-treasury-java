@@ -205,20 +205,19 @@ private constructor(
          */
         fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
 
-        /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
-         */
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         * Adds a single [String] to [Builder.id].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -230,8 +229,8 @@ private constructor(
         }
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
-         * balance amount.
+         * Alias for calling [Builder.availableBalanceAmount] with
+         * `availableBalanceAmount.orElse(null)`.
          */
         fun availableBalanceAmount(availableBalanceAmount: Optional<AvailableBalanceAmount>) =
             availableBalanceAmount(availableBalanceAmount.getOrNull())
@@ -244,12 +243,7 @@ private constructor(
          */
         fun balances(balances: Balances?) = apply { this.balances = balances }
 
-        /**
-         * Use `balances[effective_at_lower_bound]` and `balances[effective_at_upper_bound]` to get
-         * the balances change between the two timestamps. The lower bound is inclusive while the
-         * upper bound is exclusive of the provided timestamps. If no value is supplied the balances
-         * will be retrieved not including that bound.
-         */
+        /** Alias for calling [Builder.balances] with `balances.orElse(null)`. */
         fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         /**
@@ -259,26 +253,28 @@ private constructor(
          */
         fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the created at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * created_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.createdAt] with `createdAt.orElse(null)`. */
         fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
         fun currency(currency: String?) = apply { this.currency = currency }
 
+        /** Alias for calling [Builder.currency] with `currency.orElse(null)`. */
         fun currency(currency: Optional<String>) = currency(currency.getOrNull())
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerAccountCategoryId] with
+         * `ledgerAccountCategoryId.orElse(null)`.
+         */
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
             ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
         fun ledgerId(ledgerId: String?) = apply { this.ledgerId = ledgerId }
 
+        /** Alias for calling [Builder.ledgerId] with `ledgerId.orElse(null)`. */
         fun ledgerId(ledgerId: Optional<String>) = ledgerId(ledgerId.getOrNull())
 
         /**
@@ -287,10 +283,7 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
@@ -299,15 +292,13 @@ private constructor(
          */
         fun name(name: List<String>?) = apply { this.name = name?.toMutableList() }
 
-        /**
-         * If you have specific names to retrieve in bulk, you can pass them as query parameters
-         * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
-         */
+        /** Alias for calling [Builder.name] with `name.orElse(null)`. */
         fun name(name: Optional<List<String>>) = name(name.getOrNull())
 
         /**
-         * If you have specific names to retrieve in bulk, you can pass them as query parameters
-         * delimited with `name[]=`, for example `?name[]=123&name[]=abc`.
+         * Adds a single [String] to [Builder.name].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addName(name: String) = apply {
             this.name = (this.name ?: mutableListOf()).apply { add(name) }
@@ -322,16 +313,22 @@ private constructor(
         }
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
-         * balance amount.
+         * Alias for calling [Builder.pendingBalanceAmount] with
+         * `pendingBalanceAmount.orElse(null)`.
          */
         fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
             pendingBalanceAmount(pendingBalanceAmount.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -343,8 +340,7 @@ private constructor(
         }
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
-         * balance amount.
+         * Alias for calling [Builder.postedBalanceAmount] with `postedBalanceAmount.orElse(null)`.
          */
         fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
             postedBalanceAmount(postedBalanceAmount.getOrNull())
@@ -356,11 +352,7 @@ private constructor(
          */
         fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the updated at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.updatedAt] with `updatedAt.orElse(null)`. */
         fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -556,38 +548,74 @@ private constructor(
 
             fun eq(eq: Long?) = apply { this.eq = eq }
 
+            /**
+             * Alias for [Builder.eq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun eq(eq: Long) = eq(eq as Long?)
 
+            /** Alias for calling [Builder.eq] with `eq.orElse(null)`. */
             fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
+            /**
+             * Alias for [Builder.gt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gt(gt: Long) = gt(gt as Long?)
 
+            /** Alias for calling [Builder.gt] with `gt.orElse(null)`. */
             fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
+            /**
+             * Alias for [Builder.gte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gte(gte: Long) = gte(gte as Long?)
 
+            /** Alias for calling [Builder.gte] with `gte.orElse(null)`. */
             fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
+            /**
+             * Alias for [Builder.lt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lt(lt: Long) = lt(lt as Long?)
 
+            /** Alias for calling [Builder.lt] with `lt.orElse(null)`. */
             fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
+            /**
+             * Alias for [Builder.lte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lte(lte: Long) = lte(lte as Long?)
 
+            /** Alias for calling [Builder.lte] with `lte.orElse(null)`. */
             fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
+            /**
+             * Alias for [Builder.notEq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
+            /** Alias for calling [Builder.notEq] with `notEq.orElse(null)`. */
             fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
@@ -737,10 +765,12 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
+            /** Alias for calling [Builder.asOfDate] with `asOfDate.orElse(null)`. */
             fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
                 effectiveAt(effectiveAt.getOrNull())
 
@@ -748,6 +778,10 @@ private constructor(
                 this.effectiveAtLowerBound = effectiveAtLowerBound
             }
 
+            /**
+             * Alias for calling [Builder.effectiveAtLowerBound] with
+             * `effectiveAtLowerBound.orElse(null)`.
+             */
             fun effectiveAtLowerBound(effectiveAtLowerBound: Optional<OffsetDateTime>) =
                 effectiveAtLowerBound(effectiveAtLowerBound.getOrNull())
 
@@ -755,6 +789,10 @@ private constructor(
                 this.effectiveAtUpperBound = effectiveAtUpperBound
             }
 
+            /**
+             * Alias for calling [Builder.effectiveAtUpperBound] with
+             * `effectiveAtUpperBound.orElse(null)`.
+             */
             fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
                 effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
@@ -1108,38 +1146,74 @@ private constructor(
 
             fun eq(eq: Long?) = apply { this.eq = eq }
 
+            /**
+             * Alias for [Builder.eq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun eq(eq: Long) = eq(eq as Long?)
 
+            /** Alias for calling [Builder.eq] with `eq.orElse(null)`. */
             fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
+            /**
+             * Alias for [Builder.gt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gt(gt: Long) = gt(gt as Long?)
 
+            /** Alias for calling [Builder.gt] with `gt.orElse(null)`. */
             fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
+            /**
+             * Alias for [Builder.gte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gte(gte: Long) = gte(gte as Long?)
 
+            /** Alias for calling [Builder.gte] with `gte.orElse(null)`. */
             fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
+            /**
+             * Alias for [Builder.lt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lt(lt: Long) = lt(lt as Long?)
 
+            /** Alias for calling [Builder.lt] with `lt.orElse(null)`. */
             fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
+            /**
+             * Alias for [Builder.lte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lte(lte: Long) = lte(lte as Long?)
 
+            /** Alias for calling [Builder.lte] with `lte.orElse(null)`. */
             fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
+            /**
+             * Alias for [Builder.notEq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
+            /** Alias for calling [Builder.notEq] with `notEq.orElse(null)`. */
             fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {
@@ -1285,38 +1359,74 @@ private constructor(
 
             fun eq(eq: Long?) = apply { this.eq = eq }
 
+            /**
+             * Alias for [Builder.eq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun eq(eq: Long) = eq(eq as Long?)
 
+            /** Alias for calling [Builder.eq] with `eq.orElse(null)`. */
             fun eq(eq: Optional<Long>) = eq(eq.getOrNull())
 
             fun gt(gt: Long?) = apply { this.gt = gt }
 
+            /**
+             * Alias for [Builder.gt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gt(gt: Long) = gt(gt as Long?)
 
+            /** Alias for calling [Builder.gt] with `gt.orElse(null)`. */
             fun gt(gt: Optional<Long>) = gt(gt.getOrNull())
 
             fun gte(gte: Long?) = apply { this.gte = gte }
 
+            /**
+             * Alias for [Builder.gte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun gte(gte: Long) = gte(gte as Long?)
 
+            /** Alias for calling [Builder.gte] with `gte.orElse(null)`. */
             fun gte(gte: Optional<Long>) = gte(gte.getOrNull())
 
             fun lt(lt: Long?) = apply { this.lt = lt }
 
+            /**
+             * Alias for [Builder.lt].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lt(lt: Long) = lt(lt as Long?)
 
+            /** Alias for calling [Builder.lt] with `lt.orElse(null)`. */
             fun lt(lt: Optional<Long>) = lt(lt.getOrNull())
 
             fun lte(lte: Long?) = apply { this.lte = lte }
 
+            /**
+             * Alias for [Builder.lte].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun lte(lte: Long) = lte(lte as Long?)
 
+            /** Alias for calling [Builder.lte] with `lte.orElse(null)`. */
             fun lte(lte: Optional<Long>) = lte(lte.getOrNull())
 
             fun notEq(notEq: Long?) = apply { this.notEq = notEq }
 
+            /**
+             * Alias for [Builder.notEq].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun notEq(notEq: Long) = notEq(notEq as Long?)
 
+            /** Alias for calling [Builder.notEq] with `notEq.orElse(null)`. */
             fun notEq(notEq: Optional<Long>) = notEq(notEq.getOrNull())
 
             fun additionalProperties(additionalProperties: QueryParams) = apply {

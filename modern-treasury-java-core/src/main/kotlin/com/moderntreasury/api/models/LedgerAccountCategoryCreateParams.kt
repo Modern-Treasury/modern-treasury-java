@@ -18,6 +18,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
+import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -30,58 +31,127 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** The currency of the ledger account category. */
+    /**
+     * The currency of the ledger account category.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun currency(): String = body.currency()
 
-    /** The id of the ledger that this account category belongs to. */
+    /**
+     * The id of the ledger that this account category belongs to.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun ledgerId(): String = body.ledgerId()
 
-    /** The name of the ledger account category. */
+    /**
+     * The name of the ledger account category.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
-    /** The normal balance of the ledger account category. */
+    /**
+     * The normal balance of the ledger account category.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun normalBalance(): TransactionDirection = body.normalBalance()
 
-    /** The currency exponent of the ledger account category. */
+    /**
+     * The currency exponent of the ledger account category.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun currencyExponent(): Optional<Long> = body.currencyExponent()
 
-    /** The description of the ledger account category. */
+    /**
+     * The description of the ledger account category.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
     /**
      * The array of ledger account category ids that this ledger account category should be a child
      * of.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun ledgerAccountCategoryIds(): Optional<List<String>> = body.ledgerAccountCategoryIds()
 
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    /**
+     * Additional data represented as key-value pairs. Both the key and value must be strings.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun metadata(): Optional<Metadata> = body.metadata()
 
-    /** The currency of the ledger account category. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<String> = body._currency()
 
-    /** The id of the ledger that this account category belongs to. */
+    /**
+     * Returns the raw JSON value of [ledgerId].
+     *
+     * Unlike [ledgerId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _ledgerId(): JsonField<String> = body._ledgerId()
 
-    /** The name of the ledger account category. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** The normal balance of the ledger account category. */
+    /**
+     * Returns the raw JSON value of [normalBalance].
+     *
+     * Unlike [normalBalance], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _normalBalance(): JsonField<TransactionDirection> = body._normalBalance()
 
-    /** The currency exponent of the ledger account category. */
+    /**
+     * Returns the raw JSON value of [currencyExponent].
+     *
+     * Unlike [currencyExponent], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _currencyExponent(): JsonField<Long> = body._currencyExponent()
 
-    /** The description of the ledger account category. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
     /**
-     * The array of ledger account category ids that this ledger account category should be a child
-     * of.
+     * Returns the raw JSON value of [ledgerAccountCategoryIds].
+     *
+     * Unlike [ledgerAccountCategoryIds], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _ledgerAccountCategoryIds(): JsonField<List<String>> = body._ledgerAccountCategoryIds()
 
-    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    /**
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _metadata(): JsonField<Metadata> = body._metadata()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -128,72 +198,138 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The currency of the ledger account category. */
+        /**
+         * The currency of the ledger account category.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
-        /** The id of the ledger that this account category belongs to. */
+        /**
+         * The id of the ledger that this account category belongs to.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ledgerId(): String = ledgerId.getRequired("ledger_id")
 
-        /** The name of the ledger account category. */
+        /**
+         * The name of the ledger account category.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
-        /** The normal balance of the ledger account category. */
+        /**
+         * The normal balance of the ledger account category.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun normalBalance(): TransactionDirection = normalBalance.getRequired("normal_balance")
 
-        /** The currency exponent of the ledger account category. */
+        /**
+         * The currency exponent of the ledger account category.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun currencyExponent(): Optional<Long> =
             Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
 
-        /** The description of the ledger account category. */
+        /**
+         * The description of the ledger account category.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
         /**
          * The array of ledger account category ids that this ledger account category should be a
          * child of.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun ledgerAccountCategoryIds(): Optional<List<String>> =
             Optional.ofNullable(ledgerAccountCategoryIds.getNullable("ledger_account_category_ids"))
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
 
-        /** The currency of the ledger account category. */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-        /** The id of the ledger that this account category belongs to. */
+        /**
+         * Returns the raw JSON value of [ledgerId].
+         *
+         * Unlike [ledgerId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("ledger_id") @ExcludeMissing fun _ledgerId(): JsonField<String> = ledgerId
 
-        /** The name of the ledger account category. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** The normal balance of the ledger account category. */
+        /**
+         * Returns the raw JSON value of [normalBalance].
+         *
+         * Unlike [normalBalance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("normal_balance")
         @ExcludeMissing
         fun _normalBalance(): JsonField<TransactionDirection> = normalBalance
 
-        /** The currency exponent of the ledger account category. */
+        /**
+         * Returns the raw JSON value of [currencyExponent].
+         *
+         * Unlike [currencyExponent], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("currency_exponent")
         @ExcludeMissing
         fun _currencyExponent(): JsonField<Long> = currencyExponent
 
-        /** The description of the ledger account category. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
         /**
-         * The array of ledger account category ids that this ledger account category should be a
-         * child of.
+         * Returns the raw JSON value of [ledgerAccountCategoryIds].
+         *
+         * Unlike [ledgerAccountCategoryIds], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("ledger_account_category_ids")
         @ExcludeMissing
         fun _ledgerAccountCategoryIds(): JsonField<List<String>> = ledgerAccountCategoryIds
 
         /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
@@ -273,26 +409,50 @@ private constructor(
             /** The currency of the ledger account category. */
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            /** The currency of the ledger account category. */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /** The id of the ledger that this account category belongs to. */
             fun ledgerId(ledgerId: String) = ledgerId(JsonField.of(ledgerId))
 
-            /** The id of the ledger that this account category belongs to. */
+            /**
+             * Sets [Builder.ledgerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ledgerId(ledgerId: JsonField<String>) = apply { this.ledgerId = ledgerId }
 
             /** The name of the ledger account category. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the ledger account category. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The normal balance of the ledger account category. */
             fun normalBalance(normalBalance: TransactionDirection) =
                 normalBalance(JsonField.of(normalBalance))
 
-            /** The normal balance of the ledger account category. */
+            /**
+             * Sets [Builder.normalBalance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.normalBalance] with a well-typed
+             * [TransactionDirection] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
             fun normalBalance(normalBalance: JsonField<TransactionDirection>) = apply {
                 this.normalBalance = normalBalance
             }
@@ -301,15 +461,27 @@ private constructor(
             fun currencyExponent(currencyExponent: Long?) =
                 currencyExponent(JsonField.ofNullable(currencyExponent))
 
-            /** The currency exponent of the ledger account category. */
+            /**
+             * Alias for [Builder.currencyExponent].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun currencyExponent(currencyExponent: Long) =
                 currencyExponent(currencyExponent as Long?)
 
-            /** The currency exponent of the ledger account category. */
+            /**
+             * Alias for calling [Builder.currencyExponent] with `currencyExponent.orElse(null)`.
+             */
             fun currencyExponent(currencyExponent: Optional<Long>) =
                 currencyExponent(currencyExponent.getOrNull())
 
-            /** The currency exponent of the ledger account category. */
+            /**
+             * Sets [Builder.currencyExponent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currencyExponent] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
                 this.currencyExponent = currencyExponent
             }
@@ -317,10 +489,16 @@ private constructor(
             /** The description of the ledger account category. */
             fun description(description: String?) = description(JsonField.ofNullable(description))
 
-            /** The description of the ledger account category. */
+            /** Alias for calling [Builder.description] with `description.orElse(null)`. */
             fun description(description: Optional<String>) = description(description.getOrNull())
 
-            /** The description of the ledger account category. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -333,8 +511,11 @@ private constructor(
                 ledgerAccountCategoryIds(JsonField.of(ledgerAccountCategoryIds))
 
             /**
-             * The array of ledger account category ids that this ledger account category should be
-             * a child of.
+             * Sets [Builder.ledgerAccountCategoryIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerAccountCategoryIds] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: JsonField<List<String>>) =
                 apply {
@@ -343,8 +524,9 @@ private constructor(
                 }
 
             /**
-             * The array of ledger account category ids that this ledger account category should be
-             * a child of.
+             * Adds a single [String] to [ledgerAccountCategoryIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
                 ledgerAccountCategoryIds =
@@ -360,8 +542,11 @@ private constructor(
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
             /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
@@ -456,19 +641,34 @@ private constructor(
         /** The currency of the ledger account category. */
         fun currency(currency: String) = apply { body.currency(currency) }
 
-        /** The currency of the ledger account category. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /** The id of the ledger that this account category belongs to. */
         fun ledgerId(ledgerId: String) = apply { body.ledgerId(ledgerId) }
 
-        /** The id of the ledger that this account category belongs to. */
+        /**
+         * Sets [Builder.ledgerId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.ledgerId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun ledgerId(ledgerId: JsonField<String>) = apply { body.ledgerId(ledgerId) }
 
         /** The name of the ledger account category. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the ledger account category. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** The normal balance of the ledger account category. */
@@ -476,7 +676,13 @@ private constructor(
             body.normalBalance(normalBalance)
         }
 
-        /** The normal balance of the ledger account category. */
+        /**
+         * Sets [Builder.normalBalance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.normalBalance] with a well-typed [TransactionDirection]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun normalBalance(normalBalance: JsonField<TransactionDirection>) = apply {
             body.normalBalance(normalBalance)
         }
@@ -486,14 +692,24 @@ private constructor(
             body.currencyExponent(currencyExponent)
         }
 
-        /** The currency exponent of the ledger account category. */
+        /**
+         * Alias for [Builder.currencyExponent].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun currencyExponent(currencyExponent: Long) = currencyExponent(currencyExponent as Long?)
 
-        /** The currency exponent of the ledger account category. */
+        /** Alias for calling [Builder.currencyExponent] with `currencyExponent.orElse(null)`. */
         fun currencyExponent(currencyExponent: Optional<Long>) =
             currencyExponent(currencyExponent.getOrNull())
 
-        /** The currency exponent of the ledger account category. */
+        /**
+         * Sets [Builder.currencyExponent] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currencyExponent] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun currencyExponent(currencyExponent: JsonField<Long>) = apply {
             body.currencyExponent(currencyExponent)
         }
@@ -501,10 +717,16 @@ private constructor(
         /** The description of the ledger account category. */
         fun description(description: String?) = apply { body.description(description) }
 
-        /** The description of the ledger account category. */
+        /** Alias for calling [Builder.description] with `description.orElse(null)`. */
         fun description(description: Optional<String>) = description(description.getOrNull())
 
-        /** The description of the ledger account category. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
@@ -516,16 +738,20 @@ private constructor(
         }
 
         /**
-         * The array of ledger account category ids that this ledger account category should be a
-         * child of.
+         * Sets [Builder.ledgerAccountCategoryIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.ledgerAccountCategoryIds] with a well-typed
+         * `List<String>` value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun ledgerAccountCategoryIds(ledgerAccountCategoryIds: JsonField<List<String>>) = apply {
             body.ledgerAccountCategoryIds(ledgerAccountCategoryIds)
         }
 
         /**
-         * The array of ledger account category ids that this ledger account category should be a
-         * child of.
+         * Adds a single [String] to [ledgerAccountCategoryIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addLedgerAccountCategoryId(ledgerAccountCategoryId: String) = apply {
             body.addLedgerAccountCategoryId(ledgerAccountCategoryId)
@@ -537,7 +763,11 @@ private constructor(
         fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 

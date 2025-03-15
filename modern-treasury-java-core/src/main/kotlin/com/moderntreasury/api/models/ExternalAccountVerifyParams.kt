@@ -36,50 +36,80 @@ private constructor(
     /**
      * The ID of the internal account where the micro-deposits originate from. Both credit and debit
      * capabilities must be enabled.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun originatingAccountId(): String = body.originatingAccountId()
 
-    /** Can be `ach`, `eft`, or `rtp`. */
+    /**
+     * Can be `ach`, `eft`, or `rtp`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun paymentType(): PaymentType = body.paymentType()
 
-    /** Defaults to the currency of the originating account. */
+    /**
+     * Defaults to the currency of the originating account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
     fun currency(): Optional<Currency> = body.currency()
 
     /**
      * A payment type to fallback to if the original type is not valid for the receiving account.
      * Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
      * fallback_type=ach)
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun fallbackType(): Optional<FallbackType> = body.fallbackType()
 
     /**
      * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer. This
      * will apply to both `payment_type` and `fallback_type`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
     fun priority(): Optional<Priority> = body.priority()
 
     /**
-     * The ID of the internal account where the micro-deposits originate from. Both credit and debit
-     * capabilities must be enabled.
+     * Returns the raw JSON value of [originatingAccountId].
+     *
+     * Unlike [originatingAccountId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _originatingAccountId(): JsonField<String> = body._originatingAccountId()
 
-    /** Can be `ach`, `eft`, or `rtp`. */
+    /**
+     * Returns the raw JSON value of [paymentType].
+     *
+     * Unlike [paymentType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _paymentType(): JsonField<PaymentType> = body._paymentType()
 
-    /** Defaults to the currency of the originating account. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<Currency> = body._currency()
 
     /**
-     * A payment type to fallback to if the original type is not valid for the receiving account.
-     * Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
-     * fallback_type=ach)
+     * Returns the raw JSON value of [fallbackType].
+     *
+     * Unlike [fallbackType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _fallbackType(): JsonField<FallbackType> = body._fallbackType()
 
     /**
-     * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer. This
-     * will apply to both `payment_type` and `fallback_type`.
+     * Returns the raw JSON value of [priority].
+     *
+     * Unlike [priority], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _priority(): JsonField<Priority> = body._priority()
 
@@ -128,20 +158,36 @@ private constructor(
         /**
          * The ID of the internal account where the micro-deposits originate from. Both credit and
          * debit capabilities must be enabled.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun originatingAccountId(): String =
             originatingAccountId.getRequired("originating_account_id")
 
-        /** Can be `ach`, `eft`, or `rtp`. */
+        /**
+         * Can be `ach`, `eft`, or `rtp`.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun paymentType(): PaymentType = paymentType.getRequired("payment_type")
 
-        /** Defaults to the currency of the originating account. */
+        /**
+         * Defaults to the currency of the originating account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
         fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
          * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
          * fallback_type=ach)
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun fallbackType(): Optional<FallbackType> =
             Optional.ofNullable(fallbackType.getNullable("fallback_type"))
@@ -149,37 +195,52 @@ private constructor(
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
          * This will apply to both `payment_type` and `fallback_type`.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
         fun priority(): Optional<Priority> = Optional.ofNullable(priority.getNullable("priority"))
 
         /**
-         * The ID of the internal account where the micro-deposits originate from. Both credit and
-         * debit capabilities must be enabled.
+         * Returns the raw JSON value of [originatingAccountId].
+         *
+         * Unlike [originatingAccountId], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("originating_account_id")
         @ExcludeMissing
         fun _originatingAccountId(): JsonField<String> = originatingAccountId
 
-        /** Can be `ach`, `eft`, or `rtp`. */
+        /**
+         * Returns the raw JSON value of [paymentType].
+         *
+         * Unlike [paymentType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("payment_type")
         @ExcludeMissing
         fun _paymentType(): JsonField<PaymentType> = paymentType
 
-        /** Defaults to the currency of the originating account. */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<Currency> = currency
 
         /**
-         * A payment type to fallback to if the original type is not valid for the receiving
-         * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
-         * fallback_type=ach)
+         * Returns the raw JSON value of [fallbackType].
+         *
+         * Unlike [fallbackType], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("fallback_type")
         @ExcludeMissing
         fun _fallbackType(): JsonField<FallbackType> = fallbackType
 
         /**
-         * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
-         * This will apply to both `payment_type` and `fallback_type`.
+         * Returns the raw JSON value of [priority].
+         *
+         * Unlike [priority], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("priority") @ExcludeMissing fun _priority(): JsonField<Priority> = priority
 
@@ -248,8 +309,11 @@ private constructor(
                 originatingAccountId(JsonField.of(originatingAccountId))
 
             /**
-             * The ID of the internal account where the micro-deposits originate from. Both credit
-             * and debit capabilities must be enabled.
+             * Sets [Builder.originatingAccountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.originatingAccountId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
                 this.originatingAccountId = originatingAccountId
@@ -258,7 +322,13 @@ private constructor(
             /** Can be `ach`, `eft`, or `rtp`. */
             fun paymentType(paymentType: PaymentType) = paymentType(JsonField.of(paymentType))
 
-            /** Can be `ach`, `eft`, or `rtp`. */
+            /**
+             * Sets [Builder.paymentType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentType] with a well-typed [PaymentType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun paymentType(paymentType: JsonField<PaymentType>) = apply {
                 this.paymentType = paymentType
             }
@@ -266,7 +336,13 @@ private constructor(
             /** Defaults to the currency of the originating account. */
             fun currency(currency: Currency) = currency(JsonField.of(currency))
 
-            /** Defaults to the currency of the originating account. */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [Currency] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
 
             /**
@@ -277,9 +353,11 @@ private constructor(
             fun fallbackType(fallbackType: FallbackType) = fallbackType(JsonField.of(fallbackType))
 
             /**
-             * A payment type to fallback to if the original type is not valid for the receiving
-             * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp
-             * and fallback_type=ach)
+             * Sets [Builder.fallbackType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fallbackType] with a well-typed [FallbackType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun fallbackType(fallbackType: JsonField<FallbackType>) = apply {
                 this.fallbackType = fallbackType
@@ -292,8 +370,11 @@ private constructor(
             fun priority(priority: Priority) = priority(JsonField.of(priority))
 
             /**
-             * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH
-             * transfer. This will apply to both `payment_type` and `fallback_type`.
+             * Sets [Builder.priority] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.priority] with a well-typed [Priority] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun priority(priority: JsonField<Priority>) = apply { this.priority = priority }
 
@@ -391,8 +472,11 @@ private constructor(
         }
 
         /**
-         * The ID of the internal account where the micro-deposits originate from. Both credit and
-         * debit capabilities must be enabled.
+         * Sets [Builder.originatingAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.originatingAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
             body.originatingAccountId(originatingAccountId)
@@ -401,7 +485,13 @@ private constructor(
         /** Can be `ach`, `eft`, or `rtp`. */
         fun paymentType(paymentType: PaymentType) = apply { body.paymentType(paymentType) }
 
-        /** Can be `ach`, `eft`, or `rtp`. */
+        /**
+         * Sets [Builder.paymentType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentType] with a well-typed [PaymentType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun paymentType(paymentType: JsonField<PaymentType>) = apply {
             body.paymentType(paymentType)
         }
@@ -409,7 +499,13 @@ private constructor(
         /** Defaults to the currency of the originating account. */
         fun currency(currency: Currency) = apply { body.currency(currency) }
 
-        /** Defaults to the currency of the originating account. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [Currency] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
 
         /**
@@ -420,9 +516,11 @@ private constructor(
         fun fallbackType(fallbackType: FallbackType) = apply { body.fallbackType(fallbackType) }
 
         /**
-         * A payment type to fallback to if the original type is not valid for the receiving
-         * account. Currently, this only supports falling back from RTP to ACH (payment_type=rtp and
-         * fallback_type=ach)
+         * Sets [Builder.fallbackType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fallbackType] with a well-typed [FallbackType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun fallbackType(fallbackType: JsonField<FallbackType>) = apply {
             body.fallbackType(fallbackType)
@@ -435,8 +533,11 @@ private constructor(
         fun priority(priority: Priority) = apply { body.priority(priority) }
 
         /**
-         * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
-         * This will apply to both `payment_type` and `fallback_type`.
+         * Sets [Builder.priority] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.priority] with a well-typed [Priority] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun priority(priority: JsonField<Priority>) = apply { body.priority(priority) }
 

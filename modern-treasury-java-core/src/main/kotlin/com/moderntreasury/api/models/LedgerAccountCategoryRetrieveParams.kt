@@ -99,11 +99,7 @@ private constructor(
          */
         fun balances(balances: Balances?) = apply { this.balances = balances }
 
-        /**
-         * For example, if you want the balances as of a particular time (ISO8601), the encoded
-         * query string would be `balances%5Beffective_at%5D=2000-12-31T12:00:00Z`. The balances as
-         * of a time are inclusive of entries with that exact time.
-         */
+        /** Alias for calling [Builder.balances] with `balances.orElse(null)`. */
         fun balances(balances: Optional<Balances>) = balances(balances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -264,10 +260,12 @@ private constructor(
 
             fun asOfDate(asOfDate: LocalDate?) = apply { this.asOfDate = asOfDate }
 
+            /** Alias for calling [Builder.asOfDate] with `asOfDate.orElse(null)`. */
             fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
 
             fun effectiveAt(effectiveAt: OffsetDateTime?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<OffsetDateTime>) =
                 effectiveAt(effectiveAt.getOrNull())
 

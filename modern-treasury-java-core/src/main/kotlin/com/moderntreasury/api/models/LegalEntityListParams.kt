@@ -94,12 +94,14 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         fun legalEntityType(legalEntityType: LegalEntityType?) = apply {
             this.legalEntityType = legalEntityType
         }
 
+        /** Alias for calling [Builder.legalEntityType] with `legalEntityType.orElse(null)`. */
         fun legalEntityType(legalEntityType: Optional<LegalEntityType>) =
             legalEntityType(legalEntityType.getOrNull())
 
@@ -109,20 +111,24 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun showDeleted(showDeleted: String?) = apply { this.showDeleted = showDeleted }
 
+        /** Alias for calling [Builder.showDeleted] with `showDeleted.orElse(null)`. */
         fun showDeleted(showDeleted: Optional<String>) = showDeleted(showDeleted.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

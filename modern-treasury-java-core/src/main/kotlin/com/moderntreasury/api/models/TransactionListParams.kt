@@ -162,6 +162,7 @@ private constructor(
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -170,10 +171,7 @@ private constructor(
          */
         fun asOfDateEnd(asOfDateEnd: LocalDate?) = apply { this.asOfDateEnd = asOfDateEnd }
 
-        /**
-         * Filters transactions with an `as_of_date` starting on or before the specified date
-         * (YYYY-MM-DD).
-         */
+        /** Alias for calling [Builder.asOfDateEnd] with `asOfDateEnd.orElse(null)`. */
         fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.getOrNull())
 
         /**
@@ -182,26 +180,25 @@ private constructor(
          */
         fun asOfDateStart(asOfDateStart: LocalDate?) = apply { this.asOfDateStart = asOfDateStart }
 
-        /**
-         * Filters transactions with an `as_of_date` starting on or after the specified date
-         * (YYYY-MM-DD).
-         */
+        /** Alias for calling [Builder.asOfDateStart] with `asOfDateStart.orElse(null)`. */
         fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
             asOfDateStart(asOfDateStart.getOrNull())
 
         fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
 
+        /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
 
         /** Filters for transactions including the queried string in the description. */
         fun description(description: String?) = apply { this.description = description }
 
-        /** Filters for transactions including the queried string in the description. */
+        /** Alias for calling [Builder.description] with `description.orElse(null)`. */
         fun description(description: Optional<String>) = description(description.getOrNull())
 
         fun direction(direction: String?) = apply { this.direction = direction }
 
+        /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<String>) = direction(direction.getOrNull())
 
         /**
@@ -211,9 +208,7 @@ private constructor(
             this.internalAccountId = internalAccountId
         }
 
-        /**
-         * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
-         */
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
         fun internalAccountId(internalAccountId: Optional<String>) =
             internalAccountId(internalAccountId.getOrNull())
 
@@ -223,35 +218,44 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         fun paymentType(paymentType: String?) = apply { this.paymentType = paymentType }
 
+        /** Alias for calling [Builder.paymentType] with `paymentType.orElse(null)`. */
         fun paymentType(paymentType: Optional<String>) = paymentType(paymentType.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** Either `true` or `false`. */
         fun posted(posted: Boolean?) = apply { this.posted = posted }
 
-        /** Either `true` or `false`. */
+        /**
+         * Alias for [Builder.posted].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun posted(posted: Boolean) = posted(posted as Boolean?)
 
-        /** Either `true` or `false`. */
+        /** Alias for calling [Builder.posted] with `posted.orElse(null)`. */
         fun posted(posted: Optional<Boolean>) = posted(posted.getOrNull())
 
         fun transactableType(transactableType: String?) = apply {
             this.transactableType = transactableType
         }
 
+        /** Alias for calling [Builder.transactableType] with `transactableType.orElse(null)`. */
         fun transactableType(transactableType: Optional<String>) =
             transactableType(transactableType.getOrNull())
 
@@ -261,16 +265,14 @@ private constructor(
          */
         fun vendorId(vendorId: String?) = apply { this.vendorId = vendorId }
 
-        /**
-         * Filters for transactions including the queried vendor id (an identifier given to
-         * transactions by the bank).
-         */
+        /** Alias for calling [Builder.vendorId] with `vendorId.orElse(null)`. */
         fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
 
         fun virtualAccountId(virtualAccountId: String?) = apply {
             this.virtualAccountId = virtualAccountId
         }
 
+        /** Alias for calling [Builder.virtualAccountId] with `virtualAccountId.orElse(null)`. */
         fun virtualAccountId(virtualAccountId: Optional<String>) =
             virtualAccountId(virtualAccountId.getOrNull())
 

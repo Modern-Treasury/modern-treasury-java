@@ -258,20 +258,19 @@ private constructor(
          */
         fun id(id: List<String>?) = apply { this.id = id?.toMutableList() }
 
-        /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
-         */
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<List<String>>) = id(id.getOrNull())
 
         /**
-         * If you have specific IDs to retrieve in bulk, you can pass them as query parameters
-         * delimited with `id[]=`, for example `?id[]=123&id[]=abc`.
+         * Adds a single [String] to [Builder.id].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { this.id = (this.id ?: mutableListOf()).apply { add(id) } }
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
+        /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /**
@@ -283,15 +282,13 @@ private constructor(
         }
 
         /**
-         * Shows all ledger entries that were present on a ledger account at a particular
-         * `lock_version`. You must also specify `ledger_account_id`.
+         * Alias for [Builder.asOfLockVersion].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun asOfLockVersion(asOfLockVersion: Long) = asOfLockVersion(asOfLockVersion as Long?)
 
-        /**
-         * Shows all ledger entries that were present on a ledger account at a particular
-         * `lock_version`. You must also specify `ledger_account_id`.
-         */
+        /** Alias for calling [Builder.asOfLockVersion] with `asOfLockVersion.orElse(null)`. */
         fun asOfLockVersion(asOfLockVersion: Optional<Long>) =
             asOfLockVersion(asOfLockVersion.getOrNull())
 
@@ -301,10 +298,7 @@ private constructor(
          */
         fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
 
-        /**
-         * If true, response will include ledger entries that were deleted. When you update a ledger
-         * transaction to specify a new set of entries, the previous entries are deleted.
-         */
+        /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /**
@@ -313,10 +307,7 @@ private constructor(
          */
         fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
-         * transaction's effective time. Format ISO8601
-         */
+        /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
         fun effectiveAt(effectiveAt: Optional<EffectiveAt>) = effectiveAt(effectiveAt.getOrNull())
 
         /**
@@ -327,10 +318,7 @@ private constructor(
             this.effectiveDate = effectiveDate
         }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the
-         * transaction's effective date. Format YYYY-MM-DD
-         */
+        /** Alias for calling [Builder.effectiveDate] with `effectiveDate.orElse(null)`. */
         fun effectiveDate(effectiveDate: Optional<EffectiveDate>) =
             effectiveDate(effectiveDate.getOrNull())
 
@@ -339,7 +327,10 @@ private constructor(
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
         }
 
-        /** Get all ledger entries that match the direction specified. One of `credit`, `debit`. */
+        /**
+         * Alias for calling [Builder.ledgerAccountCategoryId] with
+         * `ledgerAccountCategoryId.orElse(null)`.
+         */
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: Optional<String>) =
             ledgerAccountCategoryId(ledgerAccountCategoryId.getOrNull())
 
@@ -347,6 +338,7 @@ private constructor(
             this.ledgerAccountId = ledgerAccountId
         }
 
+        /** Alias for calling [Builder.ledgerAccountId] with `ledgerAccountId.orElse(null)`. */
         fun ledgerAccountId(ledgerAccountId: Optional<String>) =
             ledgerAccountId(ledgerAccountId.getOrNull())
 
@@ -360,9 +352,8 @@ private constructor(
         }
 
         /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the lock_version
-         * of a ledger account. For example, for all entries created at or before before
-         * lock_version 1000 of a ledger account, use `ledger_account_lock_version%5Blte%5D=1000`.
+         * Alias for calling [Builder.ledgerAccountLockVersion] with
+         * `ledgerAccountLockVersion.orElse(null)`.
          */
         fun ledgerAccountLockVersion(ledgerAccountLockVersion: Optional<LedgerAccountLockVersion>) =
             ledgerAccountLockVersion(ledgerAccountLockVersion.getOrNull())
@@ -371,6 +362,10 @@ private constructor(
             this.ledgerAccountPayoutId = ledgerAccountPayoutId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerAccountPayoutId] with
+         * `ledgerAccountPayoutId.orElse(null)`.
+         */
         fun ledgerAccountPayoutId(ledgerAccountPayoutId: Optional<String>) =
             ledgerAccountPayoutId(ledgerAccountPayoutId.getOrNull())
 
@@ -378,6 +373,10 @@ private constructor(
             this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerAccountSettlementId] with
+         * `ledgerAccountSettlementId.orElse(null)`.
+         */
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
             ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
@@ -386,7 +385,10 @@ private constructor(
             this.ledgerAccountStatementId = ledgerAccountStatementId
         }
 
-        /** Get all ledger entries that are included in the ledger account statement. */
+        /**
+         * Alias for calling [Builder.ledgerAccountStatementId] with
+         * `ledgerAccountStatementId.orElse(null)`.
+         */
         fun ledgerAccountStatementId(ledgerAccountStatementId: Optional<String>) =
             ledgerAccountStatementId(ledgerAccountStatementId.getOrNull())
 
@@ -394,6 +396,9 @@ private constructor(
             this.ledgerTransactionId = ledgerTransactionId
         }
 
+        /**
+         * Alias for calling [Builder.ledgerTransactionId] with `ledgerTransactionId.orElse(null)`.
+         */
         fun ledgerTransactionId(ledgerTransactionId: Optional<String>) =
             ledgerTransactionId(ledgerTransactionId.getOrNull())
 
@@ -403,10 +408,7 @@ private constructor(
          */
         fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
         /**
@@ -416,17 +418,19 @@ private constructor(
          */
         fun orderBy(orderBy: OrderBy?) = apply { this.orderBy = orderBy }
 
-        /**
-         * Order by `created_at` or `effective_at` in `asc` or `desc` order. For example, to order
-         * by `effective_at asc`, use `order_by%5Beffective_at%5D=asc`. Ordering by only one field
-         * at a time is supported.
-         */
+        /** Alias for calling [Builder.orderBy] with `orderBy.orElse(null)`. */
         fun orderBy(orderBy: Optional<OrderBy>) = orderBy(orderBy.getOrNull())
 
         fun perPage(perPage: Long?) = apply { this.perPage = perPage }
 
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun perPage(perPage: Long) = perPage(perPage as Long?)
 
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
@@ -436,15 +440,13 @@ private constructor(
         fun showBalances(showBalances: Boolean?) = apply { this.showBalances = showBalances }
 
         /**
-         * If true, response will include the balances attached to the ledger entry. If there is no
-         * balance available, null will be returned instead.
+         * Alias for [Builder.showBalances].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun showBalances(showBalances: Boolean) = showBalances(showBalances as Boolean?)
 
-        /**
-         * If true, response will include the balances attached to the ledger entry. If there is no
-         * balance available, null will be returned instead.
-         */
+        /** Alias for calling [Builder.showBalances] with `showBalances.orElse(null)`. */
         fun showBalances(showBalances: Optional<Boolean>) = showBalances(showBalances.getOrNull())
 
         /**
@@ -454,15 +456,13 @@ private constructor(
         fun showDeleted(showDeleted: Boolean?) = apply { this.showDeleted = showDeleted }
 
         /**
-         * If true, response will include ledger entries that were deleted. When you update a ledger
-         * transaction to specify a new set of entries, the previous entries are deleted.
+         * Alias for [Builder.showDeleted].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun showDeleted(showDeleted: Boolean) = showDeleted(showDeleted as Boolean?)
 
-        /**
-         * If true, response will include ledger entries that were deleted. When you update a ledger
-         * transaction to specify a new set of entries, the previous entries are deleted.
-         */
+        /** Alias for calling [Builder.showDeleted] with `showDeleted.orElse(null)`. */
         fun showDeleted(showDeleted: Optional<Boolean>) = showDeleted(showDeleted.getOrNull())
 
         /**
@@ -471,10 +471,7 @@ private constructor(
          */
         fun status(status: Status?) = apply { this.status = status }
 
-        /**
-         * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
-         * `archived`.
-         */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
@@ -484,11 +481,7 @@ private constructor(
          */
         fun updatedAt(updatedAt: UpdatedAt?) = apply { this.updatedAt = updatedAt }
 
-        /**
-         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
-         * timestamp. For example, for all times after Jan 1 2000 12:00 UTC, use
-         * updated_at%5Bgt%5D=2000-01-01T12:00:00Z.
-         */
+        /** Alias for calling [Builder.updatedAt] with `updatedAt.orElse(null)`. */
         fun updatedAt(updatedAt: Optional<UpdatedAt>) = updatedAt(updatedAt.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -1071,10 +1064,12 @@ private constructor(
 
             fun createdAt(createdAt: CreatedAt?) = apply { this.createdAt = createdAt }
 
+            /** Alias for calling [Builder.createdAt] with `createdAt.orElse(null)`. */
             fun createdAt(createdAt: Optional<CreatedAt>) = createdAt(createdAt.getOrNull())
 
             fun effectiveAt(effectiveAt: EffectiveAt?) = apply { this.effectiveAt = effectiveAt }
 
+            /** Alias for calling [Builder.effectiveAt] with `effectiveAt.orElse(null)`. */
             fun effectiveAt(effectiveAt: Optional<EffectiveAt>) =
                 effectiveAt(effectiveAt.getOrNull())
 
