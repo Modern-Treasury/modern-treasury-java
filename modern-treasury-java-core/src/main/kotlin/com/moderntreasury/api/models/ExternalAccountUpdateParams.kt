@@ -485,6 +485,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ExternalAccountUpdateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ExternalAccountUpdateRequest =
                 ExternalAccountUpdateRequest(
                     accountType,
@@ -771,6 +776,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalAccountUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalAccountUpdateParams =
             ExternalAccountUpdateParams(
                 checkRequired("id", id),
@@ -843,6 +860,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
@@ -1135,6 +1157,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AddressRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AddressRequest =
                 AddressRequest(
                     country,

@@ -167,6 +167,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerEventHandlerRetrieveParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerEventHandlerRetrieveParams =
             LedgerEventHandlerRetrieveParams(
                 checkRequired("id", id),

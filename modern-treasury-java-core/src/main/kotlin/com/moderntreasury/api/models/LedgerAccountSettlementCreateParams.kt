@@ -631,6 +631,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerAccountSettlementCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .contraLedgerAccountId()
+             * .settledLedgerAccountId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LedgerAccountSettlementCreateRequest =
                 LedgerAccountSettlementCreateRequest(
                     checkRequired("contraLedgerAccountId", contraLedgerAccountId),
@@ -996,6 +1009,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountSettlementCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .contraLedgerAccountId()
+         * .settledLedgerAccountId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountSettlementCreateParams =
             LedgerAccountSettlementCreateParams(
                 body.build(),
@@ -1064,6 +1090,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

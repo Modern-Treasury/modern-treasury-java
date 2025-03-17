@@ -215,6 +215,19 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountCategoryAddLedgerAccountParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .ledgerAccountId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountCategoryAddLedgerAccountParams =
             LedgerAccountCategoryAddLedgerAccountParams(
                 checkRequired("id", id),

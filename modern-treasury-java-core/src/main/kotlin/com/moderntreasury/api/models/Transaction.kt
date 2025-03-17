@@ -1049,6 +1049,40 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Transaction].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .asOfDate()
+         * .asOfTime()
+         * .asOfTimezone()
+         * .createdAt()
+         * .currency()
+         * .customIdentifiers()
+         * .direction()
+         * .discardedAt()
+         * .foreignExchangeRate()
+         * .internalAccountId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .posted()
+         * .reconciled()
+         * .type()
+         * .updatedAt()
+         * .vendorCode()
+         * .vendorCodeType()
+         * .vendorCustomerId()
+         * .vendorId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Transaction =
             Transaction(
                 checkRequired("id", id),
@@ -1143,6 +1177,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomIdentifiers].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CustomIdentifiers = CustomIdentifiers(additionalProperties.toImmutable())
         }
 
@@ -1501,6 +1540,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ForeignExchangeRate].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .baseAmount()
+             * .baseCurrency()
+             * .exponent()
+             * .rateString()
+             * .targetAmount()
+             * .targetCurrency()
+             * .value()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ForeignExchangeRate =
                 ForeignExchangeRate(
                     checkRequired("baseAmount", baseAmount),
@@ -1592,6 +1649,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
@@ -2192,6 +2254,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Details].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Details = Details(additionalProperties.toImmutable())
         }
 

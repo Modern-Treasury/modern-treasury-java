@@ -272,6 +272,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [TransactionLineItemCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .expectedPaymentId()
+             * .transactionId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): TransactionLineItemCreateRequest =
                 TransactionLineItemCreateRequest(
                     checkRequired("amount", amount),
@@ -496,6 +510,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [TransactionLineItemCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .amount()
+         * .expectedPaymentId()
+         * .transactionId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): TransactionLineItemCreateParams =
             TransactionLineItemCreateParams(
                 body.build(),

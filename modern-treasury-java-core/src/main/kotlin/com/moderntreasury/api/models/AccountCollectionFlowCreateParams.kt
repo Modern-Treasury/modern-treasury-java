@@ -293,6 +293,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountCollectionFlowCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .counterpartyId()
+             * .paymentTypes()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountCollectionFlowCreateRequest =
                 AccountCollectionFlowCreateRequest(
                     checkRequired("counterpartyId", counterpartyId),
@@ -530,6 +543,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountCollectionFlowCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .counterpartyId()
+         * .paymentTypes()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountCollectionFlowCreateParams =
             AccountCollectionFlowCreateParams(
                 body.build(),

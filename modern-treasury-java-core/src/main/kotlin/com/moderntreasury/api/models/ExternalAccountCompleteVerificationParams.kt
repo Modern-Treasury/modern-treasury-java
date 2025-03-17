@@ -176,6 +176,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ExternalAccountCompleteVerificationRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ExternalAccountCompleteVerificationRequest =
                 ExternalAccountCompleteVerificationRequest(
                     (amounts ?: JsonMissing.of()).map { it.toImmutable() },
@@ -376,6 +381,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalAccountCompleteVerificationParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalAccountCompleteVerificationParams =
             ExternalAccountCompleteVerificationParams(
                 checkRequired("id", id),

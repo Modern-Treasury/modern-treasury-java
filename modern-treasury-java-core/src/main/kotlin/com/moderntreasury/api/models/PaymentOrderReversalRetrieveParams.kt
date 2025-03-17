@@ -176,6 +176,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PaymentOrderReversalRetrieveParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .paymentOrderId()
+         * .reversalId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PaymentOrderReversalRetrieveParams =
             PaymentOrderReversalRetrieveParams(
                 checkRequired("paymentOrderId", paymentOrderId),

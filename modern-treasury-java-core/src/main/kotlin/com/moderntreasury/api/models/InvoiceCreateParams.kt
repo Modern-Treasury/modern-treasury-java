@@ -1738,6 +1738,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InvoiceCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .counterpartyId()
+             * .dueDate()
+             * .originatingAccountId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InvoiceCreateRequest =
                 InvoiceCreateRequest(
                     checkRequired("counterpartyId", counterpartyId),
@@ -2486,6 +2500,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [InvoiceCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .counterpartyId()
+         * .dueDate()
+         * .originatingAccountId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): InvoiceCreateParams =
             InvoiceCreateParams(
                 body.build(),
@@ -2844,6 +2872,25 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ContactDetail].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .contactIdentifier()
+             * .contactIdentifierType()
+             * .createdAt()
+             * .discardedAt()
+             * .liveMode()
+             * .object_()
+             * .updatedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ContactDetail =
                 ContactDetail(
                     checkRequired("id", id),
@@ -3259,6 +3306,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CounterpartyBillingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CounterpartyBillingAddress =
                 CounterpartyBillingAddress(
                     checkRequired("country", country),
@@ -3556,6 +3619,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CounterpartyShippingAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CounterpartyShippingAddress =
                 CounterpartyShippingAddress(
                     checkRequired("country", country),
@@ -3919,6 +3998,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InvoiceLineItemCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * .unitAmount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InvoiceLineItemCreateRequest =
                 InvoiceLineItemCreateRequest(
                     checkRequired("name", name),
@@ -3997,6 +4089,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -4300,6 +4397,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InvoicerAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .country()
+             * .line1()
+             * .locality()
+             * .postalCode()
+             * .region()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InvoicerAddress =
                 InvoicerAddress(
                     checkRequired("country", country),
@@ -4390,6 +4503,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

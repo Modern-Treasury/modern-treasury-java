@@ -159,6 +159,11 @@ class ModernTreasuryOkHttpClient private constructor() {
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
+        /**
+         * Returns an immutable instance of [ModernTreasuryClient].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): ModernTreasuryClient =
             ModernTreasuryClientImpl(
                 clientOptions

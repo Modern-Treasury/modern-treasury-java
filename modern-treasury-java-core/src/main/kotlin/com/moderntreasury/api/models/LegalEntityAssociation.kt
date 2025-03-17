@@ -509,6 +509,28 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [LegalEntityAssociation].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .childLegalEntity()
+         * .createdAt()
+         * .discardedAt()
+         * .liveMode()
+         * .object_()
+         * .ownershipPercentage()
+         * .parentLegalEntityId()
+         * .relationshipTypes()
+         * .title()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LegalEntityAssociation =
             LegalEntityAssociation(
                 checkRequired("id", id),
@@ -1801,6 +1823,46 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ChildLegalEntity].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .addresses()
+             * .bankSettings()
+             * .businessName()
+             * .citizenshipCountry()
+             * .createdAt()
+             * .dateFormed()
+             * .dateOfBirth()
+             * .discardedAt()
+             * .doingBusinessAsNames()
+             * .email()
+             * .firstName()
+             * .identifications()
+             * .lastName()
+             * .legalEntityType()
+             * .legalStructure()
+             * .liveMode()
+             * .metadata()
+             * .middleName()
+             * .object_()
+             * .phoneNumbers()
+             * .politicallyExposedPerson()
+             * .preferredName()
+             * .prefix()
+             * .riskRating()
+             * .suffix()
+             * .updatedAt()
+             * .wealthAndEmploymentDetails()
+             * .website()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ChildLegalEntity =
                 ChildLegalEntity(
                     checkRequired("id", id),
@@ -2404,6 +2466,30 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LegalEntityAddress].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .id()
+                 * .addressTypes()
+                 * .country()
+                 * .createdAt()
+                 * .discardedAt()
+                 * .line1()
+                 * .line2()
+                 * .liveMode()
+                 * .locality()
+                 * .object_()
+                 * .postalCode()
+                 * .region()
+                 * .updatedAt()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LegalEntityAddress =
                     LegalEntityAddress(
                         checkRequired("id", id),
@@ -2939,6 +3025,25 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Identification].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .id()
+                 * .createdAt()
+                 * .discardedAt()
+                 * .idType()
+                 * .issuingCountry()
+                 * .liveMode()
+                 * .object_()
+                 * .updatedAt()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Identification =
                     Identification(
                         checkRequired("id", id),
@@ -3499,6 +3604,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -3618,6 +3728,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [PhoneNumber].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): PhoneNumber =
                     PhoneNumber(phoneNumber, additionalProperties.toImmutable())
             }

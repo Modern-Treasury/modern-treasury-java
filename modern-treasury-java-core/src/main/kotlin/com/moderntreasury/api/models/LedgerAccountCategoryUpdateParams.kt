@@ -272,6 +272,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerAccountCategoryUpdateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): LedgerAccountCategoryUpdateRequest =
                 LedgerAccountCategoryUpdateRequest(
                     description,
@@ -494,6 +499,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountCategoryUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountCategoryUpdateParams =
             LedgerAccountCategoryUpdateParams(
                 checkRequired("id", id),
@@ -563,6 +580,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

@@ -429,6 +429,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PaymentOrderListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): PaymentOrderListParams =
             PaymentOrderListParams(
                 afterCursor,
@@ -533,6 +538,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.build())
         }
 
