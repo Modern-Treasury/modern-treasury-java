@@ -72,27 +72,40 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.id?.let { queryParams.put("id[]", it.map(Any::toString)) }
-        this.afterCursor?.let { queryParams.put("after_cursor", listOf(it.toString())) }
-        this.balances?.forEachQueryParam { key, values ->
-            queryParams.put("balances[$key]", values)
-        }
-        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
-        this.ledgerAccountId?.let { queryParams.put("ledger_account_id", listOf(it.toString())) }
-        this.ledgerId?.let { queryParams.put("ledger_id", listOf(it.toString())) }
-        this.metadata?.forEachQueryParam { key, values ->
-            queryParams.put("metadata[$key]", values)
-        }
-        this.name?.let { queryParams.put("name", listOf(it.toString())) }
-        this.parentLedgerAccountCategoryId?.let {
-            queryParams.put("parent_ledger_account_category_id", listOf(it.toString()))
-        }
-        this.perPage?.let { queryParams.put("per_page", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                id?.forEach { put("id[]", it) }
+                afterCursor?.let { put("after_cursor", it) }
+                balances?.let {
+                    it.effectiveAt().ifPresent {
+                        put(
+                            "balances[effective_at]",
+                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
+                        )
+                    }
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("balances[$key]", value)
+                        }
+                    }
+                }
+                currency?.let { put("currency", it) }
+                ledgerAccountId?.let { put("ledger_account_id", it) }
+                ledgerId?.let { put("ledger_id", it) }
+                metadata?.let {
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("metadata[$key]", value)
+                        }
+                    }
+                }
+                name?.let { put("name", it) }
+                parentLedgerAccountCategoryId?.let { put("parent_ledger_account_category_id", it) }
+                perPage?.let { put("per_page", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun toBuilder() = Builder().from(this)
 
@@ -366,14 +379,6 @@ private constructor(
 
         fun _additionalProperties(): QueryParams = additionalProperties
 
-        @JvmSynthetic
-        internal fun forEachQueryParam(putParam: (String, List<String>) -> Unit) {
-            this.effectiveAt?.let {
-                putParam("effective_at", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-            }
-            additionalProperties.keys().forEach { putParam(it, additionalProperties.values(it)) }
-        }
-
         fun toBuilder() = Builder().from(this)
 
         companion object {
@@ -482,11 +487,6 @@ private constructor(
     class Metadata private constructor(private val additionalProperties: QueryParams) {
 
         fun _additionalProperties(): QueryParams = additionalProperties
-
-        @JvmSynthetic
-        internal fun forEachQueryParam(putParam: (String, List<String>) -> Unit) {
-            additionalProperties.keys().forEach { putParam(it, additionalProperties.values(it)) }
-        }
 
         fun toBuilder() = Builder().from(this)
 
