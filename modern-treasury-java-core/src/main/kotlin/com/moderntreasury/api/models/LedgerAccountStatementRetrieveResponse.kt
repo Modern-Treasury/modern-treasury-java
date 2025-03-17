@@ -672,6 +672,32 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountStatementRetrieveResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .description()
+         * .effectiveAtLowerBound()
+         * .effectiveAtUpperBound()
+         * .endingBalance()
+         * .ledgerAccountId()
+         * .ledgerAccountLockVersion()
+         * .ledgerAccountNormalBalance()
+         * .ledgerId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .startingBalance()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountStatementRetrieveResponse =
             LedgerAccountStatementRetrieveResponse(
                 checkRequired("id", id),
@@ -891,6 +917,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerBalances].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .availableBalance()
+             * .pendingBalance()
+             * .postedBalance()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LedgerBalances =
                 LedgerBalances(
                     checkRequired("availableBalance", availableBalance),
@@ -1146,6 +1186,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerBalance].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .credits()
+                 * .currency()
+                 * .currencyExponent()
+                 * .debits()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LedgerBalance =
                     LedgerBalance(
                         checkRequired("amount", amount),
@@ -1253,6 +1309,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

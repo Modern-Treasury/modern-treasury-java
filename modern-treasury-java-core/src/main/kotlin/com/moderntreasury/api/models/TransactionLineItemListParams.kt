@@ -220,6 +220,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [TransactionLineItemListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): TransactionLineItemListParams =
             TransactionLineItemListParams(
                 id,
@@ -308,6 +313,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Id].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Id = Id(additionalProperties.build())
         }
 

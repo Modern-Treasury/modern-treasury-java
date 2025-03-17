@@ -1002,6 +1002,39 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ReturnObject].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .code()
+         * .createdAt()
+         * .currency()
+         * .currentReturn()
+         * .dateOfDeath()
+         * .failureReason()
+         * .internalAccountId()
+         * .ledgerTransactionId()
+         * .liveMode()
+         * .object_()
+         * .reason()
+         * .referenceNumbers()
+         * .returnableId()
+         * .returnableType()
+         * .role()
+         * .status()
+         * .transactionId()
+         * .transactionLineItemId()
+         * .type()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ReturnObject =
             ReturnObject(
                 checkRequired("id", id),
@@ -1752,6 +1785,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [PaymentReference].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .createdAt()
+             * .liveMode()
+             * .object_()
+             * .referenceNumber()
+             * .referenceNumberType()
+             * .updatedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): PaymentReference =
                 PaymentReference(
                     checkRequired("id", id),

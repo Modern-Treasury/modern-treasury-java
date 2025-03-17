@@ -441,6 +441,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ForeignExchangeQuoteCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .internalAccountId()
+             * .targetCurrency()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ForeignExchangeQuoteCreateRequest =
                 ForeignExchangeQuoteCreateRequest(
                     checkRequired("internalAccountId", internalAccountId),
@@ -710,6 +723,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ForeignExchangeQuoteCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .internalAccountId()
+         * .targetCurrency()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ForeignExchangeQuoteCreateParams =
             ForeignExchangeQuoteCreateParams(
                 body.build(),

@@ -266,6 +266,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [BulkResultListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): BulkResultListParams =
             BulkResultListParams(
                 afterCursor,

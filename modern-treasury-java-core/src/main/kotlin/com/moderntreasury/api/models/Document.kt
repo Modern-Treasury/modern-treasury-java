@@ -524,6 +524,29 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Document].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .discardedAt()
+         * .documentDetails()
+         * .documentType()
+         * .documentableId()
+         * .documentableType()
+         * .file()
+         * .liveMode()
+         * .object_()
+         * .source()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Document =
             Document(
                 checkRequired("id", id),
@@ -891,6 +914,25 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [DocumentDetail].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .createdAt()
+             * .discardedAt()
+             * .documentIdentifier()
+             * .documentIdentifierType()
+             * .liveMode()
+             * .object_()
+             * .updatedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): DocumentDetail =
                 DocumentDetail(
                     checkRequired("id", id),
@@ -1253,6 +1295,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [File].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): File =
                 File(contentType, filename, size, additionalProperties.toImmutable())
         }
