@@ -452,6 +452,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [BalanceReport].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .asOfDate()
+         * .asOfTime()
+         * .balanceReportType()
+         * .balances()
+         * .createdAt()
+         * .internalAccountId()
+         * .liveMode()
+         * .object_()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): BalanceReport =
             BalanceReport(
                 checkRequired("id", id),
@@ -1137,6 +1158,30 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Balance].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .amount()
+             * .asOfDate()
+             * .asOfTime()
+             * .balanceType()
+             * .createdAt()
+             * .currency()
+             * .liveMode()
+             * .object_()
+             * .updatedAt()
+             * .valueDate()
+             * .vendorCode()
+             * .vendorCodeType()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Balance =
                 Balance(
                     checkRequired("id", id),

@@ -272,6 +272,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerTransactionVersionListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): LedgerTransactionVersionListParams =
             LedgerTransactionVersionListParams(
                 afterCursor,
@@ -366,6 +371,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [CreatedAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CreatedAt = CreatedAt(additionalProperties.build())
         }
 
@@ -466,6 +476,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Version].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Version = Version(additionalProperties.build())
         }
 

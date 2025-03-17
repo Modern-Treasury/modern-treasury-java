@@ -2347,6 +2347,67 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PaymentOrder].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accounting()
+         * .accountingCategoryId()
+         * .accountingLedgerClassId()
+         * .amount()
+         * .chargeBearer()
+         * .complianceRuleMetadata()
+         * .counterpartyId()
+         * .createdAt()
+         * .currency()
+         * .currentReturn()
+         * .decisionId()
+         * .description()
+         * .direction()
+         * .effectiveDate()
+         * .expiresAt()
+         * .foreignExchangeContract()
+         * .foreignExchangeIndicator()
+         * .foreignExchangeRate()
+         * .ledgerTransactionId()
+         * .liveMode()
+         * .metadata()
+         * .nsfProtected()
+         * .object_()
+         * .originatingAccountId()
+         * .originatingPartyName()
+         * .priority()
+         * .processAfter()
+         * .purpose()
+         * .receivingAccountId()
+         * .receivingAccountType()
+         * .referenceNumbers()
+         * .remittanceInformation()
+         * .sendRemittanceAdvice()
+         * .statementDescriptor()
+         * .status()
+         * .subtype()
+         * .transactionIds()
+         * .transactionMonitoringEnabled()
+         * .type()
+         * .ultimateOriginatingAccount()
+         * .ultimateOriginatingAccountId()
+         * .ultimateOriginatingAccountType()
+         * .ultimateOriginatingPartyIdentifier()
+         * .ultimateOriginatingPartyName()
+         * .ultimateReceivingPartyIdentifier()
+         * .ultimateReceivingPartyName()
+         * .updatedAt()
+         * .vendorAttributes()
+         * .vendorFailureReason()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PaymentOrder =
             PaymentOrder(
                 checkRequired("id", id),
@@ -2547,6 +2608,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Accounting].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Accounting =
                 Accounting(accountId, classId, additionalProperties.toImmutable())
         }
@@ -2748,6 +2814,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ComplianceRuleMetadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ComplianceRuleMetadata =
                 ComplianceRuleMetadata(additionalProperties.toImmutable())
         }
@@ -3330,6 +3401,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ForeignExchangeRate].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .baseAmount()
+             * .baseCurrency()
+             * .exponent()
+             * .rateString()
+             * .targetAmount()
+             * .targetCurrency()
+             * .value()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ForeignExchangeRate =
                 ForeignExchangeRate(
                     checkRequired("baseAmount", baseAmount),
@@ -3421,6 +3510,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
@@ -3967,6 +4061,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [PaymentReference].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .createdAt()
+             * .liveMode()
+             * .object_()
+             * .referenceNumber()
+             * .referenceNumberType()
+             * .updatedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): PaymentReference =
                 PaymentReference(
                     checkRequired("id", id),

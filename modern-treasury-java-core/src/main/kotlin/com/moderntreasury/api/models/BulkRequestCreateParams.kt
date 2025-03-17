@@ -436,6 +436,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [BulkRequestCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .actionType()
+             * .resourceType()
+             * .resources()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): BulkRequestCreateRequest =
                 BulkRequestCreateRequest(
                     checkRequired("actionType", actionType),
@@ -747,6 +761,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [BulkRequestCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .actionType()
+         * .resourceType()
+         * .resources()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): BulkRequestCreateParams =
             BulkRequestCreateParams(
                 body.build(),
@@ -3167,6 +3195,21 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [PaymentOrderAsyncCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .direction()
+                 * .originatingAccountId()
+                 * .type()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): PaymentOrderAsyncCreateRequest =
                     PaymentOrderAsyncCreateRequest(
                         checkRequired("amount", amount),
@@ -3473,6 +3516,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Accounting].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Accounting =
                         Accounting(accountId, classId, additionalProperties.toImmutable())
                 }
@@ -4311,6 +4359,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerTransactionCreateRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .ledgerEntries()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerTransactionCreateRequest =
                         LedgerTransactionCreateRequest(
                             checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
@@ -4897,6 +4957,20 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [LedgerEntryCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .amount()
+                         * .direction()
+                         * .ledgerAccountId()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): LedgerEntryCreateRequest =
                             LedgerEntryCreateRequest(
                                 checkRequired("amount", amount),
@@ -4986,6 +5060,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [AvailableBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): AvailableBalanceAmount =
                                 AvailableBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -5078,6 +5158,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [Metadata].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                         }
 
@@ -5172,6 +5258,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [PendingBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): PendingBalanceAmount =
                                 PendingBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -5267,6 +5359,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [PostedBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): PostedBalanceAmount =
                                 PostedBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -5515,6 +5613,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -5911,6 +6014,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LineItemRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LineItemRequest =
                         LineItemRequest(
                             checkRequired("amount", amount),
@@ -5988,6 +6103,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -6092,6 +6212,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -6820,6 +6945,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ReceivingAccount].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ReceivingAccount =
                         ReceivingAccount(
                             (accountDetails ?: JsonMissing.of()).map { it.toImmutable() },
@@ -6985,6 +7115,18 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AccountDetail].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .accountNumber()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): AccountDetail =
                             AccountDetail(
                                 checkRequired("accountNumber", accountNumber),
@@ -7319,6 +7461,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [ContactDetailCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): ContactDetailCreateRequest =
                             ContactDetailCreateRequest(
                                 contactIdentifier,
@@ -8002,6 +8149,21 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [LedgerAccountCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .currency()
+                         * .ledgerId()
+                         * .name()
+                         * .normalBalance()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): LedgerAccountCreateRequest =
                             LedgerAccountCreateRequest(
                                 checkRequired("currency", currency),
@@ -8218,6 +8380,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [Metadata].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                         }
 
@@ -8324,6 +8492,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -8648,6 +8821,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AddressRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): AddressRequest =
                             AddressRequest(
                                 country,
@@ -8974,6 +9152,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [RoutingDetail].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .routingNumber()
+                         * .routingNumberType()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): RoutingDetail =
                             RoutingDetail(
                                 checkRequired("routingNumber", routingNumber),
@@ -10491,6 +10682,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [ExpectedPaymentCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): ExpectedPaymentCreateRequest =
                     ExpectedPaymentCreateRequest(
                         amountLowerBound,
@@ -11103,6 +11299,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerTransactionCreateRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .ledgerEntries()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerTransactionCreateRequest =
                         LedgerTransactionCreateRequest(
                             checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
@@ -11689,6 +11897,20 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [LedgerEntryCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .amount()
+                         * .direction()
+                         * .ledgerAccountId()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): LedgerEntryCreateRequest =
                             LedgerEntryCreateRequest(
                                 checkRequired("amount", amount),
@@ -11778,6 +12000,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [AvailableBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): AvailableBalanceAmount =
                                 AvailableBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -11870,6 +12098,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [Metadata].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                         }
 
@@ -11964,6 +12198,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [PendingBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): PendingBalanceAmount =
                                 PendingBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -12059,6 +12299,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [PostedBalanceAmount].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): PostedBalanceAmount =
                                 PostedBalanceAmount(additionalProperties.toImmutable())
                         }
@@ -12307,6 +12553,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -12703,6 +12954,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LineItemRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LineItemRequest =
                         LineItemRequest(
                             checkRequired("amount", amount),
@@ -12780,6 +13043,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -12884,6 +13152,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -13388,6 +13661,18 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerTransactionCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .ledgerEntries()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LedgerTransactionCreateRequest =
                     LedgerTransactionCreateRequest(
                         checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
@@ -13953,6 +14238,20 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerEntryCreateRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * .direction()
+                     * .ledgerAccountId()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerEntryCreateRequest =
                         LedgerEntryCreateRequest(
                             checkRequired("amount", amount),
@@ -14040,6 +14339,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AvailableBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): AvailableBalanceAmount =
                             AvailableBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -14129,6 +14433,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -14221,6 +14530,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [PendingBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): PendingBalanceAmount =
                             PendingBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -14315,6 +14629,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [PostedBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): PostedBalanceAmount =
                             PostedBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -14560,6 +14879,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -15204,6 +15528,23 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [TransactionCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .asOfDate()
+                 * .direction()
+                 * .internalAccountId()
+                 * .vendorCode()
+                 * .vendorCodeType()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): TransactionCreateRequest =
                     TransactionCreateRequest(
                         checkRequired("amount", amount),
@@ -15286,6 +15627,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -15697,6 +16043,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Id].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Id = Id(id, additionalProperties.toImmutable())
             }
 
@@ -17481,6 +17832,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [PaymentOrderUpdateRequestWithId].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): PaymentOrderUpdateRequestWithId =
                     PaymentOrderUpdateRequestWithId(
                         id,
@@ -17676,6 +18032,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Accounting].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Accounting =
                         Accounting(accountId, classId, additionalProperties.toImmutable())
                 }
@@ -18392,6 +18753,18 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LineItemRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LineItemRequest =
                         LineItemRequest(
                             checkRequired("amount", amount),
@@ -18469,6 +18842,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -18573,6 +18951,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -19301,6 +19684,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ReceivingAccount].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ReceivingAccount =
                         ReceivingAccount(
                             (accountDetails ?: JsonMissing.of()).map { it.toImmutable() },
@@ -19466,6 +19854,18 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AccountDetail].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .accountNumber()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): AccountDetail =
                             AccountDetail(
                                 checkRequired("accountNumber", accountNumber),
@@ -19800,6 +20200,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [ContactDetailCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): ContactDetailCreateRequest =
                             ContactDetailCreateRequest(
                                 contactIdentifier,
@@ -20483,6 +20888,21 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [LedgerAccountCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .currency()
+                         * .ledgerId()
+                         * .name()
+                         * .normalBalance()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): LedgerAccountCreateRequest =
                             LedgerAccountCreateRequest(
                                 checkRequired("currency", currency),
@@ -20699,6 +21119,12 @@ private constructor(
                                 keys.forEach(::removeAdditionalProperty)
                             }
 
+                            /**
+                             * Returns an immutable instance of [Metadata].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             */
                             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                         }
 
@@ -20805,6 +21231,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -21129,6 +21560,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AddressRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): AddressRequest =
                             AddressRequest(
                                 country,
@@ -21455,6 +21891,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [RoutingDetail].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .routingNumber()
+                         * .routingNumberType()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): RoutingDetail =
                             RoutingDetail(
                                 checkRequired("routingNumber", routingNumber),
@@ -23058,6 +23507,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [ExpectedPaymentUpdateRequestWithId].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): ExpectedPaymentUpdateRequestWithId =
                     ExpectedPaymentUpdateRequestWithId(
                         id,
@@ -23257,6 +23711,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -23534,6 +23993,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [TransactionUpdateRequestWithId].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): TransactionUpdateRequestWithId =
                     TransactionUpdateRequestWithId(id, metadata, additionalProperties.toImmutable())
             }
@@ -23604,6 +24068,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -24048,6 +24517,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerTransactionUpdateRequestWithId].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): LedgerTransactionUpdateRequestWithId =
                     LedgerTransactionUpdateRequestWithId(
                         id,
@@ -24612,6 +25086,20 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerEntryCreateRequest].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * .direction()
+                     * .ledgerAccountId()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerEntryCreateRequest =
                         LedgerEntryCreateRequest(
                             checkRequired("amount", amount),
@@ -24699,6 +25187,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [AvailableBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): AvailableBalanceAmount =
                             AvailableBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -24788,6 +25281,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -24880,6 +25378,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [PendingBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): PendingBalanceAmount =
                             PendingBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -24974,6 +25477,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [PostedBalanceAmount].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): PostedBalanceAmount =
                             PostedBalanceAmount(additionalProperties.toImmutable())
                     }
@@ -25219,6 +25727,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -25429,6 +25942,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

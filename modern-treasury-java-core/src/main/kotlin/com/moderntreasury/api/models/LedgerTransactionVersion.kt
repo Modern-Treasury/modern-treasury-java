@@ -896,6 +896,37 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerTransactionVersion].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .createdAt()
+         * .description()
+         * .effectiveAt()
+         * .effectiveDate()
+         * .externalId()
+         * .ledgerEntries()
+         * .ledgerId()
+         * .ledgerTransactionId()
+         * .ledgerableId()
+         * .ledgerableType()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .partiallyPostsLedgerTransactionId()
+         * .postedAt()
+         * .reversedByLedgerTransactionId()
+         * .reversesLedgerTransactionId()
+         * .status()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerTransactionVersion =
             LedgerTransactionVersion(
                 checkRequired("id", id),
@@ -1579,6 +1610,31 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerEntryOfTransactionVersion].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .amount()
+             * .createdAt()
+             * .direction()
+             * .ledgerAccountCurrency()
+             * .ledgerAccountCurrencyExponent()
+             * .ledgerAccountId()
+             * .ledgerAccountLockVersion()
+             * .ledgerTransactionId()
+             * .liveMode()
+             * .metadata()
+             * .object_()
+             * .resultingLedgerAccountBalances()
+             * .status()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LedgerEntryOfTransactionVersion =
                 LedgerEntryOfTransactionVersion(
                     checkRequired("id", id),
@@ -1664,6 +1720,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -1891,6 +1952,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerBalances].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .availableBalance()
+                 * .pendingBalance()
+                 * .postedBalance()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LedgerBalances =
                     LedgerBalances(
                         checkRequired("availableBalance", availableBalance),
@@ -2151,6 +2226,22 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerBalance].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * .credits()
+                     * .currency()
+                     * .currencyExponent()
+                     * .debits()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerBalance =
                         LedgerBalance(
                             checkRequired("amount", amount),
@@ -2521,6 +2612,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

@@ -803,6 +803,35 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [WealthAndEmploymentDetails].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .annualIncome()
+         * .createdAt()
+         * .discardedAt()
+         * .employerCountry()
+         * .employerName()
+         * .employerState()
+         * .employmentStatus()
+         * .incomeCountry()
+         * .incomeSource()
+         * .incomeState()
+         * .industry()
+         * .liveMode()
+         * .object_()
+         * .occupation()
+         * .sourceOfFunds()
+         * .updatedAt()
+         * .wealthSource()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): WealthAndEmploymentDetails =
             WealthAndEmploymentDetails(
                 checkRequired("id", id),
