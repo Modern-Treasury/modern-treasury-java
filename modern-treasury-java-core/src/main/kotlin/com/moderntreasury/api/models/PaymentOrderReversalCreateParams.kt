@@ -294,6 +294,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ReversalCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .reason()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ReversalCreateRequest =
                 ReversalCreateRequest(
                     checkRequired("reason", reason),
@@ -526,6 +538,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PaymentOrderReversalCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .paymentOrderId()
+         * .reason()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PaymentOrderReversalCreateParams =
             PaymentOrderReversalCreateParams(
                 checkRequired("paymentOrderId", paymentOrderId),
@@ -1107,6 +1132,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerTransactionCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .ledgerEntries()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LedgerTransactionCreateRequest =
                 LedgerTransactionCreateRequest(
                     checkRequired("ledgerEntries", ledgerEntries).map { it.toImmutable() },
@@ -1663,6 +1700,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerEntryCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .amount()
+                 * .direction()
+                 * .ledgerAccountId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LedgerEntryCreateRequest =
                     LedgerEntryCreateRequest(
                         checkRequired("amount", amount),
@@ -1749,6 +1800,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [AvailableBalanceAmount].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): AvailableBalanceAmount =
                         AvailableBalanceAmount(additionalProperties.toImmutable())
                 }
@@ -1837,6 +1893,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [Metadata].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                 }
 
@@ -1928,6 +1989,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [PendingBalanceAmount].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): PendingBalanceAmount =
                         PendingBalanceAmount(additionalProperties.toImmutable())
                 }
@@ -2021,6 +2087,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [PostedBalanceAmount].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): PostedBalanceAmount =
                         PostedBalanceAmount(additionalProperties.toImmutable())
                 }
@@ -2261,6 +2332,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -2468,6 +2544,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

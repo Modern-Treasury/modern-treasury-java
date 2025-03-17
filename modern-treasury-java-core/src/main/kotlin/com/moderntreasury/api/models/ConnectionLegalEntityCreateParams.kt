@@ -275,6 +275,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ConnectionLegalEntityCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .connectionId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ConnectionLegalEntityCreateRequest =
                 ConnectionLegalEntityCreateRequest(
                     checkRequired("connectionId", connectionId),
@@ -495,6 +507,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ConnectionLegalEntityCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .connectionId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ConnectionLegalEntityCreateParams =
             ConnectionLegalEntityCreateParams(
                 body.build(),
@@ -1619,6 +1643,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LegalEntity].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): LegalEntity =
                 LegalEntity(
                     (addresses ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1996,6 +2025,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LegalEntityAddressCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .country()
+                 * .line1()
+                 * .locality()
+                 * .postalCode()
+                 * .region()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LegalEntityAddressCreateRequest =
                     LegalEntityAddressCreateRequest(
                         checkRequired("country", country),
@@ -2341,6 +2386,19 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [IdentificationCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .idNumber()
+                 * .idType()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): IdentificationCreateRequest =
                     IdentificationCreateRequest(
                         checkRequired("idNumber", idNumber),
@@ -2889,6 +2947,18 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LegalEntityAssociationInlineCreateRequest].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .relationshipTypes()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LegalEntityAssociationInlineCreateRequest =
                     LegalEntityAssociationInlineCreateRequest(
                         checkRequired("relationshipTypes", relationshipTypes).map {
@@ -4124,6 +4194,11 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [ChildLegalEntityCreate].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
                     fun build(): ChildLegalEntityCreate =
                         ChildLegalEntityCreate(
                             (addresses ?: JsonMissing.of()).map { it.toImmutable() },
@@ -4523,6 +4598,22 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [LegalEntityAddressCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .country()
+                         * .line1()
+                         * .locality()
+                         * .postalCode()
+                         * .region()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): LegalEntityAddressCreateRequest =
                             LegalEntityAddressCreateRequest(
                                 checkRequired("country", country),
@@ -4885,6 +4976,19 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [IdentificationCreateRequest].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```java
+                         * .idNumber()
+                         * .idType()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
                         fun build(): IdentificationCreateRequest =
                             IdentificationCreateRequest(
                                 checkRequired("idNumber", idNumber),
@@ -5453,6 +5557,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): Metadata = Metadata(additionalProperties.toImmutable())
                     }
 
@@ -5576,6 +5685,11 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
+                        /**
+                         * Returns an immutable instance of [PhoneNumber].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
                         fun build(): PhoneNumber =
                             PhoneNumber(phoneNumber, additionalProperties.toImmutable())
                     }
@@ -6055,6 +6169,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
@@ -6174,6 +6293,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [PhoneNumber].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): PhoneNumber =
                     PhoneNumber(phoneNumber, additionalProperties.toImmutable())
             }

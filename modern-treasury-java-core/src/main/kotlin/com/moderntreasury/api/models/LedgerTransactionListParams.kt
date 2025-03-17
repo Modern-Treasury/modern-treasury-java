@@ -499,6 +499,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerTransactionListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): LedgerTransactionListParams =
             LedgerTransactionListParams(
                 id?.toImmutable(),
@@ -606,6 +611,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [EffectiveAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): EffectiveAt = EffectiveAt(additionalProperties.build())
         }
 
@@ -706,6 +716,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [EffectiveDate].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): EffectiveDate = EffectiveDate(additionalProperties.build())
         }
 
@@ -934,6 +949,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.build())
         }
 
@@ -1061,6 +1081,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [OrderBy].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): OrderBy = OrderBy(createdAt, effectiveAt, additionalProperties.build())
         }
 
@@ -1371,6 +1396,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [PostedAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): PostedAt = PostedAt(additionalProperties.build())
         }
 
@@ -1578,6 +1608,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [UpdatedAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): UpdatedAt = UpdatedAt(additionalProperties.build())
         }
 

@@ -238,6 +238,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountDetailCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .accountNumber()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountDetailCreateRequest =
                 AccountDetailCreateRequest(
                     checkRequired("accountNumber", accountNumber),
@@ -454,6 +466,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountDetailCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .accountsType()
+         * .accountId()
+         * .accountNumber()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountDetailCreateParams =
             AccountDetailCreateParams(
                 checkRequired("accountsType", accountsType),

@@ -203,6 +203,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LedgerAccountSettlementEntriesPatchRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .ledgerEntryIds()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LedgerAccountSettlementEntriesPatchRequest =
                 LedgerAccountSettlementEntriesPatchRequest(
                     checkRequired("ledgerEntryIds", ledgerEntryIds).map { it.toImmutable() },
@@ -417,6 +429,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountSettlementAccountEntryUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .ledgerEntryIds()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountSettlementAccountEntryUpdateParams =
             LedgerAccountSettlementAccountEntryUpdateParams(
                 checkRequired("id", id),

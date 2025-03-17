@@ -453,6 +453,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): LedgerAccountListParams =
             LedgerAccountListParams(
                 id?.toImmutable(),
@@ -667,6 +672,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [AvailableBalanceAmount].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AvailableBalanceAmount =
                 AvailableBalanceAmount(eq, gt, gte, lt, lte, notEq, additionalProperties.build())
         }
@@ -845,6 +855,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Balances].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Balances =
                 Balances(
                     asOfDate,
@@ -954,6 +969,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [CreatedAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CreatedAt = CreatedAt(additionalProperties.build())
         }
 
@@ -1054,6 +1074,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.build())
         }
 
@@ -1265,6 +1290,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [PendingBalanceAmount].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): PendingBalanceAmount =
                 PendingBalanceAmount(eq, gt, gte, lt, lte, notEq, additionalProperties.build())
         }
@@ -1478,6 +1508,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [PostedBalanceAmount].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): PostedBalanceAmount =
                 PostedBalanceAmount(eq, gt, gte, lt, lte, notEq, additionalProperties.build())
         }
@@ -1581,6 +1616,11 @@ private constructor(
                 additionalProperties.removeAll(keys)
             }
 
+            /**
+             * Returns an immutable instance of [UpdatedAt].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): UpdatedAt = UpdatedAt(additionalProperties.build())
         }
 

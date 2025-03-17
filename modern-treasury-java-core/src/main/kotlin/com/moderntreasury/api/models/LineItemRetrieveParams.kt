@@ -188,6 +188,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [LineItemRetrieveParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .itemizableType()
+         * .itemizableId()
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LineItemRetrieveParams =
             LineItemRetrieveParams(
                 checkRequired("itemizableType", itemizableType),

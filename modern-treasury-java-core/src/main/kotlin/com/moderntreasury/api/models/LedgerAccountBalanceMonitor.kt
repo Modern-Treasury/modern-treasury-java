@@ -489,6 +489,28 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [LedgerAccountBalanceMonitor].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .alertCondition()
+         * .createdAt()
+         * .currentLedgerAccountBalanceState()
+         * .description()
+         * .discardedAt()
+         * .ledgerAccountId()
+         * .liveMode()
+         * .metadata()
+         * .object_()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): LedgerAccountBalanceMonitor =
             LedgerAccountBalanceMonitor(
                 checkRequired("id", id),
@@ -686,6 +708,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AlertCondition].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .field()
+             * .operator()
+             * .value()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AlertCondition =
                 AlertCondition(
                     checkRequired("field", field),
@@ -898,6 +934,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CurrentLedgerAccountBalanceState].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .balances()
+             * .ledgerAccountLockVersion()
+             * .triggered()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): CurrentLedgerAccountBalanceState =
                 CurrentLedgerAccountBalanceState(
                     checkRequired("balances", balances),
@@ -1106,6 +1156,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [LedgerBalances].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .availableBalance()
+                 * .pendingBalance()
+                 * .postedBalance()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): LedgerBalances =
                     LedgerBalances(
                         checkRequired("availableBalance", availableBalance),
@@ -1366,6 +1430,22 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
+                    /**
+                     * Returns an immutable instance of [LedgerBalance].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```java
+                     * .amount()
+                     * .credits()
+                     * .currency()
+                     * .currencyExponent()
+                     * .debits()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
                     fun build(): LedgerBalance =
                         LedgerBalance(
                             checkRequired("amount", amount),
@@ -1491,6 +1571,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 

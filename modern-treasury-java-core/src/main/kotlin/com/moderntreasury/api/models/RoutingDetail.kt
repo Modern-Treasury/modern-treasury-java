@@ -488,6 +488,28 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [RoutingDetail].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .bankAddress()
+         * .bankName()
+         * .createdAt()
+         * .discardedAt()
+         * .liveMode()
+         * .object_()
+         * .paymentType()
+         * .routingNumber()
+         * .routingNumberType()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): RoutingDetail =
             RoutingDetail(
                 checkRequired("id", id),
@@ -957,6 +979,28 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Address].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .country()
+             * .createdAt()
+             * .line1()
+             * .line2()
+             * .liveMode()
+             * .locality()
+             * .object_()
+             * .postalCode()
+             * .region()
+             * .updatedAt()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Address =
                 Address(
                     checkRequired("id", id),
