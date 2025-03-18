@@ -58,7 +58,7 @@ private constructor(
                 perPage?.let { put("per_page", it.toString()) }
                 referenceNumber?.let { put("reference_number", it) }
                 referenceableId?.let { put("referenceable_id", it) }
-                referenceableType?.let { put("referenceable_type", it.asString()) }
+                referenceableType?.let { put("referenceable_type", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
