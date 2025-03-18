@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -37,7 +38,7 @@ internal class AccountCollectionFlowTest {
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(accountCollectionFlow.liveMode()).contains(true)
         assertThat(accountCollectionFlow.object_()).contains("object")
-        assertThat(accountCollectionFlow.receivingCountries().get())
+        assertThat(accountCollectionFlow.receivingCountries().getOrNull())
             .containsExactly(AccountCollectionFlow.ReceivingCountry.USA)
         assertThat(accountCollectionFlow.status()).contains(AccountCollectionFlow.Status.CANCELLED)
         assertThat(accountCollectionFlow.updatedAt())

@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -567,22 +568,20 @@ internal class PaymentOrderCreateAsyncParamsTest {
                     .build()
             )
         assertThat(body.ledgerTransactionId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.lineItems())
-            .contains(
-                listOf(
-                    PaymentOrderCreateAsyncParams.LineItemRequest.builder()
-                        .amount(0L)
-                        .accountingCategoryId("accounting_category_id")
-                        .description("description")
-                        .metadata(
-                            PaymentOrderCreateAsyncParams.LineItemRequest.Metadata.builder()
-                                .putAdditionalProperty("key", JsonValue.from("value"))
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                                .build()
-                        )
-                        .build()
-                )
+        assertThat(body.lineItems().getOrNull())
+            .containsExactly(
+                PaymentOrderCreateAsyncParams.LineItemRequest.builder()
+                    .amount(0L)
+                    .accountingCategoryId("accounting_category_id")
+                    .description("description")
+                    .metadata(
+                        PaymentOrderCreateAsyncParams.LineItemRequest.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .build()
             )
         assertThat(body.metadata())
             .contains(

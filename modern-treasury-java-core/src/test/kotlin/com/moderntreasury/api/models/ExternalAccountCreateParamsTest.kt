@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -173,30 +174,25 @@ internal class ExternalAccountCreateParamsTest {
 
         assertNotNull(body)
         assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.accountDetails())
-            .contains(
-                listOf(
-                    ExternalAccountCreateParams.AccountDetail.builder()
-                        .accountNumber("account_number")
-                        .accountNumberType(
-                            ExternalAccountCreateParams.AccountDetail.AccountNumberType.AU_NUMBER
-                        )
-                        .build()
-                )
+        assertThat(body.accountDetails().getOrNull())
+            .containsExactly(
+                ExternalAccountCreateParams.AccountDetail.builder()
+                    .accountNumber("account_number")
+                    .accountNumberType(
+                        ExternalAccountCreateParams.AccountDetail.AccountNumberType.AU_NUMBER
+                    )
+                    .build()
             )
         assertThat(body.accountType()).contains(ExternalAccountType.CASH)
-        assertThat(body.contactDetails())
-            .contains(
-                listOf(
-                    ExternalAccountCreateParams.ContactDetailCreateRequest.builder()
-                        .contactIdentifier("contact_identifier")
-                        .contactIdentifierType(
-                            ExternalAccountCreateParams.ContactDetailCreateRequest
-                                .ContactIdentifierType
-                                .EMAIL
-                        )
-                        .build()
-                )
+        assertThat(body.contactDetails().getOrNull())
+            .containsExactly(
+                ExternalAccountCreateParams.ContactDetailCreateRequest.builder()
+                    .contactIdentifier("contact_identifier")
+                    .contactIdentifierType(
+                        ExternalAccountCreateParams.ContactDetailCreateRequest.ContactIdentifierType
+                            .EMAIL
+                    )
+                    .build()
             )
         assertThat(body.ledgerAccount())
             .contains(
@@ -246,17 +242,15 @@ internal class ExternalAccountCreateParamsTest {
         assertThat(body.partyName()).contains("party_name")
         assertThat(body.partyType()).contains(ExternalAccountCreateParams.PartyType.BUSINESS)
         assertThat(body.plaidProcessorToken()).contains("plaid_processor_token")
-        assertThat(body.routingDetails())
-            .contains(
-                listOf(
-                    ExternalAccountCreateParams.RoutingDetail.builder()
-                        .routingNumber("routing_number")
-                        .routingNumberType(
-                            ExternalAccountCreateParams.RoutingDetail.RoutingNumberType.ABA
-                        )
-                        .paymentType(ExternalAccountCreateParams.RoutingDetail.PaymentType.ACH)
-                        .build()
-                )
+        assertThat(body.routingDetails().getOrNull())
+            .containsExactly(
+                ExternalAccountCreateParams.RoutingDetail.builder()
+                    .routingNumber("routing_number")
+                    .routingNumberType(
+                        ExternalAccountCreateParams.RoutingDetail.RoutingNumberType.ABA
+                    )
+                    .paymentType(ExternalAccountCreateParams.RoutingDetail.PaymentType.ACH)
+                    .build()
             )
     }
 

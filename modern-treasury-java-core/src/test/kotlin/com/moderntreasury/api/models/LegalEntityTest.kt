@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -326,7 +327,7 @@ internal class LegalEntityTest {
                     .build()
             )
         assertThat(legalEntity.lastName()).contains("last_name")
-        assertThat(legalEntity.legalEntityAssociations().get())
+        assertThat(legalEntity.legalEntityAssociations().getOrNull())
             .containsExactly(
                 LegalEntityAssociation.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")

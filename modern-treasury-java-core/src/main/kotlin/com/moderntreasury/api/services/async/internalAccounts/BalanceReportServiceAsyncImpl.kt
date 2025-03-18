@@ -81,7 +81,7 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
                     .addPathSegments(
                         "api",
                         "internal_accounts",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balance_reports",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -116,9 +116,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
                     .addPathSegments(
                         "api",
                         "internal_accounts",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balance_reports",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -152,7 +152,7 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
                     .addPathSegments(
                         "api",
                         "internal_accounts",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balance_reports",
                     )
                     .build()
@@ -202,9 +202,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
                     .addPathSegments(
                         "api",
                         "internal_accounts",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balance_reports",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
