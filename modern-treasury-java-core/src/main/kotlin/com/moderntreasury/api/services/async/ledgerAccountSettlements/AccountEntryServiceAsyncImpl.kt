@@ -60,7 +60,7 @@ class AccountEntryServiceAsyncImpl internal constructor(private val clientOption
                     .addPathSegments(
                         "api",
                         "ledger_account_settlements",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "ledger_entries",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -86,7 +86,7 @@ class AccountEntryServiceAsyncImpl internal constructor(private val clientOption
                     .addPathSegments(
                         "api",
                         "ledger_account_settlements",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "ledger_entries",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))

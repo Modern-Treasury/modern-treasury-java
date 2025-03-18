@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -20,6 +21,19 @@ internal class CounterpartyCollectAccountParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            CounterpartyCollectAccountParams.builder()
+                .id("id")
+                .direction(TransactionDirection.CREDIT)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CounterpartyCollectAccountParams.builder()
@@ -35,7 +49,8 @@ internal class CounterpartyCollectAccountParamsTest {
         assertNotNull(body)
         assertThat(body.direction()).isEqualTo(TransactionDirection.CREDIT)
         assertThat(body.customRedirect()).contains("https://example.com")
-        assertThat(body.fields()).contains(listOf(CounterpartyCollectAccountParams.Field.NAME))
+        assertThat(body.fields().getOrNull())
+            .containsExactly(CounterpartyCollectAccountParams.Field.NAME)
         assertThat(body.sendEmail()).contains(true)
     }
 
@@ -51,19 +66,5 @@ internal class CounterpartyCollectAccountParamsTest {
 
         assertNotNull(body)
         assertThat(body.direction()).isEqualTo(TransactionDirection.CREDIT)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CounterpartyCollectAccountParams.builder()
-                .id("id")
-                .direction(TransactionDirection.CREDIT)
-                .build()
-        assertThat(params).isNotNull
-        // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
