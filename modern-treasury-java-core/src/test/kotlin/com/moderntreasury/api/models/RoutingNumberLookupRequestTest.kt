@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class RoutingNumberLookupRequestTest {
 
     @Test
-    fun createRoutingNumberLookupRequest() {
+    fun create() {
         val routingNumberLookupRequest =
             RoutingNumberLookupRequest.builder()
                 .bankAddress(
@@ -66,7 +66,7 @@ internal class RoutingNumberLookupRequestTest {
                     )
                 )
                 .build()
-        assertThat(routingNumberLookupRequest).isNotNull
+
         assertThat(routingNumberLookupRequest.bankAddress())
             .contains(
                 RoutingNumberLookupRequest.AddressRequest.builder()
