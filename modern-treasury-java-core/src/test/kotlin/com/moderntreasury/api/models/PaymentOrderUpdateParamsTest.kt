@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -164,6 +165,15 @@ internal class PaymentOrderUpdateParamsTest {
             .ultimateReceivingPartyIdentifier("ultimate_receiving_party_identifier")
             .ultimateReceivingPartyName("ultimate_receiving_party_name")
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = PaymentOrderUpdateParams.builder().id("id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -349,22 +359,20 @@ internal class PaymentOrderUpdateParamsTest {
         assertThat(body.foreignExchangeContract()).contains("foreign_exchange_contract")
         assertThat(body.foreignExchangeIndicator())
             .contains(PaymentOrderUpdateParams.ForeignExchangeIndicator.FIXED_TO_VARIABLE)
-        assertThat(body.lineItems())
-            .contains(
-                listOf(
-                    PaymentOrderUpdateParams.LineItemRequest.builder()
-                        .amount(0L)
-                        .accountingCategoryId("accounting_category_id")
-                        .description("description")
-                        .metadata(
-                            PaymentOrderUpdateParams.LineItemRequest.Metadata.builder()
-                                .putAdditionalProperty("key", JsonValue.from("value"))
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                                .build()
-                        )
-                        .build()
-                )
+        assertThat(body.lineItems().getOrNull())
+            .containsExactly(
+                PaymentOrderUpdateParams.LineItemRequest.builder()
+                    .amount(0L)
+                    .accountingCategoryId("accounting_category_id")
+                    .description("description")
+                    .metadata(
+                        PaymentOrderUpdateParams.LineItemRequest.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .build()
             )
         assertThat(body.metadata())
             .contains(
@@ -492,15 +500,5 @@ internal class PaymentOrderUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = PaymentOrderUpdateParams.builder().id("id").build()
-        assertThat(params).isNotNull
-        // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

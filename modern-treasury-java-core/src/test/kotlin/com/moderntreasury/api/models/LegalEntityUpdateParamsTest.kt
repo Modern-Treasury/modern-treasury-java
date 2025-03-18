@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -98,6 +99,15 @@ internal class LegalEntityUpdateParamsTest {
             )
             .website("website")
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = LegalEntityUpdateParams.builder().id("id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -195,22 +205,19 @@ internal class LegalEntityUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.addresses())
-            .contains(
-                listOf(
-                    LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
-                        .country("country")
-                        .line1("line1")
-                        .locality("locality")
-                        .postalCode("postal_code")
-                        .region("region")
-                        .addAddressType(
-                            LegalEntityUpdateParams.LegalEntityAddressCreateRequest.AddressType
-                                .BUSINESS
-                        )
-                        .line2("line2")
-                        .build()
-                )
+        assertThat(body.addresses().getOrNull())
+            .containsExactly(
+                LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .addAddressType(
+                        LegalEntityUpdateParams.LegalEntityAddressCreateRequest.AddressType.BUSINESS
+                    )
+                    .line2("line2")
+                    .build()
             )
         assertThat(body.bankSettings())
             .contains(
@@ -231,18 +238,16 @@ internal class LegalEntityUpdateParamsTest {
         assertThat(body.citizenshipCountry()).contains("citizenship_country")
         assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
-        assertThat(body.doingBusinessAsNames()).contains(listOf("string"))
+        assertThat(body.doingBusinessAsNames().getOrNull()).containsExactly("string")
         assertThat(body.email()).contains("email")
         assertThat(body.firstName()).contains("first_name")
-        assertThat(body.identifications())
-            .contains(
-                listOf(
-                    LegalEntityUpdateParams.IdentificationCreateRequest.builder()
-                        .idNumber("id_number")
-                        .idType(LegalEntityUpdateParams.IdentificationCreateRequest.IdType.AR_CUIL)
-                        .issuingCountry("issuing_country")
-                        .build()
-                )
+        assertThat(body.identifications().getOrNull())
+            .containsExactly(
+                LegalEntityUpdateParams.IdentificationCreateRequest.builder()
+                    .idNumber("id_number")
+                    .idType(LegalEntityUpdateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                    .issuingCountry("issuing_country")
+                    .build()
             )
         assertThat(body.lastName()).contains("last_name")
         assertThat(body.legalStructure())
@@ -256,13 +261,9 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
         assertThat(body.middleName()).contains("middle_name")
-        assertThat(body.phoneNumbers())
-            .contains(
-                listOf(
-                    LegalEntityUpdateParams.PhoneNumber.builder()
-                        .phoneNumber("phone_number")
-                        .build()
-                )
+        assertThat(body.phoneNumbers().getOrNull())
+            .containsExactly(
+                LegalEntityUpdateParams.PhoneNumber.builder().phoneNumber("phone_number").build()
             )
         assertThat(body.politicallyExposedPerson()).contains(true)
         assertThat(body.preferredName()).contains("preferred_name")
@@ -302,15 +303,5 @@ internal class LegalEntityUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = LegalEntityUpdateParams.builder().id("id").build()
-        assertThat(params).isNotNull
-        // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }
