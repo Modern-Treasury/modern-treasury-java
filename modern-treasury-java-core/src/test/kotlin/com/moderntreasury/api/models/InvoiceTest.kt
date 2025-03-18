@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -479,7 +480,7 @@ internal class InvoiceTest {
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(invoice.notificationEmailAddresses().get()).containsExactly("string")
+        assertThat(invoice.notificationEmailAddresses().getOrNull()).containsExactly("string")
         assertThat(invoice.notificationsEnabled()).isEqualTo(true)
         assertThat(invoice.number()).isEqualTo("number")
         assertThat(invoice.object_()).isEqualTo("object")
@@ -696,7 +697,7 @@ internal class InvoiceTest {
         assertThat(invoice.receivingAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(invoice.recipientEmail()).contains("recipient_email")
         assertThat(invoice.recipientName()).contains("recipient_name")
-        assertThat(invoice.remindAfterOverdueDays().get()).containsExactly(0L)
+        assertThat(invoice.remindAfterOverdueDays().getOrNull()).containsExactly(0L)
         assertThat(invoice.status()).isEqualTo(Invoice.Status.DRAFT)
         assertThat(invoice.totalAmount()).isEqualTo(0L)
         assertThat(invoice.transactionLineItemIds())

@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -87,7 +88,7 @@ internal class RoutingNumberLookupRequestTest {
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .build()
             )
-        assertThat(routingNumberLookupRequest.supportedPaymentTypes().get())
+        assertThat(routingNumberLookupRequest.supportedPaymentTypes().getOrNull())
             .containsExactly(
                 RoutingNumberLookupRequest.SupportedPaymentType.ACH,
                 RoutingNumberLookupRequest.SupportedPaymentType.AU_BECS,

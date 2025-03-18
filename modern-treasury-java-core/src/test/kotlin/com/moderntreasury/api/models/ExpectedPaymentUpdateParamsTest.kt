@@ -4,6 +4,7 @@ package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -55,6 +56,15 @@ internal class ExpectedPaymentUpdateParamsTest {
             .status(ExpectedPaymentUpdateParams.Status.RECONCILED)
             .type(ExpectedPaymentType.ACH)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = ExpectedPaymentUpdateParams.builder().id("id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -126,26 +136,24 @@ internal class ExpectedPaymentUpdateParamsTest {
             )
         assertThat(body._reconciliationFilters()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(body._reconciliationGroups()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
-        assertThat(body.reconciliationRuleVariables())
-            .contains(
-                listOf(
-                    ReconciliationRule.builder()
-                        .amountLowerBound(0L)
-                        .amountUpperBound(0L)
-                        .direction(ReconciliationRule.Direction.CREDIT)
-                        .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                        .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                        .currency(Currency.AED)
-                        .customIdentifiers(
-                            ReconciliationRule.CustomIdentifiers.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("string"))
-                                .build()
-                        )
-                        .dateLowerBound(LocalDate.parse("2019-12-27"))
-                        .dateUpperBound(LocalDate.parse("2019-12-27"))
-                        .type(ReconciliationRule.Type.ACH)
-                        .build()
-                )
+        assertThat(body.reconciliationRuleVariables().getOrNull())
+            .containsExactly(
+                ReconciliationRule.builder()
+                    .amountLowerBound(0L)
+                    .amountUpperBound(0L)
+                    .direction(ReconciliationRule.Direction.CREDIT)
+                    .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .currency(Currency.AED)
+                    .customIdentifiers(
+                        ReconciliationRule.CustomIdentifiers.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .dateLowerBound(LocalDate.parse("2019-12-27"))
+                    .dateUpperBound(LocalDate.parse("2019-12-27"))
+                    .type(ReconciliationRule.Type.ACH)
+                    .build()
             )
         assertThat(body.remittanceInformation()).contains("remittance_information")
         assertThat(body.statementDescriptor()).contains("statement_descriptor")
@@ -160,15 +168,5 @@ internal class ExpectedPaymentUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = ExpectedPaymentUpdateParams.builder().id("id").build()
-        assertThat(params).isNotNull
-        // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

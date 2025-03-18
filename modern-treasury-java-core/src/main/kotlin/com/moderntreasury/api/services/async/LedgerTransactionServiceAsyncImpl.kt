@@ -134,7 +134,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("api", "ledger_transactions", params.getPathParam(0))
+                    .addPathSegments("api", "ledger_transactions", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -163,7 +163,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
-                    .addPathSegments("api", "ledger_transactions", params.getPathParam(0))
+                    .addPathSegments("api", "ledger_transactions", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -243,7 +243,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
                     .addPathSegments(
                         "api",
                         "ledger_transactions",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "partial_post",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -275,12 +275,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "api",
-                        "ledger_transactions",
-                        params.getPathParam(0),
-                        "reversal",
-                    )
+                    .addPathSegments("api", "ledger_transactions", params._pathParam(0), "reversal")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
