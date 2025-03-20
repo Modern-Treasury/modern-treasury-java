@@ -4,7 +4,6 @@ package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -56,7 +55,6 @@ internal class LedgerAccountCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.ledgerId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.name()).isEqualTo("name")
@@ -90,7 +88,6 @@ internal class LedgerAccountCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.ledgerId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.name()).isEqualTo("name")

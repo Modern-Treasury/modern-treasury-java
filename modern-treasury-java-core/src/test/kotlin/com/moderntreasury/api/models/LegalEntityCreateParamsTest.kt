@@ -6,7 +6,6 @@ import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -506,7 +505,6 @@ internal class LegalEntityCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.legalEntityType())
             .isEqualTo(LegalEntityCreateParams.LegalEntityType.BUSINESS)
         assertThat(body.addresses().getOrNull())
@@ -758,7 +756,6 @@ internal class LegalEntityCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.legalEntityType())
             .isEqualTo(LegalEntityCreateParams.LegalEntityType.BUSINESS)
     }
