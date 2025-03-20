@@ -6,7 +6,6 @@ import com.moderntreasury.api.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -337,7 +336,6 @@ internal class PaymentOrderUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accounting())
             .contains(
                 PaymentOrderUpdateParams.Accounting.builder()
@@ -498,7 +496,5 @@ internal class PaymentOrderUpdateParamsTest {
         val params = PaymentOrderUpdateParams.builder().id("id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

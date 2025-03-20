@@ -3,7 +3,6 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -63,7 +62,6 @@ internal class InvoiceLineItemUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.description()).contains("description")
         assertThat(body.direction()).contains("direction")
         assertThat(body.metadata())
@@ -85,7 +83,5 @@ internal class InvoiceLineItemUpdateParamsTest {
         val params = InvoiceLineItemUpdateParams.builder().invoiceId("invoice_id").id("id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }
