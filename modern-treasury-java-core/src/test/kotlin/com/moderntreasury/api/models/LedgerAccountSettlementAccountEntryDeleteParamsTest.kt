@@ -4,7 +4,6 @@ package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -41,7 +40,6 @@ internal class LedgerAccountSettlementAccountEntryDeleteParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.ledgerEntryIds().getOrNull())
             .containsExactly(JsonValue.from(mapOf<String, Any>()))
     }
