@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.models
 
-import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -110,108 +109,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                id?.forEach { put("id[]", it) }
-                afterCursor?.let { put("after_cursor", it) }
-                availableBalanceAmount?.let {
-                    it.eq().ifPresent { put("available_balance_amount[eq]", it.toString()) }
-                    it.gt().ifPresent { put("available_balance_amount[gt]", it.toString()) }
-                    it.gte().ifPresent { put("available_balance_amount[gte]", it.toString()) }
-                    it.lt().ifPresent { put("available_balance_amount[lt]", it.toString()) }
-                    it.lte().ifPresent { put("available_balance_amount[lte]", it.toString()) }
-                    it.notEq().ifPresent { put("available_balance_amount[not_eq]", it.toString()) }
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("available_balance_amount[$key]", value)
-                        }
-                    }
-                }
-                balances?.let {
-                    it.asOfDate().ifPresent { put("balances[as_of_date]", it.toString()) }
-                    it.effectiveAt().ifPresent {
-                        put(
-                            "balances[effective_at]",
-                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
-                        )
-                    }
-                    it.effectiveAtLowerBound().ifPresent {
-                        put(
-                            "balances[effective_at_lower_bound]",
-                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
-                        )
-                    }
-                    it.effectiveAtUpperBound().ifPresent {
-                        put(
-                            "balances[effective_at_upper_bound]",
-                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
-                        )
-                    }
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("balances[$key]", value)
-                        }
-                    }
-                }
-                createdAt?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("created_at[$key]", value)
-                        }
-                    }
-                }
-                currency?.let { put("currency", it) }
-                ledgerAccountCategoryId?.let { put("ledger_account_category_id", it) }
-                ledgerId?.let { put("ledger_id", it) }
-                metadata?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("metadata[$key]", value)
-                        }
-                    }
-                }
-                name?.forEach { put("name[]", it) }
-                pendingBalanceAmount?.let {
-                    it.eq().ifPresent { put("pending_balance_amount[eq]", it.toString()) }
-                    it.gt().ifPresent { put("pending_balance_amount[gt]", it.toString()) }
-                    it.gte().ifPresent { put("pending_balance_amount[gte]", it.toString()) }
-                    it.lt().ifPresent { put("pending_balance_amount[lt]", it.toString()) }
-                    it.lte().ifPresent { put("pending_balance_amount[lte]", it.toString()) }
-                    it.notEq().ifPresent { put("pending_balance_amount[not_eq]", it.toString()) }
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("pending_balance_amount[$key]", value)
-                        }
-                    }
-                }
-                perPage?.let { put("per_page", it.toString()) }
-                postedBalanceAmount?.let {
-                    it.eq().ifPresent { put("posted_balance_amount[eq]", it.toString()) }
-                    it.gt().ifPresent { put("posted_balance_amount[gt]", it.toString()) }
-                    it.gte().ifPresent { put("posted_balance_amount[gte]", it.toString()) }
-                    it.lt().ifPresent { put("posted_balance_amount[lt]", it.toString()) }
-                    it.lte().ifPresent { put("posted_balance_amount[lte]", it.toString()) }
-                    it.notEq().ifPresent { put("posted_balance_amount[not_eq]", it.toString()) }
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("posted_balance_amount[$key]", value)
-                        }
-                    }
-                }
-                updatedAt?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("updated_at[$key]", value)
-                        }
-                    }
-                }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -223,7 +120,6 @@ private constructor(
     }
 
     /** A builder for [LedgerAccountListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var id: MutableList<String>? = null
@@ -542,6 +438,108 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                id?.forEach { put("id[]", it) }
+                afterCursor?.let { put("after_cursor", it) }
+                availableBalanceAmount?.let {
+                    it.eq().ifPresent { put("available_balance_amount[eq]", it.toString()) }
+                    it.gt().ifPresent { put("available_balance_amount[gt]", it.toString()) }
+                    it.gte().ifPresent { put("available_balance_amount[gte]", it.toString()) }
+                    it.lt().ifPresent { put("available_balance_amount[lt]", it.toString()) }
+                    it.lte().ifPresent { put("available_balance_amount[lte]", it.toString()) }
+                    it.notEq().ifPresent { put("available_balance_amount[not_eq]", it.toString()) }
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("available_balance_amount[$key]", value)
+                        }
+                    }
+                }
+                balances?.let {
+                    it.asOfDate().ifPresent { put("balances[as_of_date]", it.toString()) }
+                    it.effectiveAt().ifPresent {
+                        put(
+                            "balances[effective_at]",
+                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
+                        )
+                    }
+                    it.effectiveAtLowerBound().ifPresent {
+                        put(
+                            "balances[effective_at_lower_bound]",
+                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
+                        )
+                    }
+                    it.effectiveAtUpperBound().ifPresent {
+                        put(
+                            "balances[effective_at_upper_bound]",
+                            DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it),
+                        )
+                    }
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("balances[$key]", value)
+                        }
+                    }
+                }
+                createdAt?.let {
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("created_at[$key]", value)
+                        }
+                    }
+                }
+                currency?.let { put("currency", it) }
+                ledgerAccountCategoryId?.let { put("ledger_account_category_id", it) }
+                ledgerId?.let { put("ledger_id", it) }
+                metadata?.let {
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("metadata[$key]", value)
+                        }
+                    }
+                }
+                name?.forEach { put("name[]", it) }
+                pendingBalanceAmount?.let {
+                    it.eq().ifPresent { put("pending_balance_amount[eq]", it.toString()) }
+                    it.gt().ifPresent { put("pending_balance_amount[gt]", it.toString()) }
+                    it.gte().ifPresent { put("pending_balance_amount[gte]", it.toString()) }
+                    it.lt().ifPresent { put("pending_balance_amount[lt]", it.toString()) }
+                    it.lte().ifPresent { put("pending_balance_amount[lte]", it.toString()) }
+                    it.notEq().ifPresent { put("pending_balance_amount[not_eq]", it.toString()) }
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("pending_balance_amount[$key]", value)
+                        }
+                    }
+                }
+                perPage?.let { put("per_page", it.toString()) }
+                postedBalanceAmount?.let {
+                    it.eq().ifPresent { put("posted_balance_amount[eq]", it.toString()) }
+                    it.gt().ifPresent { put("posted_balance_amount[gt]", it.toString()) }
+                    it.gte().ifPresent { put("posted_balance_amount[gte]", it.toString()) }
+                    it.lt().ifPresent { put("posted_balance_amount[lt]", it.toString()) }
+                    it.lte().ifPresent { put("posted_balance_amount[lte]", it.toString()) }
+                    it.notEq().ifPresent { put("posted_balance_amount[not_eq]", it.toString()) }
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("posted_balance_amount[$key]", value)
+                        }
+                    }
+                }
+                updatedAt?.let {
+                    it._additionalProperties().keys().forEach { key ->
+                        it._additionalProperties().values(key).forEach { value ->
+                            put("updated_at[$key]", value)
+                        }
+                    }
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /**
      * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by

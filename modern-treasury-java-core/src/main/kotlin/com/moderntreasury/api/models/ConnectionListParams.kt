@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.models
 
-import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -35,19 +34,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                afterCursor?.let { put("after_cursor", it) }
-                entity?.let { put("entity", it) }
-                perPage?.let { put("per_page", it.toString()) }
-                vendorCustomerId?.let { put("vendor_customer_id", it) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -59,7 +45,6 @@ private constructor(
     }
 
     /** A builder for [ConnectionListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var afterCursor: String? = null
@@ -224,6 +209,19 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                afterCursor?.let { put("after_cursor", it) }
+                entity?.let { put("entity", it) }
+                perPage?.let { put("per_page", it.toString()) }
+                vendorCustomerId?.let { put("vendor_customer_id", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
