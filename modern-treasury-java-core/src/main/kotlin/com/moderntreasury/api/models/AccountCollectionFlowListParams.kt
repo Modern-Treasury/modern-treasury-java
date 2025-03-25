@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.models
 
-import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
@@ -39,21 +38,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                afterCursor?.let { put("after_cursor", it) }
-                clientToken?.let { put("client_token", it) }
-                counterpartyId?.let { put("counterparty_id", it) }
-                externalAccountId?.let { put("external_account_id", it) }
-                perPage?.let { put("per_page", it.toString()) }
-                status?.let { put("status", it) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -68,7 +52,6 @@ private constructor(
     }
 
     /** A builder for [AccountCollectionFlowListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var afterCursor: String? = null
@@ -250,6 +233,21 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                afterCursor?.let { put("after_cursor", it) }
+                clientToken?.let { put("client_token", it) }
+                counterpartyId?.let { put("counterparty_id", it) }
+                externalAccountId?.let { put("external_account_id", it) }
+                perPage?.let { put("per_page", it.toString()) }
+                status?.let { put("status", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

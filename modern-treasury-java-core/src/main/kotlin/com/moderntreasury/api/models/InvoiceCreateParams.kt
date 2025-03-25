@@ -11,17 +11,16 @@ import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
-import com.moderntreasury.api.core.NoAutoDetect
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
-import com.moderntreasury.api.core.immutableEmptyMap
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -453,97 +452,867 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .counterpartyId()
+         * .dueDate()
+         * .originatingAccountId()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [InvoiceCreateParams]. */
+    class Builder internal constructor() {
+
+        private var body: InvoiceCreateRequest.Builder = InvoiceCreateRequest.builder()
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
+
+        @JvmSynthetic
+        internal fun from(invoiceCreateParams: InvoiceCreateParams) = apply {
+            body = invoiceCreateParams.body.toBuilder()
+            additionalHeaders = invoiceCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceCreateParams.additionalQueryParams.toBuilder()
+        }
+
+        /** The ID of the counterparty receiving the invoice. */
+        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
+
+        /**
+         * Sets [Builder.counterpartyId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterpartyId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun counterpartyId(counterpartyId: JsonField<String>) = apply {
+            body.counterpartyId(counterpartyId)
+        }
+
+        /** A future date by when the invoice needs to be paid. */
+        fun dueDate(dueDate: OffsetDateTime) = apply { body.dueDate(dueDate) }
+
+        /**
+         * Sets [Builder.dueDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dueDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun dueDate(dueDate: JsonField<OffsetDateTime>) = apply { body.dueDate(dueDate) }
+
+        /** The ID of the internal account the invoice should be paid to. */
+        fun originatingAccountId(originatingAccountId: String) = apply {
+            body.originatingAccountId(originatingAccountId)
+        }
+
+        /**
+         * Sets [Builder.originatingAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.originatingAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
+            body.originatingAccountId(originatingAccountId)
+        }
+
+        /**
+         * When true, the invoice will progress to unpaid automatically and cannot be edited after
+         * entering that state. If the invoice fails to progress to unpaid, the errors will be
+         * returned and the invoice will not be created.
+         */
+        fun autoAdvance(autoAdvance: Boolean?) = apply { body.autoAdvance(autoAdvance) }
+
+        /**
+         * Alias for [Builder.autoAdvance].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun autoAdvance(autoAdvance: Boolean) = autoAdvance(autoAdvance as Boolean?)
+
+        /** Alias for calling [Builder.autoAdvance] with `autoAdvance.orElse(null)`. */
+        fun autoAdvance(autoAdvance: Optional<Boolean>) = autoAdvance(autoAdvance.getOrNull())
+
+        /**
+         * Sets [Builder.autoAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoAdvance] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun autoAdvance(autoAdvance: JsonField<Boolean>) = apply { body.autoAdvance(autoAdvance) }
+
+        /** The invoicer's contact details displayed at the top of the invoice. */
+        fun contactDetails(contactDetails: List<ContactDetail>) = apply {
+            body.contactDetails(contactDetails)
+        }
+
+        /**
+         * Sets [Builder.contactDetails] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contactDetails] with a well-typed `List<ContactDetail>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun contactDetails(contactDetails: JsonField<List<ContactDetail>>) = apply {
+            body.contactDetails(contactDetails)
+        }
+
+        /**
+         * Adds a single [ContactDetail] to [contactDetails].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addContactDetail(contactDetail: ContactDetail) = apply {
+            body.addContactDetail(contactDetail)
+        }
+
+        /** The counterparty's billing address. */
+        fun counterpartyBillingAddress(counterpartyBillingAddress: CounterpartyBillingAddress?) =
+            apply {
+                body.counterpartyBillingAddress(counterpartyBillingAddress)
+            }
+
+        /**
+         * Alias for calling [Builder.counterpartyBillingAddress] with
+         * `counterpartyBillingAddress.orElse(null)`.
+         */
+        fun counterpartyBillingAddress(
+            counterpartyBillingAddress: Optional<CounterpartyBillingAddress>
+        ) = counterpartyBillingAddress(counterpartyBillingAddress.getOrNull())
+
+        /**
+         * Sets [Builder.counterpartyBillingAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterpartyBillingAddress] with a well-typed
+         * [CounterpartyBillingAddress] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
+        fun counterpartyBillingAddress(
+            counterpartyBillingAddress: JsonField<CounterpartyBillingAddress>
+        ) = apply { body.counterpartyBillingAddress(counterpartyBillingAddress) }
+
+        /** The counterparty's shipping address where physical goods should be delivered. */
+        fun counterpartyShippingAddress(counterpartyShippingAddress: CounterpartyShippingAddress?) =
+            apply {
+                body.counterpartyShippingAddress(counterpartyShippingAddress)
+            }
+
+        /**
+         * Alias for calling [Builder.counterpartyShippingAddress] with
+         * `counterpartyShippingAddress.orElse(null)`.
+         */
+        fun counterpartyShippingAddress(
+            counterpartyShippingAddress: Optional<CounterpartyShippingAddress>
+        ) = counterpartyShippingAddress(counterpartyShippingAddress.getOrNull())
+
+        /**
+         * Sets [Builder.counterpartyShippingAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterpartyShippingAddress] with a well-typed
+         * [CounterpartyShippingAddress] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
+        fun counterpartyShippingAddress(
+            counterpartyShippingAddress: JsonField<CounterpartyShippingAddress>
+        ) = apply { body.counterpartyShippingAddress(counterpartyShippingAddress) }
+
+        /** Currency that the invoice is denominated in. Defaults to `USD` if not provided. */
+        fun currency(currency: Currency) = apply { body.currency(currency) }
+
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [Currency] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
+
+        /** A free-form description of the invoice. */
+        fun description(description: String) = apply { body.description(description) }
+
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
+
+        /**
+         * When payment_method is automatic, the fallback payment method to use when an automatic
+         * payment fails. One of `manual` or `ui`.
+         */
+        fun fallbackPaymentMethod(fallbackPaymentMethod: String?) = apply {
+            body.fallbackPaymentMethod(fallbackPaymentMethod)
+        }
+
+        /**
+         * Alias for calling [Builder.fallbackPaymentMethod] with
+         * `fallbackPaymentMethod.orElse(null)`.
+         */
+        fun fallbackPaymentMethod(fallbackPaymentMethod: Optional<String>) =
+            fallbackPaymentMethod(fallbackPaymentMethod.getOrNull())
+
+        /**
+         * Sets [Builder.fallbackPaymentMethod] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fallbackPaymentMethod] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun fallbackPaymentMethod(fallbackPaymentMethod: JsonField<String>) = apply {
+            body.fallbackPaymentMethod(fallbackPaymentMethod)
+        }
+
+        /**
+         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
+         * false, then a line item must be provided. If this is true, line_items must be empty.
+         * Ignored if ledger_account_settlement_id is empty.
+         */
+        fun ingestLedgerEntries(ingestLedgerEntries: Boolean?) = apply {
+            body.ingestLedgerEntries(ingestLedgerEntries)
+        }
+
+        /**
+         * Alias for [Builder.ingestLedgerEntries].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun ingestLedgerEntries(ingestLedgerEntries: Boolean) =
+            ingestLedgerEntries(ingestLedgerEntries as Boolean?)
+
+        /**
+         * Alias for calling [Builder.ingestLedgerEntries] with `ingestLedgerEntries.orElse(null)`.
+         */
+        fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
+            ingestLedgerEntries(ingestLedgerEntries.getOrNull())
+
+        /**
+         * Sets [Builder.ingestLedgerEntries] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.ingestLedgerEntries] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun ingestLedgerEntries(ingestLedgerEntries: JsonField<Boolean>) = apply {
+            body.ingestLedgerEntries(ingestLedgerEntries)
+        }
+
+        /**
+         * An array of invoice line items. The API supports a maximum of 50 invoice line items per
+         * invoice. If a greater number of invoice line items is required, please contact support.
+         */
+        fun invoiceLineItems(invoiceLineItems: List<InvoiceLineItemCreateRequest>?) = apply {
+            body.invoiceLineItems(invoiceLineItems)
+        }
+
+        /** Alias for calling [Builder.invoiceLineItems] with `invoiceLineItems.orElse(null)`. */
+        fun invoiceLineItems(invoiceLineItems: Optional<List<InvoiceLineItemCreateRequest>>) =
+            invoiceLineItems(invoiceLineItems.getOrNull())
+
+        /**
+         * Sets [Builder.invoiceLineItems] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoiceLineItems] with a well-typed
+         * `List<InvoiceLineItemCreateRequest>` value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
+         */
+        fun invoiceLineItems(invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>>) =
+            apply {
+                body.invoiceLineItems(invoiceLineItems)
+            }
+
+        /**
+         * Adds a single [InvoiceLineItemCreateRequest] to [invoiceLineItems].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addInvoiceLineItem(invoiceLineItem: InvoiceLineItemCreateRequest) = apply {
+            body.addInvoiceLineItem(invoiceLineItem)
+        }
+
+        /** The invoice issuer's business address. */
+        fun invoicerAddress(invoicerAddress: InvoicerAddress?) = apply {
+            body.invoicerAddress(invoicerAddress)
+        }
+
+        /** Alias for calling [Builder.invoicerAddress] with `invoicerAddress.orElse(null)`. */
+        fun invoicerAddress(invoicerAddress: Optional<InvoicerAddress>) =
+            invoicerAddress(invoicerAddress.getOrNull())
+
+        /**
+         * Sets [Builder.invoicerAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoicerAddress] with a well-typed [InvoicerAddress]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
+            body.invoicerAddress(invoicerAddress)
+        }
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) = apply {
+            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
+        }
+
+        /**
+         * Alias for calling [Builder.ledgerAccountSettlementId] with
+         * `ledgerAccountSettlementId.orElse(null)`.
+         */
+        fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
+            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
+
+        /**
+         * Sets [Builder.ledgerAccountSettlementId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.ledgerAccountSettlementId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
+            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
+        }
+
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
+        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
+
+        /**
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        /**
+         * Emails in addition to the counterparty email to send invoice status notifications to. At
+         * least one email is required if notifications are enabled and the counterparty doesn't
+         * have an email.
+         */
+        fun notificationEmailAddresses(notificationEmailAddresses: List<String>?) = apply {
+            body.notificationEmailAddresses(notificationEmailAddresses)
+        }
+
+        /**
+         * Alias for calling [Builder.notificationEmailAddresses] with
+         * `notificationEmailAddresses.orElse(null)`.
+         */
+        fun notificationEmailAddresses(notificationEmailAddresses: Optional<List<String>>) =
+            notificationEmailAddresses(notificationEmailAddresses.getOrNull())
+
+        /**
+         * Sets [Builder.notificationEmailAddresses] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.notificationEmailAddresses] with a well-typed
+         * `List<String>` value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun notificationEmailAddresses(notificationEmailAddresses: JsonField<List<String>>) =
+            apply {
+                body.notificationEmailAddresses(notificationEmailAddresses)
+            }
+
+        /**
+         * Adds a single [String] to [notificationEmailAddresses].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addNotificationEmailAddress(notificationEmailAddress: String) = apply {
+            body.addNotificationEmailAddress(notificationEmailAddress)
+        }
+
+        /**
+         * If true, the invoice will send email notifications to the invoice recipients about
+         * invoice status changes.
+         */
+        fun notificationsEnabled(notificationsEnabled: Boolean) = apply {
+            body.notificationsEnabled(notificationsEnabled)
+        }
+
+        /**
+         * Sets [Builder.notificationsEnabled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.notificationsEnabled] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun notificationsEnabled(notificationsEnabled: JsonField<Boolean>) = apply {
+            body.notificationsEnabled(notificationsEnabled)
+        }
+
+        /**
+         * Date transactions are to be posted to the participants' account. Defaults to the current
+         * business day or the next business day if the current day is a bank holiday or weekend.
+         * Format: yyyy-mm-dd.
+         */
+        fun paymentEffectiveDate(paymentEffectiveDate: LocalDate) = apply {
+            body.paymentEffectiveDate(paymentEffectiveDate)
+        }
+
+        /**
+         * Sets [Builder.paymentEffectiveDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentEffectiveDate] with a well-typed [LocalDate]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun paymentEffectiveDate(paymentEffectiveDate: JsonField<LocalDate>) = apply {
+            body.paymentEffectiveDate(paymentEffectiveDate)
+        }
+
+        /**
+         * The method by which the invoice can be paid. `ui` will show the embedded payment
+         * collection flow. `automatic` will automatically initiate payment based upon the account
+         * details of the receiving_account id.\nIf the invoice amount is positive, the
+         * automatically initiated payment order's direction will be debit. If the invoice amount is
+         * negative, the automatically initiated payment order's direction will be credit. One of
+         * `manual`, `ui`, or `automatic`.
+         */
+        fun paymentMethod(paymentMethod: PaymentMethod) = apply {
+            body.paymentMethod(paymentMethod)
+        }
+
+        /**
+         * Sets [Builder.paymentMethod] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentMethod] with a well-typed [PaymentMethod] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun paymentMethod(paymentMethod: JsonField<PaymentMethod>) = apply {
+            body.paymentMethod(paymentMethod)
+        }
+
+        /**
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
+         */
+        fun paymentType(paymentType: PaymentOrderType) = apply { body.paymentType(paymentType) }
+
+        /**
+         * Sets [Builder.paymentType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentType] with a well-typed [PaymentOrderType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun paymentType(paymentType: JsonField<PaymentOrderType>) = apply {
+            body.paymentType(paymentType)
+        }
+
+        /** The receiving account ID. Can be an `external_account`. */
+        fun receivingAccountId(receivingAccountId: String) = apply {
+            body.receivingAccountId(receivingAccountId)
+        }
+
+        /**
+         * Sets [Builder.receivingAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.receivingAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
+            body.receivingAccountId(receivingAccountId)
+        }
+
+        /**
+         * The email of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        fun recipientEmail(recipientEmail: String?) = apply { body.recipientEmail(recipientEmail) }
+
+        /** Alias for calling [Builder.recipientEmail] with `recipientEmail.orElse(null)`. */
+        fun recipientEmail(recipientEmail: Optional<String>) =
+            recipientEmail(recipientEmail.getOrNull())
+
+        /**
+         * Sets [Builder.recipientEmail] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.recipientEmail] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun recipientEmail(recipientEmail: JsonField<String>) = apply {
+            body.recipientEmail(recipientEmail)
+        }
+
+        /**
+         * The name of the recipient of the invoice. Leaving this value as null will fallback to
+         * using the counterparty's name.
+         */
+        fun recipientName(recipientName: String?) = apply { body.recipientName(recipientName) }
+
+        /** Alias for calling [Builder.recipientName] with `recipientName.orElse(null)`. */
+        fun recipientName(recipientName: Optional<String>) =
+            recipientName(recipientName.getOrNull())
+
+        /**
+         * Sets [Builder.recipientName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.recipientName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun recipientName(recipientName: JsonField<String>) = apply {
+            body.recipientName(recipientName)
+        }
+
+        /**
+         * Number of days after due date when overdue reminder emails will be sent out to invoice
+         * recipients.
+         */
+        fun remindAfterOverdueDays(remindAfterOverdueDays: List<Long>?) = apply {
+            body.remindAfterOverdueDays(remindAfterOverdueDays)
+        }
+
+        /**
+         * Alias for calling [Builder.remindAfterOverdueDays] with
+         * `remindAfterOverdueDays.orElse(null)`.
+         */
+        fun remindAfterOverdueDays(remindAfterOverdueDays: Optional<List<Long>>) =
+            remindAfterOverdueDays(remindAfterOverdueDays.getOrNull())
+
+        /**
+         * Sets [Builder.remindAfterOverdueDays] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.remindAfterOverdueDays] with a well-typed `List<Long>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun remindAfterOverdueDays(remindAfterOverdueDays: JsonField<List<Long>>) = apply {
+            body.remindAfterOverdueDays(remindAfterOverdueDays)
+        }
+
+        /**
+         * Adds a single [Long] to [remindAfterOverdueDays].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addRemindAfterOverdueDay(remindAfterOverdueDay: Long) = apply {
+            body.addRemindAfterOverdueDay(remindAfterOverdueDay)
+        }
+
+        /** The ID of the virtual account the invoice should be paid to. */
+        fun virtualAccountId(virtualAccountId: String?) = apply {
+            body.virtualAccountId(virtualAccountId)
+        }
+
+        /** Alias for calling [Builder.virtualAccountId] with `virtualAccountId.orElse(null)`. */
+        fun virtualAccountId(virtualAccountId: Optional<String>) =
+            virtualAccountId(virtualAccountId.getOrNull())
+
+        /**
+         * Sets [Builder.virtualAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.virtualAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
+            body.virtualAccountId(virtualAccountId)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
+
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
+
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
+
+        /**
+         * Returns an immutable instance of [InvoiceCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .counterpartyId()
+         * .dueDate()
+         * .originatingAccountId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): InvoiceCreateParams =
+            InvoiceCreateParams(
+                body.build(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+            )
+    }
+
     @JvmSynthetic internal fun _body(): InvoiceCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
-    @NoAutoDetect
     class InvoiceCreateRequest
-    @JsonCreator
     private constructor(
-        @JsonProperty("counterparty_id")
-        @ExcludeMissing
-        private val counterpartyId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("due_date")
-        @ExcludeMissing
-        private val dueDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("originating_account_id")
-        @ExcludeMissing
-        private val originatingAccountId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("auto_advance")
-        @ExcludeMissing
-        private val autoAdvance: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("contact_details")
-        @ExcludeMissing
-        private val contactDetails: JsonField<List<ContactDetail>> = JsonMissing.of(),
-        @JsonProperty("counterparty_billing_address")
-        @ExcludeMissing
-        private val counterpartyBillingAddress: JsonField<CounterpartyBillingAddress> =
-            JsonMissing.of(),
-        @JsonProperty("counterparty_shipping_address")
-        @ExcludeMissing
-        private val counterpartyShippingAddress: JsonField<CounterpartyShippingAddress> =
-            JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<Currency> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("fallback_payment_method")
-        @ExcludeMissing
-        private val fallbackPaymentMethod: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ingest_ledger_entries")
-        @ExcludeMissing
-        private val ingestLedgerEntries: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("invoice_line_items")
-        @ExcludeMissing
-        private val invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>> =
-            JsonMissing.of(),
-        @JsonProperty("invoicer_address")
-        @ExcludeMissing
-        private val invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of(),
-        @JsonProperty("ledger_account_settlement_id")
-        @ExcludeMissing
-        private val ledgerAccountSettlementId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("notification_email_addresses")
-        @ExcludeMissing
-        private val notificationEmailAddresses: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("notifications_enabled")
-        @ExcludeMissing
-        private val notificationsEnabled: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("payment_effective_date")
-        @ExcludeMissing
-        private val paymentEffectiveDate: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("payment_method")
-        @ExcludeMissing
-        private val paymentMethod: JsonField<PaymentMethod> = JsonMissing.of(),
-        @JsonProperty("payment_type")
-        @ExcludeMissing
-        private val paymentType: JsonField<PaymentOrderType> = JsonMissing.of(),
-        @JsonProperty("receiving_account_id")
-        @ExcludeMissing
-        private val receivingAccountId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("recipient_email")
-        @ExcludeMissing
-        private val recipientEmail: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("recipient_name")
-        @ExcludeMissing
-        private val recipientName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("remind_after_overdue_days")
-        @ExcludeMissing
-        private val remindAfterOverdueDays: JsonField<List<Long>> = JsonMissing.of(),
-        @JsonProperty("virtual_account_id")
-        @ExcludeMissing
-        private val virtualAccountId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val counterpartyId: JsonField<String>,
+        private val dueDate: JsonField<OffsetDateTime>,
+        private val originatingAccountId: JsonField<String>,
+        private val autoAdvance: JsonField<Boolean>,
+        private val contactDetails: JsonField<List<ContactDetail>>,
+        private val counterpartyBillingAddress: JsonField<CounterpartyBillingAddress>,
+        private val counterpartyShippingAddress: JsonField<CounterpartyShippingAddress>,
+        private val currency: JsonField<Currency>,
+        private val description: JsonField<String>,
+        private val fallbackPaymentMethod: JsonField<String>,
+        private val ingestLedgerEntries: JsonField<Boolean>,
+        private val invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>>,
+        private val invoicerAddress: JsonField<InvoicerAddress>,
+        private val ledgerAccountSettlementId: JsonField<String>,
+        private val metadata: JsonField<Metadata>,
+        private val notificationEmailAddresses: JsonField<List<String>>,
+        private val notificationsEnabled: JsonField<Boolean>,
+        private val paymentEffectiveDate: JsonField<LocalDate>,
+        private val paymentMethod: JsonField<PaymentMethod>,
+        private val paymentType: JsonField<PaymentOrderType>,
+        private val receivingAccountId: JsonField<String>,
+        private val recipientEmail: JsonField<String>,
+        private val recipientName: JsonField<String>,
+        private val remindAfterOverdueDays: JsonField<List<Long>>,
+        private val virtualAccountId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("counterparty_id")
+            @ExcludeMissing
+            counterpartyId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("due_date")
+            @ExcludeMissing
+            dueDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("originating_account_id")
+            @ExcludeMissing
+            originatingAccountId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("auto_advance")
+            @ExcludeMissing
+            autoAdvance: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("contact_details")
+            @ExcludeMissing
+            contactDetails: JsonField<List<ContactDetail>> = JsonMissing.of(),
+            @JsonProperty("counterparty_billing_address")
+            @ExcludeMissing
+            counterpartyBillingAddress: JsonField<CounterpartyBillingAddress> = JsonMissing.of(),
+            @JsonProperty("counterparty_shipping_address")
+            @ExcludeMissing
+            counterpartyShippingAddress: JsonField<CounterpartyShippingAddress> = JsonMissing.of(),
+            @JsonProperty("currency")
+            @ExcludeMissing
+            currency: JsonField<Currency> = JsonMissing.of(),
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fallback_payment_method")
+            @ExcludeMissing
+            fallbackPaymentMethod: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("ingest_ledger_entries")
+            @ExcludeMissing
+            ingestLedgerEntries: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("invoice_line_items")
+            @ExcludeMissing
+            invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>> = JsonMissing.of(),
+            @JsonProperty("invoicer_address")
+            @ExcludeMissing
+            invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of(),
+            @JsonProperty("ledger_account_settlement_id")
+            @ExcludeMissing
+            ledgerAccountSettlementId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("notification_email_addresses")
+            @ExcludeMissing
+            notificationEmailAddresses: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("notifications_enabled")
+            @ExcludeMissing
+            notificationsEnabled: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("payment_effective_date")
+            @ExcludeMissing
+            paymentEffectiveDate: JsonField<LocalDate> = JsonMissing.of(),
+            @JsonProperty("payment_method")
+            @ExcludeMissing
+            paymentMethod: JsonField<PaymentMethod> = JsonMissing.of(),
+            @JsonProperty("payment_type")
+            @ExcludeMissing
+            paymentType: JsonField<PaymentOrderType> = JsonMissing.of(),
+            @JsonProperty("receiving_account_id")
+            @ExcludeMissing
+            receivingAccountId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("recipient_email")
+            @ExcludeMissing
+            recipientEmail: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("recipient_name")
+            @ExcludeMissing
+            recipientName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("remind_after_overdue_days")
+            @ExcludeMissing
+            remindAfterOverdueDays: JsonField<List<Long>> = JsonMissing.of(),
+            @JsonProperty("virtual_account_id")
+            @ExcludeMissing
+            virtualAccountId: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            counterpartyId,
+            dueDate,
+            originatingAccountId,
+            autoAdvance,
+            contactDetails,
+            counterpartyBillingAddress,
+            counterpartyShippingAddress,
+            currency,
+            description,
+            fallbackPaymentMethod,
+            ingestLedgerEntries,
+            invoiceLineItems,
+            invoicerAddress,
+            ledgerAccountSettlementId,
+            metadata,
+            notificationEmailAddresses,
+            notificationsEnabled,
+            paymentEffectiveDate,
+            paymentMethod,
+            paymentType,
+            receivingAccountId,
+            recipientEmail,
+            recipientName,
+            remindAfterOverdueDays,
+            virtualAccountId,
+            mutableMapOf(),
+        )
 
         /**
          * The ID of the counterparty receiving the invoice.
@@ -1037,44 +1806,15 @@ private constructor(
         @ExcludeMissing
         fun _virtualAccountId(): JsonField<String> = virtualAccountId
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): InvoiceCreateRequest = apply {
-            if (validated) {
-                return@apply
-            }
-
-            counterpartyId()
-            dueDate()
-            originatingAccountId()
-            autoAdvance()
-            contactDetails().ifPresent { it.forEach { it.validate() } }
-            counterpartyBillingAddress().ifPresent { it.validate() }
-            counterpartyShippingAddress().ifPresent { it.validate() }
-            currency()
-            description()
-            fallbackPaymentMethod()
-            ingestLedgerEntries()
-            invoiceLineItems().ifPresent { it.forEach { it.validate() } }
-            invoicerAddress().ifPresent { it.validate() }
-            ledgerAccountSettlementId()
-            metadata().ifPresent { it.validate() }
-            notificationEmailAddresses()
-            notificationsEnabled()
-            paymentEffectiveDate()
-            paymentMethod()
-            paymentType()
-            receivingAccountId()
-            recipientEmail()
-            recipientName()
-            remindAfterOverdueDays()
-            virtualAccountId()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1779,8 +2519,43 @@ private constructor(
                     recipientName,
                     (remindAfterOverdueDays ?: JsonMissing.of()).map { it.toImmutable() },
                     virtualAccountId,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceCreateRequest = apply {
+            if (validated) {
+                return@apply
+            }
+
+            counterpartyId()
+            dueDate()
+            originatingAccountId()
+            autoAdvance()
+            contactDetails().ifPresent { it.forEach { it.validate() } }
+            counterpartyBillingAddress().ifPresent { it.validate() }
+            counterpartyShippingAddress().ifPresent { it.validate() }
+            currency()
+            description()
+            fallbackPaymentMethod()
+            ingestLedgerEntries()
+            invoiceLineItems().ifPresent { it.forEach { it.validate() } }
+            invoicerAddress().ifPresent { it.validate() }
+            ledgerAccountSettlementId()
+            metadata().ifPresent { it.validate() }
+            notificationEmailAddresses()
+            notificationsEnabled()
+            paymentEffectiveDate()
+            paymentMethod()
+            paymentType()
+            receivingAccountId()
+            recipientEmail()
+            recipientName()
+            remindAfterOverdueDays()
+            virtualAccountId()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1801,756 +2576,52 @@ private constructor(
             "InvoiceCreateRequest{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, ingestLedgerEntries=$ingestLedgerEntries, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, ledgerAccountSettlementId=$ledgerAccountSettlementId, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
-    fun toBuilder() = Builder().from(this)
-
-    companion object {
-
-        /**
-         * Returns a mutable builder for constructing an instance of [InvoiceCreateParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .counterpartyId()
-         * .dueDate()
-         * .originatingAccountId()
-         * ```
-         */
-        @JvmStatic fun builder() = Builder()
-    }
-
-    /** A builder for [InvoiceCreateParams]. */
-    @NoAutoDetect
-    class Builder internal constructor() {
-
-        private var body: InvoiceCreateRequest.Builder = InvoiceCreateRequest.builder()
-        private var additionalHeaders: Headers.Builder = Headers.builder()
-        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-
-        @JvmSynthetic
-        internal fun from(invoiceCreateParams: InvoiceCreateParams) = apply {
-            body = invoiceCreateParams.body.toBuilder()
-            additionalHeaders = invoiceCreateParams.additionalHeaders.toBuilder()
-            additionalQueryParams = invoiceCreateParams.additionalQueryParams.toBuilder()
-        }
-
-        /** The ID of the counterparty receiving the invoice. */
-        fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
-
-        /**
-         * Sets [Builder.counterpartyId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.counterpartyId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun counterpartyId(counterpartyId: JsonField<String>) = apply {
-            body.counterpartyId(counterpartyId)
-        }
-
-        /** A future date by when the invoice needs to be paid. */
-        fun dueDate(dueDate: OffsetDateTime) = apply { body.dueDate(dueDate) }
-
-        /**
-         * Sets [Builder.dueDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.dueDate] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun dueDate(dueDate: JsonField<OffsetDateTime>) = apply { body.dueDate(dueDate) }
-
-        /** The ID of the internal account the invoice should be paid to. */
-        fun originatingAccountId(originatingAccountId: String) = apply {
-            body.originatingAccountId(originatingAccountId)
-        }
-
-        /**
-         * Sets [Builder.originatingAccountId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.originatingAccountId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
-            body.originatingAccountId(originatingAccountId)
-        }
-
-        /**
-         * When true, the invoice will progress to unpaid automatically and cannot be edited after
-         * entering that state. If the invoice fails to progress to unpaid, the errors will be
-         * returned and the invoice will not be created.
-         */
-        fun autoAdvance(autoAdvance: Boolean?) = apply { body.autoAdvance(autoAdvance) }
-
-        /**
-         * Alias for [Builder.autoAdvance].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun autoAdvance(autoAdvance: Boolean) = autoAdvance(autoAdvance as Boolean?)
-
-        /** Alias for calling [Builder.autoAdvance] with `autoAdvance.orElse(null)`. */
-        fun autoAdvance(autoAdvance: Optional<Boolean>) = autoAdvance(autoAdvance.getOrNull())
-
-        /**
-         * Sets [Builder.autoAdvance] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.autoAdvance] with a well-typed [Boolean] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun autoAdvance(autoAdvance: JsonField<Boolean>) = apply { body.autoAdvance(autoAdvance) }
-
-        /** The invoicer's contact details displayed at the top of the invoice. */
-        fun contactDetails(contactDetails: List<ContactDetail>) = apply {
-            body.contactDetails(contactDetails)
-        }
-
-        /**
-         * Sets [Builder.contactDetails] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.contactDetails] with a well-typed `List<ContactDetail>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun contactDetails(contactDetails: JsonField<List<ContactDetail>>) = apply {
-            body.contactDetails(contactDetails)
-        }
-
-        /**
-         * Adds a single [ContactDetail] to [contactDetails].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addContactDetail(contactDetail: ContactDetail) = apply {
-            body.addContactDetail(contactDetail)
-        }
-
-        /** The counterparty's billing address. */
-        fun counterpartyBillingAddress(counterpartyBillingAddress: CounterpartyBillingAddress?) =
-            apply {
-                body.counterpartyBillingAddress(counterpartyBillingAddress)
-            }
-
-        /**
-         * Alias for calling [Builder.counterpartyBillingAddress] with
-         * `counterpartyBillingAddress.orElse(null)`.
-         */
-        fun counterpartyBillingAddress(
-            counterpartyBillingAddress: Optional<CounterpartyBillingAddress>
-        ) = counterpartyBillingAddress(counterpartyBillingAddress.getOrNull())
-
-        /**
-         * Sets [Builder.counterpartyBillingAddress] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.counterpartyBillingAddress] with a well-typed
-         * [CounterpartyBillingAddress] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
-         */
-        fun counterpartyBillingAddress(
-            counterpartyBillingAddress: JsonField<CounterpartyBillingAddress>
-        ) = apply { body.counterpartyBillingAddress(counterpartyBillingAddress) }
-
-        /** The counterparty's shipping address where physical goods should be delivered. */
-        fun counterpartyShippingAddress(counterpartyShippingAddress: CounterpartyShippingAddress?) =
-            apply {
-                body.counterpartyShippingAddress(counterpartyShippingAddress)
-            }
-
-        /**
-         * Alias for calling [Builder.counterpartyShippingAddress] with
-         * `counterpartyShippingAddress.orElse(null)`.
-         */
-        fun counterpartyShippingAddress(
-            counterpartyShippingAddress: Optional<CounterpartyShippingAddress>
-        ) = counterpartyShippingAddress(counterpartyShippingAddress.getOrNull())
-
-        /**
-         * Sets [Builder.counterpartyShippingAddress] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.counterpartyShippingAddress] with a well-typed
-         * [CounterpartyShippingAddress] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
-         */
-        fun counterpartyShippingAddress(
-            counterpartyShippingAddress: JsonField<CounterpartyShippingAddress>
-        ) = apply { body.counterpartyShippingAddress(counterpartyShippingAddress) }
-
-        /** Currency that the invoice is denominated in. Defaults to `USD` if not provided. */
-        fun currency(currency: Currency) = apply { body.currency(currency) }
-
-        /**
-         * Sets [Builder.currency] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.currency] with a well-typed [Currency] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
-
-        /** A free-form description of the invoice. */
-        fun description(description: String) = apply { body.description(description) }
-
-        /**
-         * Sets [Builder.description] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.description] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun description(description: JsonField<String>) = apply { body.description(description) }
-
-        /**
-         * When payment_method is automatic, the fallback payment method to use when an automatic
-         * payment fails. One of `manual` or `ui`.
-         */
-        fun fallbackPaymentMethod(fallbackPaymentMethod: String?) = apply {
-            body.fallbackPaymentMethod(fallbackPaymentMethod)
-        }
-
-        /**
-         * Alias for calling [Builder.fallbackPaymentMethod] with
-         * `fallbackPaymentMethod.orElse(null)`.
-         */
-        fun fallbackPaymentMethod(fallbackPaymentMethod: Optional<String>) =
-            fallbackPaymentMethod(fallbackPaymentMethod.getOrNull())
-
-        /**
-         * Sets [Builder.fallbackPaymentMethod] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.fallbackPaymentMethod] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun fallbackPaymentMethod(fallbackPaymentMethod: JsonField<String>) = apply {
-            body.fallbackPaymentMethod(fallbackPaymentMethod)
-        }
-
-        /**
-         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
-         * false, then a line item must be provided. If this is true, line_items must be empty.
-         * Ignored if ledger_account_settlement_id is empty.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Boolean?) = apply {
-            body.ingestLedgerEntries(ingestLedgerEntries)
-        }
-
-        /**
-         * Alias for [Builder.ingestLedgerEntries].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Boolean) =
-            ingestLedgerEntries(ingestLedgerEntries as Boolean?)
-
-        /**
-         * Alias for calling [Builder.ingestLedgerEntries] with `ingestLedgerEntries.orElse(null)`.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
-            ingestLedgerEntries(ingestLedgerEntries.getOrNull())
-
-        /**
-         * Sets [Builder.ingestLedgerEntries] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.ingestLedgerEntries] with a well-typed [Boolean] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: JsonField<Boolean>) = apply {
-            body.ingestLedgerEntries(ingestLedgerEntries)
-        }
-
-        /**
-         * An array of invoice line items. The API supports a maximum of 50 invoice line items per
-         * invoice. If a greater number of invoice line items is required, please contact support.
-         */
-        fun invoiceLineItems(invoiceLineItems: List<InvoiceLineItemCreateRequest>?) = apply {
-            body.invoiceLineItems(invoiceLineItems)
-        }
-
-        /** Alias for calling [Builder.invoiceLineItems] with `invoiceLineItems.orElse(null)`. */
-        fun invoiceLineItems(invoiceLineItems: Optional<List<InvoiceLineItemCreateRequest>>) =
-            invoiceLineItems(invoiceLineItems.getOrNull())
-
-        /**
-         * Sets [Builder.invoiceLineItems] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.invoiceLineItems] with a well-typed
-         * `List<InvoiceLineItemCreateRequest>` value instead. This method is primarily for setting
-         * the field to an undocumented or not yet supported value.
-         */
-        fun invoiceLineItems(invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>>) =
-            apply {
-                body.invoiceLineItems(invoiceLineItems)
-            }
-
-        /**
-         * Adds a single [InvoiceLineItemCreateRequest] to [invoiceLineItems].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addInvoiceLineItem(invoiceLineItem: InvoiceLineItemCreateRequest) = apply {
-            body.addInvoiceLineItem(invoiceLineItem)
-        }
-
-        /** The invoice issuer's business address. */
-        fun invoicerAddress(invoicerAddress: InvoicerAddress?) = apply {
-            body.invoicerAddress(invoicerAddress)
-        }
-
-        /** Alias for calling [Builder.invoicerAddress] with `invoicerAddress.orElse(null)`. */
-        fun invoicerAddress(invoicerAddress: Optional<InvoicerAddress>) =
-            invoicerAddress(invoicerAddress.getOrNull())
-
-        /**
-         * Sets [Builder.invoicerAddress] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.invoicerAddress] with a well-typed [InvoicerAddress]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
-            body.invoicerAddress(invoicerAddress)
-        }
-
-        /** The ID of the virtual account the invoice should be paid to. */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) = apply {
-            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
-        }
-
-        /**
-         * Alias for calling [Builder.ledgerAccountSettlementId] with
-         * `ledgerAccountSettlementId.orElse(null)`.
-         */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
-
-        /**
-         * Sets [Builder.ledgerAccountSettlementId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.ledgerAccountSettlementId] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
-            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
-        }
-
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
-        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
-
-        /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
-        fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
-
-        /**
-         * Sets [Builder.metadata] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
-
-        /**
-         * Emails in addition to the counterparty email to send invoice status notifications to. At
-         * least one email is required if notifications are enabled and the counterparty doesn't
-         * have an email.
-         */
-        fun notificationEmailAddresses(notificationEmailAddresses: List<String>?) = apply {
-            body.notificationEmailAddresses(notificationEmailAddresses)
-        }
-
-        /**
-         * Alias for calling [Builder.notificationEmailAddresses] with
-         * `notificationEmailAddresses.orElse(null)`.
-         */
-        fun notificationEmailAddresses(notificationEmailAddresses: Optional<List<String>>) =
-            notificationEmailAddresses(notificationEmailAddresses.getOrNull())
-
-        /**
-         * Sets [Builder.notificationEmailAddresses] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.notificationEmailAddresses] with a well-typed
-         * `List<String>` value instead. This method is primarily for setting the field to an
-         * undocumented or not yet supported value.
-         */
-        fun notificationEmailAddresses(notificationEmailAddresses: JsonField<List<String>>) =
-            apply {
-                body.notificationEmailAddresses(notificationEmailAddresses)
-            }
-
-        /**
-         * Adds a single [String] to [notificationEmailAddresses].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addNotificationEmailAddress(notificationEmailAddress: String) = apply {
-            body.addNotificationEmailAddress(notificationEmailAddress)
-        }
-
-        /**
-         * If true, the invoice will send email notifications to the invoice recipients about
-         * invoice status changes.
-         */
-        fun notificationsEnabled(notificationsEnabled: Boolean) = apply {
-            body.notificationsEnabled(notificationsEnabled)
-        }
-
-        /**
-         * Sets [Builder.notificationsEnabled] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.notificationsEnabled] with a well-typed [Boolean] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun notificationsEnabled(notificationsEnabled: JsonField<Boolean>) = apply {
-            body.notificationsEnabled(notificationsEnabled)
-        }
-
-        /**
-         * Date transactions are to be posted to the participants' account. Defaults to the current
-         * business day or the next business day if the current day is a bank holiday or weekend.
-         * Format: yyyy-mm-dd.
-         */
-        fun paymentEffectiveDate(paymentEffectiveDate: LocalDate) = apply {
-            body.paymentEffectiveDate(paymentEffectiveDate)
-        }
-
-        /**
-         * Sets [Builder.paymentEffectiveDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.paymentEffectiveDate] with a well-typed [LocalDate]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun paymentEffectiveDate(paymentEffectiveDate: JsonField<LocalDate>) = apply {
-            body.paymentEffectiveDate(paymentEffectiveDate)
-        }
-
-        /**
-         * The method by which the invoice can be paid. `ui` will show the embedded payment
-         * collection flow. `automatic` will automatically initiate payment based upon the account
-         * details of the receiving_account id.\nIf the invoice amount is positive, the
-         * automatically initiated payment order's direction will be debit. If the invoice amount is
-         * negative, the automatically initiated payment order's direction will be credit. One of
-         * `manual`, `ui`, or `automatic`.
-         */
-        fun paymentMethod(paymentMethod: PaymentMethod) = apply {
-            body.paymentMethod(paymentMethod)
-        }
-
-        /**
-         * Sets [Builder.paymentMethod] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.paymentMethod] with a well-typed [PaymentMethod] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun paymentMethod(paymentMethod: JsonField<PaymentMethod>) = apply {
-            body.paymentMethod(paymentMethod)
-        }
-
-        /**
-         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
-         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
-         * `signet`, `provexchange`, `zengin`.
-         */
-        fun paymentType(paymentType: PaymentOrderType) = apply { body.paymentType(paymentType) }
-
-        /**
-         * Sets [Builder.paymentType] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.paymentType] with a well-typed [PaymentOrderType] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun paymentType(paymentType: JsonField<PaymentOrderType>) = apply {
-            body.paymentType(paymentType)
-        }
-
-        /** The receiving account ID. Can be an `external_account`. */
-        fun receivingAccountId(receivingAccountId: String) = apply {
-            body.receivingAccountId(receivingAccountId)
-        }
-
-        /**
-         * Sets [Builder.receivingAccountId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.receivingAccountId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun receivingAccountId(receivingAccountId: JsonField<String>) = apply {
-            body.receivingAccountId(receivingAccountId)
-        }
-
-        /**
-         * The email of the recipient of the invoice. Leaving this value as null will fallback to
-         * using the counterparty's name.
-         */
-        fun recipientEmail(recipientEmail: String?) = apply { body.recipientEmail(recipientEmail) }
-
-        /** Alias for calling [Builder.recipientEmail] with `recipientEmail.orElse(null)`. */
-        fun recipientEmail(recipientEmail: Optional<String>) =
-            recipientEmail(recipientEmail.getOrNull())
-
-        /**
-         * Sets [Builder.recipientEmail] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.recipientEmail] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun recipientEmail(recipientEmail: JsonField<String>) = apply {
-            body.recipientEmail(recipientEmail)
-        }
-
-        /**
-         * The name of the recipient of the invoice. Leaving this value as null will fallback to
-         * using the counterparty's name.
-         */
-        fun recipientName(recipientName: String?) = apply { body.recipientName(recipientName) }
-
-        /** Alias for calling [Builder.recipientName] with `recipientName.orElse(null)`. */
-        fun recipientName(recipientName: Optional<String>) =
-            recipientName(recipientName.getOrNull())
-
-        /**
-         * Sets [Builder.recipientName] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.recipientName] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun recipientName(recipientName: JsonField<String>) = apply {
-            body.recipientName(recipientName)
-        }
-
-        /**
-         * Number of days after due date when overdue reminder emails will be sent out to invoice
-         * recipients.
-         */
-        fun remindAfterOverdueDays(remindAfterOverdueDays: List<Long>?) = apply {
-            body.remindAfterOverdueDays(remindAfterOverdueDays)
-        }
-
-        /**
-         * Alias for calling [Builder.remindAfterOverdueDays] with
-         * `remindAfterOverdueDays.orElse(null)`.
-         */
-        fun remindAfterOverdueDays(remindAfterOverdueDays: Optional<List<Long>>) =
-            remindAfterOverdueDays(remindAfterOverdueDays.getOrNull())
-
-        /**
-         * Sets [Builder.remindAfterOverdueDays] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.remindAfterOverdueDays] with a well-typed `List<Long>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun remindAfterOverdueDays(remindAfterOverdueDays: JsonField<List<Long>>) = apply {
-            body.remindAfterOverdueDays(remindAfterOverdueDays)
-        }
-
-        /**
-         * Adds a single [Long] to [remindAfterOverdueDays].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addRemindAfterOverdueDay(remindAfterOverdueDay: Long) = apply {
-            body.addRemindAfterOverdueDay(remindAfterOverdueDay)
-        }
-
-        /** The ID of the virtual account the invoice should be paid to. */
-        fun virtualAccountId(virtualAccountId: String?) = apply {
-            body.virtualAccountId(virtualAccountId)
-        }
-
-        /** Alias for calling [Builder.virtualAccountId] with `virtualAccountId.orElse(null)`. */
-        fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.getOrNull())
-
-        /**
-         * Sets [Builder.virtualAccountId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.virtualAccountId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun virtualAccountId(virtualAccountId: JsonField<String>) = apply {
-            body.virtualAccountId(virtualAccountId)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
-
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
-
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
-
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
-
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
-
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
-
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
-
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
-
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
-
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
-
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
-
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
-
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
-
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
-
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
-
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
-
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
-
-        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.putAll(additionalQueryParams)
-            }
-
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
-
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
-
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
-
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
-            apply {
-                this.additionalQueryParams.replaceAll(additionalQueryParams)
-            }
-
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
-
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
-
-        /**
-         * Returns an immutable instance of [InvoiceCreateParams].
-         *
-         * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .counterpartyId()
-         * .dueDate()
-         * .originatingAccountId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
-         */
-        fun build(): InvoiceCreateParams =
-            InvoiceCreateParams(
-                body.build(),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
-    }
-
-    @NoAutoDetect
     class ContactDetail
-    @JsonCreator
     private constructor(
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("contact_identifier")
-        @ExcludeMissing
-        private val contactIdentifier: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("contact_identifier_type")
-        @ExcludeMissing
-        private val contactIdentifierType: JsonField<ContactIdentifierType> = JsonMissing.of(),
-        @JsonProperty("created_at")
-        @ExcludeMissing
-        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("discarded_at")
-        @ExcludeMissing
-        private val discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("live_mode")
-        @ExcludeMissing
-        private val liveMode: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("object")
-        @ExcludeMissing
-        private val object_: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("updated_at")
-        @ExcludeMissing
-        private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val id: JsonField<String>,
+        private val contactIdentifier: JsonField<String>,
+        private val contactIdentifierType: JsonField<ContactIdentifierType>,
+        private val createdAt: JsonField<OffsetDateTime>,
+        private val discardedAt: JsonField<OffsetDateTime>,
+        private val liveMode: JsonField<Boolean>,
+        private val object_: JsonField<String>,
+        private val updatedAt: JsonField<OffsetDateTime>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("contact_identifier")
+            @ExcludeMissing
+            contactIdentifier: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("contact_identifier_type")
+            @ExcludeMissing
+            contactIdentifierType: JsonField<ContactIdentifierType> = JsonMissing.of(),
+            @JsonProperty("created_at")
+            @ExcludeMissing
+            createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("discarded_at")
+            @ExcludeMissing
+            discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("live_mode")
+            @ExcludeMissing
+            liveMode: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("updated_at")
+            @ExcludeMissing
+            updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(
+            id,
+            contactIdentifier,
+            contactIdentifierType,
+            createdAt,
+            discardedAt,
+            liveMode,
+            object_,
+            updatedAt,
+            mutableMapOf(),
+        )
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -2673,27 +2744,15 @@ private constructor(
         @ExcludeMissing
         fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): ContactDetail = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            contactIdentifier()
-            contactIdentifierType()
-            createdAt()
-            discardedAt()
-            liveMode()
-            object_()
-            updatedAt()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2901,8 +2960,26 @@ private constructor(
                     checkRequired("liveMode", liveMode),
                     checkRequired("object_", object_),
                     checkRequired("updatedAt", updatedAt),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ContactDetail = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            contactIdentifier()
+            contactIdentifierType()
+            createdAt()
+            discardedAt()
+            liveMode()
+            object_()
+            updatedAt()
+            validated = true
         }
 
         class ContactIdentifierType
@@ -3040,31 +3117,30 @@ private constructor(
     }
 
     /** The counterparty's billing address. */
-    @NoAutoDetect
     class CounterpartyBillingAddress
-    @JsonCreator
     private constructor(
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line1")
-        @ExcludeMissing
-        private val line1: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("locality")
-        @ExcludeMissing
-        private val locality: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("region")
-        @ExcludeMissing
-        private val region: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line2")
-        @ExcludeMissing
-        private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val country: JsonField<String>,
+        private val line1: JsonField<String>,
+        private val locality: JsonField<String>,
+        private val postalCode: JsonField<String>,
+        private val region: JsonField<String>,
+        private val line2: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("locality")
+            @ExcludeMissing
+            locality: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("postal_code")
+            @ExcludeMissing
+            postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+        ) : this(country, line1, locality, postalCode, region, line2, mutableMapOf())
 
         /**
          * Country code conforms to [ISO 3166-1 alpha-2]
@@ -3154,25 +3230,15 @@ private constructor(
          */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CounterpartyBillingAddress = apply {
-            if (validated) {
-                return@apply
-            }
-
-            country()
-            line1()
-            locality()
-            postalCode()
-            region()
-            line2()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -3330,8 +3396,24 @@ private constructor(
                     checkRequired("postalCode", postalCode),
                     checkRequired("region", region),
                     line2,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CounterpartyBillingAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -3353,31 +3435,30 @@ private constructor(
     }
 
     /** The counterparty's shipping address where physical goods should be delivered. */
-    @NoAutoDetect
     class CounterpartyShippingAddress
-    @JsonCreator
     private constructor(
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line1")
-        @ExcludeMissing
-        private val line1: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("locality")
-        @ExcludeMissing
-        private val locality: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("region")
-        @ExcludeMissing
-        private val region: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line2")
-        @ExcludeMissing
-        private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val country: JsonField<String>,
+        private val line1: JsonField<String>,
+        private val locality: JsonField<String>,
+        private val postalCode: JsonField<String>,
+        private val region: JsonField<String>,
+        private val line2: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("locality")
+            @ExcludeMissing
+            locality: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("postal_code")
+            @ExcludeMissing
+            postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+        ) : this(country, line1, locality, postalCode, region, line2, mutableMapOf())
 
         /**
          * Country code conforms to [ISO 3166-1 alpha-2]
@@ -3467,25 +3548,15 @@ private constructor(
          */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CounterpartyShippingAddress = apply {
-            if (validated) {
-                return@apply
-            }
-
-            country()
-            line1()
-            locality()
-            postalCode()
-            region()
-            line2()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -3643,8 +3714,24 @@ private constructor(
                     checkRequired("postalCode", postalCode),
                     checkRequired("region", region),
                     line2,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CounterpartyShippingAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -3665,34 +3752,47 @@ private constructor(
             "CounterpartyShippingAddress{country=$country, line1=$line1, locality=$locality, postalCode=$postalCode, region=$region, line2=$line2, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class InvoiceLineItemCreateRequest
-    @JsonCreator
     private constructor(
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("unit_amount")
-        @ExcludeMissing
-        private val unitAmount: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("direction")
-        @ExcludeMissing
-        private val direction: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("quantity")
-        @ExcludeMissing
-        private val quantity: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("unit_amount_decimal")
-        @ExcludeMissing
-        private val unitAmountDecimal: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val name: JsonField<String>,
+        private val unitAmount: JsonField<Long>,
+        private val description: JsonField<String>,
+        private val direction: JsonField<String>,
+        private val metadata: JsonField<Metadata>,
+        private val quantity: JsonField<Long>,
+        private val unitAmountDecimal: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            unitAmount: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("direction")
+            @ExcludeMissing
+            direction: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("unit_amount_decimal")
+            @ExcludeMissing
+            unitAmountDecimal: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            name,
+            unitAmount,
+            description,
+            direction,
+            metadata,
+            quantity,
+            unitAmountDecimal,
+            mutableMapOf(),
+        )
 
         /**
          * The name of the line item, typically a product or SKU name.
@@ -3811,26 +3911,15 @@ private constructor(
         @ExcludeMissing
         fun _unitAmountDecimal(): JsonField<String> = unitAmountDecimal
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): InvoiceLineItemCreateRequest = apply {
-            if (validated) {
-                return@apply
-            }
-
-            name()
-            unitAmount()
-            description()
-            direction()
-            metadata().ifPresent { it.validate() }
-            quantity()
-            unitAmountDecimal()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4020,34 +4109,44 @@ private constructor(
                     metadata,
                     quantity,
                     unitAmountDecimal,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceLineItemCreateRequest = apply {
+            if (validated) {
+                return@apply
+            }
+
+            name()
+            unitAmount()
+            description()
+            direction()
+            metadata().ifPresent { it.validate() }
+            quantity()
+            unitAmountDecimal()
+            validated = true
         }
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
-        @NoAutoDetect
         class Metadata
-        @JsonCreator
-        private constructor(
+        private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+            @JsonCreator private constructor() : this(mutableMapOf())
+
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-        ) {
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
 
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Metadata = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -4094,7 +4193,17 @@ private constructor(
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
-                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Metadata = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -4133,31 +4242,30 @@ private constructor(
     }
 
     /** The invoice issuer's business address. */
-    @NoAutoDetect
     class InvoicerAddress
-    @JsonCreator
     private constructor(
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line1")
-        @ExcludeMissing
-        private val line1: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("locality")
-        @ExcludeMissing
-        private val locality: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("region")
-        @ExcludeMissing
-        private val region: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("line2")
-        @ExcludeMissing
-        private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val country: JsonField<String>,
+        private val line1: JsonField<String>,
+        private val locality: JsonField<String>,
+        private val postalCode: JsonField<String>,
+        private val region: JsonField<String>,
+        private val line2: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("locality")
+            @ExcludeMissing
+            locality: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("postal_code")
+            @ExcludeMissing
+            postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+        ) : this(country, line1, locality, postalCode, region, line2, mutableMapOf())
 
         /**
          * Country code conforms to [ISO 3166-1 alpha-2]
@@ -4247,25 +4355,15 @@ private constructor(
          */
         @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): InvoicerAddress = apply {
-            if (validated) {
-                return@apply
-            }
-
-            country()
-            line1()
-            locality()
-            postalCode()
-            region()
-            line2()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4421,8 +4519,24 @@ private constructor(
                     checkRequired("postalCode", postalCode),
                     checkRequired("region", region),
                     line2,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoicerAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            country()
+            line1()
+            locality()
+            postalCode()
+            region()
+            line2()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -4444,27 +4558,20 @@ private constructor(
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    @NoAutoDetect
     class Metadata
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4508,7 +4615,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
