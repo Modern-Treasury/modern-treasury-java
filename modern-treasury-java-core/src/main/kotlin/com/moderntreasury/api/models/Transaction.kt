@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -1159,19 +1160,15 @@ private constructor(
      * value.
      */
     class CustomIdentifiers
-    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-        @JsonCreator private constructor() : this(mutableMapOf())
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
 
@@ -1215,7 +1212,7 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): CustomIdentifiers = CustomIdentifiers(additionalProperties.toMutableMap())
+            fun build(): CustomIdentifiers = CustomIdentifiers(additionalProperties.toImmutable())
         }
 
         private var validated: Boolean = false
@@ -1653,19 +1650,15 @@ private constructor(
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     class Metadata
-    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-        @JsonCreator private constructor() : this(mutableMapOf())
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
 
@@ -1709,7 +1702,7 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Metadata = Metadata(additionalProperties.toMutableMap())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         private var validated: Boolean = false
@@ -2261,19 +2254,15 @@ private constructor(
      * object: `originator_name`, `originator_to_beneficiary_information`.
      */
     class Details
-    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
-
-        @JsonCreator private constructor() : this(mutableMapOf())
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
 
@@ -2317,7 +2306,7 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Details = Details(additionalProperties.toMutableMap())
+            fun build(): Details = Details(additionalProperties.toImmutable())
         }
 
         private var validated: Boolean = false
