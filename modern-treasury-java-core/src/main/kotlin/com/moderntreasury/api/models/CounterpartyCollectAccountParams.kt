@@ -753,7 +753,7 @@ private constructor(
 
             @JvmField val ID_SKNBI_CODE = of("idSknbiCode")
 
-            @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
+            @JvmField val ZA_NATIONAL_CLEARING_CODE = of("zaNationalClearingCode")
 
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
