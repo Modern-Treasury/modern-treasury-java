@@ -1396,11 +1396,15 @@ private constructor(
 
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
+            @JvmField val LEDGER_ACCOUNT = of("ledger_account")
+
             @JvmField val LEDGER_TRANSACTION = of("ledger_transaction")
+
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
             @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
+            @JvmField val ENTITY_LINK = of("entity_link")
 
             @JvmField val BULK_ERROR = of("bulk_error")
 
@@ -1410,9 +1414,11 @@ private constructor(
         /** An enum containing [EntityType]'s known values. */
         enum class Known {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
             BULK_ERROR,
         }
 
@@ -1427,9 +1433,11 @@ private constructor(
          */
         enum class Value {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
             BULK_ERROR,
             /**
              * An enum member indicating that [EntityType] was instantiated with an unknown value.
@@ -1447,9 +1455,11 @@ private constructor(
         fun value(): Value =
             when (this) {
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Value.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
-                TRANSACTION -> Value.TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
+                TRANSACTION -> Value.TRANSACTION
+                ENTITY_LINK -> Value.ENTITY_LINK
                 BULK_ERROR -> Value.BULK_ERROR
                 else -> Value._UNKNOWN
             }
@@ -1466,9 +1476,11 @@ private constructor(
         fun known(): Known =
             when (this) {
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Known.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
-                TRANSACTION -> Known.TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
+                TRANSACTION -> Known.TRANSACTION
+                ENTITY_LINK -> Known.ENTITY_LINK
                 BULK_ERROR -> Known.BULK_ERROR
                 else -> throw ModernTreasuryInvalidDataException("Unknown EntityType: $value")
             }

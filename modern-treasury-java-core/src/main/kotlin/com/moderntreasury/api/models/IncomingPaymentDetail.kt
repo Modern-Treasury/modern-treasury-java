@@ -1875,6 +1875,10 @@ private constructor(
 
             @JvmField val ACH = of("ach")
 
+            @JvmField val AU_BECS = of("au_becs")
+
+            @JvmField val BACS = of("bacs")
+
             @JvmField val BOOK = of("book")
 
             @JvmField val CHECK = of("check")
@@ -1882,6 +1886,10 @@ private constructor(
             @JvmField val EFT = of("eft")
 
             @JvmField val INTERAC = of("interac")
+
+            @JvmField val NEFT = of("neft")
+
+            @JvmField val NZ_BECS = of("nz_becs")
 
             @JvmField val RTP = of("rtp")
 
@@ -1897,10 +1905,14 @@ private constructor(
         /** An enum containing [Type]'s known values. */
         enum class Known {
             ACH,
+            AU_BECS,
+            BACS,
             BOOK,
             CHECK,
             EFT,
             INTERAC,
+            NEFT,
+            NZ_BECS,
             RTP,
             SEPA,
             SIGNET,
@@ -1918,10 +1930,14 @@ private constructor(
          */
         enum class Value {
             ACH,
+            AU_BECS,
+            BACS,
             BOOK,
             CHECK,
             EFT,
             INTERAC,
+            NEFT,
+            NZ_BECS,
             RTP,
             SEPA,
             SIGNET,
@@ -1940,10 +1956,14 @@ private constructor(
         fun value(): Value =
             when (this) {
                 ACH -> Value.ACH
+                AU_BECS -> Value.AU_BECS
+                BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CHECK -> Value.CHECK
                 EFT -> Value.EFT
                 INTERAC -> Value.INTERAC
+                NEFT -> Value.NEFT
+                NZ_BECS -> Value.NZ_BECS
                 RTP -> Value.RTP
                 SEPA -> Value.SEPA
                 SIGNET -> Value.SIGNET
@@ -1963,10 +1983,14 @@ private constructor(
         fun known(): Known =
             when (this) {
                 ACH -> Known.ACH
+                AU_BECS -> Known.AU_BECS
+                BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CHECK -> Known.CHECK
                 EFT -> Known.EFT
                 INTERAC -> Known.INTERAC
+                NEFT -> Known.NEFT
+                NZ_BECS -> Known.NZ_BECS
                 RTP -> Known.RTP
                 SEPA -> Known.SEPA
                 SIGNET -> Known.SIGNET
