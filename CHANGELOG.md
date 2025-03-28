@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.0.1 (2025-03-28)
+
+Full Changelog: [v6.0.0...v6.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.0.0...v6.0.1)
+
+### Bug Fixes
+
+* **client:** don't call `validate()` during deserialization if we don't have to ([#404](https://github.com/Modern-Treasury/modern-treasury-java/issues/404)) ([e629b0f](https://github.com/Modern-Treasury/modern-treasury-java/commit/e629b0f75968ed31fb533482fddd8c074d0119be))
+
+
+### Chores
+
+* **api:** updates to bulk creation request, legal entity schemas and more ([#400](https://github.com/Modern-Treasury/modern-treasury-java/issues/400)) ([f8f8966](https://github.com/Modern-Treasury/modern-treasury-java/commit/f8f8966aa0f92b6f0cb08eff6ac0fb8d038758cb))
+* **internal:** remove CI condition ([#403](https://github.com/Modern-Treasury/modern-treasury-java/issues/403)) ([1cd915d](https://github.com/Modern-Treasury/modern-treasury-java/commit/1cd915d7dff53bd3eff1fb1fff128e9378f1c589))
+
 ## 6.0.0 (2025-03-26)
 
 Full Changelog: [v5.0.0...v6.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v5.0.0...v6.0.0)
