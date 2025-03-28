@@ -47,6 +47,7 @@ private constructor(
     private val type: JsonField<Type>,
     private val updatedAt: JsonField<OffsetDateTime>,
     private val additionalInformation: JsonField<String>,
+    private val data: JsonValue,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -101,6 +102,7 @@ private constructor(
         @JsonProperty("additional_information")
         @ExcludeMissing
         additionalInformation: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("data") @ExcludeMissing data: JsonValue = JsonMissing.of(),
     ) : this(
         id,
         amount,
@@ -125,6 +127,7 @@ private constructor(
         type,
         updatedAt,
         additionalInformation,
+        data,
         mutableMapOf(),
     )
 
@@ -320,6 +323,9 @@ private constructor(
      */
     fun additionalInformation(): Optional<String> =
         Optional.ofNullable(additionalInformation.getNullable("additional_information"))
+
+    /** The raw data from the return file that we get from the bank. */
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
     /**
      * Returns the raw JSON value of [id].
@@ -585,6 +591,7 @@ private constructor(
         private var type: JsonField<Type>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
         private var additionalInformation: JsonField<String> = JsonMissing.of()
+        private var data: JsonValue = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -612,6 +619,7 @@ private constructor(
             type = returnObject.type
             updatedAt = returnObject.updatedAt
             additionalInformation = returnObject.additionalInformation
+            data = returnObject.data
             additionalProperties = returnObject.additionalProperties.toMutableMap()
         }
 
@@ -995,6 +1003,9 @@ private constructor(
             this.additionalInformation = additionalInformation
         }
 
+        /** The raw data from the return file that we get from the bank. */
+        fun data(data: JsonValue) = apply { this.data = data }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1072,6 +1083,7 @@ private constructor(
                 checkRequired("type", type),
                 checkRequired("updatedAt", updatedAt),
                 additionalInformation,
+                data,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1989,6 +2001,9 @@ private constructor(
 
                 @JvmField val JPMC_PAYMENT_RETURNED_DATETIME = of("jpmc_payment_returned_datetime")
 
+                @JvmField
+                val JPMC_TRANSACTION_REFERENCE_NUMBER = of("jpmc_transaction_reference_number")
+
                 @JvmField val LOB_CHECK_ID = of("lob_check_id")
 
                 @JvmField val OTHER = of("other")
@@ -2003,8 +2018,12 @@ private constructor(
 
                 @JvmField val PNC_PAYMENT_TRACE_ID = of("pnc_payment_trace_id")
 
+                @JvmField val PNC_REQUEST_FOR_PAYMENT_ID = of("pnc_request_for_payment_id")
+
                 @JvmField
                 val PNC_TRANSACTION_REFERENCE_NUMBER = of("pnc_transaction_reference_number")
+
+                @JvmField val RBC_WIRE_REFERENCE_ID = of("rbc_wire_reference_id")
 
                 @JvmField val RSPEC_VENDOR_PAYMENT_ID = of("rspec_vendor_payment_id")
 
@@ -2102,6 +2121,7 @@ private constructor(
                 JPMC_PAYMENT_BATCH_ID,
                 JPMC_PAYMENT_INFORMATION_ID,
                 JPMC_PAYMENT_RETURNED_DATETIME,
+                JPMC_TRANSACTION_REFERENCE_NUMBER,
                 LOB_CHECK_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
@@ -2109,7 +2129,9 @@ private constructor(
                 PNC_INSTRUCTION_ID,
                 PNC_MULTIPAYMENT_ID,
                 PNC_PAYMENT_TRACE_ID,
+                PNC_REQUEST_FOR_PAYMENT_ID,
                 PNC_TRANSACTION_REFERENCE_NUMBER,
+                RBC_WIRE_REFERENCE_ID,
                 RSPEC_VENDOR_PAYMENT_ID,
                 RTP_INSTRUCTION_ID,
                 SIGNET_API_REFERENCE_ID,
@@ -2187,6 +2209,7 @@ private constructor(
                 JPMC_PAYMENT_BATCH_ID,
                 JPMC_PAYMENT_INFORMATION_ID,
                 JPMC_PAYMENT_RETURNED_DATETIME,
+                JPMC_TRANSACTION_REFERENCE_NUMBER,
                 LOB_CHECK_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
@@ -2194,7 +2217,9 @@ private constructor(
                 PNC_INSTRUCTION_ID,
                 PNC_MULTIPAYMENT_ID,
                 PNC_PAYMENT_TRACE_ID,
+                PNC_REQUEST_FOR_PAYMENT_ID,
                 PNC_TRANSACTION_REFERENCE_NUMBER,
+                RBC_WIRE_REFERENCE_ID,
                 RSPEC_VENDOR_PAYMENT_ID,
                 RTP_INSTRUCTION_ID,
                 SIGNET_API_REFERENCE_ID,
@@ -2275,6 +2300,7 @@ private constructor(
                     JPMC_PAYMENT_BATCH_ID -> Value.JPMC_PAYMENT_BATCH_ID
                     JPMC_PAYMENT_INFORMATION_ID -> Value.JPMC_PAYMENT_INFORMATION_ID
                     JPMC_PAYMENT_RETURNED_DATETIME -> Value.JPMC_PAYMENT_RETURNED_DATETIME
+                    JPMC_TRANSACTION_REFERENCE_NUMBER -> Value.JPMC_TRANSACTION_REFERENCE_NUMBER
                     LOB_CHECK_ID -> Value.LOB_CHECK_ID
                     OTHER -> Value.OTHER
                     PARTIAL_SWIFT_MIR -> Value.PARTIAL_SWIFT_MIR
@@ -2282,7 +2308,9 @@ private constructor(
                     PNC_INSTRUCTION_ID -> Value.PNC_INSTRUCTION_ID
                     PNC_MULTIPAYMENT_ID -> Value.PNC_MULTIPAYMENT_ID
                     PNC_PAYMENT_TRACE_ID -> Value.PNC_PAYMENT_TRACE_ID
+                    PNC_REQUEST_FOR_PAYMENT_ID -> Value.PNC_REQUEST_FOR_PAYMENT_ID
                     PNC_TRANSACTION_REFERENCE_NUMBER -> Value.PNC_TRANSACTION_REFERENCE_NUMBER
+                    RBC_WIRE_REFERENCE_ID -> Value.RBC_WIRE_REFERENCE_ID
                     RSPEC_VENDOR_PAYMENT_ID -> Value.RSPEC_VENDOR_PAYMENT_ID
                     RTP_INSTRUCTION_ID -> Value.RTP_INSTRUCTION_ID
                     SIGNET_API_REFERENCE_ID -> Value.SIGNET_API_REFERENCE_ID
@@ -2364,6 +2392,7 @@ private constructor(
                     JPMC_PAYMENT_BATCH_ID -> Known.JPMC_PAYMENT_BATCH_ID
                     JPMC_PAYMENT_INFORMATION_ID -> Known.JPMC_PAYMENT_INFORMATION_ID
                     JPMC_PAYMENT_RETURNED_DATETIME -> Known.JPMC_PAYMENT_RETURNED_DATETIME
+                    JPMC_TRANSACTION_REFERENCE_NUMBER -> Known.JPMC_TRANSACTION_REFERENCE_NUMBER
                     LOB_CHECK_ID -> Known.LOB_CHECK_ID
                     OTHER -> Known.OTHER
                     PARTIAL_SWIFT_MIR -> Known.PARTIAL_SWIFT_MIR
@@ -2371,7 +2400,9 @@ private constructor(
                     PNC_INSTRUCTION_ID -> Known.PNC_INSTRUCTION_ID
                     PNC_MULTIPAYMENT_ID -> Known.PNC_MULTIPAYMENT_ID
                     PNC_PAYMENT_TRACE_ID -> Known.PNC_PAYMENT_TRACE_ID
+                    PNC_REQUEST_FOR_PAYMENT_ID -> Known.PNC_REQUEST_FOR_PAYMENT_ID
                     PNC_TRANSACTION_REFERENCE_NUMBER -> Known.PNC_TRANSACTION_REFERENCE_NUMBER
+                    RBC_WIRE_REFERENCE_ID -> Known.RBC_WIRE_REFERENCE_ID
                     RSPEC_VENDOR_PAYMENT_ID -> Known.RSPEC_VENDOR_PAYMENT_ID
                     RTP_INSTRUCTION_ID -> Known.RTP_INSTRUCTION_ID
                     SIGNET_API_REFERENCE_ID -> Known.SIGNET_API_REFERENCE_ID
@@ -2971,15 +3002,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ReturnObject && id == other.id && amount == other.amount && code == other.code && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && dateOfDeath == other.dateOfDeath && failureReason == other.failureReason && internalAccountId == other.internalAccountId && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && object_ == other.object_ && reason == other.reason && referenceNumbers == other.referenceNumbers && returnableId == other.returnableId && returnableType == other.returnableType && role == other.role && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && type == other.type && updatedAt == other.updatedAt && additionalInformation == other.additionalInformation && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is ReturnObject && id == other.id && amount == other.amount && code == other.code && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && dateOfDeath == other.dateOfDeath && failureReason == other.failureReason && internalAccountId == other.internalAccountId && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && object_ == other.object_ && reason == other.reason && referenceNumbers == other.referenceNumbers && returnableId == other.returnableId && returnableType == other.returnableType && role == other.role && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && type == other.type && updatedAt == other.updatedAt && additionalInformation == other.additionalInformation && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, code, createdAt, currency, currentReturn, dateOfDeath, failureReason, internalAccountId, ledgerTransactionId, liveMode, object_, reason, referenceNumbers, returnableId, returnableType, role, status, transactionId, transactionLineItemId, type, updatedAt, additionalInformation, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, amount, code, createdAt, currency, currentReturn, dateOfDeath, failureReason, internalAccountId, ledgerTransactionId, liveMode, object_, reason, referenceNumbers, returnableId, returnableType, role, status, transactionId, transactionLineItemId, type, updatedAt, additionalInformation, data, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ReturnObject{id=$id, amount=$amount, code=$code, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, additionalProperties=$additionalProperties}"
+        "ReturnObject{id=$id, amount=$amount, code=$code, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, data=$data, additionalProperties=$additionalProperties}"
 }

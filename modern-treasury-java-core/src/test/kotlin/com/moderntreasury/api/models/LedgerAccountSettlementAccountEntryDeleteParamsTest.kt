@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.models
 
-import com.moderntreasury.api.core.JsonValue
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +12,7 @@ internal class LedgerAccountSettlementAccountEntryDeleteParamsTest {
     fun create() {
         LedgerAccountSettlementAccountEntryDeleteParams.builder()
             .id("id")
-            .addLedgerEntryId(JsonValue.from(mapOf<String, Any>()))
+            .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .build()
     }
 
@@ -22,7 +21,7 @@ internal class LedgerAccountSettlementAccountEntryDeleteParamsTest {
         val params =
             LedgerAccountSettlementAccountEntryDeleteParams.builder()
                 .id("id")
-                .addLedgerEntryId(JsonValue.from(mapOf<String, Any>()))
+                .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("id")
@@ -35,12 +34,12 @@ internal class LedgerAccountSettlementAccountEntryDeleteParamsTest {
         val params =
             LedgerAccountSettlementAccountEntryDeleteParams.builder()
                 .id("id")
-                .addLedgerEntryId(JsonValue.from(mapOf<String, Any>()))
+                .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
 
         val body = params._body()
 
         assertThat(body.ledgerEntryIds().getOrNull())
-            .containsExactly(JsonValue.from(mapOf<String, Any>()))
+            .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
 }

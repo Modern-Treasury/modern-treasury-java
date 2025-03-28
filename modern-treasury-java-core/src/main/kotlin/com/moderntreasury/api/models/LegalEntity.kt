@@ -29,6 +29,7 @@ private constructor(
     private val bankSettings: JsonField<BankSettings>,
     private val businessName: JsonField<String>,
     private val citizenshipCountry: JsonField<String>,
+    private val complianceDetails: JsonField<LegalEntityComplianceDetail>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val dateFormed: JsonField<LocalDate>,
     private val dateOfBirth: JsonField<LocalDate>,
@@ -37,6 +38,7 @@ private constructor(
     private val email: JsonField<String>,
     private val firstName: JsonField<String>,
     private val identifications: JsonField<List<Identification>>,
+    private val industryClassifications: JsonField<List<LegalEntityIndustryClassification>>,
     private val lastName: JsonField<String>,
     private val legalEntityAssociations: JsonField<List<LegalEntityAssociation>>,
     private val legalEntityType: JsonField<LegalEntityType>,
@@ -72,6 +74,9 @@ private constructor(
         @JsonProperty("citizenship_country")
         @ExcludeMissing
         citizenshipCountry: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("compliance_details")
+        @ExcludeMissing
+        complianceDetails: JsonField<LegalEntityComplianceDetail> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -92,6 +97,10 @@ private constructor(
         @JsonProperty("identifications")
         @ExcludeMissing
         identifications: JsonField<List<Identification>> = JsonMissing.of(),
+        @JsonProperty("industry_classifications")
+        @ExcludeMissing
+        industryClassifications: JsonField<List<LegalEntityIndustryClassification>> =
+            JsonMissing.of(),
         @JsonProperty("last_name") @ExcludeMissing lastName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("legal_entity_associations")
         @ExcludeMissing
@@ -135,6 +144,7 @@ private constructor(
         bankSettings,
         businessName,
         citizenshipCountry,
+        complianceDetails,
         createdAt,
         dateFormed,
         dateOfBirth,
@@ -143,6 +153,7 @@ private constructor(
         email,
         firstName,
         identifications,
+        industryClassifications,
         lastName,
         legalEntityAssociations,
         legalEntityType,
@@ -201,6 +212,13 @@ private constructor(
      */
     fun citizenshipCountry(): Optional<String> =
         Optional.ofNullable(citizenshipCountry.getNullable("citizenship_country"))
+
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun complianceDetails(): Optional<LegalEntityComplianceDetail> =
+        Optional.ofNullable(complianceDetails.getNullable("compliance_details"))
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -263,6 +281,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun identifications(): List<Identification> = identifications.getRequired("identifications")
+
+    /**
+     * A list of industry classifications for the legal entity.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun industryClassifications(): List<LegalEntityIndustryClassification> =
+        industryClassifications.getRequired("industry_classifications")
 
     /**
      * An individual's last name.
@@ -444,6 +471,16 @@ private constructor(
     fun _citizenshipCountry(): JsonField<String> = citizenshipCountry
 
     /**
+     * Returns the raw JSON value of [complianceDetails].
+     *
+     * Unlike [complianceDetails], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("compliance_details")
+    @ExcludeMissing
+    fun _complianceDetails(): JsonField<LegalEntityComplianceDetail> = complianceDetails
+
+    /**
      * Returns the raw JSON value of [createdAt].
      *
      * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
@@ -511,6 +548,17 @@ private constructor(
     @JsonProperty("identifications")
     @ExcludeMissing
     fun _identifications(): JsonField<List<Identification>> = identifications
+
+    /**
+     * Returns the raw JSON value of [industryClassifications].
+     *
+     * Unlike [industryClassifications], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("industry_classifications")
+    @ExcludeMissing
+    fun _industryClassifications(): JsonField<List<LegalEntityIndustryClassification>> =
+        industryClassifications
 
     /**
      * Returns the raw JSON value of [lastName].
@@ -678,6 +726,7 @@ private constructor(
          * .bankSettings()
          * .businessName()
          * .citizenshipCountry()
+         * .complianceDetails()
          * .createdAt()
          * .dateFormed()
          * .dateOfBirth()
@@ -686,6 +735,7 @@ private constructor(
          * .email()
          * .firstName()
          * .identifications()
+         * .industryClassifications()
          * .lastName()
          * .legalEntityAssociations()
          * .legalEntityType()
@@ -716,6 +766,7 @@ private constructor(
         private var bankSettings: JsonField<BankSettings>? = null
         private var businessName: JsonField<String>? = null
         private var citizenshipCountry: JsonField<String>? = null
+        private var complianceDetails: JsonField<LegalEntityComplianceDetail>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var dateFormed: JsonField<LocalDate>? = null
         private var dateOfBirth: JsonField<LocalDate>? = null
@@ -724,6 +775,9 @@ private constructor(
         private var email: JsonField<String>? = null
         private var firstName: JsonField<String>? = null
         private var identifications: JsonField<MutableList<Identification>>? = null
+        private var industryClassifications:
+            JsonField<MutableList<LegalEntityIndustryClassification>>? =
+            null
         private var lastName: JsonField<String>? = null
         private var legalEntityAssociations: JsonField<MutableList<LegalEntityAssociation>>? = null
         private var legalEntityType: JsonField<LegalEntityType>? = null
@@ -750,6 +804,7 @@ private constructor(
             bankSettings = legalEntity.bankSettings
             businessName = legalEntity.businessName
             citizenshipCountry = legalEntity.citizenshipCountry
+            complianceDetails = legalEntity.complianceDetails
             createdAt = legalEntity.createdAt
             dateFormed = legalEntity.dateFormed
             dateOfBirth = legalEntity.dateOfBirth
@@ -758,6 +813,7 @@ private constructor(
             email = legalEntity.email
             firstName = legalEntity.firstName
             identifications = legalEntity.identifications.map { it.toMutableList() }
+            industryClassifications = legalEntity.industryClassifications.map { it.toMutableList() }
             lastName = legalEntity.lastName
             legalEntityAssociations = legalEntity.legalEntityAssociations.map { it.toMutableList() }
             legalEntityType = legalEntity.legalEntityType
@@ -868,6 +924,24 @@ private constructor(
          */
         fun citizenshipCountry(citizenshipCountry: JsonField<String>) = apply {
             this.citizenshipCountry = citizenshipCountry
+        }
+
+        fun complianceDetails(complianceDetails: LegalEntityComplianceDetail?) =
+            complianceDetails(JsonField.ofNullable(complianceDetails))
+
+        /** Alias for calling [Builder.complianceDetails] with `complianceDetails.orElse(null)`. */
+        fun complianceDetails(complianceDetails: Optional<LegalEntityComplianceDetail>) =
+            complianceDetails(complianceDetails.getOrNull())
+
+        /**
+         * Sets [Builder.complianceDetails] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.complianceDetails] with a well-typed
+         * [LegalEntityComplianceDetail] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
+        fun complianceDetails(complianceDetails: JsonField<LegalEntityComplianceDetail>) = apply {
+            this.complianceDetails = complianceDetails
         }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -1012,6 +1086,37 @@ private constructor(
                     checkKnown("identifications", it).add(identification)
                 }
         }
+
+        /** A list of industry classifications for the legal entity. */
+        fun industryClassifications(
+            industryClassifications: List<LegalEntityIndustryClassification>
+        ) = industryClassifications(JsonField.of(industryClassifications))
+
+        /**
+         * Sets [Builder.industryClassifications] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.industryClassifications] with a well-typed
+         * `List<LegalEntityIndustryClassification>` value instead. This method is primarily for
+         * setting the field to an undocumented or not yet supported value.
+         */
+        fun industryClassifications(
+            industryClassifications: JsonField<List<LegalEntityIndustryClassification>>
+        ) = apply {
+            this.industryClassifications = industryClassifications.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [LegalEntityIndustryClassification] to [industryClassifications].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addIndustryClassification(industryClassification: LegalEntityIndustryClassification) =
+            apply {
+                industryClassifications =
+                    (industryClassifications ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("industryClassifications", it).add(industryClassification)
+                    }
+            }
 
         /** An individual's last name. */
         fun lastName(lastName: String?) = lastName(JsonField.ofNullable(lastName))
@@ -1347,6 +1452,7 @@ private constructor(
          * .bankSettings()
          * .businessName()
          * .citizenshipCountry()
+         * .complianceDetails()
          * .createdAt()
          * .dateFormed()
          * .dateOfBirth()
@@ -1355,6 +1461,7 @@ private constructor(
          * .email()
          * .firstName()
          * .identifications()
+         * .industryClassifications()
          * .lastName()
          * .legalEntityAssociations()
          * .legalEntityType()
@@ -1383,6 +1490,7 @@ private constructor(
                 checkRequired("bankSettings", bankSettings),
                 checkRequired("businessName", businessName),
                 checkRequired("citizenshipCountry", citizenshipCountry),
+                checkRequired("complianceDetails", complianceDetails),
                 checkRequired("createdAt", createdAt),
                 checkRequired("dateFormed", dateFormed),
                 checkRequired("dateOfBirth", dateOfBirth),
@@ -1393,6 +1501,9 @@ private constructor(
                 checkRequired("email", email),
                 checkRequired("firstName", firstName),
                 checkRequired("identifications", identifications).map { it.toImmutable() },
+                checkRequired("industryClassifications", industryClassifications).map {
+                    it.toImmutable()
+                },
                 checkRequired("lastName", lastName),
                 checkRequired("legalEntityAssociations", legalEntityAssociations).map {
                     it.toImmutable()
@@ -1428,6 +1539,7 @@ private constructor(
         bankSettings().ifPresent { it.validate() }
         businessName()
         citizenshipCountry()
+        complianceDetails().ifPresent { it.validate() }
         createdAt()
         dateFormed()
         dateOfBirth()
@@ -1436,6 +1548,7 @@ private constructor(
         email()
         firstName()
         identifications().forEach { it.validate() }
+        industryClassifications().forEach { it.validate() }
         lastName()
         legalEntityAssociations().ifPresent { it.forEach { it.validate() } }
         legalEntityType()
@@ -3418,15 +3531,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LegalEntity && id == other.id && addresses == other.addresses && bankSettings == other.bankSettings && businessName == other.businessName && citizenshipCountry == other.citizenshipCountry && createdAt == other.createdAt && dateFormed == other.dateFormed && dateOfBirth == other.dateOfBirth && discardedAt == other.discardedAt && doingBusinessAsNames == other.doingBusinessAsNames && email == other.email && firstName == other.firstName && identifications == other.identifications && lastName == other.lastName && legalEntityAssociations == other.legalEntityAssociations && legalEntityType == other.legalEntityType && legalStructure == other.legalStructure && liveMode == other.liveMode && metadata == other.metadata && middleName == other.middleName && object_ == other.object_ && phoneNumbers == other.phoneNumbers && politicallyExposedPerson == other.politicallyExposedPerson && preferredName == other.preferredName && prefix == other.prefix && riskRating == other.riskRating && suffix == other.suffix && updatedAt == other.updatedAt && wealthAndEmploymentDetails == other.wealthAndEmploymentDetails && website == other.website && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LegalEntity && id == other.id && addresses == other.addresses && bankSettings == other.bankSettings && businessName == other.businessName && citizenshipCountry == other.citizenshipCountry && complianceDetails == other.complianceDetails && createdAt == other.createdAt && dateFormed == other.dateFormed && dateOfBirth == other.dateOfBirth && discardedAt == other.discardedAt && doingBusinessAsNames == other.doingBusinessAsNames && email == other.email && firstName == other.firstName && identifications == other.identifications && industryClassifications == other.industryClassifications && lastName == other.lastName && legalEntityAssociations == other.legalEntityAssociations && legalEntityType == other.legalEntityType && legalStructure == other.legalStructure && liveMode == other.liveMode && metadata == other.metadata && middleName == other.middleName && object_ == other.object_ && phoneNumbers == other.phoneNumbers && politicallyExposedPerson == other.politicallyExposedPerson && preferredName == other.preferredName && prefix == other.prefix && riskRating == other.riskRating && suffix == other.suffix && updatedAt == other.updatedAt && wealthAndEmploymentDetails == other.wealthAndEmploymentDetails && website == other.website && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, addresses, bankSettings, businessName, citizenshipCountry, createdAt, dateFormed, dateOfBirth, discardedAt, doingBusinessAsNames, email, firstName, identifications, lastName, legalEntityAssociations, legalEntityType, legalStructure, liveMode, metadata, middleName, object_, phoneNumbers, politicallyExposedPerson, preferredName, prefix, riskRating, suffix, updatedAt, wealthAndEmploymentDetails, website, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, addresses, bankSettings, businessName, citizenshipCountry, complianceDetails, createdAt, dateFormed, dateOfBirth, discardedAt, doingBusinessAsNames, email, firstName, identifications, industryClassifications, lastName, legalEntityAssociations, legalEntityType, legalStructure, liveMode, metadata, middleName, object_, phoneNumbers, politicallyExposedPerson, preferredName, prefix, riskRating, suffix, updatedAt, wealthAndEmploymentDetails, website, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessName=$businessName, citizenshipCountry=$citizenshipCountry, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, doingBusinessAsNames=$doingBusinessAsNames, email=$email, firstName=$firstName, identifications=$identifications, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, riskRating=$riskRating, suffix=$suffix, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "LegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, doingBusinessAsNames=$doingBusinessAsNames, email=$email, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, riskRating=$riskRating, suffix=$suffix, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }
