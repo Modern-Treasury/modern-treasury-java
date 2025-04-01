@@ -896,21 +896,56 @@ private constructor(
         counterpartyId()
         createdAt()
         currency()
-        direction()
+        direction().ifPresent { it.validate() }
         dueDate()
         effectiveDateSelectionEnabled()
-        existingExternalAccountsFilter()
-        externalAccountCollection()
+        existingExternalAccountsFilter().ifPresent { it.validate() }
+        externalAccountCollection().ifPresent { it.validate() }
         liveMode()
         object_()
         originatingAccountId()
         paymentOrderId()
         receivingAccountId()
         selectedEffectiveDate()
-        status()
+        status().ifPresent { it.validate() }
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (clientToken.asKnown().isPresent) 1 else 0) +
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (currency.asKnown().isPresent) 1 else 0) +
+            (direction.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (dueDate.asKnown().isPresent) 1 else 0) +
+            (if (effectiveDateSelectionEnabled.asKnown().isPresent) 1 else 0) +
+            (existingExternalAccountsFilter.asKnown().getOrNull()?.validity() ?: 0) +
+            (externalAccountCollection.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (originatingAccountId.asKnown().isPresent) 1 else 0) +
+            (if (paymentOrderId.asKnown().isPresent) 1 else 0) +
+            (if (receivingAccountId.asKnown().isPresent) 1 else 0) +
+            (if (selectedEffectiveDate.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /**
      * Describes the direction money is flowing in the transaction. Can only be `debit`. A `debit`
@@ -1004,6 +1039,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Direction = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1112,6 +1174,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ExistingExternalAccountsFilter = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1228,6 +1317,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ExternalAccountCollection = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1343,6 +1459,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
