@@ -109,6 +109,17 @@ private constructor(
             additionalQueryParams = ledgerCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [name]
+         * - [description]
+         * - [metadata]
+         */
+        fun body(body: LedgerCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The name of the ledger. */
         fun name(name: String) = apply { body.name(name) }
 
@@ -286,7 +297,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerCreateRequest = body
+    fun _body(): LedgerCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

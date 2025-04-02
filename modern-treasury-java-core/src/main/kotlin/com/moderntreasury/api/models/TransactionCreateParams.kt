@@ -228,6 +228,20 @@ private constructor(
             additionalQueryParams = transactionCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [asOfDate]
+         * - [direction]
+         * - [internalAccountId]
+         * - [vendorCode]
+         * - etc.
+         */
+        fun body(body: TransactionCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
@@ -530,7 +544,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): TransactionCreateRequest = body
+    fun _body(): TransactionCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

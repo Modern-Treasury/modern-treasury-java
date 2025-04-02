@@ -348,6 +348,20 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amountLowerBound]
+         * - [amountUpperBound]
+         * - [counterpartyId]
+         * - [currency]
+         * - [dateLowerBound]
+         * - etc.
+         */
+        fun body(body: ExpectedPaymentCreateRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
@@ -853,7 +867,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExpectedPaymentCreateRequest = body
+    fun _body(): ExpectedPaymentCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

@@ -434,6 +434,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [addresses]
+         * - [bankSettings]
+         * - [businessName]
+         * - [citizenshipCountry]
+         * - [complianceDetails]
+         * - etc.
+         */
+        fun body(body: LegalEntityUpdateRequest) = apply { this.body = body.toBuilder() }
+
         /** A list of addresses for the entity. */
         fun addresses(addresses: List<LegalEntityAddressCreateRequest>) = apply {
             body.addresses(addresses)
@@ -1021,7 +1035,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LegalEntityUpdateRequest = body
+    fun _body(): LegalEntityUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
