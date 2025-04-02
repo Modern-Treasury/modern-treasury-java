@@ -176,6 +176,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountType]
+         * - [counterpartyId]
+         * - [metadata]
+         * - [name]
+         * - [partyAddress]
+         * - etc.
+         */
+        fun body(body: ExternalAccountUpdateRequest) = apply { this.body = body.toBuilder() }
+
         /** Can be `checking`, `savings` or `other`. */
         fun accountType(accountType: ExternalAccountType) = apply { body.accountType(accountType) }
 
@@ -417,7 +431,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExternalAccountUpdateRequest = body
+    fun _body(): ExternalAccountUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

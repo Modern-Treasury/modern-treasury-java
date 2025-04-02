@@ -90,6 +90,15 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [status]
+         */
+        fun body(body: ConnectionLegalEntityUpdateRequest) = apply { this.body = body.toBuilder() }
+
         /** The status of the connection legal entity. */
         fun status(status: Status) = apply { body.status(status) }
 
@@ -239,7 +248,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ConnectionLegalEntityUpdateRequest = body
+    fun _body(): ConnectionLegalEntityUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

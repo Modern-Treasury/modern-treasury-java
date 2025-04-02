@@ -92,6 +92,15 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [status]
+         */
+        fun body(body: AccountCollectionFlowUpdateRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * Required. The updated status of the account collection flow. Can only be used to mark a
          * flow as `cancelled`.
          */
@@ -244,7 +253,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): AccountCollectionFlowUpdateRequest = body
+    fun _body(): AccountCollectionFlowUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

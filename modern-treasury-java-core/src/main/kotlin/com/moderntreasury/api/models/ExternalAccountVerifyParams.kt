@@ -155,6 +155,20 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [originatingAccountId]
+         * - [paymentType]
+         * - [currency]
+         * - [fallbackType]
+         * - [priority]
+         * - etc.
+         */
+        fun body(body: ExternalAccountVerifyRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * The ID of the internal account where the micro-deposits originate from. Both credit and
          * debit capabilities must be enabled.
          */
@@ -372,7 +386,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExternalAccountVerifyRequest = body
+    fun _body(): ExternalAccountVerifyRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
