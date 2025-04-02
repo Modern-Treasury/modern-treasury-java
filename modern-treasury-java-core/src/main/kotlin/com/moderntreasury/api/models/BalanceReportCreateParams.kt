@@ -142,6 +142,18 @@ private constructor(
             this.internalAccountId = internalAccountId
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [asOfDate]
+         * - [asOfTime]
+         * - [balanceReportType]
+         * - [balances]
+         */
+        fun body(body: BalanceReportCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The date of the balance report in local time. */
         fun asOfDate(asOfDate: LocalDate) = apply { body.asOfDate(asOfDate) }
 
@@ -347,7 +359,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): BalanceReportCreateRequest = body
+    fun _body(): BalanceReportCreateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

@@ -488,6 +488,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [contactDetails]
+         * - [counterpartyBillingAddress]
+         * - [counterpartyId]
+         * - [counterpartyShippingAddress]
+         * - [currency]
+         * - etc.
+         */
+        fun body(body: InvoiceUpdateRequest) = apply { this.body = body.toBuilder() }
+
         /** The invoicer's contact details displayed at the top of the invoice. */
         fun contactDetails(contactDetails: List<ContactDetail>) = apply {
             body.contactDetails(contactDetails)
@@ -1165,7 +1179,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): InvoiceUpdateRequest = body
+    fun _body(): InvoiceUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

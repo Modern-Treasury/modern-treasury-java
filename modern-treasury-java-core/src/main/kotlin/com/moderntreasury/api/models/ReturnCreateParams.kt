@@ -162,6 +162,20 @@ private constructor(
             additionalQueryParams = returnCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [returnableId]
+         * - [returnableType]
+         * - [additionalInformation]
+         * - [code]
+         * - [data]
+         * - etc.
+         */
+        fun body(body: ReturnCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: String?) = apply { body.returnableId(returnableId) }
 
@@ -413,7 +427,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ReturnCreateRequest = body
+    fun _body(): ReturnCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

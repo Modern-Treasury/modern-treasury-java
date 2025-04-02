@@ -112,6 +112,16 @@ private constructor(
 
         fun accountId(accountId: String) = apply { this.accountId = accountId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountNumber]
+         * - [accountNumberType]
+         */
+        fun body(body: AccountDetailCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The account number for the bank account. */
         fun accountNumber(accountNumber: String) = apply { body.accountNumber(accountNumber) }
 
@@ -286,7 +296,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): AccountDetailCreateRequest = body
+    fun _body(): AccountDetailCreateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
