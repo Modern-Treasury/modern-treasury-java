@@ -176,6 +176,20 @@ private constructor(
             additionalQueryParams = ledgerEventHandlerCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [ledgerTransactionTemplate]
+         * - [name]
+         * - [conditions]
+         * - [description]
+         * - [ledgerId]
+         * - etc.
+         */
+        fun body(body: LedgerEventHandlerCreateRequest) = apply { this.body = body.toBuilder() }
+
         @Deprecated("deprecated")
         fun ledgerTransactionTemplate(
             ledgerTransactionTemplate: LedgerEventHandlerLedgerTransactionTemplate
@@ -427,7 +441,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerEventHandlerCreateRequest = body
+    fun _body(): LedgerEventHandlerCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

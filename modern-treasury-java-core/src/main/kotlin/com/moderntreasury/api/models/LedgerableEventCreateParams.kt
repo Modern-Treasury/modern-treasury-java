@@ -113,6 +113,18 @@ private constructor(
             additionalQueryParams = ledgerableEventCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [name]
+         * - [customData]
+         * - [description]
+         * - [metadata]
+         */
+        fun body(body: LedgerableEventCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** Name of the ledgerable event. */
         fun name(name: String) = apply { body.name(name) }
 
@@ -293,7 +305,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerableEventCreateRequest = body
+    fun _body(): LedgerableEventCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
