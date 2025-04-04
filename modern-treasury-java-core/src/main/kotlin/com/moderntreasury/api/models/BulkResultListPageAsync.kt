@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** list bulk_results */
 class BulkResultListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<BulkResult>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<BulkResult> = items.getNullable("items") ?: listOf()
+        fun items(): List<BulkResult> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** list transaction_line_items */
 class TransactionLineItemListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<TransactionLineItem>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<TransactionLineItem> = items.getNullable("items") ?: listOf()
+        fun items(): List<TransactionLineItem> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

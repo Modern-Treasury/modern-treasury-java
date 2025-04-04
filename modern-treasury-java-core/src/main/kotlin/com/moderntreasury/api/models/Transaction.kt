@@ -153,7 +153,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun asOfDate(): Optional<LocalDate> = Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+    fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
 
     /**
      * The time on which the transaction occurred. Depending on the granularity of the timestamp
@@ -162,7 +162,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun asOfTime(): Optional<String> = Optional.ofNullable(asOfTime.getNullable("as_of_time"))
+    fun asOfTime(): Optional<String> = asOfTime.getOptional("as_of_time")
 
     /**
      * The timezone in which the `as_of_time` is represented. Can be `null` if the bank does not
@@ -171,8 +171,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun asOfTimezone(): Optional<String> =
-        Optional.ofNullable(asOfTimezone.getNullable("as_of_timezone"))
+    fun asOfTimezone(): Optional<String> = asOfTimezone.getOptional("as_of_timezone")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -209,8 +208,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * Associated serialized foreign exchange rate information.
@@ -219,7 +217,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun foreignExchangeRate(): Optional<ForeignExchangeRate> =
-        Optional.ofNullable(foreignExchangeRate.getNullable("foreign_exchange_rate"))
+        foreignExchangeRate.getOptional("foreign_exchange_rate")
 
     /**
      * The ID of the relevant Internal Account.
@@ -291,7 +289,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorCode(): Optional<String> = Optional.ofNullable(vendorCode.getNullable("vendor_code"))
+    fun vendorCode(): Optional<String> = vendorCode.getOptional("vendor_code")
 
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -301,8 +299,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorCodeType(): Optional<VendorCodeType> =
-        Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
+    fun vendorCodeType(): Optional<VendorCodeType> = vendorCodeType.getOptional("vendor_code_type")
 
     /**
      * An identifier given to this transaction by the bank, often `null`.
@@ -310,8 +307,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorCustomerId(): Optional<String> =
-        Optional.ofNullable(vendorCustomerId.getNullable("vendor_customer_id"))
+    fun vendorCustomerId(): Optional<String> = vendorCustomerId.getOptional("vendor_customer_id")
 
     /**
      * An identifier given to this transaction by the bank.
@@ -319,7 +315,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorId(): Optional<String> = Optional.ofNullable(vendorId.getNullable("vendor_id"))
+    fun vendorId(): Optional<String> = vendorId.getOptional("vendor_id")
 
     /**
      * This field contains additional information that the bank provided about the transaction. This
@@ -332,7 +328,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun details(): Optional<Details> = Optional.ofNullable(details.getNullable("details"))
+    fun details(): Optional<Details> = details.getOptional("details")
 
     /**
      * The transaction detail text that often appears in on your bank statement and in your banking
@@ -341,8 +337,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorDescription(): Optional<String> =
-        Optional.ofNullable(vendorDescription.getNullable("vendor_description"))
+    fun vendorDescription(): Optional<String> = vendorDescription.getOptional("vendor_description")
 
     /**
      * Returns the raw JSON value of [id].

@@ -95,8 +95,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The issuer of the compliance token.
@@ -127,8 +126,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun tokenExpiresAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(tokenExpiresAt.getNullable("token_expires_at"))
+    fun tokenExpiresAt(): Optional<OffsetDateTime> = tokenExpiresAt.getOptional("token_expires_at")
 
     /**
      * The timestamp when the compliance token was issued.
@@ -136,8 +134,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun tokenIssuedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(tokenIssuedAt.getNullable("token_issued_at"))
+    fun tokenIssuedAt(): Optional<OffsetDateTime> = tokenIssuedAt.getOptional("token_issued_at")
 
     /**
      * The URL to the compliance token. (ex. provider portal URL)
@@ -145,7 +142,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun tokenUrl(): Optional<String> = Optional.ofNullable(tokenUrl.getNullable("token_url"))
+    fun tokenUrl(): Optional<String> = tokenUrl.getOptional("token_url")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -167,8 +164,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun validatedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(validatedAt.getNullable("validated_at"))
+    fun validatedAt(): Optional<OffsetDateTime> = validatedAt.getOptional("validated_at")
 
     /**
      * Returns the raw JSON value of [id].

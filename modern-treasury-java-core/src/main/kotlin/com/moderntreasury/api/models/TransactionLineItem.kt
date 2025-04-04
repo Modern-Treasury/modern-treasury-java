@@ -116,8 +116,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun counterpartyId(): Optional<String> =
-        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+    fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -140,8 +139,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The ID of the reconciled Expected Payment, otherwise `null`.
@@ -149,8 +147,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun expectedPaymentId(): Optional<String> =
-        Optional.ofNullable(expectedPaymentId.getNullable("expected_payment_id"))
+    fun expectedPaymentId(): Optional<String> = expectedPaymentId.getOptional("expected_payment_id")
 
     /**
      * This field will be true if this object exists in the live environment, or false if it exists
@@ -183,8 +180,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun transactableId(): Optional<String> =
-        Optional.ofNullable(transactableId.getNullable("transactable_id"))
+    fun transactableId(): Optional<String> = transactableId.getOptional("transactable_id")
 
     /**
      * If a matching object exists in Modern Treasury, the type will be populated here, otherwise
@@ -194,7 +190,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun transactableType(): Optional<TransactableType> =
-        Optional.ofNullable(transactableType.getNullable("transactable_type"))
+        transactableType.getOptional("transactable_type")
 
     /**
      * The ID of the parent transaction.

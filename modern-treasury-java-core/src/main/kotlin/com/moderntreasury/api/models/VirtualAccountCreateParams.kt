@@ -640,7 +640,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun accountDetails(): Optional<List<AccountDetailCreateRequest>> =
-            Optional.ofNullable(accountDetails.getNullable("account_details"))
+            accountDetails.getOptional("account_details")
 
         /**
          * The ID of the counterparty that the virtual account belongs to.
@@ -648,8 +648,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun counterpartyId(): Optional<String> =
-            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+        fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
         /**
          * The ID of a credit normal ledger account. When money leaves the virtual account, this
@@ -660,7 +659,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun creditLedgerAccountId(): Optional<String> =
-            Optional.ofNullable(creditLedgerAccountId.getNullable("credit_ledger_account_id"))
+            creditLedgerAccountId.getOptional("credit_ledger_account_id")
 
         /**
          * The ID of a debit normal ledger account. When money enters the virtual account, this
@@ -671,7 +670,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun debitLedgerAccountId(): Optional<String> =
-            Optional.ofNullable(debitLedgerAccountId.getNullable("debit_ledger_account_id"))
+            debitLedgerAccountId.getOptional("debit_ledger_account_id")
 
         /**
          * An optional description for internal use.
@@ -679,8 +678,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Specifies a ledger account object that will be created with the virtual account. The
@@ -690,7 +688,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
-            Optional.ofNullable(ledgerAccount.getNullable("ledger_account"))
+            ledgerAccount.getOptional("ledger_account")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -698,7 +696,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * An array of routing detail objects.
@@ -707,7 +705,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun routingDetails(): Optional<List<RoutingDetailCreateRequest>> =
-            Optional.ofNullable(routingDetails.getNullable("routing_details"))
+            routingDetails.getOptional("routing_details")
 
         /**
          * Returns the raw JSON value of [internalAccountId].
@@ -1191,7 +1189,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun accountNumberType(): Optional<AccountNumberType> =
-            Optional.ofNullable(accountNumberType.getNullable("account_number_type"))
+            accountNumberType.getOptional("account_number_type")
 
         /**
          * Returns the raw JSON value of [accountNumber].
@@ -1663,8 +1661,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currencyExponent(): Optional<Long> =
-            Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
+        fun currencyExponent(): Optional<Long> = currencyExponent.getOptional("currency_exponent")
 
         /**
          * The description of the ledger account.
@@ -1672,8 +1669,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
@@ -1682,7 +1678,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerAccountCategoryIds(): Optional<List<String>> =
-            Optional.ofNullable(ledgerAccountCategoryIds.getNullable("ledger_account_category_ids"))
+            ledgerAccountCategoryIds.getOptional("ledger_account_category_ids")
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
@@ -1691,8 +1687,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerableId(): Optional<String> =
-            Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+        fun ledgerableId(): Optional<String> = ledgerableId.getOptional("ledgerable_id")
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
@@ -1702,7 +1697,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerableType(): Optional<LedgerableType> =
-            Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+            ledgerableType.getOptional("ledgerable_type")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -1710,7 +1705,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * Returns the raw JSON value of [currency].
@@ -2560,8 +2555,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun paymentType(): Optional<PaymentType> =
-            Optional.ofNullable(paymentType.getNullable("payment_type"))
+        fun paymentType(): Optional<PaymentType> = paymentType.getOptional("payment_type")
 
         /**
          * Returns the raw JSON value of [routingNumber].

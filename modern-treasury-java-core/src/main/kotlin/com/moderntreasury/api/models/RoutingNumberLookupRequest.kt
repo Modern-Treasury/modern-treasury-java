@@ -64,8 +64,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun bankAddress(): Optional<AddressRequest> =
-        Optional.ofNullable(bankAddress.getNullable("bank_address"))
+    fun bankAddress(): Optional<AddressRequest> = bankAddress.getOptional("bank_address")
 
     /**
      * The name of the bank.
@@ -73,7 +72,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun bankName(): Optional<String> = Optional.ofNullable(bankName.getNullable("bank_name"))
+    fun bankName(): Optional<String> = bankName.getOptional("bank_name")
 
     /**
      * The routing number of the bank.
@@ -81,8 +80,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun routingNumber(): Optional<String> =
-        Optional.ofNullable(routingNumber.getNullable("routing_number"))
+    fun routingNumber(): Optional<String> = routingNumber.getOptional("routing_number")
 
     /**
      * The type of routing number. See
@@ -94,7 +92,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun routingNumberType(): Optional<RoutingNumberType> =
-        Optional.ofNullable(routingNumberType.getNullable("routing_number_type"))
+        routingNumberType.getOptional("routing_number_type")
 
     /**
      * An object containing key-value pairs, each with a sanctions list as the key and a boolean
@@ -104,7 +102,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun sanctions(): Optional<Sanctions> = Optional.ofNullable(sanctions.getNullable("sanctions"))
+    fun sanctions(): Optional<Sanctions> = sanctions.getOptional("sanctions")
 
     /**
      * An array of payment types that are supported for this routing number. This can include `ach`,
@@ -114,7 +112,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun supportedPaymentTypes(): Optional<List<SupportedPaymentType>> =
-        Optional.ofNullable(supportedPaymentTypes.getNullable("supported_payment_types"))
+        supportedPaymentTypes.getOptional("supported_payment_types")
 
     /**
      * Returns the raw JSON value of [bankAddress].
@@ -423,19 +421,19 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
+        fun country(): Optional<String> = country.getOptional("country")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun line1(): Optional<String> = Optional.ofNullable(line1.getNullable("line1"))
+        fun line1(): Optional<String> = line1.getOptional("line1")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
+        fun line2(): Optional<String> = line2.getOptional("line2")
 
         /**
          * Locality or City.
@@ -443,7 +441,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
+        fun locality(): Optional<String> = locality.getOptional("locality")
 
         /**
          * The postal code of the address.
@@ -451,8 +449,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun postalCode(): Optional<String> =
-            Optional.ofNullable(postalCode.getNullable("postal_code"))
+        fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
         /**
          * Region or State.
@@ -460,7 +457,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
+        fun region(): Optional<String> = region.getOptional("region")
 
         /**
          * Returns the raw JSON value of [country].

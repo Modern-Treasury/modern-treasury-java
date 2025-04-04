@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of virtual accounts. */
 class VirtualAccountListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<VirtualAccount>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<VirtualAccount> = items.getNullable("items") ?: listOf()
+        fun items(): List<VirtualAccount> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

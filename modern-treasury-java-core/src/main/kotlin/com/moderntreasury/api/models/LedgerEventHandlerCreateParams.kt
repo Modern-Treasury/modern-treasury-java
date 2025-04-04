@@ -515,7 +515,7 @@ private constructor(
          */
         @Deprecated("deprecated")
         fun conditions(): Optional<LedgerEventHandlerConditions> =
-            Optional.ofNullable(conditions.getNullable("conditions"))
+            conditions.getOptional("conditions")
 
         /**
          * An optional description.
@@ -523,8 +523,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The id of the ledger that this account belongs to.
@@ -532,7 +531,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId.getNullable("ledger_id"))
+        fun ledgerId(): Optional<String> = ledgerId.getOptional("ledger_id")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -540,15 +539,14 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         @Deprecated("deprecated")
-        fun variables(): Optional<LedgerEventHandlerVariables> =
-            Optional.ofNullable(variables.getNullable("variables"))
+        fun variables(): Optional<LedgerEventHandlerVariables> = variables.getOptional("variables")
 
         /**
          * Returns the raw JSON value of [ledgerTransactionTemplate].
@@ -920,8 +918,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -930,8 +927,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<String> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<String> = effectiveAt.getOptional("effective_at")
 
         /**
          * An array of ledger entry objects.
@@ -948,7 +944,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<String> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<String> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [description].

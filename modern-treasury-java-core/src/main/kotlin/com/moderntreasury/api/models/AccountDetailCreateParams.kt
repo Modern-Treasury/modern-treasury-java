@@ -342,7 +342,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun accountNumberType(): Optional<AccountNumberType> =
-            Optional.ofNullable(accountNumberType.getNullable("account_number_type"))
+            accountNumberType.getOptional("account_number_type")
 
         /**
          * Returns the raw JSON value of [accountNumber].

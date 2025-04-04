@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledgers. */
 class LedgerListPageAsync
@@ -89,7 +90,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<Ledger>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<Ledger> = items.getNullable("items") ?: listOf()
+        fun items(): List<Ledger> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

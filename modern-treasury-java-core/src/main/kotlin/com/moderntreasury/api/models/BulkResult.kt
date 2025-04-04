@@ -158,8 +158,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun requestParams(): Optional<RequestParams> =
-        Optional.ofNullable(requestParams.getNullable("request_params"))
+    fun requestParams(): Optional<RequestParams> = requestParams.getOptional("request_params")
 
     /**
      * The type of the request that created this result. bulk_request is the only supported
@@ -1279,21 +1278,19 @@ private constructor(
                  * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected
                  *   type (e.g. if the server responded with an unexpected value).
                  */
-                fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+                fun code(): Optional<String> = code.getOptional("code")
 
                 /**
                  * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected
                  *   type (e.g. if the server responded with an unexpected value).
                  */
-                fun message(): Optional<String> =
-                    Optional.ofNullable(message.getNullable("message"))
+                fun message(): Optional<String> = message.getOptional("message")
 
                 /**
                  * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected
                  *   type (e.g. if the server responded with an unexpected value).
                  */
-                fun parameter(): Optional<String> =
-                    Optional.ofNullable(parameter.getNullable("parameter"))
+                fun parameter(): Optional<String> = parameter.getOptional("parameter")
 
                 /**
                  * Returns the raw JSON value of [code].

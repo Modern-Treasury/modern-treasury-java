@@ -123,15 +123,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The id of the ledger that this account belongs to.
@@ -148,8 +146,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerableId(): Optional<String> =
-        Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+    fun ledgerableId(): Optional<String> = ledgerableId.getOptional("ledgerable_id")
 
     /**
      * If the ledger account links to another object in Modern Treasury, the type will be populated
@@ -158,8 +155,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerableType(): Optional<LedgerableType> =
-        Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+    fun ledgerableType(): Optional<LedgerableType> = ledgerableType.getOptional("ledgerable_type")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -807,7 +803,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun effectiveAtLowerBound(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAtLowerBound.getNullable("effective_at_lower_bound"))
+            effectiveAtLowerBound.getOptional("effective_at_lower_bound")
 
         /**
          * The exclusive upper bound of the effective_at timestamp for the returned balances.
@@ -816,7 +812,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAtUpperBound.getNullable("effective_at_upper_bound"))
+            effectiveAtUpperBound.getOptional("effective_at_upper_bound")
 
         /**
          * The pending_balance is the sum of all pending and posted entries.
