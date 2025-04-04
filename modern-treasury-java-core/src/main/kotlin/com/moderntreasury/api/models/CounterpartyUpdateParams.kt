@@ -165,6 +165,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [email]
+         * - [legalEntityId]
+         * - [metadata]
+         * - [name]
+         * - [sendRemittanceAdvice]
+         * - etc.
+         */
+        fun body(body: CounterpartyUpdateRequest) = apply { this.body = body.toBuilder() }
+
         /** A new email for the counterparty. */
         fun email(email: String) = apply { body.email(email) }
 
@@ -393,7 +407,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): CounterpartyUpdateRequest = body
+    fun _body(): CounterpartyUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -448,7 +462,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
+        fun email(): Optional<String> = email.getOptional("email")
 
         /**
          * The id of the legal entity.
@@ -456,8 +470,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun legalEntityId(): Optional<String> =
-            Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
+        fun legalEntityId(): Optional<String> = legalEntityId.getOptional("legal_entity_id")
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
@@ -466,7 +479,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * A new name for the counterparty. Will only update if passed.
@@ -474,7 +487,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
@@ -484,7 +497,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun sendRemittanceAdvice(): Optional<Boolean> =
-            Optional.ofNullable(sendRemittanceAdvice.getNullable("send_remittance_advice"))
+            sendRemittanceAdvice.getOptional("send_remittance_advice")
 
         /**
          * Either a valid SSN or EIN.
@@ -493,7 +506,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun taxpayerIdentifier(): Optional<String> =
-            Optional.ofNullable(taxpayerIdentifier.getNullable("taxpayer_identifier"))
+            taxpayerIdentifier.getOptional("taxpayer_identifier")
 
         /**
          * Returns the raw JSON value of [email].
@@ -732,6 +745,29 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (email.asKnown().isPresent) 1 else 0) +
+                (if (legalEntityId.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (sendRemittanceAdvice.asKnown().isPresent) 1 else 0) +
+                (if (taxpayerIdentifier.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -819,6 +855,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

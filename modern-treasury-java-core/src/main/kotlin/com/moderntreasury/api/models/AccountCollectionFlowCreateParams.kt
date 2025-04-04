@@ -21,6 +21,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create account_collection_flow */
 class AccountCollectionFlowCreateParams
@@ -111,6 +112,17 @@ private constructor(
                 additionalQueryParams =
                     accountCollectionFlowCreateParams.additionalQueryParams.toBuilder()
             }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [counterpartyId]
+         * - [paymentTypes]
+         * - [receivingCountries]
+         */
+        fun body(body: AccountCollectionFlowCreateRequest) = apply { this.body = body.toBuilder() }
 
         /** Required. */
         fun counterpartyId(counterpartyId: String) = apply { body.counterpartyId(counterpartyId) }
@@ -308,7 +320,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): AccountCollectionFlowCreateRequest = body
+    fun _body(): AccountCollectionFlowCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -354,7 +366,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun receivingCountries(): Optional<List<ReceivingCountry>> =
-            Optional.ofNullable(receivingCountries.getNullable("receiving_countries"))
+            receivingCountries.getOptional("receiving_countries")
 
         /**
          * Returns the raw JSON value of [counterpartyId].
@@ -550,9 +562,29 @@ private constructor(
 
             counterpartyId()
             paymentTypes()
-            receivingCountries()
+            receivingCountries().ifPresent { it.forEach { it.validate() } }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (paymentTypes.asKnown().getOrNull()?.size ?: 0) +
+                (receivingCountries.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -759,6 +791,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ReceivingCountry = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

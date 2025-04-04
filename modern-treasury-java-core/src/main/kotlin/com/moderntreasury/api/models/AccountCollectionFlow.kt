@@ -98,7 +98,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): Optional<String> = id.getOptional("id")
 
     /**
      * The client token of the account collection flow. This token can be used to embed account
@@ -107,15 +107,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun clientToken(): Optional<String> =
-        Optional.ofNullable(clientToken.getNullable("client_token"))
+    fun clientToken(): Optional<String> = clientToken.getOptional("client_token")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun createdAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(createdAt.getNullable("created_at"))
+    fun createdAt(): Optional<OffsetDateTime> = createdAt.getOptional("created_at")
 
     /**
      * If present, the ID of the external account created using this flow.
@@ -123,8 +121,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun externalAccountId(): Optional<String> =
-        Optional.ofNullable(externalAccountId.getNullable("external_account_id"))
+    fun externalAccountId(): Optional<String> = externalAccountId.getOptional("external_account_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -133,20 +130,20 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun liveMode(): Optional<Boolean> = Optional.ofNullable(liveMode.getNullable("live_mode"))
+    fun liveMode(): Optional<Boolean> = liveMode.getOptional("live_mode")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun object_(): Optional<String> = Optional.ofNullable(object_.getNullable("object"))
+    fun object_(): Optional<String> = object_.getOptional("object")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
     fun receivingCountries(): Optional<List<ReceivingCountry>> =
-        Optional.ofNullable(receivingCountries.getNullable("receiving_countries"))
+        receivingCountries.getOptional("receiving_countries")
 
     /**
      * The current status of the account collection flow. One of `pending`, `completed`, `expired`,
@@ -155,14 +152,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun updatedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(updatedAt.getNullable("updated_at"))
+    fun updatedAt(): Optional<OffsetDateTime> = updatedAt.getOptional("updated_at")
 
     /**
      * Returns the raw JSON value of [counterpartyId].
@@ -545,18 +541,45 @@ private constructor(
         }
 
         counterpartyId()
-        paymentTypes()
+        paymentTypes().forEach { it.validate() }
         id()
         clientToken()
         createdAt()
         externalAccountId()
         liveMode()
         object_()
-        receivingCountries()
-        status()
+        receivingCountries().ifPresent { it.forEach { it.validate() } }
+        status().ifPresent { it.validate() }
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+            (paymentTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (id.asKnown().isPresent) 1 else 0) +
+            (if (clientToken.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (externalAccountId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (receivingCountries.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /** An account created with this flow will support payments of one of these types. */
     class PaymentType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -648,6 +671,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): PaymentType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -850,6 +900,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ReceivingCountry = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -965,6 +1042,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

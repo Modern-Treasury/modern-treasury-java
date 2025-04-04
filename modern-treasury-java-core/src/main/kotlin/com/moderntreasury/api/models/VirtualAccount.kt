@@ -121,8 +121,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun counterpartyId(): Optional<String> =
-        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+    fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -138,7 +137,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun creditLedgerAccountId(): Optional<String> =
-        Optional.ofNullable(creditLedgerAccountId.getNullable("credit_ledger_account_id"))
+        creditLedgerAccountId.getOptional("credit_ledger_account_id")
 
     /**
      * The ID of a debit normal ledger account. When money enters the virtual account, this ledger
@@ -148,7 +147,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun debitLedgerAccountId(): Optional<String> =
-        Optional.ofNullable(debitLedgerAccountId.getNullable("debit_ledger_account_id"))
+        debitLedgerAccountId.getOptional("debit_ledger_account_id")
 
     /**
      * An optional free-form description for internal use.
@@ -156,15 +155,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The ID of the internal account that the virtual account is in.
@@ -181,8 +178,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerAccountId(): Optional<String> =
-        Optional.ofNullable(ledgerAccountId.getNullable("ledger_account_id"))
+    fun ledgerAccountId(): Optional<String> = ledgerAccountId.getOptional("ledger_account_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -821,6 +817,38 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (accountDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (creditLedgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (debitLedgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (description.asKnown().isPresent) 1 else 0) +
+            (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+            (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (name.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
+
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     class Metadata
     @JsonCreator
@@ -887,6 +915,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -47,6 +47,7 @@ private constructor(
     private val type: JsonField<Type>,
     private val updatedAt: JsonField<OffsetDateTime>,
     private val additionalInformation: JsonField<String>,
+    private val data: JsonValue,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -101,6 +102,7 @@ private constructor(
         @JsonProperty("additional_information")
         @ExcludeMissing
         additionalInformation: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("data") @ExcludeMissing data: JsonValue = JsonMissing.of(),
     ) : this(
         id,
         amount,
@@ -125,6 +127,7 @@ private constructor(
         type,
         updatedAt,
         additionalInformation,
+        data,
         mutableMapOf(),
     )
 
@@ -148,7 +151,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun code(): Optional<Code> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<Code> = code.getOptional("code")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -171,8 +174,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun currentReturn(): Optional<ReturnObject> =
-        Optional.ofNullable(currentReturn.getNullable("current_return"))
+    fun currentReturn(): Optional<ReturnObject> = currentReturn.getOptional("current_return")
 
     /**
      * If the return code is `R14` or `R15` this is the date the deceased counterparty passed away.
@@ -180,8 +182,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun dateOfDeath(): Optional<LocalDate> =
-        Optional.ofNullable(dateOfDeath.getNullable("date_of_death"))
+    fun dateOfDeath(): Optional<LocalDate> = dateOfDeath.getOptional("date_of_death")
 
     /**
      * If an originating return failed to be processed by the bank, a description of the failure
@@ -190,8 +191,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun failureReason(): Optional<String> =
-        Optional.ofNullable(failureReason.getNullable("failure_reason"))
+    fun failureReason(): Optional<String> = failureReason.getOptional("failure_reason")
 
     /**
      * The ID of the relevant Internal Account.
@@ -199,8 +199,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun internalAccountId(): Optional<String> =
-        Optional.ofNullable(internalAccountId.getNullable("internal_account_id"))
+    fun internalAccountId(): Optional<String> = internalAccountId.getOptional("internal_account_id")
 
     /**
      * The ID of the ledger transaction linked to the return.
@@ -209,7 +208,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerTransactionId(): Optional<String> =
-        Optional.ofNullable(ledgerTransactionId.getNullable("ledger_transaction_id"))
+        ledgerTransactionId.getOptional("ledger_transaction_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -233,7 +232,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun reason(): Optional<String> = Optional.ofNullable(reason.getNullable("reason"))
+    fun reason(): Optional<String> = reason.getOptional("reason")
 
     /**
      * An array of Payment Reference objects.
@@ -250,8 +249,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun returnableId(): Optional<String> =
-        Optional.ofNullable(returnableId.getNullable("returnable_id"))
+    fun returnableId(): Optional<String> = returnableId.getOptional("returnable_id")
 
     /**
      * The type of object being returned or `null`.
@@ -259,8 +257,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun returnableType(): Optional<ReturnableType> =
-        Optional.ofNullable(returnableType.getNullable("returnable_type"))
+    fun returnableType(): Optional<ReturnableType> = returnableType.getOptional("returnable_type")
 
     /**
      * The role of the return, can be `originating` or `receiving`.
@@ -284,8 +281,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun transactionId(): Optional<String> =
-        Optional.ofNullable(transactionId.getNullable("transaction_id"))
+    fun transactionId(): Optional<String> = transactionId.getOptional("transaction_id")
 
     /**
      * The ID of the relevant Transaction Line Item or `null`.
@@ -294,7 +290,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun transactionLineItemId(): Optional<String> =
-        Optional.ofNullable(transactionLineItemId.getNullable("transaction_line_item_id"))
+        transactionLineItemId.getOptional("transaction_line_item_id")
 
     /**
      * The type of return. Can be one of: `ach`, `ach_noc`, `au_becs`, `bacs`, `eft`, `interac`,
@@ -319,7 +315,10 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun additionalInformation(): Optional<String> =
-        Optional.ofNullable(additionalInformation.getNullable("additional_information"))
+        additionalInformation.getOptional("additional_information")
+
+    /** The raw data from the return file that we get from the bank. */
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
     /**
      * Returns the raw JSON value of [id].
@@ -585,6 +584,7 @@ private constructor(
         private var type: JsonField<Type>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
         private var additionalInformation: JsonField<String> = JsonMissing.of()
+        private var data: JsonValue = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -612,6 +612,7 @@ private constructor(
             type = returnObject.type
             updatedAt = returnObject.updatedAt
             additionalInformation = returnObject.additionalInformation
+            data = returnObject.data
             additionalProperties = returnObject.additionalProperties.toMutableMap()
         }
 
@@ -995,6 +996,9 @@ private constructor(
             this.additionalInformation = additionalInformation
         }
 
+        /** The raw data from the return file that we get from the bank. */
+        fun data(data: JsonValue) = apply { this.data = data }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1072,6 +1076,7 @@ private constructor(
                 checkRequired("type", type),
                 checkRequired("updatedAt", updatedAt),
                 additionalInformation,
+                data,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1085,9 +1090,9 @@ private constructor(
 
         id()
         amount()
-        code()
+        code().ifPresent { it.validate() }
         createdAt()
-        currency()
+        currency().validate()
         currentReturn().ifPresent { it.validate() }
         dateOfDeath()
         failureReason()
@@ -1098,16 +1103,55 @@ private constructor(
         reason()
         referenceNumbers().forEach { it.validate() }
         returnableId()
-        returnableType()
-        role()
-        status()
+        returnableType().ifPresent { it.validate() }
+        role().validate()
+        status().validate()
         transactionId()
         transactionLineItemId()
-        type()
+        type().validate()
         updatedAt()
         additionalInformation()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (code.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (currency.asKnown().getOrNull()?.validity() ?: 0) +
+            (currentReturn.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (dateOfDeath.asKnown().isPresent) 1 else 0) +
+            (if (failureReason.asKnown().isPresent) 1 else 0) +
+            (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+            (if (ledgerTransactionId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (reason.asKnown().isPresent) 1 else 0) +
+            (referenceNumbers.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (returnableId.asKnown().isPresent) 1 else 0) +
+            (returnableType.asKnown().getOrNull()?.validity() ?: 0) +
+            (role.asKnown().getOrNull()?.validity() ?: 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (transactionId.asKnown().isPresent) 1 else 0) +
+            (if (transactionLineItemId.asKnown().isPresent) 1 else 0) +
+            (type.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0) +
+            (if (additionalInformation.asKnown().isPresent) 1 else 0)
 
     /** The return code. For ACH returns, this is the required ACH return code. */
     class Code @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1503,6 +1547,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): Code = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1877,10 +1948,34 @@ private constructor(
             liveMode()
             object_()
             referenceNumber()
-            referenceNumberType()
+            referenceNumberType().validate()
             updatedAt()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (id.asKnown().isPresent) 1 else 0) +
+                (if (createdAt.asKnown().isPresent) 1 else 0) +
+                (if (liveMode.asKnown().isPresent) 1 else 0) +
+                (if (object_.asKnown().isPresent) 1 else 0) +
+                (if (referenceNumber.asKnown().isPresent) 1 else 0) +
+                (referenceNumberType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (updatedAt.asKnown().isPresent) 1 else 0)
 
         /** The type of the reference number. Referring to the vendor payment id. */
         class ReferenceNumberType
@@ -1989,6 +2084,9 @@ private constructor(
 
                 @JvmField val JPMC_PAYMENT_RETURNED_DATETIME = of("jpmc_payment_returned_datetime")
 
+                @JvmField
+                val JPMC_TRANSACTION_REFERENCE_NUMBER = of("jpmc_transaction_reference_number")
+
                 @JvmField val LOB_CHECK_ID = of("lob_check_id")
 
                 @JvmField val OTHER = of("other")
@@ -2003,8 +2101,12 @@ private constructor(
 
                 @JvmField val PNC_PAYMENT_TRACE_ID = of("pnc_payment_trace_id")
 
+                @JvmField val PNC_REQUEST_FOR_PAYMENT_ID = of("pnc_request_for_payment_id")
+
                 @JvmField
                 val PNC_TRANSACTION_REFERENCE_NUMBER = of("pnc_transaction_reference_number")
+
+                @JvmField val RBC_WIRE_REFERENCE_ID = of("rbc_wire_reference_id")
 
                 @JvmField val RSPEC_VENDOR_PAYMENT_ID = of("rspec_vendor_payment_id")
 
@@ -2102,6 +2204,7 @@ private constructor(
                 JPMC_PAYMENT_BATCH_ID,
                 JPMC_PAYMENT_INFORMATION_ID,
                 JPMC_PAYMENT_RETURNED_DATETIME,
+                JPMC_TRANSACTION_REFERENCE_NUMBER,
                 LOB_CHECK_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
@@ -2109,7 +2212,9 @@ private constructor(
                 PNC_INSTRUCTION_ID,
                 PNC_MULTIPAYMENT_ID,
                 PNC_PAYMENT_TRACE_ID,
+                PNC_REQUEST_FOR_PAYMENT_ID,
                 PNC_TRANSACTION_REFERENCE_NUMBER,
+                RBC_WIRE_REFERENCE_ID,
                 RSPEC_VENDOR_PAYMENT_ID,
                 RTP_INSTRUCTION_ID,
                 SIGNET_API_REFERENCE_ID,
@@ -2187,6 +2292,7 @@ private constructor(
                 JPMC_PAYMENT_BATCH_ID,
                 JPMC_PAYMENT_INFORMATION_ID,
                 JPMC_PAYMENT_RETURNED_DATETIME,
+                JPMC_TRANSACTION_REFERENCE_NUMBER,
                 LOB_CHECK_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
@@ -2194,7 +2300,9 @@ private constructor(
                 PNC_INSTRUCTION_ID,
                 PNC_MULTIPAYMENT_ID,
                 PNC_PAYMENT_TRACE_ID,
+                PNC_REQUEST_FOR_PAYMENT_ID,
                 PNC_TRANSACTION_REFERENCE_NUMBER,
+                RBC_WIRE_REFERENCE_ID,
                 RSPEC_VENDOR_PAYMENT_ID,
                 RTP_INSTRUCTION_ID,
                 SIGNET_API_REFERENCE_ID,
@@ -2275,6 +2383,7 @@ private constructor(
                     JPMC_PAYMENT_BATCH_ID -> Value.JPMC_PAYMENT_BATCH_ID
                     JPMC_PAYMENT_INFORMATION_ID -> Value.JPMC_PAYMENT_INFORMATION_ID
                     JPMC_PAYMENT_RETURNED_DATETIME -> Value.JPMC_PAYMENT_RETURNED_DATETIME
+                    JPMC_TRANSACTION_REFERENCE_NUMBER -> Value.JPMC_TRANSACTION_REFERENCE_NUMBER
                     LOB_CHECK_ID -> Value.LOB_CHECK_ID
                     OTHER -> Value.OTHER
                     PARTIAL_SWIFT_MIR -> Value.PARTIAL_SWIFT_MIR
@@ -2282,7 +2391,9 @@ private constructor(
                     PNC_INSTRUCTION_ID -> Value.PNC_INSTRUCTION_ID
                     PNC_MULTIPAYMENT_ID -> Value.PNC_MULTIPAYMENT_ID
                     PNC_PAYMENT_TRACE_ID -> Value.PNC_PAYMENT_TRACE_ID
+                    PNC_REQUEST_FOR_PAYMENT_ID -> Value.PNC_REQUEST_FOR_PAYMENT_ID
                     PNC_TRANSACTION_REFERENCE_NUMBER -> Value.PNC_TRANSACTION_REFERENCE_NUMBER
+                    RBC_WIRE_REFERENCE_ID -> Value.RBC_WIRE_REFERENCE_ID
                     RSPEC_VENDOR_PAYMENT_ID -> Value.RSPEC_VENDOR_PAYMENT_ID
                     RTP_INSTRUCTION_ID -> Value.RTP_INSTRUCTION_ID
                     SIGNET_API_REFERENCE_ID -> Value.SIGNET_API_REFERENCE_ID
@@ -2364,6 +2475,7 @@ private constructor(
                     JPMC_PAYMENT_BATCH_ID -> Known.JPMC_PAYMENT_BATCH_ID
                     JPMC_PAYMENT_INFORMATION_ID -> Known.JPMC_PAYMENT_INFORMATION_ID
                     JPMC_PAYMENT_RETURNED_DATETIME -> Known.JPMC_PAYMENT_RETURNED_DATETIME
+                    JPMC_TRANSACTION_REFERENCE_NUMBER -> Known.JPMC_TRANSACTION_REFERENCE_NUMBER
                     LOB_CHECK_ID -> Known.LOB_CHECK_ID
                     OTHER -> Known.OTHER
                     PARTIAL_SWIFT_MIR -> Known.PARTIAL_SWIFT_MIR
@@ -2371,7 +2483,9 @@ private constructor(
                     PNC_INSTRUCTION_ID -> Known.PNC_INSTRUCTION_ID
                     PNC_MULTIPAYMENT_ID -> Known.PNC_MULTIPAYMENT_ID
                     PNC_PAYMENT_TRACE_ID -> Known.PNC_PAYMENT_TRACE_ID
+                    PNC_REQUEST_FOR_PAYMENT_ID -> Known.PNC_REQUEST_FOR_PAYMENT_ID
                     PNC_TRANSACTION_REFERENCE_NUMBER -> Known.PNC_TRANSACTION_REFERENCE_NUMBER
+                    RBC_WIRE_REFERENCE_ID -> Known.RBC_WIRE_REFERENCE_ID
                     RSPEC_VENDOR_PAYMENT_ID -> Known.RSPEC_VENDOR_PAYMENT_ID
                     RTP_INSTRUCTION_ID -> Known.RTP_INSTRUCTION_ID
                     SIGNET_API_REFERENCE_ID -> Known.SIGNET_API_REFERENCE_ID
@@ -2415,6 +2529,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): ReferenceNumberType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -2557,6 +2698,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ReturnableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -2657,6 +2825,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Role = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2782,6 +2977,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2953,6 +3175,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -2971,15 +3220,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ReturnObject && id == other.id && amount == other.amount && code == other.code && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && dateOfDeath == other.dateOfDeath && failureReason == other.failureReason && internalAccountId == other.internalAccountId && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && object_ == other.object_ && reason == other.reason && referenceNumbers == other.referenceNumbers && returnableId == other.returnableId && returnableType == other.returnableType && role == other.role && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && type == other.type && updatedAt == other.updatedAt && additionalInformation == other.additionalInformation && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is ReturnObject && id == other.id && amount == other.amount && code == other.code && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && dateOfDeath == other.dateOfDeath && failureReason == other.failureReason && internalAccountId == other.internalAccountId && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && object_ == other.object_ && reason == other.reason && referenceNumbers == other.referenceNumbers && returnableId == other.returnableId && returnableType == other.returnableType && role == other.role && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && type == other.type && updatedAt == other.updatedAt && additionalInformation == other.additionalInformation && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, code, createdAt, currency, currentReturn, dateOfDeath, failureReason, internalAccountId, ledgerTransactionId, liveMode, object_, reason, referenceNumbers, returnableId, returnableType, role, status, transactionId, transactionLineItemId, type, updatedAt, additionalInformation, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, amount, code, createdAt, currency, currentReturn, dateOfDeath, failureReason, internalAccountId, ledgerTransactionId, liveMode, object_, reason, referenceNumbers, returnableId, returnableType, role, status, transactionId, transactionLineItemId, type, updatedAt, additionalInformation, data, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ReturnObject{id=$id, amount=$amount, code=$code, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, additionalProperties=$additionalProperties}"
+        "ReturnObject{id=$id, amount=$amount, code=$code, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, data=$data, additionalProperties=$additionalProperties}"
 }

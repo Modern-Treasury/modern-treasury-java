@@ -10,6 +10,7 @@ import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
+import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import com.moderntreasury.api.services.async.LedgerAccountBalanceMonitorServiceAsync
 import java.util.Collections
 import java.util.Objects
@@ -17,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of ledger account balance monitors. */
 class LedgerAccountBalanceMonitorListPageAsync
@@ -100,7 +102,8 @@ private constructor(
             items: JsonField<List<LedgerAccountBalanceMonitor>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<LedgerAccountBalanceMonitor> = items.getNullable("items") ?: listOf()
+        fun items(): List<LedgerAccountBalanceMonitor> =
+            items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 
@@ -130,6 +133,14 @@ private constructor(
             items().map { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
 
         fun toBuilder() = Builder().from(this)
 

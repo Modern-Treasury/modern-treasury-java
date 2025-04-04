@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create payment_flow */
 class PaymentFlowCreateParams
@@ -163,6 +164,20 @@ private constructor(
             additionalHeaders = paymentFlowCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = paymentFlowCreateParams.additionalQueryParams.toBuilder()
         }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [counterpartyId]
+         * - [currency]
+         * - [direction]
+         * - [originatingAccountId]
+         * - etc.
+         */
+        fun body(body: PaymentFlowCreateRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * Required. Value in specified currency's smallest unit. e.g. $10 would be represented
@@ -394,7 +409,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): PaymentFlowCreateRequest = body
+    fun _body(): PaymentFlowCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -491,7 +506,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("due_date"))
+        fun dueDate(): Optional<LocalDate> = dueDate.getOptional("due_date")
 
         /**
          * Returns the raw JSON value of [amount].
@@ -742,11 +757,34 @@ private constructor(
             amount()
             counterpartyId()
             currency()
-            direction()
+            direction().validate()
             originatingAccountId()
             dueDate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (if (currency.asKnown().isPresent) 1 else 0) +
+                (direction.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (originatingAccountId.asKnown().isPresent) 1 else 0) +
+                (if (dueDate.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -858,6 +896,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Direction = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

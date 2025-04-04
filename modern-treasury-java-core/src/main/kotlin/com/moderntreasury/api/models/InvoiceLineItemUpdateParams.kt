@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** update invoice_line_item */
 class InvoiceLineItemUpdateParams
@@ -188,6 +189,20 @@ private constructor(
         fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [description]
+         * - [direction]
+         * - [metadata]
+         * - [name]
+         * - [quantity]
+         * - etc.
+         */
+        fun body(body: InvoiceLineItemUpdateRequest) = apply { this.body = body.toBuilder() }
 
         /** An optional free-form description of the line item. */
         fun description(description: String) = apply { body.description(description) }
@@ -429,7 +444,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): InvoiceLineItemUpdateRequest = body
+    fun _body(): InvoiceLineItemUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -490,8 +505,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
@@ -501,7 +515,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<String> = Optional.ofNullable(direction.getNullable("direction"))
+        fun direction(): Optional<String> = direction.getOptional("direction")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -509,7 +523,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * The name of the line item, typically a product or SKU name.
@@ -517,7 +531,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -526,7 +540,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun quantity(): Optional<Long> = Optional.ofNullable(quantity.getNullable("quantity"))
+        fun quantity(): Optional<Long> = quantity.getOptional("quantity")
 
         /**
          * The cost per unit of the product or service that this line item is for, specified in the
@@ -535,8 +549,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun unitAmount(): Optional<Long> =
-            Optional.ofNullable(unitAmount.getNullable("unit_amount"))
+        fun unitAmount(): Optional<Long> = unitAmount.getOptional("unit_amount")
 
         /**
          * The cost per unit of the product or service that this line item is for, specified in the
@@ -546,7 +559,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun unitAmountDecimal(): Optional<String> =
-            Optional.ofNullable(unitAmountDecimal.getNullable("unit_amount_decimal"))
+            unitAmountDecimal.getOptional("unit_amount_decimal")
 
         /**
          * Returns the raw JSON value of [description].
@@ -807,6 +820,30 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (description.asKnown().isPresent) 1 else 0) +
+                (if (direction.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (quantity.asKnown().isPresent) 1 else 0) +
+                (if (unitAmount.asKnown().isPresent) 1 else 0) +
+                (if (unitAmountDecimal.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -891,6 +928,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

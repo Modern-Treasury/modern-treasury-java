@@ -116,7 +116,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): Optional<String> = id.getOptional("id")
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can be
@@ -125,7 +125,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun amount(): Optional<Long> = Optional.ofNullable(amount.getNullable("amount"))
+    fun amount(): Optional<Long> = amount.getOptional("amount")
 
     /**
      * The client token of the payment flow. This token can be used to embed a payment workflow in
@@ -134,8 +134,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun clientToken(): Optional<String> =
-        Optional.ofNullable(clientToken.getNullable("client_token"))
+    fun clientToken(): Optional<String> = clientToken.getOptional("client_token")
 
     /**
      * The ID of a counterparty associated with the payment. As part of the payment workflow an
@@ -144,15 +143,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun counterpartyId(): Optional<String> =
-        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+    fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun createdAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(createdAt.getNullable("created_at"))
+    fun createdAt(): Optional<OffsetDateTime> = createdAt.getOptional("created_at")
 
     /**
      * The currency of the payment.
@@ -160,7 +157,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
      * Describes the direction money is flowing in the transaction. Can only be `debit`. A `debit`
@@ -169,7 +166,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun direction(): Optional<Direction> = Optional.ofNullable(direction.getNullable("direction"))
+    fun direction(): Optional<Direction> = direction.getOptional("direction")
 
     /**
      * The due date for the flow. Can only be passed in when `effective_date_selection_enabled` is
@@ -178,7 +175,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("due_date"))
+    fun dueDate(): Optional<LocalDate> = dueDate.getOptional("due_date")
 
     /**
      * When `true`, your end-user can schedule the payment `effective_date` while completing the
@@ -188,9 +185,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun effectiveDateSelectionEnabled(): Optional<Boolean> =
-        Optional.ofNullable(
-            effectiveDateSelectionEnabled.getNullable("effective_date_selection_enabled")
-        )
+        effectiveDateSelectionEnabled.getOptional("effective_date_selection_enabled")
 
     /**
      * When `verified` and `external_account_collection` is `enabled`, filters the list of external
@@ -200,9 +195,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun existingExternalAccountsFilter(): Optional<ExistingExternalAccountsFilter> =
-        Optional.ofNullable(
-            existingExternalAccountsFilter.getNullable("existing_external_accounts_filter")
-        )
+        existingExternalAccountsFilter.getOptional("existing_external_accounts_filter")
 
     /**
      * When `enabled`, your end-user can select from an existing external account when completing
@@ -213,7 +206,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun externalAccountCollection(): Optional<ExternalAccountCollection> =
-        Optional.ofNullable(externalAccountCollection.getNullable("external_account_collection"))
+        externalAccountCollection.getOptional("external_account_collection")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -222,13 +215,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun liveMode(): Optional<Boolean> = Optional.ofNullable(liveMode.getNullable("live_mode"))
+    fun liveMode(): Optional<Boolean> = liveMode.getOptional("live_mode")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun object_(): Optional<String> = Optional.ofNullable(object_.getNullable("object"))
+    fun object_(): Optional<String> = object_.getOptional("object")
 
     /**
      * The ID of one of your organization's internal accounts.
@@ -237,7 +230,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingAccountId(): Optional<String> =
-        Optional.ofNullable(originatingAccountId.getNullable("originating_account_id"))
+        originatingAccountId.getOptional("originating_account_id")
 
     /**
      * If present, the ID of the payment order created using this flow.
@@ -245,8 +238,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun paymentOrderId(): Optional<String> =
-        Optional.ofNullable(paymentOrderId.getNullable("payment_order_id"))
+    fun paymentOrderId(): Optional<String> = paymentOrderId.getOptional("payment_order_id")
 
     /**
      * If present, the ID of the external account created using this flow.
@@ -255,7 +247,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun receivingAccountId(): Optional<String> =
-        Optional.ofNullable(receivingAccountId.getNullable("receiving_account_id"))
+        receivingAccountId.getOptional("receiving_account_id")
 
     /**
      * This field is set after your end-user selects a payment date while completing the pre-built
@@ -265,7 +257,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun selectedEffectiveDate(): Optional<LocalDate> =
-        Optional.ofNullable(selectedEffectiveDate.getNullable("selected_effective_date"))
+        selectedEffectiveDate.getOptional("selected_effective_date")
 
     /**
      * The current status of the payment flow. One of `pending`, `completed`, `expired`, or
@@ -274,14 +266,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun updatedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(updatedAt.getNullable("updated_at"))
+    fun updatedAt(): Optional<OffsetDateTime> = updatedAt.getOptional("updated_at")
 
     /**
      * Returns the raw JSON value of [id].
@@ -896,21 +887,56 @@ private constructor(
         counterpartyId()
         createdAt()
         currency()
-        direction()
+        direction().ifPresent { it.validate() }
         dueDate()
         effectiveDateSelectionEnabled()
-        existingExternalAccountsFilter()
-        externalAccountCollection()
+        existingExternalAccountsFilter().ifPresent { it.validate() }
+        externalAccountCollection().ifPresent { it.validate() }
         liveMode()
         object_()
         originatingAccountId()
         paymentOrderId()
         receivingAccountId()
         selectedEffectiveDate()
-        status()
+        status().ifPresent { it.validate() }
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (clientToken.asKnown().isPresent) 1 else 0) +
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (currency.asKnown().isPresent) 1 else 0) +
+            (direction.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (dueDate.asKnown().isPresent) 1 else 0) +
+            (if (effectiveDateSelectionEnabled.asKnown().isPresent) 1 else 0) +
+            (existingExternalAccountsFilter.asKnown().getOrNull()?.validity() ?: 0) +
+            (externalAccountCollection.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (originatingAccountId.asKnown().isPresent) 1 else 0) +
+            (if (paymentOrderId.asKnown().isPresent) 1 else 0) +
+            (if (receivingAccountId.asKnown().isPresent) 1 else 0) +
+            (if (selectedEffectiveDate.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /**
      * Describes the direction money is flowing in the transaction. Can only be `debit`. A `debit`
@@ -1004,6 +1030,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Direction = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1112,6 +1165,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ExistingExternalAccountsFilter = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1228,6 +1308,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ExternalAccountCollection = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1343,6 +1450,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

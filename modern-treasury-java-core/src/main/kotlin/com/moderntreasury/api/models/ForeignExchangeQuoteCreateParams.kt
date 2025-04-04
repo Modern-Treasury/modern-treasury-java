@@ -19,6 +19,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** create foreign_exchange_quote */
 class ForeignExchangeQuoteCreateParams
@@ -159,6 +160,20 @@ private constructor(
                 additionalQueryParams =
                     foreignExchangeQuoteCreateParams.additionalQueryParams.toBuilder()
             }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [internalAccountId]
+         * - [targetCurrency]
+         * - [baseAmount]
+         * - [baseCurrency]
+         * - [effectiveAt]
+         * - etc.
+         */
+        fun body(body: ForeignExchangeQuoteCreateRequest) = apply { this.body = body.toBuilder() }
 
         /** The ID for the `InternalAccount` this quote is associated with. */
         fun internalAccountId(internalAccountId: String) = apply {
@@ -385,7 +400,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ForeignExchangeQuoteCreateRequest = body
+    fun _body(): ForeignExchangeQuoteCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -455,8 +470,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun baseAmount(): Optional<Long> =
-            Optional.ofNullable(baseAmount.getNullable("base_amount"))
+        fun baseAmount(): Optional<Long> = baseAmount.getOptional("base_amount")
 
         /**
          * Currency to convert, often called the "sell" currency.
@@ -464,8 +478,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun baseCurrency(): Optional<Currency> =
-            Optional.ofNullable(baseCurrency.getNullable("base_currency"))
+        fun baseCurrency(): Optional<Currency> = baseCurrency.getOptional("base_currency")
 
         /**
          * The timestamp until when the quoted rate is valid.
@@ -473,8 +486,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<OffsetDateTime> = effectiveAt.getOptional("effective_at")
 
         /**
          * Amount in the lowest denomination of the `target_currency`, often called the "buy"
@@ -483,8 +495,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun targetAmount(): Optional<Long> =
-            Optional.ofNullable(targetAmount.getNullable("target_amount"))
+        fun targetAmount(): Optional<Long> = targetAmount.getOptional("target_amount")
 
         /**
          * Returns the raw JSON value of [internalAccountId].
@@ -736,13 +747,36 @@ private constructor(
             }
 
             internalAccountId()
-            targetCurrency()
+            targetCurrency().validate()
             baseAmount()
-            baseCurrency()
+            baseCurrency().ifPresent { it.validate() }
             effectiveAt()
             targetAmount()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+                (targetCurrency.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (baseAmount.asKnown().isPresent) 1 else 0) +
+                (baseCurrency.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (effectiveAt.asKnown().isPresent) 1 else 0) +
+                (if (targetAmount.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

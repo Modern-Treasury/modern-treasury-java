@@ -20,6 +20,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** complete verification of external account */
 class ExternalAccountCompleteVerificationParams
@@ -89,6 +90,17 @@ private constructor(
         }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amounts]
+         */
+        fun body(body: ExternalAccountCompleteVerificationRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         fun amounts(amounts: List<Long>) = apply { body.amounts(amounts) }
 
@@ -246,7 +258,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExternalAccountCompleteVerificationRequest = body
+    fun _body(): ExternalAccountCompleteVerificationRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -275,7 +287,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amounts(): Optional<List<Long>> = Optional.ofNullable(amounts.getNullable("amounts"))
+        fun amounts(): Optional<List<Long>> = amounts.getOptional("amounts")
 
         /**
          * Returns the raw JSON value of [amounts].
@@ -388,6 +400,22 @@ private constructor(
             amounts()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = (amounts.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

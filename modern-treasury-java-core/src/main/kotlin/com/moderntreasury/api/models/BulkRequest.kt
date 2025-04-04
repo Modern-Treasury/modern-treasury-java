@@ -17,6 +17,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
+import kotlin.jvm.optionals.getOrNull
 
 class BulkRequest
 private constructor(
@@ -564,19 +565,47 @@ private constructor(
         }
 
         id()
-        actionType()
+        actionType().validate()
         createdAt()
         failedResultCount()
         liveMode()
         metadata().validate()
         object_()
-        resourceType()
-        status()
+        resourceType().validate()
+        status().validate()
         successResultCount()
         totalResourceCount()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (actionType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (failedResultCount.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (resourceType.asKnown().getOrNull()?.validity() ?: 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (successResultCount.asKnown().isPresent) 1 else 0) +
+            (if (totalResourceCount.asKnown().isPresent) 1 else 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /** One of create, or update. */
     class ActionType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -674,6 +703,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ActionType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -754,6 +810,24 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -789,11 +863,15 @@ private constructor(
 
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
+            @JvmField val LEDGER_ACCOUNT = of("ledger_account")
+
             @JvmField val LEDGER_TRANSACTION = of("ledger_transaction")
+
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
             @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
+            @JvmField val ENTITY_LINK = of("entity_link")
 
             @JvmStatic fun of(value: String) = ResourceType(JsonField.of(value))
         }
@@ -801,9 +879,11 @@ private constructor(
         /** An enum containing [ResourceType]'s known values. */
         enum class Known {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
         }
 
         /**
@@ -817,9 +897,11 @@ private constructor(
          */
         enum class Value {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
             /**
              * An enum member indicating that [ResourceType] was instantiated with an unknown value.
              */
@@ -836,9 +918,11 @@ private constructor(
         fun value(): Value =
             when (this) {
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Value.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
-                TRANSACTION -> Value.TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
+                TRANSACTION -> Value.TRANSACTION
+                ENTITY_LINK -> Value.ENTITY_LINK
                 else -> Value._UNKNOWN
             }
 
@@ -854,9 +938,11 @@ private constructor(
         fun known(): Known =
             when (this) {
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Known.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
-                TRANSACTION -> Known.TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
+                TRANSACTION -> Known.TRANSACTION
+                ENTITY_LINK -> Known.ENTITY_LINK
                 else -> throw ModernTreasuryInvalidDataException("Unknown ResourceType: $value")
             }
 
@@ -873,6 +959,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ResourceType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -980,6 +1093,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

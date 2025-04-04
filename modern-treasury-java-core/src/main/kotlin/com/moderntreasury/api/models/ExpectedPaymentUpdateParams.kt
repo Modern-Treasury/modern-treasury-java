@@ -323,6 +323,20 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amountLowerBound]
+         * - [amountUpperBound]
+         * - [counterpartyId]
+         * - [currency]
+         * - [dateLowerBound]
+         * - etc.
+         */
+        fun body(body: ExpectedPaymentUpdateRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * The lowest amount this expected payment may be equal to. Value in specified currency's
          * smallest unit. e.g. $10 would be represented as 1000.
          */
@@ -789,7 +803,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExpectedPaymentUpdateRequest = body
+    fun _body(): ExpectedPaymentUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -902,8 +916,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amountLowerBound(): Optional<Long> =
-            Optional.ofNullable(amountLowerBound.getNullable("amount_lower_bound"))
+        fun amountLowerBound(): Optional<Long> = amountLowerBound.getOptional("amount_lower_bound")
 
         /**
          * The highest amount this expected payment may be equal to. Value in specified currency's
@@ -912,8 +925,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amountUpperBound(): Optional<Long> =
-            Optional.ofNullable(amountUpperBound.getNullable("amount_upper_bound"))
+        fun amountUpperBound(): Optional<Long> = amountUpperBound.getOptional("amount_upper_bound")
 
         /**
          * The ID of the counterparty you expect for this payment.
@@ -921,8 +933,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun counterpartyId(): Optional<String> =
-            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+        fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
         /**
          * Must conform to ISO 4217. Defaults to the currency of the internal account.
@@ -930,7 +941,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<Currency> = currency.getOptional("currency")
 
         /**
          * The earliest date the payment may come in. Format: yyyy-mm-dd
@@ -938,8 +949,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateLowerBound(): Optional<LocalDate> =
-            Optional.ofNullable(dateLowerBound.getNullable("date_lower_bound"))
+        fun dateLowerBound(): Optional<LocalDate> = dateLowerBound.getOptional("date_lower_bound")
 
         /**
          * The latest date the payment may come in. Format: yyyy-mm-dd
@@ -947,8 +957,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateUpperBound(): Optional<LocalDate> =
-            Optional.ofNullable(dateUpperBound.getNullable("date_upper_bound"))
+        fun dateUpperBound(): Optional<LocalDate> = dateUpperBound.getOptional("date_upper_bound")
 
         /**
          * An optional description for internal use.
@@ -956,8 +965,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * One of credit or debit. When you are receiving money, use credit. When you are being
@@ -966,8 +974,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<Direction> =
-            Optional.ofNullable(direction.getNullable("direction"))
+        fun direction(): Optional<Direction> = direction.getOptional("direction")
 
         /**
          * The ID of the Internal Account for the expected payment.
@@ -976,7 +983,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun internalAccountId(): Optional<String> =
-            Optional.ofNullable(internalAccountId.getNullable("internal_account_id"))
+            internalAccountId.getOptional("internal_account_id")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -984,7 +991,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /** The reconciliation filters you have for this payment. */
         @JsonProperty("reconciliation_filters")
@@ -1003,9 +1010,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun reconciliationRuleVariables(): Optional<List<ReconciliationRule>> =
-            Optional.ofNullable(
-                reconciliationRuleVariables.getNullable("reconciliation_rule_variables")
-            )
+            reconciliationRuleVariables.getOptional("reconciliation_rule_variables")
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -1016,7 +1021,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun remittanceInformation(): Optional<String> =
-            Optional.ofNullable(remittanceInformation.getNullable("remittance_information"))
+            remittanceInformation.getOptional("remittance_information")
 
         /**
          * The statement description you expect to see on the transaction. For ACH payments, this
@@ -1027,7 +1032,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun statementDescriptor(): Optional<String> =
-            Optional.ofNullable(statementDescriptor.getNullable("statement_descriptor"))
+            statementDescriptor.getOptional("statement_descriptor")
 
         /**
          * The Expected Payment's status can be updated from partially_reconciled to reconciled.
@@ -1035,7 +1040,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<Status> = status.getOptional("status")
 
         /**
          * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
@@ -1044,7 +1049,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun type(): Optional<ExpectedPaymentType> = Optional.ofNullable(type.getNullable("type"))
+        fun type(): Optional<ExpectedPaymentType> = type.getOptional("type")
 
         /**
          * Returns the raw JSON value of [amountLowerBound].
@@ -1655,20 +1660,53 @@ private constructor(
             amountLowerBound()
             amountUpperBound()
             counterpartyId()
-            currency()
+            currency().ifPresent { it.validate() }
             dateLowerBound()
             dateUpperBound()
             description()
-            direction()
+            direction().ifPresent { it.validate() }
             internalAccountId()
             metadata().ifPresent { it.validate() }
             reconciliationRuleVariables().ifPresent { it.forEach { it.validate() } }
             remittanceInformation()
             statementDescriptor()
-            status()
-            type()
+            status().ifPresent { it.validate() }
+            type().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amountLowerBound.asKnown().isPresent) 1 else 0) +
+                (if (amountUpperBound.asKnown().isPresent) 1 else 0) +
+                (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (currency.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (dateLowerBound.asKnown().isPresent) 1 else 0) +
+                (if (dateUpperBound.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (direction.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (reconciliationRuleVariables.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
+                    ?: 0) +
+                (if (remittanceInformation.asKnown().isPresent) 1 else 0) +
+                (if (statementDescriptor.asKnown().isPresent) 1 else 0) +
+                (status.asKnown().getOrNull()?.validity() ?: 0) +
+                (type.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1781,6 +1819,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): Direction = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1860,6 +1925,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1959,6 +2042,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

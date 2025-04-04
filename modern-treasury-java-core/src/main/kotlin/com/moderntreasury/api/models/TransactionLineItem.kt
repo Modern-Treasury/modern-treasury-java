@@ -116,8 +116,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun counterpartyId(): Optional<String> =
-        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+    fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -140,8 +139,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The ID of the reconciled Expected Payment, otherwise `null`.
@@ -149,8 +147,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun expectedPaymentId(): Optional<String> =
-        Optional.ofNullable(expectedPaymentId.getNullable("expected_payment_id"))
+    fun expectedPaymentId(): Optional<String> = expectedPaymentId.getOptional("expected_payment_id")
 
     /**
      * This field will be true if this object exists in the live environment, or false if it exists
@@ -183,8 +180,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun transactableId(): Optional<String> =
-        Optional.ofNullable(transactableId.getNullable("transactable_id"))
+    fun transactableId(): Optional<String> = transactableId.getOptional("transactable_id")
 
     /**
      * If a matching object exists in Modern Treasury, the type will be populated here, otherwise
@@ -194,7 +190,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun transactableType(): Optional<TransactableType> =
-        Optional.ofNullable(transactableType.getNullable("transactable_type"))
+        transactableType.getOptional("transactable_type")
 
     /**
      * The ID of the parent transaction.
@@ -740,12 +736,43 @@ private constructor(
         object_()
         reconcilable()
         transactableId()
-        transactableType()
+        transactableType().ifPresent { it.validate() }
         transactionId()
-        type()
+        type().validate()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (description.asKnown().isPresent) 1 else 0) +
+            (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (expectedPaymentId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (reconcilable.asKnown().isPresent) 1 else 0) +
+            (if (transactableId.asKnown().isPresent) 1 else 0) +
+            (transactableType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (transactionId.asKnown().isPresent) 1 else 0) +
+            (type.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /**
      * If a matching object exists in Modern Treasury, the type will be populated here, otherwise
@@ -866,6 +893,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): TransactableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -969,6 +1023,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

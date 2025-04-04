@@ -152,6 +152,20 @@ private constructor(
             }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [effectiveAtLowerBound]
+         * - [effectiveAtUpperBound]
+         * - [ledgerAccountId]
+         * - [description]
+         * - [metadata]
+         * - etc.
+         */
+        fun body(body: LedgerAccountStatementCreateRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * The inclusive lower bound of the effective_at timestamp of the ledger entries to be
          * included in the ledger account statement.
          */
@@ -376,7 +390,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerAccountStatementCreateRequest = body
+    fun _body(): LedgerAccountStatementCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -453,8 +467,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -462,7 +475,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * Returns the raw JSON value of [effectiveAtLowerBound].
@@ -706,6 +719,28 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (effectiveAtLowerBound.asKnown().isPresent) 1 else 0) +
+                (if (effectiveAtUpperBound.asKnown().isPresent) 1 else 0) +
+                (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -790,6 +825,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

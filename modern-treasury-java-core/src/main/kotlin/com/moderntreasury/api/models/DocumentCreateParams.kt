@@ -123,6 +123,18 @@ private constructor(
             additionalQueryParams = documentCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [documentableId]
+         * - [documentableType]
+         * - [file]
+         * - [documentType]
+         */
+        fun body(body: DocumentCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The unique identifier for the associated object. */
         fun documentableId(documentableId: String) = apply { body.documentableId(documentableId) }
 
@@ -301,8 +313,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic
-    internal fun _body(): Map<String, MultipartField<*>> =
+    fun _body(): Map<String, MultipartField<*>> =
         mapOf(
                 "documentable_id" to _documentableId(),
                 "documentable_type" to _documentableType(),
@@ -350,8 +361,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun documentType(): Optional<String> =
-            Optional.ofNullable(documentType.value.getNullable("document_type"))
+        fun documentType(): Optional<String> = documentType.value.getOptional("document_type")
 
         /**
          * Returns the raw multipart value of [documentableId].
@@ -518,11 +528,19 @@ private constructor(
             }
 
             documentableId()
-            documentableType()
+            documentableType().validate()
             file()
             documentType()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -692,6 +710,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): DocumentableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

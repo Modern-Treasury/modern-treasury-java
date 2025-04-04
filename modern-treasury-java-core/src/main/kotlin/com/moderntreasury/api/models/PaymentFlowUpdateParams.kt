@@ -18,6 +18,7 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
+import kotlin.jvm.optionals.getOrNull
 
 /** update payment_flow */
 class PaymentFlowUpdateParams
@@ -85,6 +86,15 @@ private constructor(
         }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [status]
+         */
+        fun body(body: PaymentFlowUpdateRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * Required. The updated status of the payment flow. Can only be used to mark a flow as
@@ -239,7 +249,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): PaymentFlowUpdateRequest = body
+    fun _body(): PaymentFlowUpdateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -375,9 +385,25 @@ private constructor(
                 return@apply
             }
 
-            status()
+            status().validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = (status.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -481,6 +507,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

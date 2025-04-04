@@ -361,6 +361,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ActionType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -492,11 +519,15 @@ private constructor(
 
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
+            @JvmField val LEDGER_ACCOUNT = of("ledger_account")
+
             @JvmField val LEDGER_TRANSACTION = of("ledger_transaction")
+
+            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
             @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val EXPECTED_PAYMENT = of("expected_payment")
+            @JvmField val ENTITY_LINK = of("entity_link")
 
             @JvmStatic fun of(value: String) = ResourceType(JsonField.of(value))
         }
@@ -504,9 +535,11 @@ private constructor(
         /** An enum containing [ResourceType]'s known values. */
         enum class Known {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
         }
 
         /**
@@ -520,9 +553,11 @@ private constructor(
          */
         enum class Value {
             PAYMENT_ORDER,
+            LEDGER_ACCOUNT,
             LEDGER_TRANSACTION,
-            TRANSACTION,
             EXPECTED_PAYMENT,
+            TRANSACTION,
+            ENTITY_LINK,
             /**
              * An enum member indicating that [ResourceType] was instantiated with an unknown value.
              */
@@ -539,9 +574,11 @@ private constructor(
         fun value(): Value =
             when (this) {
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Value.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
-                TRANSACTION -> Value.TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
+                TRANSACTION -> Value.TRANSACTION
+                ENTITY_LINK -> Value.ENTITY_LINK
                 else -> Value._UNKNOWN
             }
 
@@ -557,9 +594,11 @@ private constructor(
         fun known(): Known =
             when (this) {
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                LEDGER_ACCOUNT -> Known.LEDGER_ACCOUNT
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
-                TRANSACTION -> Known.TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
+                TRANSACTION -> Known.TRANSACTION
+                ENTITY_LINK -> Known.ENTITY_LINK
                 else -> throw ModernTreasuryInvalidDataException("Unknown ResourceType: $value")
             }
 
@@ -576,6 +615,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ResourceType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -683,6 +749,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

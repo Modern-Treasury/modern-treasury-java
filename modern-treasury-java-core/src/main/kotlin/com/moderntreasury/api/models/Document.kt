@@ -98,8 +98,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -113,8 +112,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun documentType(): Optional<String> =
-        Optional.ofNullable(documentType.getNullable("document_type"))
+    fun documentType(): Optional<String> = documentType.getOptional("document_type")
 
     /**
      * The unique identifier for the associated object.
@@ -583,7 +581,7 @@ private constructor(
         documentDetails().forEach { it.validate() }
         documentType()
         documentableId()
-        documentableType()
+        documentableType().validate()
         file().validate()
         liveMode()
         object_()
@@ -591,6 +589,34 @@ private constructor(
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (documentDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (documentType.asKnown().isPresent) 1 else 0) +
+            (if (documentableId.asKnown().isPresent) 1 else 0) +
+            (documentableType.asKnown().getOrNull()?.validity() ?: 0) +
+            (file.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (source.asKnown().isPresent) 1 else 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     class DocumentDetail
     private constructor(
@@ -655,8 +681,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun discardedAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+        fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -997,6 +1022,31 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (id.asKnown().isPresent) 1 else 0) +
+                (if (createdAt.asKnown().isPresent) 1 else 0) +
+                (if (discardedAt.asKnown().isPresent) 1 else 0) +
+                (if (documentIdentifier.asKnown().isPresent) 1 else 0) +
+                (if (documentIdentifierType.asKnown().isPresent) 1 else 0) +
+                (if (liveMode.asKnown().isPresent) 1 else 0) +
+                (if (object_.asKnown().isPresent) 1 else 0) +
+                (if (updatedAt.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1171,6 +1221,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): DocumentableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1209,8 +1286,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun contentType(): Optional<String> =
-            Optional.ofNullable(contentType.getNullable("content_type"))
+        fun contentType(): Optional<String> = contentType.getOptional("content_type")
 
         /**
          * The original filename of the document.
@@ -1218,7 +1294,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun filename(): Optional<String> = Optional.ofNullable(filename.getNullable("filename"))
+        fun filename(): Optional<String> = filename.getOptional("filename")
 
         /**
          * The size of the document in bytes.
@@ -1226,7 +1302,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun size(): Optional<Long> = Optional.ofNullable(size.getNullable("size"))
+        fun size(): Optional<Long> = size.getOptional("size")
 
         /**
          * Returns the raw JSON value of [contentType].
@@ -1363,6 +1439,26 @@ private constructor(
             size()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (contentType.asKnown().isPresent) 1 else 0) +
+                (if (filename.asKnown().isPresent) 1 else 0) +
+                (if (size.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

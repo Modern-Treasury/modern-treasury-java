@@ -19,6 +19,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** verify external account */
 class ExternalAccountVerifyParams
@@ -152,6 +153,20 @@ private constructor(
         }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [originatingAccountId]
+         * - [paymentType]
+         * - [currency]
+         * - [fallbackType]
+         * - [priority]
+         * - etc.
+         */
+        fun body(body: ExternalAccountVerifyRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * The ID of the internal account where the micro-deposits originate from. Both credit and
@@ -371,7 +386,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExternalAccountVerifyRequest = body
+    fun _body(): ExternalAccountVerifyRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -443,7 +458,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<Currency> = currency.getOptional("currency")
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
@@ -453,8 +468,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun fallbackType(): Optional<FallbackType> =
-            Optional.ofNullable(fallbackType.getNullable("fallback_type"))
+        fun fallbackType(): Optional<FallbackType> = fallbackType.getOptional("fallback_type")
 
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
@@ -463,7 +477,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun priority(): Optional<Priority> = Optional.ofNullable(priority.getNullable("priority"))
+        fun priority(): Optional<Priority> = priority.getOptional("priority")
 
         /**
          * Returns the raw JSON value of [originatingAccountId].
@@ -684,12 +698,34 @@ private constructor(
             }
 
             originatingAccountId()
-            paymentType()
-            currency()
-            fallbackType()
-            priority()
+            paymentType().validate()
+            currency().ifPresent { it.validate() }
+            fallbackType().ifPresent { it.validate() }
+            priority().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (originatingAccountId.asKnown().isPresent) 1 else 0) +
+                (paymentType.asKnown().getOrNull()?.validity() ?: 0) +
+                (currency.asKnown().getOrNull()?.validity() ?: 0) +
+                (fallbackType.asKnown().getOrNull()?.validity() ?: 0) +
+                (priority.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -968,6 +1004,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): PaymentType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1069,6 +1132,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): FallbackType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1173,6 +1263,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Priority = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

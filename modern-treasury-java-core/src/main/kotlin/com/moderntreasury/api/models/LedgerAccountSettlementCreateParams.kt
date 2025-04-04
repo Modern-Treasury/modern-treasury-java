@@ -207,6 +207,22 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [contraLedgerAccountId]
+         * - [settledLedgerAccountId]
+         * - [allowEitherDirection]
+         * - [description]
+         * - [effectiveAtUpperBound]
+         * - etc.
+         */
+        fun body(body: LedgerAccountSettlementCreateRequest) = apply {
+            this.body = body.toBuilder()
+        }
+
+        /**
          * The id of the contra ledger account that sends to or receives funds from the settled
          * ledger account.
          */
@@ -524,7 +540,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerAccountSettlementCreateRequest = body
+    fun _body(): LedgerAccountSettlementCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -607,7 +623,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun allowEitherDirection(): Optional<Boolean> =
-            Optional.ofNullable(allowEitherDirection.getNullable("allow_either_direction"))
+            allowEitherDirection.getOptional("allow_either_direction")
 
         /**
          * The description of the ledger account settlement.
@@ -615,8 +631,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
@@ -627,7 +642,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAtUpperBound.getNullable("effective_at_upper_bound"))
+            effectiveAtUpperBound.getOptional("effective_at_upper_bound")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -635,7 +650,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * It is set to `false` by default. It should be set to `true` when migrating existing
@@ -645,9 +660,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun skipSettlementLedgerTransaction(): Optional<Boolean> =
-            Optional.ofNullable(
-                skipSettlementLedgerTransaction.getNullable("skip_settlement_ledger_transaction")
-            )
+            skipSettlementLedgerTransaction.getOptional("skip_settlement_ledger_transaction")
 
         /**
          * The status of the ledger account settlement. It is set to `pending` by default. To post a
@@ -656,7 +669,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<Status> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [contraLedgerAccountId].
@@ -1029,9 +1042,34 @@ private constructor(
             effectiveAtUpperBound()
             metadata().ifPresent { it.validate() }
             skipSettlementLedgerTransaction()
-            status()
+            status().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (contraLedgerAccountId.asKnown().isPresent) 1 else 0) +
+                (if (settledLedgerAccountId.asKnown().isPresent) 1 else 0) +
+                (if (allowEitherDirection.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (effectiveAtUpperBound.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (skipSettlementLedgerTransaction.asKnown().isPresent) 1 else 0) +
+                (status.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1117,6 +1155,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1225,6 +1281,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

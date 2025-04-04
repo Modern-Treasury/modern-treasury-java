@@ -176,6 +176,20 @@ private constructor(
             additionalQueryParams = ledgerEventHandlerCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [ledgerTransactionTemplate]
+         * - [name]
+         * - [conditions]
+         * - [description]
+         * - [ledgerId]
+         * - etc.
+         */
+        fun body(body: LedgerEventHandlerCreateRequest) = apply { this.body = body.toBuilder() }
+
         @Deprecated("deprecated")
         fun ledgerTransactionTemplate(
             ledgerTransactionTemplate: LedgerEventHandlerLedgerTransactionTemplate
@@ -427,7 +441,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerEventHandlerCreateRequest = body
+    fun _body(): LedgerEventHandlerCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -501,7 +515,7 @@ private constructor(
          */
         @Deprecated("deprecated")
         fun conditions(): Optional<LedgerEventHandlerConditions> =
-            Optional.ofNullable(conditions.getNullable("conditions"))
+            conditions.getOptional("conditions")
 
         /**
          * An optional description.
@@ -509,8 +523,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The id of the ledger that this account belongs to.
@@ -518,7 +531,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId.getNullable("ledger_id"))
+        fun ledgerId(): Optional<String> = ledgerId.getOptional("ledger_id")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -526,15 +539,14 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         @Deprecated("deprecated")
-        fun variables(): Optional<LedgerEventHandlerVariables> =
-            Optional.ofNullable(variables.getNullable("variables"))
+        fun variables(): Optional<LedgerEventHandlerVariables> = variables.getOptional("variables")
 
         /**
          * Returns the raw JSON value of [ledgerTransactionTemplate].
@@ -834,6 +846,30 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (ledgerTransactionTemplate.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (conditions.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (ledgerId.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (variables.asKnown().getOrNull()?.validity() ?: 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -882,8 +918,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -892,8 +927,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<String> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<String> = effectiveAt.getOptional("effective_at")
 
         /**
          * An array of ledger entry objects.
@@ -910,7 +944,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<String> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<String> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [description].
@@ -1140,6 +1174,27 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (description.asKnown().isPresent) 1 else 0) +
+                (if (effectiveAt.asKnown().isPresent) 1 else 0) +
+                (ledgerEntries.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (status.asKnown().isPresent) 1 else 0)
+
         @Deprecated("deprecated")
         class LedgerEventHandlerLedgerEntries
         private constructor(
@@ -1359,6 +1414,26 @@ private constructor(
                 ledgerAccountId()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (if (amount.asKnown().isPresent) 1 else 0) +
+                    (if (direction.asKnown().isPresent) 1 else 0) +
+                    (if (ledgerAccountId.asKnown().isPresent) 1 else 0)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1595,6 +1670,26 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (field.asKnown().isPresent) 1 else 0) +
+                (if (operator.asKnown().isPresent) 1 else 0) +
+                (if (value.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1679,6 +1774,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1768,6 +1881,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

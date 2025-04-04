@@ -119,8 +119,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun accountNumber(): Optional<String> =
-        Optional.ofNullable(accountNumber.getNullable("account_number"))
+    fun accountNumber(): Optional<String> = accountNumber.getOptional("account_number")
 
     /**
      * The last 4 digits of the account_number.
@@ -128,8 +127,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun accountNumberSafe(): Optional<String> =
-        Optional.ofNullable(accountNumberSafe.getNullable("account_number_safe"))
+    fun accountNumberSafe(): Optional<String> = accountNumberSafe.getOptional("account_number_safe")
 
     /**
      * The amount of the paper item.
@@ -145,8 +143,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun checkNumber(): Optional<String> =
-        Optional.ofNullable(checkNumber.getNullable("check_number"))
+    fun checkNumber(): Optional<String> = checkNumber.getOptional("check_number")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -193,7 +190,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun memoField(): Optional<String> = Optional.ofNullable(memoField.getNullable("memo_field"))
+    fun memoField(): Optional<String> = memoField.getOptional("memo_field")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -207,8 +204,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun remitterName(): Optional<String> =
-        Optional.ofNullable(remitterName.getNullable("remitter_name"))
+    fun remitterName(): Optional<String> = remitterName.getOptional("remitter_name")
 
     /**
      * The routing number on the paper item.
@@ -216,8 +212,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun routingNumber(): Optional<String> =
-        Optional.ofNullable(routingNumber.getNullable("routing_number"))
+    fun routingNumber(): Optional<String> = routingNumber.getOptional("routing_number")
 
     /**
      * The current status of the paper item. One of `pending`, `completed`, or `returned`.
@@ -233,8 +228,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun transactionId(): Optional<String> =
-        Optional.ofNullable(transactionId.getNullable("transaction_id"))
+    fun transactionId(): Optional<String> = transactionId.getOptional("transaction_id")
 
     /**
      * The ID of the reconciled Transaction Line Item or `null`.
@@ -243,7 +237,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun transactionLineItemId(): Optional<String> =
-        Optional.ofNullable(transactionLineItemId.getNullable("transaction_line_item_id"))
+        transactionLineItemId.getOptional("transaction_line_item_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -838,7 +832,7 @@ private constructor(
         amount()
         checkNumber()
         createdAt()
-        currency()
+        currency().validate()
         depositDate()
         liveMode()
         lockboxNumber()
@@ -846,12 +840,46 @@ private constructor(
         object_()
         remitterName()
         routingNumber()
-        status()
+        status().validate()
         transactionId()
         transactionLineItemId()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (accountNumber.asKnown().isPresent) 1 else 0) +
+            (if (accountNumberSafe.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (checkNumber.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (currency.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (depositDate.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (lockboxNumber.asKnown().isPresent) 1 else 0) +
+            (if (memoField.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (remitterName.asKnown().isPresent) 1 else 0) +
+            (if (routingNumber.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (transactionId.asKnown().isPresent) 1 else 0) +
+            (if (transactionLineItemId.asKnown().isPresent) 1 else 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /** The current status of the paper item. One of `pending`, `completed`, or `returned`. */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -946,6 +974,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

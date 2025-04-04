@@ -21,6 +21,7 @@ import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Send an email requesting account details. */
 class CounterpartyCollectAccountParams
@@ -146,6 +147,18 @@ private constructor(
             }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [direction]
+         * - [customRedirect]
+         * - [fields]
+         * - [sendEmail]
+         */
+        fun body(body: CounterpartyCollectAccountRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * One of `credit` or `debit`. Use `credit` when you want to pay a counterparty. Use `debit`
@@ -363,7 +376,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): CounterpartyCollectAccountRequest = body
+    fun _body(): CounterpartyCollectAccountRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -417,8 +430,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun customRedirect(): Optional<String> =
-            Optional.ofNullable(customRedirect.getNullable("custom_redirect"))
+        fun customRedirect(): Optional<String> = customRedirect.getOptional("custom_redirect")
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
@@ -430,7 +442,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun fields(): Optional<List<Field>> = Optional.ofNullable(fields.getNullable("fields"))
+        fun fields(): Optional<List<Field>> = fields.getOptional("fields")
 
         /**
          * By default, Modern Treasury will send an email to your counterparty that includes a link
@@ -441,8 +453,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun sendEmail(): Optional<Boolean> =
-            Optional.ofNullable(sendEmail.getNullable("send_email"))
+        fun sendEmail(): Optional<Boolean> = sendEmail.getOptional("send_email")
 
         /**
          * Returns the raw JSON value of [direction].
@@ -658,12 +669,33 @@ private constructor(
                 return@apply
             }
 
-            direction()
+            direction().validate()
             customRedirect()
-            fields()
+            fields().ifPresent { it.forEach { it.validate() } }
             sendEmail()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (direction.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (customRedirect.asKnown().isPresent) 1 else 0) +
+                (fields.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (sendEmail.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -753,7 +785,7 @@ private constructor(
 
             @JvmField val ID_SKNBI_CODE = of("idSknbiCode")
 
-            @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
+            @JvmField val ZA_NATIONAL_CLEARING_CODE = of("zaNationalClearingCode")
 
             @JvmStatic fun of(value: String) = Field(JsonField.of(value))
         }
@@ -931,6 +963,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Field = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

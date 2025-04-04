@@ -115,6 +115,17 @@ private constructor(
             }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [expectedPaymentId]
+         * - [transactionId]
+         */
+        fun body(body: TransactionLineItemCreateRequest) = apply { this.body = body.toBuilder() }
+
+        /**
          * If a matching object exists in Modern Treasury, `amount` will be populated. Value in
          * specified currency's smallest unit (taken from parent Transaction).
          */
@@ -297,7 +308,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): TransactionLineItemCreateRequest = body
+    fun _body(): TransactionLineItemCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -518,6 +529,26 @@ private constructor(
             transactionId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (expectedPaymentId.asKnown().isPresent) 1 else 0) +
+                (if (transactionId.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

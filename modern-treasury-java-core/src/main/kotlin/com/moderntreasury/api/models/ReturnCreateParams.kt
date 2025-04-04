@@ -63,6 +63,9 @@ private constructor(
      */
     fun code(): Optional<Code> = body.code()
 
+    /** The raw data from the return file that we get from the bank. */
+    fun _data(): JsonValue = body._data()
+
     /**
      * If the return code is `R14` or `R15` this is the date the deceased counterparty passed away.
      *
@@ -159,6 +162,20 @@ private constructor(
             additionalQueryParams = returnCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [returnableId]
+         * - [returnableType]
+         * - [additionalInformation]
+         * - [code]
+         * - [data]
+         * - etc.
+         */
+        fun body(body: ReturnCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** The ID of the object being returned or `null`. */
         fun returnableId(returnableId: String?) = apply { body.returnableId(returnableId) }
 
@@ -233,6 +250,9 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<Code>) = apply { body.code(code) }
+
+        /** The raw data from the return file that we get from the bank. */
+        fun data(data: JsonValue) = apply { body.data(data) }
 
         /**
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
@@ -407,7 +427,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ReturnCreateRequest = body
+    fun _body(): ReturnCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -419,6 +439,7 @@ private constructor(
         private val returnableType: JsonField<ReturnableType>,
         private val additionalInformation: JsonField<String>,
         private val code: JsonField<Code>,
+        private val data: JsonValue,
         private val dateOfDeath: JsonField<LocalDate>,
         private val reason: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -436,6 +457,7 @@ private constructor(
             @ExcludeMissing
             additionalInformation: JsonField<String> = JsonMissing.of(),
             @JsonProperty("code") @ExcludeMissing code: JsonField<Code> = JsonMissing.of(),
+            @JsonProperty("data") @ExcludeMissing data: JsonValue = JsonMissing.of(),
             @JsonProperty("date_of_death")
             @ExcludeMissing
             dateOfDeath: JsonField<LocalDate> = JsonMissing.of(),
@@ -445,6 +467,7 @@ private constructor(
             returnableType,
             additionalInformation,
             code,
+            data,
             dateOfDeath,
             reason,
             mutableMapOf(),
@@ -456,8 +479,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun returnableId(): Optional<String> =
-            Optional.ofNullable(returnableId.getNullable("returnable_id"))
+        fun returnableId(): Optional<String> = returnableId.getOptional("returnable_id")
 
         /**
          * The type of object being returned. Currently, this may only be incoming_payment_detail.
@@ -475,7 +497,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun additionalInformation(): Optional<String> =
-            Optional.ofNullable(additionalInformation.getNullable("additional_information"))
+            additionalInformation.getOptional("additional_information")
 
         /**
          * The return code. For ACH returns, this is the required ACH return code.
@@ -483,7 +505,10 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun code(): Optional<Code> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<Code> = code.getOptional("code")
+
+        /** The raw data from the return file that we get from the bank. */
+        @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
         /**
          * If the return code is `R14` or `R15` this is the date the deceased counterparty passed
@@ -492,8 +517,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateOfDeath(): Optional<LocalDate> =
-            Optional.ofNullable(dateOfDeath.getNullable("date_of_death"))
+        fun dateOfDeath(): Optional<LocalDate> = dateOfDeath.getOptional("date_of_death")
 
         /**
          * An optional description of the reason for the return. This is for internal usage and will
@@ -502,7 +526,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun reason(): Optional<String> = Optional.ofNullable(reason.getNullable("reason"))
+        fun reason(): Optional<String> = reason.getOptional("reason")
 
         /**
          * Returns the raw JSON value of [returnableId].
@@ -590,6 +614,7 @@ private constructor(
             private var returnableType: JsonField<ReturnableType>? = null
             private var additionalInformation: JsonField<String> = JsonMissing.of()
             private var code: JsonField<Code> = JsonMissing.of()
+            private var data: JsonValue = JsonMissing.of()
             private var dateOfDeath: JsonField<LocalDate> = JsonMissing.of()
             private var reason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -600,6 +625,7 @@ private constructor(
                 returnableType = returnCreateRequest.returnableType
                 additionalInformation = returnCreateRequest.additionalInformation
                 code = returnCreateRequest.code
+                data = returnCreateRequest.data
                 dateOfDeath = returnCreateRequest.dateOfDeath
                 reason = returnCreateRequest.reason
                 additionalProperties = returnCreateRequest.additionalProperties.toMutableMap()
@@ -682,6 +708,9 @@ private constructor(
              */
             fun code(code: JsonField<Code>) = apply { this.code = code }
 
+            /** The raw data from the return file that we get from the bank. */
+            fun data(data: JsonValue) = apply { this.data = data }
+
             /**
              * If the return code is `R14` or `R15` this is the date the deceased counterparty
              * passed away.
@@ -759,6 +788,7 @@ private constructor(
                     checkRequired("returnableType", returnableType),
                     additionalInformation,
                     code,
+                    data,
                     dateOfDeath,
                     reason,
                     additionalProperties.toMutableMap(),
@@ -773,30 +803,53 @@ private constructor(
             }
 
             returnableId()
-            returnableType()
+            returnableType().validate()
             additionalInformation()
-            code()
+            code().ifPresent { it.validate() }
             dateOfDeath()
             reason()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (returnableId.asKnown().isPresent) 1 else 0) +
+                (returnableType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (additionalInformation.asKnown().isPresent) 1 else 0) +
+                (code.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (dateOfDeath.asKnown().isPresent) 1 else 0) +
+                (if (reason.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is ReturnCreateRequest && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ReturnCreateRequest && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && data == other.data && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(returnableId, returnableType, additionalInformation, code, dateOfDeath, reason, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(returnableId, returnableType, additionalInformation, code, data, dateOfDeath, reason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ReturnCreateRequest{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
+            "ReturnCreateRequest{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, data=$data, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     /** The type of object being returned. Currently, this may only be incoming_payment_detail. */
@@ -884,6 +937,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): ReturnableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1291,6 +1371,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Code = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

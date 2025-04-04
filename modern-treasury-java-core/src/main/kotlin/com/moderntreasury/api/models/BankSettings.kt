@@ -86,9 +86,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun backupWithholdingPercentage(): Optional<Long> =
-        Optional.ofNullable(
-            backupWithholdingPercentage.getNullable("backup_withholding_percentage")
-        )
+        backupWithholdingPercentage.getOptional("backup_withholding_percentage")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -100,8 +98,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * Whether backup withholding is enabled. See more here -
@@ -111,7 +108,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun enableBackupWithholding(): Optional<Boolean> =
-        Optional.ofNullable(enableBackupWithholding.getNullable("enable_backup_withholding"))
+        enableBackupWithholding.getOptional("enable_backup_withholding")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -134,8 +131,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun privacyOptOut(): Optional<Boolean> =
-        Optional.ofNullable(privacyOptOut.getNullable("privacy_opt_out"))
+    fun privacyOptOut(): Optional<Boolean> = privacyOptOut.getOptional("privacy_opt_out")
 
     /**
      * It covers, among other types of insider loans, extensions of credit by a member bank to an
@@ -146,8 +142,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun regulationO(): Optional<Boolean> =
-        Optional.ofNullable(regulationO.getNullable("regulation_o"))
+    fun regulationO(): Optional<Boolean> = regulationO.getOptional("regulation_o")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -571,6 +566,32 @@ private constructor(
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (backupWithholdingPercentage.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (enableBackupWithholding.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (privacyOptOut.asKnown().isPresent) 1 else 0) +
+            (if (regulationO.asKnown().isPresent) 1 else 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

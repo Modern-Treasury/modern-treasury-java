@@ -1,5 +1,50 @@
 # Changelog
 
+## 6.1.0 (2025-04-04)
+
+Full Changelog: [v6.0.0...v6.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.0.0...v6.1.0)
+
+### Features
+
+* add MCP server ([5a1b6e0](https://github.com/Modern-Treasury/modern-treasury-java/commit/5a1b6e0cda2b30444068810a199d7c3fac2e294a))
+* **client:** add enum validation method ([53a309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/53a309fc27d67be5164f7401b4226f4a5b505a67))
+* **client:** expose request body setter and getter ([#408](https://github.com/Modern-Treasury/modern-treasury-java/issues/408)) ([02e86ee](https://github.com/Modern-Treasury/modern-treasury-java/commit/02e86eed43e412a3606147c2292735d5742210b9))
+* **client:** make union deserialization more robust ([#406](https://github.com/Modern-Treasury/modern-treasury-java/issues/406)) ([53a309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/53a309fc27d67be5164f7401b4226f4a5b505a67))
+
+
+### Bug Fixes
+
+* **client:** don't call `validate()` during deserialization if we don't have to ([#404](https://github.com/Modern-Treasury/modern-treasury-java/issues/404)) ([e629b0f](https://github.com/Modern-Treasury/modern-treasury-java/commit/e629b0f75968ed31fb533482fddd8c074d0119be))
+* **client:** limit json deserialization coercion ([#405](https://github.com/Modern-Treasury/modern-treasury-java/issues/405)) ([b5b6c7d](https://github.com/Modern-Treasury/modern-treasury-java/commit/b5b6c7daacc098924c88d49f89715872eb092a3d))
+* **client:** return `Optional&lt;T&gt;` instead of `Optional<? extends T>` ([#411](https://github.com/Modern-Treasury/modern-treasury-java/issues/411)) ([dd1a2a1](https://github.com/Modern-Treasury/modern-treasury-java/commit/dd1a2a173b6766f2248e49829bde85c4a3bc8e70))
+
+
+### Performance Improvements
+
+* **client:** cached parsed type in `HttpResponseFor` ([#409](https://github.com/Modern-Treasury/modern-treasury-java/issues/409)) ([29a5e4c](https://github.com/Modern-Treasury/modern-treasury-java/commit/29a5e4c8a4cf234e08a68bc00315c923c9d9c908))
+
+
+### Chores
+
+* **api:** updates to bulk creation request, legal entity schemas and more ([#400](https://github.com/Modern-Treasury/modern-treasury-java/issues/400)) ([f8f8966](https://github.com/Modern-Treasury/modern-treasury-java/commit/f8f8966aa0f92b6f0cb08eff6ac0fb8d038758cb))
+* **client:** remove unnecessary json state from some query param classes ([53a309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/53a309fc27d67be5164f7401b4226f4a5b505a67))
+* configure new SDK language ([064bcff](https://github.com/Modern-Treasury/modern-treasury-java/commit/064bcffc698a8e34c60138e71f087e5e2b3a64df))
+* configure new SDK language ([b196832](https://github.com/Modern-Treasury/modern-treasury-java/commit/b1968323e3f6a7fa39df75b0be53c3a7923d78f0))
+* internal codegen changes ([a46f62b](https://github.com/Modern-Treasury/modern-treasury-java/commit/a46f62b360deb8681e3df7b8c3519ad99ec9ba68))
+* **internal:** add invalid json deserialization tests ([53a309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/53a309fc27d67be5164f7401b4226f4a5b505a67))
+* **internal:** add json roundtripping tests ([53a309f](https://github.com/Modern-Treasury/modern-treasury-java/commit/53a309fc27d67be5164f7401b4226f4a5b505a67))
+* **internal:** codegen related update ([#407](https://github.com/Modern-Treasury/modern-treasury-java/issues/407)) ([4e9382d](https://github.com/Modern-Treasury/modern-treasury-java/commit/4e9382dcf70ae1bf14e60b2360ab0e39bcc14d72))
+* **internal:** remove CI condition ([#403](https://github.com/Modern-Treasury/modern-treasury-java/issues/403)) ([1cd915d](https://github.com/Modern-Treasury/modern-treasury-java/commit/1cd915d7dff53bd3eff1fb1fff128e9378f1c589))
+* **internal:** swap from `getNullable` to `getOptional` ([#410](https://github.com/Modern-Treasury/modern-treasury-java/issues/410)) ([0933a31](https://github.com/Modern-Treasury/modern-treasury-java/commit/0933a312920a72970db1be015e840b17eb085180))
+* Remove deprecated/unused remote spec feature ([904c292](https://github.com/Modern-Treasury/modern-treasury-java/commit/904c29210c975de4c91d1e79d81faf0f2cbfd33e))
+
+
+### Documentation
+
+* add comments to `JsonField` classes ([dd1a2a1](https://github.com/Modern-Treasury/modern-treasury-java/commit/dd1a2a173b6766f2248e49829bde85c4a3bc8e70))
+* document how to forcibly omit required field ([2a58a85](https://github.com/Modern-Treasury/modern-treasury-java/commit/2a58a854480e7ab83efb3748827b4d745ecd44b4))
+* swap examples used in readme ([#412](https://github.com/Modern-Treasury/modern-treasury-java/issues/412)) ([2a58a85](https://github.com/Modern-Treasury/modern-treasury-java/commit/2a58a854480e7ab83efb3748827b4d745ecd44b4))
+
 ## 6.0.0 (2025-03-26)
 
 Full Changelog: [v5.0.0...v6.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v5.0.0...v6.0.0)

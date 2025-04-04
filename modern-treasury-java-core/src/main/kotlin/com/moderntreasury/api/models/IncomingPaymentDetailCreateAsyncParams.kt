@@ -54,6 +54,11 @@ private constructor(
     fun currency(): Optional<Currency> = body.currency()
 
     /**
+     * An object passed through to the simulated IPD that could reflect what a vendor would pass.
+     */
+    fun _data(): JsonValue = body._data()
+
+    /**
      * Defaults to a random description.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -188,6 +193,20 @@ private constructor(
                 incomingPaymentDetailCreateAsyncParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [asOfDate]
+         * - [currency]
+         * - [data]
+         * - [description]
+         * - etc.
+         */
+        fun body(body: IncomingPaymentDetailCreateRequest) = apply { this.body = body.toBuilder() }
+
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
@@ -228,6 +247,12 @@ private constructor(
          * value.
          */
         fun currency(currency: JsonField<Currency>) = apply { body.currency(currency) }
+
+        /**
+         * An object passed through to the simulated IPD that could reflect what a vendor would
+         * pass.
+         */
+        fun data(data: JsonValue) = apply { body.data(data) }
 
         /** Defaults to a random description. */
         fun description(description: String?) = apply { body.description(description) }
@@ -433,7 +458,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): IncomingPaymentDetailCreateRequest = body
+    fun _body(): IncomingPaymentDetailCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -444,6 +469,7 @@ private constructor(
         private val amount: JsonField<Long>,
         private val asOfDate: JsonField<LocalDate>,
         private val currency: JsonField<Currency>,
+        private val data: JsonValue,
         private val description: JsonField<String>,
         private val direction: JsonField<Direction>,
         private val internalAccountId: JsonField<String>,
@@ -461,6 +487,7 @@ private constructor(
             @JsonProperty("currency")
             @ExcludeMissing
             currency: JsonField<Currency> = JsonMissing.of(),
+            @JsonProperty("data") @ExcludeMissing data: JsonValue = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
@@ -478,6 +505,7 @@ private constructor(
             amount,
             asOfDate,
             currency,
+            data,
             description,
             direction,
             internalAccountId,
@@ -492,7 +520,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amount(): Optional<Long> = Optional.ofNullable(amount.getNullable("amount"))
+        fun amount(): Optional<Long> = amount.getOptional("amount")
 
         /**
          * Defaults to today.
@@ -500,8 +528,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun asOfDate(): Optional<LocalDate> =
-            Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+        fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
 
         /**
          * Defaults to the currency of the originating account.
@@ -509,7 +536,13 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<Currency> = currency.getOptional("currency")
+
+        /**
+         * An object passed through to the simulated IPD that could reflect what a vendor would
+         * pass.
+         */
+        @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
         /**
          * Defaults to a random description.
@@ -517,8 +550,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * One of `credit`, `debit`.
@@ -526,8 +558,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<Direction> =
-            Optional.ofNullable(direction.getNullable("direction"))
+        fun direction(): Optional<Direction> = direction.getOptional("direction")
 
         /**
          * The ID of one of your internal accounts.
@@ -536,7 +567,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun internalAccountId(): Optional<String> =
-            Optional.ofNullable(internalAccountId.getNullable("internal_account_id"))
+            internalAccountId.getOptional("internal_account_id")
 
         /**
          * One of `ach`, `wire`, `check`.
@@ -544,7 +575,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+        fun type(): Optional<Type> = type.getOptional("type")
 
         /**
          * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -553,7 +584,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun virtualAccountId(): Optional<String> =
-            Optional.ofNullable(virtualAccountId.getNullable("virtual_account_id"))
+            virtualAccountId.getOptional("virtual_account_id")
 
         /**
          * Returns the raw JSON value of [amount].
@@ -648,6 +679,7 @@ private constructor(
             private var amount: JsonField<Long> = JsonMissing.of()
             private var asOfDate: JsonField<LocalDate> = JsonMissing.of()
             private var currency: JsonField<Currency> = JsonMissing.of()
+            private var data: JsonValue = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var direction: JsonField<Direction> = JsonMissing.of()
             private var internalAccountId: JsonField<String> = JsonMissing.of()
@@ -662,6 +694,7 @@ private constructor(
                 amount = incomingPaymentDetailCreateRequest.amount
                 asOfDate = incomingPaymentDetailCreateRequest.asOfDate
                 currency = incomingPaymentDetailCreateRequest.currency
+                data = incomingPaymentDetailCreateRequest.data
                 description = incomingPaymentDetailCreateRequest.description
                 direction = incomingPaymentDetailCreateRequest.direction
                 internalAccountId = incomingPaymentDetailCreateRequest.internalAccountId
@@ -714,6 +747,12 @@ private constructor(
              * supported value.
              */
             fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
+
+            /**
+             * An object passed through to the simulated IPD that could reflect what a vendor would
+             * pass.
+             */
+            fun data(data: JsonValue) = apply { this.data = data }
 
             /** Defaults to a random description. */
             fun description(description: String?) = description(JsonField.ofNullable(description))
@@ -823,6 +862,7 @@ private constructor(
                     amount,
                     asOfDate,
                     currency,
+                    data,
                     description,
                     direction,
                     internalAccountId,
@@ -841,31 +881,56 @@ private constructor(
 
             amount()
             asOfDate()
-            currency()
+            currency().ifPresent { it.validate() }
             description()
-            direction()
+            direction().ifPresent { it.validate() }
             internalAccountId()
-            type()
+            type().ifPresent { it.validate() }
             virtualAccountId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (asOfDate.asKnown().isPresent) 1 else 0) +
+                (currency.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (direction.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+                (type.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (virtualAccountId.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is IncomingPaymentDetailCreateRequest && amount == other.amount && asOfDate == other.asOfDate && currency == other.currency && description == other.description && direction == other.direction && internalAccountId == other.internalAccountId && type == other.type && virtualAccountId == other.virtualAccountId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is IncomingPaymentDetailCreateRequest && amount == other.amount && asOfDate == other.asOfDate && currency == other.currency && data == other.data && description == other.description && direction == other.direction && internalAccountId == other.internalAccountId && type == other.type && virtualAccountId == other.virtualAccountId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, currency, description, direction, internalAccountId, type, virtualAccountId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, currency, data, description, direction, internalAccountId, type, virtualAccountId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, description=$description, direction=$direction, internalAccountId=$internalAccountId, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
     /** One of `credit`, `debit`. */
@@ -958,6 +1023,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): Direction = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -988,6 +1080,10 @@ private constructor(
 
             @JvmField val ACH = of("ach")
 
+            @JvmField val AU_BECS = of("au_becs")
+
+            @JvmField val BACS = of("bacs")
+
             @JvmField val BOOK = of("book")
 
             @JvmField val CHECK = of("check")
@@ -995,6 +1091,10 @@ private constructor(
             @JvmField val EFT = of("eft")
 
             @JvmField val INTERAC = of("interac")
+
+            @JvmField val NEFT = of("neft")
+
+            @JvmField val NZ_BECS = of("nz_becs")
 
             @JvmField val RTP = of("rtp")
 
@@ -1010,10 +1110,14 @@ private constructor(
         /** An enum containing [Type]'s known values. */
         enum class Known {
             ACH,
+            AU_BECS,
+            BACS,
             BOOK,
             CHECK,
             EFT,
             INTERAC,
+            NEFT,
+            NZ_BECS,
             RTP,
             SEPA,
             SIGNET,
@@ -1031,10 +1135,14 @@ private constructor(
          */
         enum class Value {
             ACH,
+            AU_BECS,
+            BACS,
             BOOK,
             CHECK,
             EFT,
             INTERAC,
+            NEFT,
+            NZ_BECS,
             RTP,
             SEPA,
             SIGNET,
@@ -1053,10 +1161,14 @@ private constructor(
         fun value(): Value =
             when (this) {
                 ACH -> Value.ACH
+                AU_BECS -> Value.AU_BECS
+                BACS -> Value.BACS
                 BOOK -> Value.BOOK
                 CHECK -> Value.CHECK
                 EFT -> Value.EFT
                 INTERAC -> Value.INTERAC
+                NEFT -> Value.NEFT
+                NZ_BECS -> Value.NZ_BECS
                 RTP -> Value.RTP
                 SEPA -> Value.SEPA
                 SIGNET -> Value.SIGNET
@@ -1076,10 +1188,14 @@ private constructor(
         fun known(): Known =
             when (this) {
                 ACH -> Known.ACH
+                AU_BECS -> Known.AU_BECS
+                BACS -> Known.BACS
                 BOOK -> Known.BOOK
                 CHECK -> Known.CHECK
                 EFT -> Known.EFT
                 INTERAC -> Known.INTERAC
+                NEFT -> Known.NEFT
+                NZ_BECS -> Known.NZ_BECS
                 RTP -> Known.RTP
                 SEPA -> Known.SEPA
                 SIGNET -> Known.SIGNET
@@ -1100,6 +1216,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

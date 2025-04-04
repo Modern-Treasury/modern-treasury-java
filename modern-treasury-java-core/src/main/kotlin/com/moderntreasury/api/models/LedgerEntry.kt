@@ -134,8 +134,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The currency of the ledger account.
@@ -172,7 +171,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerAccountLockVersion(): Optional<Long> =
-        Optional.ofNullable(ledgerAccountLockVersion.getNullable("ledger_account_lock_version"))
+        ledgerAccountLockVersion.getOptional("ledger_account_lock_version")
 
     /**
      * The ledger transaction that this ledger entry is associated with.
@@ -216,9 +215,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun resultingLedgerAccountBalances(): Optional<LedgerBalances> =
-        Optional.ofNullable(
-            resultingLedgerAccountBalances.getNullable("resulting_ledger_account_balances")
-        )
+        resultingLedgerAccountBalances.getOptional("resulting_ledger_account_balances")
 
     /**
      * Equal to the state of the ledger transaction when the ledger entry was created. One of
@@ -793,7 +790,7 @@ private constructor(
         id()
         amount()
         createdAt()
-        direction()
+        direction().validate()
         discardedAt()
         ledgerAccountCurrency()
         ledgerAccountCurrencyExponent()
@@ -804,10 +801,42 @@ private constructor(
         metadata().validate()
         object_()
         resultingLedgerAccountBalances().ifPresent { it.validate() }
-        status()
+        status().validate()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (direction.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (ledgerAccountCurrency.asKnown().isPresent) 1 else 0) +
+            (if (ledgerAccountCurrencyExponent.asKnown().isPresent) 1 else 0) +
+            (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (ledgerAccountLockVersion.asKnown().isPresent) 1 else 0) +
+            (if (ledgerTransactionId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (resultingLedgerAccountBalances.asKnown().getOrNull()?.validity() ?: 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     class Metadata
@@ -875,6 +904,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1123,6 +1170,26 @@ private constructor(
             postedBalance().validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (availableBalance.asKnown().getOrNull()?.validity() ?: 0) +
+                (pendingBalance.asKnown().getOrNull()?.validity() ?: 0) +
+                (postedBalance.asKnown().getOrNull()?.validity() ?: 0)
 
         /**
          * The available_balance is the sum of all posted inbound entries and pending outbound
@@ -1405,6 +1472,28 @@ private constructor(
                 validated = true
             }
 
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (if (amount.asKnown().isPresent) 1 else 0) +
+                    (if (credits.asKnown().isPresent) 1 else 0) +
+                    (if (currency.asKnown().isPresent) 1 else 0) +
+                    (if (currencyExponent.asKnown().isPresent) 1 else 0) +
+                    (if (debits.asKnown().isPresent) 1 else 0)
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -1537,6 +1626,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -40,14 +40,14 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerEntryIds(): Optional<List<JsonValue>> = body.ledgerEntryIds()
+    fun ledgerEntryIds(): Optional<List<String>> = body.ledgerEntryIds()
 
     /**
      * Returns the raw JSON value of [ledgerEntryIds].
      *
      * Unlike [ledgerEntryIds], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _ledgerEntryIds(): JsonField<List<JsonValue>> = body._ledgerEntryIds()
+    fun _ledgerEntryIds(): JsonField<List<String>> = body._ledgerEntryIds()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -97,36 +97,45 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [ledgerEntryIds]
+         */
+        fun body(body: LedgerAccountSettlementEntriesDeleteRequest) = apply {
+            this.body = body.toBuilder()
+        }
+
+        /**
          * The ids of the ledger entries that are to be added or removed from the ledger account
          * settlement.
          */
-        fun ledgerEntryIds(ledgerEntryIds: List<JsonValue>?) = apply {
+        fun ledgerEntryIds(ledgerEntryIds: List<String>?) = apply {
             body.ledgerEntryIds(ledgerEntryIds)
         }
 
         /** Alias for calling [Builder.ledgerEntryIds] with `ledgerEntryIds.orElse(null)`. */
-        fun ledgerEntryIds(ledgerEntryIds: Optional<List<JsonValue>>) =
+        fun ledgerEntryIds(ledgerEntryIds: Optional<List<String>>) =
             ledgerEntryIds(ledgerEntryIds.getOrNull())
 
         /**
          * Sets [Builder.ledgerEntryIds] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.ledgerEntryIds] with a well-typed `List<JsonValue>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.ledgerEntryIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun ledgerEntryIds(ledgerEntryIds: JsonField<List<JsonValue>>) = apply {
+        fun ledgerEntryIds(ledgerEntryIds: JsonField<List<String>>) = apply {
             body.ledgerEntryIds(ledgerEntryIds)
         }
 
         /**
-         * Adds a single [JsonValue] to [ledgerEntryIds].
+         * Adds a single [String] to [ledgerEntryIds].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addLedgerEntryId(ledgerEntryId: JsonValue) = apply {
-            body.addLedgerEntryId(ledgerEntryId)
-        }
+        fun addLedgerEntryId(ledgerEntryId: String) = apply { body.addLedgerEntryId(ledgerEntryId) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -267,7 +276,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerAccountSettlementEntriesDeleteRequest = body
+    fun _body(): LedgerAccountSettlementEntriesDeleteRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -281,7 +290,7 @@ private constructor(
 
     class LedgerAccountSettlementEntriesDeleteRequest
     private constructor(
-        private val ledgerEntryIds: JsonField<List<JsonValue>>,
+        private val ledgerEntryIds: JsonField<List<String>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -289,7 +298,7 @@ private constructor(
         private constructor(
             @JsonProperty("ledger_entry_ids")
             @ExcludeMissing
-            ledgerEntryIds: JsonField<List<JsonValue>> = JsonMissing.of()
+            ledgerEntryIds: JsonField<List<String>> = JsonMissing.of()
         ) : this(ledgerEntryIds, mutableMapOf())
 
         /**
@@ -299,8 +308,8 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerEntryIds(): Optional<List<JsonValue>> =
-            Optional.ofNullable(ledgerEntryIds.getNullable("ledger_entry_ids"))
+        fun ledgerEntryIds(): Optional<List<String>> =
+            ledgerEntryIds.getOptional("ledger_entry_ids")
 
         /**
          * Returns the raw JSON value of [ledgerEntryIds].
@@ -310,7 +319,7 @@ private constructor(
          */
         @JsonProperty("ledger_entry_ids")
         @ExcludeMissing
-        fun _ledgerEntryIds(): JsonField<List<JsonValue>> = ledgerEntryIds
+        fun _ledgerEntryIds(): JsonField<List<String>> = ledgerEntryIds
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -341,7 +350,7 @@ private constructor(
         /** A builder for [LedgerAccountSettlementEntriesDeleteRequest]. */
         class Builder internal constructor() {
 
-            private var ledgerEntryIds: JsonField<MutableList<JsonValue>>? = null
+            private var ledgerEntryIds: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -361,30 +370,30 @@ private constructor(
              * The ids of the ledger entries that are to be added or removed from the ledger account
              * settlement.
              */
-            fun ledgerEntryIds(ledgerEntryIds: List<JsonValue>?) =
+            fun ledgerEntryIds(ledgerEntryIds: List<String>?) =
                 ledgerEntryIds(JsonField.ofNullable(ledgerEntryIds))
 
             /** Alias for calling [Builder.ledgerEntryIds] with `ledgerEntryIds.orElse(null)`. */
-            fun ledgerEntryIds(ledgerEntryIds: Optional<List<JsonValue>>) =
+            fun ledgerEntryIds(ledgerEntryIds: Optional<List<String>>) =
                 ledgerEntryIds(ledgerEntryIds.getOrNull())
 
             /**
              * Sets [Builder.ledgerEntryIds] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.ledgerEntryIds] with a well-typed `List<JsonValue>`
+             * You should usually call [Builder.ledgerEntryIds] with a well-typed `List<String>`
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun ledgerEntryIds(ledgerEntryIds: JsonField<List<JsonValue>>) = apply {
+            fun ledgerEntryIds(ledgerEntryIds: JsonField<List<String>>) = apply {
                 this.ledgerEntryIds = ledgerEntryIds.map { it.toMutableList() }
             }
 
             /**
-             * Adds a single [JsonValue] to [ledgerEntryIds].
+             * Adds a single [String] to [ledgerEntryIds].
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
-            fun addLedgerEntryId(ledgerEntryId: JsonValue) = apply {
+            fun addLedgerEntryId(ledgerEntryId: String) = apply {
                 ledgerEntryIds =
                     (ledgerEntryIds ?: JsonField.of(mutableListOf())).also {
                         checkKnown("ledgerEntryIds", it).add(ledgerEntryId)
@@ -439,6 +448,23 @@ private constructor(
             ledgerEntryIds()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int = (ledgerEntryIds.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

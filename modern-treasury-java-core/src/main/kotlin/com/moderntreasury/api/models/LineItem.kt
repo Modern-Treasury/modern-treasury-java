@@ -106,7 +106,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountingCategoryId(): Optional<String> =
-        Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
+        accountingCategoryId.getOptional("accounting_category_id")
 
     /**
      * The ID of one of the class objects in your accounting system. Class objects track segments of
@@ -117,7 +117,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountingLedgerClassId(): Optional<String> =
-        Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
+        accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -139,8 +139,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The ID of the payment order or expected payment.
@@ -632,13 +631,42 @@ private constructor(
         createdAt()
         description()
         itemizableId()
-        itemizableType()
+        itemizableType().validate()
         liveMode()
         metadata().validate()
         object_()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (accounting.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
+            (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (description.asKnown().isPresent) 1 else 0) +
+            (if (itemizableId.asKnown().isPresent) 1 else 0) +
+            (itemizableType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     class Accounting
     private constructor(
@@ -662,7 +690,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("account_id"))
+        fun accountId(): Optional<String> = accountId.getOptional("account_id")
 
         /**
          * The ID of one of the class objects in your accounting system. Class objects track
@@ -672,7 +700,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun classId(): Optional<String> = Optional.ofNullable(classId.getNullable("class_id"))
+        fun classId(): Optional<String> = classId.getOptional("class_id")
 
         /**
          * Returns the raw JSON value of [accountId].
@@ -797,6 +825,25 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountId.asKnown().isPresent) 1 else 0) +
+                (if (classId.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -907,6 +954,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): ItemizableType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -986,6 +1060,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

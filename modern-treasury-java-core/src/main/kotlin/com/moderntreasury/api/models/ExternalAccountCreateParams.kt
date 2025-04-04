@@ -258,6 +258,20 @@ private constructor(
             additionalQueryParams = externalAccountCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [counterpartyId]
+         * - [accountDetails]
+         * - [accountType]
+         * - [contactDetails]
+         * - [ledgerAccount]
+         * - etc.
+         */
+        fun body(body: ExternalAccountCreateRequest) = apply { this.body = body.toBuilder() }
+
         fun counterpartyId(counterpartyId: String?) = apply { body.counterpartyId(counterpartyId) }
 
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
@@ -626,7 +640,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): ExternalAccountCreateRequest = body
+    fun _body(): ExternalAccountCreateRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -710,15 +724,14 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun counterpartyId(): Optional<String> =
-            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+        fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun accountDetails(): Optional<List<AccountDetail>> =
-            Optional.ofNullable(accountDetails.getNullable("account_details"))
+            accountDetails.getOptional("account_details")
 
         /**
          * Can be `checking`, `savings` or `other`.
@@ -726,15 +739,14 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun accountType(): Optional<ExternalAccountType> =
-            Optional.ofNullable(accountType.getNullable("account_type"))
+        fun accountType(): Optional<ExternalAccountType> = accountType.getOptional("account_type")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun contactDetails(): Optional<List<ContactDetailCreateRequest>> =
-            Optional.ofNullable(contactDetails.getNullable("contact_details"))
+            contactDetails.getOptional("contact_details")
 
         /**
          * Specifies a ledger account object that will be created with the external account. The
@@ -747,7 +759,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
-            Optional.ofNullable(ledgerAccount.getNullable("ledger_account"))
+            ledgerAccount.getOptional("ledger_account")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -755,7 +767,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * A nickname for the external account. This is only for internal usage and won't affect any
@@ -764,7 +776,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * Required if receiving wire payments.
@@ -772,15 +784,13 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun partyAddress(): Optional<AddressRequest> =
-            Optional.ofNullable(partyAddress.getNullable("party_address"))
+        fun partyAddress(): Optional<AddressRequest> = partyAddress.getOptional("party_address")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun partyIdentifier(): Optional<String> =
-            Optional.ofNullable(partyIdentifier.getNullable("party_identifier"))
+        fun partyIdentifier(): Optional<String> = partyIdentifier.getOptional("party_identifier")
 
         /**
          * If this value isn't provided, it will be inherited from the counterparty's name.
@@ -788,7 +798,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun partyName(): Optional<String> = Optional.ofNullable(partyName.getNullable("party_name"))
+        fun partyName(): Optional<String> = partyName.getOptional("party_name")
 
         /**
          * Either `individual` or `business`.
@@ -796,8 +806,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun partyType(): Optional<PartyType> =
-            Optional.ofNullable(partyType.getNullable("party_type"))
+        fun partyType(): Optional<PartyType> = partyType.getOptional("party_type")
 
         /**
          * If you've enabled the Modern Treasury + Plaid integration in your Plaid account, you can
@@ -807,14 +816,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun plaidProcessorToken(): Optional<String> =
-            Optional.ofNullable(plaidProcessorToken.getNullable("plaid_processor_token"))
+            plaidProcessorToken.getOptional("plaid_processor_token")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun routingDetails(): Optional<List<RoutingDetail>> =
-            Optional.ofNullable(routingDetails.getNullable("routing_details"))
+            routingDetails.getOptional("routing_details")
 
         /**
          * Returns the raw JSON value of [counterpartyId].
@@ -1300,7 +1309,7 @@ private constructor(
 
             counterpartyId()
             accountDetails().ifPresent { it.forEach { it.validate() } }
-            accountType()
+            accountType().ifPresent { it.validate() }
             contactDetails().ifPresent { it.forEach { it.validate() } }
             ledgerAccount().ifPresent { it.validate() }
             metadata().ifPresent { it.validate() }
@@ -1308,11 +1317,41 @@ private constructor(
             partyAddress().ifPresent { it.validate() }
             partyIdentifier()
             partyName()
-            partyType()
+            partyType().ifPresent { it.validate() }
             plaidProcessorToken()
             routingDetails().ifPresent { it.forEach { it.validate() } }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (accountDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (accountType.asKnown().getOrNull()?.validity() ?: 0) +
+                (contactDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (ledgerAccount.asKnown().getOrNull()?.validity() ?: 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (partyAddress.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (partyIdentifier.asKnown().isPresent) 1 else 0) +
+                (if (partyName.asKnown().isPresent) 1 else 0) +
+                (partyType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (plaidProcessorToken.asKnown().isPresent) 1 else 0) +
+                (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1360,7 +1399,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun accountNumberType(): Optional<AccountNumberType> =
-            Optional.ofNullable(accountNumberType.getNullable("account_number_type"))
+            accountNumberType.getOptional("account_number_type")
 
         /**
          * Returns the raw JSON value of [accountNumber].
@@ -1495,9 +1534,28 @@ private constructor(
             }
 
             accountNumber()
-            accountNumberType()
+            accountNumberType().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountNumber.asKnown().isPresent) 1 else 0) +
+                (accountNumberType.asKnown().getOrNull()?.validity() ?: 0)
 
         class AccountNumberType
         @JsonCreator
@@ -1643,6 +1701,33 @@ private constructor(
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
 
+            private var validated: Boolean = false
+
+            fun validate(): AccountNumberType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -1696,14 +1781,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun contactIdentifier(): Optional<String> =
-            Optional.ofNullable(contactIdentifier.getNullable("contact_identifier"))
+            contactIdentifier.getOptional("contact_identifier")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun contactIdentifierType(): Optional<ContactIdentifierType> =
-            Optional.ofNullable(contactIdentifierType.getNullable("contact_identifier_type"))
+            contactIdentifierType.getOptional("contact_identifier_type")
 
         /**
          * Returns the raw JSON value of [contactIdentifier].
@@ -1830,9 +1915,28 @@ private constructor(
             }
 
             contactIdentifier()
-            contactIdentifierType()
+            contactIdentifierType().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (contactIdentifier.asKnown().isPresent) 1 else 0) +
+                (contactIdentifierType.asKnown().getOrNull()?.validity() ?: 0)
 
         class ContactIdentifierType
         @JsonCreator
@@ -1936,6 +2040,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): ContactIdentifierType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -2071,8 +2202,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currencyExponent(): Optional<Long> =
-            Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
+        fun currencyExponent(): Optional<Long> = currencyExponent.getOptional("currency_exponent")
 
         /**
          * The description of the ledger account.
@@ -2080,8 +2210,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The array of ledger account category ids that this ledger account should be a child of.
@@ -2090,7 +2219,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerAccountCategoryIds(): Optional<List<String>> =
-            Optional.ofNullable(ledgerAccountCategoryIds.getNullable("ledger_account_category_ids"))
+            ledgerAccountCategoryIds.getOptional("ledger_account_category_ids")
 
         /**
          * If the ledger account links to another object in Modern Treasury, the id will be
@@ -2099,8 +2228,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerableId(): Optional<String> =
-            Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+        fun ledgerableId(): Optional<String> = ledgerableId.getOptional("ledgerable_id")
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
@@ -2110,7 +2238,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerableType(): Optional<LedgerableType> =
-            Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+            ledgerableType.getOptional("ledgerable_type")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -2118,7 +2246,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * Returns the raw JSON value of [currency].
@@ -2508,15 +2636,42 @@ private constructor(
             currency()
             ledgerId()
             name()
-            normalBalance()
+            normalBalance().validate()
             currencyExponent()
             description()
             ledgerAccountCategoryIds()
             ledgerableId()
-            ledgerableType()
+            ledgerableType().ifPresent { it.validate() }
             metadata().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (currency.asKnown().isPresent) 1 else 0) +
+                (if (ledgerId.asKnown().isPresent) 1 else 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (normalBalance.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (currencyExponent.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (ledgerAccountCategoryIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (ledgerableId.asKnown().isPresent) 1 else 0) +
+                (ledgerableType.asKnown().getOrNull()?.validity() ?: 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0)
 
         /**
          * If the ledger account links to another object in Modern Treasury, the type will be
@@ -2627,6 +2782,33 @@ private constructor(
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
 
+            private var validated: Boolean = false
+
+            fun validate(): LedgerableType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -2711,6 +2893,24 @@ private constructor(
 
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -2814,6 +3014,24 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -2863,19 +3081,19 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
+        fun country(): Optional<String> = country.getOptional("country")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun line1(): Optional<String> = Optional.ofNullable(line1.getNullable("line1"))
+        fun line1(): Optional<String> = line1.getOptional("line1")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
+        fun line2(): Optional<String> = line2.getOptional("line2")
 
         /**
          * Locality or City.
@@ -2883,7 +3101,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
+        fun locality(): Optional<String> = locality.getOptional("locality")
 
         /**
          * The postal code of the address.
@@ -2891,8 +3109,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun postalCode(): Optional<String> =
-            Optional.ofNullable(postalCode.getNullable("postal_code"))
+        fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
         /**
          * Region or State.
@@ -2900,7 +3117,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
+        fun region(): Optional<String> = region.getOptional("region")
 
         /**
          * Returns the raw JSON value of [country].
@@ -3126,6 +3343,29 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (country.asKnown().isPresent) 1 else 0) +
+                (if (line1.asKnown().isPresent) 1 else 0) +
+                (if (line2.asKnown().isPresent) 1 else 0) +
+                (if (locality.asKnown().isPresent) 1 else 0) +
+                (if (postalCode.asKnown().isPresent) 1 else 0) +
+                (if (region.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -3234,6 +3474,33 @@ private constructor(
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
 
+        private var validated: Boolean = false
+
+        fun validate(): PartyType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -3285,8 +3552,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun paymentType(): Optional<PaymentType> =
-            Optional.ofNullable(paymentType.getNullable("payment_type"))
+        fun paymentType(): Optional<PaymentType> = paymentType.getOptional("payment_type")
 
         /**
          * Returns the raw JSON value of [routingNumber].
@@ -3448,10 +3714,30 @@ private constructor(
             }
 
             routingNumber()
-            routingNumberType()
-            paymentType()
+            routingNumberType().validate()
+            paymentType().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (routingNumber.asKnown().isPresent) 1 else 0) +
+                (routingNumberType.asKnown().getOrNull()?.validity() ?: 0) +
+                (paymentType.asKnown().getOrNull()?.validity() ?: 0)
 
         class RoutingNumberType
         @JsonCreator
@@ -3662,6 +3948,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): RoutingNumberType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -3934,6 +4247,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     ModernTreasuryInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): PaymentType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {

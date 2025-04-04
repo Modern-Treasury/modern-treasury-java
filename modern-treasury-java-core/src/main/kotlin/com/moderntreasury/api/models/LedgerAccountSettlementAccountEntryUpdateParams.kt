@@ -97,6 +97,17 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [ledgerEntryIds]
+         */
+        fun body(body: LedgerAccountSettlementEntriesPatchRequest) = apply {
+            this.body = body.toBuilder()
+        }
+
+        /**
          * The ids of the ledger entries that are to be added or removed from the ledger account
          * settlement.
          */
@@ -265,7 +276,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): LedgerAccountSettlementEntriesPatchRequest = body
+    fun _body(): LedgerAccountSettlementEntriesPatchRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -298,7 +309,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerEntryIds(): Optional<List<String>> =
-            Optional.ofNullable(ledgerEntryIds.getNullable("ledger_entry_ids"))
+            ledgerEntryIds.getOptional("ledger_entry_ids")
 
         /**
          * Returns the raw JSON value of [ledgerEntryIds].
@@ -437,6 +448,23 @@ private constructor(
             ledgerEntryIds()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int = (ledgerEntryIds.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

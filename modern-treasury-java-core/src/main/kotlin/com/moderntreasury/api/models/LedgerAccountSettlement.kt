@@ -112,7 +112,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun amount(): Optional<Long> = Optional.ofNullable(amount.getNullable("amount"))
+    fun amount(): Optional<Long> = amount.getOptional("amount")
 
     /**
      * The id of the contra ledger account that sends to or receives funds from the settled ledger
@@ -144,8 +144,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun currencyExponent(): Optional<Long> =
-        Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
+    fun currencyExponent(): Optional<Long> = currencyExponent.getOptional("currency_exponent")
 
     /**
      * The description of the ledger account settlement.
@@ -153,8 +152,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The exclusive upper bound of the effective_at timestamp of the ledger entries to be included
@@ -182,7 +180,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerTransactionId(): Optional<String> =
-        Optional.ofNullable(ledgerTransactionId.getNullable("ledger_transaction_id"))
+        ledgerTransactionId.getOptional("ledger_transaction_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -224,7 +222,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun settlementEntryDirection(): Optional<String> =
-        Optional.ofNullable(settlementEntryDirection.getNullable("settlement_entry_direction"))
+        settlementEntryDirection.getOptional("settlement_entry_direction")
 
     /**
      * The status of the ledger account settlement. One of `processing`, `pending`, `posted`,
@@ -826,10 +824,43 @@ private constructor(
         object_()
         settledLedgerAccountId()
         settlementEntryDirection()
-        status()
+        status().validate()
         updatedAt()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: ModernTreasuryInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (contraLedgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (currency.asKnown().isPresent) 1 else 0) +
+            (if (currencyExponent.asKnown().isPresent) 1 else 0) +
+            (if (description.asKnown().isPresent) 1 else 0) +
+            (if (effectiveAtUpperBound.asKnown().isPresent) 1 else 0) +
+            (if (ledgerId.asKnown().isPresent) 1 else 0) +
+            (if (ledgerTransactionId.asKnown().isPresent) 1 else 0) +
+            (if (liveMode.asKnown().isPresent) 1 else 0) +
+            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (object_.asKnown().isPresent) 1 else 0) +
+            (if (settledLedgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (settlementEntryDirection.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
     class Metadata
@@ -897,6 +928,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1029,6 +1078,33 @@ private constructor(
             _value().asString().orElseThrow {
                 ModernTreasuryInvalidDataException("Value is not a String")
             }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

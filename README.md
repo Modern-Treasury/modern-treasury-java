@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/6.0.0)
-[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/6.0.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.0.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/6.1.0)
+[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/6.1.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Modern Treasury Java SDK is similar to the Modern Treasury Kotlin SDK but wi
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.0.0).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://doc
 ### Gradle
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:6.0.0")
+implementation("com.moderntreasury:modern-treasury-java:6.1.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.moderntreasury:modern-treasury-java:6.0.0")
 <dependency>
   <groupId>com.moderntreasury</groupId>
   <artifactId>modern-treasury-java</artifactId>
-  <version>6.0.0</version>
+  <version>6.1.0</version>
 </dependency>
 ```
 
@@ -496,6 +496,19 @@ JsonValue complexValue = JsonValue.from(Map.of(
     3, 4
   )
 ));
+```
+
+Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
+
+To forcibly omit a required parameter or property, pass [`JsonMissing`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/core/Values.kt):
+
+```java
+import com.moderntreasury.api.core.JsonMissing;
+import com.moderntreasury.api.models.CounterpartyCreateParams;
+
+CounterpartyCreateParams params = CounterpartyCreateParams.builder()
+    .name(JsonMissing.of())
+    .build();
 ```
 
 ### Response properties

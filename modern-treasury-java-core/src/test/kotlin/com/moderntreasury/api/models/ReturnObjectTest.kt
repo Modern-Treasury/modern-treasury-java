@@ -2,6 +2,9 @@
 
 package com.moderntreasury.api.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.moderntreasury.api.core.JsonValue
+import com.moderntreasury.api.core.jsonMapper
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -49,6 +52,7 @@ internal class ReturnObjectTest {
                 .type(ReturnObject.Type.ACH)
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .additionalInformation("additional_information")
+                .data(JsonValue.from(mapOf<String, Any>()))
                 .build()
 
         assertThat(returnObject.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -93,5 +97,59 @@ internal class ReturnObjectTest {
         assertThat(returnObject.updatedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(returnObject.additionalInformation()).contains("additional_information")
+        assertThat(returnObject._data()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val returnObject =
+            ReturnObject.builder()
+                .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .amount(0L)
+                .code(ReturnObject.Code._901)
+                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .currency(Currency.AED)
+                .currentReturn(null)
+                .dateOfDeath(LocalDate.parse("2019-12-27"))
+                .failureReason("failure_reason")
+                .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .ledgerTransactionId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .liveMode(true)
+                .object_("object")
+                .reason("reason")
+                .addReferenceNumber(
+                    ReturnObject.PaymentReference.builder()
+                        .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .liveMode(true)
+                        .object_("object")
+                        .referenceNumber("reference_number")
+                        .referenceNumberType(
+                            ReturnObject.PaymentReference.ReferenceNumberType
+                                .ACH_ORIGINAL_TRACE_NUMBER
+                        )
+                        .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
+                .returnableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .returnableType(ReturnObject.ReturnableType.INCOMING_PAYMENT_DETAIL)
+                .role(ReturnObject.Role.ORIGINATING)
+                .status(ReturnObject.Status.COMPLETED)
+                .transactionId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .transactionLineItemId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .type(ReturnObject.Type.ACH)
+                .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .additionalInformation("additional_information")
+                .data(JsonValue.from(mapOf<String, Any>()))
+                .build()
+
+        val roundtrippedReturnObject =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(returnObject),
+                jacksonTypeRef<ReturnObject>(),
+            )
+
+        assertThat(roundtrippedReturnObject).isEqualTo(returnObject)
     }
 }
