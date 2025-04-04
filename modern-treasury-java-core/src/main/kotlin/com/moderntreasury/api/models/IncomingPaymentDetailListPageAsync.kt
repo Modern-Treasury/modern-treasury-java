@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of Incoming Payment Details. */
 class IncomingPaymentDetailListPageAsync
@@ -95,7 +96,8 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<IncomingPaymentDetail>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<IncomingPaymentDetail> = items.getNullable("items") ?: listOf()
+        fun items(): List<IncomingPaymentDetail> =
+            items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

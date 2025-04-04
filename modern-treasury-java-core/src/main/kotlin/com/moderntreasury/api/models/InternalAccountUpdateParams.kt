@@ -417,8 +417,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun counterpartyId(): Optional<String> =
-            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+        fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
         /**
          * The Ledger Account associated to this account.
@@ -426,8 +425,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerAccountId(): Optional<String> =
-            Optional.ofNullable(ledgerAccountId.getNullable("ledger_account_id"))
+        fun ledgerAccountId(): Optional<String> = ledgerAccountId.getOptional("ledger_account_id")
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
@@ -436,7 +434,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * The nickname for the internal account.
@@ -444,7 +442,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * The parent internal account for this account.
@@ -452,8 +450,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun parentAccountId(): Optional<String> =
-            Optional.ofNullable(parentAccountId.getNullable("parent_account_id"))
+        fun parentAccountId(): Optional<String> = parentAccountId.getOptional("parent_account_id")
 
         /**
          * Returns the raw JSON value of [counterpartyId].

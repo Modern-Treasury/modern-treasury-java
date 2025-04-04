@@ -623,7 +623,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun allowEitherDirection(): Optional<Boolean> =
-            Optional.ofNullable(allowEitherDirection.getNullable("allow_either_direction"))
+            allowEitherDirection.getOptional("allow_either_direction")
 
         /**
          * The description of the ledger account settlement.
@@ -631,8 +631,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The exclusive upper bound of the effective_at timestamp of the ledger entries to be
@@ -643,7 +642,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAtUpperBound.getNullable("effective_at_upper_bound"))
+            effectiveAtUpperBound.getOptional("effective_at_upper_bound")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -651,7 +650,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * It is set to `false` by default. It should be set to `true` when migrating existing
@@ -661,9 +660,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun skipSettlementLedgerTransaction(): Optional<Boolean> =
-            Optional.ofNullable(
-                skipSettlementLedgerTransaction.getNullable("skip_settlement_ledger_transaction")
-            )
+            skipSettlementLedgerTransaction.getOptional("skip_settlement_ledger_transaction")
 
         /**
          * The status of the ledger account settlement. It is set to `pending` by default. To post a
@@ -672,7 +669,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<Status> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [contraLedgerAccountId].

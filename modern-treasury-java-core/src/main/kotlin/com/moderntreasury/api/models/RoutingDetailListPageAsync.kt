@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of routing details for a single internal or external account. */
 class RoutingDetailListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<RoutingDetail>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<RoutingDetail> = items.getNullable("items") ?: listOf()
+        fun items(): List<RoutingDetail> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

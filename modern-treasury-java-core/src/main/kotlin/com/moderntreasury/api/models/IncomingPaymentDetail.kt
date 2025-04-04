@@ -204,7 +204,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerTransactionId(): Optional<String> =
-        Optional.ofNullable(ledgerTransactionId.getNullable("ledger_transaction_id"))
+        ledgerTransactionId.getOptional("ledger_transaction_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -236,9 +236,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingAccountNumberSafe(): Optional<String> =
-        Optional.ofNullable(
-            originatingAccountNumberSafe.getNullable("originating_account_number_safe")
-        )
+        originatingAccountNumberSafe.getOptional("originating_account_number_safe")
 
     /**
      * The type of the originating account number for the incoming payment detail.
@@ -247,9 +245,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingAccountNumberType(): Optional<OriginatingAccountNumberType> =
-        Optional.ofNullable(
-            originatingAccountNumberType.getNullable("originating_account_number_type")
-        )
+        originatingAccountNumberType.getOptional("originating_account_number_type")
 
     /**
      * The routing number of the originating account for the incoming payment detail.
@@ -258,7 +254,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingRoutingNumber(): Optional<String> =
-        Optional.ofNullable(originatingRoutingNumber.getNullable("originating_routing_number"))
+        originatingRoutingNumber.getOptional("originating_routing_number")
 
     /**
      * The type of the originating routing number for the incoming payment detail.
@@ -267,9 +263,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingRoutingNumberType(): Optional<OriginatingRoutingNumberType> =
-        Optional.ofNullable(
-            originatingRoutingNumberType.getNullable("originating_routing_number_type")
-        )
+        originatingRoutingNumberType.getOptional("originating_routing_number_type")
 
     /**
      * The current status of the incoming payment order. One of `pending`, `completed`, or
@@ -286,8 +280,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun transactionId(): Optional<String> =
-        Optional.ofNullable(transactionId.getNullable("transaction_id"))
+    fun transactionId(): Optional<String> = transactionId.getOptional("transaction_id")
 
     /**
      * The ID of the reconciled Transaction Line Item or `null`.
@@ -296,7 +289,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun transactionLineItemId(): Optional<String> =
-        Optional.ofNullable(transactionLineItemId.getNullable("transaction_line_item_id"))
+        transactionLineItemId.getOptional("transaction_line_item_id")
 
     /**
      * One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`.
@@ -318,7 +311,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorId(): Optional<String> = Optional.ofNullable(vendorId.getNullable("vendor_id"))
+    fun vendorId(): Optional<String> = vendorId.getOptional("vendor_id")
 
     /**
      * If the incoming payment detail is in a virtual account, the serialized virtual account
@@ -327,8 +320,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun virtualAccount(): Optional<VirtualAccount> =
-        Optional.ofNullable(virtualAccount.getNullable("virtual_account"))
+    fun virtualAccount(): Optional<VirtualAccount> = virtualAccount.getOptional("virtual_account")
 
     /**
      * If the incoming payment detail is in a virtual account, the ID of the Virtual Account.
@@ -336,8 +328,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun virtualAccountId(): Optional<String> =
-        Optional.ofNullable(virtualAccountId.getNullable("virtual_account_id"))
+    fun virtualAccountId(): Optional<String> = virtualAccountId.getOptional("virtual_account_id")
 
     /**
      * The account number of the originating account for the incoming payment detail.
@@ -346,7 +337,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun originatingAccountNumber(): Optional<String> =
-        Optional.ofNullable(originatingAccountNumber.getNullable("originating_account_number"))
+        originatingAccountNumber.getOptional("originating_account_number")
 
     /**
      * Returns the raw JSON value of [id].

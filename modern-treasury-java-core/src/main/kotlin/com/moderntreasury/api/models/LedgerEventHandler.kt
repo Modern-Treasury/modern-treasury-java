@@ -97,8 +97,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     @Deprecated("deprecated")
-    fun conditions(): Optional<LedgerEventHandlerConditions> =
-        Optional.ofNullable(conditions.getNullable("conditions"))
+    fun conditions(): Optional<LedgerEventHandlerConditions> = conditions.getOptional("conditions")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -112,15 +111,13 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The id of the ledger that this event handler belongs to.
@@ -128,7 +125,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerId(): Optional<String> = Optional.ofNullable(ledgerId.getNullable("ledger_id"))
+    fun ledgerId(): Optional<String> = ledgerId.getOptional("ledger_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -153,7 +150,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+    fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
     /**
      * Name of the ledger event handler.
@@ -180,8 +177,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     @Deprecated("deprecated")
-    fun variables(): Optional<LedgerEventHandlerVariables> =
-        Optional.ofNullable(variables.getNullable("variables"))
+    fun variables(): Optional<LedgerEventHandlerVariables> = variables.getOptional("variables")
 
     /**
      * Returns the raw JSON value of [id].
@@ -938,8 +934,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -948,8 +943,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<String> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<String> = effectiveAt.getOptional("effective_at")
 
         /**
          * An array of ledger entry objects.
@@ -966,7 +960,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<String> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<String> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [description].

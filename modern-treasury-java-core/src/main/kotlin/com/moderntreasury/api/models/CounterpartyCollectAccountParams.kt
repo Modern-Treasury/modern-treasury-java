@@ -430,8 +430,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun customRedirect(): Optional<String> =
-            Optional.ofNullable(customRedirect.getNullable("custom_redirect"))
+        fun customRedirect(): Optional<String> = customRedirect.getOptional("custom_redirect")
 
         /**
          * The list of fields you want on the form. This field is optional and if it is not set,
@@ -443,7 +442,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun fields(): Optional<List<Field>> = Optional.ofNullable(fields.getNullable("fields"))
+        fun fields(): Optional<List<Field>> = fields.getOptional("fields")
 
         /**
          * By default, Modern Treasury will send an email to your counterparty that includes a link
@@ -454,8 +453,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun sendEmail(): Optional<Boolean> =
-            Optional.ofNullable(sendEmail.getNullable("send_email"))
+        fun sendEmail(): Optional<Boolean> = sendEmail.getOptional("send_email")
 
         /**
          * Returns the raw JSON value of [direction].

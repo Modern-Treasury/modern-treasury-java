@@ -518,8 +518,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -528,8 +527,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<OffsetDateTime> = effectiveAt.getOptional("effective_at")
 
         /**
          * An array of ledger entry objects.
@@ -538,7 +536,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerEntries(): Optional<List<LedgerEntryCreateRequest>> =
-            Optional.ofNullable(ledgerEntries.getNullable("ledger_entries"))
+            ledgerEntries.getOptional("ledger_entries")
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the id
@@ -547,8 +545,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun ledgerableId(): Optional<String> =
-            Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+        fun ledgerableId(): Optional<String> = ledgerableId.getOptional("ledgerable_id")
 
         /**
          * If the ledger transaction can be reconciled to another object in Modern Treasury, the
@@ -559,7 +556,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerableType(): Optional<LedgerableType> =
-            Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+            ledgerableType.getOptional("ledgerable_type")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -567,7 +564,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * To post a ledger transaction at creation, use `posted`.
@@ -575,7 +572,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<Status> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [description].
@@ -998,7 +995,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
-            Optional.ofNullable(availableBalanceAmount.getNullable("available_balance_amount"))
+            availableBalanceAmount.getOptional("available_balance_amount")
 
         /**
          * Lock version of the ledger account. This can be passed when creating a ledger transaction
@@ -1008,8 +1005,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun lockVersion(): Optional<Long> =
-            Optional.ofNullable(lockVersion.getNullable("lock_version"))
+        fun lockVersion(): Optional<Long> = lockVersion.getOptional("lock_version")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -1017,7 +1013,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -1028,7 +1024,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun pendingBalanceAmount(): Optional<PendingBalanceAmount> =
-            Optional.ofNullable(pendingBalanceAmount.getNullable("pending_balance_amount"))
+            pendingBalanceAmount.getOptional("pending_balance_amount")
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -1039,7 +1035,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun postedBalanceAmount(): Optional<PostedBalanceAmount> =
-            Optional.ofNullable(postedBalanceAmount.getNullable("posted_balance_amount"))
+            postedBalanceAmount.getOptional("posted_balance_amount")
 
         /**
          * If true, response will include the balance of the associated ledger account for the
@@ -1049,11 +1045,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun showResultingLedgerAccountBalances(): Optional<Boolean> =
-            Optional.ofNullable(
-                showResultingLedgerAccountBalances.getNullable(
-                    "show_resulting_ledger_account_balances"
-                )
-            )
+            showResultingLedgerAccountBalances.getOptional("show_resulting_ledger_account_balances")
 
         /**
          * Returns the raw JSON value of [amount].

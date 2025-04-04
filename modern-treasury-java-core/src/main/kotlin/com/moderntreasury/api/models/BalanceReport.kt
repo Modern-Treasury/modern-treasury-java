@@ -95,7 +95,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun asOfTime(): Optional<String> = Optional.ofNullable(asOfTime.getNullable("as_of_time"))
+    fun asOfTime(): Optional<String> = asOfTime.getOptional("as_of_time")
 
     /**
      * The specific type of balance report. One of `intraday`, `previous_day`, `real_time`, or
@@ -776,8 +776,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun asOfDate(): Optional<LocalDate> =
-            Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+        fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
 
         /**
          * The time on which the balance became true for the account.
@@ -785,7 +784,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun asOfTime(): Optional<String> = Optional.ofNullable(asOfTime.getNullable("as_of_time"))
+        fun asOfTime(): Optional<String> = asOfTime.getOptional("as_of_time")
 
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
@@ -838,8 +837,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun valueDate(): Optional<LocalDate> =
-            Optional.ofNullable(valueDate.getNullable("value_date"))
+        fun valueDate(): Optional<LocalDate> = valueDate.getOptional("value_date")
 
         /**
          * The code used by the bank when reporting this specific balance.
@@ -857,8 +855,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun vendorCodeType(): Optional<String> =
-            Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
+        fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
 
         /**
          * Returns the raw JSON value of [id].

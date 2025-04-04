@@ -354,8 +354,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -363,7 +362,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
@@ -372,7 +371,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+        fun status(): Optional<Status> = status.getOptional("status")
 
         /**
          * Returns the raw JSON value of [description].

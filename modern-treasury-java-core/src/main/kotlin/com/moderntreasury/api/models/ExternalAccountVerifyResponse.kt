@@ -334,7 +334,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun priority(): Optional<Priority> = Optional.ofNullable(priority.getNullable("priority"))
+        fun priority(): Optional<Priority> = priority.getOptional("priority")
 
         /**
          * The status of the verification attempt. Can be `pending_verification`, `verified`,

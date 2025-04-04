@@ -113,8 +113,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The inclusive lower bound of the effective_at timestamp of the ledger entries to be included
