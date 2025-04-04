@@ -520,7 +520,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amount(): Optional<Long> = Optional.ofNullable(amount.getNullable("amount"))
+        fun amount(): Optional<Long> = amount.getOptional("amount")
 
         /**
          * Defaults to today.
@@ -528,8 +528,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun asOfDate(): Optional<LocalDate> =
-            Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+        fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
 
         /**
          * Defaults to the currency of the originating account.
@@ -537,7 +536,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<Currency> = currency.getOptional("currency")
 
         /**
          * An object passed through to the simulated IPD that could reflect what a vendor would
@@ -551,8 +550,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * One of `credit`, `debit`.
@@ -560,8 +558,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<Direction> =
-            Optional.ofNullable(direction.getNullable("direction"))
+        fun direction(): Optional<Direction> = direction.getOptional("direction")
 
         /**
          * The ID of one of your internal accounts.
@@ -570,7 +567,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun internalAccountId(): Optional<String> =
-            Optional.ofNullable(internalAccountId.getNullable("internal_account_id"))
+            internalAccountId.getOptional("internal_account_id")
 
         /**
          * One of `ach`, `wire`, `check`.
@@ -578,7 +575,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+        fun type(): Optional<Type> = type.getOptional("type")
 
         /**
          * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -587,7 +584,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun virtualAccountId(): Optional<String> =
-            Optional.ofNullable(virtualAccountId.getNullable("virtual_account_id"))
+            virtualAccountId.getOptional("virtual_account_id")
 
         /**
          * Returns the raw JSON value of [amount].

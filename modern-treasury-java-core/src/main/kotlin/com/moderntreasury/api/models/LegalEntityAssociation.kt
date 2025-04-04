@@ -104,8 +104,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -129,7 +128,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ownershipPercentage(): Optional<Long> =
-        Optional.ofNullable(ownershipPercentage.getNullable("ownership_percentage"))
+        ownershipPercentage.getOptional("ownership_percentage")
 
     /**
      * The ID of the parent legal entity. This must be a business or joint legal entity.
@@ -152,7 +151,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun title(): Optional<String> = Optional.ofNullable(title.getNullable("title"))
+    fun title(): Optional<String> = title.getOptional("title")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -776,8 +775,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun bankSettings(): Optional<BankSettings> =
-            Optional.ofNullable(bankSettings.getNullable("bank_settings"))
+        fun bankSettings(): Optional<BankSettings> = bankSettings.getOptional("bank_settings")
 
         /**
          * The business's legal business name.
@@ -785,8 +783,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun businessName(): Optional<String> =
-            Optional.ofNullable(businessName.getNullable("business_name"))
+        fun businessName(): Optional<String> = businessName.getOptional("business_name")
 
         /**
          * The country of citizenship for an individual.
@@ -795,14 +792,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun citizenshipCountry(): Optional<String> =
-            Optional.ofNullable(citizenshipCountry.getNullable("citizenship_country"))
+            citizenshipCountry.getOptional("citizenship_country")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun complianceDetails(): Optional<LegalEntityComplianceDetail> =
-            Optional.ofNullable(complianceDetails.getNullable("compliance_details"))
+            complianceDetails.getOptional("compliance_details")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -816,8 +813,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateFormed(): Optional<LocalDate> =
-            Optional.ofNullable(dateFormed.getNullable("date_formed"))
+        fun dateFormed(): Optional<LocalDate> = dateFormed.getOptional("date_formed")
 
         /**
          * An individual's date of birth (YYYY-MM-DD).
@@ -825,15 +821,13 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateOfBirth(): Optional<LocalDate> =
-            Optional.ofNullable(dateOfBirth.getNullable("date_of_birth"))
+        fun dateOfBirth(): Optional<LocalDate> = dateOfBirth.getOptional("date_of_birth")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun discardedAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+        fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -848,7 +842,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
+        fun email(): Optional<String> = email.getOptional("email")
 
         /**
          * An individual's first name.
@@ -856,7 +850,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun firstName(): Optional<String> = Optional.ofNullable(firstName.getNullable("first_name"))
+        fun firstName(): Optional<String> = firstName.getOptional("first_name")
 
         /**
          * A list of identifications for the legal entity.
@@ -881,7 +875,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun lastName(): Optional<String> = Optional.ofNullable(lastName.getNullable("last_name"))
+        fun lastName(): Optional<String> = lastName.getOptional("last_name")
 
         /**
          * The type of legal entity.
@@ -898,7 +892,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun legalStructure(): Optional<LegalStructure> =
-            Optional.ofNullable(legalStructure.getNullable("legal_structure"))
+            legalStructure.getOptional("legal_structure")
 
         /**
          * This field will be true if this object exists in the live environment or false if it
@@ -923,8 +917,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun middleName(): Optional<String> =
-            Optional.ofNullable(middleName.getNullable("middle_name"))
+        fun middleName(): Optional<String> = middleName.getOptional("middle_name")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -945,7 +938,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun politicallyExposedPerson(): Optional<Boolean> =
-            Optional.ofNullable(politicallyExposedPerson.getNullable("politically_exposed_person"))
+            politicallyExposedPerson.getOptional("politically_exposed_person")
 
         /**
          * An individual's preferred name.
@@ -953,8 +946,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun preferredName(): Optional<String> =
-            Optional.ofNullable(preferredName.getNullable("preferred_name"))
+        fun preferredName(): Optional<String> = preferredName.getOptional("preferred_name")
 
         /**
          * An individual's prefix.
@@ -962,7 +954,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
+        fun prefix(): Optional<String> = prefix.getOptional("prefix")
 
         /**
          * The risk rating of the legal entity. One of low, medium, high.
@@ -970,8 +962,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun riskRating(): Optional<RiskRating> =
-            Optional.ofNullable(riskRating.getNullable("risk_rating"))
+        fun riskRating(): Optional<RiskRating> = riskRating.getOptional("risk_rating")
 
         /**
          * An individual's suffix.
@@ -979,7 +970,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun suffix(): Optional<String> = Optional.ofNullable(suffix.getNullable("suffix"))
+        fun suffix(): Optional<String> = suffix.getOptional("suffix")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -992,9 +983,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun wealthAndEmploymentDetails(): Optional<WealthAndEmploymentDetails> =
-            Optional.ofNullable(
-                wealthAndEmploymentDetails.getNullable("wealth_and_employment_details")
-            )
+            wealthAndEmploymentDetails.getOptional("wealth_and_employment_details")
 
         /**
          * The entity's primary website URL.
@@ -1002,7 +991,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun website(): Optional<String> = Optional.ofNullable(website.getNullable("website"))
+        fun website(): Optional<String> = website.getOptional("website")
 
         /**
          * Returns the raw JSON value of [id].
@@ -2269,7 +2258,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
+            fun country(): Optional<String> = country.getOptional("country")
 
             /**
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
@@ -2282,20 +2271,19 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun discardedAt(): Optional<OffsetDateTime> =
-                Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+            fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
             /**
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun line1(): Optional<String> = Optional.ofNullable(line1.getNullable("line1"))
+            fun line1(): Optional<String> = line1.getOptional("line1")
 
             /**
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
+            fun line2(): Optional<String> = line2.getOptional("line2")
 
             /**
              * This field will be true if this object exists in the live environment or false if it
@@ -2313,7 +2301,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
+            fun locality(): Optional<String> = locality.getOptional("locality")
 
             /**
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
@@ -2328,8 +2316,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun postalCode(): Optional<String> =
-                Optional.ofNullable(postalCode.getNullable("postal_code"))
+            fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
             /**
              * Region or State.
@@ -2337,7 +2324,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
+            fun region(): Optional<String> = region.getOptional("region")
 
             /**
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
@@ -3081,8 +3068,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun discardedAt(): Optional<OffsetDateTime> =
-                Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+            fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
             /**
              * The type of ID number.
@@ -3099,8 +3085,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun issuingCountry(): Optional<String> =
-                Optional.ofNullable(issuingCountry.getNullable("issuing_country"))
+            fun issuingCountry(): Optional<String> = issuingCountry.getOptional("issuing_country")
 
             /**
              * This field will be true if this object exists in the live environment or false if it
@@ -4156,8 +4141,7 @@ private constructor(
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun phoneNumber(): Optional<String> =
-                Optional.ofNullable(phoneNumber.getNullable("phone_number"))
+            fun phoneNumber(): Optional<String> = phoneNumber.getOptional("phone_number")
 
             /**
              * Returns the raw JSON value of [phoneNumber].

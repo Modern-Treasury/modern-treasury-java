@@ -462,7 +462,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
+        fun email(): Optional<String> = email.getOptional("email")
 
         /**
          * The id of the legal entity.
@@ -470,8 +470,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun legalEntityId(): Optional<String> =
-            Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
+        fun legalEntityId(): Optional<String> = legalEntityId.getOptional("legal_entity_id")
 
         /**
          * Additional data in the form of key-value pairs. Pairs can be removed by passing an empty
@@ -480,7 +479,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * A new name for the counterparty. Will only update if passed.
@@ -488,7 +487,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * If this is `true`, Modern Treasury will send an email to the counterparty whenever an
@@ -498,7 +497,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun sendRemittanceAdvice(): Optional<Boolean> =
-            Optional.ofNullable(sendRemittanceAdvice.getNullable("send_remittance_advice"))
+            sendRemittanceAdvice.getOptional("send_remittance_advice")
 
         /**
          * Either a valid SSN or EIN.
@@ -507,7 +506,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun taxpayerIdentifier(): Optional<String> =
-            Optional.ofNullable(taxpayerIdentifier.getNullable("taxpayer_identifier"))
+            taxpayerIdentifier.getOptional("taxpayer_identifier")
 
         /**
          * Returns the raw JSON value of [email].

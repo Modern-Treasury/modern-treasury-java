@@ -309,7 +309,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerEntryIds(): Optional<List<String>> =
-            Optional.ofNullable(ledgerEntryIds.getNullable("ledger_entry_ids"))
+            ledgerEntryIds.getOptional("ledger_entry_ids")
 
         /**
          * Returns the raw JSON value of [ledgerEntryIds].

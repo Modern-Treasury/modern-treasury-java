@@ -137,8 +137,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
@@ -164,7 +163,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun externalId(): Optional<String> = Optional.ofNullable(externalId.getNullable("external_id"))
+    fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
     /**
      * An array of ledger entry objects.
@@ -198,8 +197,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerableId(): Optional<String> =
-        Optional.ofNullable(ledgerableId.getNullable("ledgerable_id"))
+    fun ledgerableId(): Optional<String> = ledgerableId.getOptional("ledgerable_id")
 
     /**
      * If the ledger transaction can be reconciled to another object in Modern Treasury, the type
@@ -209,8 +207,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun ledgerableType(): Optional<LedgerableType> =
-        Optional.ofNullable(ledgerableType.getNullable("ledgerable_type"))
+    fun ledgerableType(): Optional<LedgerableType> = ledgerableType.getOptional("ledgerable_type")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -242,9 +239,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun partiallyPostsLedgerTransactionId(): Optional<String> =
-        Optional.ofNullable(
-            partiallyPostsLedgerTransactionId.getNullable("partially_posts_ledger_transaction_id")
-        )
+        partiallyPostsLedgerTransactionId.getOptional("partially_posts_ledger_transaction_id")
 
     /**
      * The time on which the ledger transaction posted. This is null if the ledger transaction is
@@ -253,8 +248,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun postedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(postedAt.getNullable("posted_at"))
+    fun postedAt(): Optional<OffsetDateTime> = postedAt.getOptional("posted_at")
 
     /**
      * The ID of the ledger transaction that reversed this ledger transaction.
@@ -263,9 +257,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun reversedByLedgerTransactionId(): Optional<String> =
-        Optional.ofNullable(
-            reversedByLedgerTransactionId.getNullable("reversed_by_ledger_transaction_id")
-        )
+        reversedByLedgerTransactionId.getOptional("reversed_by_ledger_transaction_id")
 
     /**
      * The ID of the original ledger transaction. that this ledger transaction reverses.
@@ -274,9 +266,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun reversesLedgerTransactionId(): Optional<String> =
-        Optional.ofNullable(
-            reversesLedgerTransactionId.getNullable("reverses_ledger_transaction_id")
-        )
+        reversesLedgerTransactionId.getOptional("reverses_ledger_transaction_id")
 
     /**
      * One of `pending`, `posted`, or `archived`.
@@ -1169,7 +1159,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun ledgerAccountLockVersion(): Optional<Long> =
-            Optional.ofNullable(ledgerAccountLockVersion.getNullable("ledger_account_lock_version"))
+            ledgerAccountLockVersion.getOptional("ledger_account_lock_version")
 
         /**
          * The ledger transaction that this ledger entry is associated with.
@@ -1214,9 +1204,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun resultingLedgerAccountBalances(): Optional<LedgerBalances> =
-            Optional.ofNullable(
-                resultingLedgerAccountBalances.getNullable("resulting_ledger_account_balances")
-            )
+            resultingLedgerAccountBalances.getOptional("resulting_ledger_account_balances")
 
         /**
          * Equal to the state of the ledger transaction when the ledger entry was created. One of

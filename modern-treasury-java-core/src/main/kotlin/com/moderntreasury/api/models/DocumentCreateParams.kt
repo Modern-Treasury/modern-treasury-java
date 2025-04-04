@@ -361,8 +361,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun documentType(): Optional<String> =
-            Optional.ofNullable(documentType.value.getNullable("document_type"))
+        fun documentType(): Optional<String> = documentType.value.getOptional("document_type")
 
         /**
          * Returns the raw multipart value of [documentableId].

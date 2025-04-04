@@ -619,8 +619,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun asOfDate(): Optional<LocalDate> =
-            Optional.ofNullable(asOfDate.getNullable("as_of_date"))
+        fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
 
         /**
          * Either `credit` or `debit`.
@@ -645,8 +644,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun vendorCode(): Optional<String> =
-            Optional.ofNullable(vendorCode.getNullable("vendor_code"))
+        fun vendorCode(): Optional<String> = vendorCode.getOptional("vendor_code")
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
@@ -657,8 +655,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun vendorCodeType(): Optional<String> =
-            Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
+        fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -666,7 +663,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * This field will be `true` if the transaction has posted to the account.
@@ -674,7 +671,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun posted(): Optional<Boolean> = Optional.ofNullable(posted.getNullable("posted"))
+        fun posted(): Optional<Boolean> = posted.getOptional("posted")
 
         /**
          * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
@@ -683,7 +680,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+        fun type(): Optional<Type> = type.getOptional("type")
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
@@ -693,7 +690,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun vendorDescription(): Optional<String> =
-            Optional.ofNullable(vendorDescription.getNullable("vendor_description"))
+            vendorDescription.getOptional("vendor_description")
 
         /**
          * Returns the raw JSON value of [amount].

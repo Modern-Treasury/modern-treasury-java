@@ -506,7 +506,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("due_date"))
+        fun dueDate(): Optional<LocalDate> = dueDate.getOptional("due_date")
 
         /**
          * Returns the raw JSON value of [amount].

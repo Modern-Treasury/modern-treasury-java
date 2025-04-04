@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** list account_collection_flows */
 class AccountCollectionFlowListPageAsync
@@ -95,7 +96,8 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<AccountCollectionFlow>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<AccountCollectionFlow> = items.getNullable("items") ?: listOf()
+        fun items(): List<AccountCollectionFlow> =
+            items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

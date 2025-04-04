@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all legal entities. */
 class LegalEntityListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<LegalEntity>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<LegalEntity> = items.getNullable("items") ?: listOf()
+        fun items(): List<LegalEntity> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

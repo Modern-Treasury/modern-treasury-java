@@ -94,7 +94,8 @@ private constructor(
             items: JsonField<List<LedgerTransactionVersion>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<LedgerTransactionVersion> = items.getNullable("items") ?: listOf()
+        fun items(): List<LedgerTransactionVersion> =
+            items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

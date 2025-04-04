@@ -881,8 +881,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun vendorCodeType(): Optional<String> =
-            Optional.ofNullable(vendorCodeType.getNullable("vendor_code_type"))
+        fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
 
         /**
          * Returns the raw JSON value of [amount].

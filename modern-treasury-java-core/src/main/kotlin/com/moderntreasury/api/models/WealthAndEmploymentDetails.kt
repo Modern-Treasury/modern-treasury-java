@@ -124,8 +124,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun annualIncome(): Optional<Long> =
-        Optional.ofNullable(annualIncome.getNullable("annual_income"))
+    fun annualIncome(): Optional<Long> = annualIncome.getOptional("annual_income")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -137,8 +136,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The country in which the employer is located.
@@ -146,8 +144,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun employerCountry(): Optional<String> =
-        Optional.ofNullable(employerCountry.getNullable("employer_country"))
+    fun employerCountry(): Optional<String> = employerCountry.getOptional("employer_country")
 
     /**
      * The name of the employer.
@@ -155,8 +152,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun employerName(): Optional<String> =
-        Optional.ofNullable(employerName.getNullable("employer_name"))
+    fun employerName(): Optional<String> = employerName.getOptional("employer_name")
 
     /**
      * The state in which the employer is located.
@@ -164,8 +160,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun employerState(): Optional<String> =
-        Optional.ofNullable(employerState.getNullable("employer_state"))
+    fun employerState(): Optional<String> = employerState.getOptional("employer_state")
 
     /**
      * The employment status of the individual.
@@ -174,7 +169,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun employmentStatus(): Optional<EmploymentStatus> =
-        Optional.ofNullable(employmentStatus.getNullable("employment_status"))
+        employmentStatus.getOptional("employment_status")
 
     /**
      * The country in which the individual's income is earned.
@@ -182,8 +177,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun incomeCountry(): Optional<String> =
-        Optional.ofNullable(incomeCountry.getNullable("income_country"))
+    fun incomeCountry(): Optional<String> = incomeCountry.getOptional("income_country")
 
     /**
      * The source of the individual's income.
@@ -191,8 +185,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun incomeSource(): Optional<IncomeSource> =
-        Optional.ofNullable(incomeSource.getNullable("income_source"))
+    fun incomeSource(): Optional<IncomeSource> = incomeSource.getOptional("income_source")
 
     /**
      * The state in which the individual's income is earned.
@@ -200,8 +193,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun incomeState(): Optional<String> =
-        Optional.ofNullable(incomeState.getNullable("income_state"))
+    fun incomeState(): Optional<String> = incomeState.getOptional("income_state")
 
     /**
      * The industry of the individual.
@@ -209,7 +201,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun industry(): Optional<Industry> = Optional.ofNullable(industry.getNullable("industry"))
+    fun industry(): Optional<Industry> = industry.getOptional("industry")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -232,8 +224,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun occupation(): Optional<Occupation> =
-        Optional.ofNullable(occupation.getNullable("occupation"))
+    fun occupation(): Optional<Occupation> = occupation.getOptional("occupation")
 
     /**
      * The source of the individual's funds.
@@ -241,8 +232,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun sourceOfFunds(): Optional<SourceOfFunds> =
-        Optional.ofNullable(sourceOfFunds.getNullable("source_of_funds"))
+    fun sourceOfFunds(): Optional<SourceOfFunds> = sourceOfFunds.getOptional("source_of_funds")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -256,8 +246,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun wealthSource(): Optional<WealthSource> =
-        Optional.ofNullable(wealthSource.getNullable("wealth_source"))
+    fun wealthSource(): Optional<WealthSource> = wealthSource.getOptional("wealth_source")
 
     /**
      * Returns the raw JSON value of [id].
