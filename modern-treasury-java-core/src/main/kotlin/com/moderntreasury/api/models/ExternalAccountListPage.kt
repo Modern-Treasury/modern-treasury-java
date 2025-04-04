@@ -90,7 +90,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<ExternalAccount>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<ExternalAccount> = items.getNullable("items") ?: listOf()
+        fun items(): List<ExternalAccount> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

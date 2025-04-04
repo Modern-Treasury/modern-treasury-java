@@ -106,7 +106,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountingCategoryId(): Optional<String> =
-        Optional.ofNullable(accountingCategoryId.getNullable("accounting_category_id"))
+        accountingCategoryId.getOptional("accounting_category_id")
 
     /**
      * The ID of one of the class objects in your accounting system. Class objects track segments of
@@ -117,7 +117,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountingLedgerClassId(): Optional<String> =
-        Optional.ofNullable(accountingLedgerClassId.getNullable("accounting_ledger_class_id"))
+        accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -139,8 +139,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The ID of the payment order or expected payment.
@@ -691,7 +690,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("account_id"))
+        fun accountId(): Optional<String> = accountId.getOptional("account_id")
 
         /**
          * The ID of one of the class objects in your accounting system. Class objects track
@@ -701,7 +700,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun classId(): Optional<String> = Optional.ofNullable(classId.getNullable("class_id"))
+        fun classId(): Optional<String> = classId.getOptional("class_id")
 
         /**
          * Returns the raw JSON value of [accountId].

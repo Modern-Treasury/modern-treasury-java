@@ -287,7 +287,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun amounts(): Optional<List<Long>> = Optional.ofNullable(amounts.getNullable("amounts"))
+        fun amounts(): Optional<List<Long>> = amounts.getOptional("amounts")
 
         /**
          * Returns the raw JSON value of [amounts].

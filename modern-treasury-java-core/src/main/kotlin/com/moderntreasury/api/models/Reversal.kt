@@ -94,7 +94,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerTransactionId(): Optional<String> =
-        Optional.ofNullable(ledgerTransactionId.getNullable("ledger_transaction_id"))
+        ledgerTransactionId.getOptional("ledger_transaction_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -125,8 +125,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun paymentOrderId(): Optional<String> =
-        Optional.ofNullable(paymentOrderId.getNullable("payment_order_id"))
+    fun paymentOrderId(): Optional<String> = paymentOrderId.getOptional("payment_order_id")
 
     /**
      * The reason for the reversal.

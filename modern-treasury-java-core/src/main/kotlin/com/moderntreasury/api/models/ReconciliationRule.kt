@@ -118,8 +118,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun counterpartyId(): Optional<String> =
-        Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+    fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
     /**
      * Must conform to ISO 4217. Defaults to the currency of the internal account
@@ -127,7 +126,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<Currency> = currency.getOptional("currency")
 
     /**
      * A hash of custom identifiers for this payment
@@ -136,7 +135,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun customIdentifiers(): Optional<CustomIdentifiers> =
-        Optional.ofNullable(customIdentifiers.getNullable("custom_identifiers"))
+        customIdentifiers.getOptional("custom_identifiers")
 
     /**
      * The earliest date the payment may come in. Format is yyyy-mm-dd
@@ -144,8 +143,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun dateLowerBound(): Optional<LocalDate> =
-        Optional.ofNullable(dateLowerBound.getNullable("date_lower_bound"))
+    fun dateLowerBound(): Optional<LocalDate> = dateLowerBound.getOptional("date_lower_bound")
 
     /**
      * The latest date the payment may come in. Format is yyyy-mm-dd
@@ -153,8 +151,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun dateUpperBound(): Optional<LocalDate> =
-        Optional.ofNullable(dateUpperBound.getNullable("date_upper_bound"))
+    fun dateUpperBound(): Optional<LocalDate> = dateUpperBound.getOptional("date_upper_bound")
 
     /**
      * One of ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet
@@ -163,7 +160,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+    fun type(): Optional<Type> = type.getOptional("type")
 
     /**
      * Returns the raw JSON value of [amountLowerBound].

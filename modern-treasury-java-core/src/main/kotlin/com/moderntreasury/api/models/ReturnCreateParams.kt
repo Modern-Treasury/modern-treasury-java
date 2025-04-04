@@ -479,8 +479,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun returnableId(): Optional<String> =
-            Optional.ofNullable(returnableId.getNullable("returnable_id"))
+        fun returnableId(): Optional<String> = returnableId.getOptional("returnable_id")
 
         /**
          * The type of object being returned. Currently, this may only be incoming_payment_detail.
@@ -498,7 +497,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun additionalInformation(): Optional<String> =
-            Optional.ofNullable(additionalInformation.getNullable("additional_information"))
+            additionalInformation.getOptional("additional_information")
 
         /**
          * The return code. For ACH returns, this is the required ACH return code.
@@ -506,7 +505,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun code(): Optional<Code> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<Code> = code.getOptional("code")
 
         /** The raw data from the return file that we get from the bank. */
         @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
@@ -518,8 +517,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun dateOfDeath(): Optional<LocalDate> =
-            Optional.ofNullable(dateOfDeath.getNullable("date_of_death"))
+        fun dateOfDeath(): Optional<LocalDate> = dateOfDeath.getOptional("date_of_death")
 
         /**
          * An optional description of the reason for the return. This is for internal usage and will
@@ -528,7 +526,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun reason(): Optional<String> = Optional.ofNullable(reason.getNullable("reason"))
+        fun reason(): Optional<String> = reason.getOptional("reason")
 
         /**
          * Returns the raw JSON value of [returnableId].

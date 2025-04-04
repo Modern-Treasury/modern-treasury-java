@@ -112,7 +112,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun amount(): Optional<Long> = Optional.ofNullable(amount.getNullable("amount"))
+    fun amount(): Optional<Long> = amount.getOptional("amount")
 
     /**
      * The id of the contra ledger account that sends to or receives funds from the settled ledger
@@ -144,8 +144,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun currencyExponent(): Optional<Long> =
-        Optional.ofNullable(currencyExponent.getNullable("currency_exponent"))
+    fun currencyExponent(): Optional<Long> = currencyExponent.getOptional("currency_exponent")
 
     /**
      * The description of the ledger account settlement.
@@ -153,8 +152,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The exclusive upper bound of the effective_at timestamp of the ledger entries to be included
@@ -182,7 +180,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerTransactionId(): Optional<String> =
-        Optional.ofNullable(ledgerTransactionId.getNullable("ledger_transaction_id"))
+        ledgerTransactionId.getOptional("ledger_transaction_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -224,7 +222,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun settlementEntryDirection(): Optional<String> =
-        Optional.ofNullable(settlementEntryDirection.getNullable("settlement_entry_direction"))
+        settlementEntryDirection.getOptional("settlement_entry_direction")
 
     /**
      * The status of the ledger account settlement. One of `processing`, `pending`, `posted`,

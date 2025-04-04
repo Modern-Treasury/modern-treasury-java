@@ -98,8 +98,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -113,8 +112,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun documentType(): Optional<String> =
-        Optional.ofNullable(documentType.getNullable("document_type"))
+    fun documentType(): Optional<String> = documentType.getOptional("document_type")
 
     /**
      * The unique identifier for the associated object.
@@ -683,8 +681,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun discardedAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+        fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
         /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -1289,8 +1286,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun contentType(): Optional<String> =
-            Optional.ofNullable(contentType.getNullable("content_type"))
+        fun contentType(): Optional<String> = contentType.getOptional("content_type")
 
         /**
          * The original filename of the document.
@@ -1298,7 +1294,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun filename(): Optional<String> = Optional.ofNullable(filename.getNullable("filename"))
+        fun filename(): Optional<String> = filename.getOptional("filename")
 
         /**
          * The size of the document in bytes.
@@ -1306,7 +1302,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun size(): Optional<Long> = Optional.ofNullable(size.getNullable("size"))
+        fun size(): Optional<Long> = size.getOptional("size")
 
         /**
          * Returns the raw JSON value of [contentType].

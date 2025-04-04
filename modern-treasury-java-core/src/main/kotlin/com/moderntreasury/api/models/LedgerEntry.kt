@@ -134,8 +134,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun discardedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(discardedAt.getNullable("discarded_at"))
+    fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
 
     /**
      * The currency of the ledger account.
@@ -172,7 +171,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun ledgerAccountLockVersion(): Optional<Long> =
-        Optional.ofNullable(ledgerAccountLockVersion.getNullable("ledger_account_lock_version"))
+        ledgerAccountLockVersion.getOptional("ledger_account_lock_version")
 
     /**
      * The ledger transaction that this ledger entry is associated with.
@@ -216,9 +215,7 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun resultingLedgerAccountBalances(): Optional<LedgerBalances> =
-        Optional.ofNullable(
-            resultingLedgerAccountBalances.getNullable("resulting_ledger_account_balances")
-        )
+        resultingLedgerAccountBalances.getOptional("resulting_ledger_account_balances")
 
     /**
      * Equal to the state of the ledger transaction when the ledger entry was created. One of

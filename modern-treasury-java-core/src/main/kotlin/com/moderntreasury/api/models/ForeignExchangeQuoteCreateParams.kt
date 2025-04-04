@@ -470,8 +470,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun baseAmount(): Optional<Long> =
-            Optional.ofNullable(baseAmount.getNullable("base_amount"))
+        fun baseAmount(): Optional<Long> = baseAmount.getOptional("base_amount")
 
         /**
          * Currency to convert, often called the "sell" currency.
@@ -479,8 +478,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun baseCurrency(): Optional<Currency> =
-            Optional.ofNullable(baseCurrency.getNullable("base_currency"))
+        fun baseCurrency(): Optional<Currency> = baseCurrency.getOptional("base_currency")
 
         /**
          * The timestamp until when the quoted rate is valid.
@@ -488,8 +486,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun effectiveAt(): Optional<OffsetDateTime> =
-            Optional.ofNullable(effectiveAt.getNullable("effective_at"))
+        fun effectiveAt(): Optional<OffsetDateTime> = effectiveAt.getOptional("effective_at")
 
         /**
          * Amount in the lowest denomination of the `target_currency`, often called the "buy"
@@ -498,8 +495,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun targetAmount(): Optional<Long> =
-            Optional.ofNullable(targetAmount.getNullable("target_amount"))
+        fun targetAmount(): Optional<Long> = targetAmount.getOptional("target_amount")
 
         /**
          * Returns the raw JSON value of [internalAccountId].

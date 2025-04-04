@@ -366,7 +366,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun receivingCountries(): Optional<List<ReceivingCountry>> =
-            Optional.ofNullable(receivingCountries.getNullable("receiving_countries"))
+            receivingCountries.getOptional("receiving_countries")
 
         /**
          * Returns the raw JSON value of [counterpartyId].

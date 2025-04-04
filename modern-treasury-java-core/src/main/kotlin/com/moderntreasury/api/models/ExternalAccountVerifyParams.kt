@@ -458,7 +458,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun currency(): Optional<Currency> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<Currency> = currency.getOptional("currency")
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
@@ -468,8 +468,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun fallbackType(): Optional<FallbackType> =
-            Optional.ofNullable(fallbackType.getNullable("fallback_type"))
+        fun fallbackType(): Optional<FallbackType> = fallbackType.getOptional("fallback_type")
 
         /**
          * Either `normal` or `high`. For ACH payments, `high` represents a same-day ACH transfer.
@@ -478,7 +477,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun priority(): Optional<Priority> = Optional.ofNullable(priority.getNullable("priority"))
+        fun priority(): Optional<Priority> = priority.getOptional("priority")
 
         /**
          * Returns the raw JSON value of [originatingAccountId].

@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /** list invoice_line_items */
 class InvoiceLineItemListPageAsync
@@ -92,7 +93,7 @@ private constructor(
             @JsonProperty("items") items: JsonField<List<InvoiceLineItem>> = JsonMissing.of()
         ) : this(items, "", "", mutableMapOf())
 
-        fun items(): List<InvoiceLineItem> = items.getNullable("items") ?: listOf()
+        fun items(): List<InvoiceLineItem> = items.getOptional("items").getOrNull() ?: listOf()
 
         fun perPage(): String = perPage
 

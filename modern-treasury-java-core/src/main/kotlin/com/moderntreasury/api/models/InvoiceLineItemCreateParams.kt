@@ -515,8 +515,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Either `debit` or `credit`. `debit` indicates that a client owes the business money and
@@ -526,7 +525,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<String> = Optional.ofNullable(direction.getNullable("direction"))
+        fun direction(): Optional<String> = direction.getOptional("direction")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -534,7 +533,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * The number of units of a product or service that this line item is for. Must be a whole
@@ -543,7 +542,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun quantity(): Optional<Long> = Optional.ofNullable(quantity.getNullable("quantity"))
+        fun quantity(): Optional<Long> = quantity.getOptional("quantity")
 
         /**
          * The cost per unit of the product or service that this line item is for, specified in the
@@ -553,7 +552,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun unitAmountDecimal(): Optional<String> =
-            Optional.ofNullable(unitAmountDecimal.getNullable("unit_amount_decimal"))
+            unitAmountDecimal.getOptional("unit_amount_decimal")
 
         /**
          * Returns the raw JSON value of [name].

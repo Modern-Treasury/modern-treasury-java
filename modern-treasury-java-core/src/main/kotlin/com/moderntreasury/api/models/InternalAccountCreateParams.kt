@@ -584,8 +584,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun counterpartyId(): Optional<String> =
-            Optional.ofNullable(counterpartyId.getNullable("counterparty_id"))
+        fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
 
         /**
          * The LegalEntity associated to this account.
@@ -593,8 +592,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun legalEntityId(): Optional<String> =
-            Optional.ofNullable(legalEntityId.getNullable("legal_entity_id"))
+        fun legalEntityId(): Optional<String> = legalEntityId.getOptional("legal_entity_id")
 
         /**
          * The parent internal account of this new account.
@@ -602,8 +600,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun parentAccountId(): Optional<String> =
-            Optional.ofNullable(parentAccountId.getNullable("parent_account_id"))
+        fun parentAccountId(): Optional<String> = parentAccountId.getOptional("parent_account_id")
 
         /**
          * The address associated with the owner or null.
@@ -611,8 +608,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun partyAddress(): Optional<PartyAddress> =
-            Optional.ofNullable(partyAddress.getNullable("party_address"))
+        fun partyAddress(): Optional<PartyAddress> = partyAddress.getOptional("party_address")
 
         /**
          * A hash of vendor specific attributes that will be used when creating the account at the
@@ -622,7 +618,7 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun vendorAttributes(): Optional<VendorAttributes> =
-            Optional.ofNullable(vendorAttributes.getNullable("vendor_attributes"))
+            vendorAttributes.getOptional("vendor_attributes")
 
         /**
          * Returns the raw JSON value of [connectionId].
@@ -1197,7 +1193,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun line2(): Optional<String> = Optional.ofNullable(line2.getNullable("line2"))
+        fun line2(): Optional<String> = line2.getOptional("line2")
 
         /**
          * Returns the raw JSON value of [country].
