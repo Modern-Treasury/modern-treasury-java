@@ -498,6 +498,19 @@ JsonValue complexValue = JsonValue.from(Map.of(
 ));
 ```
 
+Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
+
+To forcibly omit a required parameter or property, pass [`JsonMissing`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/core/Values.kt):
+
+```java
+import com.moderntreasury.api.core.JsonMissing;
+import com.moderntreasury.api.models.CounterpartyCreateParams;
+
+CounterpartyCreateParams params = CounterpartyCreateParams.builder()
+    .name(JsonMissing.of())
+    .build();
+```
+
 ### Response properties
 
 To access undocumented response properties, call the `_additionalProperties()` method:
