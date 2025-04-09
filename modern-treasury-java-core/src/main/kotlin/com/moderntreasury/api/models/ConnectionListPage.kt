@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.ConnectionService
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Get a list of all connections. */
+/** @see [ConnectionService.list] */
 class ConnectionListPage
 private constructor(
-    private val connectionsService: ConnectionService,
+    private val service: ConnectionService,
     private val params: ConnectionListParams,
     private val headers: Headers,
     private val items: List<Connection>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<Connection> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ConnectionListPage && connectionsService == other.connectionsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(connectionsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "ConnectionListPage{connectionsService=$connectionsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,21 +37,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<ConnectionListPage> {
-        return getNextPageParams().map { connectionsService.list(it) }
-    }
+    fun getNextPage(): Optional<ConnectionListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ConnectionListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<Connection> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            connectionsService: ConnectionService,
-            params: ConnectionListParams,
-            headers: Headers,
-            items: List<Connection>,
-        ) = ConnectionListPage(connectionsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [ConnectionListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ConnectionListPage]. */
+    class Builder internal constructor() {
+
+        private var service: ConnectionService? = null
+        private var params: ConnectionListParams? = null
+        private var headers: Headers? = null
+        private var items: List<Connection>? = null
+
+        @JvmSynthetic
+        internal fun from(connectionListPage: ConnectionListPage) = apply {
+            service = connectionListPage.service
+            params = connectionListPage.params
+            headers = connectionListPage.headers
+            items = connectionListPage.items
+        }
+
+        fun service(service: ConnectionService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ConnectionListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<Connection>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [ConnectionListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ConnectionListPage =
+            ConnectionListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: ConnectionListPage) : Iterable<Connection> {
@@ -87,4 +133,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ConnectionListPage && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "ConnectionListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

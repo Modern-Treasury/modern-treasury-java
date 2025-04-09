@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.PaperItemService
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Get a list of all paper items. */
+/** @see [PaperItemService.list] */
 class PaperItemListPage
 private constructor(
-    private val paperItemsService: PaperItemService,
+    private val service: PaperItemService,
     private val params: PaperItemListParams,
     private val headers: Headers,
     private val items: List<PaperItem>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<PaperItem> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaperItemListPage && paperItemsService == other.paperItemsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paperItemsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "PaperItemListPage{paperItemsService=$paperItemsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,21 +37,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<PaperItemListPage> {
-        return getNextPageParams().map { paperItemsService.list(it) }
-    }
+    fun getNextPage(): Optional<PaperItemListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PaperItemListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<PaperItem> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            paperItemsService: PaperItemService,
-            params: PaperItemListParams,
-            headers: Headers,
-            items: List<PaperItem>,
-        ) = PaperItemListPage(paperItemsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [PaperItemListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [PaperItemListPage]. */
+    class Builder internal constructor() {
+
+        private var service: PaperItemService? = null
+        private var params: PaperItemListParams? = null
+        private var headers: Headers? = null
+        private var items: List<PaperItem>? = null
+
+        @JvmSynthetic
+        internal fun from(paperItemListPage: PaperItemListPage) = apply {
+            service = paperItemListPage.service
+            params = paperItemListPage.params
+            headers = paperItemListPage.headers
+            items = paperItemListPage.items
+        }
+
+        fun service(service: PaperItemService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PaperItemListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<PaperItem>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [PaperItemListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PaperItemListPage =
+            PaperItemListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: PaperItemListPage) : Iterable<PaperItem> {
@@ -87,4 +133,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaperItemListPage && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "PaperItemListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }
