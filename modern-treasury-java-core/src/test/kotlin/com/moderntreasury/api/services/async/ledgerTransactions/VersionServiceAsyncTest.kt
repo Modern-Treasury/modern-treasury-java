@@ -23,6 +23,6 @@ internal class VersionServiceAsyncTest {
         val pageFuture = versionServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }

@@ -41,6 +41,6 @@ internal class BulkResultServiceAsyncTest {
         val pageFuture = bulkResultServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }

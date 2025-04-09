@@ -72,6 +72,6 @@ internal class ForeignExchangeQuoteServiceAsyncTest {
         val pageFuture = foreignExchangeQuoteServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }

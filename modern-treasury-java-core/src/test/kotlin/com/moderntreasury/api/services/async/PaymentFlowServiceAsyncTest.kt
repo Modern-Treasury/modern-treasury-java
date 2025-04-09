@@ -92,6 +92,6 @@ internal class PaymentFlowServiceAsyncTest {
         val pageFuture = paymentFlowServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }

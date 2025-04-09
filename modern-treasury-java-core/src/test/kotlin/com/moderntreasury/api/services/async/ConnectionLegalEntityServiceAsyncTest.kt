@@ -517,6 +517,6 @@ internal class ConnectionLegalEntityServiceAsyncTest {
         val pageFuture = connectionLegalEntityServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }

@@ -640,7 +640,7 @@ internal class CounterpartyServiceAsyncTest {
         val pageFuture = counterpartyServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 
     @Test

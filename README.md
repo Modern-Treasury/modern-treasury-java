@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/6.1.0)
-[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/6.1.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/6.2.0)
+[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/6.2.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.2.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Modern Treasury Java SDK is similar to the Modern Treasury Kotlin SDK but wi
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.2.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://doc
 ### Gradle
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:6.1.0")
+implementation("com.moderntreasury:modern-treasury-java:6.2.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.moderntreasury:modern-treasury-java:6.1.0")
 <dependency>
   <groupId>com.moderntreasury</groupId>
   <artifactId>modern-treasury-java</artifactId>
-  <version>6.1.0</version>
+  <version>6.2.0</version>
 </dependency>
 ```
 
@@ -51,7 +51,7 @@ import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
 import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.CounterpartyCreateParams;
 
-// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` and `MODERN_TREASURY_WEBHOOK_KEY` environment variables
+// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID`, `MODERN_TREASURY_WEBHOOK_KEY` and `MODERN_TREASURY_BASE_URL` environment variables
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.fromEnv();
 
 CounterpartyCreateParams params = CounterpartyCreateParams.builder()
@@ -68,7 +68,7 @@ Configure the client using environment variables:
 import com.moderntreasury.api.client.ModernTreasuryClient;
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
 
-// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` and `MODERN_TREASURY_WEBHOOK_KEY` environment variables
+// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID`, `MODERN_TREASURY_WEBHOOK_KEY` and `MODERN_TREASURY_BASE_URL` environment variables
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.fromEnv();
 ```
 
@@ -91,7 +91,7 @@ import com.moderntreasury.api.client.ModernTreasuryClient;
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
 
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
-    // Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` and `MODERN_TREASURY_WEBHOOK_KEY` environment variables
+    // Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID`, `MODERN_TREASURY_WEBHOOK_KEY` and `MODERN_TREASURY_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build();
@@ -99,11 +99,12 @@ ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter           | Environment variable              | Required | Default value |
-| ---------------- | --------------------------------- | -------- | ------------- |
-| `apiKey`         | `MODERN_TREASURY_API_KEY`         | true     | -             |
-| `organizationId` | `MODERN_TREASURY_ORGANIZATION_ID` | true     | -             |
-| `webhookKey`     | `MODERN_TREASURY_WEBHOOK_KEY`     | false    | -             |
+| Setter           | Environment variable              | Required | Default value                      |
+| ---------------- | --------------------------------- | -------- | ---------------------------------- |
+| `apiKey`         | `MODERN_TREASURY_API_KEY`         | true     | -                                  |
+| `organizationId` | `MODERN_TREASURY_ORGANIZATION_ID` | true     | -                                  |
+| `webhookKey`     | `MODERN_TREASURY_WEBHOOK_KEY`     | false    | -                                  |
+| `baseUrl`        | `MODERN_TREASURY_BASE_URL`        | true     | `"https://app.moderntreasury.com"` |
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
@@ -134,7 +135,7 @@ import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.CounterpartyCreateParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` and `MODERN_TREASURY_WEBHOOK_KEY` environment variables
+// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID`, `MODERN_TREASURY_WEBHOOK_KEY` and `MODERN_TREASURY_BASE_URL` environment variables
 ModernTreasuryClient client = ModernTreasuryOkHttpClient.fromEnv();
 
 CounterpartyCreateParams params = CounterpartyCreateParams.builder()
@@ -152,7 +153,7 @@ import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.CounterpartyCreateParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID` and `MODERN_TREASURY_WEBHOOK_KEY` environment variables
+// Configures using the `MODERN_TREASURY_API_KEY`, `MODERN_TREASURY_ORGANIZATION_ID`, `MODERN_TREASURY_WEBHOOK_KEY` and `MODERN_TREASURY_BASE_URL` environment variables
 ModernTreasuryClientAsync client = ModernTreasuryOkHttpClientAsync.fromEnv();
 
 CounterpartyCreateParams params = CounterpartyCreateParams.builder()

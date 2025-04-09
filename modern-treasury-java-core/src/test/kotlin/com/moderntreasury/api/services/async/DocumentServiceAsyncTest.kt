@@ -68,6 +68,6 @@ internal class DocumentServiceAsyncTest {
         val pageFuture = documentServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 }
