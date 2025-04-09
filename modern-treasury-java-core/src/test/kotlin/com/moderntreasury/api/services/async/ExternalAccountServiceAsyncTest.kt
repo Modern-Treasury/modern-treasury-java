@@ -190,7 +190,7 @@ internal class ExternalAccountServiceAsyncTest {
         val pageFuture = externalAccountServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 
     @Test
