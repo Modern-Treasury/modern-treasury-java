@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.DocumentService
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Get a list of documents. */
+/** @see [DocumentService.list] */
 class DocumentListPage
 private constructor(
-    private val documentsService: DocumentService,
+    private val service: DocumentService,
     private val params: DocumentListParams,
     private val headers: Headers,
     private val items: List<Document>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<Document> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DocumentListPage && documentsService == other.documentsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(documentsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "DocumentListPage{documentsService=$documentsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,21 +37,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<DocumentListPage> {
-        return getNextPageParams().map { documentsService.list(it) }
-    }
+    fun getNextPage(): Optional<DocumentListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DocumentListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<Document> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            documentsService: DocumentService,
-            params: DocumentListParams,
-            headers: Headers,
-            items: List<Document>,
-        ) = DocumentListPage(documentsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [DocumentListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [DocumentListPage]. */
+    class Builder internal constructor() {
+
+        private var service: DocumentService? = null
+        private var params: DocumentListParams? = null
+        private var headers: Headers? = null
+        private var items: List<Document>? = null
+
+        @JvmSynthetic
+        internal fun from(documentListPage: DocumentListPage) = apply {
+            service = documentListPage.service
+            params = documentListPage.params
+            headers = documentListPage.headers
+            items = documentListPage.items
+        }
+
+        fun service(service: DocumentService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DocumentListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<Document>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [DocumentListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DocumentListPage =
+            DocumentListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: DocumentListPage) : Iterable<Document> {
@@ -87,4 +133,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DocumentListPage && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "DocumentListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }
