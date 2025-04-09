@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.AccountDetailService
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Get a list of account details for a single internal or external account. */
+/** @see [AccountDetailService.list] */
 class AccountDetailListPage
 private constructor(
-    private val accountDetailsService: AccountDetailService,
+    private val service: AccountDetailService,
     private val params: AccountDetailListParams,
     private val headers: Headers,
     private val items: List<AccountDetail>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<AccountDetail> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountDetailListPage && accountDetailsService == other.accountDetailsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountDetailsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "AccountDetailListPage{accountDetailsService=$accountDetailsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,21 +37,83 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<AccountDetailListPage> {
-        return getNextPageParams().map { accountDetailsService.list(it) }
-    }
+    fun getNextPage(): Optional<AccountDetailListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): AccountDetailListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<AccountDetail> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            accountDetailsService: AccountDetailService,
-            params: AccountDetailListParams,
-            headers: Headers,
-            items: List<AccountDetail>,
-        ) = AccountDetailListPage(accountDetailsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountDetailListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [AccountDetailListPage]. */
+    class Builder internal constructor() {
+
+        private var service: AccountDetailService? = null
+        private var params: AccountDetailListParams? = null
+        private var headers: Headers? = null
+        private var items: List<AccountDetail>? = null
+
+        @JvmSynthetic
+        internal fun from(accountDetailListPage: AccountDetailListPage) = apply {
+            service = accountDetailListPage.service
+            params = accountDetailListPage.params
+            headers = accountDetailListPage.headers
+            items = accountDetailListPage.items
+        }
+
+        fun service(service: AccountDetailService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: AccountDetailListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<AccountDetail>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [AccountDetailListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): AccountDetailListPage =
+            AccountDetailListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: AccountDetailListPage) : Iterable<AccountDetail> {
@@ -87,4 +134,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountDetailListPage && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "AccountDetailListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

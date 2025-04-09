@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.ConnectionLegalEntityServiceAsync
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
-/** Get a list of all connection legal entities. */
+/** @see [ConnectionLegalEntityServiceAsync.list] */
 class ConnectionLegalEntityListPageAsync
 private constructor(
-    private val connectionLegalEntitiesService: ConnectionLegalEntityServiceAsync,
+    private val service: ConnectionLegalEntityServiceAsync,
     private val params: ConnectionLegalEntityListParams,
     private val headers: Headers,
     private val items: List<ConnectionLegalEntity>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<ConnectionLegalEntity> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ConnectionLegalEntityListPageAsync && connectionLegalEntitiesService == other.connectionLegalEntitiesService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(connectionLegalEntitiesService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "ConnectionLegalEntityListPageAsync{connectionLegalEntitiesService=$connectionLegalEntitiesService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,28 +37,86 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ConnectionLegalEntityListPageAsync>> {
-        return getNextPageParams()
-            .map { connectionLegalEntitiesService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ConnectionLegalEntityListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ConnectionLegalEntityListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<ConnectionLegalEntity> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            connectionLegalEntitiesService: ConnectionLegalEntityServiceAsync,
-            params: ConnectionLegalEntityListParams,
-            headers: Headers,
-            items: List<ConnectionLegalEntity>,
-        ) =
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ConnectionLegalEntityListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ConnectionLegalEntityListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ConnectionLegalEntityServiceAsync? = null
+        private var params: ConnectionLegalEntityListParams? = null
+        private var headers: Headers? = null
+        private var items: List<ConnectionLegalEntity>? = null
+
+        @JvmSynthetic
+        internal fun from(connectionLegalEntityListPageAsync: ConnectionLegalEntityListPageAsync) =
+            apply {
+                service = connectionLegalEntityListPageAsync.service
+                params = connectionLegalEntityListPageAsync.params
+                headers = connectionLegalEntityListPageAsync.headers
+                items = connectionLegalEntityListPageAsync.items
+            }
+
+        fun service(service: ConnectionLegalEntityServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ConnectionLegalEntityListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<ConnectionLegalEntity>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [ConnectionLegalEntityListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ConnectionLegalEntityListPageAsync =
             ConnectionLegalEntityListPageAsync(
-                connectionLegalEntitiesService,
-                params,
-                headers,
-                items,
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
             )
     }
 
@@ -105,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ConnectionLegalEntityListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "ConnectionLegalEntityListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
 }
