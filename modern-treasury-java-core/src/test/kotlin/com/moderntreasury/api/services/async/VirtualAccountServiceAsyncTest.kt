@@ -156,7 +156,7 @@ internal class VirtualAccountServiceAsyncTest {
         val pageFuture = virtualAccountServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 
     @Test

@@ -88,7 +88,7 @@ internal class BalanceReportServiceAsyncTest {
             )
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 
     @Test
