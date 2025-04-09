@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.RoutingDetailServiceAsync
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
-/** Get a list of routing details for a single internal or external account. */
+/** @see [RoutingDetailServiceAsync.list] */
 class RoutingDetailListPageAsync
 private constructor(
-    private val routingDetailsService: RoutingDetailServiceAsync,
+    private val service: RoutingDetailServiceAsync,
     private val params: RoutingDetailListParams,
     private val headers: Headers,
     private val items: List<RoutingDetail>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<RoutingDetail> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is RoutingDetailListPageAsync && routingDetailsService == other.routingDetailsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(routingDetailsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "RoutingDetailListPageAsync{routingDetailsService=$routingDetailsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,23 +37,85 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<RoutingDetailListPageAsync>> {
-        return getNextPageParams()
-            .map { routingDetailsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<RoutingDetailListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): RoutingDetailListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<RoutingDetail> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            routingDetailsService: RoutingDetailServiceAsync,
-            params: RoutingDetailListParams,
-            headers: Headers,
-            items: List<RoutingDetail>,
-        ) = RoutingDetailListPageAsync(routingDetailsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [RoutingDetailListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [RoutingDetailListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: RoutingDetailServiceAsync? = null
+        private var params: RoutingDetailListParams? = null
+        private var headers: Headers? = null
+        private var items: List<RoutingDetail>? = null
+
+        @JvmSynthetic
+        internal fun from(routingDetailListPageAsync: RoutingDetailListPageAsync) = apply {
+            service = routingDetailListPageAsync.service
+            params = routingDetailListPageAsync.params
+            headers = routingDetailListPageAsync.headers
+            items = routingDetailListPageAsync.items
+        }
+
+        fun service(service: RoutingDetailServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: RoutingDetailListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<RoutingDetail>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [RoutingDetailListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): RoutingDetailListPageAsync =
+            RoutingDetailListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: RoutingDetailListPageAsync) {
@@ -96,4 +143,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is RoutingDetailListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "RoutingDetailListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
 }

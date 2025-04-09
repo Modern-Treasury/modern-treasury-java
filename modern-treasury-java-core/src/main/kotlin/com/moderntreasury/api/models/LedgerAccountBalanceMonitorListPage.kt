@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.LedgerAccountBalanceMonitorService
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Get a list of ledger account balance monitors. */
+/** @see [LedgerAccountBalanceMonitorService.list] */
 class LedgerAccountBalanceMonitorListPage
 private constructor(
-    private val ledgerAccountBalanceMonitorsService: LedgerAccountBalanceMonitorService,
+    private val service: LedgerAccountBalanceMonitorService,
     private val params: LedgerAccountBalanceMonitorListParams,
     private val headers: Headers,
     private val items: List<LedgerAccountBalanceMonitor>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<LedgerAccountBalanceMonitor> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is LedgerAccountBalanceMonitorListPage && ledgerAccountBalanceMonitorsService == other.ledgerAccountBalanceMonitorsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ledgerAccountBalanceMonitorsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "LedgerAccountBalanceMonitorListPage{ledgerAccountBalanceMonitorsService=$ledgerAccountBalanceMonitorsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,26 +37,85 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<LedgerAccountBalanceMonitorListPage> {
-        return getNextPageParams().map { ledgerAccountBalanceMonitorsService.list(it) }
-    }
+    fun getNextPage(): Optional<LedgerAccountBalanceMonitorListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): LedgerAccountBalanceMonitorListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<LedgerAccountBalanceMonitor> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            ledgerAccountBalanceMonitorsService: LedgerAccountBalanceMonitorService,
-            params: LedgerAccountBalanceMonitorListParams,
-            headers: Headers,
-            items: List<LedgerAccountBalanceMonitor>,
-        ) =
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LedgerAccountBalanceMonitorListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [LedgerAccountBalanceMonitorListPage]. */
+    class Builder internal constructor() {
+
+        private var service: LedgerAccountBalanceMonitorService? = null
+        private var params: LedgerAccountBalanceMonitorListParams? = null
+        private var headers: Headers? = null
+        private var items: List<LedgerAccountBalanceMonitor>? = null
+
+        @JvmSynthetic
+        internal fun from(
+            ledgerAccountBalanceMonitorListPage: LedgerAccountBalanceMonitorListPage
+        ) = apply {
+            service = ledgerAccountBalanceMonitorListPage.service
+            params = ledgerAccountBalanceMonitorListPage.params
+            headers = ledgerAccountBalanceMonitorListPage.headers
+            items = ledgerAccountBalanceMonitorListPage.items
+        }
+
+        fun service(service: LedgerAccountBalanceMonitorService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: LedgerAccountBalanceMonitorListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<LedgerAccountBalanceMonitor>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [LedgerAccountBalanceMonitorListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): LedgerAccountBalanceMonitorListPage =
             LedgerAccountBalanceMonitorListPage(
-                ledgerAccountBalanceMonitorsService,
-                params,
-                headers,
-                items,
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
             )
     }
 
@@ -94,4 +138,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is LedgerAccountBalanceMonitorListPage && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "LedgerAccountBalanceMonitorListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

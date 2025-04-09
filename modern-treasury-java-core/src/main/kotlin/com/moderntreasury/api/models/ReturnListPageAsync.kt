@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.ReturnServiceAsync
 import java.util.Objects
@@ -10,35 +11,19 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
-/** Get a list of returns. */
+/** @see [ReturnServiceAsync.list] */
 class ReturnListPageAsync
 private constructor(
-    private val returnsService: ReturnServiceAsync,
+    private val service: ReturnServiceAsync,
     private val params: ReturnListParams,
     private val headers: Headers,
     private val items: List<ReturnObject>,
 ) {
 
-    /** Returns the response that this page was parsed from. */
-    fun items(): List<ReturnObject> = items
-
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReturnListPageAsync && returnsService == other.returnsService && params == other.params && items == other.items /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(returnsService, params, items) /* spotless:on */
-
-    override fun toString() =
-        "ReturnListPageAsync{returnsService=$returnsService, params=$params, items=$items}"
 
     fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
 
@@ -52,23 +37,85 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ReturnListPageAsync>> {
-        return getNextPageParams()
-            .map { returnsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ReturnListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ReturnListParams = params
+
+    /** The response that this page was parsed from. */
+    fun items(): List<ReturnObject> = items
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            returnsService: ReturnServiceAsync,
-            params: ReturnListParams,
-            headers: Headers,
-            items: List<ReturnObject>,
-        ) = ReturnListPageAsync(returnsService, params, headers, items)
+        /**
+         * Returns a mutable builder for constructing an instance of [ReturnListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ReturnListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ReturnServiceAsync? = null
+        private var params: ReturnListParams? = null
+        private var headers: Headers? = null
+        private var items: List<ReturnObject>? = null
+
+        @JvmSynthetic
+        internal fun from(returnListPageAsync: ReturnListPageAsync) = apply {
+            service = returnListPageAsync.service
+            params = returnListPageAsync.params
+            headers = returnListPageAsync.headers
+            items = returnListPageAsync.items
+        }
+
+        fun service(service: ReturnServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ReturnListParams) = apply { this.params = params }
+
+        fun headers(headers: Headers) = apply { this.headers = headers }
+
+        /** The response that this page was parsed from. */
+        fun items(items: List<ReturnObject>) = apply { this.items = items }
+
+        /**
+         * Returns an immutable instance of [ReturnListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .headers()
+         * .items()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ReturnListPageAsync =
+            ReturnListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("headers", headers),
+                checkRequired("items", items),
+            )
     }
 
     class AutoPager(private val firstPage: ReturnListPageAsync) {
@@ -96,4 +143,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReturnListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+
+    override fun toString() =
+        "ReturnListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
 }
