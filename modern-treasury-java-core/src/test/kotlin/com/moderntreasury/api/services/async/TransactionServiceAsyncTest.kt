@@ -108,7 +108,7 @@ internal class TransactionServiceAsyncTest {
         val pageFuture = transactionServiceAsync.list()
 
         val page = pageFuture.get()
-        page.response().validate()
+        page.items().forEach { it.validate() }
     }
 
     @Test
