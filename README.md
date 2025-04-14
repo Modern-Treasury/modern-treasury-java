@@ -13,7 +13,7 @@ The Modern Treasury Java SDK is similar to the Modern Treasury Kotlin SDK but wi
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/6.1.0).
 
 <!-- x-release-please-end -->
 
