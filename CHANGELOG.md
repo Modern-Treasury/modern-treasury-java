@@ -1,5 +1,38 @@
 # Changelog
 
+## 6.2.0 (2025-04-15)
+
+Full Changelog: [v6.1.0...v6.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.1.0...v6.2.0)
+
+### Features
+
+* **client:** make pagination robust to missing data ([d500252](https://github.com/Modern-Treasury/modern-treasury-java/commit/d50025268f858d06730736a65de2b9c47757ceeb))
+* **client:** support setting base URL via env var ([#417](https://github.com/Modern-Treasury/modern-treasury-java/issues/417)) ([ca56f87](https://github.com/Modern-Treasury/modern-treasury-java/commit/ca56f87f2c851570c337d455886149fb70bdaa82))
+
+
+### Bug Fixes
+
+* **client:** bump to better jackson version ([#420](https://github.com/Modern-Treasury/modern-treasury-java/issues/420)) ([7c130e8](https://github.com/Modern-Treasury/modern-treasury-java/commit/7c130e81e1d1b91573d814ac7293990adbfcb0b3))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([#419](https://github.com/Modern-Treasury/modern-treasury-java/issues/419)) ([69c9de2](https://github.com/Modern-Treasury/modern-treasury-java/commit/69c9de2e3617b54ee0303410d992b519d4dcfc80))
+* **internal:** reduce CI branch coverage ([f021e8d](https://github.com/Modern-Treasury/modern-treasury-java/commit/f021e8d6288c87f9c081ee195bfc17fb559113fb))
+
+
+### Documentation
+
+* add comments for page methods ([d500252](https://github.com/Modern-Treasury/modern-treasury-java/commit/d50025268f858d06730736a65de2b9c47757ceeb))
+* **client:** update jackson compat error message ([82dca48](https://github.com/Modern-Treasury/modern-treasury-java/commit/82dca48b0fa222e9661e0a7ee0f96af886cae9cd))
+* update documentation links to be more uniform ([474ecf9](https://github.com/Modern-Treasury/modern-treasury-java/commit/474ecf9b4eb2168861025b702afa14e46c2ebcaa))
+
+
+### Refactors
+
+* **client:** deduplicate page response classes ([#421](https://github.com/Modern-Treasury/modern-treasury-java/issues/421)) ([d500252](https://github.com/Modern-Treasury/modern-treasury-java/commit/d50025268f858d06730736a65de2b9c47757ceeb))
+* **client:** migrate pages to builder pattern ([#422](https://github.com/Modern-Treasury/modern-treasury-java/issues/422)) ([355523d](https://github.com/Modern-Treasury/modern-treasury-java/commit/355523de9cbb324347c014513ce11f574c03cba2))
+
 ## 6.1.0 (2025-04-04)
 
 Full Changelog: [v6.0.0...v6.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.0.0...v6.1.0)
