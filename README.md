@@ -439,6 +439,42 @@ ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
     .build();
 ```
 
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `modern-treasury-java-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`ModernTreasuryClient`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClient.kt), [`ModernTreasuryClientAsync`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientAsync.kt), [`ModernTreasuryClientImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientImpl.kt), and [`ModernTreasuryClientAsyncImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientAsyncImpl.kt), all of which can work with any HTTP client
+- `modern-treasury-java-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`ModernTreasuryOkHttpClient`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClient.kt) and [`ModernTreasuryOkHttpClientAsync`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClientAsync.kt), which provide a way to construct [`ModernTreasuryClientImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientImpl.kt) and [`ModernTreasuryClientAsyncImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientAsyncImpl.kt), respectively, using OkHttp
+- `modern-treasury-java`
+  - Depends on and exposes the APIs of both `modern-treasury-java-core` and `modern-treasury-java-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`modern-treasury-java` dependency](#installation) with `modern-treasury-java-core`
+2. Copy `modern-treasury-java-client-okhttp`'s [`OkHttpClient`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`ModernTreasuryClientImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientImpl.kt) or [`ModernTreasuryClientAsyncImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientAsyncImpl.kt), similarly to [`ModernTreasuryOkHttpClient`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClient.kt) or [`ModernTreasuryOkHttpClientAsync`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`modern-treasury-java` dependency](#installation) with `modern-treasury-java-core`
+2. Write a class that implements the [`HttpClient`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/core/http/HttpClient.kt) interface
+3. Construct [`ModernTreasuryClientImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientImpl.kt) or [`ModernTreasuryClientAsyncImpl`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/client/ModernTreasuryClientAsyncImpl.kt), similarly to [`ModernTreasuryOkHttpClient`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClient.kt) or [`ModernTreasuryOkHttpClientAsync`](modern-treasury-java-client-okhttp/src/main/kotlin/com/moderntreasury/api/client/okhttp/ModernTreasuryOkHttpClientAsync.kt), using your new client class
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
