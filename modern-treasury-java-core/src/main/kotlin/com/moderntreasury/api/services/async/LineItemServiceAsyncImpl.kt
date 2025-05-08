@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.moderntreasury.api.models.LineItemListParams
 import com.moderntreasury.api.models.LineItemRetrieveParams
 import com.moderntreasury.api.models.LineItemUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemServiceAsync {
@@ -64,6 +66,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             params: LineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<LineItem>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -99,6 +104,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             params: LineItemUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<LineItem>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -135,6 +143,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             params: LineItemListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("itemizableId", params.itemizableId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

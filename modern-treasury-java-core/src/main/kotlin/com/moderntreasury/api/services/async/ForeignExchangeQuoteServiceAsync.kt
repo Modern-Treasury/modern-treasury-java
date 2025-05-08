@@ -30,15 +30,40 @@ interface ForeignExchangeQuoteServiceAsync {
     ): CompletableFuture<ForeignExchangeQuote>
 
     /** get foreign_exchange_quote */
+    fun retrieve(id: String): CompletableFuture<ForeignExchangeQuote> =
+        retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: ForeignExchangeQuoteRetrieveParams
-    ): CompletableFuture<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ForeignExchangeQuote> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+    ): CompletableFuture<ForeignExchangeQuote> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuote>
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: ForeignExchangeQuoteRetrieveParams
+    ): CompletableFuture<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ForeignExchangeQuote> =
+        retrieve(id, ForeignExchangeQuoteRetrieveParams.none(), requestOptions)
 
     /** list foreign_exchange_quotes */
     fun list(): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
@@ -87,6 +112,35 @@ interface ForeignExchangeQuoteServiceAsync {
          * the same as [ForeignExchangeQuoteServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ForeignExchangeQuoteRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
@@ -95,9 +149,10 @@ interface ForeignExchangeQuoteServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: ForeignExchangeQuoteRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
+            retrieve(id, ForeignExchangeQuoteRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the

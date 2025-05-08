@@ -7,7 +7,6 @@ import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.InvoiceLineItemCreateParams
 import com.moderntreasury.api.models.InvoiceLineItemDeleteParams
-import com.moderntreasury.api.models.InvoiceLineItemListParams
 import com.moderntreasury.api.models.InvoiceLineItemRetrieveParams
 import com.moderntreasury.api.models.InvoiceLineItemUpdateParams
 import org.junit.jupiter.api.Test
@@ -114,10 +113,7 @@ internal class LineItemServiceAsyncTest {
                 .build()
         val lineItemServiceAsync = client.invoices().lineItems()
 
-        val pageFuture =
-            lineItemServiceAsync.list(
-                InvoiceLineItemListParams.builder().invoiceId("invoice_id").build()
-            )
+        val pageFuture = lineItemServiceAsync.list("invoice_id")
 
         val page = pageFuture.get()
         page.items().forEach { it.validate() }

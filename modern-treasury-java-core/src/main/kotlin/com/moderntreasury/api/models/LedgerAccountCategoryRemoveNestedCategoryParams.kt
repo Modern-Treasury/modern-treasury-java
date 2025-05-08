@@ -10,12 +10,13 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Delete a ledger account category from a ledger account category. */
 class LedgerAccountCategoryRemoveNestedCategoryParams
 private constructor(
     private val id: String,
-    private val subCategoryId: String,
+    private val subCategoryId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -23,7 +24,7 @@ private constructor(
 
     fun id(): String = id
 
-    fun subCategoryId(): String = subCategoryId
+    fun subCategoryId(): Optional<String> = Optional.ofNullable(subCategoryId)
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -42,7 +43,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .subCategoryId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -75,7 +75,11 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        fun subCategoryId(subCategoryId: String) = apply { this.subCategoryId = subCategoryId }
+        fun subCategoryId(subCategoryId: String?) = apply { this.subCategoryId = subCategoryId }
+
+        /** Alias for calling [Builder.subCategoryId] with `subCategoryId.orElse(null)`. */
+        fun subCategoryId(subCategoryId: Optional<String>) =
+            subCategoryId(subCategoryId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -205,7 +209,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .subCategoryId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -213,7 +216,7 @@ private constructor(
         fun build(): LedgerAccountCategoryRemoveNestedCategoryParams =
             LedgerAccountCategoryRemoveNestedCategoryParams(
                 checkRequired("id", id),
-                checkRequired("subCategoryId", subCategoryId),
+                subCategoryId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -226,7 +229,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> id
-            1 -> subCategoryId
+            1 -> subCategoryId ?: ""
             else -> ""
         }
 

@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -26,6 +27,7 @@ import com.moderntreasury.api.models.CounterpartyListPage
 import com.moderntreasury.api.models.CounterpartyListParams
 import com.moderntreasury.api.models.CounterpartyRetrieveParams
 import com.moderntreasury.api.models.CounterpartyUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class CounterpartyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CounterpartyService {
@@ -115,6 +117,9 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             params: CounterpartyRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Counterparty> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -141,6 +146,9 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             params: CounterpartyUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Counterparty> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -201,6 +209,9 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             params: CounterpartyDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -221,6 +232,9 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             params: CounterpartyCollectAccountParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CounterpartyCollectAccountResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

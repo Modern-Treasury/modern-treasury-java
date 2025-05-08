@@ -30,8 +30,21 @@ interface AccountCollectionFlowService {
     ): AccountCollectionFlow
 
     /** get account_collection_flow */
-    fun retrieve(params: AccountCollectionFlowRetrieveParams): AccountCollectionFlow =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): AccountCollectionFlow =
+        retrieve(id, AccountCollectionFlowRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountCollectionFlow = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+    ): AccountCollectionFlow = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -39,7 +52,26 @@ interface AccountCollectionFlowService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountCollectionFlow
 
+    /** @see [retrieve] */
+    fun retrieve(params: AccountCollectionFlowRetrieveParams): AccountCollectionFlow =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): AccountCollectionFlow =
+        retrieve(id, AccountCollectionFlowRetrieveParams.none(), requestOptions)
+
     /** update account_collection_flow */
+    fun update(id: String, params: AccountCollectionFlowUpdateParams): AccountCollectionFlow =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: AccountCollectionFlowUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountCollectionFlow = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: AccountCollectionFlowUpdateParams): AccountCollectionFlow =
         update(params, RequestOptions.none())
 
@@ -94,9 +126,25 @@ interface AccountCollectionFlowService {
          * otherwise the same as [AccountCollectionFlowService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<AccountCollectionFlow> =
+            retrieve(id, AccountCollectionFlowRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: AccountCollectionFlowRetrieveParams
-        ): HttpResponseFor<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: AccountCollectionFlowRetrieveParams =
+                AccountCollectionFlowRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountCollectionFlow> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+        ): HttpResponseFor<AccountCollectionFlow> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -105,10 +153,40 @@ interface AccountCollectionFlowService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountCollectionFlow>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: AccountCollectionFlowRetrieveParams
+        ): HttpResponseFor<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AccountCollectionFlow> =
+            retrieve(id, AccountCollectionFlowRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountCollectionFlowUpdateParams,
+        ): HttpResponseFor<AccountCollectionFlow> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountCollectionFlowUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountCollectionFlow> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountCollectionFlowUpdateParams

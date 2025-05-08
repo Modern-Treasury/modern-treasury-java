@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking.invoices
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -22,6 +23,7 @@ import com.moderntreasury.api.models.InvoiceLineItemListPage
 import com.moderntreasury.api.models.InvoiceLineItemListParams
 import com.moderntreasury.api.models.InvoiceLineItemRetrieveParams
 import com.moderntreasury.api.models.InvoiceLineItemUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemService {
@@ -79,6 +81,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: InvoiceLineItemCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvoiceLineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -106,6 +111,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: InvoiceLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvoiceLineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -138,6 +146,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: InvoiceLineItemUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvoiceLineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -172,6 +183,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: InvoiceLineItemListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvoiceLineItemListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -206,6 +220,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: InvoiceLineItemDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvoiceLineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -8,7 +8,6 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.LedgerAccountCategoryAddLedgerAccountParams
 import com.moderntreasury.api.models.LedgerAccountCategoryAddNestedCategoryParams
 import com.moderntreasury.api.models.LedgerAccountCategoryCreateParams
-import com.moderntreasury.api.models.LedgerAccountCategoryDeleteParams
 import com.moderntreasury.api.models.LedgerAccountCategoryRemoveLedgerAccountParams
 import com.moderntreasury.api.models.LedgerAccountCategoryRemoveNestedCategoryParams
 import com.moderntreasury.api.models.LedgerAccountCategoryRetrieveParams
@@ -139,10 +138,7 @@ internal class LedgerAccountCategoryServiceAsyncTest {
                 .build()
         val ledgerAccountCategoryServiceAsync = client.ledgerAccountCategories()
 
-        val ledgerAccountCategoryFuture =
-            ledgerAccountCategoryServiceAsync.delete(
-                LedgerAccountCategoryDeleteParams.builder().id("id").build()
-            )
+        val ledgerAccountCategoryFuture = ledgerAccountCategoryServiceAsync.delete("id")
 
         val ledgerAccountCategory = ledgerAccountCategoryFuture.get()
         ledgerAccountCategory.validate()

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.Params
-import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
@@ -18,7 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 /** Get all balance reports for a given internal account. */
 class BalanceReportListParams
 private constructor(
-    private val internalAccountId: String,
+    private val internalAccountId: String?,
     private val afterCursor: String?,
     private val asOfDate: LocalDate?,
     private val balanceReportType: BalanceReportType?,
@@ -27,7 +26,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun internalAccountId(): String = internalAccountId
+    fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
@@ -50,14 +49,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [BalanceReportListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .internalAccountId()
-         * ```
-         */
+        @JvmStatic fun none(): BalanceReportListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [BalanceReportListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -83,9 +77,13 @@ private constructor(
             additionalQueryParams = balanceReportListParams.additionalQueryParams.toBuilder()
         }
 
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
         }
+
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
@@ -224,17 +222,10 @@ private constructor(
          * Returns an immutable instance of [BalanceReportListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .internalAccountId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BalanceReportListParams =
             BalanceReportListParams(
-                checkRequired("internalAccountId", internalAccountId),
+                internalAccountId,
                 afterCursor,
                 asOfDate,
                 balanceReportType,
@@ -246,7 +237,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> internalAccountId
+            0 -> internalAccountId ?: ""
             else -> ""
         }
 

@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async.paymentOrders
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.moderntreasury.api.models.PaymentOrderReversalListParams
 import com.moderntreasury.api.models.PaymentOrderReversalRetrieveParams
 import com.moderntreasury.api.models.Reversal
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ReversalServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ReversalServiceAsync {
@@ -64,6 +66,9 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             params: PaymentOrderReversalCreateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Reversal>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -94,6 +99,9 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             params: PaymentOrderReversalRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Reversal>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("reversalId", params.reversalId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -129,6 +137,9 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             params: PaymentOrderReversalListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -7,13 +7,15 @@ import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a single account detail for a single internal or external account. */
 class AccountDetailRetrieveParams
 private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -22,7 +24,7 @@ private constructor(
 
     fun accountId(): String = accountId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -39,7 +41,6 @@ private constructor(
          * ```java
          * .accountsType()
          * .accountId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -67,7 +68,10 @@ private constructor(
 
         fun accountId(accountId: String) = apply { this.accountId = accountId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -176,7 +180,6 @@ private constructor(
          * ```java
          * .accountsType()
          * .accountId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -185,7 +188,7 @@ private constructor(
             AccountDetailRetrieveParams(
                 checkRequired("accountsType", accountsType),
                 checkRequired("accountId", accountId),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -195,7 +198,7 @@ private constructor(
         when (index) {
             0 -> accountsType.toString()
             1 -> accountId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 
