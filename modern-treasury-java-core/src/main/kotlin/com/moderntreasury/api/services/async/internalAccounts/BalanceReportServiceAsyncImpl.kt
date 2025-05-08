@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async.internalAccounts
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -24,6 +25,7 @@ import com.moderntreasury.api.models.BalanceReportListPageAsync
 import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class BalanceReportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceReportServiceAsync {
@@ -74,6 +76,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
             params: BalanceReportCreateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BalanceReport>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("internalAccountId", params.internalAccountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -109,6 +114,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
             params: BalanceReportRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BalanceReport>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -145,6 +153,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
             params: BalanceReportListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("internalAccountId", params.internalAccountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -186,6 +197,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
             params: BalanceReportDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

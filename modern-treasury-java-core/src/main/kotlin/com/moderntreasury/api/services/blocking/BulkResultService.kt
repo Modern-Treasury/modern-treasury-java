@@ -18,14 +18,34 @@ interface BulkResultService {
     fun withRawResponse(): WithRawResponse
 
     /** get bulk_result */
-    fun retrieve(params: BulkResultRetrieveParams): BulkResult =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): BulkResult = retrieve(id, BulkResultRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BulkResult = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+    ): BulkResult = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResult
+
+    /** @see [retrieve] */
+    fun retrieve(params: BulkResultRetrieveParams): BulkResult =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): BulkResult =
+        retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
     /** list bulk_results */
     fun list(): BulkResultListPage = list(BulkResultListParams.none())
@@ -52,8 +72,23 @@ interface BulkResultService {
          * as [BulkResultService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: BulkResultRetrieveParams): HttpResponseFor<BulkResult> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<BulkResult> =
+            retrieve(id, BulkResultRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BulkResult> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+        ): HttpResponseFor<BulkResult> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -61,6 +96,16 @@ interface BulkResultService {
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkResult>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: BulkResultRetrieveParams): HttpResponseFor<BulkResult> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BulkResult> =
+            retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as

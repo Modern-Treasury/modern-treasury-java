@@ -14,7 +14,7 @@ import kotlin.jvm.optionals.getOrNull
 class AccountDetailListParams
 private constructor(
     private val accountsType: AccountsType,
-    private val accountId: String,
+    private val accountId: String?,
     private val afterCursor: String?,
     private val perPage: Long?,
     private val additionalHeaders: Headers,
@@ -23,7 +23,7 @@ private constructor(
 
     fun accountsType(): AccountsType = accountsType
 
-    fun accountId(): String = accountId
+    fun accountId(): Optional<String> = Optional.ofNullable(accountId)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
@@ -43,7 +43,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -71,7 +70,10 @@ private constructor(
 
         fun accountsType(accountsType: AccountsType) = apply { this.accountsType = accountsType }
 
-        fun accountId(accountId: String) = apply { this.accountId = accountId }
+        fun accountId(accountId: String?) = apply { this.accountId = accountId }
+
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
@@ -196,7 +198,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -204,7 +205,7 @@ private constructor(
         fun build(): AccountDetailListParams =
             AccountDetailListParams(
                 checkRequired("accountsType", accountsType),
-                checkRequired("accountId", accountId),
+                accountId,
                 afterCursor,
                 perPage,
                 additionalHeaders.build(),
@@ -215,7 +216,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> accountsType.toString()
-            1 -> accountId
+            1 -> accountId ?: ""
             else -> ""
         }
 

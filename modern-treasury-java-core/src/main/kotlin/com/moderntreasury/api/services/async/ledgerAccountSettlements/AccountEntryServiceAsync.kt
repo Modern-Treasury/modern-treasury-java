@@ -17,6 +17,19 @@ interface AccountEntryServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Add ledger entries to a draft ledger account settlement. */
+    fun update(
+        id: String,
+        params: LedgerAccountSettlementAccountEntryUpdateParams,
+    ): CompletableFuture<Void?> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerAccountSettlementAccountEntryUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: LedgerAccountSettlementAccountEntryUpdateParams): CompletableFuture<Void?> =
         update(params, RequestOptions.none())
 
@@ -27,6 +40,19 @@ interface AccountEntryServiceAsync {
     ): CompletableFuture<Void?>
 
     /** Remove ledger entries from a draft ledger account settlement. */
+    fun delete(
+        id: String,
+        params: LedgerAccountSettlementAccountEntryDeleteParams,
+    ): CompletableFuture<Void?> = delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerAccountSettlementAccountEntryDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
@@ -49,6 +75,22 @@ interface AccountEntryServiceAsync {
          */
         @MustBeClosed
         fun update(
+            id: String,
+            params: LedgerAccountSettlementAccountEntryUpdateParams,
+        ): CompletableFuture<HttpResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountSettlementAccountEntryUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: LedgerAccountSettlementAccountEntryUpdateParams
         ): CompletableFuture<HttpResponse> = update(params, RequestOptions.none())
 
@@ -64,6 +106,22 @@ interface AccountEntryServiceAsync {
          * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
          * [AccountEntryServiceAsync.delete].
          */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountSettlementAccountEntryDeleteParams,
+        ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountSettlementAccountEntryDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: LedgerAccountSettlementAccountEntryDeleteParams

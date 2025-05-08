@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -27,6 +28,7 @@ import com.moderntreasury.api.models.PaymentOrderUpdateParams
 import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsync
 import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class PaymentOrderServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PaymentOrderServiceAsync {
@@ -124,6 +126,9 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             params: PaymentOrderRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -153,6 +158,9 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             params: PaymentOrderUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)

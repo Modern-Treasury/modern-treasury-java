@@ -32,9 +32,22 @@ interface AccountCollectionFlowServiceAsync {
     ): CompletableFuture<AccountCollectionFlow>
 
     /** get account_collection_flow */
+    fun retrieve(id: String): CompletableFuture<AccountCollectionFlow> =
+        retrieve(id, AccountCollectionFlowRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: AccountCollectionFlowRetrieveParams
-    ): CompletableFuture<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountCollectionFlow> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+    ): CompletableFuture<AccountCollectionFlow> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -42,7 +55,33 @@ interface AccountCollectionFlowServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: AccountCollectionFlowRetrieveParams
+    ): CompletableFuture<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<AccountCollectionFlow> =
+        retrieve(id, AccountCollectionFlowRetrieveParams.none(), requestOptions)
+
     /** update account_collection_flow */
+    fun update(
+        id: String,
+        params: AccountCollectionFlowUpdateParams,
+    ): CompletableFuture<AccountCollectionFlow> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: AccountCollectionFlowUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountCollectionFlow> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(
         params: AccountCollectionFlowUpdateParams
     ): CompletableFuture<AccountCollectionFlow> = update(params, RequestOptions.none())
@@ -102,10 +141,26 @@ interface AccountCollectionFlowServiceAsync {
          * otherwise the same as [AccountCollectionFlowServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            retrieve(id, AccountCollectionFlowRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: AccountCollectionFlowRetrieveParams
+            id: String,
+            params: AccountCollectionFlowRetrieveParams =
+                AccountCollectionFlowRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -114,10 +169,42 @@ interface AccountCollectionFlowServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: AccountCollectionFlowRetrieveParams
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            retrieve(id, AccountCollectionFlowRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/account_collection_flows/{id}`, but is
          * otherwise the same as [AccountCollectionFlowServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountCollectionFlowUpdateParams,
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountCollectionFlowUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountCollectionFlowUpdateParams

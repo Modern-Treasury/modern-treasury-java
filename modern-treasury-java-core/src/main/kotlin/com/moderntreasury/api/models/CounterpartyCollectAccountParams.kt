@@ -26,13 +26,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Send an email requesting account details. */
 class CounterpartyCollectAccountParams
 private constructor(
-    private val id: String,
+    private val id: String?,
     private val body: CounterpartyCollectAccountRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * One of `credit` or `debit`. Use `credit` when you want to pay a counterparty. Use `debit`
@@ -120,7 +120,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .direction()
          * ```
          */
@@ -146,7 +145,10 @@ private constructor(
                     counterpartyCollectAccountParams.additionalQueryParams.toBuilder()
             }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -361,7 +363,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .direction()
          * ```
          *
@@ -369,7 +370,7 @@ private constructor(
          */
         fun build(): CounterpartyCollectAccountParams =
             CounterpartyCollectAccountParams(
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -380,7 +381,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> id
+            0 -> id ?: ""
             else -> ""
         }
 

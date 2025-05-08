@@ -19,14 +19,35 @@ interface BulkResultServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** get bulk_result */
-    fun retrieve(params: BulkResultRetrieveParams): CompletableFuture<BulkResult> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<BulkResult> =
+        retrieve(id, BulkResultRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BulkResult> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+    ): CompletableFuture<BulkResult> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResult>
+
+    /** @see [retrieve] */
+    fun retrieve(params: BulkResultRetrieveParams): CompletableFuture<BulkResult> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<BulkResult> =
+        retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
     /** list bulk_results */
     fun list(): CompletableFuture<BulkResultListPageAsync> = list(BulkResultListParams.none())
@@ -57,9 +78,25 @@ interface BulkResultServiceAsync {
          * as [BulkResultServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<BulkResult>> =
+            retrieve(id, BulkResultRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: BulkResultRetrieveParams
-        ): CompletableFuture<HttpResponseFor<BulkResult>> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BulkResult>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<BulkResult>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -67,6 +104,20 @@ interface BulkResultServiceAsync {
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResult>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: BulkResultRetrieveParams
+        ): CompletableFuture<HttpResponseFor<BulkResult>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BulkResult>> =
+            retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as

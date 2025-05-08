@@ -4,7 +4,6 @@ package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
-import com.moderntreasury.api.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -21,7 +20,7 @@ internal class EventServiceAsyncTest {
                 .build()
         val eventServiceAsync = client.events()
 
-        val eventFuture = eventServiceAsync.retrieve(EventRetrieveParams.builder().id("id").build())
+        val eventFuture = eventServiceAsync.retrieve("id")
 
         val event = eventFuture.get()
         event.validate()

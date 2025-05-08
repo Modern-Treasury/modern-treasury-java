@@ -7,19 +7,21 @@ import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a single balance report for a given internal account. */
 class BalanceReportRetrieveParams
 private constructor(
     private val internalAccountId: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun internalAccountId(): String = internalAccountId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -35,7 +37,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .internalAccountId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -61,7 +62,10 @@ private constructor(
             this.internalAccountId = internalAccountId
         }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -169,7 +173,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .internalAccountId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -177,7 +180,7 @@ private constructor(
         fun build(): BalanceReportRetrieveParams =
             BalanceReportRetrieveParams(
                 checkRequired("internalAccountId", internalAccountId),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -186,7 +189,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> internalAccountId
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

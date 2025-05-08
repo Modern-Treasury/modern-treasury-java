@@ -39,8 +39,20 @@ interface ExpectedPaymentService {
         create(ExpectedPaymentCreateParams.none(), requestOptions)
 
     /** get expected payment */
-    fun retrieve(params: ExpectedPaymentRetrieveParams): ExpectedPayment =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): ExpectedPayment = retrieve(id, ExpectedPaymentRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExpectedPayment = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
+    ): ExpectedPayment = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -48,15 +60,43 @@ interface ExpectedPaymentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExpectedPayment
 
+    /** @see [retrieve] */
+    fun retrieve(params: ExpectedPaymentRetrieveParams): ExpectedPayment =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): ExpectedPayment =
+        retrieve(id, ExpectedPaymentRetrieveParams.none(), requestOptions)
+
     /** update expected payment */
-    fun update(params: ExpectedPaymentUpdateParams): ExpectedPayment =
-        update(params, RequestOptions.none())
+    fun update(id: String): ExpectedPayment = update(id, ExpectedPaymentUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExpectedPayment = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
+    ): ExpectedPayment = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: ExpectedPaymentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExpectedPayment
+
+    /** @see [update] */
+    fun update(params: ExpectedPaymentUpdateParams): ExpectedPayment =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): ExpectedPayment =
+        update(id, ExpectedPaymentUpdateParams.none(), requestOptions)
 
     /** list expected_payments */
     fun list(): ExpectedPaymentListPage = list(ExpectedPaymentListParams.none())
@@ -77,14 +117,34 @@ interface ExpectedPaymentService {
         list(ExpectedPaymentListParams.none(), requestOptions)
 
     /** delete expected payment */
-    fun delete(params: ExpectedPaymentDeleteParams): ExpectedPayment =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): ExpectedPayment = delete(id, ExpectedPaymentDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExpectedPayment = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
+    ): ExpectedPayment = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: ExpectedPaymentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExpectedPayment
+
+    /** @see [delete] */
+    fun delete(params: ExpectedPaymentDeleteParams): ExpectedPayment =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): ExpectedPayment =
+        delete(id, ExpectedPaymentDeleteParams.none(), requestOptions)
 
     /**
      * A view of [ExpectedPaymentService] that provides access to raw HTTP responses for each
@@ -122,8 +182,24 @@ interface ExpectedPaymentService {
          * same as [ExpectedPaymentService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: ExpectedPaymentRetrieveParams): HttpResponseFor<ExpectedPayment> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<ExpectedPayment> =
+            retrieve(id, ExpectedPaymentRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExpectedPayment> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
+        ): HttpResponseFor<ExpectedPayment> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -132,13 +208,39 @@ interface ExpectedPaymentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExpectedPayment>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: ExpectedPaymentRetrieveParams): HttpResponseFor<ExpectedPayment> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<ExpectedPayment> =
+            retrieve(id, ExpectedPaymentRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/expected_payments/{id}`, but is otherwise the
          * same as [ExpectedPaymentService.update].
          */
         @MustBeClosed
-        fun update(params: ExpectedPaymentUpdateParams): HttpResponseFor<ExpectedPayment> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<ExpectedPayment> =
+            update(id, ExpectedPaymentUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExpectedPayment> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
+        ): HttpResponseFor<ExpectedPayment> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -146,6 +248,16 @@ interface ExpectedPaymentService {
             params: ExpectedPaymentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExpectedPayment>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: ExpectedPaymentUpdateParams): HttpResponseFor<ExpectedPayment> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<ExpectedPayment> =
+            update(id, ExpectedPaymentUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/expected_payments`, but is otherwise the same
@@ -178,8 +290,24 @@ interface ExpectedPaymentService {
          * the same as [ExpectedPaymentService.delete].
          */
         @MustBeClosed
-        fun delete(params: ExpectedPaymentDeleteParams): HttpResponseFor<ExpectedPayment> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<ExpectedPayment> =
+            delete(id, ExpectedPaymentDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExpectedPayment> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
+        ): HttpResponseFor<ExpectedPayment> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -187,5 +315,15 @@ interface ExpectedPaymentService {
             params: ExpectedPaymentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExpectedPayment>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: ExpectedPaymentDeleteParams): HttpResponseFor<ExpectedPayment> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<ExpectedPayment> =
+            delete(id, ExpectedPaymentDeleteParams.none(), requestOptions)
     }
 }

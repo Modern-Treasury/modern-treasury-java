@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryService
 import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryServiceImpl
+import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountSettlementServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSettlementService {
@@ -114,6 +116,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             params: LedgerAccountSettlementRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerAccountSettlement> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -141,6 +146,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             params: LedgerAccountSettlementUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerAccountSettlement> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)

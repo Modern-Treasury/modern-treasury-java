@@ -7,8 +7,6 @@ import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.TransactionDirection
 import com.moderntreasury.api.models.VirtualAccountCreateParams
-import com.moderntreasury.api.models.VirtualAccountDeleteParams
-import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -105,10 +103,7 @@ internal class VirtualAccountServiceAsyncTest {
                 .build()
         val virtualAccountServiceAsync = client.virtualAccounts()
 
-        val virtualAccountFuture =
-            virtualAccountServiceAsync.retrieve(
-                VirtualAccountRetrieveParams.builder().id("id").build()
-            )
+        val virtualAccountFuture = virtualAccountServiceAsync.retrieve("id")
 
         val virtualAccount = virtualAccountFuture.get()
         virtualAccount.validate()
@@ -169,8 +164,7 @@ internal class VirtualAccountServiceAsyncTest {
                 .build()
         val virtualAccountServiceAsync = client.virtualAccounts()
 
-        val virtualAccountFuture =
-            virtualAccountServiceAsync.delete(VirtualAccountDeleteParams.builder().id("id").build())
+        val virtualAccountFuture = virtualAccountServiceAsync.delete("id")
 
         val virtualAccount = virtualAccountFuture.get()
         virtualAccount.validate()

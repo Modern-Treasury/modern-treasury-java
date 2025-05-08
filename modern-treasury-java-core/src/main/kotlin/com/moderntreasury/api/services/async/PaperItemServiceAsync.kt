@@ -19,14 +19,35 @@ interface PaperItemServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get details on a single paper item. */
-    fun retrieve(params: PaperItemRetrieveParams): CompletableFuture<PaperItem> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<PaperItem> =
+        retrieve(id, PaperItemRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PaperItem> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
+    ): CompletableFuture<PaperItem> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: PaperItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItem>
+
+    /** @see [retrieve] */
+    fun retrieve(params: PaperItemRetrieveParams): CompletableFuture<PaperItem> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaperItem> =
+        retrieve(id, PaperItemRetrieveParams.none(), requestOptions)
 
     /** Get a list of all paper items. */
     fun list(): CompletableFuture<PaperItemListPageAsync> = list(PaperItemListParams.none())
@@ -56,9 +77,25 @@ interface PaperItemServiceAsync {
          * [PaperItemServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaperItem>> =
+            retrieve(id, PaperItemRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: PaperItemRetrieveParams
-        ): CompletableFuture<HttpResponseFor<PaperItem>> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PaperItem>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<PaperItem>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -66,6 +103,20 @@ interface PaperItemServiceAsync {
             params: PaperItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaperItem>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: PaperItemRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaperItem>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PaperItem>> =
+            retrieve(id, PaperItemRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/paper_items`, but is otherwise the same as

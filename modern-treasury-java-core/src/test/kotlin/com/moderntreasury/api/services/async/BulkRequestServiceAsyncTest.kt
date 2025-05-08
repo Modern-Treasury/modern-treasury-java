@@ -6,7 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.BulkRequestCreateParams
-import com.moderntreasury.api.models.BulkRequestRetrieveParams
 import com.moderntreasury.api.models.Currency
 import com.moderntreasury.api.models.ExternalAccountType
 import com.moderntreasury.api.models.PaymentOrderSubtype
@@ -412,8 +411,7 @@ internal class BulkRequestServiceAsyncTest {
                 .build()
         val bulkRequestServiceAsync = client.bulkRequests()
 
-        val bulkRequestFuture =
-            bulkRequestServiceAsync.retrieve(BulkRequestRetrieveParams.builder().id("id").build())
+        val bulkRequestFuture = bulkRequestServiceAsync.retrieve("id")
 
         val bulkRequest = bulkRequestFuture.get()
         bulkRequest.validate()

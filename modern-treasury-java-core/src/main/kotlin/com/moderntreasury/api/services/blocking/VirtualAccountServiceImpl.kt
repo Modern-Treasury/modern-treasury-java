@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -22,6 +23,7 @@ import com.moderntreasury.api.models.VirtualAccountListPage
 import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class VirtualAccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     VirtualAccountService {
@@ -106,6 +108,9 @@ class VirtualAccountServiceImpl internal constructor(private val clientOptions: 
             params: VirtualAccountRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<VirtualAccount> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -132,6 +137,9 @@ class VirtualAccountServiceImpl internal constructor(private val clientOptions: 
             params: VirtualAccountUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<VirtualAccount> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -194,6 +202,9 @@ class VirtualAccountServiceImpl internal constructor(private val clientOptions: 
             params: VirtualAccountDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<VirtualAccount> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -6,8 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.LedgerCreateParams
-import com.moderntreasury.api.models.LedgerDeleteParams
-import com.moderntreasury.api.models.LedgerRetrieveParams
 import com.moderntreasury.api.models.LedgerUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -54,8 +52,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.ledgers()
 
-        val ledgerFuture =
-            ledgerServiceAsync.retrieve(LedgerRetrieveParams.builder().id("id").build())
+        val ledgerFuture = ledgerServiceAsync.retrieve("id")
 
         val ledger = ledgerFuture.get()
         ledger.validate()
@@ -117,7 +114,7 @@ internal class LedgerServiceAsyncTest {
                 .build()
         val ledgerServiceAsync = client.ledgers()
 
-        val ledgerFuture = ledgerServiceAsync.delete(LedgerDeleteParams.builder().id("id").build())
+        val ledgerFuture = ledgerServiceAsync.delete("id")
 
         val ledger = ledgerFuture.get()
         ledger.validate()

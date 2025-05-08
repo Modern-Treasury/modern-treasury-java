@@ -6,8 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.LedgerAccountBalanceMonitorCreateParams
-import com.moderntreasury.api.models.LedgerAccountBalanceMonitorDeleteParams
-import com.moderntreasury.api.models.LedgerAccountBalanceMonitorRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountBalanceMonitorUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -63,9 +61,7 @@ internal class LedgerAccountBalanceMonitorServiceAsyncTest {
         val ledgerAccountBalanceMonitorServiceAsync = client.ledgerAccountBalanceMonitors()
 
         val ledgerAccountBalanceMonitorFuture =
-            ledgerAccountBalanceMonitorServiceAsync.retrieve(
-                LedgerAccountBalanceMonitorRetrieveParams.builder().id("id").build()
-            )
+            ledgerAccountBalanceMonitorServiceAsync.retrieve("id")
 
         val ledgerAccountBalanceMonitor = ledgerAccountBalanceMonitorFuture.get()
         ledgerAccountBalanceMonitor.validate()
@@ -126,10 +122,7 @@ internal class LedgerAccountBalanceMonitorServiceAsyncTest {
                 .build()
         val ledgerAccountBalanceMonitorServiceAsync = client.ledgerAccountBalanceMonitors()
 
-        val ledgerAccountBalanceMonitorFuture =
-            ledgerAccountBalanceMonitorServiceAsync.delete(
-                LedgerAccountBalanceMonitorDeleteParams.builder().id("id").build()
-            )
+        val ledgerAccountBalanceMonitorFuture = ledgerAccountBalanceMonitorServiceAsync.delete("id")
 
         val ledgerAccountBalanceMonitor = ledgerAccountBalanceMonitorFuture.get()
         ledgerAccountBalanceMonitor.validate()

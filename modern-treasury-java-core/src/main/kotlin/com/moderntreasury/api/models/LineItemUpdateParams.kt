@@ -27,7 +27,7 @@ class LineItemUpdateParams
 private constructor(
     private val itemizableType: ItemizableType,
     private val itemizableId: String,
-    private val id: String,
+    private val id: String?,
     private val body: LineItemUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -37,7 +37,7 @@ private constructor(
 
     fun itemizableId(): String = itemizableId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -71,7 +71,6 @@ private constructor(
          * ```java
          * .itemizableType()
          * .itemizableId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -103,7 +102,10 @@ private constructor(
 
         fun itemizableId(itemizableId: String) = apply { this.itemizableId = itemizableId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -254,7 +256,6 @@ private constructor(
          * ```java
          * .itemizableType()
          * .itemizableId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -263,7 +264,7 @@ private constructor(
             LineItemUpdateParams(
                 checkRequired("itemizableType", itemizableType),
                 checkRequired("itemizableId", itemizableId),
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -276,7 +277,7 @@ private constructor(
         when (index) {
             0 -> itemizableType.toString()
             1 -> itemizableId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

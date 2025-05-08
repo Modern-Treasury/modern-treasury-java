@@ -31,6 +31,31 @@ interface LedgerAccountStatementServiceAsync {
     ): CompletableFuture<LedgerAccountStatementCreateResponse>
 
     /** Get details on a single ledger account statement. */
+    fun retrieve(id: String): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
+        retrieve(id, LedgerAccountStatementRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
+    ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
+        retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: LedgerAccountStatementRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountStatementRetrieveResponse>
+
+    /** @see [retrieve] */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
@@ -38,9 +63,10 @@ interface LedgerAccountStatementServiceAsync {
 
     /** @see [retrieve] */
     fun retrieve(
-        params: LedgerAccountStatementRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<LedgerAccountStatementRetrieveResponse>
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
+        retrieve(id, LedgerAccountStatementRetrieveParams.none(), requestOptions)
 
     /**
      * A view of [LedgerAccountStatementServiceAsync] that provides access to raw HTTP responses for
@@ -71,9 +97,28 @@ interface LedgerAccountStatementServiceAsync {
          */
         @MustBeClosed
         fun retrieve(
-            params: LedgerAccountStatementRetrieveParams
+            id: String
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(id, LedgerAccountStatementRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountStatementRetrieveParams =
+                LedgerAccountStatementRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountStatementRetrieveParams =
+                LedgerAccountStatementRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -81,5 +126,20 @@ interface LedgerAccountStatementServiceAsync {
             params: LedgerAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountStatementRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
+            retrieve(id, LedgerAccountStatementRetrieveParams.none(), requestOptions)
     }
 }

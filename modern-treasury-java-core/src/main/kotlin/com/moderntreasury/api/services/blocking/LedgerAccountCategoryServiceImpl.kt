@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -28,6 +29,7 @@ import com.moderntreasury.api.models.LedgerAccountCategoryRemoveLedgerAccountPar
 import com.moderntreasury.api.models.LedgerAccountCategoryRemoveNestedCategoryParams
 import com.moderntreasury.api.models.LedgerAccountCategoryRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountCategoryUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountCategoryServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCategoryService {
@@ -146,6 +148,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerAccountCategory> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -173,6 +178,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerAccountCategory> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -236,6 +244,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerAccountCategory> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -263,6 +274,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryAddLedgerAccountParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("ledgerAccountId", params.ledgerAccountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -288,6 +302,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryAddNestedCategoryParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subCategoryId", params.subCategoryId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -313,6 +330,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryRemoveLedgerAccountParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("ledgerAccountId", params.ledgerAccountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -338,6 +358,9 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
             params: LedgerAccountCategoryRemoveNestedCategoryParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("subCategoryId", params.subCategoryId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

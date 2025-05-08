@@ -25,13 +25,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Add ledger entries to a draft ledger account settlement. */
 class LedgerAccountSettlementAccountEntryUpdateParams
 private constructor(
-    private val id: String,
+    private val id: String?,
     private val body: LedgerAccountSettlementEntriesPatchRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * The ids of the ledger entries that are to be added or removed from the ledger account
@@ -65,7 +65,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .ledgerEntryIds()
          * ```
          */
@@ -94,7 +93,10 @@ private constructor(
                 ledgerAccountSettlementAccountEntryUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -261,7 +263,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .ledgerEntryIds()
          * ```
          *
@@ -269,7 +270,7 @@ private constructor(
          */
         fun build(): LedgerAccountSettlementAccountEntryUpdateParams =
             LedgerAccountSettlementAccountEntryUpdateParams(
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -280,7 +281,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> id
+            0 -> id ?: ""
             else -> ""
         }
 

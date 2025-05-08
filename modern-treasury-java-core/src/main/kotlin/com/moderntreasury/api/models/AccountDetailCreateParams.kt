@@ -25,7 +25,7 @@ import kotlin.jvm.optionals.getOrNull
 class AccountDetailCreateParams
 private constructor(
     private val accountsType: AccountsType,
-    private val accountId: String,
+    private val accountId: String?,
     private val body: AccountDetailCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -33,7 +33,7 @@ private constructor(
 
     fun accountsType(): AccountsType = accountsType
 
-    fun accountId(): String = accountId
+    fun accountId(): Optional<String> = Optional.ofNullable(accountId)
 
     /**
      * The account number for the bank account.
@@ -83,7 +83,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountId()
          * .accountNumber()
          * ```
          */
@@ -110,7 +109,10 @@ private constructor(
 
         fun accountsType(accountsType: AccountsType) = apply { this.accountsType = accountsType }
 
-        fun accountId(accountId: String) = apply { this.accountId = accountId }
+        fun accountId(accountId: String?) = apply { this.accountId = accountId }
+
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -280,7 +282,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountId()
          * .accountNumber()
          * ```
          *
@@ -289,7 +290,7 @@ private constructor(
         fun build(): AccountDetailCreateParams =
             AccountDetailCreateParams(
                 checkRequired("accountsType", accountsType),
-                checkRequired("accountId", accountId),
+                accountId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -301,7 +302,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> accountsType.toString()
-            1 -> accountId
+            1 -> accountId ?: ""
             else -> ""
         }
 
