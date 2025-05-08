@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking.paymentOrders
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -20,6 +21,7 @@ import com.moderntreasury.api.models.PaymentOrderReversalListPage
 import com.moderntreasury.api.models.PaymentOrderReversalListParams
 import com.moderntreasury.api.models.PaymentOrderReversalRetrieveParams
 import com.moderntreasury.api.models.Reversal
+import kotlin.jvm.optionals.getOrNull
 
 class ReversalServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ReversalService {
@@ -63,6 +65,9 @@ class ReversalServiceImpl internal constructor(private val clientOptions: Client
             params: PaymentOrderReversalCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Reversal> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -90,6 +95,9 @@ class ReversalServiceImpl internal constructor(private val clientOptions: Client
             params: PaymentOrderReversalRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Reversal> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("reversalId", params.reversalId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -122,6 +130,9 @@ class ReversalServiceImpl internal constructor(private val clientOptions: Client
             params: PaymentOrderReversalListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PaymentOrderReversalListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

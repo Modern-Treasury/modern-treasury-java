@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.moderntreasury.api.models.LedgerEventHandlerDeleteParams
 import com.moderntreasury.api.models.LedgerEventHandlerListPage
 import com.moderntreasury.api.models.LedgerEventHandlerListParams
 import com.moderntreasury.api.models.LedgerEventHandlerRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class LedgerEventHandlerServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LedgerEventHandlerService {
@@ -98,6 +100,9 @@ class LedgerEventHandlerServiceImpl internal constructor(private val clientOptio
             params: LedgerEventHandlerRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerEventHandler> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -159,6 +164,9 @@ class LedgerEventHandlerServiceImpl internal constructor(private val clientOptio
             params: LedgerEventHandlerDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LedgerEventHandler> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -20,8 +20,21 @@ interface LedgerEntryServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get details on a single ledger entry. */
-    fun retrieve(params: LedgerEntryRetrieveParams): CompletableFuture<LedgerEntry> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<LedgerEntry> =
+        retrieve(id, LedgerEntryRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerEntry> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
+    ): CompletableFuture<LedgerEntry> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -29,15 +42,44 @@ interface LedgerEntryServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntry>
 
+    /** @see [retrieve] */
+    fun retrieve(params: LedgerEntryRetrieveParams): CompletableFuture<LedgerEntry> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerEntry> =
+        retrieve(id, LedgerEntryRetrieveParams.none(), requestOptions)
+
     /** Update the details of a ledger entry. */
-    fun update(params: LedgerEntryUpdateParams): CompletableFuture<LedgerEntry> =
-        update(params, RequestOptions.none())
+    fun update(id: String): CompletableFuture<LedgerEntry> =
+        update(id, LedgerEntryUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerEntry> = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
+    ): CompletableFuture<LedgerEntry> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: LedgerEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEntry>
+
+    /** @see [update] */
+    fun update(params: LedgerEntryUpdateParams): CompletableFuture<LedgerEntry> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerEntry> =
+        update(id, LedgerEntryUpdateParams.none(), requestOptions)
 
     /** Get a list of all ledger entries. */
     fun list(): CompletableFuture<LedgerEntryListPageAsync> = list(LedgerEntryListParams.none())
@@ -68,9 +110,25 @@ interface LedgerEntryServiceAsync {
          * as [LedgerEntryServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            retrieve(id, LedgerEntryRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: LedgerEntryRetrieveParams
-        ): CompletableFuture<HttpResponseFor<LedgerEntry>> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -79,10 +137,53 @@ interface LedgerEntryServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerEntry>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerEntryRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            retrieve(id, LedgerEntryRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/ledger_entries/{id}`, but is otherwise the
          * same as [LedgerEntryServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(id: String): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            update(id, LedgerEntryUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: LedgerEntryUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>>
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerEntryUpdateParams
@@ -91,9 +192,10 @@ interface LedgerEntryServiceAsync {
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: LedgerEntryUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerEntry>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerEntry>> =
+            update(id, LedgerEntryUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_entries`, but is otherwise the same as

@@ -14,13 +14,14 @@ import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Delete a single account detail for an external account. */
 class AccountDetailDeleteParams
 private constructor(
     private val accountsType: AccountsType,
     private val accountId: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -30,7 +31,7 @@ private constructor(
 
     fun accountId(): String = accountId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -49,7 +50,6 @@ private constructor(
          * ```java
          * .accountsType()
          * .accountId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -80,7 +80,10 @@ private constructor(
 
         fun accountId(accountId: String) = apply { this.accountId = accountId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -211,7 +214,6 @@ private constructor(
          * ```java
          * .accountsType()
          * .accountId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -220,7 +222,7 @@ private constructor(
             AccountDetailDeleteParams(
                 checkRequired("accountsType", accountsType),
                 checkRequired("accountId", accountId),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -234,7 +236,7 @@ private constructor(
         when (index) {
             0 -> accountsType.toString()
             1 -> accountId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

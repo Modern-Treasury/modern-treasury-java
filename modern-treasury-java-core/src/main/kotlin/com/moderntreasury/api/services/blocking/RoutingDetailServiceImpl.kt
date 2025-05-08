@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -23,6 +24,7 @@ import com.moderntreasury.api.models.RoutingDetailDeleteParams
 import com.moderntreasury.api.models.RoutingDetailListPage
 import com.moderntreasury.api.models.RoutingDetailListParams
 import com.moderntreasury.api.models.RoutingDetailRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class RoutingDetailServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     RoutingDetailService {
@@ -71,6 +73,9 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
             params: RoutingDetailCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<RoutingDetail> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("accountId", params.accountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,6 +108,9 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
             params: RoutingDetailRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<RoutingDetail> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -136,6 +144,9 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
             params: RoutingDetailListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<RoutingDetailListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("accountId", params.accountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -174,6 +185,9 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
             params: RoutingDetailDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

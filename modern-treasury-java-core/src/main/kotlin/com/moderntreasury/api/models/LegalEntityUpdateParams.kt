@@ -27,13 +27,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Update a legal entity. */
 class LegalEntityUpdateParams
 private constructor(
-    private val id: String,
+    private val id: String?,
     private val body: LegalEntityUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * A list of addresses for the entity.
@@ -405,14 +405,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [LegalEntityUpdateParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         */
+        @JvmStatic fun none(): LegalEntityUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [LegalEntityUpdateParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -432,7 +427,10 @@ private constructor(
             additionalQueryParams = legalEntityUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -1018,17 +1016,10 @@ private constructor(
          * Returns an immutable instance of [LegalEntityUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): LegalEntityUpdateParams =
             LegalEntityUpdateParams(
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -1039,7 +1030,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> id
+            0 -> id ?: ""
             else -> ""
         }
 

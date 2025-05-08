@@ -22,6 +22,20 @@ interface RoutingDetailServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a routing detail for a single external account. */
+    fun create(
+        accountId: String,
+        params: RoutingDetailCreateParams,
+    ): CompletableFuture<RoutingDetail> = create(accountId, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        accountId: String,
+        params: RoutingDetailCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<RoutingDetail> =
+        create(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: RoutingDetailCreateParams): CompletableFuture<RoutingDetail> =
         create(params, RequestOptions.none())
 
@@ -32,6 +46,20 @@ interface RoutingDetailServiceAsync {
     ): CompletableFuture<RoutingDetail>
 
     /** Get a single routing detail for a single internal or external account. */
+    fun retrieve(
+        id: String,
+        params: RoutingDetailRetrieveParams,
+    ): CompletableFuture<RoutingDetail> = retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: RoutingDetailRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<RoutingDetail> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
     fun retrieve(params: RoutingDetailRetrieveParams): CompletableFuture<RoutingDetail> =
         retrieve(params, RequestOptions.none())
 
@@ -42,6 +70,21 @@ interface RoutingDetailServiceAsync {
     ): CompletableFuture<RoutingDetail>
 
     /** Get a list of routing details for a single internal or external account. */
+    fun list(
+        accountId: String,
+        params: RoutingDetailListParams,
+    ): CompletableFuture<RoutingDetailListPageAsync> =
+        list(accountId, params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(
+        accountId: String,
+        params: RoutingDetailListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<RoutingDetailListPageAsync> =
+        list(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+    /** @see [list] */
     fun list(params: RoutingDetailListParams): CompletableFuture<RoutingDetailListPageAsync> =
         list(params, RequestOptions.none())
 
@@ -52,6 +95,17 @@ interface RoutingDetailServiceAsync {
     ): CompletableFuture<RoutingDetailListPageAsync>
 
     /** Delete a routing detail for a single external account. */
+    fun delete(id: String, params: RoutingDetailDeleteParams): CompletableFuture<Void?> =
+        delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: RoutingDetailDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: RoutingDetailDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
@@ -73,6 +127,23 @@ interface RoutingDetailServiceAsync {
          */
         @MustBeClosed
         fun create(
+            accountId: String,
+            params: RoutingDetailCreateParams,
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> =
+            create(accountId, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            accountId: String,
+            params: RoutingDetailCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> =
+            create(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
             params: RoutingDetailCreateParams
         ): CompletableFuture<HttpResponseFor<RoutingDetail>> = create(params, RequestOptions.none())
 
@@ -88,6 +159,23 @@ interface RoutingDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
          * [RoutingDetailServiceAsync.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: RoutingDetailRetrieveParams,
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: RoutingDetailRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetail>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: RoutingDetailRetrieveParams
@@ -107,6 +195,23 @@ interface RoutingDetailServiceAsync {
          */
         @MustBeClosed
         fun list(
+            accountId: String,
+            params: RoutingDetailListParams,
+        ): CompletableFuture<HttpResponseFor<RoutingDetailListPageAsync>> =
+            list(accountId, params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            accountId: String,
+            params: RoutingDetailListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<RoutingDetailListPageAsync>> =
+            list(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: RoutingDetailListParams
         ): CompletableFuture<HttpResponseFor<RoutingDetailListPageAsync>> =
             list(params, RequestOptions.none())
@@ -123,6 +228,20 @@ interface RoutingDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
          * [RoutingDetailServiceAsync.delete].
          */
+        @MustBeClosed
+        fun delete(id: String, params: RoutingDetailDeleteParams): CompletableFuture<HttpResponse> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: RoutingDetailDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(params: RoutingDetailDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())

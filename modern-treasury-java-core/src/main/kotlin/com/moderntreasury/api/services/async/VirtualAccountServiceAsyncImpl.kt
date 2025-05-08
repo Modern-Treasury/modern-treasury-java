@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class VirtualAccountServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : VirtualAccountServiceAsync {
@@ -110,6 +112,9 @@ internal constructor(private val clientOptions: ClientOptions) : VirtualAccountS
             params: VirtualAccountRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -139,6 +144,9 @@ internal constructor(private val clientOptions: ClientOptions) : VirtualAccountS
             params: VirtualAccountUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -207,6 +215,9 @@ internal constructor(private val clientOptions: ClientOptions) : VirtualAccountS
             params: VirtualAccountDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

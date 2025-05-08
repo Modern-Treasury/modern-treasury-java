@@ -5,8 +5,6 @@ package com.moderntreasury.api.services.async.transactions
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.models.TransactionLineItemCreateParams
-import com.moderntreasury.api.models.TransactionLineItemDeleteParams
-import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -46,10 +44,7 @@ internal class LineItemServiceAsyncTest {
                 .build()
         val lineItemServiceAsync = client.transactions().lineItems()
 
-        val transactionLineItemFuture =
-            lineItemServiceAsync.retrieve(
-                TransactionLineItemRetrieveParams.builder().id("id").build()
-            )
+        val transactionLineItemFuture = lineItemServiceAsync.retrieve("id")
 
         val transactionLineItem = transactionLineItemFuture.get()
         transactionLineItem.validate()
@@ -81,8 +76,7 @@ internal class LineItemServiceAsyncTest {
                 .build()
         val lineItemServiceAsync = client.transactions().lineItems()
 
-        val future =
-            lineItemServiceAsync.delete(TransactionLineItemDeleteParams.builder().id("id").build())
+        val future = lineItemServiceAsync.delete("id")
 
         val response = future.get()
     }

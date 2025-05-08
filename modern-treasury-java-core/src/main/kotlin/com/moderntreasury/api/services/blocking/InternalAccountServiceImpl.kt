@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportService
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportServiceImpl
+import kotlin.jvm.optionals.getOrNull
 
 class InternalAccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     InternalAccountService {
@@ -112,6 +114,9 @@ class InternalAccountServiceImpl internal constructor(private val clientOptions:
             params: InternalAccountRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InternalAccount> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -138,6 +143,9 @@ class InternalAccountServiceImpl internal constructor(private val clientOptions:
             params: InternalAccountUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InternalAccount> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)

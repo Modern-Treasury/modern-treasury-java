@@ -31,14 +31,39 @@ interface LedgerEventHandlerServiceAsync {
     ): CompletableFuture<LedgerEventHandler>
 
     /** Get details on a single ledger event handler. */
-    fun retrieve(params: LedgerEventHandlerRetrieveParams): CompletableFuture<LedgerEventHandler> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<LedgerEventHandler> =
+        retrieve(id, LedgerEventHandlerRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerEventHandlerRetrieveParams = LedgerEventHandlerRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerEventHandler> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerEventHandlerRetrieveParams = LedgerEventHandlerRetrieveParams.none(),
+    ): CompletableFuture<LedgerEventHandler> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: LedgerEventHandlerRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandler>
+
+    /** @see [retrieve] */
+    fun retrieve(params: LedgerEventHandlerRetrieveParams): CompletableFuture<LedgerEventHandler> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerEventHandler> =
+        retrieve(id, LedgerEventHandlerRetrieveParams.none(), requestOptions)
 
     /** Get a list of ledger event handlers. */
     fun list(): CompletableFuture<LedgerEventHandlerListPageAsync> =
@@ -60,14 +85,36 @@ interface LedgerEventHandlerServiceAsync {
         list(LedgerEventHandlerListParams.none(), requestOptions)
 
     /** Archive a ledger event handler. */
-    fun delete(params: LedgerEventHandlerDeleteParams): CompletableFuture<LedgerEventHandler> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<LedgerEventHandler> =
+        delete(id, LedgerEventHandlerDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerEventHandlerDeleteParams = LedgerEventHandlerDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerEventHandler> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerEventHandlerDeleteParams = LedgerEventHandlerDeleteParams.none(),
+    ): CompletableFuture<LedgerEventHandler> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: LedgerEventHandlerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerEventHandler>
+
+    /** @see [delete] */
+    fun delete(params: LedgerEventHandlerDeleteParams): CompletableFuture<LedgerEventHandler> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerEventHandler> =
+        delete(id, LedgerEventHandlerDeleteParams.none(), requestOptions)
 
     /**
      * A view of [LedgerEventHandlerServiceAsync] that provides access to raw HTTP responses for
@@ -97,6 +144,35 @@ interface LedgerEventHandlerServiceAsync {
          * the same as [LedgerEventHandlerServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            retrieve(id, LedgerEventHandlerRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerEventHandlerRetrieveParams = LedgerEventHandlerRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerEventHandlerRetrieveParams = LedgerEventHandlerRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerEventHandlerRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: LedgerEventHandlerRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
@@ -105,9 +181,10 @@ interface LedgerEventHandlerServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: LedgerEventHandlerRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            retrieve(id, LedgerEventHandlerRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_event_handlers`, but is otherwise the
@@ -143,6 +220,35 @@ interface LedgerEventHandlerServiceAsync {
          * otherwise the same as [LedgerEventHandlerServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            delete(id, LedgerEventHandlerDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerEventHandlerDeleteParams = LedgerEventHandlerDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerEventHandlerDeleteParams = LedgerEventHandlerDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: LedgerEventHandlerDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: LedgerEventHandlerDeleteParams
         ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
@@ -151,8 +257,9 @@ interface LedgerEventHandlerServiceAsync {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: LedgerEventHandlerDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerEventHandler>> =
+            delete(id, LedgerEventHandlerDeleteParams.none(), requestOptions)
     }
 }

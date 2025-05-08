@@ -6,7 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.InternalAccountCreateParams
-import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -68,10 +67,7 @@ internal class InternalAccountServiceAsyncTest {
                 .build()
         val internalAccountServiceAsync = client.internalAccounts()
 
-        val internalAccountFuture =
-            internalAccountServiceAsync.retrieve(
-                InternalAccountRetrieveParams.builder().id("id").build()
-            )
+        val internalAccountFuture = internalAccountServiceAsync.retrieve("id")
 
         val internalAccount = internalAccountFuture.get()
         internalAccount.validate()

@@ -34,8 +34,20 @@ interface TransactionService {
     ): Transaction
 
     /** Get details on a single transaction. */
-    fun retrieve(params: TransactionRetrieveParams): Transaction =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): Transaction = retrieve(id, TransactionRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Transaction = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
+    ): Transaction = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -43,14 +55,42 @@ interface TransactionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
 
+    /** @see [retrieve] */
+    fun retrieve(params: TransactionRetrieveParams): Transaction =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): Transaction =
+        retrieve(id, TransactionRetrieveParams.none(), requestOptions)
+
     /** Update a single transaction. */
-    fun update(params: TransactionUpdateParams): Transaction = update(params, RequestOptions.none())
+    fun update(id: String): Transaction = update(id, TransactionUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: TransactionUpdateParams = TransactionUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Transaction = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: TransactionUpdateParams = TransactionUpdateParams.none(),
+    ): Transaction = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: TransactionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
+
+    /** @see [update] */
+    fun update(params: TransactionUpdateParams): Transaction = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): Transaction =
+        update(id, TransactionUpdateParams.none(), requestOptions)
 
     /** Get a list of all transactions. */
     fun list(): TransactionListPage = list(TransactionListParams.none())
@@ -70,13 +110,31 @@ interface TransactionService {
         list(TransactionListParams.none(), requestOptions)
 
     /** delete transaction */
-    fun delete(params: TransactionDeleteParams) = delete(params, RequestOptions.none())
+    fun delete(id: String) = delete(id, TransactionDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: TransactionDeleteParams = TransactionDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(id: String, params: TransactionDeleteParams = TransactionDeleteParams.none()) =
+        delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: TransactionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
+
+    /** @see [delete] */
+    fun delete(params: TransactionDeleteParams) = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions) =
+        delete(id, TransactionDeleteParams.none(), requestOptions)
 
     /**
      * A view of [TransactionService] that provides access to raw HTTP responses for each method.
@@ -105,8 +163,24 @@ interface TransactionService {
          * as [TransactionService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: TransactionRetrieveParams): HttpResponseFor<Transaction> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<Transaction> =
+            retrieve(id, TransactionRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Transaction> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
+        ): HttpResponseFor<Transaction> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -115,13 +189,38 @@ interface TransactionService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: TransactionRetrieveParams): HttpResponseFor<Transaction> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Transaction> =
+            retrieve(id, TransactionRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/transactions/{id}`, but is otherwise the same
          * as [TransactionService.update].
          */
         @MustBeClosed
-        fun update(params: TransactionUpdateParams): HttpResponseFor<Transaction> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<Transaction> =
+            update(id, TransactionUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: TransactionUpdateParams = TransactionUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Transaction> = update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: TransactionUpdateParams = TransactionUpdateParams.none(),
+        ): HttpResponseFor<Transaction> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -129,6 +228,16 @@ interface TransactionService {
             params: TransactionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: TransactionUpdateParams): HttpResponseFor<Transaction> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<Transaction> =
+            update(id, TransactionUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/transactions`, but is otherwise the same as
@@ -160,8 +269,22 @@ interface TransactionService {
          * same as [TransactionService.delete].
          */
         @MustBeClosed
-        fun delete(params: TransactionDeleteParams): HttpResponse =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponse = delete(id, TransactionDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: TransactionDeleteParams = TransactionDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: TransactionDeleteParams = TransactionDeleteParams.none(),
+        ): HttpResponse = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -169,5 +292,15 @@ interface TransactionService {
             params: TransactionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: TransactionDeleteParams): HttpResponse =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponse =
+            delete(id, TransactionDeleteParams.none(), requestOptions)
     }
 }

@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowListPage
 import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class AccountCollectionFlowServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : AccountCollectionFlowService {
@@ -100,6 +102,9 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
             params: AccountCollectionFlowRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountCollectionFlow> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -127,6 +132,9 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
             params: AccountCollectionFlowUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountCollectionFlow> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
