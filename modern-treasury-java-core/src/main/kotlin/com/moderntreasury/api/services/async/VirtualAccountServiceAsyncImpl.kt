@@ -199,6 +199,7 @@ internal constructor(private val clientOptions: ClientOptions) : VirtualAccountS
                             .let {
                                 VirtualAccountListPageAsync.builder()
                                     .service(VirtualAccountServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

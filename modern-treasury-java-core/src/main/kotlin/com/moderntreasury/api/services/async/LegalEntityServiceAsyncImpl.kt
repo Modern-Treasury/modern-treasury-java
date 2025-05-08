@@ -190,6 +190,7 @@ class LegalEntityServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 LegalEntityListPageAsync.builder()
                                     .service(LegalEntityServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

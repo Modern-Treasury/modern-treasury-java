@@ -198,6 +198,7 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                             .let {
                                 LedgerListPageAsync.builder()
                                     .service(LedgerServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

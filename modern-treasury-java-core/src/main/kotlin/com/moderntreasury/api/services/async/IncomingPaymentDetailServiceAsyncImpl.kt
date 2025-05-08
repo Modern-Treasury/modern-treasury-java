@@ -165,6 +165,7 @@ internal constructor(private val clientOptions: ClientOptions) : IncomingPayment
                             .let {
                                 IncomingPaymentDetailListPageAsync.builder()
                                     .service(IncomingPaymentDetailServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

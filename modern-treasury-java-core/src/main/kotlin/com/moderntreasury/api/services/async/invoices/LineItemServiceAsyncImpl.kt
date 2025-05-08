@@ -217,6 +217,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                             .let {
                                 InvoiceLineItemListPageAsync.builder()
                                     .service(LineItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

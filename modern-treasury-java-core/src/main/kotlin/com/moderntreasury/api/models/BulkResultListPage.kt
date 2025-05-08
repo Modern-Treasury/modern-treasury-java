@@ -2,14 +2,13 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.AutoPager
+import com.moderntreasury.api.core.Page
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.BulkResultService
 import java.util.Objects
 import java.util.Optional
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
-import kotlin.jvm.optionals.getOrNull
 
 /** @see [BulkResultService.list] */
 class BulkResultListPage
@@ -18,34 +17,27 @@ private constructor(
     private val params: BulkResultListParams,
     private val headers: Headers,
     private val items: List<BulkResult>,
-) {
+) : Page<BulkResult> {
 
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPageParams(): Optional<BulkResultListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    fun nextPageParams(): BulkResultListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-        return Optional.of(
-            params.toBuilder().apply { afterCursor().ifPresent { afterCursor(it) } }.build()
-        )
-    }
+    override fun nextPage(): BulkResultListPage = service.list(nextPageParams())
 
-    fun getNextPage(): Optional<BulkResultListPage> = getNextPageParams().map { service.list(it) }
-
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<BulkResult> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): BulkResultListParams = params
 
     /** The response that this page was parsed from. */
-    fun items(): List<BulkResult> = items
+    override fun items(): List<BulkResult> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -113,25 +105,6 @@ private constructor(
                 checkRequired("headers", headers),
                 checkRequired("items", items),
             )
-    }
-
-    class AutoPager(private val firstPage: BulkResultListPage) : Iterable<BulkResult> {
-
-        override fun iterator(): Iterator<BulkResult> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.items().size) {
-                    yield(page.items()[index++])
-                }
-                page = page.getNextPage().getOrNull() ?: break
-                index = 0
-            }
-        }
-
-        fun stream(): Stream<BulkResult> {
-            return StreamSupport.stream(spliterator(), false)
-        }
     }
 
     override fun equals(other: Any?): Boolean {

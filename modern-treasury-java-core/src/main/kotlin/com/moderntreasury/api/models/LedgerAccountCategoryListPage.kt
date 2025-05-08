@@ -2,14 +2,13 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.AutoPager
+import com.moderntreasury.api.core.Page
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.LedgerAccountCategoryService
 import java.util.Objects
 import java.util.Optional
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
-import kotlin.jvm.optionals.getOrNull
 
 /** @see [LedgerAccountCategoryService.list] */
 class LedgerAccountCategoryListPage
@@ -18,35 +17,27 @@ private constructor(
     private val params: LedgerAccountCategoryListParams,
     private val headers: Headers,
     private val items: List<LedgerAccountCategory>,
-) {
+) : Page<LedgerAccountCategory> {
 
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPageParams(): Optional<LedgerAccountCategoryListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    fun nextPageParams(): LedgerAccountCategoryListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-        return Optional.of(
-            params.toBuilder().apply { afterCursor().ifPresent { afterCursor(it) } }.build()
-        )
-    }
+    override fun nextPage(): LedgerAccountCategoryListPage = service.list(nextPageParams())
 
-    fun getNextPage(): Optional<LedgerAccountCategoryListPage> =
-        getNextPageParams().map { service.list(it) }
-
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<LedgerAccountCategory> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): LedgerAccountCategoryListParams = params
 
     /** The response that this page was parsed from. */
-    fun items(): List<LedgerAccountCategory> = items
+    override fun items(): List<LedgerAccountCategory> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -115,26 +106,6 @@ private constructor(
                 checkRequired("headers", headers),
                 checkRequired("items", items),
             )
-    }
-
-    class AutoPager(private val firstPage: LedgerAccountCategoryListPage) :
-        Iterable<LedgerAccountCategory> {
-
-        override fun iterator(): Iterator<LedgerAccountCategory> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.items().size) {
-                    yield(page.items()[index++])
-                }
-                page = page.getNextPage().getOrNull() ?: break
-                index = 0
-            }
-        }
-
-        fun stream(): Stream<LedgerAccountCategory> {
-            return StreamSupport.stream(spliterator(), false)
-        }
     }
 
     override fun equals(other: Any?): Boolean {

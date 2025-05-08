@@ -149,6 +149,7 @@ class ReturnServiceAsyncImpl internal constructor(private val clientOptions: Cli
                             .let {
                                 ReturnListPageAsync.builder()
                                     .service(ReturnServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

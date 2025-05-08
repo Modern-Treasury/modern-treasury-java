@@ -149,6 +149,7 @@ class DocumentServiceAsyncImpl internal constructor(private val clientOptions: C
                             .let {
                                 DocumentListPageAsync.builder()
                                     .service(DocumentServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

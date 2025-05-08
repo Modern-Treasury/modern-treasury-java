@@ -110,6 +110,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             .let {
                                 EventListPageAsync.builder()
                                     .service(EventServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

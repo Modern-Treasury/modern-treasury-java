@@ -206,6 +206,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                                     .service(
                                         LedgerAccountBalanceMonitorServiceAsyncImpl(clientOptions)
                                     )
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

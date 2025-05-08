@@ -158,6 +158,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerEventHand
                             .let {
                                 LedgerEventHandlerListPageAsync.builder()
                                     .service(LedgerEventHandlerServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)
