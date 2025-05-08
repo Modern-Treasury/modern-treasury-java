@@ -195,6 +195,7 @@ internal constructor(private val clientOptions: ClientOptions) : ConnectionLegal
                             .let {
                                 ConnectionLegalEntityListPageAsync.builder()
                                     .service(ConnectionLegalEntityServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

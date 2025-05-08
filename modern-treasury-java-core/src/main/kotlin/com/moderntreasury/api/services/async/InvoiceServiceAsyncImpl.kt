@@ -212,6 +212,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 InvoiceListPageAsync.builder()
                                     .service(InvoiceServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

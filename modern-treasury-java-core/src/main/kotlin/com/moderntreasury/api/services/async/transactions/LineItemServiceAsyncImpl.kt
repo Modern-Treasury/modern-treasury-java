@@ -162,6 +162,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                             .let {
                                 TransactionLineItemListPageAsync.builder()
                                     .service(LineItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

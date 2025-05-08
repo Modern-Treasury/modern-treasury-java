@@ -219,6 +219,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
                             .let {
                                 LedgerTransactionListPageAsync.builder()
                                     .service(LedgerTransactionServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

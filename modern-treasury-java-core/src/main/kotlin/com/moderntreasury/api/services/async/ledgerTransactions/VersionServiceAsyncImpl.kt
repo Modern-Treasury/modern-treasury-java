@@ -69,6 +69,7 @@ class VersionServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 LedgerTransactionVersionListPageAsync.builder()
                                     .service(VersionServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

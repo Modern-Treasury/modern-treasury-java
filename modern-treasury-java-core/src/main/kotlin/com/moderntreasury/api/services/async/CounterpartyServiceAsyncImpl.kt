@@ -209,6 +209,7 @@ class CounterpartyServiceAsyncImpl internal constructor(private val clientOption
                             .let {
                                 CounterpartyListPageAsync.builder()
                                     .service(CounterpartyServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

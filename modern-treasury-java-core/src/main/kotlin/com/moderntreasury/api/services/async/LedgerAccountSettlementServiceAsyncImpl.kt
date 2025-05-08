@@ -210,6 +210,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                             .let {
                                 LedgerAccountSettlementListPageAsync.builder()
                                     .service(LedgerAccountSettlementServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

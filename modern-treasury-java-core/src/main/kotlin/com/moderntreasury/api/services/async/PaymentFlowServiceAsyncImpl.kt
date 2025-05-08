@@ -190,6 +190,7 @@ class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 PaymentFlowListPageAsync.builder()
                                     .service(PaymentFlowServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

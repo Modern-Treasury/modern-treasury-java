@@ -205,6 +205,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
                             .let {
                                 InternalAccountListPageAsync.builder()
                                     .service(InternalAccountServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

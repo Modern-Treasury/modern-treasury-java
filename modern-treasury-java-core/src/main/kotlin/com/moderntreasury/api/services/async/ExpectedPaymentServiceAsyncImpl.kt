@@ -199,6 +199,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExpectedPayment
                             .let {
                                 ExpectedPaymentListPageAsync.builder()
                                     .service(ExpectedPaymentServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

@@ -153,6 +153,7 @@ internal constructor(private val clientOptions: ClientOptions) : ForeignExchange
                             .let {
                                 ForeignExchangeQuoteListPageAsync.builder()
                                     .service(ForeignExchangeQuoteServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)
