@@ -286,53 +286,101 @@ The SDK throws custom unchecked exception types:
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
 
-### Synchronous
+When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
 import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.CounterpartyListPage;
 
-// As an Iterable:
-CounterpartyListPage page = client.counterparties().list(params);
+CounterpartyListPage page = client.counterparties().list();
+
+// Process as an Iterable
 for (Counterparty counterparty : page.autoPager()) {
     System.out.println(counterparty);
-};
+}
 
-// As a Stream:
-client.counterparties().list(params).autoPager().stream()
+// Process as a Stream
+page.autoPager()
+    .stream()
     .limit(50)
     .forEach(counterparty -> System.out.println(counterparty));
 ```
 
-### Asynchronous
+When using the asynchronous client, the method returns an [`AsyncStreamResponse`](modern-treasury-java-core/src/main/kotlin/com/moderntreasury/api/core/http/AsyncStreamResponse.kt):
 
 ```java
-// Using forEach, which returns CompletableFuture<Void>:
-asyncClient.counterparties().list(params).autoPager()
-    .forEach(counterparty -> System.out.println(counterparty), executor);
+import com.moderntreasury.api.core.http.AsyncStreamResponse;
+import com.moderntreasury.api.models.Counterparty;
+import com.moderntreasury.api.models.CounterpartyListPageAsync;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+CompletableFuture<CounterpartyListPageAsync> pageFuture = client.async().counterparties().list();
+
+pageFuture.thenRun(page -> page.autoPager().subscribe(counterparty -> {
+    System.out.println(counterparty);
+}));
+
+// If you need to handle errors or completion of the stream
+pageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {
+    @Override
+    public void onNext(Counterparty counterparty) {
+        System.out.println(counterparty);
+    }
+
+    @Override
+    public void onComplete(Optional<Throwable> error) {
+        if (error.isPresent()) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error.get());
+        } else {
+            System.out.println("No more!");
+        }
+    }
+}));
+
+// Or use futures
+pageFuture.thenRun(page -> page.autoPager()
+    .subscribe(counterparty -> {
+        System.out.println(counterparty);
+    })
+    .onCompleteFuture()
+    .whenComplete((unused, error) -> {
+        if (error != null) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error);
+        } else {
+            System.out.println("No more!");
+        }
+    }));
 ```
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+To access individual page items and manually request the next page, use the `items()`,
+`hasNextPage()`, and `nextPage()` methods:
 
 ```java
 import com.moderntreasury.api.models.Counterparty;
 import com.moderntreasury.api.models.CounterpartyListPage;
 
-CounterpartyListPage page = client.counterparties().list(params);
-while (page != null) {
+CounterpartyListPage page = client.counterparties().list();
+while (true) {
     for (Counterparty counterparty : page.items()) {
         System.out.println(counterparty);
     }
 
-    page = page.getNextPage().orElse(null);
+    if (!page.hasNextPage()) {
+        break;
+    }
+
+    page = page.nextPage();
 }
 ```
 
@@ -399,7 +447,6 @@ To set a custom timeout, configure the method call using the `timeout` method:
 
 ```java
 import com.moderntreasury.api.models.Counterparty;
-import com.moderntreasury.api.models.CounterpartyCreateParams;
 
 Counterparty counterparty = client.counterparties().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
@@ -631,7 +678,6 @@ Or configure the method call to validate the response using the `responseValidat
 
 ```java
 import com.moderntreasury.api.models.Counterparty;
-import com.moderntreasury.api.models.CounterpartyCreateParams;
 
 Counterparty counterparty = client.counterparties().create(
   params, RequestOptions.builder().responseValidation(true).build()

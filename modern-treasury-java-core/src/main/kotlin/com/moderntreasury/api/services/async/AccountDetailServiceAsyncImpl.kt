@@ -182,6 +182,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 AccountDetailListPageAsync.builder()
                                     .service(AccountDetailServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

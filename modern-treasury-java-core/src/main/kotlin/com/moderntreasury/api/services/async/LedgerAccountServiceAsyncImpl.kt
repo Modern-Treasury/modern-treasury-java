@@ -199,6 +199,7 @@ class LedgerAccountServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 LedgerAccountListPageAsync.builder()
                                     .service(LedgerAccountServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

@@ -120,6 +120,7 @@ internal constructor(private val clientOptions: ClientOptions) : PaymentReferenc
                             .let {
                                 PaymentReferenceListPageAsync.builder()
                                     .service(PaymentReferenceServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

@@ -237,6 +237,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
                             .let {
                                 LedgerAccountCategoryListPageAsync.builder()
                                     .service(LedgerAccountCategoryServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

@@ -110,6 +110,7 @@ class PaperItemServiceAsyncImpl internal constructor(private val clientOptions: 
                             .let {
                                 PaperItemListPageAsync.builder()
                                     .service(PaperItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

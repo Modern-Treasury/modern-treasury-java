@@ -182,6 +182,7 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 BalanceReportListPageAsync.builder()
                                     .service(BalanceReportServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

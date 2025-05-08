@@ -2,6 +2,8 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.AutoPagerAsync
+import com.moderntreasury.api.core.PageAsync
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.CounterpartyServiceAsync
@@ -9,46 +11,37 @@ import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 
 /** @see [CounterpartyServiceAsync.list] */
 class CounterpartyListPageAsync
 private constructor(
     private val service: CounterpartyServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: CounterpartyListParams,
     private val headers: Headers,
     private val items: List<Counterparty>,
-) {
+) : PageAsync<Counterparty> {
 
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPageParams(): Optional<CounterpartyListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    fun nextPageParams(): CounterpartyListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-        return Optional.of(
-            params.toBuilder().apply { afterCursor().ifPresent { afterCursor(it) } }.build()
-        )
-    }
+    override fun nextPage(): CompletableFuture<CounterpartyListPageAsync> =
+        service.list(nextPageParams())
 
-    fun getNextPage(): CompletableFuture<Optional<CounterpartyListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<Counterparty> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): CounterpartyListParams = params
 
     /** The response that this page was parsed from. */
-    fun items(): List<Counterparty> = items
+    override fun items(): List<Counterparty> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -60,6 +53,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -72,6 +66,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: CounterpartyServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: CounterpartyListParams? = null
         private var headers: Headers? = null
         private var items: List<Counterparty>? = null
@@ -79,12 +74,17 @@ private constructor(
         @JvmSynthetic
         internal fun from(counterpartyListPageAsync: CounterpartyListPageAsync) = apply {
             service = counterpartyListPageAsync.service
+            streamHandlerExecutor = counterpartyListPageAsync.streamHandlerExecutor
             params = counterpartyListPageAsync.params
             headers = counterpartyListPageAsync.headers
             items = counterpartyListPageAsync.items
         }
 
         fun service(service: CounterpartyServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: CounterpartyListParams) = apply { this.params = params }
@@ -102,6 +102,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -112,36 +113,11 @@ private constructor(
         fun build(): CounterpartyListPageAsync =
             CounterpartyListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("headers", headers),
                 checkRequired("items", items),
             )
-    }
-
-    class AutoPager(private val firstPage: CounterpartyListPageAsync) {
-
-        fun forEach(action: Predicate<Counterparty>, executor: Executor): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<CounterpartyListPageAsync>>.forEach(
-                action: (Counterparty) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.items().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<Counterparty>> {
-            val values = mutableListOf<Counterparty>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -149,11 +125,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterpartyListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+        return /* spotless:off */ other is CounterpartyListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, headers, items) /* spotless:on */
 
     override fun toString() =
-        "CounterpartyListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
+        "CounterpartyListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
 }

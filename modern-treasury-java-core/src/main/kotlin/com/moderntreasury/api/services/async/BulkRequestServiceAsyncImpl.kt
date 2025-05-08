@@ -149,6 +149,7 @@ class BulkRequestServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 BulkRequestListPageAsync.builder()
                                     .service(BulkRequestServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

@@ -182,6 +182,7 @@ class RoutingDetailServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 RoutingDetailListPageAsync.builder()
                                     .service(RoutingDetailServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

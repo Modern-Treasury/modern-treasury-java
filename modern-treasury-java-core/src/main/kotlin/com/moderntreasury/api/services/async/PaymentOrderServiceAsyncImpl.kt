@@ -212,6 +212,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
                             .let {
                                 PaymentOrderListPageAsync.builder()
                                     .service(PaymentOrderServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)
