@@ -7,19 +7,21 @@ import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get details on a single reversal of a payment order. */
 class PaymentOrderReversalRetrieveParams
 private constructor(
     private val paymentOrderId: String,
-    private val reversalId: String,
+    private val reversalId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun paymentOrderId(): String = paymentOrderId
 
-    fun reversalId(): String = reversalId
+    fun reversalId(): Optional<String> = Optional.ofNullable(reversalId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -36,7 +38,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .paymentOrderId()
-         * .reversalId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -62,7 +63,10 @@ private constructor(
 
         fun paymentOrderId(paymentOrderId: String) = apply { this.paymentOrderId = paymentOrderId }
 
-        fun reversalId(reversalId: String) = apply { this.reversalId = reversalId }
+        fun reversalId(reversalId: String?) = apply { this.reversalId = reversalId }
+
+        /** Alias for calling [Builder.reversalId] with `reversalId.orElse(null)`. */
+        fun reversalId(reversalId: Optional<String>) = reversalId(reversalId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -170,7 +174,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .paymentOrderId()
-         * .reversalId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -178,7 +181,7 @@ private constructor(
         fun build(): PaymentOrderReversalRetrieveParams =
             PaymentOrderReversalRetrieveParams(
                 checkRequired("paymentOrderId", paymentOrderId),
-                checkRequired("reversalId", reversalId),
+                reversalId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -187,7 +190,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> paymentOrderId
-            1 -> reversalId
+            1 -> reversalId ?: ""
             else -> ""
         }
 

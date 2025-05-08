@@ -21,6 +21,17 @@ interface RoutingDetailService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a routing detail for a single external account. */
+    fun create(accountId: String, params: RoutingDetailCreateParams): RoutingDetail =
+        create(accountId, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        accountId: String,
+        params: RoutingDetailCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): RoutingDetail = create(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: RoutingDetailCreateParams): RoutingDetail =
         create(params, RequestOptions.none())
 
@@ -31,6 +42,17 @@ interface RoutingDetailService {
     ): RoutingDetail
 
     /** Get a single routing detail for a single internal or external account. */
+    fun retrieve(id: String, params: RoutingDetailRetrieveParams): RoutingDetail =
+        retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: RoutingDetailRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): RoutingDetail = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
     fun retrieve(params: RoutingDetailRetrieveParams): RoutingDetail =
         retrieve(params, RequestOptions.none())
 
@@ -41,6 +63,17 @@ interface RoutingDetailService {
     ): RoutingDetail
 
     /** Get a list of routing details for a single internal or external account. */
+    fun list(accountId: String, params: RoutingDetailListParams): RoutingDetailListPage =
+        list(accountId, params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(
+        accountId: String,
+        params: RoutingDetailListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): RoutingDetailListPage = list(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+    /** @see [list] */
     fun list(params: RoutingDetailListParams): RoutingDetailListPage =
         list(params, RequestOptions.none())
 
@@ -51,6 +84,17 @@ interface RoutingDetailService {
     ): RoutingDetailListPage
 
     /** Delete a routing detail for a single external account. */
+    fun delete(id: String, params: RoutingDetailDeleteParams) =
+        delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: RoutingDetailDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: RoutingDetailDeleteParams) = delete(params, RequestOptions.none())
 
     /** @see [delete] */
@@ -69,6 +113,22 @@ interface RoutingDetailService {
          * but is otherwise the same as [RoutingDetailService.create].
          */
         @MustBeClosed
+        fun create(
+            accountId: String,
+            params: RoutingDetailCreateParams,
+        ): HttpResponseFor<RoutingDetail> = create(accountId, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            accountId: String,
+            params: RoutingDetailCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<RoutingDetail> =
+            create(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
         fun create(params: RoutingDetailCreateParams): HttpResponseFor<RoutingDetail> =
             create(params, RequestOptions.none())
 
@@ -85,6 +145,22 @@ interface RoutingDetailService {
          * [RoutingDetailService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: RoutingDetailRetrieveParams,
+        ): HttpResponseFor<RoutingDetail> = retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: RoutingDetailRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<RoutingDetail> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(params: RoutingDetailRetrieveParams): HttpResponseFor<RoutingDetail> =
             retrieve(params, RequestOptions.none())
 
@@ -99,6 +175,22 @@ interface RoutingDetailService {
          * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/routing_details`,
          * but is otherwise the same as [RoutingDetailService.list].
          */
+        @MustBeClosed
+        fun list(
+            accountId: String,
+            params: RoutingDetailListParams,
+        ): HttpResponseFor<RoutingDetailListPage> = list(accountId, params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            accountId: String,
+            params: RoutingDetailListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<RoutingDetailListPage> =
+            list(params.toBuilder().accountId(accountId).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         fun list(params: RoutingDetailListParams): HttpResponseFor<RoutingDetailListPage> =
             list(params, RequestOptions.none())
@@ -115,6 +207,19 @@ interface RoutingDetailService {
          * /api/{accounts_type}/{account_id}/routing_details/{id}`, but is otherwise the same as
          * [RoutingDetailService.delete].
          */
+        @MustBeClosed
+        fun delete(id: String, params: RoutingDetailDeleteParams): HttpResponse =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: RoutingDetailDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(params: RoutingDetailDeleteParams): HttpResponse =
             delete(params, RequestOptions.none())

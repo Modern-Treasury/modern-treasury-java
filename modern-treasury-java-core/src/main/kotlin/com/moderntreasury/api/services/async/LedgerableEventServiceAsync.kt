@@ -28,14 +28,36 @@ interface LedgerableEventServiceAsync {
     ): CompletableFuture<LedgerableEvent>
 
     /** Get details on a single ledgerable event. */
-    fun retrieve(params: LedgerableEventRetrieveParams): CompletableFuture<LedgerableEvent> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<LedgerableEvent> =
+        retrieve(id, LedgerableEventRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerableEvent> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
+    ): CompletableFuture<LedgerableEvent> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: LedgerableEventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerableEvent>
+
+    /** @see [retrieve] */
+    fun retrieve(params: LedgerableEventRetrieveParams): CompletableFuture<LedgerableEvent> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerableEvent> =
+        retrieve(id, LedgerableEventRetrieveParams.none(), requestOptions)
 
     /**
      * A view of [LedgerableEventServiceAsync] that provides access to raw HTTP responses for each
@@ -65,6 +87,35 @@ interface LedgerableEventServiceAsync {
          * same as [LedgerableEventServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
+            retrieve(id, LedgerableEventRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerableEventRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerableEvent>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: LedgerableEventRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
@@ -73,8 +124,9 @@ interface LedgerableEventServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: LedgerableEventRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerableEvent>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
+            retrieve(id, LedgerableEventRetrieveParams.none(), requestOptions)
     }
 }

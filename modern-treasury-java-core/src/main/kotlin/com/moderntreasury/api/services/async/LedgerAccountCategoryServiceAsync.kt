@@ -38,9 +38,22 @@ interface LedgerAccountCategoryServiceAsync {
     ): CompletableFuture<LedgerAccountCategory>
 
     /** Get the details on a single ledger account category. */
+    fun retrieve(id: String): CompletableFuture<LedgerAccountCategory> =
+        retrieve(id, LedgerAccountCategoryRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: LedgerAccountCategoryRetrieveParams
-    ): CompletableFuture<LedgerAccountCategory> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountCategory> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
+    ): CompletableFuture<LedgerAccountCategory> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -48,16 +61,53 @@ interface LedgerAccountCategoryServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: LedgerAccountCategoryRetrieveParams
+    ): CompletableFuture<LedgerAccountCategory> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountCategory> =
+        retrieve(id, LedgerAccountCategoryRetrieveParams.none(), requestOptions)
+
     /** Update the details of a ledger account category. */
+    fun update(id: String): CompletableFuture<LedgerAccountCategory> =
+        update(id, LedgerAccountCategoryUpdateParams.none())
+
+    /** @see [update] */
     fun update(
-        params: LedgerAccountCategoryUpdateParams
-    ): CompletableFuture<LedgerAccountCategory> = update(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountCategory> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
+    ): CompletableFuture<LedgerAccountCategory> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: LedgerAccountCategoryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
+
+    /** @see [update] */
+    fun update(
+        params: LedgerAccountCategoryUpdateParams
+    ): CompletableFuture<LedgerAccountCategory> = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountCategory> =
+        update(id, LedgerAccountCategoryUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger account categories. */
     fun list(): CompletableFuture<LedgerAccountCategoryListPageAsync> =
@@ -81,9 +131,22 @@ interface LedgerAccountCategoryServiceAsync {
         list(LedgerAccountCategoryListParams.none(), requestOptions)
 
     /** Delete a ledger account category. */
+    fun delete(id: String): CompletableFuture<LedgerAccountCategory> =
+        delete(id, LedgerAccountCategoryDeleteParams.none())
+
+    /** @see [delete] */
     fun delete(
-        params: LedgerAccountCategoryDeleteParams
-    ): CompletableFuture<LedgerAccountCategory> = delete(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountCategory> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
+    ): CompletableFuture<LedgerAccountCategory> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
@@ -91,7 +154,36 @@ interface LedgerAccountCategoryServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountCategory>
 
+    /** @see [delete] */
+    fun delete(
+        params: LedgerAccountCategoryDeleteParams
+    ): CompletableFuture<LedgerAccountCategory> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountCategory> =
+        delete(id, LedgerAccountCategoryDeleteParams.none(), requestOptions)
+
     /** Add a ledger account to a ledger account category. */
+    fun addLedgerAccount(
+        ledgerAccountId: String,
+        params: LedgerAccountCategoryAddLedgerAccountParams,
+    ): CompletableFuture<Void?> = addLedgerAccount(ledgerAccountId, params, RequestOptions.none())
+
+    /** @see [addLedgerAccount] */
+    fun addLedgerAccount(
+        ledgerAccountId: String,
+        params: LedgerAccountCategoryAddLedgerAccountParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> =
+        addLedgerAccount(
+            params.toBuilder().ledgerAccountId(ledgerAccountId).build(),
+            requestOptions,
+        )
+
+    /** @see [addLedgerAccount] */
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams
     ): CompletableFuture<Void?> = addLedgerAccount(params, RequestOptions.none())
@@ -104,6 +196,20 @@ interface LedgerAccountCategoryServiceAsync {
 
     /** Add a ledger account category to a ledger account category. */
     fun addNestedCategory(
+        subCategoryId: String,
+        params: LedgerAccountCategoryAddNestedCategoryParams,
+    ): CompletableFuture<Void?> = addNestedCategory(subCategoryId, params, RequestOptions.none())
+
+    /** @see [addNestedCategory] */
+    fun addNestedCategory(
+        subCategoryId: String,
+        params: LedgerAccountCategoryAddNestedCategoryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> =
+        addNestedCategory(params.toBuilder().subCategoryId(subCategoryId).build(), requestOptions)
+
+    /** @see [addNestedCategory] */
+    fun addNestedCategory(
         params: LedgerAccountCategoryAddNestedCategoryParams
     ): CompletableFuture<Void?> = addNestedCategory(params, RequestOptions.none())
 
@@ -115,6 +221,24 @@ interface LedgerAccountCategoryServiceAsync {
 
     /** Remove a ledger account from a ledger account category. */
     fun removeLedgerAccount(
+        ledgerAccountId: String,
+        params: LedgerAccountCategoryRemoveLedgerAccountParams,
+    ): CompletableFuture<Void?> =
+        removeLedgerAccount(ledgerAccountId, params, RequestOptions.none())
+
+    /** @see [removeLedgerAccount] */
+    fun removeLedgerAccount(
+        ledgerAccountId: String,
+        params: LedgerAccountCategoryRemoveLedgerAccountParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> =
+        removeLedgerAccount(
+            params.toBuilder().ledgerAccountId(ledgerAccountId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeLedgerAccount] */
+    fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams
     ): CompletableFuture<Void?> = removeLedgerAccount(params, RequestOptions.none())
 
@@ -125,6 +249,23 @@ interface LedgerAccountCategoryServiceAsync {
     ): CompletableFuture<Void?>
 
     /** Delete a ledger account category from a ledger account category. */
+    fun removeNestedCategory(
+        subCategoryId: String,
+        params: LedgerAccountCategoryRemoveNestedCategoryParams,
+    ): CompletableFuture<Void?> = removeNestedCategory(subCategoryId, params, RequestOptions.none())
+
+    /** @see [removeNestedCategory] */
+    fun removeNestedCategory(
+        subCategoryId: String,
+        params: LedgerAccountCategoryRemoveNestedCategoryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> =
+        removeNestedCategory(
+            params.toBuilder().subCategoryId(subCategoryId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeNestedCategory] */
     fun removeNestedCategory(
         params: LedgerAccountCategoryRemoveNestedCategoryParams
     ): CompletableFuture<Void?> = removeNestedCategory(params, RequestOptions.none())
@@ -163,10 +304,26 @@ interface LedgerAccountCategoryServiceAsync {
          * otherwise the same as [LedgerAccountCategoryServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            retrieve(id, LedgerAccountCategoryRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: LedgerAccountCategoryRetrieveParams
+            id: String,
+            params: LedgerAccountCategoryRetrieveParams =
+                LedgerAccountCategoryRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -175,10 +332,54 @@ interface LedgerAccountCategoryServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountCategoryRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            retrieve(id, LedgerAccountCategoryRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/ledger_account_categories/{id}`, but is
          * otherwise the same as [LedgerAccountCategoryServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(id: String): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            update(id, LedgerAccountCategoryUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountCategoryUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>>
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountCategoryUpdateParams
@@ -188,9 +389,10 @@ interface LedgerAccountCategoryServiceAsync {
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: LedgerAccountCategoryUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            update(id, LedgerAccountCategoryUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_account_categories`, but is otherwise
@@ -226,10 +428,25 @@ interface LedgerAccountCategoryServiceAsync {
          * otherwise the same as [LedgerAccountCategoryServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            delete(id, LedgerAccountCategoryDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: LedgerAccountCategoryDeleteParams
+            id: String,
+            params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
-            delete(params, RequestOptions.none())
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -238,11 +455,46 @@ interface LedgerAccountCategoryServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: LedgerAccountCategoryDeleteParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountCategory>> =
+            delete(id, LedgerAccountCategoryDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /api/ledger_account_categories/{id}/ledger_accounts/{ledger_account_id}`, but is
          * otherwise the same as [LedgerAccountCategoryServiceAsync.addLedgerAccount].
          */
+        @MustBeClosed
+        fun addLedgerAccount(
+            ledgerAccountId: String,
+            params: LedgerAccountCategoryAddLedgerAccountParams,
+        ): CompletableFuture<HttpResponse> =
+            addLedgerAccount(ledgerAccountId, params, RequestOptions.none())
+
+        /** @see [addLedgerAccount] */
+        @MustBeClosed
+        fun addLedgerAccount(
+            ledgerAccountId: String,
+            params: LedgerAccountCategoryAddLedgerAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            addLedgerAccount(
+                params.toBuilder().ledgerAccountId(ledgerAccountId).build(),
+                requestOptions,
+            )
+
+        /** @see [addLedgerAccount] */
         @MustBeClosed
         fun addLedgerAccount(
             params: LedgerAccountCategoryAddLedgerAccountParams
@@ -262,6 +514,26 @@ interface LedgerAccountCategoryServiceAsync {
          */
         @MustBeClosed
         fun addNestedCategory(
+            subCategoryId: String,
+            params: LedgerAccountCategoryAddNestedCategoryParams,
+        ): CompletableFuture<HttpResponse> =
+            addNestedCategory(subCategoryId, params, RequestOptions.none())
+
+        /** @see [addNestedCategory] */
+        @MustBeClosed
+        fun addNestedCategory(
+            subCategoryId: String,
+            params: LedgerAccountCategoryAddNestedCategoryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            addNestedCategory(
+                params.toBuilder().subCategoryId(subCategoryId).build(),
+                requestOptions,
+            )
+
+        /** @see [addNestedCategory] */
+        @MustBeClosed
+        fun addNestedCategory(
             params: LedgerAccountCategoryAddNestedCategoryParams
         ): CompletableFuture<HttpResponse> = addNestedCategory(params, RequestOptions.none())
 
@@ -279,6 +551,26 @@ interface LedgerAccountCategoryServiceAsync {
          */
         @MustBeClosed
         fun removeLedgerAccount(
+            ledgerAccountId: String,
+            params: LedgerAccountCategoryRemoveLedgerAccountParams,
+        ): CompletableFuture<HttpResponse> =
+            removeLedgerAccount(ledgerAccountId, params, RequestOptions.none())
+
+        /** @see [removeLedgerAccount] */
+        @MustBeClosed
+        fun removeLedgerAccount(
+            ledgerAccountId: String,
+            params: LedgerAccountCategoryRemoveLedgerAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            removeLedgerAccount(
+                params.toBuilder().ledgerAccountId(ledgerAccountId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeLedgerAccount] */
+        @MustBeClosed
+        fun removeLedgerAccount(
             params: LedgerAccountCategoryRemoveLedgerAccountParams
         ): CompletableFuture<HttpResponse> = removeLedgerAccount(params, RequestOptions.none())
 
@@ -294,6 +586,26 @@ interface LedgerAccountCategoryServiceAsync {
          * /api/ledger_account_categories/{id}/ledger_account_categories/{sub_category_id}`, but is
          * otherwise the same as [LedgerAccountCategoryServiceAsync.removeNestedCategory].
          */
+        @MustBeClosed
+        fun removeNestedCategory(
+            subCategoryId: String,
+            params: LedgerAccountCategoryRemoveNestedCategoryParams,
+        ): CompletableFuture<HttpResponse> =
+            removeNestedCategory(subCategoryId, params, RequestOptions.none())
+
+        /** @see [removeNestedCategory] */
+        @MustBeClosed
+        fun removeNestedCategory(
+            subCategoryId: String,
+            params: LedgerAccountCategoryRemoveNestedCategoryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            removeNestedCategory(
+                params.toBuilder().subCategoryId(subCategoryId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeNestedCategory] */
         @MustBeClosed
         fun removeNestedCategory(
             params: LedgerAccountCategoryRemoveNestedCategoryParams

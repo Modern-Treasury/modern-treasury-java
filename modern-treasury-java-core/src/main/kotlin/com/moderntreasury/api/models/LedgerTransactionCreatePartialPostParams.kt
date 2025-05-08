@@ -27,13 +27,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Create a ledger transaction that partially posts another ledger transaction. */
 class LedgerTransactionCreatePartialPostParams
 private constructor(
-    private val id: String,
+    private val id: String?,
     private val body: LedgerTransactionPartialPostCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * An array of ledger entry objects to be set on the posted ledger transaction. There must be
@@ -117,7 +117,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .postedLedgerEntries()
          * ```
          */
@@ -145,7 +144,10 @@ private constructor(
                 ledgerTransactionCreatePartialPostParams.additionalQueryParams.toBuilder()
         }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -361,7 +363,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .postedLedgerEntries()
          * ```
          *
@@ -369,7 +370,7 @@ private constructor(
          */
         fun build(): LedgerTransactionCreatePartialPostParams =
             LedgerTransactionCreatePartialPostParams(
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -380,7 +381,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> id
+            0 -> id ?: ""
             else -> ""
         }
 

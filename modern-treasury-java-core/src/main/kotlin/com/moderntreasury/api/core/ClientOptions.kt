@@ -11,6 +11,10 @@ import com.moderntreasury.api.core.http.RetryingHttpClient
 import java.time.Clock
 import java.util.Base64
 import java.util.Optional
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadFactory
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.jvm.optionals.getOrNull
 
 class ClientOptions
@@ -19,6 +23,7 @@ private constructor(
     @get:JvmName("httpClient") val httpClient: HttpClient,
     @get:JvmName("checkJacksonVersionCompatibility") val checkJacksonVersionCompatibility: Boolean,
     @get:JvmName("jsonMapper") val jsonMapper: JsonMapper,
+    @get:JvmName("streamHandlerExecutor") val streamHandlerExecutor: Executor,
     @get:JvmName("clock") val clock: Clock,
     @get:JvmName("baseUrl") val baseUrl: String,
     @get:JvmName("headers") val headers: Headers,
@@ -66,6 +71,7 @@ private constructor(
         private var httpClient: HttpClient? = null
         private var checkJacksonVersionCompatibility: Boolean = true
         private var jsonMapper: JsonMapper = jsonMapper()
+        private var streamHandlerExecutor: Executor? = null
         private var clock: Clock = Clock.systemUTC()
         private var baseUrl: String = PRODUCTION_URL
         private var headers: Headers.Builder = Headers.builder()
@@ -82,6 +88,7 @@ private constructor(
             httpClient = clientOptions.originalHttpClient
             checkJacksonVersionCompatibility = clientOptions.checkJacksonVersionCompatibility
             jsonMapper = clientOptions.jsonMapper
+            streamHandlerExecutor = clientOptions.streamHandlerExecutor
             clock = clientOptions.clock
             baseUrl = clientOptions.baseUrl
             headers = clientOptions.headers.toBuilder()
@@ -101,6 +108,10 @@ private constructor(
         }
 
         fun jsonMapper(jsonMapper: JsonMapper) = apply { this.jsonMapper = jsonMapper }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         fun clock(clock: Clock) = apply { this.clock = clock }
 
@@ -265,6 +276,21 @@ private constructor(
                 ),
                 checkJacksonVersionCompatibility,
                 jsonMapper,
+                streamHandlerExecutor
+                    ?: Executors.newCachedThreadPool(
+                        object : ThreadFactory {
+
+                            private val threadFactory: ThreadFactory =
+                                Executors.defaultThreadFactory()
+                            private val count = AtomicLong(0)
+
+                            override fun newThread(runnable: Runnable): Thread =
+                                threadFactory.newThread(runnable).also {
+                                    it.name =
+                                        "modern-treasury-stream-handler-thread-${count.getAndIncrement()}"
+                                }
+                        }
+                    ),
                 clock,
                 baseUrl,
                 headers.build(),

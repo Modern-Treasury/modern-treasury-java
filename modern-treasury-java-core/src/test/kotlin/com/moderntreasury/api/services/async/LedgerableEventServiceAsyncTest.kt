@@ -6,7 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.LedgerableEventCreateParams
-import com.moderntreasury.api.models.LedgerableEventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -53,10 +52,7 @@ internal class LedgerableEventServiceAsyncTest {
                 .build()
         val ledgerableEventServiceAsync = client.ledgerableEvents()
 
-        val ledgerableEventFuture =
-            ledgerableEventServiceAsync.retrieve(
-                LedgerableEventRetrieveParams.builder().id("id").build()
-            )
+        val ledgerableEventFuture = ledgerableEventServiceAsync.retrieve("id")
 
         val ledgerableEvent = ledgerableEventFuture.get()
         ledgerableEvent.validate()

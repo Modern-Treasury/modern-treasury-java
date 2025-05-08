@@ -32,15 +32,40 @@ interface LineItemServiceAsync {
     ): CompletableFuture<TransactionLineItem>
 
     /** get transaction line item */
+    fun retrieve(id: String): CompletableFuture<TransactionLineItem> =
+        retrieve(id, TransactionLineItemRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: TransactionLineItemRetrieveParams
-    ): CompletableFuture<TransactionLineItem> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TransactionLineItem> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
+    ): CompletableFuture<TransactionLineItem> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: TransactionLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionLineItem>
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: TransactionLineItemRetrieveParams
+    ): CompletableFuture<TransactionLineItem> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<TransactionLineItem> =
+        retrieve(id, TransactionLineItemRetrieveParams.none(), requestOptions)
 
     /** list transaction_line_items */
     fun list(): CompletableFuture<TransactionLineItemListPageAsync> =
@@ -62,14 +87,35 @@ interface LineItemServiceAsync {
         list(TransactionLineItemListParams.none(), requestOptions)
 
     /** delete transaction line item */
-    fun delete(params: TransactionLineItemDeleteParams): CompletableFuture<Void?> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<Void?> =
+        delete(id, TransactionLineItemDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
+    ): CompletableFuture<Void?> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: TransactionLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
+
+    /** @see [delete] */
+    fun delete(params: TransactionLineItemDeleteParams): CompletableFuture<Void?> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
+        delete(id, TransactionLineItemDeleteParams.none(), requestOptions)
 
     /**
      * A view of [LineItemServiceAsync] that provides access to raw HTTP responses for each method.
@@ -98,6 +144,35 @@ interface LineItemServiceAsync {
          * the same as [LineItemServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<TransactionLineItem>> =
+            retrieve(id, TransactionLineItemRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionLineItem>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionLineItem>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionLineItem>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: TransactionLineItemRetrieveParams
         ): CompletableFuture<HttpResponseFor<TransactionLineItem>> =
@@ -106,9 +181,10 @@ interface LineItemServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: TransactionLineItemRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TransactionLineItem>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<TransactionLineItem>> =
+            retrieve(id, TransactionLineItemRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/transaction_line_items`, but is otherwise the
@@ -144,8 +220,24 @@ interface LineItemServiceAsync {
          * otherwise the same as [LineItemServiceAsync.delete].
          */
         @MustBeClosed
-        fun delete(params: TransactionLineItemDeleteParams): CompletableFuture<HttpResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): CompletableFuture<HttpResponse> =
+            delete(id, TransactionLineItemDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
+        ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -153,5 +245,15 @@ interface LineItemServiceAsync {
             params: TransactionLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: TransactionLineItemDeleteParams): CompletableFuture<HttpResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
+            delete(id, TransactionLineItemDeleteParams.none(), requestOptions)
     }
 }

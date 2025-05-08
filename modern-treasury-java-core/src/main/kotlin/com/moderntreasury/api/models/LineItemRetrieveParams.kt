@@ -11,13 +11,15 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Get a single line item */
 class LineItemRetrieveParams
 private constructor(
     private val itemizableType: ItemizableType,
     private val itemizableId: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -26,7 +28,7 @@ private constructor(
 
     fun itemizableId(): String = itemizableId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -43,7 +45,6 @@ private constructor(
          * ```java
          * .itemizableType()
          * .itemizableId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -73,7 +74,10 @@ private constructor(
 
         fun itemizableId(itemizableId: String) = apply { this.itemizableId = itemizableId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -182,7 +186,6 @@ private constructor(
          * ```java
          * .itemizableType()
          * .itemizableId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -191,7 +194,7 @@ private constructor(
             LineItemRetrieveParams(
                 checkRequired("itemizableType", itemizableType),
                 checkRequired("itemizableId", itemizableId),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -201,7 +204,7 @@ private constructor(
         when (index) {
             0 -> itemizableType.toString()
             1 -> itemizableId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

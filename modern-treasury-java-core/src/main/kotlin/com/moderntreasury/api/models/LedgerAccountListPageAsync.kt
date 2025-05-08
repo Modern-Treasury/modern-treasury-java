@@ -2,6 +2,8 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.AutoPagerAsync
+import com.moderntreasury.api.core.PageAsync
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.LedgerAccountServiceAsync
@@ -9,46 +11,38 @@ import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 
 /** @see [LedgerAccountServiceAsync.list] */
 class LedgerAccountListPageAsync
 private constructor(
     private val service: LedgerAccountServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: LedgerAccountListParams,
     private val headers: Headers,
     private val items: List<LedgerAccount>,
-) {
+) : PageAsync<LedgerAccount> {
 
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPageParams(): Optional<LedgerAccountListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    fun nextPageParams(): LedgerAccountListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-        return Optional.of(
-            params.toBuilder().apply { afterCursor().ifPresent { afterCursor(it) } }.build()
-        )
-    }
+    override fun nextPage(): CompletableFuture<LedgerAccountListPageAsync> =
+        service.list(nextPageParams())
 
-    fun getNextPage(): CompletableFuture<Optional<LedgerAccountListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<LedgerAccount> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): LedgerAccountListParams = params
 
     /** The response that this page was parsed from. */
-    fun items(): List<LedgerAccount> = items
+    override fun items(): List<LedgerAccount> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -60,6 +54,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -72,6 +67,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: LedgerAccountServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: LedgerAccountListParams? = null
         private var headers: Headers? = null
         private var items: List<LedgerAccount>? = null
@@ -79,12 +75,17 @@ private constructor(
         @JvmSynthetic
         internal fun from(ledgerAccountListPageAsync: LedgerAccountListPageAsync) = apply {
             service = ledgerAccountListPageAsync.service
+            streamHandlerExecutor = ledgerAccountListPageAsync.streamHandlerExecutor
             params = ledgerAccountListPageAsync.params
             headers = ledgerAccountListPageAsync.headers
             items = ledgerAccountListPageAsync.items
         }
 
         fun service(service: LedgerAccountServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: LedgerAccountListParams) = apply { this.params = params }
@@ -102,6 +103,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -112,36 +114,11 @@ private constructor(
         fun build(): LedgerAccountListPageAsync =
             LedgerAccountListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("headers", headers),
                 checkRequired("items", items),
             )
-    }
-
-    class AutoPager(private val firstPage: LedgerAccountListPageAsync) {
-
-        fun forEach(action: Predicate<LedgerAccount>, executor: Executor): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<LedgerAccountListPageAsync>>.forEach(
-                action: (LedgerAccount) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.items().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<LedgerAccount>> {
-            val values = mutableListOf<LedgerAccount>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -149,11 +126,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, headers, items) /* spotless:on */
 
     override fun toString() =
-        "LedgerAccountListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
+        "LedgerAccountListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
 }

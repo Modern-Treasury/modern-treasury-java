@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -20,6 +21,7 @@ import com.moderntreasury.api.models.LineItemListPage
 import com.moderntreasury.api.models.LineItemListParams
 import com.moderntreasury.api.models.LineItemRetrieveParams
 import com.moderntreasury.api.models.LineItemUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemService {
@@ -60,6 +62,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: LineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -92,6 +97,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: LineItemUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -125,6 +133,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: LineItemListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LineItemListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("itemizableId", params.itemizableId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

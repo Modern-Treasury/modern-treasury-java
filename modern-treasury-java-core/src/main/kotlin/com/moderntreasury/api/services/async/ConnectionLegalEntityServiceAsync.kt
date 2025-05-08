@@ -32,9 +32,22 @@ interface ConnectionLegalEntityServiceAsync {
     ): CompletableFuture<ConnectionLegalEntity>
 
     /** Get details on a single connection legal entity. */
+    fun retrieve(id: String): CompletableFuture<ConnectionLegalEntity> =
+        retrieve(id, ConnectionLegalEntityRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: ConnectionLegalEntityRetrieveParams
-    ): CompletableFuture<ConnectionLegalEntity> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ConnectionLegalEntity> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
+    ): CompletableFuture<ConnectionLegalEntity> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -42,16 +55,53 @@ interface ConnectionLegalEntityServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: ConnectionLegalEntityRetrieveParams
+    ): CompletableFuture<ConnectionLegalEntity> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ConnectionLegalEntity> =
+        retrieve(id, ConnectionLegalEntityRetrieveParams.none(), requestOptions)
+
     /** Update a connection legal entity. */
+    fun update(id: String): CompletableFuture<ConnectionLegalEntity> =
+        update(id, ConnectionLegalEntityUpdateParams.none())
+
+    /** @see [update] */
     fun update(
-        params: ConnectionLegalEntityUpdateParams
-    ): CompletableFuture<ConnectionLegalEntity> = update(params, RequestOptions.none())
+        id: String,
+        params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ConnectionLegalEntity> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
+    ): CompletableFuture<ConnectionLegalEntity> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: ConnectionLegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
+
+    /** @see [update] */
+    fun update(
+        params: ConnectionLegalEntityUpdateParams
+    ): CompletableFuture<ConnectionLegalEntity> = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ConnectionLegalEntity> =
+        update(id, ConnectionLegalEntityUpdateParams.none(), requestOptions)
 
     /** Get a list of all connection legal entities. */
     fun list(): CompletableFuture<ConnectionLegalEntityListPageAsync> =
@@ -102,10 +152,26 @@ interface ConnectionLegalEntityServiceAsync {
          * otherwise the same as [ConnectionLegalEntityServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            retrieve(id, ConnectionLegalEntityRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: ConnectionLegalEntityRetrieveParams
+            id: String,
+            params: ConnectionLegalEntityRetrieveParams =
+                ConnectionLegalEntityRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -114,10 +180,54 @@ interface ConnectionLegalEntityServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ConnectionLegalEntityRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            retrieve(id, ConnectionLegalEntityRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/connection_legal_entities/{id}`, but is
          * otherwise the same as [ConnectionLegalEntityServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(id: String): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            update(id, ConnectionLegalEntityUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: ConnectionLegalEntityUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>>
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ConnectionLegalEntityUpdateParams
@@ -127,9 +237,10 @@ interface ConnectionLegalEntityServiceAsync {
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: ConnectionLegalEntityUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
+            update(id, ConnectionLegalEntityUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/connection_legal_entities`, but is otherwise

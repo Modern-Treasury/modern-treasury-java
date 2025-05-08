@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 class LineItemListParams
 private constructor(
     private val itemizableType: ItemizableType,
-    private val itemizableId: String,
+    private val itemizableId: String?,
     private val afterCursor: String?,
     private val perPage: Long?,
     private val additionalHeaders: Headers,
@@ -27,7 +27,7 @@ private constructor(
 
     fun itemizableType(): ItemizableType = itemizableType
 
-    fun itemizableId(): String = itemizableId
+    fun itemizableId(): Optional<String> = Optional.ofNullable(itemizableId)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
@@ -47,7 +47,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .itemizableType()
-         * .itemizableId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -77,7 +76,10 @@ private constructor(
             this.itemizableType = itemizableType
         }
 
-        fun itemizableId(itemizableId: String) = apply { this.itemizableId = itemizableId }
+        fun itemizableId(itemizableId: String?) = apply { this.itemizableId = itemizableId }
+
+        /** Alias for calling [Builder.itemizableId] with `itemizableId.orElse(null)`. */
+        fun itemizableId(itemizableId: Optional<String>) = itemizableId(itemizableId.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
@@ -202,7 +204,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .itemizableType()
-         * .itemizableId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -210,7 +211,7 @@ private constructor(
         fun build(): LineItemListParams =
             LineItemListParams(
                 checkRequired("itemizableType", itemizableType),
-                checkRequired("itemizableId", itemizableId),
+                itemizableId,
                 afterCursor,
                 perPage,
                 additionalHeaders.build(),
@@ -221,7 +222,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> itemizableType.toString()
-            1 -> itemizableId
+            1 -> itemizableId ?: ""
             else -> ""
         }
 

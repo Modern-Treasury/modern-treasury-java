@@ -68,6 +68,7 @@ class ConnectionServiceAsyncImpl internal constructor(private val clientOptions:
                             .let {
                                 ConnectionListPageAsync.builder()
                                     .service(ConnectionServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .headers(response.headers())
                                     .items(it)

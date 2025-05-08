@@ -8,7 +8,6 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.Currency
 import com.moderntreasury.api.models.InvoiceAddPaymentOrderParams
 import com.moderntreasury.api.models.InvoiceCreateParams
-import com.moderntreasury.api.models.InvoiceRetrieveParams
 import com.moderntreasury.api.models.InvoiceUpdateParams
 import com.moderntreasury.api.models.PaymentOrderType
 import java.time.LocalDate
@@ -136,8 +135,7 @@ internal class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoiceFuture =
-            invoiceServiceAsync.retrieve(InvoiceRetrieveParams.builder().id("id").build())
+        val invoiceFuture = invoiceServiceAsync.retrieve("id")
 
         val invoice = invoiceFuture.get()
         invoice.validate()

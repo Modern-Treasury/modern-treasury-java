@@ -10,12 +10,13 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Add a ledger account to a ledger account category. */
 class LedgerAccountCategoryAddLedgerAccountParams
 private constructor(
     private val id: String,
-    private val ledgerAccountId: String,
+    private val ledgerAccountId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -23,7 +24,7 @@ private constructor(
 
     fun id(): String = id
 
-    fun ledgerAccountId(): String = ledgerAccountId
+    fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -42,7 +43,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .ledgerAccountId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -73,9 +73,13 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        fun ledgerAccountId(ledgerAccountId: String) = apply {
+        fun ledgerAccountId(ledgerAccountId: String?) = apply {
             this.ledgerAccountId = ledgerAccountId
         }
+
+        /** Alias for calling [Builder.ledgerAccountId] with `ledgerAccountId.orElse(null)`. */
+        fun ledgerAccountId(ledgerAccountId: Optional<String>) =
+            ledgerAccountId(ledgerAccountId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -205,7 +209,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .ledgerAccountId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -213,7 +216,7 @@ private constructor(
         fun build(): LedgerAccountCategoryAddLedgerAccountParams =
             LedgerAccountCategoryAddLedgerAccountParams(
                 checkRequired("id", id),
-                checkRequired("ledgerAccountId", ledgerAccountId),
+                ledgerAccountId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -226,7 +229,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> id
-            1 -> ledgerAccountId
+            1 -> ledgerAccountId ?: ""
             else -> ""
         }
 

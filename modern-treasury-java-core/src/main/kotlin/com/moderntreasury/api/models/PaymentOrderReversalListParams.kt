@@ -3,7 +3,6 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.Params
-import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
@@ -13,14 +12,14 @@ import kotlin.jvm.optionals.getOrNull
 /** Get a list of all reversals of a payment order. */
 class PaymentOrderReversalListParams
 private constructor(
-    private val paymentOrderId: String,
+    private val paymentOrderId: String?,
     private val afterCursor: String?,
     private val perPage: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun paymentOrderId(): String = paymentOrderId
+    fun paymentOrderId(): Optional<String> = Optional.ofNullable(paymentOrderId)
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
@@ -34,14 +33,11 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): PaymentOrderReversalListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PaymentOrderReversalListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .paymentOrderId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -64,7 +60,11 @@ private constructor(
             additionalQueryParams = paymentOrderReversalListParams.additionalQueryParams.toBuilder()
         }
 
-        fun paymentOrderId(paymentOrderId: String) = apply { this.paymentOrderId = paymentOrderId }
+        fun paymentOrderId(paymentOrderId: String?) = apply { this.paymentOrderId = paymentOrderId }
+
+        /** Alias for calling [Builder.paymentOrderId] with `paymentOrderId.orElse(null)`. */
+        fun paymentOrderId(paymentOrderId: Optional<String>) =
+            paymentOrderId(paymentOrderId.getOrNull())
 
         fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
 
@@ -185,17 +185,10 @@ private constructor(
          * Returns an immutable instance of [PaymentOrderReversalListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .paymentOrderId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PaymentOrderReversalListParams =
             PaymentOrderReversalListParams(
-                checkRequired("paymentOrderId", paymentOrderId),
+                paymentOrderId,
                 afterCursor,
                 perPage,
                 additionalHeaders.build(),
@@ -205,7 +198,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> paymentOrderId
+            0 -> paymentOrderId ?: ""
             else -> ""
         }
 

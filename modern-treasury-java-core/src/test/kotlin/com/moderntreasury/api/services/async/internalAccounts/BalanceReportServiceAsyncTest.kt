@@ -6,7 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.models.BalanceReportCreateParams
 import com.moderntreasury.api.models.BalanceReportDeleteParams
-import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.time.LocalDate
 import org.junit.jupiter.api.Test
@@ -82,10 +81,7 @@ internal class BalanceReportServiceAsyncTest {
                 .build()
         val balanceReportServiceAsync = client.internalAccounts().balanceReports()
 
-        val pageFuture =
-            balanceReportServiceAsync.list(
-                BalanceReportListParams.builder().internalAccountId("internal_account_id").build()
-            )
+        val pageFuture = balanceReportServiceAsync.list("internal_account_id")
 
         val page = pageFuture.get()
         page.items().forEach { it.validate() }

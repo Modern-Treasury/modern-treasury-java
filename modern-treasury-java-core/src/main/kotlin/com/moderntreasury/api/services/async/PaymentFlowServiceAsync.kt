@@ -31,8 +31,21 @@ interface PaymentFlowServiceAsync {
     ): CompletableFuture<PaymentFlow>
 
     /** get payment_flow */
-    fun retrieve(params: PaymentFlowRetrieveParams): CompletableFuture<PaymentFlow> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<PaymentFlow> =
+        retrieve(id, PaymentFlowRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PaymentFlow> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
+    ): CompletableFuture<PaymentFlow> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -40,7 +53,26 @@ interface PaymentFlowServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
+    /** @see [retrieve] */
+    fun retrieve(params: PaymentFlowRetrieveParams): CompletableFuture<PaymentFlow> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentFlow> =
+        retrieve(id, PaymentFlowRetrieveParams.none(), requestOptions)
+
     /** update payment_flow */
+    fun update(id: String, params: PaymentFlowUpdateParams): CompletableFuture<PaymentFlow> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PaymentFlowUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PaymentFlow> = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PaymentFlowUpdateParams): CompletableFuture<PaymentFlow> =
         update(params, RequestOptions.none())
 
@@ -95,9 +127,25 @@ interface PaymentFlowServiceAsync {
          * as [PaymentFlowServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            retrieve(id, PaymentFlowRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: PaymentFlowRetrieveParams
-        ): CompletableFuture<HttpResponseFor<PaymentFlow>> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -106,10 +154,41 @@ interface PaymentFlowServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlow>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: PaymentFlowRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            retrieve(id, PaymentFlowRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/payment_flows/{id}`, but is otherwise the
          * same as [PaymentFlowServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PaymentFlowUpdateParams,
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PaymentFlowUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams

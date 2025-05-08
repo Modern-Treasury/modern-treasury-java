@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
 import com.moderntreasury.api.core.handlers.withErrorHandler
@@ -18,6 +19,7 @@ import com.moderntreasury.api.models.BulkResult
 import com.moderntreasury.api.models.BulkResultListPage
 import com.moderntreasury.api.models.BulkResultListParams
 import com.moderntreasury.api.models.BulkResultRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class BulkResultServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BulkResultService {
@@ -54,6 +56,9 @@ class BulkResultServiceImpl internal constructor(private val clientOptions: Clie
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BulkResult> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -2,6 +2,8 @@
 
 package com.moderntreasury.api.models
 
+import com.moderntreasury.api.core.AutoPagerAsync
+import com.moderntreasury.api.core.PageAsync
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.async.TransactionServiceAsync
@@ -9,46 +11,37 @@ import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 
 /** @see [TransactionServiceAsync.list] */
 class TransactionListPageAsync
 private constructor(
     private val service: TransactionServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: TransactionListParams,
     private val headers: Headers,
     private val items: List<Transaction>,
-) {
+) : PageAsync<Transaction> {
 
     fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    fun hasNextPage(): Boolean = items.isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPageParams(): Optional<TransactionListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    fun nextPageParams(): TransactionListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-        return Optional.of(
-            params.toBuilder().apply { afterCursor().ifPresent { afterCursor(it) } }.build()
-        )
-    }
+    override fun nextPage(): CompletableFuture<TransactionListPageAsync> =
+        service.list(nextPageParams())
 
-    fun getNextPage(): CompletableFuture<Optional<TransactionListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<Transaction> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): TransactionListParams = params
 
     /** The response that this page was parsed from. */
-    fun items(): List<Transaction> = items
+    override fun items(): List<Transaction> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -60,6 +53,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -72,6 +66,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: TransactionServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: TransactionListParams? = null
         private var headers: Headers? = null
         private var items: List<Transaction>? = null
@@ -79,12 +74,17 @@ private constructor(
         @JvmSynthetic
         internal fun from(transactionListPageAsync: TransactionListPageAsync) = apply {
             service = transactionListPageAsync.service
+            streamHandlerExecutor = transactionListPageAsync.streamHandlerExecutor
             params = transactionListPageAsync.params
             headers = transactionListPageAsync.headers
             items = transactionListPageAsync.items
         }
 
         fun service(service: TransactionServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: TransactionListParams) = apply { this.params = params }
@@ -102,6 +102,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .headers()
          * .items()
@@ -112,36 +113,11 @@ private constructor(
         fun build(): TransactionListPageAsync =
             TransactionListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("headers", headers),
                 checkRequired("items", items),
             )
-    }
-
-    class AutoPager(private val firstPage: TransactionListPageAsync) {
-
-        fun forEach(action: Predicate<Transaction>, executor: Executor): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<TransactionListPageAsync>>.forEach(
-                action: (Transaction) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.items().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<Transaction>> {
-            val values = mutableListOf<Transaction>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -149,11 +125,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransactionListPageAsync && service == other.service && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+        return /* spotless:off */ other is TransactionListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, headers, items) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, headers, items) /* spotless:on */
 
     override fun toString() =
-        "TransactionListPageAsync{service=$service, params=$params, headers=$headers, items=$items}"
+        "TransactionListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
 }

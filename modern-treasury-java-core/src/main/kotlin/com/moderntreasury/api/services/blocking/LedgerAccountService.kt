@@ -31,8 +31,20 @@ interface LedgerAccountService {
     ): LedgerAccount
 
     /** Get details on a single ledger account. */
-    fun retrieve(params: LedgerAccountRetrieveParams): LedgerAccount =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): LedgerAccount = retrieve(id, LedgerAccountRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LedgerAccount = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
+    ): LedgerAccount = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -40,15 +52,43 @@ interface LedgerAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
 
+    /** @see [retrieve] */
+    fun retrieve(params: LedgerAccountRetrieveParams): LedgerAccount =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): LedgerAccount =
+        retrieve(id, LedgerAccountRetrieveParams.none(), requestOptions)
+
     /** Update the details of a ledger account. */
-    fun update(params: LedgerAccountUpdateParams): LedgerAccount =
-        update(params, RequestOptions.none())
+    fun update(id: String): LedgerAccount = update(id, LedgerAccountUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LedgerAccount = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
+    ): LedgerAccount = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: LedgerAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
+
+    /** @see [update] */
+    fun update(params: LedgerAccountUpdateParams): LedgerAccount =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): LedgerAccount =
+        update(id, LedgerAccountUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger accounts. */
     fun list(): LedgerAccountListPage = list(LedgerAccountListParams.none())
@@ -69,14 +109,34 @@ interface LedgerAccountService {
         list(LedgerAccountListParams.none(), requestOptions)
 
     /** Delete a ledger account. */
-    fun delete(params: LedgerAccountDeleteParams): LedgerAccount =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): LedgerAccount = delete(id, LedgerAccountDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LedgerAccount = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
+    ): LedgerAccount = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: LedgerAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
+
+    /** @see [delete] */
+    fun delete(params: LedgerAccountDeleteParams): LedgerAccount =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): LedgerAccount =
+        delete(id, LedgerAccountDeleteParams.none(), requestOptions)
 
     /**
      * A view of [LedgerAccountService] that provides access to raw HTTP responses for each method.
@@ -103,8 +163,24 @@ interface LedgerAccountService {
          * same as [LedgerAccountService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: LedgerAccountRetrieveParams): HttpResponseFor<LedgerAccount> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<LedgerAccount> =
+            retrieve(id, LedgerAccountRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LedgerAccount> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
+        ): HttpResponseFor<LedgerAccount> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -113,13 +189,39 @@ interface LedgerAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccount>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: LedgerAccountRetrieveParams): HttpResponseFor<LedgerAccount> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<LedgerAccount> =
+            retrieve(id, LedgerAccountRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/ledger_accounts/{id}`, but is otherwise the
          * same as [LedgerAccountService.update].
          */
         @MustBeClosed
-        fun update(params: LedgerAccountUpdateParams): HttpResponseFor<LedgerAccount> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<LedgerAccount> =
+            update(id, LedgerAccountUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LedgerAccount> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
+        ): HttpResponseFor<LedgerAccount> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -127,6 +229,16 @@ interface LedgerAccountService {
             params: LedgerAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccount>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: LedgerAccountUpdateParams): HttpResponseFor<LedgerAccount> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<LedgerAccount> =
+            update(id, LedgerAccountUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_accounts`, but is otherwise the same as
@@ -158,8 +270,24 @@ interface LedgerAccountService {
          * same as [LedgerAccountService.delete].
          */
         @MustBeClosed
-        fun delete(params: LedgerAccountDeleteParams): HttpResponseFor<LedgerAccount> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<LedgerAccount> =
+            delete(id, LedgerAccountDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LedgerAccount> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
+        ): HttpResponseFor<LedgerAccount> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -167,5 +295,15 @@ interface LedgerAccountService {
             params: LedgerAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccount>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: LedgerAccountDeleteParams): HttpResponseFor<LedgerAccount> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<LedgerAccount> =
+            delete(id, LedgerAccountDeleteParams.none(), requestOptions)
     }
 }

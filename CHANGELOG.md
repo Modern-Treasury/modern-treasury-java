@@ -1,5 +1,41 @@
 # Changelog
 
+## 7.0.0 (2025-05-08)
+
+Full Changelog: [v6.2.0...v7.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.2.0...v7.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** extract auto pagination to shared classes
+* **client:** **Migration:** - If you were referencing the `AutoPager` class on a specific `*Page` or `*PageAsync` type, then you should instead reference the shared `AutoPager` and `AutoPagerAsync` types, under the `core` package
+    - `AutoPagerAsync` now has different usage. You can call `.subscribe(...)` on the returned object instead to get called back each page item. You can also call `onCompleteFuture()` to get a future that completes when all items have been processed. Finally, you can call `.close()` on the returned object to stop auto-paginating early
+    - If you were referencing `getNextPage` or `getNextPageParams`:
+       - Swap to `nextPage()` and `nextPageParams()`
+       - Note that these both now return non-optional types (use `hasNextPage()` before calling these, since they will throw if it's impossible to get another page)
+
+### Features
+
+* **api:** only send idempotency headers on PUT / POST requests ([b6af4eb](https://github.com/Modern-Treasury/modern-treasury-java/commit/b6af4ebca72513731d994db5ba84609b10d7aa0c))
+* **client:** allow providing some params positionally ([c31350d](https://github.com/Modern-Treasury/modern-treasury-java/commit/c31350de1a83577bd8939f56f8099f59c2180ca6))
+* **client:** extract auto pagination to shared classes ([578b033](https://github.com/Modern-Treasury/modern-treasury-java/commit/578b033749fbe2aa9e7afc36a493d1543f92d7ed))
+
+
+### Bug Fixes
+
+* **client:** add missing convenience methods ([ac3f059](https://github.com/Modern-Treasury/modern-treasury-java/commit/ac3f05909d3c136609f25520e6412353dc518f52))
+* **internal:** format ([897821c](https://github.com/Modern-Treasury/modern-treasury-java/commit/897821ce9b3d209dc7609cde4a827c0a08400f02))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([0622aaf](https://github.com/Modern-Treasury/modern-treasury-java/commit/0622aafaa9c6b587110cebfa76b7400989d7b2b2))
+* **ci:** only use depot for staging repos ([62b7483](https://github.com/Modern-Treasury/modern-treasury-java/commit/62b7483bf16ff40e2934931ee3d150bb4a8ea0ed))
+* **ci:** run on more branches and use depot runners ([0daa6f8](https://github.com/Modern-Treasury/modern-treasury-java/commit/0daa6f89440339d9a527d9c5b56c3e8d97a8e3ef))
+* **internal:** java 17 -&gt; 21 on ci ([6511256](https://github.com/Modern-Treasury/modern-treasury-java/commit/65112564512234ff8fc9c4db0e049bb92d50a46c))
+* **internal:** remove flaky `-Xbackend-threads=0` option ([aa64e9e](https://github.com/Modern-Treasury/modern-treasury-java/commit/aa64e9e8fb65e307b16a5af1154cb17e4e5f1a45))
+* **internal:** update java toolchain ([6cd2213](https://github.com/Modern-Treasury/modern-treasury-java/commit/6cd2213a29baa1889b2a7caf19a7bb6d1a5a8664))
+* **internal:** use `byteInputStream()` in tests ([ac3f059](https://github.com/Modern-Treasury/modern-treasury-java/commit/ac3f05909d3c136609f25520e6412353dc518f52))
+
 ## 6.2.0 (2025-04-16)
 
 Full Changelog: [v6.1.0...v6.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.1.0...v6.2.0)

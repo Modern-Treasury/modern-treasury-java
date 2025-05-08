@@ -18,18 +18,19 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.Objects
+import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** update payment_flow */
 class PaymentFlowUpdateParams
 private constructor(
-    private val id: String,
+    private val id: String?,
     private val body: PaymentFlowUpdateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Required. The updated status of the payment flow. Can only be used to mark a flow as
@@ -62,7 +63,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .status()
          * ```
          */
@@ -85,7 +85,10 @@ private constructor(
             additionalQueryParams = paymentFlowUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -234,7 +237,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .status()
          * ```
          *
@@ -242,7 +244,7 @@ private constructor(
          */
         fun build(): PaymentFlowUpdateParams =
             PaymentFlowUpdateParams(
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -253,7 +255,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> id
+            0 -> id ?: ""
             else -> ""
         }
 

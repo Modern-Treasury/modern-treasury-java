@@ -33,9 +33,24 @@ interface LedgerAccountBalanceMonitorServiceAsync {
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 
     /** Get details on a single ledger account balance monitor. */
+    fun retrieve(id: String): CompletableFuture<LedgerAccountBalanceMonitor> =
+        retrieve(id, LedgerAccountBalanceMonitorRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: LedgerAccountBalanceMonitorRetrieveParams
-    ): CompletableFuture<LedgerAccountBalanceMonitor> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountBalanceMonitorRetrieveParams =
+            LedgerAccountBalanceMonitorRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LedgerAccountBalanceMonitorRetrieveParams =
+            LedgerAccountBalanceMonitorRetrieveParams.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -43,16 +58,55 @@ interface LedgerAccountBalanceMonitorServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: LedgerAccountBalanceMonitorRetrieveParams
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        retrieve(id, LedgerAccountBalanceMonitorRetrieveParams.none(), requestOptions)
+
     /** Update a ledger account balance monitor. */
+    fun update(id: String): CompletableFuture<LedgerAccountBalanceMonitor> =
+        update(id, LedgerAccountBalanceMonitorUpdateParams.none())
+
+    /** @see [update] */
     fun update(
-        params: LedgerAccountBalanceMonitorUpdateParams
-    ): CompletableFuture<LedgerAccountBalanceMonitor> = update(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountBalanceMonitorUpdateParams =
+            LedgerAccountBalanceMonitorUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LedgerAccountBalanceMonitorUpdateParams =
+            LedgerAccountBalanceMonitorUpdateParams.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: LedgerAccountBalanceMonitorUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
+
+    /** @see [update] */
+    fun update(
+        params: LedgerAccountBalanceMonitorUpdateParams
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        update(id, LedgerAccountBalanceMonitorUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger account balance monitors. */
     fun list(): CompletableFuture<LedgerAccountBalanceMonitorListPageAsync> =
@@ -78,15 +132,42 @@ interface LedgerAccountBalanceMonitorServiceAsync {
         list(LedgerAccountBalanceMonitorListParams.none(), requestOptions)
 
     /** Delete a ledger account balance monitor. */
+    fun delete(id: String): CompletableFuture<LedgerAccountBalanceMonitor> =
+        delete(id, LedgerAccountBalanceMonitorDeleteParams.none())
+
+    /** @see [delete] */
     fun delete(
-        params: LedgerAccountBalanceMonitorDeleteParams
-    ): CompletableFuture<LedgerAccountBalanceMonitor> = delete(params, RequestOptions.none())
+        id: String,
+        params: LedgerAccountBalanceMonitorDeleteParams =
+            LedgerAccountBalanceMonitorDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: LedgerAccountBalanceMonitorDeleteParams =
+            LedgerAccountBalanceMonitorDeleteParams.none(),
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: LedgerAccountBalanceMonitorDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountBalanceMonitor>
+
+    /** @see [delete] */
+    fun delete(
+        params: LedgerAccountBalanceMonitorDeleteParams
+    ): CompletableFuture<LedgerAccountBalanceMonitor> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<LedgerAccountBalanceMonitor> =
+        delete(id, LedgerAccountBalanceMonitorDeleteParams.none(), requestOptions)
 
     /**
      * A view of [LedgerAccountBalanceMonitorServiceAsync] that provides access to raw HTTP
@@ -116,10 +197,27 @@ interface LedgerAccountBalanceMonitorServiceAsync {
          * otherwise the same as [LedgerAccountBalanceMonitorServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            retrieve(id, LedgerAccountBalanceMonitorRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: LedgerAccountBalanceMonitorRetrieveParams
+            id: String,
+            params: LedgerAccountBalanceMonitorRetrieveParams =
+                LedgerAccountBalanceMonitorRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LedgerAccountBalanceMonitorRetrieveParams =
+                LedgerAccountBalanceMonitorRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -128,10 +226,56 @@ interface LedgerAccountBalanceMonitorServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: LedgerAccountBalanceMonitorRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            retrieve(id, LedgerAccountBalanceMonitorRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/ledger_account_balance_monitors/{id}`, but is
          * otherwise the same as [LedgerAccountBalanceMonitorServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(id: String): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            update(id, LedgerAccountBalanceMonitorUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountBalanceMonitorUpdateParams =
+                LedgerAccountBalanceMonitorUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LedgerAccountBalanceMonitorUpdateParams =
+                LedgerAccountBalanceMonitorUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: LedgerAccountBalanceMonitorUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>>
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: LedgerAccountBalanceMonitorUpdateParams
@@ -141,9 +285,10 @@ interface LedgerAccountBalanceMonitorServiceAsync {
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: LedgerAccountBalanceMonitorUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            update(id, LedgerAccountBalanceMonitorUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_account_balance_monitors`, but is
@@ -181,6 +326,37 @@ interface LedgerAccountBalanceMonitorServiceAsync {
          * is otherwise the same as [LedgerAccountBalanceMonitorServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            delete(id, LedgerAccountBalanceMonitorDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountBalanceMonitorDeleteParams =
+                LedgerAccountBalanceMonitorDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: LedgerAccountBalanceMonitorDeleteParams =
+                LedgerAccountBalanceMonitorDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: LedgerAccountBalanceMonitorDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: LedgerAccountBalanceMonitorDeleteParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
@@ -189,8 +365,9 @@ interface LedgerAccountBalanceMonitorServiceAsync {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: LedgerAccountBalanceMonitorDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<LedgerAccountBalanceMonitor>> =
+            delete(id, LedgerAccountBalanceMonitorDeleteParams.none(), requestOptions)
     }
 }

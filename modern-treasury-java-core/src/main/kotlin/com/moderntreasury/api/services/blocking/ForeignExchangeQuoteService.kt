@@ -29,14 +29,35 @@ interface ForeignExchangeQuoteService {
     ): ForeignExchangeQuote
 
     /** get foreign_exchange_quote */
-    fun retrieve(params: ForeignExchangeQuoteRetrieveParams): ForeignExchangeQuote =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): ForeignExchangeQuote =
+        retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ForeignExchangeQuote = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+    ): ForeignExchangeQuote = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
+
+    /** @see [retrieve] */
+    fun retrieve(params: ForeignExchangeQuoteRetrieveParams): ForeignExchangeQuote =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): ForeignExchangeQuote =
+        retrieve(id, ForeignExchangeQuoteRetrieveParams.none(), requestOptions)
 
     /** list foreign_exchange_quotes */
     fun list(): ForeignExchangeQuoteListPage = list(ForeignExchangeQuoteListParams.none())
@@ -83,9 +104,24 @@ interface ForeignExchangeQuoteService {
          * the same as [ForeignExchangeQuoteService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<ForeignExchangeQuote> =
+            retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: ForeignExchangeQuoteRetrieveParams
-        ): HttpResponseFor<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ForeignExchangeQuote> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
+        ): HttpResponseFor<ForeignExchangeQuote> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -93,6 +129,20 @@ interface ForeignExchangeQuoteService {
             params: ForeignExchangeQuoteRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ForeignExchangeQuote>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ForeignExchangeQuoteRetrieveParams
+        ): HttpResponseFor<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ForeignExchangeQuote> =
+            retrieve(id, ForeignExchangeQuoteRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/foreign_exchange_quotes`, but is otherwise the

@@ -34,7 +34,20 @@ interface InvoiceService {
     ): Invoice
 
     /** get invoice */
-    fun retrieve(params: InvoiceRetrieveParams): Invoice = retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): Invoice = retrieve(id, InvoiceRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
+    ): Invoice = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -42,14 +55,39 @@ interface InvoiceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
+    /** @see [retrieve] */
+    fun retrieve(params: InvoiceRetrieveParams): Invoice = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): Invoice =
+        retrieve(id, InvoiceRetrieveParams.none(), requestOptions)
+
     /** update invoice */
-    fun update(params: InvoiceUpdateParams): Invoice = update(params, RequestOptions.none())
+    fun update(id: String): Invoice = update(id, InvoiceUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Invoice = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(id: String, params: InvoiceUpdateParams = InvoiceUpdateParams.none()): Invoice =
+        update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see [update] */
+    fun update(params: InvoiceUpdateParams): Invoice = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): Invoice =
+        update(id, InvoiceUpdateParams.none(), requestOptions)
 
     /** list invoices */
     fun list(): InvoiceListPage = list(InvoiceListParams.none())
@@ -69,6 +107,17 @@ interface InvoiceService {
         list(InvoiceListParams.none(), requestOptions)
 
     /** Add a payment order to an invoice. */
+    fun addPaymentOrder(paymentOrderId: String, params: InvoiceAddPaymentOrderParams) =
+        addPaymentOrder(paymentOrderId, params, RequestOptions.none())
+
+    /** @see [addPaymentOrder] */
+    fun addPaymentOrder(
+        paymentOrderId: String,
+        params: InvoiceAddPaymentOrderParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = addPaymentOrder(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
+
+    /** @see [addPaymentOrder] */
     fun addPaymentOrder(params: InvoiceAddPaymentOrderParams) =
         addPaymentOrder(params, RequestOptions.none())
 
@@ -103,8 +152,23 @@ interface InvoiceService {
          * [InvoiceService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: InvoiceRetrieveParams): HttpResponseFor<Invoice> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<Invoice> =
+            retrieve(id, InvoiceRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
+        ): HttpResponseFor<Invoice> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -113,13 +177,37 @@ interface InvoiceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: InvoiceRetrieveParams): HttpResponseFor<Invoice> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            retrieve(id, InvoiceRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceService.update].
          */
         @MustBeClosed
-        fun update(params: InvoiceUpdateParams): HttpResponseFor<Invoice> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<Invoice> = update(id, InvoiceUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice> = update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
+        ): HttpResponseFor<Invoice> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -127,6 +215,16 @@ interface InvoiceService {
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: InvoiceUpdateParams): HttpResponseFor<Invoice> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            update(id, InvoiceUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
@@ -157,6 +255,25 @@ interface InvoiceService {
          * /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the same as
          * [InvoiceService.addPaymentOrder].
          */
+        @MustBeClosed
+        fun addPaymentOrder(
+            paymentOrderId: String,
+            params: InvoiceAddPaymentOrderParams,
+        ): HttpResponse = addPaymentOrder(paymentOrderId, params, RequestOptions.none())
+
+        /** @see [addPaymentOrder] */
+        @MustBeClosed
+        fun addPaymentOrder(
+            paymentOrderId: String,
+            params: InvoiceAddPaymentOrderParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            addPaymentOrder(
+                params.toBuilder().paymentOrderId(paymentOrderId).build(),
+                requestOptions,
+            )
+
+        /** @see [addPaymentOrder] */
         @MustBeClosed
         fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): HttpResponse =
             addPaymentOrder(params, RequestOptions.none())

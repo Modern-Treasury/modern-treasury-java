@@ -6,7 +6,6 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.LedgerAccountSettlementCreateParams
-import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -59,10 +58,7 @@ internal class LedgerAccountSettlementServiceAsyncTest {
                 .build()
         val ledgerAccountSettlementServiceAsync = client.ledgerAccountSettlements()
 
-        val ledgerAccountSettlementFuture =
-            ledgerAccountSettlementServiceAsync.retrieve(
-                LedgerAccountSettlementRetrieveParams.builder().id("id").build()
-            )
+        val ledgerAccountSettlementFuture = ledgerAccountSettlementServiceAsync.retrieve("id")
 
         val ledgerAccountSettlement = ledgerAccountSettlementFuture.get()
         ledgerAccountSettlement.validate()

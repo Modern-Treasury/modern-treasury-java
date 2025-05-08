@@ -30,14 +30,35 @@ interface DocumentServiceAsync {
     ): CompletableFuture<Document>
 
     /** Get an existing document. */
-    fun retrieve(params: DocumentRetrieveParams): CompletableFuture<Document> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<Document> =
+        retrieve(id, DocumentRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Document> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
+    ): CompletableFuture<Document> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: DocumentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
+
+    /** @see [retrieve] */
+    fun retrieve(params: DocumentRetrieveParams): CompletableFuture<Document> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Document> =
+        retrieve(id, DocumentRetrieveParams.none(), requestOptions)
 
     /** Get a list of documents. */
     fun list(): CompletableFuture<DocumentListPageAsync> = list(DocumentListParams.none())
@@ -82,8 +103,25 @@ interface DocumentServiceAsync {
          * [DocumentServiceAsync.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: DocumentRetrieveParams): CompletableFuture<HttpResponseFor<Document>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(id, DocumentRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -91,6 +129,19 @@ interface DocumentServiceAsync {
             params: DocumentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Document>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: DocumentRetrieveParams): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<Document>> =
+            retrieve(id, DocumentRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as

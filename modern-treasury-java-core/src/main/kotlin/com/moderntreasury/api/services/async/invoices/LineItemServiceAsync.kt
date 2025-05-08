@@ -22,6 +22,20 @@ interface LineItemServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** create invoice_line_item */
+    fun create(
+        invoiceId: String,
+        params: InvoiceLineItemCreateParams,
+    ): CompletableFuture<InvoiceLineItem> = create(invoiceId, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        invoiceId: String,
+        params: InvoiceLineItemCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InvoiceLineItem> =
+        create(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: InvoiceLineItemCreateParams): CompletableFuture<InvoiceLineItem> =
         create(params, RequestOptions.none())
 
@@ -32,6 +46,20 @@ interface LineItemServiceAsync {
     ): CompletableFuture<InvoiceLineItem>
 
     /** get invoice_line_item */
+    fun retrieve(
+        id: String,
+        params: InvoiceLineItemRetrieveParams,
+    ): CompletableFuture<InvoiceLineItem> = retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: InvoiceLineItemRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InvoiceLineItem> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
     fun retrieve(params: InvoiceLineItemRetrieveParams): CompletableFuture<InvoiceLineItem> =
         retrieve(params, RequestOptions.none())
 
@@ -42,6 +70,20 @@ interface LineItemServiceAsync {
     ): CompletableFuture<InvoiceLineItem>
 
     /** update invoice_line_item */
+    fun update(
+        id: String,
+        params: InvoiceLineItemUpdateParams,
+    ): CompletableFuture<InvoiceLineItem> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: InvoiceLineItemUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InvoiceLineItem> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: InvoiceLineItemUpdateParams): CompletableFuture<InvoiceLineItem> =
         update(params, RequestOptions.none())
 
@@ -52,8 +94,23 @@ interface LineItemServiceAsync {
     ): CompletableFuture<InvoiceLineItem>
 
     /** list invoice_line_items */
-    fun list(params: InvoiceLineItemListParams): CompletableFuture<InvoiceLineItemListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(invoiceId: String): CompletableFuture<InvoiceLineItemListPageAsync> =
+        list(invoiceId, InvoiceLineItemListParams.none())
+
+    /** @see [list] */
+    fun list(
+        invoiceId: String,
+        params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InvoiceLineItemListPageAsync> =
+        list(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
+        invoiceId: String,
+        params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
+    ): CompletableFuture<InvoiceLineItemListPageAsync> =
+        list(invoiceId, params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
@@ -61,7 +118,32 @@ interface LineItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvoiceLineItemListPageAsync>
 
+    /** @see [list] */
+    fun list(params: InvoiceLineItemListParams): CompletableFuture<InvoiceLineItemListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(
+        invoiceId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<InvoiceLineItemListPageAsync> =
+        list(invoiceId, InvoiceLineItemListParams.none(), requestOptions)
+
     /** delete invoice_line_item */
+    fun delete(
+        id: String,
+        params: InvoiceLineItemDeleteParams,
+    ): CompletableFuture<InvoiceLineItem> = delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: InvoiceLineItemDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InvoiceLineItem> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: InvoiceLineItemDeleteParams): CompletableFuture<InvoiceLineItem> =
         delete(params, RequestOptions.none())
 
@@ -82,6 +164,23 @@ interface LineItemServiceAsync {
          */
         @MustBeClosed
         fun create(
+            invoiceId: String,
+            params: InvoiceLineItemCreateParams,
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            create(invoiceId, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            invoiceId: String,
+            params: InvoiceLineItemCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            create(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
             params: InvoiceLineItemCreateParams
         ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
             create(params, RequestOptions.none())
@@ -97,6 +196,23 @@ interface LineItemServiceAsync {
          * Returns a raw HTTP response for `get /api/invoices/{invoice_id}/invoice_line_items/{id}`,
          * but is otherwise the same as [LineItemServiceAsync.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: InvoiceLineItemRetrieveParams,
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: InvoiceLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: InvoiceLineItemRetrieveParams
@@ -117,6 +233,23 @@ interface LineItemServiceAsync {
          */
         @MustBeClosed
         fun update(
+            id: String,
+            params: InvoiceLineItemUpdateParams,
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: InvoiceLineItemUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: InvoiceLineItemUpdateParams
         ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
             update(params, RequestOptions.none())
@@ -134,9 +267,26 @@ interface LineItemServiceAsync {
          */
         @MustBeClosed
         fun list(
-            params: InvoiceLineItemListParams
+            invoiceId: String
         ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>> =
-            list(params, RequestOptions.none())
+            list(invoiceId, InvoiceLineItemListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            invoiceId: String,
+            params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>> =
+            list(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            invoiceId: String,
+            params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>> =
+            list(invoiceId, params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
@@ -145,11 +295,43 @@ interface LineItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>>
 
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: InvoiceLineItemListParams
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            invoiceId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItemListPageAsync>> =
+            list(invoiceId, InvoiceLineItemListParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `delete
          * /api/invoices/{invoice_id}/invoice_line_items/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.delete].
          */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: InvoiceLineItemDeleteParams,
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: InvoiceLineItemDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InvoiceLineItem>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: InvoiceLineItemDeleteParams

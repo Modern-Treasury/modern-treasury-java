@@ -24,13 +24,13 @@ import kotlin.jvm.optionals.getOrNull
 /** create invoice_line_item */
 class InvoiceLineItemCreateParams
 private constructor(
-    private val invoiceId: String,
+    private val invoiceId: String?,
     private val body: InvoiceLineItemCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun invoiceId(): String = invoiceId
+    fun invoiceId(): Optional<String> = Optional.ofNullable(invoiceId)
 
     /**
      * The name of the line item, typically a product or SKU name.
@@ -157,7 +157,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .invoiceId()
          * .name()
          * .unitAmount()
          * ```
@@ -182,7 +181,10 @@ private constructor(
             additionalQueryParams = invoiceLineItemCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
+        fun invoiceId(invoiceId: String?) = apply { this.invoiceId = invoiceId }
+
+        /** Alias for calling [Builder.invoiceId] with `invoiceId.orElse(null)`. */
+        fun invoiceId(invoiceId: Optional<String>) = invoiceId(invoiceId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -422,7 +424,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .invoiceId()
          * .name()
          * .unitAmount()
          * ```
@@ -431,7 +432,7 @@ private constructor(
          */
         fun build(): InvoiceLineItemCreateParams =
             InvoiceLineItemCreateParams(
-                checkRequired("invoiceId", invoiceId),
+                invoiceId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -442,7 +443,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> invoiceId
+            0 -> invoiceId ?: ""
             else -> ""
         }
 

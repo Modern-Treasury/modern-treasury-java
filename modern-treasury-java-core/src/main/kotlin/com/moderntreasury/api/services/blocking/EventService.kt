@@ -18,13 +18,31 @@ interface EventService {
     fun withRawResponse(): WithRawResponse
 
     /** get event */
-    fun retrieve(params: EventRetrieveParams): Event = retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): Event = retrieve(id, EventRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: EventRetrieveParams = EventRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Event = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, params: EventRetrieveParams = EventRetrieveParams.none()): Event =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
+
+    /** @see [retrieve] */
+    fun retrieve(params: EventRetrieveParams): Event = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): Event =
+        retrieve(id, EventRetrieveParams.none(), requestOptions)
 
     /** list events */
     fun list(): EventListPage = list(EventListParams.none())
@@ -51,8 +69,22 @@ interface EventService {
          * [EventService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: EventRetrieveParams): HttpResponseFor<Event> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<Event> = retrieve(id, EventRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Event> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+        ): HttpResponseFor<Event> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -60,6 +92,16 @@ interface EventService {
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: EventRetrieveParams): HttpResponseFor<Event> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Event> =
+            retrieve(id, EventRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/events`, but is otherwise the same as

@@ -27,13 +27,13 @@ import kotlin.jvm.optionals.getOrNull
 /** create balance reports */
 class BalanceReportCreateParams
 private constructor(
-    private val internalAccountId: String,
+    private val internalAccountId: String?,
     private val body: BalanceReportCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun internalAccountId(): String = internalAccountId
+    fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
     /**
      * The date of the balance report in local time.
@@ -112,7 +112,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .internalAccountId()
          * .asOfDate()
          * .asOfTime()
          * .balanceReportType()
@@ -138,9 +137,13 @@ private constructor(
             additionalQueryParams = balanceReportCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun internalAccountId(internalAccountId: String) = apply {
+        fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
         }
+
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -341,7 +344,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .internalAccountId()
          * .asOfDate()
          * .asOfTime()
          * .balanceReportType()
@@ -352,7 +354,7 @@ private constructor(
          */
         fun build(): BalanceReportCreateParams =
             BalanceReportCreateParams(
-                checkRequired("internalAccountId", internalAccountId),
+                internalAccountId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -363,7 +365,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> internalAccountId
+            0 -> internalAccountId ?: ""
             else -> ""
         }
 

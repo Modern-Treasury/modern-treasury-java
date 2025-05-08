@@ -29,8 +29,20 @@ interface LegalEntityService {
     ): LegalEntity
 
     /** Get details on a single legal entity. */
-    fun retrieve(params: LegalEntityRetrieveParams): LegalEntity =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): LegalEntity = retrieve(id, LegalEntityRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LegalEntity = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
+    ): LegalEntity = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -38,14 +50,42 @@ interface LegalEntityService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
 
+    /** @see [retrieve] */
+    fun retrieve(params: LegalEntityRetrieveParams): LegalEntity =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): LegalEntity =
+        retrieve(id, LegalEntityRetrieveParams.none(), requestOptions)
+
     /** Update a legal entity. */
-    fun update(params: LegalEntityUpdateParams): LegalEntity = update(params, RequestOptions.none())
+    fun update(id: String): LegalEntity = update(id, LegalEntityUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LegalEntity = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
+    ): LegalEntity = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: LegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
+
+    /** @see [update] */
+    fun update(params: LegalEntityUpdateParams): LegalEntity = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): LegalEntity =
+        update(id, LegalEntityUpdateParams.none(), requestOptions)
 
     /** Get a list of all legal entities. */
     fun list(): LegalEntityListPage = list(LegalEntityListParams.none())
@@ -89,8 +129,24 @@ interface LegalEntityService {
          * as [LegalEntityService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: LegalEntityRetrieveParams): HttpResponseFor<LegalEntity> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<LegalEntity> =
+            retrieve(id, LegalEntityRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LegalEntity> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
+        ): HttpResponseFor<LegalEntity> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -99,13 +155,38 @@ interface LegalEntityService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LegalEntity>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: LegalEntityRetrieveParams): HttpResponseFor<LegalEntity> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<LegalEntity> =
+            retrieve(id, LegalEntityRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/legal_entities/{id}`, but is otherwise the
          * same as [LegalEntityService.update].
          */
         @MustBeClosed
-        fun update(params: LegalEntityUpdateParams): HttpResponseFor<LegalEntity> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<LegalEntity> =
+            update(id, LegalEntityUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LegalEntity> = update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
+        ): HttpResponseFor<LegalEntity> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -113,6 +194,16 @@ interface LegalEntityService {
             params: LegalEntityUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LegalEntity>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: LegalEntityUpdateParams): HttpResponseFor<LegalEntity> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<LegalEntity> =
+            update(id, LegalEntityUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as

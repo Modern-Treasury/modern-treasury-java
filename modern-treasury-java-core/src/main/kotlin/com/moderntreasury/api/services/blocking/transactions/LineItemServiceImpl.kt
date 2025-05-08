@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.blocking.transactions
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -23,6 +24,7 @@ import com.moderntreasury.api.models.TransactionLineItemDeleteParams
 import com.moderntreasury.api.models.TransactionLineItemListPage
 import com.moderntreasury.api.models.TransactionLineItemListParams
 import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemService {
@@ -100,6 +102,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: TransactionLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionLineItem> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -160,6 +165,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: TransactionLineItemDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

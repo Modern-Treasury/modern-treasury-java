@@ -22,9 +22,22 @@ interface IncomingPaymentDetailServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Get an existing Incoming Payment Detail. */
+    fun retrieve(id: String): CompletableFuture<IncomingPaymentDetail> =
+        retrieve(id, IncomingPaymentDetailRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: IncomingPaymentDetailRetrieveParams
-    ): CompletableFuture<IncomingPaymentDetail> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: IncomingPaymentDetailRetrieveParams = IncomingPaymentDetailRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<IncomingPaymentDetail> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: IncomingPaymentDetailRetrieveParams = IncomingPaymentDetailRetrieveParams.none(),
+    ): CompletableFuture<IncomingPaymentDetail> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -32,16 +45,53 @@ interface IncomingPaymentDetailServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetail>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: IncomingPaymentDetailRetrieveParams
+    ): CompletableFuture<IncomingPaymentDetail> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<IncomingPaymentDetail> =
+        retrieve(id, IncomingPaymentDetailRetrieveParams.none(), requestOptions)
+
     /** Update an existing Incoming Payment Detail. */
+    fun update(id: String): CompletableFuture<IncomingPaymentDetail> =
+        update(id, IncomingPaymentDetailUpdateParams.none())
+
+    /** @see [update] */
     fun update(
-        params: IncomingPaymentDetailUpdateParams
-    ): CompletableFuture<IncomingPaymentDetail> = update(params, RequestOptions.none())
+        id: String,
+        params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<IncomingPaymentDetail> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
+    ): CompletableFuture<IncomingPaymentDetail> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: IncomingPaymentDetailUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<IncomingPaymentDetail>
+
+    /** @see [update] */
+    fun update(
+        params: IncomingPaymentDetailUpdateParams
+    ): CompletableFuture<IncomingPaymentDetail> = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<IncomingPaymentDetail> =
+        update(id, IncomingPaymentDetailUpdateParams.none(), requestOptions)
 
     /** Get a list of Incoming Payment Details. */
     fun list(): CompletableFuture<IncomingPaymentDetailListPageAsync> =
@@ -96,10 +146,26 @@ interface IncomingPaymentDetailServiceAsync {
          * otherwise the same as [IncomingPaymentDetailServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            retrieve(id, IncomingPaymentDetailRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: IncomingPaymentDetailRetrieveParams
+            id: String,
+            params: IncomingPaymentDetailRetrieveParams =
+                IncomingPaymentDetailRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: IncomingPaymentDetailRetrieveParams = IncomingPaymentDetailRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -108,10 +174,54 @@ interface IncomingPaymentDetailServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: IncomingPaymentDetailRetrieveParams
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            retrieve(id, IncomingPaymentDetailRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `patch /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(id: String): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            update(id, IncomingPaymentDetailUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: IncomingPaymentDetailUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: IncomingPaymentDetailUpdateParams
@@ -121,9 +231,10 @@ interface IncomingPaymentDetailServiceAsync {
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: IncomingPaymentDetailUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
+            update(id, IncomingPaymentDetailUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
