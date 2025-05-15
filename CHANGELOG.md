@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.0.1 (2025-05-15)
+
+Full Changelog: [v7.0.0...v7.0.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.0.0...v7.0.1)
+
+### Chores
+
+* **internal:** update JVM publishing method ([c61e679](https://github.com/Modern-Treasury/modern-treasury-java/commit/c61e679275189ec156e7ccef7a55f5abdbf552b9))
+
 ## 7.0.0 (2025-05-08)
 
 Full Changelog: [v6.2.0...v7.0.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v6.2.0...v7.0.0)
