@@ -69,7 +69,9 @@ internal class LegalEntityCreateParamsTest {
                 LegalEntityCreateParams.IdentificationCreateRequest.builder()
                     .idNumber("id_number")
                     .idType(LegalEntityCreateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                    .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
+                    .issuingRegion("issuing_region")
                     .build()
             )
             .addIndustryClassification(
@@ -170,7 +172,9 @@ internal class LegalEntityCreateParamsTest {
                                             .IdType
                                             .AR_CUIL
                                     )
+                                    .expirationDate(LocalDate.parse("2019-12-27"))
                                     .issuingCountry("issuing_country")
+                                    .issuingRegion("issuing_region")
                                     .build()
                             )
                             .addIndustryClassification(
@@ -368,7 +372,9 @@ internal class LegalEntityCreateParamsTest {
                     LegalEntityCreateParams.IdentificationCreateRequest.builder()
                         .idNumber("id_number")
                         .idType(LegalEntityCreateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                        .expirationDate(LocalDate.parse("2019-12-27"))
                         .issuingCountry("issuing_country")
+                        .issuingRegion("issuing_region")
                         .build()
                 )
                 .addIndustryClassification(
@@ -481,7 +487,9 @@ internal class LegalEntityCreateParamsTest {
                                                 .IdType
                                                 .AR_CUIL
                                         )
+                                        .expirationDate(LocalDate.parse("2019-12-27"))
                                         .issuingCountry("issuing_country")
+                                        .issuingRegion("issuing_region")
                                         .build()
                                 )
                                 .addIndustryClassification(
@@ -696,7 +704,9 @@ internal class LegalEntityCreateParamsTest {
                 LegalEntityCreateParams.IdentificationCreateRequest.builder()
                     .idNumber("id_number")
                     .idType(LegalEntityCreateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                    .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
+                    .issuingRegion("issuing_region")
                     .build()
             )
         assertThat(body.industryClassifications().getOrNull())
@@ -799,7 +809,9 @@ internal class LegalEntityCreateParamsTest {
                                             .IdType
                                             .AR_CUIL
                                     )
+                                    .expirationDate(LocalDate.parse("2019-12-27"))
                                     .issuingCountry("issuing_country")
+                                    .issuingRegion("issuing_region")
                                     .build()
                             )
                             .addIndustryClassification(

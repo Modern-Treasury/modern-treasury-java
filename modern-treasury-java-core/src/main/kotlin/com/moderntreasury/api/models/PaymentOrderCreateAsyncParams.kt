@@ -7723,7 +7723,11 @@ private constructor(
 
                     @JvmField val AU_NUMBER = of("au_number")
 
+                    @JvmField val BASE_ADDRESS = of("base_address")
+
                     @JvmField val CLABE = of("clabe")
+
+                    @JvmField val ETHEREUM_ADDRESS = of("ethereum_address")
 
                     @JvmField val HK_NUMBER = of("hk_number")
 
@@ -7737,7 +7741,11 @@ private constructor(
 
                     @JvmField val PAN = of("pan")
 
+                    @JvmField val POLYGON_ADDRESS = of("polygon_address")
+
                     @JvmField val SG_NUMBER = of("sg_number")
+
+                    @JvmField val SOLANA_ADDRESS = of("solana_address")
 
                     @JvmField val WALLET_ADDRESS = of("wallet_address")
 
@@ -7747,14 +7755,18 @@ private constructor(
                 /** An enum containing [AccountNumberType]'s known values. */
                 enum class Known {
                     AU_NUMBER,
+                    BASE_ADDRESS,
                     CLABE,
+                    ETHEREUM_ADDRESS,
                     HK_NUMBER,
                     IBAN,
                     ID_NUMBER,
                     NZ_NUMBER,
                     OTHER,
                     PAN,
+                    POLYGON_ADDRESS,
                     SG_NUMBER,
+                    SOLANA_ADDRESS,
                     WALLET_ADDRESS,
                 }
 
@@ -7771,14 +7783,18 @@ private constructor(
                  */
                 enum class Value {
                     AU_NUMBER,
+                    BASE_ADDRESS,
                     CLABE,
+                    ETHEREUM_ADDRESS,
                     HK_NUMBER,
                     IBAN,
                     ID_NUMBER,
                     NZ_NUMBER,
                     OTHER,
                     PAN,
+                    POLYGON_ADDRESS,
                     SG_NUMBER,
+                    SOLANA_ADDRESS,
                     WALLET_ADDRESS,
                     /**
                      * An enum member indicating that [AccountNumberType] was instantiated with an
@@ -7797,14 +7813,18 @@ private constructor(
                 fun value(): Value =
                     when (this) {
                         AU_NUMBER -> Value.AU_NUMBER
+                        BASE_ADDRESS -> Value.BASE_ADDRESS
                         CLABE -> Value.CLABE
+                        ETHEREUM_ADDRESS -> Value.ETHEREUM_ADDRESS
                         HK_NUMBER -> Value.HK_NUMBER
                         IBAN -> Value.IBAN
                         ID_NUMBER -> Value.ID_NUMBER
                         NZ_NUMBER -> Value.NZ_NUMBER
                         OTHER -> Value.OTHER
                         PAN -> Value.PAN
+                        POLYGON_ADDRESS -> Value.POLYGON_ADDRESS
                         SG_NUMBER -> Value.SG_NUMBER
+                        SOLANA_ADDRESS -> Value.SOLANA_ADDRESS
                         WALLET_ADDRESS -> Value.WALLET_ADDRESS
                         else -> Value._UNKNOWN
                     }
@@ -7821,14 +7841,18 @@ private constructor(
                 fun known(): Known =
                     when (this) {
                         AU_NUMBER -> Known.AU_NUMBER
+                        BASE_ADDRESS -> Known.BASE_ADDRESS
                         CLABE -> Known.CLABE
+                        ETHEREUM_ADDRESS -> Known.ETHEREUM_ADDRESS
                         HK_NUMBER -> Known.HK_NUMBER
                         IBAN -> Known.IBAN
                         ID_NUMBER -> Known.ID_NUMBER
                         NZ_NUMBER -> Known.NZ_NUMBER
                         OTHER -> Known.OTHER
                         PAN -> Known.PAN
+                        POLYGON_ADDRESS -> Known.POLYGON_ADDRESS
                         SG_NUMBER -> Known.SG_NUMBER
+                        SOLANA_ADDRESS -> Known.SOLANA_ADDRESS
                         WALLET_ADDRESS -> Known.WALLET_ADDRESS
                         else ->
                             throw ModernTreasuryInvalidDataException(
@@ -10219,6 +10243,8 @@ private constructor(
 
                     @JvmField val BACS = of("bacs")
 
+                    @JvmField val BASE = of("base")
+
                     @JvmField val BOOK = of("book")
 
                     @JvmField val CARD = of("card")
@@ -10232,6 +10258,8 @@ private constructor(
                     @JvmField val DK_NETS = of("dk_nets")
 
                     @JvmField val EFT = of("eft")
+
+                    @JvmField val ETHEREUM = of("ethereum")
 
                     @JvmField val HU_ICS = of("hu_ics")
 
@@ -10248,6 +10276,8 @@ private constructor(
                     @JvmField val NZ_BECS = of("nz_becs")
 
                     @JvmField val PL_ELIXIR = of("pl_elixir")
+
+                    @JvmField val POLYGON = of("polygon")
 
                     @JvmField val PROVXCHANGE = of("provxchange")
 
@@ -10269,6 +10299,8 @@ private constructor(
 
                     @JvmField val SKNBI = of("sknbi")
 
+                    @JvmField val SOLANA = of("solana")
+
                     @JvmField val WIRE = of("wire")
 
                     @JvmField val ZENGIN = of("zengin")
@@ -10281,6 +10313,7 @@ private constructor(
                     ACH,
                     AU_BECS,
                     BACS,
+                    BASE,
                     BOOK,
                     CARD,
                     CHATS,
@@ -10288,6 +10321,7 @@ private constructor(
                     CROSS_BORDER,
                     DK_NETS,
                     EFT,
+                    ETHEREUM,
                     HU_ICS,
                     INTERAC,
                     MASAV,
@@ -10296,6 +10330,7 @@ private constructor(
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    POLYGON,
                     PROVXCHANGE,
                     RO_SENT,
                     RTP,
@@ -10306,6 +10341,7 @@ private constructor(
                     SIC,
                     SIGNET,
                     SKNBI,
+                    SOLANA,
                     WIRE,
                     ZENGIN,
                 }
@@ -10323,6 +10359,7 @@ private constructor(
                     ACH,
                     AU_BECS,
                     BACS,
+                    BASE,
                     BOOK,
                     CARD,
                     CHATS,
@@ -10330,6 +10367,7 @@ private constructor(
                     CROSS_BORDER,
                     DK_NETS,
                     EFT,
+                    ETHEREUM,
                     HU_ICS,
                     INTERAC,
                     MASAV,
@@ -10338,6 +10376,7 @@ private constructor(
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    POLYGON,
                     PROVXCHANGE,
                     RO_SENT,
                     RTP,
@@ -10348,6 +10387,7 @@ private constructor(
                     SIC,
                     SIGNET,
                     SKNBI,
+                    SOLANA,
                     WIRE,
                     ZENGIN,
                     /**
@@ -10369,6 +10409,7 @@ private constructor(
                         ACH -> Value.ACH
                         AU_BECS -> Value.AU_BECS
                         BACS -> Value.BACS
+                        BASE -> Value.BASE
                         BOOK -> Value.BOOK
                         CARD -> Value.CARD
                         CHATS -> Value.CHATS
@@ -10376,6 +10417,7 @@ private constructor(
                         CROSS_BORDER -> Value.CROSS_BORDER
                         DK_NETS -> Value.DK_NETS
                         EFT -> Value.EFT
+                        ETHEREUM -> Value.ETHEREUM
                         HU_ICS -> Value.HU_ICS
                         INTERAC -> Value.INTERAC
                         MASAV -> Value.MASAV
@@ -10384,6 +10426,7 @@ private constructor(
                         NICS -> Value.NICS
                         NZ_BECS -> Value.NZ_BECS
                         PL_ELIXIR -> Value.PL_ELIXIR
+                        POLYGON -> Value.POLYGON
                         PROVXCHANGE -> Value.PROVXCHANGE
                         RO_SENT -> Value.RO_SENT
                         RTP -> Value.RTP
@@ -10394,6 +10437,7 @@ private constructor(
                         SIC -> Value.SIC
                         SIGNET -> Value.SIGNET
                         SKNBI -> Value.SKNBI
+                        SOLANA -> Value.SOLANA
                         WIRE -> Value.WIRE
                         ZENGIN -> Value.ZENGIN
                         else -> Value._UNKNOWN
@@ -10413,6 +10457,7 @@ private constructor(
                         ACH -> Known.ACH
                         AU_BECS -> Known.AU_BECS
                         BACS -> Known.BACS
+                        BASE -> Known.BASE
                         BOOK -> Known.BOOK
                         CARD -> Known.CARD
                         CHATS -> Known.CHATS
@@ -10420,6 +10465,7 @@ private constructor(
                         CROSS_BORDER -> Known.CROSS_BORDER
                         DK_NETS -> Known.DK_NETS
                         EFT -> Known.EFT
+                        ETHEREUM -> Known.ETHEREUM
                         HU_ICS -> Known.HU_ICS
                         INTERAC -> Known.INTERAC
                         MASAV -> Known.MASAV
@@ -10428,6 +10474,7 @@ private constructor(
                         NICS -> Known.NICS
                         NZ_BECS -> Known.NZ_BECS
                         PL_ELIXIR -> Known.PL_ELIXIR
+                        POLYGON -> Known.POLYGON
                         PROVXCHANGE -> Known.PROVXCHANGE
                         RO_SENT -> Known.RO_SENT
                         RTP -> Known.RTP
@@ -10438,6 +10485,7 @@ private constructor(
                         SIC -> Known.SIC
                         SIGNET -> Known.SIGNET
                         SKNBI -> Known.SKNBI
+                        SOLANA -> Known.SOLANA
                         WIRE -> Known.WIRE
                         ZENGIN -> Known.ZENGIN
                         else ->

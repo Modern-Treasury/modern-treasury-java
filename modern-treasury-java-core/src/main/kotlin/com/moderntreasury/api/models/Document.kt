@@ -1085,13 +1085,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val CASE = of("case")
-
             @JvmField val COUNTERPARTY = of("counterparty")
 
             @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
             @JvmField val EXTERNAL_ACCOUNT = of("external_account")
+
+            @JvmField val IDENTIFICATION = of("identification")
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
@@ -1105,27 +1105,27 @@ private constructor(
 
             @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val DECISION = of("decision")
-
             @JvmField val CONNECTION = of("connection")
+
+            @JvmField val CONVERSATION = of("conversation")
 
             @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
         }
 
         /** An enum containing [DocumentableType]'s known values. */
         enum class Known {
-            CASE,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
             EXTERNAL_ACCOUNT,
+            IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             ORGANIZATION,
             PAPER_ITEM,
             PAYMENT_ORDER,
             TRANSACTION,
-            DECISION,
             CONNECTION,
+            CONVERSATION,
         }
 
         /**
@@ -1138,18 +1138,18 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            CASE,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
             EXTERNAL_ACCOUNT,
+            IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             ORGANIZATION,
             PAPER_ITEM,
             PAYMENT_ORDER,
             TRANSACTION,
-            DECISION,
             CONNECTION,
+            CONVERSATION,
             /**
              * An enum member indicating that [DocumentableType] was instantiated with an unknown
              * value.
@@ -1166,18 +1166,18 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                CASE -> Value.CASE
                 COUNTERPARTY -> Value.COUNTERPARTY
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
+                IDENTIFICATION -> Value.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
                 ORGANIZATION -> Value.ORGANIZATION
                 PAPER_ITEM -> Value.PAPER_ITEM
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 TRANSACTION -> Value.TRANSACTION
-                DECISION -> Value.DECISION
                 CONNECTION -> Value.CONNECTION
+                CONVERSATION -> Value.CONVERSATION
                 else -> Value._UNKNOWN
             }
 
@@ -1192,18 +1192,18 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                CASE -> Known.CASE
                 COUNTERPARTY -> Known.COUNTERPARTY
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
+                IDENTIFICATION -> Known.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
                 ORGANIZATION -> Known.ORGANIZATION
                 PAPER_ITEM -> Known.PAPER_ITEM
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 TRANSACTION -> Known.TRANSACTION
-                DECISION -> Known.DECISION
                 CONNECTION -> Known.CONNECTION
+                CONVERSATION -> Known.CONVERSATION
                 else -> throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
             }
 
