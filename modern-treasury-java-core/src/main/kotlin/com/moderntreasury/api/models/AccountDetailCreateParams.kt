@@ -547,7 +547,11 @@ private constructor(
 
             @JvmField val AU_NUMBER = of("au_number")
 
+            @JvmField val BASE_ADDRESS = of("base_address")
+
             @JvmField val CLABE = of("clabe")
+
+            @JvmField val ETHEREUM_ADDRESS = of("ethereum_address")
 
             @JvmField val HK_NUMBER = of("hk_number")
 
@@ -561,7 +565,11 @@ private constructor(
 
             @JvmField val PAN = of("pan")
 
+            @JvmField val POLYGON_ADDRESS = of("polygon_address")
+
             @JvmField val SG_NUMBER = of("sg_number")
+
+            @JvmField val SOLANA_ADDRESS = of("solana_address")
 
             @JvmField val WALLET_ADDRESS = of("wallet_address")
 
@@ -571,14 +579,18 @@ private constructor(
         /** An enum containing [AccountNumberType]'s known values. */
         enum class Known {
             AU_NUMBER,
+            BASE_ADDRESS,
             CLABE,
+            ETHEREUM_ADDRESS,
             HK_NUMBER,
             IBAN,
             ID_NUMBER,
             NZ_NUMBER,
             OTHER,
             PAN,
+            POLYGON_ADDRESS,
             SG_NUMBER,
+            SOLANA_ADDRESS,
             WALLET_ADDRESS,
         }
 
@@ -593,14 +605,18 @@ private constructor(
          */
         enum class Value {
             AU_NUMBER,
+            BASE_ADDRESS,
             CLABE,
+            ETHEREUM_ADDRESS,
             HK_NUMBER,
             IBAN,
             ID_NUMBER,
             NZ_NUMBER,
             OTHER,
             PAN,
+            POLYGON_ADDRESS,
             SG_NUMBER,
+            SOLANA_ADDRESS,
             WALLET_ADDRESS,
             /**
              * An enum member indicating that [AccountNumberType] was instantiated with an unknown
@@ -619,14 +635,18 @@ private constructor(
         fun value(): Value =
             when (this) {
                 AU_NUMBER -> Value.AU_NUMBER
+                BASE_ADDRESS -> Value.BASE_ADDRESS
                 CLABE -> Value.CLABE
+                ETHEREUM_ADDRESS -> Value.ETHEREUM_ADDRESS
                 HK_NUMBER -> Value.HK_NUMBER
                 IBAN -> Value.IBAN
                 ID_NUMBER -> Value.ID_NUMBER
                 NZ_NUMBER -> Value.NZ_NUMBER
                 OTHER -> Value.OTHER
                 PAN -> Value.PAN
+                POLYGON_ADDRESS -> Value.POLYGON_ADDRESS
                 SG_NUMBER -> Value.SG_NUMBER
+                SOLANA_ADDRESS -> Value.SOLANA_ADDRESS
                 WALLET_ADDRESS -> Value.WALLET_ADDRESS
                 else -> Value._UNKNOWN
             }
@@ -643,14 +663,18 @@ private constructor(
         fun known(): Known =
             when (this) {
                 AU_NUMBER -> Known.AU_NUMBER
+                BASE_ADDRESS -> Known.BASE_ADDRESS
                 CLABE -> Known.CLABE
+                ETHEREUM_ADDRESS -> Known.ETHEREUM_ADDRESS
                 HK_NUMBER -> Known.HK_NUMBER
                 IBAN -> Known.IBAN
                 ID_NUMBER -> Known.ID_NUMBER
                 NZ_NUMBER -> Known.NZ_NUMBER
                 OTHER -> Known.OTHER
                 PAN -> Known.PAN
+                POLYGON_ADDRESS -> Known.POLYGON_ADDRESS
                 SG_NUMBER -> Known.SG_NUMBER
+                SOLANA_ADDRESS -> Known.SOLANA_ADDRESS
                 WALLET_ADDRESS -> Known.WALLET_ADDRESS
                 else ->
                     throw ModernTreasuryInvalidDataException("Unknown AccountNumberType: $value")

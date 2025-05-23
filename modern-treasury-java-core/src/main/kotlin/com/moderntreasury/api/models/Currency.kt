@@ -121,6 +121,8 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
 
         @JvmField val EUR = of("EUR")
 
+        @JvmField val EURC = of("EURC")
+
         @JvmField val FJD = of("FJD")
 
         @JvmField val FKP = of("FKP")
@@ -271,6 +273,8 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
 
         @JvmField val PYG = of("PYG")
 
+        @JvmField val PYUSD = of("PYUSD")
+
         @JvmField val QAR = of("QAR")
 
         @JvmField val RON = of("RON")
@@ -282,6 +286,8 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         @JvmField val RWF = of("RWF")
 
         @JvmField val SAR = of("SAR")
+
+        @JvmField val SBC = of("SBC")
 
         @JvmField val SBD = of("SBD")
 
@@ -338,6 +344,14 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         @JvmField val UGX = of("UGX")
 
         @JvmField val USD = of("USD")
+
+        @JvmField val USDB = of("USDB")
+
+        @JvmField val USDC = of("USDC")
+
+        @JvmField val USDP = of("USDP")
+
+        @JvmField val USDT = of("USDT")
 
         @JvmField val UYU = of("UYU")
 
@@ -454,6 +468,7 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         ERN,
         ETB,
         EUR,
+        EURC,
         FJD,
         FKP,
         GBP,
@@ -529,12 +544,14 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         PKR,
         PLN,
         PYG,
+        PYUSD,
         QAR,
         RON,
         RSD,
         RUB,
         RWF,
         SAR,
+        SBC,
         SBD,
         SCR,
         SDG,
@@ -563,6 +580,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         UAH,
         UGX,
         USD,
+        USDB,
+        USDC,
+        USDP,
+        USDT,
         UYU,
         UZS,
         VEF,
@@ -655,6 +676,7 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         ERN,
         ETB,
         EUR,
+        EURC,
         FJD,
         FKP,
         GBP,
@@ -730,12 +752,14 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         PKR,
         PLN,
         PYG,
+        PYUSD,
         QAR,
         RON,
         RSD,
         RUB,
         RWF,
         SAR,
+        SBC,
         SBD,
         SCR,
         SDG,
@@ -764,6 +788,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         UAH,
         UGX,
         USD,
+        USDB,
+        USDC,
+        USDP,
+        USDT,
         UYU,
         UZS,
         VEF,
@@ -857,6 +885,7 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             ERN -> Value.ERN
             ETB -> Value.ETB
             EUR -> Value.EUR
+            EURC -> Value.EURC
             FJD -> Value.FJD
             FKP -> Value.FKP
             GBP -> Value.GBP
@@ -932,12 +961,14 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             PKR -> Value.PKR
             PLN -> Value.PLN
             PYG -> Value.PYG
+            PYUSD -> Value.PYUSD
             QAR -> Value.QAR
             RON -> Value.RON
             RSD -> Value.RSD
             RUB -> Value.RUB
             RWF -> Value.RWF
             SAR -> Value.SAR
+            SBC -> Value.SBC
             SBD -> Value.SBD
             SCR -> Value.SCR
             SDG -> Value.SDG
@@ -966,6 +997,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             UAH -> Value.UAH
             UGX -> Value.UGX
             USD -> Value.USD
+            USDB -> Value.USDB
+            USDC -> Value.USDC
+            USDP -> Value.USDP
+            USDT -> Value.USDT
             UYU -> Value.UYU
             UZS -> Value.UZS
             VEF -> Value.VEF
@@ -1060,6 +1095,7 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             ERN -> Known.ERN
             ETB -> Known.ETB
             EUR -> Known.EUR
+            EURC -> Known.EURC
             FJD -> Known.FJD
             FKP -> Known.FKP
             GBP -> Known.GBP
@@ -1135,12 +1171,14 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             PKR -> Known.PKR
             PLN -> Known.PLN
             PYG -> Known.PYG
+            PYUSD -> Known.PYUSD
             QAR -> Known.QAR
             RON -> Known.RON
             RSD -> Known.RSD
             RUB -> Known.RUB
             RWF -> Known.RWF
             SAR -> Known.SAR
+            SBC -> Known.SBC
             SBD -> Known.SBD
             SCR -> Known.SCR
             SDG -> Known.SDG
@@ -1169,6 +1207,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             UAH -> Known.UAH
             UGX -> Known.UGX
             USD -> Known.USD
+            USDB -> Known.USDB
+            USDC -> Known.USDC
+            USDP -> Known.USDP
+            USDT -> Known.USDT
             UYU -> Known.UYU
             UZS -> Known.UZS
             VEF -> Known.VEF
