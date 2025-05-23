@@ -256,13 +256,13 @@ private constructor(
 
         companion object {
 
-            @JvmField val CASES = of("cases")
-
             @JvmField val COUNTERPARTIES = of("counterparties")
 
             @JvmField val EXPECTED_PAYMENTS = of("expected_payments")
 
             @JvmField val EXTERNAL_ACCOUNTS = of("external_accounts")
+
+            @JvmField val IDENTIFICATIONS = of("identifications")
 
             @JvmField val INCOMING_PAYMENT_DETAILS = of("incoming_payment_details")
 
@@ -276,27 +276,27 @@ private constructor(
 
             @JvmField val TRANSACTIONS = of("transactions")
 
-            @JvmField val DECISIONS = of("decisions")
-
             @JvmField val CONNECTIONS = of("connections")
+
+            @JvmField val CONVERSATIONS = of("conversations")
 
             @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
         }
 
         /** An enum containing [DocumentableType]'s known values. */
         enum class Known {
-            CASES,
             COUNTERPARTIES,
             EXPECTED_PAYMENTS,
             EXTERNAL_ACCOUNTS,
+            IDENTIFICATIONS,
             INCOMING_PAYMENT_DETAILS,
             INTERNAL_ACCOUNTS,
             ORGANIZATIONS,
             PAPER_ITEMS,
             PAYMENT_ORDERS,
             TRANSACTIONS,
-            DECISIONS,
             CONNECTIONS,
+            CONVERSATIONS,
         }
 
         /**
@@ -309,18 +309,18 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            CASES,
             COUNTERPARTIES,
             EXPECTED_PAYMENTS,
             EXTERNAL_ACCOUNTS,
+            IDENTIFICATIONS,
             INCOMING_PAYMENT_DETAILS,
             INTERNAL_ACCOUNTS,
             ORGANIZATIONS,
             PAPER_ITEMS,
             PAYMENT_ORDERS,
             TRANSACTIONS,
-            DECISIONS,
             CONNECTIONS,
+            CONVERSATIONS,
             /**
              * An enum member indicating that [DocumentableType] was instantiated with an unknown
              * value.
@@ -337,18 +337,18 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                CASES -> Value.CASES
                 COUNTERPARTIES -> Value.COUNTERPARTIES
                 EXPECTED_PAYMENTS -> Value.EXPECTED_PAYMENTS
                 EXTERNAL_ACCOUNTS -> Value.EXTERNAL_ACCOUNTS
+                IDENTIFICATIONS -> Value.IDENTIFICATIONS
                 INCOMING_PAYMENT_DETAILS -> Value.INCOMING_PAYMENT_DETAILS
                 INTERNAL_ACCOUNTS -> Value.INTERNAL_ACCOUNTS
                 ORGANIZATIONS -> Value.ORGANIZATIONS
                 PAPER_ITEMS -> Value.PAPER_ITEMS
                 PAYMENT_ORDERS -> Value.PAYMENT_ORDERS
                 TRANSACTIONS -> Value.TRANSACTIONS
-                DECISIONS -> Value.DECISIONS
                 CONNECTIONS -> Value.CONNECTIONS
+                CONVERSATIONS -> Value.CONVERSATIONS
                 else -> Value._UNKNOWN
             }
 
@@ -363,18 +363,18 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                CASES -> Known.CASES
                 COUNTERPARTIES -> Known.COUNTERPARTIES
                 EXPECTED_PAYMENTS -> Known.EXPECTED_PAYMENTS
                 EXTERNAL_ACCOUNTS -> Known.EXTERNAL_ACCOUNTS
+                IDENTIFICATIONS -> Known.IDENTIFICATIONS
                 INCOMING_PAYMENT_DETAILS -> Known.INCOMING_PAYMENT_DETAILS
                 INTERNAL_ACCOUNTS -> Known.INTERNAL_ACCOUNTS
                 ORGANIZATIONS -> Known.ORGANIZATIONS
                 PAPER_ITEMS -> Known.PAPER_ITEMS
                 PAYMENT_ORDERS -> Known.PAYMENT_ORDERS
                 TRANSACTIONS -> Known.TRANSACTIONS
-                DECISIONS -> Known.DECISIONS
                 CONNECTIONS -> Known.CONNECTIONS
+                CONVERSATIONS -> Known.CONVERSATIONS
                 else -> throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
             }
 

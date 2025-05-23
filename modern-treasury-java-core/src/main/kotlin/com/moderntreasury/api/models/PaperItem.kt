@@ -33,6 +33,7 @@ private constructor(
     private val liveMode: JsonField<Boolean>,
     private val lockboxNumber: JsonField<String>,
     private val memoField: JsonField<String>,
+    private val metadata: JsonValue,
     private val object_: JsonField<String>,
     private val remitterName: JsonField<String>,
     private val routingNumber: JsonField<String>,
@@ -68,6 +69,7 @@ private constructor(
         @ExcludeMissing
         lockboxNumber: JsonField<String> = JsonMissing.of(),
         @JsonProperty("memo_field") @ExcludeMissing memoField: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata") @ExcludeMissing metadata: JsonValue = JsonMissing.of(),
         @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
         @JsonProperty("remitter_name")
         @ExcludeMissing
@@ -97,6 +99,7 @@ private constructor(
         liveMode,
         lockboxNumber,
         memoField,
+        metadata,
         object_,
         remitterName,
         routingNumber,
@@ -191,6 +194,9 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun memoField(): Optional<String> = memoField.getOptional("memo_field")
+
+    /** Additional data represented as key-value pairs. Both the key and value must be strings. */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonValue = metadata
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -425,6 +431,7 @@ private constructor(
          * .liveMode()
          * .lockboxNumber()
          * .memoField()
+         * .metadata()
          * .object_()
          * .remitterName()
          * .routingNumber()
@@ -451,6 +458,7 @@ private constructor(
         private var liveMode: JsonField<Boolean>? = null
         private var lockboxNumber: JsonField<String>? = null
         private var memoField: JsonField<String>? = null
+        private var metadata: JsonValue? = null
         private var object_: JsonField<String>? = null
         private var remitterName: JsonField<String>? = null
         private var routingNumber: JsonField<String>? = null
@@ -473,6 +481,7 @@ private constructor(
             liveMode = paperItem.liveMode
             lockboxNumber = paperItem.lockboxNumber
             memoField = paperItem.memoField
+            metadata = paperItem.metadata
             object_ = paperItem.object_
             remitterName = paperItem.remitterName
             routingNumber = paperItem.routingNumber
@@ -638,6 +647,11 @@ private constructor(
          */
         fun memoField(memoField: JsonField<String>) = apply { this.memoField = memoField }
 
+        /**
+         * Additional data represented as key-value pairs. Both the key and value must be strings.
+         */
+        fun metadata(metadata: JsonValue) = apply { this.metadata = metadata }
+
         fun object_(object_: String) = object_(JsonField.of(object_))
 
         /**
@@ -784,6 +798,7 @@ private constructor(
          * .liveMode()
          * .lockboxNumber()
          * .memoField()
+         * .metadata()
          * .object_()
          * .remitterName()
          * .routingNumber()
@@ -808,6 +823,7 @@ private constructor(
                 checkRequired("liveMode", liveMode),
                 checkRequired("lockboxNumber", lockboxNumber),
                 checkRequired("memoField", memoField),
+                checkRequired("metadata", metadata),
                 checkRequired("object_", object_),
                 checkRequired("remitterName", remitterName),
                 checkRequired("routingNumber", routingNumber),
@@ -1020,15 +1036,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaperItem && id == other.id && accountNumber == other.accountNumber && accountNumberSafe == other.accountNumberSafe && amount == other.amount && checkNumber == other.checkNumber && createdAt == other.createdAt && currency == other.currency && depositDate == other.depositDate && liveMode == other.liveMode && lockboxNumber == other.lockboxNumber && memoField == other.memoField && object_ == other.object_ && remitterName == other.remitterName && routingNumber == other.routingNumber && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PaperItem && id == other.id && accountNumber == other.accountNumber && accountNumberSafe == other.accountNumberSafe && amount == other.amount && checkNumber == other.checkNumber && createdAt == other.createdAt && currency == other.currency && depositDate == other.depositDate && liveMode == other.liveMode && lockboxNumber == other.lockboxNumber && memoField == other.memoField && metadata == other.metadata && object_ == other.object_ && remitterName == other.remitterName && routingNumber == other.routingNumber && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountNumber, accountNumberSafe, amount, checkNumber, createdAt, currency, depositDate, liveMode, lockboxNumber, memoField, object_, remitterName, routingNumber, status, transactionId, transactionLineItemId, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountNumber, accountNumberSafe, amount, checkNumber, createdAt, currency, depositDate, liveMode, lockboxNumber, memoField, metadata, object_, remitterName, routingNumber, status, transactionId, transactionLineItemId, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaperItem{id=$id, accountNumber=$accountNumber, accountNumberSafe=$accountNumberSafe, amount=$amount, checkNumber=$checkNumber, createdAt=$createdAt, currency=$currency, depositDate=$depositDate, liveMode=$liveMode, lockboxNumber=$lockboxNumber, memoField=$memoField, object_=$object_, remitterName=$remitterName, routingNumber=$routingNumber, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "PaperItem{id=$id, accountNumber=$accountNumber, accountNumberSafe=$accountNumberSafe, amount=$amount, checkNumber=$checkNumber, createdAt=$createdAt, currency=$currency, depositDate=$depositDate, liveMode=$liveMode, lockboxNumber=$lockboxNumber, memoField=$memoField, metadata=$metadata, object_=$object_, remitterName=$remitterName, routingNumber=$routingNumber, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }

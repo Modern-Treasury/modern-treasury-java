@@ -25,6 +25,7 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val description: JsonField<String>,
     private val direction: JsonField<String>,
+    private val invoiceId: JsonField<String>,
     private val liveMode: JsonField<Boolean>,
     private val metadata: JsonField<Metadata>,
     private val name: JsonField<String>,
@@ -47,6 +48,7 @@ private constructor(
         @ExcludeMissing
         description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("direction") @ExcludeMissing direction: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoice_id") @ExcludeMissing invoiceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("live_mode") @ExcludeMissing liveMode: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
@@ -65,6 +67,7 @@ private constructor(
         createdAt,
         description,
         direction,
+        invoiceId,
         liveMode,
         metadata,
         name,
@@ -112,6 +115,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun direction(): String = direction.getRequired("direction")
+
+    /**
+     * The ID of the invoice for this line item.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun invoiceId(): String = invoiceId.getRequired("invoice_id")
 
     /**
      * This field will be true if this object exists in the live environment or false if it exists
@@ -215,6 +226,13 @@ private constructor(
     @JsonProperty("direction") @ExcludeMissing fun _direction(): JsonField<String> = direction
 
     /**
+     * Returns the raw JSON value of [invoiceId].
+     *
+     * Unlike [invoiceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId(): JsonField<String> = invoiceId
+
+    /**
      * Returns the raw JSON value of [liveMode].
      *
      * Unlike [liveMode], this method doesn't throw if the JSON field has an unexpected type.
@@ -299,6 +317,7 @@ private constructor(
          * .createdAt()
          * .description()
          * .direction()
+         * .invoiceId()
          * .liveMode()
          * .metadata()
          * .name()
@@ -320,6 +339,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var description: JsonField<String>? = null
         private var direction: JsonField<String>? = null
+        private var invoiceId: JsonField<String>? = null
         private var liveMode: JsonField<Boolean>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
@@ -337,6 +357,7 @@ private constructor(
             createdAt = invoiceLineItem.createdAt
             description = invoiceLineItem.description
             direction = invoiceLineItem.direction
+            invoiceId = invoiceLineItem.invoiceId
             liveMode = invoiceLineItem.liveMode
             metadata = invoiceLineItem.metadata
             name = invoiceLineItem.name
@@ -409,6 +430,18 @@ private constructor(
          * value.
          */
         fun direction(direction: JsonField<String>) = apply { this.direction = direction }
+
+        /** The ID of the invoice for this line item. */
+        fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
+
+        /**
+         * Sets [Builder.invoiceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoiceId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
 
         /**
          * This field will be true if this object exists in the live environment or false if it
@@ -548,6 +581,7 @@ private constructor(
          * .createdAt()
          * .description()
          * .direction()
+         * .invoiceId()
          * .liveMode()
          * .metadata()
          * .name()
@@ -567,6 +601,7 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("description", description),
                 checkRequired("direction", direction),
+                checkRequired("invoiceId", invoiceId),
                 checkRequired("liveMode", liveMode),
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
@@ -591,6 +626,7 @@ private constructor(
         createdAt()
         description()
         direction()
+        invoiceId()
         liveMode()
         metadata().validate()
         name()
@@ -622,6 +658,7 @@ private constructor(
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (if (direction.asKnown().isPresent) 1 else 0) +
+            (if (invoiceId.asKnown().isPresent) 1 else 0) +
             (if (liveMode.asKnown().isPresent) 1 else 0) +
             (metadata.asKnown().getOrNull()?.validity() ?: 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
@@ -738,15 +775,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItem && id == other.id && amount == other.amount && createdAt == other.createdAt && description == other.description && direction == other.direction && liveMode == other.liveMode && metadata == other.metadata && name == other.name && object_ == other.object_ && quantity == other.quantity && unitAmount == other.unitAmount && unitAmountDecimal == other.unitAmountDecimal && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceLineItem && id == other.id && amount == other.amount && createdAt == other.createdAt && description == other.description && direction == other.direction && invoiceId == other.invoiceId && liveMode == other.liveMode && metadata == other.metadata && name == other.name && object_ == other.object_ && quantity == other.quantity && unitAmount == other.unitAmount && unitAmountDecimal == other.unitAmountDecimal && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, description, direction, liveMode, metadata, name, object_, quantity, unitAmount, unitAmountDecimal, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, description, direction, invoiceId, liveMode, metadata, name, object_, quantity, unitAmount, unitAmountDecimal, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InvoiceLineItem{id=$id, amount=$amount, createdAt=$createdAt, description=$description, direction=$direction, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "InvoiceLineItem{id=$id, amount=$amount, createdAt=$createdAt, description=$description, direction=$direction, invoiceId=$invoiceId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, quantity=$quantity, unitAmount=$unitAmount, unitAmountDecimal=$unitAmountDecimal, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }

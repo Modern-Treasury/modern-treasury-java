@@ -21,7 +21,7 @@ internal class ExternalAccountCreateParamsTest {
                     )
                     .build()
             )
-            .accountType(ExternalAccountType.CASH)
+            .accountType(ExternalAccountType.BASE_WALLET)
             .addContactDetail(
                 ExternalAccountCreateParams.ContactDetailCreateRequest.builder()
                     .contactIdentifier("contact_identifier")
@@ -101,7 +101,7 @@ internal class ExternalAccountCreateParamsTest {
                         )
                         .build()
                 )
-                .accountType(ExternalAccountType.CASH)
+                .accountType(ExternalAccountType.BASE_WALLET)
                 .addContactDetail(
                     ExternalAccountCreateParams.ContactDetailCreateRequest.builder()
                         .contactIdentifier("contact_identifier")
@@ -181,7 +181,7 @@ internal class ExternalAccountCreateParamsTest {
                     )
                     .build()
             )
-        assertThat(body.accountType()).contains(ExternalAccountType.CASH)
+        assertThat(body.accountType()).contains(ExternalAccountType.BASE_WALLET)
         assertThat(body.contactDetails().getOrNull())
             .containsExactly(
                 ExternalAccountCreateParams.ContactDetailCreateRequest.builder()

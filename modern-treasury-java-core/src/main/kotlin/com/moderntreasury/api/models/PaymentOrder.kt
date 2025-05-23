@@ -41,12 +41,10 @@ private constructor(
     private val accountingLedgerClassId: JsonField<String>,
     private val amount: JsonField<Long>,
     private val chargeBearer: JsonField<ChargeBearer>,
-    private val complianceRuleMetadata: JsonField<ComplianceRuleMetadata>,
     private val counterpartyId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<Currency>,
     private val currentReturn: JsonField<ReturnObject>,
-    private val decisionId: JsonField<String>,
     private val description: JsonField<String>,
     private val direction: JsonField<Direction>,
     private val effectiveDate: JsonField<LocalDate>,
@@ -73,7 +71,6 @@ private constructor(
     private val status: JsonField<Status>,
     private val subtype: JsonField<PaymentOrderSubtype>,
     private val transactionIds: JsonField<List<String>>,
-    private val transactionMonitoringEnabled: JsonField<Boolean>,
     private val type: JsonField<PaymentOrderType>,
     private val ultimateOriginatingAccount: JsonField<UltimateOriginatingAccount>,
     private val ultimateOriginatingAccountId: JsonField<String>,
@@ -104,9 +101,6 @@ private constructor(
         @JsonProperty("charge_bearer")
         @ExcludeMissing
         chargeBearer: JsonField<ChargeBearer> = JsonMissing.of(),
-        @JsonProperty("compliance_rule_metadata")
-        @ExcludeMissing
-        complianceRuleMetadata: JsonField<ComplianceRuleMetadata> = JsonMissing.of(),
         @JsonProperty("counterparty_id")
         @ExcludeMissing
         counterpartyId: JsonField<String> = JsonMissing.of(),
@@ -117,9 +111,6 @@ private constructor(
         @JsonProperty("current_return")
         @ExcludeMissing
         currentReturn: JsonField<ReturnObject> = JsonMissing.of(),
-        @JsonProperty("decision_id")
-        @ExcludeMissing
-        decisionId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("description")
         @ExcludeMissing
         description: JsonField<String> = JsonMissing.of(),
@@ -186,9 +177,6 @@ private constructor(
         @JsonProperty("transaction_ids")
         @ExcludeMissing
         transactionIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("transaction_monitoring_enabled")
-        @ExcludeMissing
-        transactionMonitoringEnabled: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<PaymentOrderType> = JsonMissing.of(),
         @JsonProperty("ultimate_originating_account")
         @ExcludeMissing
@@ -228,12 +216,10 @@ private constructor(
         accountingLedgerClassId,
         amount,
         chargeBearer,
-        complianceRuleMetadata,
         counterpartyId,
         createdAt,
         currency,
         currentReturn,
-        decisionId,
         description,
         direction,
         effectiveDate,
@@ -260,7 +246,6 @@ private constructor(
         status,
         subtype,
         transactionIds,
-        transactionMonitoringEnabled,
         type,
         ultimateOriginatingAccount,
         ultimateOriginatingAccountId,
@@ -329,16 +314,6 @@ private constructor(
     fun chargeBearer(): Optional<ChargeBearer> = chargeBearer.getOptional("charge_bearer")
 
     /**
-     * Custom key-value pair for usage in compliance rules. Please contact support before making
-     * changes to this field.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun complianceRuleMetadata(): Optional<ComplianceRuleMetadata> =
-        complianceRuleMetadata.getOptional("compliance_rule_metadata")
-
-    /**
      * If the payment order is tied to a specific Counterparty, their id will appear, otherwise
      * `null`.
      *
@@ -368,15 +343,6 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun currentReturn(): Optional<ReturnObject> = currentReturn.getOptional("current_return")
-
-    /**
-     * The ID of the compliance decision for the payment order, if transaction monitoring is
-     * enabled.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun decisionId(): Optional<String> = decisionId.getOptional("decision_id")
 
     /**
      * An optional description for internal use.
@@ -621,15 +587,6 @@ private constructor(
     fun transactionIds(): List<String> = transactionIds.getRequired("transaction_ids")
 
     /**
-     * A flag that determines whether a payment order should go through transaction monitoring.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun transactionMonitoringEnabled(): Boolean =
-        transactionMonitoringEnabled.getRequired("transaction_monitoring_enabled")
-
-    /**
      * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
      * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
      * `provexchange`, `zengin`.
@@ -776,16 +733,6 @@ private constructor(
     fun _chargeBearer(): JsonField<ChargeBearer> = chargeBearer
 
     /**
-     * Returns the raw JSON value of [complianceRuleMetadata].
-     *
-     * Unlike [complianceRuleMetadata], this method doesn't throw if the JSON field has an
-     * unexpected type.
-     */
-    @JsonProperty("compliance_rule_metadata")
-    @ExcludeMissing
-    fun _complianceRuleMetadata(): JsonField<ComplianceRuleMetadata> = complianceRuleMetadata
-
-    /**
      * Returns the raw JSON value of [counterpartyId].
      *
      * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected type.
@@ -818,13 +765,6 @@ private constructor(
     @JsonProperty("current_return")
     @ExcludeMissing
     fun _currentReturn(): JsonField<ReturnObject> = currentReturn
-
-    /**
-     * Returns the raw JSON value of [decisionId].
-     *
-     * Unlike [decisionId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("decision_id") @ExcludeMissing fun _decisionId(): JsonField<String> = decisionId
 
     /**
      * Returns the raw JSON value of [description].
@@ -1057,16 +997,6 @@ private constructor(
     fun _transactionIds(): JsonField<List<String>> = transactionIds
 
     /**
-     * Returns the raw JSON value of [transactionMonitoringEnabled].
-     *
-     * Unlike [transactionMonitoringEnabled], this method doesn't throw if the JSON field has an
-     * unexpected type.
-     */
-    @JsonProperty("transaction_monitoring_enabled")
-    @ExcludeMissing
-    fun _transactionMonitoringEnabled(): JsonField<Boolean> = transactionMonitoringEnabled
-
-    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -1190,12 +1120,10 @@ private constructor(
          * .accountingLedgerClassId()
          * .amount()
          * .chargeBearer()
-         * .complianceRuleMetadata()
          * .counterpartyId()
          * .createdAt()
          * .currency()
          * .currentReturn()
-         * .decisionId()
          * .description()
          * .direction()
          * .effectiveDate()
@@ -1222,7 +1150,6 @@ private constructor(
          * .status()
          * .subtype()
          * .transactionIds()
-         * .transactionMonitoringEnabled()
          * .type()
          * .ultimateOriginatingAccount()
          * .ultimateOriginatingAccountId()
@@ -1248,12 +1175,10 @@ private constructor(
         private var accountingLedgerClassId: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
         private var chargeBearer: JsonField<ChargeBearer>? = null
-        private var complianceRuleMetadata: JsonField<ComplianceRuleMetadata>? = null
         private var counterpartyId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<Currency>? = null
         private var currentReturn: JsonField<ReturnObject>? = null
-        private var decisionId: JsonField<String>? = null
         private var description: JsonField<String>? = null
         private var direction: JsonField<Direction>? = null
         private var effectiveDate: JsonField<LocalDate>? = null
@@ -1280,7 +1205,6 @@ private constructor(
         private var status: JsonField<Status>? = null
         private var subtype: JsonField<PaymentOrderSubtype>? = null
         private var transactionIds: JsonField<MutableList<String>>? = null
-        private var transactionMonitoringEnabled: JsonField<Boolean>? = null
         private var type: JsonField<PaymentOrderType>? = null
         private var ultimateOriginatingAccount: JsonField<UltimateOriginatingAccount>? = null
         private var ultimateOriginatingAccountId: JsonField<String>? = null
@@ -1303,12 +1227,10 @@ private constructor(
             accountingLedgerClassId = paymentOrder.accountingLedgerClassId
             amount = paymentOrder.amount
             chargeBearer = paymentOrder.chargeBearer
-            complianceRuleMetadata = paymentOrder.complianceRuleMetadata
             counterpartyId = paymentOrder.counterpartyId
             createdAt = paymentOrder.createdAt
             currency = paymentOrder.currency
             currentReturn = paymentOrder.currentReturn
-            decisionId = paymentOrder.decisionId
             description = paymentOrder.description
             direction = paymentOrder.direction
             effectiveDate = paymentOrder.effectiveDate
@@ -1335,7 +1257,6 @@ private constructor(
             status = paymentOrder.status
             subtype = paymentOrder.subtype
             transactionIds = paymentOrder.transactionIds.map { it.toMutableList() }
-            transactionMonitoringEnabled = paymentOrder.transactionMonitoringEnabled
             type = paymentOrder.type
             ultimateOriginatingAccount = paymentOrder.ultimateOriginatingAccount
             ultimateOriginatingAccountId = paymentOrder.ultimateOriginatingAccountId
@@ -1465,32 +1386,6 @@ private constructor(
         }
 
         /**
-         * Custom key-value pair for usage in compliance rules. Please contact support before making
-         * changes to this field.
-         */
-        fun complianceRuleMetadata(complianceRuleMetadata: ComplianceRuleMetadata?) =
-            complianceRuleMetadata(JsonField.ofNullable(complianceRuleMetadata))
-
-        /**
-         * Alias for calling [Builder.complianceRuleMetadata] with
-         * `complianceRuleMetadata.orElse(null)`.
-         */
-        fun complianceRuleMetadata(complianceRuleMetadata: Optional<ComplianceRuleMetadata>) =
-            complianceRuleMetadata(complianceRuleMetadata.getOrNull())
-
-        /**
-         * Sets [Builder.complianceRuleMetadata] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.complianceRuleMetadata] with a well-typed
-         * [ComplianceRuleMetadata] value instead. This method is primarily for setting the field to
-         * an undocumented or not yet supported value.
-         */
-        fun complianceRuleMetadata(complianceRuleMetadata: JsonField<ComplianceRuleMetadata>) =
-            apply {
-                this.complianceRuleMetadata = complianceRuleMetadata
-            }
-
-        /**
          * If the payment order is tied to a specific Counterparty, their id will appear, otherwise
          * `null`.
          */
@@ -1555,24 +1450,6 @@ private constructor(
         fun currentReturn(currentReturn: JsonField<ReturnObject>) = apply {
             this.currentReturn = currentReturn
         }
-
-        /**
-         * The ID of the compliance decision for the payment order, if transaction monitoring is
-         * enabled.
-         */
-        fun decisionId(decisionId: String?) = decisionId(JsonField.ofNullable(decisionId))
-
-        /** Alias for calling [Builder.decisionId] with `decisionId.orElse(null)`. */
-        fun decisionId(decisionId: Optional<String>) = decisionId(decisionId.getOrNull())
-
-        /**
-         * Sets [Builder.decisionId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.decisionId] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun decisionId(decisionId: JsonField<String>) = apply { this.decisionId = decisionId }
 
         /** An optional description for internal use. */
         fun description(description: String?) = description(JsonField.ofNullable(description))
@@ -2091,23 +1968,6 @@ private constructor(
         }
 
         /**
-         * A flag that determines whether a payment order should go through transaction monitoring.
-         */
-        fun transactionMonitoringEnabled(transactionMonitoringEnabled: Boolean) =
-            transactionMonitoringEnabled(JsonField.of(transactionMonitoringEnabled))
-
-        /**
-         * Sets [Builder.transactionMonitoringEnabled] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.transactionMonitoringEnabled] with a well-typed
-         * [Boolean] value instead. This method is primarily for setting the field to an
-         * undocumented or not yet supported value.
-         */
-        fun transactionMonitoringEnabled(transactionMonitoringEnabled: JsonField<Boolean>) = apply {
-            this.transactionMonitoringEnabled = transactionMonitoringEnabled
-        }
-
-        /**
          * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
          * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
          * `signet`, `provexchange`, `zengin`.
@@ -2377,12 +2237,10 @@ private constructor(
          * .accountingLedgerClassId()
          * .amount()
          * .chargeBearer()
-         * .complianceRuleMetadata()
          * .counterpartyId()
          * .createdAt()
          * .currency()
          * .currentReturn()
-         * .decisionId()
          * .description()
          * .direction()
          * .effectiveDate()
@@ -2409,7 +2267,6 @@ private constructor(
          * .status()
          * .subtype()
          * .transactionIds()
-         * .transactionMonitoringEnabled()
          * .type()
          * .ultimateOriginatingAccount()
          * .ultimateOriginatingAccountId()
@@ -2433,12 +2290,10 @@ private constructor(
                 checkRequired("accountingLedgerClassId", accountingLedgerClassId),
                 checkRequired("amount", amount),
                 checkRequired("chargeBearer", chargeBearer),
-                checkRequired("complianceRuleMetadata", complianceRuleMetadata),
                 checkRequired("counterpartyId", counterpartyId),
                 checkRequired("createdAt", createdAt),
                 checkRequired("currency", currency),
                 checkRequired("currentReturn", currentReturn),
-                checkRequired("decisionId", decisionId),
                 checkRequired("description", description),
                 checkRequired("direction", direction),
                 checkRequired("effectiveDate", effectiveDate),
@@ -2465,7 +2320,6 @@ private constructor(
                 checkRequired("status", status),
                 checkRequired("subtype", subtype),
                 checkRequired("transactionIds", transactionIds).map { it.toImmutable() },
-                checkRequired("transactionMonitoringEnabled", transactionMonitoringEnabled),
                 checkRequired("type", type),
                 checkRequired("ultimateOriginatingAccount", ultimateOriginatingAccount),
                 checkRequired("ultimateOriginatingAccountId", ultimateOriginatingAccountId),
@@ -2497,12 +2351,10 @@ private constructor(
         accountingLedgerClassId()
         amount()
         chargeBearer().ifPresent { it.validate() }
-        complianceRuleMetadata().ifPresent { it.validate() }
         counterpartyId()
         createdAt()
         currency().validate()
         currentReturn().ifPresent { it.validate() }
-        decisionId()
         description()
         direction().validate()
         effectiveDate()
@@ -2529,7 +2381,6 @@ private constructor(
         status().validate()
         subtype().ifPresent { it.validate() }
         transactionIds()
-        transactionMonitoringEnabled()
         type().validate()
         ultimateOriginatingAccount().ifPresent { it.validate() }
         ultimateOriginatingAccountId()
@@ -2564,12 +2415,10 @@ private constructor(
             (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (chargeBearer.asKnown().getOrNull()?.validity() ?: 0) +
-            (complianceRuleMetadata.asKnown().getOrNull()?.validity() ?: 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (currency.asKnown().getOrNull()?.validity() ?: 0) +
             (currentReturn.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (decisionId.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (direction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (effectiveDate.asKnown().isPresent) 1 else 0) +
@@ -2596,7 +2445,6 @@ private constructor(
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (subtype.asKnown().getOrNull()?.validity() ?: 0) +
             (transactionIds.asKnown().getOrNull()?.size ?: 0) +
-            (if (transactionMonitoringEnabled.asKnown().isPresent) 1 else 0) +
             (type.asKnown().getOrNull()?.validity() ?: 0) +
             (ultimateOriginatingAccount.asKnown().getOrNull()?.validity() ?: 0) +
             (if (ultimateOriginatingAccountId.asKnown().isPresent) 1 else 0) +
@@ -2941,115 +2789,6 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
-    }
-
-    /**
-     * Custom key-value pair for usage in compliance rules. Please contact support before making
-     * changes to this field.
-     */
-    class ComplianceRuleMetadata
-    @JsonCreator
-    private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
-    ) {
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [ComplianceRuleMetadata].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [ComplianceRuleMetadata]. */
-        class Builder internal constructor() {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(complianceRuleMetadata: ComplianceRuleMetadata) = apply {
-                additionalProperties = complianceRuleMetadata.additionalProperties.toMutableMap()
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [ComplianceRuleMetadata].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): ComplianceRuleMetadata =
-                ComplianceRuleMetadata(additionalProperties.toImmutable())
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): ComplianceRuleMetadata = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: ModernTreasuryInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ComplianceRuleMetadata && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "ComplianceRuleMetadata{additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -4549,6 +4288,15 @@ private constructor(
 
                 @JvmField val BOFA_TRANSACTION_ID = of("bofa_transaction_id")
 
+                @JvmField val BRALE_TRANSFER_ID = of("brale_transfer_id")
+
+                @JvmField
+                val BRIDGE_DESTINATION_TRANSACTION_HASH = of("bridge_destination_transaction_hash")
+
+                @JvmField val BRIDGE_SOURCE_TRANSACTION_HASH = of("bridge_source_transaction_hash")
+
+                @JvmField val BRIDGE_TRANSFER_ID = of("bridge_transfer_id")
+
                 @JvmField val CHECK_NUMBER = of("check_number")
 
                 @JvmField val CITIBANK_REFERENCE_NUMBER = of("citibank_reference_number")
@@ -4709,6 +4457,10 @@ private constructor(
                 BNK_DEV_TRANSFER_ID,
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
+                BRALE_TRANSFER_ID,
+                BRIDGE_DESTINATION_TRANSACTION_HASH,
+                BRIDGE_SOURCE_TRANSACTION_HASH,
+                BRIDGE_TRANSFER_ID,
                 CHECK_NUMBER,
                 CITIBANK_REFERENCE_NUMBER,
                 CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
@@ -4797,6 +4549,10 @@ private constructor(
                 BNK_DEV_TRANSFER_ID,
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
+                BRALE_TRANSFER_ID,
+                BRIDGE_DESTINATION_TRANSACTION_HASH,
+                BRIDGE_SOURCE_TRANSACTION_HASH,
+                BRIDGE_TRANSFER_ID,
                 CHECK_NUMBER,
                 CITIBANK_REFERENCE_NUMBER,
                 CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
@@ -4887,6 +4643,10 @@ private constructor(
                     BNK_DEV_TRANSFER_ID -> Value.BNK_DEV_TRANSFER_ID
                     BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
+                    BRALE_TRANSFER_ID -> Value.BRALE_TRANSFER_ID
+                    BRIDGE_DESTINATION_TRANSACTION_HASH -> Value.BRIDGE_DESTINATION_TRANSACTION_HASH
+                    BRIDGE_SOURCE_TRANSACTION_HASH -> Value.BRIDGE_SOURCE_TRANSACTION_HASH
+                    BRIDGE_TRANSFER_ID -> Value.BRIDGE_TRANSFER_ID
                     CHECK_NUMBER -> Value.CHECK_NUMBER
                     CITIBANK_REFERENCE_NUMBER -> Value.CITIBANK_REFERENCE_NUMBER
                     CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
@@ -4979,6 +4739,10 @@ private constructor(
                     BNK_DEV_TRANSFER_ID -> Known.BNK_DEV_TRANSFER_ID
                     BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
+                    BRALE_TRANSFER_ID -> Known.BRALE_TRANSFER_ID
+                    BRIDGE_DESTINATION_TRANSACTION_HASH -> Known.BRIDGE_DESTINATION_TRANSACTION_HASH
+                    BRIDGE_SOURCE_TRANSACTION_HASH -> Known.BRIDGE_SOURCE_TRANSACTION_HASH
+                    BRIDGE_TRANSFER_ID -> Known.BRIDGE_TRANSFER_ID
                     CHECK_NUMBER -> Known.CHECK_NUMBER
                     CITIBANK_REFERENCE_NUMBER -> Known.CITIBANK_REFERENCE_NUMBER
                     CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
@@ -5638,15 +5402,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentOrder && id == other.id && accounting == other.accounting && accountingCategoryId == other.accountingCategoryId && accountingLedgerClassId == other.accountingLedgerClassId && amount == other.amount && chargeBearer == other.chargeBearer && complianceRuleMetadata == other.complianceRuleMetadata && counterpartyId == other.counterpartyId && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && decisionId == other.decisionId && description == other.description && direction == other.direction && effectiveDate == other.effectiveDate && expiresAt == other.expiresAt && foreignExchangeContract == other.foreignExchangeContract && foreignExchangeIndicator == other.foreignExchangeIndicator && foreignExchangeRate == other.foreignExchangeRate && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && metadata == other.metadata && nsfProtected == other.nsfProtected && object_ == other.object_ && originatingAccountId == other.originatingAccountId && originatingPartyName == other.originatingPartyName && priority == other.priority && processAfter == other.processAfter && purpose == other.purpose && receivingAccountId == other.receivingAccountId && receivingAccountType == other.receivingAccountType && referenceNumbers == other.referenceNumbers && remittanceInformation == other.remittanceInformation && sendRemittanceAdvice == other.sendRemittanceAdvice && statementDescriptor == other.statementDescriptor && status == other.status && subtype == other.subtype && transactionIds == other.transactionIds && transactionMonitoringEnabled == other.transactionMonitoringEnabled && type == other.type && ultimateOriginatingAccount == other.ultimateOriginatingAccount && ultimateOriginatingAccountId == other.ultimateOriginatingAccountId && ultimateOriginatingAccountType == other.ultimateOriginatingAccountType && ultimateOriginatingPartyIdentifier == other.ultimateOriginatingPartyIdentifier && ultimateOriginatingPartyName == other.ultimateOriginatingPartyName && ultimateReceivingPartyIdentifier == other.ultimateReceivingPartyIdentifier && ultimateReceivingPartyName == other.ultimateReceivingPartyName && updatedAt == other.updatedAt && vendorAttributes == other.vendorAttributes && vendorFailureReason == other.vendorFailureReason && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PaymentOrder && id == other.id && accounting == other.accounting && accountingCategoryId == other.accountingCategoryId && accountingLedgerClassId == other.accountingLedgerClassId && amount == other.amount && chargeBearer == other.chargeBearer && counterpartyId == other.counterpartyId && createdAt == other.createdAt && currency == other.currency && currentReturn == other.currentReturn && description == other.description && direction == other.direction && effectiveDate == other.effectiveDate && expiresAt == other.expiresAt && foreignExchangeContract == other.foreignExchangeContract && foreignExchangeIndicator == other.foreignExchangeIndicator && foreignExchangeRate == other.foreignExchangeRate && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && metadata == other.metadata && nsfProtected == other.nsfProtected && object_ == other.object_ && originatingAccountId == other.originatingAccountId && originatingPartyName == other.originatingPartyName && priority == other.priority && processAfter == other.processAfter && purpose == other.purpose && receivingAccountId == other.receivingAccountId && receivingAccountType == other.receivingAccountType && referenceNumbers == other.referenceNumbers && remittanceInformation == other.remittanceInformation && sendRemittanceAdvice == other.sendRemittanceAdvice && statementDescriptor == other.statementDescriptor && status == other.status && subtype == other.subtype && transactionIds == other.transactionIds && type == other.type && ultimateOriginatingAccount == other.ultimateOriginatingAccount && ultimateOriginatingAccountId == other.ultimateOriginatingAccountId && ultimateOriginatingAccountType == other.ultimateOriginatingAccountType && ultimateOriginatingPartyIdentifier == other.ultimateOriginatingPartyIdentifier && ultimateOriginatingPartyName == other.ultimateOriginatingPartyName && ultimateReceivingPartyIdentifier == other.ultimateReceivingPartyIdentifier && ultimateReceivingPartyName == other.ultimateReceivingPartyName && updatedAt == other.updatedAt && vendorAttributes == other.vendorAttributes && vendorFailureReason == other.vendorFailureReason && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accounting, accountingCategoryId, accountingLedgerClassId, amount, chargeBearer, complianceRuleMetadata, counterpartyId, createdAt, currency, currentReturn, decisionId, description, direction, effectiveDate, expiresAt, foreignExchangeContract, foreignExchangeIndicator, foreignExchangeRate, ledgerTransactionId, liveMode, metadata, nsfProtected, object_, originatingAccountId, originatingPartyName, priority, processAfter, purpose, receivingAccountId, receivingAccountType, referenceNumbers, remittanceInformation, sendRemittanceAdvice, statementDescriptor, status, subtype, transactionIds, transactionMonitoringEnabled, type, ultimateOriginatingAccount, ultimateOriginatingAccountId, ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier, ultimateReceivingPartyName, updatedAt, vendorAttributes, vendorFailureReason, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accounting, accountingCategoryId, accountingLedgerClassId, amount, chargeBearer, counterpartyId, createdAt, currency, currentReturn, description, direction, effectiveDate, expiresAt, foreignExchangeContract, foreignExchangeIndicator, foreignExchangeRate, ledgerTransactionId, liveMode, metadata, nsfProtected, object_, originatingAccountId, originatingPartyName, priority, processAfter, purpose, receivingAccountId, receivingAccountType, referenceNumbers, remittanceInformation, sendRemittanceAdvice, statementDescriptor, status, subtype, transactionIds, type, ultimateOriginatingAccount, ultimateOriginatingAccountId, ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier, ultimateReceivingPartyName, updatedAt, vendorAttributes, vendorFailureReason, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, complianceRuleMetadata=$complianceRuleMetadata, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, decisionId=$decisionId, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, transactionMonitoringEnabled=$transactionMonitoringEnabled, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
+        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
 }

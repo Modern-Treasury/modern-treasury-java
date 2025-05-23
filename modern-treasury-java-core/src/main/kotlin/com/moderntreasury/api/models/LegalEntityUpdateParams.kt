@@ -2850,7 +2850,9 @@ private constructor(
     private constructor(
         private val idNumber: JsonField<String>,
         private val idType: JsonField<IdType>,
+        private val expirationDate: JsonField<LocalDate>,
         private val issuingCountry: JsonField<String>,
+        private val issuingRegion: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2860,10 +2862,16 @@ private constructor(
             @ExcludeMissing
             idNumber: JsonField<String> = JsonMissing.of(),
             @JsonProperty("id_type") @ExcludeMissing idType: JsonField<IdType> = JsonMissing.of(),
+            @JsonProperty("expiration_date")
+            @ExcludeMissing
+            expirationDate: JsonField<LocalDate> = JsonMissing.of(),
             @JsonProperty("issuing_country")
             @ExcludeMissing
             issuingCountry: JsonField<String> = JsonMissing.of(),
-        ) : this(idNumber, idType, issuingCountry, mutableMapOf())
+            @JsonProperty("issuing_region")
+            @ExcludeMissing
+            issuingRegion: JsonField<String> = JsonMissing.of(),
+        ) : this(idNumber, idType, expirationDate, issuingCountry, issuingRegion, mutableMapOf())
 
         /**
          * The ID number of identification document.
@@ -2882,12 +2890,28 @@ private constructor(
         fun idType(): IdType = idType.getRequired("id_type")
 
         /**
+         * The date when the Identification is no longer considered valid by the issuing authority.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun expirationDate(): Optional<LocalDate> = expirationDate.getOptional("expiration_date")
+
+        /**
          * The ISO 3166-1 alpha-2 country code of the country that issued the identification
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun issuingCountry(): Optional<String> = issuingCountry.getOptional("issuing_country")
+
+        /**
+         * The region in which the identifcation was issued.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun issuingRegion(): Optional<String> = issuingRegion.getOptional("issuing_region")
 
         /**
          * Returns the raw JSON value of [idNumber].
@@ -2904,6 +2928,16 @@ private constructor(
         @JsonProperty("id_type") @ExcludeMissing fun _idType(): JsonField<IdType> = idType
 
         /**
+         * Returns the raw JSON value of [expirationDate].
+         *
+         * Unlike [expirationDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("expiration_date")
+        @ExcludeMissing
+        fun _expirationDate(): JsonField<LocalDate> = expirationDate
+
+        /**
          * Returns the raw JSON value of [issuingCountry].
          *
          * Unlike [issuingCountry], this method doesn't throw if the JSON field has an unexpected
@@ -2912,6 +2946,16 @@ private constructor(
         @JsonProperty("issuing_country")
         @ExcludeMissing
         fun _issuingCountry(): JsonField<String> = issuingCountry
+
+        /**
+         * Returns the raw JSON value of [issuingRegion].
+         *
+         * Unlike [issuingRegion], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("issuing_region")
+        @ExcludeMissing
+        fun _issuingRegion(): JsonField<String> = issuingRegion
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2945,14 +2989,18 @@ private constructor(
 
             private var idNumber: JsonField<String>? = null
             private var idType: JsonField<IdType>? = null
+            private var expirationDate: JsonField<LocalDate> = JsonMissing.of()
             private var issuingCountry: JsonField<String> = JsonMissing.of()
+            private var issuingRegion: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(identificationCreateRequest: IdentificationCreateRequest) = apply {
                 idNumber = identificationCreateRequest.idNumber
                 idType = identificationCreateRequest.idType
+                expirationDate = identificationCreateRequest.expirationDate
                 issuingCountry = identificationCreateRequest.issuingCountry
+                issuingRegion = identificationCreateRequest.issuingRegion
                 additionalProperties =
                     identificationCreateRequest.additionalProperties.toMutableMap()
             }
@@ -2981,6 +3029,28 @@ private constructor(
              */
             fun idType(idType: JsonField<IdType>) = apply { this.idType = idType }
 
+            /**
+             * The date when the Identification is no longer considered valid by the issuing
+             * authority.
+             */
+            fun expirationDate(expirationDate: LocalDate?) =
+                expirationDate(JsonField.ofNullable(expirationDate))
+
+            /** Alias for calling [Builder.expirationDate] with `expirationDate.orElse(null)`. */
+            fun expirationDate(expirationDate: Optional<LocalDate>) =
+                expirationDate(expirationDate.getOrNull())
+
+            /**
+             * Sets [Builder.expirationDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.expirationDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun expirationDate(expirationDate: JsonField<LocalDate>) = apply {
+                this.expirationDate = expirationDate
+            }
+
             /** The ISO 3166-1 alpha-2 country code of the country that issued the identification */
             fun issuingCountry(issuingCountry: String?) =
                 issuingCountry(JsonField.ofNullable(issuingCountry))
@@ -2998,6 +3068,25 @@ private constructor(
              */
             fun issuingCountry(issuingCountry: JsonField<String>) = apply {
                 this.issuingCountry = issuingCountry
+            }
+
+            /** The region in which the identifcation was issued. */
+            fun issuingRegion(issuingRegion: String?) =
+                issuingRegion(JsonField.ofNullable(issuingRegion))
+
+            /** Alias for calling [Builder.issuingRegion] with `issuingRegion.orElse(null)`. */
+            fun issuingRegion(issuingRegion: Optional<String>) =
+                issuingRegion(issuingRegion.getOrNull())
+
+            /**
+             * Sets [Builder.issuingRegion] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.issuingRegion] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun issuingRegion(issuingRegion: JsonField<String>) = apply {
+                this.issuingRegion = issuingRegion
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3036,7 +3125,9 @@ private constructor(
                 IdentificationCreateRequest(
                     checkRequired("idNumber", idNumber),
                     checkRequired("idType", idType),
+                    expirationDate,
                     issuingCountry,
+                    issuingRegion,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -3050,7 +3141,9 @@ private constructor(
 
             idNumber()
             idType().validate()
+            expirationDate()
             issuingCountry()
+            issuingRegion()
             validated = true
         }
 
@@ -3072,7 +3165,9 @@ private constructor(
         internal fun validity(): Int =
             (if (idNumber.asKnown().isPresent) 1 else 0) +
                 (idType.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (issuingCountry.asKnown().isPresent) 1 else 0)
+                (if (expirationDate.asKnown().isPresent) 1 else 0) +
+                (if (issuingCountry.asKnown().isPresent) 1 else 0) +
+                (if (issuingRegion.asKnown().isPresent) 1 else 0)
 
         /** The type of ID number. */
         class IdType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -3104,6 +3199,8 @@ private constructor(
                 @JvmField val CO_CEDULAS = of("co_cedulas")
 
                 @JvmField val CO_NIT = of("co_nit")
+
+                @JvmField val DRIVERS_LICENSE = of("drivers_license")
 
                 @JvmField val HN_ID = of("hn_id")
 
@@ -3144,6 +3241,7 @@ private constructor(
                 CL_RUT,
                 CO_CEDULAS,
                 CO_NIT,
+                DRIVERS_LICENSE,
                 HN_ID,
                 HN_RTN,
                 IN_LEI,
@@ -3177,6 +3275,7 @@ private constructor(
                 CL_RUT,
                 CO_CEDULAS,
                 CO_NIT,
+                DRIVERS_LICENSE,
                 HN_ID,
                 HN_RTN,
                 IN_LEI,
@@ -3213,6 +3312,7 @@ private constructor(
                     CL_RUT -> Value.CL_RUT
                     CO_CEDULAS -> Value.CO_CEDULAS
                     CO_NIT -> Value.CO_NIT
+                    DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
                     HN_ID -> Value.HN_ID
                     HN_RTN -> Value.HN_RTN
                     IN_LEI -> Value.IN_LEI
@@ -3248,6 +3348,7 @@ private constructor(
                     CL_RUT -> Known.CL_RUT
                     CO_CEDULAS -> Known.CO_CEDULAS
                     CO_NIT -> Known.CO_NIT
+                    DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
                     HN_ID -> Known.HN_ID
                     HN_RTN -> Known.HN_RTN
                     IN_LEI -> Known.IN_LEI
@@ -3323,17 +3424,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is IdentificationCreateRequest && idNumber == other.idNumber && idType == other.idType && issuingCountry == other.issuingCountry && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is IdentificationCreateRequest && idNumber == other.idNumber && idType == other.idType && expirationDate == other.expirationDate && issuingCountry == other.issuingCountry && issuingRegion == other.issuingRegion && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(idNumber, idType, issuingCountry, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(idNumber, idType, expirationDate, issuingCountry, issuingRegion, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IdentificationCreateRequest{idNumber=$idNumber, idType=$idType, issuingCountry=$issuingCountry, additionalProperties=$additionalProperties}"
+            "IdentificationCreateRequest{idNumber=$idNumber, idType=$idType, expirationDate=$expirationDate, issuingCountry=$issuingCountry, issuingRegion=$issuingRegion, additionalProperties=$additionalProperties}"
     }
 
     /** The business's legal structure. */
