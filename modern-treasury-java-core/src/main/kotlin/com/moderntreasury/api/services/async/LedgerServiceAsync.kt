@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Ledger
@@ -148,12 +147,10 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `post /api/ledgers`, but is otherwise the same as
          * [LedgerServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: LedgerCreateParams): CompletableFuture<HttpResponseFor<Ledger>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: LedgerCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -163,12 +160,10 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Ledger>> =
             retrieve(id, LedgerRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerRetrieveParams = LedgerRetrieveParams.none(),
@@ -177,26 +172,22 @@ interface LedgerServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerRetrieveParams = LedgerRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: LedgerRetrieveParams): CompletableFuture<HttpResponseFor<Ledger>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -207,12 +198,10 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<Ledger>> =
             update(id, LedgerUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerUpdateParams = LedgerUpdateParams.none(),
@@ -221,26 +210,22 @@ interface LedgerServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerUpdateParams = LedgerUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(params: LedgerUpdateParams): CompletableFuture<HttpResponseFor<Ledger>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -251,26 +236,22 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `get /api/ledgers`, but is otherwise the same as
          * [LedgerServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<LedgerListPageAsync>> =
             list(LedgerListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerListParams = LedgerListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerListParams = LedgerListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerListPageAsync>> =
@@ -280,12 +261,10 @@ interface LedgerServiceAsync {
          * Returns a raw HTTP response for `delete /api/ledgers/{id}`, but is otherwise the same as
          * [LedgerServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<Ledger>> =
             delete(id, LedgerDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: LedgerDeleteParams = LedgerDeleteParams.none(),
@@ -294,26 +273,22 @@ interface LedgerServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: LedgerDeleteParams = LedgerDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: LedgerDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Ledger>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: LedgerDeleteParams): CompletableFuture<HttpResponseFor<Ledger>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

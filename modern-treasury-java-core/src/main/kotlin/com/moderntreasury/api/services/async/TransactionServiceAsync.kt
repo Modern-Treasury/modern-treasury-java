@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -157,13 +156,11 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: TransactionCreateParams
         ): CompletableFuture<HttpResponseFor<Transaction>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: TransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -173,12 +170,10 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the same
          * as [TransactionServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Transaction>> =
             retrieve(id, TransactionRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
@@ -187,7 +182,6 @@ interface TransactionServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
@@ -195,20 +189,17 @@ interface TransactionServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: TransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Transaction>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: TransactionRetrieveParams
         ): CompletableFuture<HttpResponseFor<Transaction>> = retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -219,12 +210,10 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `patch /api/transactions/{id}`, but is otherwise the same
          * as [TransactionServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<Transaction>> =
             update(id, TransactionUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: TransactionUpdateParams = TransactionUpdateParams.none(),
@@ -233,7 +222,6 @@ interface TransactionServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: TransactionUpdateParams = TransactionUpdateParams.none(),
@@ -241,20 +229,17 @@ interface TransactionServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: TransactionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Transaction>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: TransactionUpdateParams
         ): CompletableFuture<HttpResponseFor<Transaction>> = update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -265,26 +250,22 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<TransactionListPageAsync>> =
             list(TransactionListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: TransactionListParams = TransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TransactionListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: TransactionListParams = TransactionListParams.none()
         ): CompletableFuture<HttpResponseFor<TransactionListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<TransactionListPageAsync>> =
@@ -294,12 +275,10 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `delete /api/transactions/{id}`, but is otherwise the
          * same as [TransactionServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponse> =
             delete(id, TransactionDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: TransactionDeleteParams = TransactionDeleteParams.none(),
@@ -308,26 +287,22 @@ interface TransactionServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: TransactionDeleteParams = TransactionDeleteParams.none(),
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: TransactionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: TransactionDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
             delete(id, TransactionDeleteParams.none(), requestOptions)
     }

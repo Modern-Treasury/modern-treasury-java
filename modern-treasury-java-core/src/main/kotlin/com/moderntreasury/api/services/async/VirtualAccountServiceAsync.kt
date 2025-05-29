@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.VirtualAccount
@@ -154,14 +153,12 @@ interface VirtualAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/virtual_accounts`, but is otherwise the same
          * as [VirtualAccountServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: VirtualAccountCreateParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: VirtualAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,12 +168,10 @@ interface VirtualAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(id, VirtualAccountRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
@@ -185,7 +180,6 @@ interface VirtualAccountServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
@@ -193,21 +187,18 @@ interface VirtualAccountServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: VirtualAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: VirtualAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -218,12 +209,10 @@ interface VirtualAccountServiceAsync {
          * Returns a raw HTTP response for `patch /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(id, VirtualAccountUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
@@ -232,7 +221,6 @@ interface VirtualAccountServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
@@ -240,21 +228,18 @@ interface VirtualAccountServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: VirtualAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: VirtualAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -265,26 +250,22 @@ interface VirtualAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/virtual_accounts`, but is otherwise the same as
          * [VirtualAccountServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
             list(VirtualAccountListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
@@ -294,12 +275,10 @@ interface VirtualAccountServiceAsync {
          * Returns a raw HTTP response for `delete /api/virtual_accounts/{id}`, but is otherwise the
          * same as [VirtualAccountServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(id, VirtualAccountDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
@@ -308,7 +287,6 @@ interface VirtualAccountServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
@@ -316,21 +294,18 @@ interface VirtualAccountServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: VirtualAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: VirtualAccountDeleteParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

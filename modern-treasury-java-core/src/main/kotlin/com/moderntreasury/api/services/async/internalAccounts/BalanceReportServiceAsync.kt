@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async.internalAccounts
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -137,7 +136,6 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             internalAccountId: String,
             params: BalanceReportCreateParams,
@@ -145,7 +143,6 @@ interface BalanceReportServiceAsync {
             create(internalAccountId, params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             internalAccountId: String,
             params: BalanceReportCreateParams,
@@ -154,13 +151,11 @@ interface BalanceReportServiceAsync {
             create(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BalanceReportCreateParams
         ): CompletableFuture<HttpResponseFor<BalanceReport>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BalanceReportCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,7 +166,6 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BalanceReportRetrieveParams,
@@ -179,7 +173,6 @@ interface BalanceReportServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BalanceReportRetrieveParams,
@@ -188,14 +181,12 @@ interface BalanceReportServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BalanceReportRetrieveParams
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BalanceReportRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -206,14 +197,12 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports`, but is otherwise the same
          * as [BalanceReportServiceAsync.list].
          */
-        @MustBeClosed
         fun list(
             internalAccountId: String
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(internalAccountId, BalanceReportListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             internalAccountId: String,
             params: BalanceReportListParams = BalanceReportListParams.none(),
@@ -222,7 +211,6 @@ interface BalanceReportServiceAsync {
             list(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             internalAccountId: String,
             params: BalanceReportListParams = BalanceReportListParams.none(),
@@ -230,21 +218,18 @@ interface BalanceReportServiceAsync {
             list(internalAccountId, params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BalanceReportListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BalanceReportListParams
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             internalAccountId: String,
             requestOptions: RequestOptions,
@@ -256,12 +241,10 @@ interface BalanceReportServiceAsync {
          * /api/internal_accounts/{internal_account_id}/balance_reports/{id}`, but is otherwise the
          * same as [BalanceReportServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String, params: BalanceReportDeleteParams): CompletableFuture<HttpResponse> =
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: BalanceReportDeleteParams,
@@ -270,12 +253,10 @@ interface BalanceReportServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: BalanceReportDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: BalanceReportDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),

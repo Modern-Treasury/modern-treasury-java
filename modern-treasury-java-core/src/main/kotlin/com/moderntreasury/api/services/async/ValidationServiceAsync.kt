@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.RoutingNumberLookupRequest
@@ -38,14 +37,12 @@ interface ValidationServiceAsync {
          * Returns a raw HTTP response for `get /api/validations/routing_numbers`, but is otherwise
          * the same as [ValidationServiceAsync.validateRoutingNumber].
          */
-        @MustBeClosed
         fun validateRoutingNumber(
             params: ValidationValidateRoutingNumberParams
         ): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>> =
             validateRoutingNumber(params, RequestOptions.none())
 
         /** @see [validateRoutingNumber] */
-        @MustBeClosed
         fun validateRoutingNumber(
             params: ValidationValidateRoutingNumberParams,
             requestOptions: RequestOptions = RequestOptions.none(),

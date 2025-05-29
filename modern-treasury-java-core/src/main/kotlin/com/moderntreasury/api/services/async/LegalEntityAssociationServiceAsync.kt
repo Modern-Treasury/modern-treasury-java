@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LegalEntityAssociation
@@ -37,14 +36,12 @@ interface LegalEntityAssociationServiceAsync {
          * Returns a raw HTTP response for `post /api/legal_entity_associations`, but is otherwise
          * the same as [LegalEntityAssociationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: LegalEntityAssociationCreateParams
         ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: LegalEntityAssociationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

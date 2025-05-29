@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.InternalAccount
@@ -128,14 +127,12 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/internal_accounts`, but is otherwise the same
          * as [InternalAccountServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: InternalAccountCreateParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: InternalAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -145,12 +142,10 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/internal_accounts/{id}`, but is otherwise the
          * same as [InternalAccountServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(id, InternalAccountRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
@@ -159,7 +154,6 @@ interface InternalAccountServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
@@ -167,21 +161,18 @@ interface InternalAccountServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: InternalAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: InternalAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -192,12 +183,10 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `patch /api/internal_accounts/{id}`, but is otherwise the
          * same as [InternalAccountServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(id, InternalAccountUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
@@ -206,7 +195,6 @@ interface InternalAccountServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
@@ -214,21 +202,18 @@ interface InternalAccountServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: InternalAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: InternalAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -239,26 +224,22 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/internal_accounts`, but is otherwise the same
          * as [InternalAccountServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(InternalAccountListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =

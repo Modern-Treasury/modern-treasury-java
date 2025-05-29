@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerTransaction
@@ -192,14 +191,12 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions`, but is otherwise the
          * same as [LedgerTransactionServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: LedgerTransactionCreateParams
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: LedgerTransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -209,12 +206,10 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transactions/{id}`, but is otherwise the
          * same as [LedgerTransactionServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             retrieve(id, LedgerTransactionRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerTransactionRetrieveParams = LedgerTransactionRetrieveParams.none(),
@@ -223,7 +218,6 @@ interface LedgerTransactionServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerTransactionRetrieveParams = LedgerTransactionRetrieveParams.none(),
@@ -231,21 +225,18 @@ interface LedgerTransactionServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerTransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerTransactionRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -256,12 +247,10 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledger_transactions/{id}`, but is otherwise
          * the same as [LedgerTransactionServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             update(id, LedgerTransactionUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerTransactionUpdateParams = LedgerTransactionUpdateParams.none(),
@@ -270,7 +259,6 @@ interface LedgerTransactionServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerTransactionUpdateParams = LedgerTransactionUpdateParams.none(),
@@ -278,21 +266,18 @@ interface LedgerTransactionServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerTransactionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerTransactionUpdateParams
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -303,26 +288,22 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transactions`, but is otherwise the same
          * as [LedgerTransactionServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>> =
             list(LedgerTransactionListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerTransactionListParams = LedgerTransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerTransactionListParams = LedgerTransactionListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerTransactionListPageAsync>> =
@@ -332,7 +313,6 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/partial_post`, but is
          * otherwise the same as [LedgerTransactionServiceAsync.createPartialPost].
          */
-        @MustBeClosed
         fun createPartialPost(
             id: String,
             params: LedgerTransactionCreatePartialPostParams,
@@ -340,7 +320,6 @@ interface LedgerTransactionServiceAsync {
             createPartialPost(id, params, RequestOptions.none())
 
         /** @see [createPartialPost] */
-        @MustBeClosed
         fun createPartialPost(
             id: String,
             params: LedgerTransactionCreatePartialPostParams,
@@ -349,14 +328,12 @@ interface LedgerTransactionServiceAsync {
             createPartialPost(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [createPartialPost] */
-        @MustBeClosed
         fun createPartialPost(
             params: LedgerTransactionCreatePartialPostParams
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             createPartialPost(params, RequestOptions.none())
 
         /** @see [createPartialPost] */
-        @MustBeClosed
         fun createPartialPost(
             params: LedgerTransactionCreatePartialPostParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -366,12 +343,10 @@ interface LedgerTransactionServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_transactions/{id}/reversal`, but is
          * otherwise the same as [LedgerTransactionServiceAsync.createReversal].
          */
-        @MustBeClosed
         fun createReversal(id: String): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             createReversal(id, LedgerTransactionCreateReversalParams.none())
 
         /** @see [createReversal] */
-        @MustBeClosed
         fun createReversal(
             id: String,
             params: LedgerTransactionCreateReversalParams =
@@ -381,7 +356,6 @@ interface LedgerTransactionServiceAsync {
             createReversal(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [createReversal] */
-        @MustBeClosed
         fun createReversal(
             id: String,
             params: LedgerTransactionCreateReversalParams =
@@ -390,21 +364,18 @@ interface LedgerTransactionServiceAsync {
             createReversal(id, params, RequestOptions.none())
 
         /** @see [createReversal] */
-        @MustBeClosed
         fun createReversal(
             params: LedgerTransactionCreateReversalParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>>
 
         /** @see [createReversal] */
-        @MustBeClosed
         fun createReversal(
             params: LedgerTransactionCreateReversalParams
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
             createReversal(params, RequestOptions.none())
 
         /** @see [createReversal] */
-        @MustBeClosed
         fun createReversal(
             id: String,
             requestOptions: RequestOptions,

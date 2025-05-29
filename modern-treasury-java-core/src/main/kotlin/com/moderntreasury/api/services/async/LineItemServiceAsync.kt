@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LineItem
@@ -95,7 +94,6 @@ interface LineItemServiceAsync {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LineItemRetrieveParams,
@@ -103,7 +101,6 @@ interface LineItemServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LineItemRetrieveParams,
@@ -112,12 +109,10 @@ interface LineItemServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: LineItemRetrieveParams): CompletableFuture<HttpResponseFor<LineItem>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -128,14 +123,12 @@ interface LineItemServiceAsync {
          * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: LineItemUpdateParams,
         ): CompletableFuture<HttpResponseFor<LineItem>> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LineItemUpdateParams,
@@ -144,12 +137,10 @@ interface LineItemServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(params: LineItemUpdateParams): CompletableFuture<HttpResponseFor<LineItem>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -159,7 +150,6 @@ interface LineItemServiceAsync {
          * Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items`,
          * but is otherwise the same as [LineItemServiceAsync.list].
          */
-        @MustBeClosed
         fun list(
             itemizableId: String,
             params: LineItemListParams,
@@ -167,7 +157,6 @@ interface LineItemServiceAsync {
             list(itemizableId, params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             itemizableId: String,
             params: LineItemListParams,
@@ -176,14 +165,12 @@ interface LineItemServiceAsync {
             list(params.toBuilder().itemizableId(itemizableId).build(), requestOptions)
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LineItemListParams
         ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -149,12 +148,10 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `post /api/invoices`, but is otherwise the same as
          * [InvoiceServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: InvoiceCreateParams): CompletableFuture<HttpResponseFor<Invoice>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: InvoiceCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -164,12 +161,10 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `get /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Invoice>> =
             retrieve(id, InvoiceRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
@@ -178,26 +173,22 @@ interface InvoiceServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Invoice>> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: InvoiceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Invoice>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: InvoiceRetrieveParams): CompletableFuture<HttpResponseFor<Invoice>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -208,12 +199,10 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the same as
          * [InvoiceServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<Invoice>> =
             update(id, InvoiceUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
@@ -222,26 +211,22 @@ interface InvoiceServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<Invoice>> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Invoice>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(params: InvoiceUpdateParams): CompletableFuture<HttpResponseFor<Invoice>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -252,26 +237,22 @@ interface InvoiceServiceAsync {
          * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
          * [InvoiceServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
             list(InvoiceListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: InvoiceListParams = InvoiceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: InvoiceListParams = InvoiceListParams.none()
         ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
@@ -282,7 +263,6 @@ interface InvoiceServiceAsync {
          * /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the same as
          * [InvoiceServiceAsync.addPaymentOrder].
          */
-        @MustBeClosed
         fun addPaymentOrder(
             paymentOrderId: String,
             params: InvoiceAddPaymentOrderParams,
@@ -290,7 +270,6 @@ interface InvoiceServiceAsync {
             addPaymentOrder(paymentOrderId, params, RequestOptions.none())
 
         /** @see [addPaymentOrder] */
-        @MustBeClosed
         fun addPaymentOrder(
             paymentOrderId: String,
             params: InvoiceAddPaymentOrderParams,
@@ -302,12 +281,10 @@ interface InvoiceServiceAsync {
             )
 
         /** @see [addPaymentOrder] */
-        @MustBeClosed
         fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): CompletableFuture<HttpResponse> =
             addPaymentOrder(params, RequestOptions.none())
 
         /** @see [addPaymentOrder] */
-        @MustBeClosed
         fun addPaymentOrder(
             params: InvoiceAddPaymentOrderParams,
             requestOptions: RequestOptions = RequestOptions.none(),

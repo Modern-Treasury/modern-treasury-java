@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccountSettlement
@@ -140,14 +139,12 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `post /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: LedgerAccountSettlementCreateParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: LedgerAccountSettlementCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -157,12 +154,10 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(id, LedgerAccountSettlementRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerAccountSettlementRetrieveParams =
@@ -172,7 +167,6 @@ interface LedgerAccountSettlementServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerAccountSettlementRetrieveParams =
@@ -181,21 +175,18 @@ interface LedgerAccountSettlementServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -206,12 +197,10 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `patch /api/ledger_account_settlements/{id}`, but is
          * otherwise the same as [LedgerAccountSettlementServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(id, LedgerAccountSettlementUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountSettlementUpdateParams =
@@ -221,7 +210,6 @@ interface LedgerAccountSettlementServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
@@ -229,21 +217,18 @@ interface LedgerAccountSettlementServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -254,26 +239,22 @@ interface LedgerAccountSettlementServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_account_settlements`, but is otherwise
          * the same as [LedgerAccountSettlementServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
             list(LedgerAccountSettlementListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =

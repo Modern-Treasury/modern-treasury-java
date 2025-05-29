@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async.ledgerTransactions
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerTransactionVersionListPageAsync
@@ -47,26 +46,22 @@ interface VersionServiceAsync {
          * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise
          * the same as [VersionServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
             list(LedgerTransactionVersionListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
