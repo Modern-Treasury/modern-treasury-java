@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.1.1 (2025-05-29)
+
+Full Changelog: [v7.1.0...v7.1.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.1.0...v7.1.1)
+
+### Bug Fixes
+
+* **client:** remove `@MustBeClosed` for future returning methods ([97b9fcc](https://github.com/Modern-Treasury/modern-treasury-java/commit/97b9fcc50fbe223951433e779a16d3f2c35306c9))
+
 ## 7.1.0 (2025-05-23)
 
 Full Changelog: [v7.0.1...v7.1.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.0.1...v7.1.0)
