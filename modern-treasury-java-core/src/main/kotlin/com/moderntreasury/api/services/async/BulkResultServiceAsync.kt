@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.BulkResult
@@ -77,12 +76,10 @@ interface BulkResultServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_results/{id}`, but is otherwise the same
          * as [BulkResultServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<BulkResult>> =
             retrieve(id, BulkResultRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
@@ -91,7 +88,6 @@ interface BulkResultServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
@@ -99,20 +95,17 @@ interface BulkResultServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResult>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BulkResultRetrieveParams
         ): CompletableFuture<HttpResponseFor<BulkResult>> = retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -123,26 +116,22 @@ interface BulkResultServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_results`, but is otherwise the same as
          * [BulkResultServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
             list(BulkResultListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none()
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =

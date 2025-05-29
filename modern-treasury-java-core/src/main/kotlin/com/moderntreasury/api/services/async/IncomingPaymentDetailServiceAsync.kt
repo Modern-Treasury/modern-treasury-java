@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.AsyncResponse
@@ -145,12 +144,10 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             retrieve(id, IncomingPaymentDetailRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: IncomingPaymentDetailRetrieveParams =
@@ -160,7 +157,6 @@ interface IncomingPaymentDetailServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: IncomingPaymentDetailRetrieveParams = IncomingPaymentDetailRetrieveParams.none(),
@@ -168,21 +164,18 @@ interface IncomingPaymentDetailServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: IncomingPaymentDetailRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: IncomingPaymentDetailRetrieveParams
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -193,12 +186,10 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `patch /api/incoming_payment_details/{id}`, but is
          * otherwise the same as [IncomingPaymentDetailServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             update(id, IncomingPaymentDetailUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
@@ -207,7 +198,6 @@ interface IncomingPaymentDetailServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: IncomingPaymentDetailUpdateParams = IncomingPaymentDetailUpdateParams.none(),
@@ -215,21 +205,18 @@ interface IncomingPaymentDetailServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: IncomingPaymentDetailUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: IncomingPaymentDetailUpdateParams
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -240,26 +227,22 @@ interface IncomingPaymentDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/incoming_payment_details`, but is otherwise the
          * same as [IncomingPaymentDetailServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>> =
             list(IncomingPaymentDetailListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: IncomingPaymentDetailListParams = IncomingPaymentDetailListParams.none()
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<IncomingPaymentDetailListPageAsync>> =
@@ -270,12 +253,10 @@ interface IncomingPaymentDetailServiceAsync {
          * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
          * [IncomingPaymentDetailServiceAsync.createAsync].
          */
-        @MustBeClosed
         fun createAsync(): CompletableFuture<HttpResponseFor<AsyncResponse>> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none())
 
         /** @see [createAsync] */
-        @MustBeClosed
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none(),
@@ -283,7 +264,6 @@ interface IncomingPaymentDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AsyncResponse>>
 
         /** @see [createAsync] */
-        @MustBeClosed
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none()
@@ -291,7 +271,6 @@ interface IncomingPaymentDetailServiceAsync {
             createAsync(params, RequestOptions.none())
 
         /** @see [createAsync] */
-        @MustBeClosed
         fun createAsync(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<AsyncResponse>> =

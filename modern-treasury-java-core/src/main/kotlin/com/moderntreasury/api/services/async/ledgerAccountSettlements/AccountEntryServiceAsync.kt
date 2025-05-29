@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async.ledgerAccountSettlements
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.models.LedgerAccountSettlementAccountEntryDeleteParams
@@ -73,14 +72,12 @@ interface AccountEntryServiceAsync {
          * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
          * [AccountEntryServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountSettlementAccountEntryUpdateParams,
         ): CompletableFuture<HttpResponse> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountSettlementAccountEntryUpdateParams,
@@ -89,13 +86,11 @@ interface AccountEntryServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerAccountSettlementAccountEntryUpdateParams
         ): CompletableFuture<HttpResponse> = update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: LedgerAccountSettlementAccountEntryUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -106,14 +101,12 @@ interface AccountEntryServiceAsync {
          * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
          * [AccountEntryServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(
             id: String,
             params: LedgerAccountSettlementAccountEntryDeleteParams,
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: LedgerAccountSettlementAccountEntryDeleteParams,
@@ -122,13 +115,11 @@ interface AccountEntryServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: LedgerAccountSettlementAccountEntryDeleteParams
         ): CompletableFuture<HttpResponse> = delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: LedgerAccountSettlementAccountEntryDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
