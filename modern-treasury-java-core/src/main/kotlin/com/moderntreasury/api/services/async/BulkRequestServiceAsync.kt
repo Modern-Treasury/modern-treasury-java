@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.BulkRequest
@@ -88,13 +87,11 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `post /api/bulk_requests`, but is otherwise the same as
          * [BulkRequestServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: BulkRequestCreateParams
         ): CompletableFuture<HttpResponseFor<BulkRequest>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BulkRequestCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,12 +101,10 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_requests/{id}`, but is otherwise the same
          * as [BulkRequestServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<BulkRequest>> =
             retrieve(id, BulkRequestRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkRequestRetrieveParams = BulkRequestRetrieveParams.none(),
@@ -118,7 +113,6 @@ interface BulkRequestServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkRequestRetrieveParams = BulkRequestRetrieveParams.none(),
@@ -126,20 +120,17 @@ interface BulkRequestServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BulkRequestRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkRequest>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BulkRequestRetrieveParams
         ): CompletableFuture<HttpResponseFor<BulkRequest>> = retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -150,26 +141,22 @@ interface BulkRequestServiceAsync {
          * Returns a raw HTTP response for `get /api/bulk_requests`, but is otherwise the same as
          * [BulkRequestServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>> =
             list(BulkRequestListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BulkRequestListParams = BulkRequestListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BulkRequestListParams = BulkRequestListParams.none()
         ): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BulkRequestListPageAsync>> =

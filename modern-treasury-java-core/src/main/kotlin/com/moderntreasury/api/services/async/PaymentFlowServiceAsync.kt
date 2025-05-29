@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.PaymentFlow
@@ -110,13 +109,11 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: PaymentFlowCreateParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: PaymentFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -126,12 +123,10 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_flows/{id}`, but is otherwise the same
          * as [PaymentFlowServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             retrieve(id, PaymentFlowRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
@@ -140,7 +135,6 @@ interface PaymentFlowServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
@@ -148,20 +142,17 @@ interface PaymentFlowServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PaymentFlowRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlow>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PaymentFlowRetrieveParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -172,7 +163,6 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `patch /api/payment_flows/{id}`, but is otherwise the
          * same as [PaymentFlowServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: PaymentFlowUpdateParams,
@@ -180,7 +170,6 @@ interface PaymentFlowServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: PaymentFlowUpdateParams,
@@ -189,13 +178,11 @@ interface PaymentFlowServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -205,26 +192,22 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
             list(PaymentFlowListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none()
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =

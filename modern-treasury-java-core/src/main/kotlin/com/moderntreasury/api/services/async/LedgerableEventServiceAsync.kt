@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerableEvent
@@ -69,14 +68,12 @@ interface LedgerableEventServiceAsync {
          * Returns a raw HTTP response for `post /api/ledgerable_events`, but is otherwise the same
          * as [LedgerableEventServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: LedgerableEventCreateParams
         ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: LedgerableEventCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -86,12 +83,10 @@ interface LedgerableEventServiceAsync {
          * Returns a raw HTTP response for `get /api/ledgerable_events/{id}`, but is otherwise the
          * same as [LedgerableEventServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
             retrieve(id, LedgerableEventRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
@@ -100,7 +95,6 @@ interface LedgerableEventServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerableEventRetrieveParams = LedgerableEventRetrieveParams.none(),
@@ -108,21 +102,18 @@ interface LedgerableEventServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerableEventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerableEvent>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: LedgerableEventRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerableEvent>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,

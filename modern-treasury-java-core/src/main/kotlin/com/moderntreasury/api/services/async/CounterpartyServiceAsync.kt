@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -181,13 +180,11 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `post /api/counterparties`, but is otherwise the same as
          * [CounterpartyServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CounterpartyCreateParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CounterpartyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -197,12 +194,10 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `get /api/counterparties/{id}`, but is otherwise the same
          * as [CounterpartyServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(id, CounterpartyRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
@@ -211,7 +206,6 @@ interface CounterpartyServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
@@ -219,21 +213,18 @@ interface CounterpartyServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterpartyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterpartyRetrieveParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -244,12 +235,10 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `patch /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<Counterparty>> =
             update(id, CounterpartyUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
@@ -258,7 +247,6 @@ interface CounterpartyServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
@@ -266,20 +254,17 @@ interface CounterpartyServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterpartyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterpartyUpdateParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> = update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -290,26 +275,22 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `get /api/counterparties`, but is otherwise the same as
          * [CounterpartyServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
             list(CounterpartyListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
@@ -319,12 +300,10 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `delete /api/counterparties/{id}`, but is otherwise the
          * same as [CounterpartyServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponse> =
             delete(id, CounterpartyDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
@@ -333,26 +312,22 @@ interface CounterpartyServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CounterpartyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: CounterpartyDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
             delete(id, CounterpartyDeleteParams.none(), requestOptions)
 
@@ -360,7 +335,6 @@ interface CounterpartyServiceAsync {
          * Returns a raw HTTP response for `post /api/counterparties/{id}/collect_account`, but is
          * otherwise the same as [CounterpartyServiceAsync.collectAccount].
          */
-        @MustBeClosed
         fun collectAccount(
             id: String,
             params: CounterpartyCollectAccountParams,
@@ -368,7 +342,6 @@ interface CounterpartyServiceAsync {
             collectAccount(id, params, RequestOptions.none())
 
         /** @see [collectAccount] */
-        @MustBeClosed
         fun collectAccount(
             id: String,
             params: CounterpartyCollectAccountParams,
@@ -377,14 +350,12 @@ interface CounterpartyServiceAsync {
             collectAccount(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [collectAccount] */
-        @MustBeClosed
         fun collectAccount(
             params: CounterpartyCollectAccountParams
         ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> =
             collectAccount(params, RequestOptions.none())
 
         /** @see [collectAccount] */
-        @MustBeClosed
         fun collectAccount(
             params: CounterpartyCollectAccountParams,
             requestOptions: RequestOptions = RequestOptions.none(),

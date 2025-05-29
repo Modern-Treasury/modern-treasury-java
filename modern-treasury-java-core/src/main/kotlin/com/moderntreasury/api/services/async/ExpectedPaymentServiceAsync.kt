@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ExpectedPayment
@@ -164,26 +163,22 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `post /api/expected_payments`, but is otherwise the same
          * as [ExpectedPaymentServiceAsync.create].
          */
-        @MustBeClosed
         fun create(): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             create(ExpectedPaymentCreateParams.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
@@ -193,12 +188,10 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `get /api/expected_payments/{id}`, but is otherwise the
          * same as [ExpectedPaymentServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(id, ExpectedPaymentRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
@@ -207,7 +200,6 @@ interface ExpectedPaymentServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
@@ -215,21 +207,18 @@ interface ExpectedPaymentServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ExpectedPaymentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ExpectedPaymentRetrieveParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -240,12 +229,10 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `patch /api/expected_payments/{id}`, but is otherwise the
          * same as [ExpectedPaymentServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(id, ExpectedPaymentUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
@@ -254,7 +241,6 @@ interface ExpectedPaymentServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
@@ -262,21 +248,18 @@ interface ExpectedPaymentServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ExpectedPaymentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ExpectedPaymentUpdateParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -287,26 +270,22 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `get /api/expected_payments`, but is otherwise the same
          * as [ExpectedPaymentServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
             list(ExpectedPaymentListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ExpectedPaymentListParams = ExpectedPaymentListParams.none()
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
@@ -316,12 +295,10 @@ interface ExpectedPaymentServiceAsync {
          * Returns a raw HTTP response for `delete /api/expected_payments/{id}`, but is otherwise
          * the same as [ExpectedPaymentServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(id, ExpectedPaymentDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
@@ -330,7 +307,6 @@ interface ExpectedPaymentServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
@@ -338,21 +314,18 @@ interface ExpectedPaymentServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ExpectedPaymentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ExpectedPaymentDeleteParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

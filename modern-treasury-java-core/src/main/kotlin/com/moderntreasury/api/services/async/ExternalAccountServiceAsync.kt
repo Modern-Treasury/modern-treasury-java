@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -222,14 +221,12 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: ExternalAccountCreateParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ExternalAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -239,12 +236,10 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(id, ExternalAccountRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
@@ -253,7 +248,6 @@ interface ExternalAccountServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
@@ -261,21 +255,18 @@ interface ExternalAccountServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ExternalAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ExternalAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -286,12 +277,10 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `patch /api/external_accounts/{id}`, but is otherwise the
          * same as [ExternalAccountServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(id, ExternalAccountUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
@@ -300,7 +289,6 @@ interface ExternalAccountServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
@@ -308,21 +296,18 @@ interface ExternalAccountServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ExternalAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ExternalAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -333,26 +318,22 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `get /api/external_accounts`, but is otherwise the same
          * as [ExternalAccountServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
             list(ExternalAccountListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
@@ -362,12 +343,10 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `delete /api/external_accounts/{id}`, but is otherwise
          * the same as [ExternalAccountServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponse> =
             delete(id, ExternalAccountDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
@@ -376,26 +355,22 @@ interface ExternalAccountServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ExternalAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: ExternalAccountDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
             delete(id, ExternalAccountDeleteParams.none(), requestOptions)
 
@@ -403,12 +378,10 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/complete_verification`,
          * but is otherwise the same as [ExternalAccountServiceAsync.completeVerification].
          */
-        @MustBeClosed
         fun completeVerification(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(id, ExternalAccountCompleteVerificationParams.none())
 
         /** @see [completeVerification] */
-        @MustBeClosed
         fun completeVerification(
             id: String,
             params: ExternalAccountCompleteVerificationParams =
@@ -418,7 +391,6 @@ interface ExternalAccountServiceAsync {
             completeVerification(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [completeVerification] */
-        @MustBeClosed
         fun completeVerification(
             id: String,
             params: ExternalAccountCompleteVerificationParams =
@@ -427,21 +399,18 @@ interface ExternalAccountServiceAsync {
             completeVerification(id, params, RequestOptions.none())
 
         /** @see [completeVerification] */
-        @MustBeClosed
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
         /** @see [completeVerification] */
-        @MustBeClosed
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(params, RequestOptions.none())
 
         /** @see [completeVerification] */
-        @MustBeClosed
         fun completeVerification(
             id: String,
             requestOptions: RequestOptions,
@@ -456,7 +425,6 @@ interface ExternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/external_accounts/{id}/verify`, but is
          * otherwise the same as [ExternalAccountServiceAsync.verify].
          */
-        @MustBeClosed
         fun verify(
             id: String,
             params: ExternalAccountVerifyParams,
@@ -464,7 +432,6 @@ interface ExternalAccountServiceAsync {
             verify(id, params, RequestOptions.none())
 
         /** @see [verify] */
-        @MustBeClosed
         fun verify(
             id: String,
             params: ExternalAccountVerifyParams,
@@ -473,14 +440,12 @@ interface ExternalAccountServiceAsync {
             verify(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [verify] */
-        @MustBeClosed
         fun verify(
             params: ExternalAccountVerifyParams
         ): CompletableFuture<HttpResponseFor<ExternalAccountVerifyResponse>> =
             verify(params, RequestOptions.none())
 
         /** @see [verify] */
-        @MustBeClosed
         fun verify(
             params: ExternalAccountVerifyParams,
             requestOptions: RequestOptions = RequestOptions.none(),

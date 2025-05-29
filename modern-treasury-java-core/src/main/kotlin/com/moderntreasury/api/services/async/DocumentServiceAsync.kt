@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Document
@@ -87,12 +86,10 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `post /api/documents`, but is otherwise the same as
          * [DocumentServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: DocumentCreateParams): CompletableFuture<HttpResponseFor<Document>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: DocumentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -102,12 +99,10 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `get /api/documents/{id}`, but is otherwise the same as
          * [DocumentServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(id, DocumentRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
@@ -116,7 +111,6 @@ interface DocumentServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
@@ -124,19 +118,16 @@ interface DocumentServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: DocumentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Document>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: DocumentRetrieveParams): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -147,26 +138,22 @@ interface DocumentServiceAsync {
          * Returns a raw HTTP response for `get /api/documents`, but is otherwise the same as
          * [DocumentServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
             list(DocumentListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DocumentListParams = DocumentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DocumentListParams = DocumentListParams.none()
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =

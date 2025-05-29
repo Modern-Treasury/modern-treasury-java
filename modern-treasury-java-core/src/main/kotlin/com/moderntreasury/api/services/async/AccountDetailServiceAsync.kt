@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -125,7 +124,6 @@ interface AccountDetailServiceAsync {
          * Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/account_details`,
          * but is otherwise the same as [AccountDetailServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             accountId: String,
             params: AccountDetailCreateParams,
@@ -133,7 +131,6 @@ interface AccountDetailServiceAsync {
             create(accountId, params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             accountId: String,
             params: AccountDetailCreateParams,
@@ -142,13 +139,11 @@ interface AccountDetailServiceAsync {
             create(params.toBuilder().accountId(accountId).build(), requestOptions)
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: AccountDetailCreateParams
         ): CompletableFuture<HttpResponseFor<AccountDetail>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: AccountDetailCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -159,7 +154,6 @@ interface AccountDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
          * [AccountDetailServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountDetailRetrieveParams,
@@ -167,7 +161,6 @@ interface AccountDetailServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountDetailRetrieveParams,
@@ -176,14 +169,12 @@ interface AccountDetailServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountDetailRetrieveParams
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountDetailRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -193,7 +184,6 @@ interface AccountDetailServiceAsync {
          * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/account_details`,
          * but is otherwise the same as [AccountDetailServiceAsync.list].
          */
-        @MustBeClosed
         fun list(
             accountId: String,
             params: AccountDetailListParams,
@@ -201,7 +191,6 @@ interface AccountDetailServiceAsync {
             list(accountId, params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             accountId: String,
             params: AccountDetailListParams,
@@ -210,14 +199,12 @@ interface AccountDetailServiceAsync {
             list(params.toBuilder().accountId(accountId).build(), requestOptions)
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountDetailListParams
         ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountDetailListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -228,12 +215,10 @@ interface AccountDetailServiceAsync {
          * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
          * [AccountDetailServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String, params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: AccountDetailDeleteParams,
@@ -242,12 +227,10 @@ interface AccountDetailServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: AccountDetailDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.client
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ClientPingParams
@@ -270,24 +269,20 @@ interface ModernTreasuryClientAsync {
          * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
          * [ModernTreasuryClientAsync.ping].
          */
-        @MustBeClosed
         fun ping(): CompletableFuture<HttpResponseFor<PingResponse>> = ping(ClientPingParams.none())
 
         /** @see [ping] */
-        @MustBeClosed
         fun ping(
             params: ClientPingParams = ClientPingParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PingResponse>>
 
         /** @see [ping] */
-        @MustBeClosed
         fun ping(
             params: ClientPingParams = ClientPingParams.none()
         ): CompletableFuture<HttpResponseFor<PingResponse>> = ping(params, RequestOptions.none())
 
         /** @see [ping] */
-        @MustBeClosed
         fun ping(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<PingResponse>> =
             ping(ClientPingParams.none(), requestOptions)
     }

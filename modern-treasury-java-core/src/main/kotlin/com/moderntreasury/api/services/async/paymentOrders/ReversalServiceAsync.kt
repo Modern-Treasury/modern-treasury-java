@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async.paymentOrders
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.PaymentOrderReversalCreateParams
@@ -113,7 +112,6 @@ interface ReversalServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_orders/{payment_order_id}/reversals`,
          * but is otherwise the same as [ReversalServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             paymentOrderId: String,
             params: PaymentOrderReversalCreateParams,
@@ -121,7 +119,6 @@ interface ReversalServiceAsync {
             create(paymentOrderId, params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             paymentOrderId: String,
             params: PaymentOrderReversalCreateParams,
@@ -130,13 +127,11 @@ interface ReversalServiceAsync {
             create(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: PaymentOrderReversalCreateParams
         ): CompletableFuture<HttpResponseFor<Reversal>> = create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: PaymentOrderReversalCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -147,7 +142,6 @@ interface ReversalServiceAsync {
          * /api/payment_orders/{payment_order_id}/reversals/{reversal_id}`, but is otherwise the
          * same as [ReversalServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             reversalId: String,
             params: PaymentOrderReversalRetrieveParams,
@@ -155,7 +149,6 @@ interface ReversalServiceAsync {
             retrieve(reversalId, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             reversalId: String,
             params: PaymentOrderReversalRetrieveParams,
@@ -164,13 +157,11 @@ interface ReversalServiceAsync {
             retrieve(params.toBuilder().reversalId(reversalId).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PaymentOrderReversalRetrieveParams
         ): CompletableFuture<HttpResponseFor<Reversal>> = retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PaymentOrderReversalRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -180,14 +171,12 @@ interface ReversalServiceAsync {
          * Returns a raw HTTP response for `get /api/payment_orders/{payment_order_id}/reversals`,
          * but is otherwise the same as [ReversalServiceAsync.list].
          */
-        @MustBeClosed
         fun list(
             paymentOrderId: String
         ): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>> =
             list(paymentOrderId, PaymentOrderReversalListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             paymentOrderId: String,
             params: PaymentOrderReversalListParams = PaymentOrderReversalListParams.none(),
@@ -196,7 +185,6 @@ interface ReversalServiceAsync {
             list(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             paymentOrderId: String,
             params: PaymentOrderReversalListParams = PaymentOrderReversalListParams.none(),
@@ -204,21 +192,18 @@ interface ReversalServiceAsync {
             list(paymentOrderId, params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PaymentOrderReversalListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PaymentOrderReversalListParams
         ): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             paymentOrderId: String,
             requestOptions: RequestOptions,

@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ReturnCreateParams
@@ -87,12 +86,10 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `post /api/returns`, but is otherwise the same as
          * [ReturnServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: ReturnCreateParams): CompletableFuture<HttpResponseFor<ReturnObject>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ReturnCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -102,12 +99,10 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `get /api/returns/{id}`, but is otherwise the same as
          * [ReturnServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ReturnObject>> =
             retrieve(id, ReturnRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ReturnRetrieveParams = ReturnRetrieveParams.none(),
@@ -116,7 +111,6 @@ interface ReturnServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ReturnRetrieveParams = ReturnRetrieveParams.none(),
@@ -124,21 +118,18 @@ interface ReturnServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ReturnRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ReturnObject>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ReturnRetrieveParams
         ): CompletableFuture<HttpResponseFor<ReturnObject>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -149,26 +140,22 @@ interface ReturnServiceAsync {
          * Returns a raw HTTP response for `get /api/returns`, but is otherwise the same as
          * [ReturnServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ReturnListPageAsync>> =
             list(ReturnListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ReturnListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none()
         ): CompletableFuture<HttpResponseFor<ReturnListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ReturnListPageAsync>> =
