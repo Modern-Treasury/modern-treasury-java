@@ -19,6 +19,7 @@ private constructor(
     private val afterCursor: String?,
     private val balances: Balances?,
     private val currency: String?,
+    private val externalId: String?,
     private val ledgerAccountId: String?,
     private val ledgerId: String?,
     private val metadata: Metadata?,
@@ -45,6 +46,8 @@ private constructor(
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
     fun currency(): Optional<String> = Optional.ofNullable(currency)
+
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     /** Query categories which contain a ledger account directly or through child categories. */
     fun ledgerAccountId(): Optional<String> = Optional.ofNullable(ledgerAccountId)
@@ -89,6 +92,7 @@ private constructor(
         private var afterCursor: String? = null
         private var balances: Balances? = null
         private var currency: String? = null
+        private var externalId: String? = null
         private var ledgerAccountId: String? = null
         private var ledgerId: String? = null
         private var metadata: Metadata? = null
@@ -105,6 +109,7 @@ private constructor(
                 afterCursor = ledgerAccountCategoryListParams.afterCursor
                 balances = ledgerAccountCategoryListParams.balances
                 currency = ledgerAccountCategoryListParams.currency
+                externalId = ledgerAccountCategoryListParams.externalId
                 ledgerAccountId = ledgerAccountCategoryListParams.ledgerAccountId
                 ledgerId = ledgerAccountCategoryListParams.ledgerId
                 metadata = ledgerAccountCategoryListParams.metadata
@@ -152,6 +157,11 @@ private constructor(
 
         /** Alias for calling [Builder.currency] with `currency.orElse(null)`. */
         fun currency(currency: Optional<String>) = currency(currency.getOrNull())
+
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /** Query categories which contain a ledger account directly or through child categories. */
         fun ledgerAccountId(ledgerAccountId: String?) = apply {
@@ -314,6 +324,7 @@ private constructor(
                 afterCursor,
                 balances,
                 currency,
+                externalId,
                 ledgerAccountId,
                 ledgerId,
                 metadata,
@@ -346,6 +357,7 @@ private constructor(
                     }
                 }
                 currency?.let { put("currency", it) }
+                externalId?.let { put("external_id", it) }
                 ledgerAccountId?.let { put("ledger_account_id", it) }
                 ledgerId?.let { put("ledger_id", it) }
                 metadata?.let {
@@ -583,11 +595,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountCategoryListParams && id == other.id && afterCursor == other.afterCursor && balances == other.balances && currency == other.currency && ledgerAccountId == other.ledgerAccountId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && parentLedgerAccountCategoryId == other.parentLedgerAccountCategoryId && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountCategoryListParams && id == other.id && afterCursor == other.afterCursor && balances == other.balances && currency == other.currency && externalId == other.externalId && ledgerAccountId == other.ledgerAccountId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && parentLedgerAccountCategoryId == other.parentLedgerAccountCategoryId && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, balances, currency, ledgerAccountId, ledgerId, metadata, name, parentLedgerAccountCategoryId, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, balances, currency, externalId, ledgerAccountId, ledgerId, metadata, name, parentLedgerAccountCategoryId, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "LedgerAccountCategoryListParams{id=$id, afterCursor=$afterCursor, balances=$balances, currency=$currency, ledgerAccountId=$ledgerAccountId, ledgerId=$ledgerId, metadata=$metadata, name=$name, parentLedgerAccountCategoryId=$parentLedgerAccountCategoryId, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "LedgerAccountCategoryListParams{id=$id, afterCursor=$afterCursor, balances=$balances, currency=$currency, externalId=$externalId, ledgerAccountId=$ledgerAccountId, ledgerId=$ledgerId, metadata=$metadata, name=$name, parentLedgerAccountCategoryId=$parentLedgerAccountCategoryId, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

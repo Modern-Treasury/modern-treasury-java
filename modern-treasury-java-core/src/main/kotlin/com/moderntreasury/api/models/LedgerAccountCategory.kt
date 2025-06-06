@@ -26,6 +26,7 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val description: JsonField<String>,
     private val discardedAt: JsonField<OffsetDateTime>,
+    private val externalId: JsonField<String>,
     private val ledgerId: JsonField<String>,
     private val liveMode: JsonField<Boolean>,
     private val metadata: JsonField<Metadata>,
@@ -51,6 +52,9 @@ private constructor(
         @JsonProperty("discarded_at")
         @ExcludeMissing
         discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        externalId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("ledger_id") @ExcludeMissing ledgerId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("live_mode") @ExcludeMissing liveMode: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -68,6 +72,7 @@ private constructor(
         createdAt,
         description,
         discardedAt,
+        externalId,
         ledgerId,
         liveMode,
         metadata,
@@ -114,6 +119,14 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
+
+    /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
     /**
      * The id of the ledger that this account category belongs to.
@@ -208,6 +221,13 @@ private constructor(
     fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
 
     /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("external_id") @ExcludeMissing fun _externalId(): JsonField<String> = externalId
+
+    /**
      * Returns the raw JSON value of [ledgerId].
      *
      * Unlike [ledgerId], this method doesn't throw if the JSON field has an unexpected type.
@@ -284,6 +304,7 @@ private constructor(
          * .createdAt()
          * .description()
          * .discardedAt()
+         * .externalId()
          * .ledgerId()
          * .liveMode()
          * .metadata()
@@ -304,6 +325,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var description: JsonField<String>? = null
         private var discardedAt: JsonField<OffsetDateTime>? = null
+        private var externalId: JsonField<String>? = null
         private var ledgerId: JsonField<String>? = null
         private var liveMode: JsonField<Boolean>? = null
         private var metadata: JsonField<Metadata>? = null
@@ -320,6 +342,7 @@ private constructor(
             createdAt = ledgerAccountCategory.createdAt
             description = ledgerAccountCategory.description
             discardedAt = ledgerAccountCategory.discardedAt
+            externalId = ledgerAccountCategory.externalId
             ledgerId = ledgerAccountCategory.ledgerId
             liveMode = ledgerAccountCategory.liveMode
             metadata = ledgerAccountCategory.metadata
@@ -400,6 +423,21 @@ private constructor(
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
         }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /** The id of the ledger that this account category belongs to. */
         fun ledgerId(ledgerId: String) = ledgerId(JsonField.of(ledgerId))
@@ -519,6 +557,7 @@ private constructor(
          * .createdAt()
          * .description()
          * .discardedAt()
+         * .externalId()
          * .ledgerId()
          * .liveMode()
          * .metadata()
@@ -537,6 +576,7 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("description", description),
                 checkRequired("discardedAt", discardedAt),
+                checkRequired("externalId", externalId),
                 checkRequired("ledgerId", ledgerId),
                 checkRequired("liveMode", liveMode),
                 checkRequired("metadata", metadata),
@@ -560,6 +600,7 @@ private constructor(
         createdAt()
         description()
         discardedAt()
+        externalId()
         ledgerId()
         liveMode()
         metadata().validate()
@@ -590,6 +631,7 @@ private constructor(
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (externalId.asKnown().isPresent) 1 else 0) +
             (if (ledgerId.asKnown().isPresent) 1 else 0) +
             (if (liveMode.asKnown().isPresent) 1 else 0) +
             (metadata.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1294,15 +1336,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountCategory && id == other.id && balances == other.balances && createdAt == other.createdAt && description == other.description && discardedAt == other.discardedAt && ledgerId == other.ledgerId && liveMode == other.liveMode && metadata == other.metadata && name == other.name && normalBalance == other.normalBalance && object_ == other.object_ && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountCategory && id == other.id && balances == other.balances && createdAt == other.createdAt && description == other.description && discardedAt == other.discardedAt && externalId == other.externalId && ledgerId == other.ledgerId && liveMode == other.liveMode && metadata == other.metadata && name == other.name && normalBalance == other.normalBalance && object_ == other.object_ && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, balances, createdAt, description, discardedAt, ledgerId, liveMode, metadata, name, normalBalance, object_, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, balances, createdAt, description, discardedAt, externalId, ledgerId, liveMode, metadata, name, normalBalance, object_, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerAccountCategory{id=$id, balances=$balances, createdAt=$createdAt, description=$description, discardedAt=$discardedAt, ledgerId=$ledgerId, liveMode=$liveMode, metadata=$metadata, name=$name, normalBalance=$normalBalance, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LedgerAccountCategory{id=$id, balances=$balances, createdAt=$createdAt, description=$description, discardedAt=$discardedAt, externalId=$externalId, ledgerId=$ledgerId, liveMode=$liveMode, metadata=$metadata, name=$name, normalBalance=$normalBalance, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
