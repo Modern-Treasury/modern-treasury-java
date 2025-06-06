@@ -551,6 +551,8 @@ private constructor(
 
             @JvmField val COLUMN_TRANSFER_ID = of("column_transfer_id")
 
+            @JvmField val CROSS_RIVER_FED_BATCH_ID = of("cross_river_fed_batch_id")
+
             @JvmField val CROSS_RIVER_PAYMENT_ID = of("cross_river_payment_id")
 
             @JvmField val CROSS_RIVER_SERVICE_MESSAGE = of("cross_river_service_message")
@@ -562,8 +564,6 @@ private constructor(
             @JvmField val CURRENCYCLOUD_PAYMENT_ID = of("currencycloud_payment_id")
 
             @JvmField val DC_BANK_TRANSACTION_ID = of("dc_bank_transaction_id")
-
-            @JvmField val DWOLLA_TRANSACTION_ID = of("dwolla_transaction_id")
 
             @JvmField val EFT_TRACE_NUMBER = of("eft_trace_number")
 
@@ -703,13 +703,13 @@ private constructor(
             COLUMN_FX_QUOTE_ID,
             COLUMN_REVERSAL_PAIR_TRANSFER_ID,
             COLUMN_TRANSFER_ID,
+            CROSS_RIVER_FED_BATCH_ID,
             CROSS_RIVER_PAYMENT_ID,
             CROSS_RIVER_SERVICE_MESSAGE,
             CROSS_RIVER_TRANSACTION_ID,
             CURRENCYCLOUD_CONVERSION_ID,
             CURRENCYCLOUD_PAYMENT_ID,
             DC_BANK_TRANSACTION_ID,
-            DWOLLA_TRANSACTION_ID,
             EFT_TRACE_NUMBER,
             EVOLVE_TRANSACTION_ID,
             FEDWIRE_IMAD,
@@ -793,13 +793,13 @@ private constructor(
             COLUMN_FX_QUOTE_ID,
             COLUMN_REVERSAL_PAIR_TRANSFER_ID,
             COLUMN_TRANSFER_ID,
+            CROSS_RIVER_FED_BATCH_ID,
             CROSS_RIVER_PAYMENT_ID,
             CROSS_RIVER_SERVICE_MESSAGE,
             CROSS_RIVER_TRANSACTION_ID,
             CURRENCYCLOUD_CONVERSION_ID,
             CURRENCYCLOUD_PAYMENT_ID,
             DC_BANK_TRANSACTION_ID,
-            DWOLLA_TRANSACTION_ID,
             EFT_TRACE_NUMBER,
             EVOLVE_TRANSACTION_ID,
             FEDWIRE_IMAD,
@@ -888,13 +888,13 @@ private constructor(
                 COLUMN_FX_QUOTE_ID -> Value.COLUMN_FX_QUOTE_ID
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Value.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                 COLUMN_TRANSFER_ID -> Value.COLUMN_TRANSFER_ID
+                CROSS_RIVER_FED_BATCH_ID -> Value.CROSS_RIVER_FED_BATCH_ID
                 CROSS_RIVER_PAYMENT_ID -> Value.CROSS_RIVER_PAYMENT_ID
                 CROSS_RIVER_SERVICE_MESSAGE -> Value.CROSS_RIVER_SERVICE_MESSAGE
                 CROSS_RIVER_TRANSACTION_ID -> Value.CROSS_RIVER_TRANSACTION_ID
                 CURRENCYCLOUD_CONVERSION_ID -> Value.CURRENCYCLOUD_CONVERSION_ID
                 CURRENCYCLOUD_PAYMENT_ID -> Value.CURRENCYCLOUD_PAYMENT_ID
                 DC_BANK_TRANSACTION_ID -> Value.DC_BANK_TRANSACTION_ID
-                DWOLLA_TRANSACTION_ID -> Value.DWOLLA_TRANSACTION_ID
                 EFT_TRACE_NUMBER -> Value.EFT_TRACE_NUMBER
                 EVOLVE_TRANSACTION_ID -> Value.EVOLVE_TRANSACTION_ID
                 FEDWIRE_IMAD -> Value.FEDWIRE_IMAD
@@ -984,13 +984,13 @@ private constructor(
                 COLUMN_FX_QUOTE_ID -> Known.COLUMN_FX_QUOTE_ID
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Known.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                 COLUMN_TRANSFER_ID -> Known.COLUMN_TRANSFER_ID
+                CROSS_RIVER_FED_BATCH_ID -> Known.CROSS_RIVER_FED_BATCH_ID
                 CROSS_RIVER_PAYMENT_ID -> Known.CROSS_RIVER_PAYMENT_ID
                 CROSS_RIVER_SERVICE_MESSAGE -> Known.CROSS_RIVER_SERVICE_MESSAGE
                 CROSS_RIVER_TRANSACTION_ID -> Known.CROSS_RIVER_TRANSACTION_ID
                 CURRENCYCLOUD_CONVERSION_ID -> Known.CURRENCYCLOUD_CONVERSION_ID
                 CURRENCYCLOUD_PAYMENT_ID -> Known.CURRENCYCLOUD_PAYMENT_ID
                 DC_BANK_TRANSACTION_ID -> Known.DC_BANK_TRANSACTION_ID
-                DWOLLA_TRANSACTION_ID -> Known.DWOLLA_TRANSACTION_ID
                 EFT_TRACE_NUMBER -> Known.EFT_TRACE_NUMBER
                 EVOLVE_TRANSACTION_ID -> Known.EVOLVE_TRANSACTION_ID
                 FEDWIRE_IMAD -> Known.FEDWIRE_IMAD

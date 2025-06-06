@@ -22,6 +22,7 @@ private constructor(
     private val balances: Balances?,
     private val createdAt: CreatedAt?,
     private val currency: String?,
+    private val externalId: String?,
     private val ledgerAccountCategoryId: String?,
     private val ledgerId: String?,
     private val metadata: Metadata?,
@@ -65,6 +66,8 @@ private constructor(
     fun createdAt(): Optional<CreatedAt> = Optional.ofNullable(createdAt)
 
     fun currency(): Optional<String> = Optional.ofNullable(currency)
+
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     fun ledgerAccountCategoryId(): Optional<String> = Optional.ofNullable(ledgerAccountCategoryId)
 
@@ -128,6 +131,7 @@ private constructor(
         private var balances: Balances? = null
         private var createdAt: CreatedAt? = null
         private var currency: String? = null
+        private var externalId: String? = null
         private var ledgerAccountCategoryId: String? = null
         private var ledgerId: String? = null
         private var metadata: Metadata? = null
@@ -147,6 +151,7 @@ private constructor(
             balances = ledgerAccountListParams.balances
             createdAt = ledgerAccountListParams.createdAt
             currency = ledgerAccountListParams.currency
+            externalId = ledgerAccountListParams.externalId
             ledgerAccountCategoryId = ledgerAccountListParams.ledgerAccountCategoryId
             ledgerId = ledgerAccountListParams.ledgerId
             metadata = ledgerAccountListParams.metadata
@@ -220,6 +225,11 @@ private constructor(
 
         /** Alias for calling [Builder.currency] with `currency.orElse(null)`. */
         fun currency(currency: Optional<String>) = currency(currency.getOrNull())
+
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         fun ledgerAccountCategoryId(ledgerAccountCategoryId: String?) = apply {
             this.ledgerAccountCategoryId = ledgerAccountCategoryId
@@ -426,6 +436,7 @@ private constructor(
                 balances,
                 createdAt,
                 currency,
+                externalId,
                 ledgerAccountCategoryId,
                 ledgerId,
                 metadata,
@@ -493,6 +504,7 @@ private constructor(
                     }
                 }
                 currency?.let { put("currency", it) }
+                externalId?.let { put("external_id", it) }
                 ledgerAccountCategoryId?.let { put("ledger_account_category_id", it) }
                 ledgerId?.let { put("ledger_id", it) }
                 metadata?.let {
@@ -1639,11 +1651,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && externalId == other.externalId && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, ledgerAccountCategoryId, ledgerId, metadata, name, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, externalId, ledgerAccountCategoryId, ledgerId, metadata, name, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, externalId=$externalId, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

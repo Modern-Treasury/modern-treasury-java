@@ -393,6 +393,9 @@ private constructor(
         fun entity(ledgerTransaction: LedgerTransaction) =
             entity(Entity.ofLedgerTransaction(ledgerTransaction))
 
+        /** Alias for calling [entity] with `Entity.ofLedgerAccount(ledgerAccount)`. */
+        fun entity(ledgerAccount: LedgerAccount) = entity(Entity.ofLedgerAccount(ledgerAccount))
+
         /** Alias for calling [entity] with `Entity.ofTransaction(transaction)`. */
         fun entity(transaction: Transaction) = entity(Entity.ofTransaction(transaction))
 
@@ -648,6 +651,7 @@ private constructor(
         private val paymentOrder: PaymentOrder? = null,
         private val expectedPayment: ExpectedPayment? = null,
         private val ledgerTransaction: LedgerTransaction? = null,
+        private val ledgerAccount: LedgerAccount? = null,
         private val transaction: Transaction? = null,
         private val bulkError: BulkError? = null,
         private val _json: JsonValue? = null,
@@ -660,6 +664,8 @@ private constructor(
         fun ledgerTransaction(): Optional<LedgerTransaction> =
             Optional.ofNullable(ledgerTransaction)
 
+        fun ledgerAccount(): Optional<LedgerAccount> = Optional.ofNullable(ledgerAccount)
+
         fun transaction(): Optional<Transaction> = Optional.ofNullable(transaction)
 
         fun bulkError(): Optional<BulkError> = Optional.ofNullable(bulkError)
@@ -669,6 +675,8 @@ private constructor(
         fun isExpectedPayment(): Boolean = expectedPayment != null
 
         fun isLedgerTransaction(): Boolean = ledgerTransaction != null
+
+        fun isLedgerAccount(): Boolean = ledgerAccount != null
 
         fun isTransaction(): Boolean = transaction != null
 
@@ -681,6 +689,8 @@ private constructor(
         fun asLedgerTransaction(): LedgerTransaction =
             ledgerTransaction.getOrThrow("ledgerTransaction")
 
+        fun asLedgerAccount(): LedgerAccount = ledgerAccount.getOrThrow("ledgerAccount")
+
         fun asTransaction(): Transaction = transaction.getOrThrow("transaction")
 
         fun asBulkError(): BulkError = bulkError.getOrThrow("bulkError")
@@ -692,6 +702,7 @@ private constructor(
                 paymentOrder != null -> visitor.visitPaymentOrder(paymentOrder)
                 expectedPayment != null -> visitor.visitExpectedPayment(expectedPayment)
                 ledgerTransaction != null -> visitor.visitLedgerTransaction(ledgerTransaction)
+                ledgerAccount != null -> visitor.visitLedgerAccount(ledgerAccount)
                 transaction != null -> visitor.visitTransaction(transaction)
                 bulkError != null -> visitor.visitBulkError(bulkError)
                 else -> visitor.unknown(_json)
@@ -716,6 +727,10 @@ private constructor(
 
                     override fun visitLedgerTransaction(ledgerTransaction: LedgerTransaction) {
                         ledgerTransaction.validate()
+                    }
+
+                    override fun visitLedgerAccount(ledgerAccount: LedgerAccount) {
+                        ledgerAccount.validate()
                     }
 
                     override fun visitTransaction(transaction: Transaction) {
@@ -757,6 +772,9 @@ private constructor(
                     override fun visitLedgerTransaction(ledgerTransaction: LedgerTransaction) =
                         ledgerTransaction.validity()
 
+                    override fun visitLedgerAccount(ledgerAccount: LedgerAccount) =
+                        ledgerAccount.validity()
+
                     override fun visitTransaction(transaction: Transaction) = transaction.validity()
 
                     override fun visitBulkError(bulkError: BulkError) = bulkError.validity()
@@ -770,16 +788,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Entity && paymentOrder == other.paymentOrder && expectedPayment == other.expectedPayment && ledgerTransaction == other.ledgerTransaction && transaction == other.transaction && bulkError == other.bulkError /* spotless:on */
+            return /* spotless:off */ other is Entity && paymentOrder == other.paymentOrder && expectedPayment == other.expectedPayment && ledgerTransaction == other.ledgerTransaction && ledgerAccount == other.ledgerAccount && transaction == other.transaction && bulkError == other.bulkError /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrder, expectedPayment, ledgerTransaction, transaction, bulkError) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentOrder, expectedPayment, ledgerTransaction, ledgerAccount, transaction, bulkError) /* spotless:on */
 
         override fun toString(): String =
             when {
                 paymentOrder != null -> "Entity{paymentOrder=$paymentOrder}"
                 expectedPayment != null -> "Entity{expectedPayment=$expectedPayment}"
                 ledgerTransaction != null -> "Entity{ledgerTransaction=$ledgerTransaction}"
+                ledgerAccount != null -> "Entity{ledgerAccount=$ledgerAccount}"
                 transaction != null -> "Entity{transaction=$transaction}"
                 bulkError != null -> "Entity{bulkError=$bulkError}"
                 _json != null -> "Entity{_unknown=$_json}"
@@ -800,6 +819,10 @@ private constructor(
                 Entity(ledgerTransaction = ledgerTransaction)
 
             @JvmStatic
+            fun ofLedgerAccount(ledgerAccount: LedgerAccount) =
+                Entity(ledgerAccount = ledgerAccount)
+
+            @JvmStatic
             fun ofTransaction(transaction: Transaction) = Entity(transaction = transaction)
 
             @JvmStatic fun ofBulkError(bulkError: BulkError) = Entity(bulkError = bulkError)
@@ -813,6 +836,8 @@ private constructor(
             fun visitExpectedPayment(expectedPayment: ExpectedPayment): T
 
             fun visitLedgerTransaction(ledgerTransaction: LedgerTransaction): T
+
+            fun visitLedgerAccount(ledgerAccount: LedgerAccount): T
 
             fun visitTransaction(transaction: Transaction): T
 
@@ -849,6 +874,9 @@ private constructor(
                             tryDeserialize(node, jacksonTypeRef<LedgerTransaction>())?.let {
                                 Entity(ledgerTransaction = it, _json = json)
                             },
+                            tryDeserialize(node, jacksonTypeRef<LedgerAccount>())?.let {
+                                Entity(ledgerAccount = it, _json = json)
+                            },
                             tryDeserialize(node, jacksonTypeRef<Transaction>())?.let {
                                 Entity(transaction = it, _json = json)
                             },
@@ -884,6 +912,7 @@ private constructor(
                     value.expectedPayment != null -> generator.writeObject(value.expectedPayment)
                     value.ledgerTransaction != null ->
                         generator.writeObject(value.ledgerTransaction)
+                    value.ledgerAccount != null -> generator.writeObject(value.ledgerAccount)
                     value.transaction != null -> generator.writeObject(value.transaction)
                     value.bulkError != null -> generator.writeObject(value.bulkError)
                     value._json != null -> generator.writeObject(value._json)

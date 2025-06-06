@@ -719,6 +719,8 @@ private constructor(
 
             @JvmField val SENT = of("sent")
 
+            @JvmField val STOPPED = of("stopped")
+
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }
 
@@ -735,6 +737,7 @@ private constructor(
             RETURNED,
             REVERSED,
             SENT,
+            STOPPED,
         }
 
         /**
@@ -758,6 +761,7 @@ private constructor(
             RETURNED,
             REVERSED,
             SENT,
+            STOPPED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -782,6 +786,7 @@ private constructor(
                 RETURNED -> Value.RETURNED
                 REVERSED -> Value.REVERSED
                 SENT -> Value.SENT
+                STOPPED -> Value.STOPPED
                 else -> Value._UNKNOWN
             }
 
@@ -807,6 +812,7 @@ private constructor(
                 RETURNED -> Known.RETURNED
                 REVERSED -> Known.REVERSED
                 SENT -> Known.SENT
+                STOPPED -> Known.STOPPED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
             }
 
