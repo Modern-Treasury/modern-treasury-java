@@ -46,13 +46,13 @@ interface BalanceReportServiceAsync {
 
     /** Get a single balance report for a given internal account. */
     fun retrieve(
-        id: String,
+        id: BalanceReportRetrieveParams.Id,
         params: BalanceReportRetrieveParams,
     ): CompletableFuture<BalanceReport> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        id: String,
+        id: BalanceReportRetrieveParams.Id,
         params: BalanceReportRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceReport> =
@@ -167,14 +167,14 @@ interface BalanceReportServiceAsync {
          * same as [BalanceReportServiceAsync.retrieve].
          */
         fun retrieve(
-            id: String,
+            id: BalanceReportRetrieveParams.Id,
             params: BalanceReportRetrieveParams,
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         fun retrieve(
-            id: String,
+            id: BalanceReportRetrieveParams.Id,
             params: BalanceReportRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =

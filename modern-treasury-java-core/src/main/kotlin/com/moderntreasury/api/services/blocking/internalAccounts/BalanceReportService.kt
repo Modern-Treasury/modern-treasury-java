@@ -43,12 +43,14 @@ interface BalanceReportService {
     ): BalanceReport
 
     /** Get a single balance report for a given internal account. */
-    fun retrieve(id: String, params: BalanceReportRetrieveParams): BalanceReport =
-        retrieve(id, params, RequestOptions.none())
+    fun retrieve(
+        id: BalanceReportRetrieveParams.Id,
+        params: BalanceReportRetrieveParams,
+    ): BalanceReport = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        id: String,
+        id: BalanceReportRetrieveParams.Id,
         params: BalanceReportRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceReport = retrieve(params.toBuilder().id(id).build(), requestOptions)
@@ -159,14 +161,14 @@ interface BalanceReportService {
          */
         @MustBeClosed
         fun retrieve(
-            id: String,
+            id: BalanceReportRetrieveParams.Id,
             params: BalanceReportRetrieveParams,
         ): HttpResponseFor<BalanceReport> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            id: String,
+            id: BalanceReportRetrieveParams.Id,
             params: BalanceReportRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceReport> =
