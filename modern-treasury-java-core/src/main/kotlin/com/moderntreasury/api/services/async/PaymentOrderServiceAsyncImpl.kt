@@ -99,6 +99,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders")
                     .body(multipartFormData(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -132,6 +133,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -164,6 +166,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -194,6 +197,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -232,6 +236,7 @@ class PaymentOrderServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders", "create_async")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

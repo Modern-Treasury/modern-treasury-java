@@ -76,6 +76,7 @@ class LegalEntityServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "legal_entities")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -106,6 +107,7 @@ class LegalEntityServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "legal_entities", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -135,6 +137,7 @@ class LegalEntityServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "legal_entities", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -162,6 +165,7 @@ class LegalEntityServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "legal_entities")
                     .build()
                     .prepare(clientOptions, params)
