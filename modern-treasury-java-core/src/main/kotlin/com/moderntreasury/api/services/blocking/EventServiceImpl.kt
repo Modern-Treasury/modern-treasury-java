@@ -56,6 +56,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "events", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -82,6 +83,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "events")
                     .build()
                     .prepare(clientOptions, params)

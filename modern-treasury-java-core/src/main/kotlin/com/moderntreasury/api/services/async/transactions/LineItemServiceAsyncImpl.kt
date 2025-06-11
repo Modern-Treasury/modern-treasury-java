@@ -80,6 +80,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "transaction_line_items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -114,6 +115,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "transaction_line_items", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -144,6 +146,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "transaction_line_items")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -184,6 +187,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "transaction_line_items", params._pathParam(0))
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

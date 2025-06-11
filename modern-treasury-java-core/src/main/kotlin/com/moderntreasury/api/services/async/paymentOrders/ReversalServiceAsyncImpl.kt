@@ -72,6 +72,7 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -105,6 +106,7 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         "payment_orders",
@@ -143,6 +145,7 @@ class ReversalServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
                     .build()
                     .prepareAsync(clientOptions, params)

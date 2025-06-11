@@ -91,6 +91,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_account_settlements")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -122,6 +123,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_account_settlements", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -152,6 +154,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_account_settlements", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -180,6 +183,7 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_account_settlements")
                     .build()
                     .prepare(clientOptions, params)

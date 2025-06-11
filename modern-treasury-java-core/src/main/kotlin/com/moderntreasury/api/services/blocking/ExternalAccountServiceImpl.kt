@@ -101,6 +101,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -131,6 +132,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -160,6 +162,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -188,6 +191,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts")
                     .build()
                     .prepare(clientOptions, params)
@@ -224,6 +228,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts", params._pathParam(0))
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -246,6 +251,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         "external_accounts",
@@ -282,6 +288,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "external_accounts", params._pathParam(0), "verify")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

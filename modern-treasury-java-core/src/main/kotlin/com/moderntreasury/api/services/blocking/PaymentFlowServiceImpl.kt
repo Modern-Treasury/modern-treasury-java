@@ -76,6 +76,7 @@ class PaymentFlowServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_flows")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -106,6 +107,7 @@ class PaymentFlowServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_flows", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -135,6 +137,7 @@ class PaymentFlowServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_flows", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -162,6 +165,7 @@ class PaymentFlowServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "payment_flows")
                     .build()
                     .prepare(clientOptions, params)

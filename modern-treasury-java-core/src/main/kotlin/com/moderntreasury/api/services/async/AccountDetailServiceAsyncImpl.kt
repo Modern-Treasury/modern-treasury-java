@@ -82,6 +82,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         params._pathParam(0),
@@ -120,6 +121,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         params._pathParam(0),
@@ -159,6 +161,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         params._pathParam(0),
@@ -204,6 +207,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         params._pathParam(0),
