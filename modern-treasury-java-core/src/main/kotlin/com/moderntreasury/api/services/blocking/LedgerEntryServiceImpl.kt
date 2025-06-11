@@ -71,6 +71,7 @@ class LedgerEntryServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_entries", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -100,6 +101,7 @@ class LedgerEntryServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_entries", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -127,6 +129,7 @@ class LedgerEntryServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "ledger_entries")
                     .build()
                     .prepare(clientOptions, params)

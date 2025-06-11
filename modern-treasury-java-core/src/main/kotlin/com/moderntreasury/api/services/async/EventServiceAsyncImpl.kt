@@ -63,6 +63,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "events", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -92,6 +93,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "events")
                     .build()
                     .prepareAsync(clientOptions, params)

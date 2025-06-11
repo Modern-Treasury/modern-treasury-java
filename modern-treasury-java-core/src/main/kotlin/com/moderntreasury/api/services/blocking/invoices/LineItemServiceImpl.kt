@@ -87,6 +87,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "invoices", params._pathParam(0), "invoice_line_items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -117,6 +118,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         "invoices",
@@ -152,6 +154,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         "invoices",
@@ -189,6 +192,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "invoices", params._pathParam(0), "invoice_line_items")
                     .build()
                     .prepare(clientOptions, params)
@@ -226,6 +230,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "api",
                         "invoices",

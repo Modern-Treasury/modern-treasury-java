@@ -63,6 +63,7 @@ class BulkResultServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "bulk_results", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -92,6 +93,7 @@ class BulkResultServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("api", "bulk_results")
                     .build()
                     .prepareAsync(clientOptions, params)
