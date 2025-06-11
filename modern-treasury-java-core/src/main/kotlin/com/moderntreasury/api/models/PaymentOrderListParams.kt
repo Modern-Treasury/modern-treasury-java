@@ -26,6 +26,7 @@ private constructor(
     private val direction: TransactionDirection?,
     private val effectiveDateEnd: LocalDate?,
     private val effectiveDateStart: LocalDate?,
+    private val externalId: String?,
     private val metadata: Metadata?,
     private val originatingAccountId: String?,
     private val perPage: Long?,
@@ -57,6 +58,8 @@ private constructor(
 
     /** An inclusive lower bound for searching effective_date */
     fun effectiveDateStart(): Optional<LocalDate> = Optional.ofNullable(effectiveDateStart)
+
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     /**
      * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
@@ -115,6 +118,7 @@ private constructor(
         private var direction: TransactionDirection? = null
         private var effectiveDateEnd: LocalDate? = null
         private var effectiveDateStart: LocalDate? = null
+        private var externalId: String? = null
         private var metadata: Metadata? = null
         private var originatingAccountId: String? = null
         private var perPage: Long? = null
@@ -137,6 +141,7 @@ private constructor(
             direction = paymentOrderListParams.direction
             effectiveDateEnd = paymentOrderListParams.effectiveDateEnd
             effectiveDateStart = paymentOrderListParams.effectiveDateStart
+            externalId = paymentOrderListParams.externalId
             metadata = paymentOrderListParams.metadata
             originatingAccountId = paymentOrderListParams.originatingAccountId
             perPage = paymentOrderListParams.perPage
@@ -201,6 +206,11 @@ private constructor(
          */
         fun effectiveDateStart(effectiveDateStart: Optional<LocalDate>) =
             effectiveDateStart(effectiveDateStart.getOrNull())
+
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -400,6 +410,7 @@ private constructor(
                 direction,
                 effectiveDateEnd,
                 effectiveDateStart,
+                externalId,
                 metadata,
                 originatingAccountId,
                 perPage,
@@ -427,6 +438,7 @@ private constructor(
                 direction?.let { put("direction", it.toString()) }
                 effectiveDateEnd?.let { put("effective_date_end", it.toString()) }
                 effectiveDateStart?.let { put("effective_date_start", it.toString()) }
+                externalId?.let { put("external_id", it) }
                 metadata?.let {
                     it._additionalProperties().keys().forEach { key ->
                         it._additionalProperties().values(key).forEach { value ->
@@ -1194,11 +1206,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentOrderListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtEnd == other.createdAtEnd && createdAtStart == other.createdAtStart && direction == other.direction && effectiveDateEnd == other.effectiveDateEnd && effectiveDateStart == other.effectiveDateStart && metadata == other.metadata && originatingAccountId == other.originatingAccountId && perPage == other.perPage && priority == other.priority && processAfterEnd == other.processAfterEnd && processAfterStart == other.processAfterStart && referenceNumber == other.referenceNumber && status == other.status && transactionId == other.transactionId && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PaymentOrderListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtEnd == other.createdAtEnd && createdAtStart == other.createdAtStart && direction == other.direction && effectiveDateEnd == other.effectiveDateEnd && effectiveDateStart == other.effectiveDateStart && externalId == other.externalId && metadata == other.metadata && originatingAccountId == other.originatingAccountId && perPage == other.perPage && priority == other.priority && processAfterEnd == other.processAfterEnd && processAfterStart == other.processAfterStart && referenceNumber == other.referenceNumber && status == other.status && transactionId == other.transactionId && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, createdAtEnd, createdAtStart, direction, effectiveDateEnd, effectiveDateStart, metadata, originatingAccountId, perPage, priority, processAfterEnd, processAfterStart, referenceNumber, status, transactionId, type, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, createdAtEnd, createdAtStart, direction, effectiveDateEnd, effectiveDateStart, externalId, metadata, originatingAccountId, perPage, priority, processAfterEnd, processAfterStart, referenceNumber, status, transactionId, type, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, processAfterEnd=$processAfterEnd, processAfterStart=$processAfterStart, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, externalId=$externalId, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, processAfterEnd=$processAfterEnd, processAfterStart=$processAfterStart, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
