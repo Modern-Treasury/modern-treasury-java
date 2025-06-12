@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.VirtualAccountListPage
 import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class VirtualAccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class VirtualAccountServiceImpl internal constructor(private val clientOptions: 
     }
 
     override fun withRawResponse(): VirtualAccountService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VirtualAccountService =
+        VirtualAccountServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: VirtualAccountCreateParams,
@@ -73,6 +77,13 @@ class VirtualAccountServiceImpl internal constructor(private val clientOptions: 
         VirtualAccountService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): VirtualAccountService.WithRawResponse =
+            VirtualAccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<VirtualAccount> =
             jsonHandler<VirtualAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

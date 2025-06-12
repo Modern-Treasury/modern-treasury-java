@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.ExpectedPaymentListPage
 import com.moderntreasury.api.models.ExpectedPaymentListParams
 import com.moderntreasury.api.models.ExpectedPaymentRetrieveParams
 import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExpectedPaymentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): ExpectedPaymentService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExpectedPaymentService =
+        ExpectedPaymentServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExpectedPaymentCreateParams,
@@ -73,6 +77,13 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
         ExpectedPaymentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExpectedPaymentService.WithRawResponse =
+            ExpectedPaymentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExpectedPayment> =
             jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

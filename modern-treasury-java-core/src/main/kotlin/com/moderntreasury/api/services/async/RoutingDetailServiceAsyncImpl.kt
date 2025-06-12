@@ -25,6 +25,7 @@ import com.moderntreasury.api.models.RoutingDetailListPageAsync
 import com.moderntreasury.api.models.RoutingDetailListParams
 import com.moderntreasury.api.models.RoutingDetailRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class RoutingDetailServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class RoutingDetailServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): RoutingDetailServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): RoutingDetailServiceAsync =
+        RoutingDetailServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: RoutingDetailCreateParams,
@@ -68,6 +72,13 @@ class RoutingDetailServiceAsyncImpl internal constructor(private val clientOptio
         RoutingDetailServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): RoutingDetailServiceAsync.WithRawResponse =
+            RoutingDetailServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<RoutingDetail> =
             jsonHandler<RoutingDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

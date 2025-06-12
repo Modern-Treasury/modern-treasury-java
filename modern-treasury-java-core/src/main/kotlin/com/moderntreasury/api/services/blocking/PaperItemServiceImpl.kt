@@ -19,6 +19,7 @@ import com.moderntreasury.api.models.PaperItem
 import com.moderntreasury.api.models.PaperItemListPage
 import com.moderntreasury.api.models.PaperItemListParams
 import com.moderntreasury.api.models.PaperItemRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PaperItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -29,6 +30,9 @@ class PaperItemServiceImpl internal constructor(private val clientOptions: Clien
     }
 
     override fun withRawResponse(): PaperItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaperItemService =
+        PaperItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: PaperItemRetrieveParams,
@@ -48,6 +52,13 @@ class PaperItemServiceImpl internal constructor(private val clientOptions: Clien
         PaperItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaperItemService.WithRawResponse =
+            PaperItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<PaperItem> =
             jsonHandler<PaperItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

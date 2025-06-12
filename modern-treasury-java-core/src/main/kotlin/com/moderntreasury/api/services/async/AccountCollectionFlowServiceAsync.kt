@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.AccountCollectionFlow
@@ -11,6 +12,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface AccountCollectionFlowServiceAsync {
 
@@ -18,6 +20,13 @@ interface AccountCollectionFlowServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountCollectionFlowServiceAsync
 
     /** create account_collection_flow */
     fun create(
@@ -117,6 +126,15 @@ interface AccountCollectionFlowServiceAsync {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountCollectionFlowServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/account_collection_flows`, but is otherwise

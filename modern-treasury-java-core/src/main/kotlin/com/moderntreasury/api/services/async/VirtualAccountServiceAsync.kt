@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.VirtualAccount
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface VirtualAccountServiceAsync {
 
@@ -19,6 +21,13 @@ interface VirtualAccountServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): VirtualAccountServiceAsync
 
     /** create virtual_account */
     fun create(params: VirtualAccountCreateParams): CompletableFuture<VirtualAccount> =
@@ -148,6 +157,15 @@ interface VirtualAccountServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): VirtualAccountServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/virtual_accounts`, but is otherwise the same

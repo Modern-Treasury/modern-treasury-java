@@ -19,6 +19,7 @@ import com.moderntreasury.api.models.BulkResult
 import com.moderntreasury.api.models.BulkResultListPage
 import com.moderntreasury.api.models.BulkResultListParams
 import com.moderntreasury.api.models.BulkResultRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BulkResultServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -29,6 +30,9 @@ class BulkResultServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): BulkResultService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BulkResultService =
+        BulkResultServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BulkResultRetrieveParams,
@@ -48,6 +52,13 @@ class BulkResultServiceImpl internal constructor(private val clientOptions: Clie
         BulkResultService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BulkResultService.WithRawResponse =
+            BulkResultServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<BulkResult> =
             jsonHandler<BulkResult>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

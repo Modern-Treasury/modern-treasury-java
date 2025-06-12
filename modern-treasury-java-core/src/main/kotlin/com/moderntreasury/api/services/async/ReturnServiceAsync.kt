@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ReturnCreateParams
@@ -10,6 +11,7 @@ import com.moderntreasury.api.models.ReturnListParams
 import com.moderntreasury.api.models.ReturnObject
 import com.moderntreasury.api.models.ReturnRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface ReturnServiceAsync {
 
@@ -17,6 +19,13 @@ interface ReturnServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReturnServiceAsync
 
     /** Create a return. */
     fun create(params: ReturnCreateParams): CompletableFuture<ReturnObject> =
@@ -81,6 +90,15 @@ interface ReturnServiceAsync {
      * A view of [ReturnServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ReturnServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/returns`, but is otherwise the same as

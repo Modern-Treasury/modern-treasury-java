@@ -2,11 +2,13 @@
 
 package com.moderntreasury.api.services.async.ledgerAccountSettlements
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.models.LedgerAccountSettlementAccountEntryDeleteParams
 import com.moderntreasury.api.models.LedgerAccountSettlementAccountEntryUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface AccountEntryServiceAsync {
 
@@ -14,6 +16,13 @@ interface AccountEntryServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountEntryServiceAsync
 
     /** Add ledger entries to a draft ledger account settlement. */
     fun update(
@@ -66,6 +75,15 @@ interface AccountEntryServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountEntryServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `patch

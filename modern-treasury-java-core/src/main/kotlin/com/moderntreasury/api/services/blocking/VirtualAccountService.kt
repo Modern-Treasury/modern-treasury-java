@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.VirtualAccount
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.VirtualAccountListPage
 import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.models.VirtualAccountRetrieveParams
 import com.moderntreasury.api.models.VirtualAccountUpdateParams
+import java.util.function.Consumer
 
 interface VirtualAccountService {
 
@@ -19,6 +21,13 @@ interface VirtualAccountService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): VirtualAccountService
 
     /** create virtual_account */
     fun create(params: VirtualAccountCreateParams): VirtualAccount =
@@ -142,6 +151,15 @@ interface VirtualAccountService {
      * A view of [VirtualAccountService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): VirtualAccountService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/virtual_accounts`, but is otherwise the same

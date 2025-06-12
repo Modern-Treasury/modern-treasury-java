@@ -25,6 +25,7 @@ import com.moderntreasury.api.models.TransactionLineItemListPageAsync
 import com.moderntreasury.api.models.TransactionLineItemListParams
 import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): LineItemServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemServiceAsync =
+        LineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: TransactionLineItemCreateParams,
@@ -68,6 +72,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
         LineItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LineItemServiceAsync.WithRawResponse =
+            LineItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionLineItem> =
             jsonHandler<TransactionLineItem>(clientOptions.jsonMapper)

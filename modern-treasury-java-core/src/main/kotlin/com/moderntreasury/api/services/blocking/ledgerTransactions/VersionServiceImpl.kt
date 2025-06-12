@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.models.LedgerTransactionVersion
 import com.moderntreasury.api.models.LedgerTransactionVersionListPage
 import com.moderntreasury.api.models.LedgerTransactionVersionListParams
+import java.util.function.Consumer
 
 class VersionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     VersionService {
@@ -26,6 +27,9 @@ class VersionServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): VersionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService =
+        VersionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun list(
         params: LedgerTransactionVersionListParams,
@@ -38,6 +42,13 @@ class VersionServiceImpl internal constructor(private val clientOptions: ClientO
         VersionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): VersionService.WithRawResponse =
+            VersionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val listHandler: Handler<List<LedgerTransactionVersion>> =
             jsonHandler<List<LedgerTransactionVersion>>(clientOptions.jsonMapper)

@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.LedgerAccountBalanceMonitorListPage
 import com.moderntreasury.api.models.LedgerAccountBalanceMonitorListParams
 import com.moderntreasury.api.models.LedgerAccountBalanceMonitorRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountBalanceMonitorUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountBalanceMonitorServiceImpl
@@ -35,6 +36,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): LedgerAccountBalanceMonitorService.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): LedgerAccountBalanceMonitorService =
+        LedgerAccountBalanceMonitorServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: LedgerAccountBalanceMonitorCreateParams,
@@ -75,6 +83,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         LedgerAccountBalanceMonitorService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountBalanceMonitorService.WithRawResponse =
+            LedgerAccountBalanceMonitorServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<LedgerAccountBalanceMonitor> =
             jsonHandler<LedgerAccountBalanceMonitor>(clientOptions.jsonMapper)

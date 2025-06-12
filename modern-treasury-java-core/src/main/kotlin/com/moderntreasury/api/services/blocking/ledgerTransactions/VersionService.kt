@@ -3,10 +3,12 @@
 package com.moderntreasury.api.services.blocking.ledgerTransactions
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerTransactionVersionListPage
 import com.moderntreasury.api.models.LedgerTransactionVersionListParams
+import java.util.function.Consumer
 
 interface VersionService {
 
@@ -14,6 +16,13 @@ interface VersionService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService
 
     /** Get a list of ledger transaction versions. */
     fun list(): LedgerTransactionVersionListPage = list(LedgerTransactionVersionListParams.none())
@@ -35,6 +44,13 @@ interface VersionService {
 
     /** A view of [VersionService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_transaction_versions`, but is otherwise

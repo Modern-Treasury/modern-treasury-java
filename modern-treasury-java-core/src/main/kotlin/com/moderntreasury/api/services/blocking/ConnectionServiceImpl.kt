@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.models.Connection
 import com.moderntreasury.api.models.ConnectionListPage
 import com.moderntreasury.api.models.ConnectionListParams
+import java.util.function.Consumer
 
 class ConnectionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ConnectionService {
@@ -26,6 +27,9 @@ class ConnectionServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): ConnectionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ConnectionService =
+        ConnectionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun list(
         params: ConnectionListParams,
@@ -38,6 +42,13 @@ class ConnectionServiceImpl internal constructor(private val clientOptions: Clie
         ConnectionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ConnectionService.WithRawResponse =
+            ConnectionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val listHandler: Handler<List<Connection>> =
             jsonHandler<List<Connection>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

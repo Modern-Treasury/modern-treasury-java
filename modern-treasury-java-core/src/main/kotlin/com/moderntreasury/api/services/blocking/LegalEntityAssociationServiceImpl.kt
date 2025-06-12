@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.models.LegalEntityAssociation
 import com.moderntreasury.api.models.LegalEntityAssociationCreateParams
+import java.util.function.Consumer
 
 class LegalEntityAssociationServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : LegalEntityAssociationService {
@@ -26,6 +27,11 @@ internal constructor(private val clientOptions: ClientOptions) : LegalEntityAsso
     }
 
     override fun withRawResponse(): LegalEntityAssociationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): LegalEntityAssociationService =
+        LegalEntityAssociationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: LegalEntityAssociationCreateParams,
@@ -38,6 +44,13 @@ internal constructor(private val clientOptions: ClientOptions) : LegalEntityAsso
         LegalEntityAssociationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LegalEntityAssociationService.WithRawResponse =
+            LegalEntityAssociationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<LegalEntityAssociation> =
             jsonHandler<LegalEntityAssociation>(clientOptions.jsonMapper)

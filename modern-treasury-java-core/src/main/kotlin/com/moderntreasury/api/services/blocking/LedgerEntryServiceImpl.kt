@@ -21,6 +21,7 @@ import com.moderntreasury.api.models.LedgerEntryListPage
 import com.moderntreasury.api.models.LedgerEntryListParams
 import com.moderntreasury.api.models.LedgerEntryRetrieveParams
 import com.moderntreasury.api.models.LedgerEntryUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerEntryServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -31,6 +32,9 @@ class LedgerEntryServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): LedgerEntryService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerEntryService =
+        LedgerEntryServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: LedgerEntryRetrieveParams,
@@ -57,6 +61,13 @@ class LedgerEntryServiceImpl internal constructor(private val clientOptions: Cli
         LedgerEntryService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerEntryService.WithRawResponse =
+            LedgerEntryServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<LedgerEntry> =
             jsonHandler<LedgerEntry>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

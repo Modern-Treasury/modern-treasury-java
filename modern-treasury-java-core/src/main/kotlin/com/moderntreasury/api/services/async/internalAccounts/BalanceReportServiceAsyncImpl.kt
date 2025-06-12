@@ -25,6 +25,7 @@ import com.moderntreasury.api.models.BalanceReportListPageAsync
 import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BalanceReportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): BalanceReportServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceReportServiceAsync =
+        BalanceReportServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BalanceReportCreateParams,
@@ -68,6 +72,13 @@ class BalanceReportServiceAsyncImpl internal constructor(private val clientOptio
         BalanceReportServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceReportServiceAsync.WithRawResponse =
+            BalanceReportServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<BalanceReport> =
             jsonHandler<BalanceReport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

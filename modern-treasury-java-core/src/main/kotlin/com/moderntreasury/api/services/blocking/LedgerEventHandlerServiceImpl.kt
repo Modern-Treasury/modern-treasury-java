@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
+import java.util.function.Consumer
 
 class LedgerEventHandlerServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LedgerEventHandlerService {
@@ -13,6 +14,17 @@ class LedgerEventHandlerServiceImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): LedgerEventHandlerService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerEventHandlerService =
+        LedgerEventHandlerServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        LedgerEventHandlerService.WithRawResponse
+        LedgerEventHandlerService.WithRawResponse {
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerEventHandlerService.WithRawResponse =
+            LedgerEventHandlerServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+    }
 }

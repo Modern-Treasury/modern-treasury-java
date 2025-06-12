@@ -3,12 +3,14 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccountStatementCreateParams
 import com.moderntreasury.api.models.LedgerAccountStatementCreateResponse
 import com.moderntreasury.api.models.LedgerAccountStatementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountStatementRetrieveResponse
+import java.util.function.Consumer
 
 interface LedgerAccountStatementService {
 
@@ -16,6 +18,13 @@ interface LedgerAccountStatementService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerAccountStatementService
 
     /** Create a ledger account statement. */
     fun create(params: LedgerAccountStatementCreateParams): LedgerAccountStatementCreateResponse =
@@ -68,6 +77,15 @@ interface LedgerAccountStatementService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountStatementService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/ledger_account_statements`, but is otherwise

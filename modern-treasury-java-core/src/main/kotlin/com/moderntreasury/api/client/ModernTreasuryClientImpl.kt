@@ -95,6 +95,7 @@ import com.moderntreasury.api.services.blocking.VirtualAccountService
 import com.moderntreasury.api.services.blocking.VirtualAccountServiceImpl
 import com.moderntreasury.api.services.blocking.WebhookService
 import com.moderntreasury.api.services.blocking.WebhookServiceImpl
+import java.util.function.Consumer
 
 class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : ModernTreasuryClient {
 
@@ -264,6 +265,9 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
     override fun async(): ModernTreasuryClientAsync = async
 
     override fun withRawResponse(): ModernTreasuryClient.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ModernTreasuryClient =
+        ModernTreasuryClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun connections(): ConnectionService = connections
 
@@ -509,6 +513,13 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
         private val paymentActions: PaymentActionService.WithRawResponse by lazy {
             PaymentActionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ModernTreasuryClient.WithRawResponse =
+            ModernTreasuryClientImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun connections(): ConnectionService.WithRawResponse = connections
 

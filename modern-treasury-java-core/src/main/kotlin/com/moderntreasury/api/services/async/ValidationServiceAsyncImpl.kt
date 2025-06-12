@@ -17,6 +17,7 @@ import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.models.RoutingNumberLookupRequest
 import com.moderntreasury.api.models.ValidationValidateRoutingNumberParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class ValidationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ValidationServiceAsync {
@@ -26,6 +27,9 @@ class ValidationServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): ValidationServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ValidationServiceAsync =
+        ValidationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
@@ -38,6 +42,13 @@ class ValidationServiceAsyncImpl internal constructor(private val clientOptions:
         ValidationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ValidationServiceAsync.WithRawResponse =
+            ValidationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val validateRoutingNumberHandler: Handler<RoutingNumberLookupRequest> =
             jsonHandler<RoutingNumberLookupRequest>(clientOptions.jsonMapper)

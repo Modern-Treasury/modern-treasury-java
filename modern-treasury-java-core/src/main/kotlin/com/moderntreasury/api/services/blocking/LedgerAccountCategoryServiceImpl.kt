@@ -29,6 +29,7 @@ import com.moderntreasury.api.models.LedgerAccountCategoryRemoveLedgerAccountPar
 import com.moderntreasury.api.models.LedgerAccountCategoryRemoveNestedCategoryParams
 import com.moderntreasury.api.models.LedgerAccountCategoryRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountCategoryUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountCategoryServiceImpl
@@ -39,6 +40,11 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
     }
 
     override fun withRawResponse(): LedgerAccountCategoryService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): LedgerAccountCategoryService =
+        LedgerAccountCategoryServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: LedgerAccountCategoryCreateParams,
@@ -111,6 +117,13 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountCa
         LedgerAccountCategoryService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountCategoryService.WithRawResponse =
+            LedgerAccountCategoryServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<LedgerAccountCategory> =
             jsonHandler<LedgerAccountCategory>(clientOptions.jsonMapper)

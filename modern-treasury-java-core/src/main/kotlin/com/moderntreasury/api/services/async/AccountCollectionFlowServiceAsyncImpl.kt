@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountCollectionFlowServiceAsyncImpl
@@ -34,6 +35,13 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
 
     override fun withRawResponse(): AccountCollectionFlowServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): AccountCollectionFlowServiceAsync =
+        AccountCollectionFlowServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: AccountCollectionFlowCreateParams,
@@ -67,6 +75,13 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
         AccountCollectionFlowServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountCollectionFlowServiceAsync.WithRawResponse =
+            AccountCollectionFlowServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountCollectionFlow> =
             jsonHandler<AccountCollectionFlow>(clientOptions.jsonMapper)

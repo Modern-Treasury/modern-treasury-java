@@ -18,6 +18,7 @@ import com.moderntreasury.api.models.LedgerTransactionVersion
 import com.moderntreasury.api.models.LedgerTransactionVersionListPageAsync
 import com.moderntreasury.api.models.LedgerTransactionVersionListParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class VersionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     VersionServiceAsync {
@@ -27,6 +28,9 @@ class VersionServiceAsyncImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): VersionServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionServiceAsync =
+        VersionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun list(
         params: LedgerTransactionVersionListParams,
@@ -39,6 +43,13 @@ class VersionServiceAsyncImpl internal constructor(private val clientOptions: Cl
         VersionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): VersionServiceAsync.WithRawResponse =
+            VersionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val listHandler: Handler<List<LedgerTransactionVersion>> =
             jsonHandler<List<LedgerTransactionVersion>>(clientOptions.jsonMapper)

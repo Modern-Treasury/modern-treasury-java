@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async.internalAccounts
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.BalanceReportListPageAsync
 import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface BalanceReportServiceAsync {
 
@@ -19,6 +21,13 @@ interface BalanceReportServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceReportServiceAsync
 
     /** create balance reports */
     fun create(
@@ -130,6 +139,15 @@ interface BalanceReportServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceReportServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post
