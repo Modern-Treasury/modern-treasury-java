@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LineItem
@@ -10,6 +11,7 @@ import com.moderntreasury.api.models.LineItemListPage
 import com.moderntreasury.api.models.LineItemListParams
 import com.moderntreasury.api.models.LineItemRetrieveParams
 import com.moderntreasury.api.models.LineItemUpdateParams
+import java.util.function.Consumer
 
 interface LineItemService {
 
@@ -17,6 +19,13 @@ interface LineItemService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService
 
     /** Get a single line item */
     fun retrieve(id: String, params: LineItemRetrieveParams): LineItem =
@@ -81,6 +90,13 @@ interface LineItemService {
 
     /** A view of [LineItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get

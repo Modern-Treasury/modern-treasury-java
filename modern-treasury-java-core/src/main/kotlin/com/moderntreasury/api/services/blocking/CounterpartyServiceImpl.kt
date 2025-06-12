@@ -27,6 +27,7 @@ import com.moderntreasury.api.models.CounterpartyListPage
 import com.moderntreasury.api.models.CounterpartyListParams
 import com.moderntreasury.api.models.CounterpartyRetrieveParams
 import com.moderntreasury.api.models.CounterpartyUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CounterpartyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,9 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): CounterpartyService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterpartyService =
+        CounterpartyServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CounterpartyCreateParams,
@@ -82,6 +86,13 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
         CounterpartyService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterpartyService.WithRawResponse =
+            CounterpartyServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<Counterparty> =
             jsonHandler<Counterparty>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

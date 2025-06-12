@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.PaymentReference
@@ -10,6 +11,7 @@ import com.moderntreasury.api.models.PaymentReferenceListPage
 import com.moderntreasury.api.models.PaymentReferenceListParams
 import com.moderntreasury.api.models.PaymentReferenceRetireveParams
 import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
+import java.util.function.Consumer
 
 interface PaymentReferenceService {
 
@@ -17,6 +19,13 @@ interface PaymentReferenceService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentReferenceService
 
     /** get payment_reference */
     fun retrieve(id: String): PaymentReference = retrieve(id, PaymentReferenceRetrieveParams.none())
@@ -107,6 +116,15 @@ interface PaymentReferenceService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaymentReferenceService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /api/payment_references/{id}`, but is otherwise the

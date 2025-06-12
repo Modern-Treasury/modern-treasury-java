@@ -27,6 +27,7 @@ import com.moderntreasury.api.models.InvoiceRetrieveParams
 import com.moderntreasury.api.models.InvoiceUpdateParams
 import com.moderntreasury.api.services.blocking.invoices.LineItemService
 import com.moderntreasury.api.services.blocking.invoices.LineItemServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InvoiceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -39,6 +40,9 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
     private val lineItems: LineItemService by lazy { LineItemServiceImpl(clientOptions) }
 
     override fun withRawResponse(): InvoiceService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvoiceService =
+        InvoiceServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun lineItems(): LineItemService = lineItems
 
@@ -74,6 +78,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
         private val lineItems: LineItemService.WithRawResponse by lazy {
             LineItemServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvoiceService.WithRawResponse =
+            InvoiceServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun lineItems(): LineItemService.WithRawResponse = lineItems
 

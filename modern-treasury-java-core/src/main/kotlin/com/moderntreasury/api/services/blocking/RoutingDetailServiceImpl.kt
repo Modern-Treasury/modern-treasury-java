@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.RoutingDetailDeleteParams
 import com.moderntreasury.api.models.RoutingDetailListPage
 import com.moderntreasury.api.models.RoutingDetailListParams
 import com.moderntreasury.api.models.RoutingDetailRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class RoutingDetailServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): RoutingDetailService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): RoutingDetailService =
+        RoutingDetailServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: RoutingDetailCreateParams,
@@ -65,6 +69,13 @@ class RoutingDetailServiceImpl internal constructor(private val clientOptions: C
         RoutingDetailService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): RoutingDetailService.WithRawResponse =
+            RoutingDetailServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<RoutingDetail> =
             jsonHandler<RoutingDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

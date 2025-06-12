@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryService
 import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountSettlementServiceImpl
@@ -38,6 +39,13 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
     }
 
     override fun withRawResponse(): LedgerAccountSettlementService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): LedgerAccountSettlementService =
+        LedgerAccountSettlementServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun accountEntries(): AccountEntryService = accountEntries
 
@@ -77,6 +85,13 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerAccountSe
         private val accountEntries: AccountEntryService.WithRawResponse by lazy {
             AccountEntryServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountSettlementService.WithRawResponse =
+            LedgerAccountSettlementServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun accountEntries(): AccountEntryService.WithRawResponse = accountEntries
 

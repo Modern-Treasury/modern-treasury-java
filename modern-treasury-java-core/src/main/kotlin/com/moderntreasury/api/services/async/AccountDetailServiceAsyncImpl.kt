@@ -25,6 +25,7 @@ import com.moderntreasury.api.models.AccountDetailListPageAsync
 import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountDetailServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): AccountDetailServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync =
+        AccountDetailServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: AccountDetailCreateParams,
@@ -68,6 +72,13 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
         AccountDetailServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountDetailServiceAsync.WithRawResponse =
+            AccountDetailServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountDetail> =
             jsonHandler<AccountDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

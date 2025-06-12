@@ -27,6 +27,7 @@ import com.moderntreasury.api.models.LedgerTransactionUpdateParams
 import com.moderntreasury.api.services.async.ledgerTransactions.VersionServiceAsync
 import com.moderntreasury.api.services.async.ledgerTransactions.VersionServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerTransactionServiceAsyncImpl
@@ -39,6 +40,11 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
     private val versions: VersionServiceAsync by lazy { VersionServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): LedgerTransactionServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): LedgerTransactionServiceAsync =
+        LedgerTransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun versions(): VersionServiceAsync = versions
 
@@ -92,6 +98,13 @@ internal constructor(private val clientOptions: ClientOptions) : LedgerTransacti
         private val versions: VersionServiceAsync.WithRawResponse by lazy {
             VersionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerTransactionServiceAsync.WithRawResponse =
+            LedgerTransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun versions(): VersionServiceAsync.WithRawResponse = versions
 

@@ -21,6 +21,7 @@ import com.moderntreasury.api.models.DocumentCreateParams
 import com.moderntreasury.api.models.DocumentListPage
 import com.moderntreasury.api.models.DocumentListParams
 import com.moderntreasury.api.models.DocumentRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class DocumentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -31,6 +32,9 @@ class DocumentServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): DocumentService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DocumentService =
+        DocumentServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(params: DocumentCreateParams, requestOptions: RequestOptions): Document =
         // post /api/documents
@@ -54,6 +58,13 @@ class DocumentServiceImpl internal constructor(private val clientOptions: Client
         DocumentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DocumentService.WithRawResponse =
+            DocumentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<Document> =
             jsonHandler<Document>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

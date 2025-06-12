@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.AccountDetailDeleteParams
 import com.moderntreasury.api.models.AccountDetailListPage
 import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountDetailServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class AccountDetailServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): AccountDetailService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailService =
+        AccountDetailServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: AccountDetailCreateParams,
@@ -65,6 +69,13 @@ class AccountDetailServiceImpl internal constructor(private val clientOptions: C
         AccountDetailService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountDetailService.WithRawResponse =
+            AccountDetailServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountDetail> =
             jsonHandler<AccountDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking.invoices
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.InvoiceLineItem
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.InvoiceLineItemListPage
 import com.moderntreasury.api.models.InvoiceLineItemListParams
 import com.moderntreasury.api.models.InvoiceLineItemRetrieveParams
 import com.moderntreasury.api.models.InvoiceLineItemUpdateParams
+import java.util.function.Consumer
 
 interface LineItemService {
 
@@ -19,6 +21,13 @@ interface LineItemService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService
 
     /** create invoice_line_item */
     fun create(invoiceId: String, params: InvoiceLineItemCreateParams): InvoiceLineItem =
@@ -138,6 +147,13 @@ interface LineItemService {
 
     /** A view of [LineItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/invoices/{invoice_id}/invoice_line_items`, but

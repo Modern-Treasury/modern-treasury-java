@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -16,6 +17,7 @@ import com.moderntreasury.api.models.ExternalAccountRetrieveParams
 import com.moderntreasury.api.models.ExternalAccountUpdateParams
 import com.moderntreasury.api.models.ExternalAccountVerifyParams
 import com.moderntreasury.api.models.ExternalAccountVerifyResponse
+import java.util.function.Consumer
 
 interface ExternalAccountService {
 
@@ -23,6 +25,13 @@ interface ExternalAccountService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExternalAccountService
 
     /** create external account */
     fun create(params: ExternalAccountCreateParams): ExternalAccount =
@@ -200,6 +209,15 @@ interface ExternalAccountService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalAccountService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/external_accounts`, but is otherwise the same

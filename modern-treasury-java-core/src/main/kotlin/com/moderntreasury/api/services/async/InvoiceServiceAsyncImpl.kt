@@ -28,6 +28,7 @@ import com.moderntreasury.api.models.InvoiceUpdateParams
 import com.moderntreasury.api.services.async.invoices.LineItemServiceAsync
 import com.moderntreasury.api.services.async.invoices.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -40,6 +41,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
     private val lineItems: LineItemServiceAsync by lazy { LineItemServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): InvoiceServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvoiceServiceAsync =
+        InvoiceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun lineItems(): LineItemServiceAsync = lineItems
 
@@ -86,6 +90,13 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         private val lineItems: LineItemServiceAsync.WithRawResponse by lazy {
             LineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvoiceServiceAsync.WithRawResponse =
+            InvoiceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun lineItems(): LineItemServiceAsync.WithRawResponse = lineItems
 

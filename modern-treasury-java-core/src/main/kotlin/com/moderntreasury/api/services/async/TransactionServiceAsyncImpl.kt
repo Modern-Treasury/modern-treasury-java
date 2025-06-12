@@ -28,6 +28,7 @@ import com.moderntreasury.api.models.TransactionUpdateParams
 import com.moderntreasury.api.services.async.transactions.LineItemServiceAsync
 import com.moderntreasury.api.services.async.transactions.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class TransactionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -40,6 +41,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
     private val lineItems: LineItemServiceAsync by lazy { LineItemServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): TransactionServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionServiceAsync =
+        TransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun lineItems(): LineItemServiceAsync = lineItems
 
@@ -86,6 +90,13 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
         private val lineItems: LineItemServiceAsync.WithRawResponse by lazy {
             LineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionServiceAsync.WithRawResponse =
+            TransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun lineItems(): LineItemServiceAsync.WithRawResponse = lineItems
 

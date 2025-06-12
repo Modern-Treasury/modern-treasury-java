@@ -21,6 +21,7 @@ import com.moderntreasury.api.models.PaymentOrderReversalListPage
 import com.moderntreasury.api.models.PaymentOrderReversalListParams
 import com.moderntreasury.api.models.PaymentOrderReversalRetrieveParams
 import com.moderntreasury.api.models.Reversal
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ReversalServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -31,6 +32,9 @@ class ReversalServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): ReversalService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReversalService =
+        ReversalServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PaymentOrderReversalCreateParams,
@@ -57,6 +61,13 @@ class ReversalServiceImpl internal constructor(private val clientOptions: Client
         ReversalService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ReversalService.WithRawResponse =
+            ReversalServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<Reversal> =
             jsonHandler<Reversal>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

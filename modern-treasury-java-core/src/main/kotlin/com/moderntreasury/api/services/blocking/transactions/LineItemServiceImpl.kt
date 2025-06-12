@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.TransactionLineItemDeleteParams
 import com.moderntreasury.api.models.TransactionLineItemListPage
 import com.moderntreasury.api.models.TransactionLineItemListParams
 import com.moderntreasury.api.models.TransactionLineItemRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): LineItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService =
+        LineItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: TransactionLineItemCreateParams,
@@ -65,6 +69,13 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
         LineItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LineItemService.WithRawResponse =
+            LineItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionLineItem> =
             jsonHandler<TransactionLineItem>(clientOptions.jsonMapper)

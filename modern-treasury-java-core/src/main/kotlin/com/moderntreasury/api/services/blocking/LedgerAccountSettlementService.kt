@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccountSettlement
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.LedgerAccountSettlementListParams
 import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryService
+import java.util.function.Consumer
 
 interface LedgerAccountSettlementService {
 
@@ -19,6 +21,13 @@ interface LedgerAccountSettlementService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerAccountSettlementService
 
     fun accountEntries(): AccountEntryService
 
@@ -118,6 +127,15 @@ interface LedgerAccountSettlementService {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountSettlementService.WithRawResponse
 
         fun accountEntries(): AccountEntryService.WithRawResponse
 

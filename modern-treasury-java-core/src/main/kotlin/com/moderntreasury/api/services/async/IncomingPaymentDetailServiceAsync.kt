@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.AsyncResponse
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.IncomingPaymentDetailListParams
 import com.moderntreasury.api.models.IncomingPaymentDetailRetrieveParams
 import com.moderntreasury.api.models.IncomingPaymentDetailUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface IncomingPaymentDetailServiceAsync {
 
@@ -19,6 +21,13 @@ interface IncomingPaymentDetailServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): IncomingPaymentDetailServiceAsync
 
     /** Get an existing Incoming Payment Detail. */
     fun retrieve(id: String): CompletableFuture<IncomingPaymentDetail> =
@@ -139,6 +148,15 @@ interface IncomingPaymentDetailServiceAsync {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IncomingPaymentDetailServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /api/incoming_payment_details/{id}`, but is

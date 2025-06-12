@@ -21,6 +21,7 @@ import com.moderntreasury.api.models.ForeignExchangeQuoteCreateParams
 import com.moderntreasury.api.models.ForeignExchangeQuoteListPage
 import com.moderntreasury.api.models.ForeignExchangeQuoteListParams
 import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ForeignExchangeQuoteServiceImpl
@@ -31,6 +32,11 @@ internal constructor(private val clientOptions: ClientOptions) : ForeignExchange
     }
 
     override fun withRawResponse(): ForeignExchangeQuoteService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ForeignExchangeQuoteService =
+        ForeignExchangeQuoteServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ForeignExchangeQuoteCreateParams,
@@ -57,6 +63,13 @@ internal constructor(private val clientOptions: ClientOptions) : ForeignExchange
         ForeignExchangeQuoteService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ForeignExchangeQuoteService.WithRawResponse =
+            ForeignExchangeQuoteServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ForeignExchangeQuote> =
             jsonHandler<ForeignExchangeQuote>(clientOptions.jsonMapper)
