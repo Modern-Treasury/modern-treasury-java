@@ -28,6 +28,7 @@ import com.moderntreasury.api.models.ExternalAccountRetrieveParams
 import com.moderntreasury.api.models.ExternalAccountUpdateParams
 import com.moderntreasury.api.models.ExternalAccountVerifyParams
 import com.moderntreasury.api.models.ExternalAccountVerifyResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExternalAccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): ExternalAccountService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExternalAccountService =
+        ExternalAccountServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExternalAccountCreateParams,
@@ -90,6 +94,13 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
         ExternalAccountService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalAccountService.WithRawResponse =
+            ExternalAccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExternalAccount> =
             jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

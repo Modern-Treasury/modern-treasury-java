@@ -22,6 +22,7 @@ import com.moderntreasury.api.models.ForeignExchangeQuoteListPageAsync
 import com.moderntreasury.api.models.ForeignExchangeQuoteListParams
 import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ForeignExchangeQuoteServiceAsyncImpl
@@ -33,6 +34,13 @@ internal constructor(private val clientOptions: ClientOptions) : ForeignExchange
 
     override fun withRawResponse(): ForeignExchangeQuoteServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ForeignExchangeQuoteServiceAsync =
+        ForeignExchangeQuoteServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: ForeignExchangeQuoteCreateParams,
@@ -59,6 +67,13 @@ internal constructor(private val clientOptions: ClientOptions) : ForeignExchange
         ForeignExchangeQuoteServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ForeignExchangeQuoteServiceAsync.WithRawResponse =
+            ForeignExchangeQuoteServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ForeignExchangeQuote> =
             jsonHandler<ForeignExchangeQuote>(clientOptions.jsonMapper)

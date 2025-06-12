@@ -25,6 +25,7 @@ import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServiceAsync
 import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InternalAccountServiceAsyncImpl
@@ -39,6 +40,11 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
     }
 
     override fun withRawResponse(): InternalAccountServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): InternalAccountServiceAsync =
+        InternalAccountServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun balanceReports(): BalanceReportServiceAsync = balanceReports
 
@@ -78,6 +84,13 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         private val balanceReports: BalanceReportServiceAsync.WithRawResponse by lazy {
             BalanceReportServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InternalAccountServiceAsync.WithRawResponse =
+            InternalAccountServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun balanceReports(): BalanceReportServiceAsync.WithRawResponse = balanceReports
 

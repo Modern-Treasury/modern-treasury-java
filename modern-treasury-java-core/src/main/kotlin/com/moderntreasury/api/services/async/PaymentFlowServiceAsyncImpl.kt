@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.PaymentFlowListParams
 import com.moderntreasury.api.models.PaymentFlowRetrieveParams
 import com.moderntreasury.api.models.PaymentFlowUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): PaymentFlowServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentFlowServiceAsync =
+        PaymentFlowServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PaymentFlowCreateParams,
@@ -66,6 +70,13 @@ class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions
         PaymentFlowServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaymentFlowServiceAsync.WithRawResponse =
+            PaymentFlowServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PaymentFlow> =
             jsonHandler<PaymentFlow>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

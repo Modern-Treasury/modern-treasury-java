@@ -22,6 +22,7 @@ import com.moderntreasury.api.models.ReturnListParams
 import com.moderntreasury.api.models.ReturnObject
 import com.moderntreasury.api.models.ReturnRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ReturnServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,6 +33,9 @@ class ReturnServiceAsyncImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): ReturnServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReturnServiceAsync =
+        ReturnServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ReturnCreateParams,
@@ -58,6 +62,13 @@ class ReturnServiceAsyncImpl internal constructor(private val clientOptions: Cli
         ReturnServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ReturnServiceAsync.WithRawResponse =
+            ReturnServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ReturnObject> =
             jsonHandler<ReturnObject>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

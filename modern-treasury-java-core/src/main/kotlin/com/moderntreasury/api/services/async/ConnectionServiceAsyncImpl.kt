@@ -18,6 +18,7 @@ import com.moderntreasury.api.models.Connection
 import com.moderntreasury.api.models.ConnectionListPageAsync
 import com.moderntreasury.api.models.ConnectionListParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class ConnectionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ConnectionServiceAsync {
@@ -27,6 +28,9 @@ class ConnectionServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): ConnectionServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ConnectionServiceAsync =
+        ConnectionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun list(
         params: ConnectionListParams,
@@ -39,6 +43,13 @@ class ConnectionServiceAsyncImpl internal constructor(private val clientOptions:
         ConnectionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ConnectionServiceAsync.WithRawResponse =
+            ConnectionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val listHandler: Handler<List<Connection>> =
             jsonHandler<List<Connection>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

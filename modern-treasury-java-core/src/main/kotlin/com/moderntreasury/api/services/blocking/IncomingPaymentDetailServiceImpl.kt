@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.IncomingPaymentDetailListPage
 import com.moderntreasury.api.models.IncomingPaymentDetailListParams
 import com.moderntreasury.api.models.IncomingPaymentDetailRetrieveParams
 import com.moderntreasury.api.models.IncomingPaymentDetailUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class IncomingPaymentDetailServiceImpl
@@ -33,6 +34,11 @@ internal constructor(private val clientOptions: ClientOptions) : IncomingPayment
     }
 
     override fun withRawResponse(): IncomingPaymentDetailService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): IncomingPaymentDetailService =
+        IncomingPaymentDetailServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: IncomingPaymentDetailRetrieveParams,
@@ -66,6 +72,13 @@ internal constructor(private val clientOptions: ClientOptions) : IncomingPayment
         IncomingPaymentDetailService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IncomingPaymentDetailService.WithRawResponse =
+            IncomingPaymentDetailServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<IncomingPaymentDetail> =
             jsonHandler<IncomingPaymentDetail>(clientOptions.jsonMapper)

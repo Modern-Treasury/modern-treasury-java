@@ -29,6 +29,7 @@ import com.moderntreasury.api.models.ExternalAccountUpdateParams
 import com.moderntreasury.api.models.ExternalAccountVerifyParams
 import com.moderntreasury.api.models.ExternalAccountVerifyResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExternalAccountServiceAsyncImpl
@@ -39,6 +40,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalAccount
     }
 
     override fun withRawResponse(): ExternalAccountServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ExternalAccountServiceAsync =
+        ExternalAccountServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExternalAccountCreateParams,
@@ -93,6 +99,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalAccount
         ExternalAccountServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalAccountServiceAsync.WithRawResponse =
+            ExternalAccountServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExternalAccount> =
             jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -23,6 +23,7 @@ import com.moderntreasury.api.models.InvoiceLineItemListPage
 import com.moderntreasury.api.models.InvoiceLineItemListParams
 import com.moderntreasury.api.models.InvoiceLineItemRetrieveParams
 import com.moderntreasury.api.models.InvoiceLineItemUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): LineItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService =
+        LineItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: InvoiceLineItemCreateParams,
@@ -73,6 +77,13 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
         LineItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LineItemService.WithRawResponse =
+            LineItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<InvoiceLineItem> =
             jsonHandler<InvoiceLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

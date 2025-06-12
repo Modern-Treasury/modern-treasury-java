@@ -21,6 +21,7 @@ import com.moderntreasury.api.models.PaymentReferenceListParams
 import com.moderntreasury.api.models.PaymentReferenceRetireveParams
 import com.moderntreasury.api.models.PaymentReferenceRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PaymentReferenceServiceAsyncImpl
@@ -31,6 +32,11 @@ internal constructor(private val clientOptions: ClientOptions) : PaymentReferenc
     }
 
     override fun withRawResponse(): PaymentReferenceServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): PaymentReferenceServiceAsync =
+        PaymentReferenceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: PaymentReferenceRetrieveParams,
@@ -58,6 +64,13 @@ internal constructor(private val clientOptions: ClientOptions) : PaymentReferenc
         PaymentReferenceServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaymentReferenceServiceAsync.WithRawResponse =
+            PaymentReferenceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<PaymentReference> =
             jsonHandler<PaymentReference>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

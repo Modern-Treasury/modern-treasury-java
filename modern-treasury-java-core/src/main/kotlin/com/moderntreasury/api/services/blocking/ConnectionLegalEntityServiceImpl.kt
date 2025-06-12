@@ -22,6 +22,7 @@ import com.moderntreasury.api.models.ConnectionLegalEntityListPage
 import com.moderntreasury.api.models.ConnectionLegalEntityListParams
 import com.moderntreasury.api.models.ConnectionLegalEntityRetrieveParams
 import com.moderntreasury.api.models.ConnectionLegalEntityUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ConnectionLegalEntityServiceImpl
@@ -32,6 +33,11 @@ internal constructor(private val clientOptions: ClientOptions) : ConnectionLegal
     }
 
     override fun withRawResponse(): ConnectionLegalEntityService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ConnectionLegalEntityService =
+        ConnectionLegalEntityServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ConnectionLegalEntityCreateParams,
@@ -65,6 +71,13 @@ internal constructor(private val clientOptions: ClientOptions) : ConnectionLegal
         ConnectionLegalEntityService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ConnectionLegalEntityService.WithRawResponse =
+            ConnectionLegalEntityServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ConnectionLegalEntity> =
             jsonHandler<ConnectionLegalEntity>(clientOptions.jsonMapper)

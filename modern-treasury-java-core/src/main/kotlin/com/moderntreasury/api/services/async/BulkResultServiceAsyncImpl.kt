@@ -20,6 +20,7 @@ import com.moderntreasury.api.models.BulkResultListPageAsync
 import com.moderntreasury.api.models.BulkResultListParams
 import com.moderntreasury.api.models.BulkResultRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BulkResultServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -30,6 +31,9 @@ class BulkResultServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): BulkResultServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BulkResultServiceAsync =
+        BulkResultServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BulkResultRetrieveParams,
@@ -49,6 +53,13 @@ class BulkResultServiceAsyncImpl internal constructor(private val clientOptions:
         BulkResultServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BulkResultServiceAsync.WithRawResponse =
+            BulkResultServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<BulkResult> =
             jsonHandler<BulkResult>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

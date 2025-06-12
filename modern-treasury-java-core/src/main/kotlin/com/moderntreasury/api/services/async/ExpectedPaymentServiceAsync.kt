@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ExpectedPayment
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.ExpectedPaymentListParams
 import com.moderntreasury.api.models.ExpectedPaymentRetrieveParams
 import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface ExpectedPaymentServiceAsync {
 
@@ -19,6 +21,13 @@ interface ExpectedPaymentServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExpectedPaymentServiceAsync
 
     /** create expected payment */
     fun create(): CompletableFuture<ExpectedPayment> = create(ExpectedPaymentCreateParams.none())
@@ -158,6 +167,15 @@ interface ExpectedPaymentServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExpectedPaymentServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/expected_payments`, but is otherwise the same

@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ConnectionLegalEntity
@@ -11,6 +12,7 @@ import com.moderntreasury.api.models.ConnectionLegalEntityListParams
 import com.moderntreasury.api.models.ConnectionLegalEntityRetrieveParams
 import com.moderntreasury.api.models.ConnectionLegalEntityUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface ConnectionLegalEntityServiceAsync {
 
@@ -18,6 +20,13 @@ interface ConnectionLegalEntityServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ConnectionLegalEntityServiceAsync
 
     /** Create a connection legal entity. */
     fun create(
@@ -128,6 +137,15 @@ interface ConnectionLegalEntityServiceAsync {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ConnectionLegalEntityServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/connection_legal_entities`, but is otherwise

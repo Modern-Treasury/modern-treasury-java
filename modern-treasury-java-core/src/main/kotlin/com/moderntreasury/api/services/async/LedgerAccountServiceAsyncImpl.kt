@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.LedgerAccountListParams
 import com.moderntreasury.api.models.LedgerAccountRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class LedgerAccountServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): LedgerAccountServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerAccountServiceAsync =
+        LedgerAccountServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: LedgerAccountCreateParams,
@@ -74,6 +78,13 @@ class LedgerAccountServiceAsyncImpl internal constructor(private val clientOptio
         LedgerAccountServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountServiceAsync.WithRawResponse =
+            LedgerAccountServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<LedgerAccount> =
             jsonHandler<LedgerAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

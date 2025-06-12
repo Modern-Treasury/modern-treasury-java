@@ -2,6 +2,7 @@
 
 package com.moderntreasury.api.services.async
 
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccountSettlement
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.LedgerAccountSettlementRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountSettlementUpdateParams
 import com.moderntreasury.api.services.async.ledgerAccountSettlements.AccountEntryServiceAsync
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface LedgerAccountSettlementServiceAsync {
 
@@ -19,6 +21,13 @@ interface LedgerAccountSettlementServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerAccountSettlementServiceAsync
 
     fun accountEntries(): AccountEntryServiceAsync
 
@@ -132,6 +141,15 @@ interface LedgerAccountSettlementServiceAsync {
      * for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountSettlementServiceAsync.WithRawResponse
 
         fun accountEntries(): AccountEntryServiceAsync.WithRawResponse
 

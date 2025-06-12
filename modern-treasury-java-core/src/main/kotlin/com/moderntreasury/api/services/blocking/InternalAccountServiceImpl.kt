@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportService
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InternalAccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class InternalAccountServiceImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): InternalAccountService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): InternalAccountService =
+        InternalAccountServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun balanceReports(): BalanceReportService = balanceReports
 
@@ -77,6 +81,13 @@ class InternalAccountServiceImpl internal constructor(private val clientOptions:
         private val balanceReports: BalanceReportService.WithRawResponse by lazy {
             BalanceReportServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InternalAccountService.WithRawResponse =
+            InternalAccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun balanceReports(): BalanceReportService.WithRawResponse = balanceReports
 

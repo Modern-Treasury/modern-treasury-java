@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.PaymentActionCreateParams
@@ -13,6 +14,7 @@ import com.moderntreasury.api.models.PaymentActionRetrieveParams
 import com.moderntreasury.api.models.PaymentActionRetrieveResponse
 import com.moderntreasury.api.models.PaymentActionUpdateParams
 import com.moderntreasury.api.models.PaymentActionUpdateResponse
+import java.util.function.Consumer
 
 interface PaymentActionService {
 
@@ -20,6 +22,13 @@ interface PaymentActionService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentActionService
 
     /** Create a payment action. */
     fun create(params: PaymentActionCreateParams): PaymentActionCreateResponse =
@@ -105,6 +114,15 @@ interface PaymentActionService {
      * A view of [PaymentActionService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaymentActionService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/payment_actions`, but is otherwise the same as

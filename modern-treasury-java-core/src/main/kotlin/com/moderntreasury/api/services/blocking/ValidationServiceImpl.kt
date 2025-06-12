@@ -16,6 +16,7 @@ import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.models.RoutingNumberLookupRequest
 import com.moderntreasury.api.models.ValidationValidateRoutingNumberParams
+import java.util.function.Consumer
 
 class ValidationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ValidationService {
@@ -25,6 +26,9 @@ class ValidationServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): ValidationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ValidationService =
+        ValidationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
@@ -37,6 +41,13 @@ class ValidationServiceImpl internal constructor(private val clientOptions: Clie
         ValidationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ValidationService.WithRawResponse =
+            ValidationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val validateRoutingNumberHandler: Handler<RoutingNumberLookupRequest> =
             jsonHandler<RoutingNumberLookupRequest>(clientOptions.jsonMapper)

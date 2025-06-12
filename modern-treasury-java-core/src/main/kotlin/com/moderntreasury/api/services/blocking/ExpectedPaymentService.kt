@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ExpectedPayment
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.ExpectedPaymentListPage
 import com.moderntreasury.api.models.ExpectedPaymentListParams
 import com.moderntreasury.api.models.ExpectedPaymentRetrieveParams
 import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
+import java.util.function.Consumer
 
 interface ExpectedPaymentService {
 
@@ -19,6 +21,13 @@ interface ExpectedPaymentService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExpectedPaymentService
 
     /** create expected payment */
     fun create(): ExpectedPayment = create(ExpectedPaymentCreateParams.none())
@@ -151,6 +160,15 @@ interface ExpectedPaymentService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExpectedPaymentService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/expected_payments`, but is otherwise the same

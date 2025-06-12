@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ForeignExchangeQuote
@@ -10,6 +11,7 @@ import com.moderntreasury.api.models.ForeignExchangeQuoteCreateParams
 import com.moderntreasury.api.models.ForeignExchangeQuoteListPage
 import com.moderntreasury.api.models.ForeignExchangeQuoteListParams
 import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
+import java.util.function.Consumer
 
 interface ForeignExchangeQuoteService {
 
@@ -17,6 +19,13 @@ interface ForeignExchangeQuoteService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ForeignExchangeQuoteService
 
     /** create foreign_exchange_quote */
     fun create(params: ForeignExchangeQuoteCreateParams): ForeignExchangeQuote =
@@ -82,6 +91,15 @@ interface ForeignExchangeQuoteService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ForeignExchangeQuoteService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/foreign_exchange_quotes`, but is otherwise the

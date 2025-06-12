@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccount
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.LedgerAccountListPage
 import com.moderntreasury.api.models.LedgerAccountListParams
 import com.moderntreasury.api.models.LedgerAccountRetrieveParams
 import com.moderntreasury.api.models.LedgerAccountUpdateParams
+import java.util.function.Consumer
 
 interface LedgerAccountService {
 
@@ -19,6 +21,13 @@ interface LedgerAccountService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerAccountService
 
     /** Create a ledger account. */
     fun create(params: LedgerAccountCreateParams): LedgerAccount =
@@ -142,6 +151,15 @@ interface LedgerAccountService {
      * A view of [LedgerAccountService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerAccountService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/ledger_accounts`, but is otherwise the same as

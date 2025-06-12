@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking.internalAccounts
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -12,6 +13,7 @@ import com.moderntreasury.api.models.BalanceReportDeleteParams
 import com.moderntreasury.api.models.BalanceReportListPage
 import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
+import java.util.function.Consumer
 
 interface BalanceReportService {
 
@@ -19,6 +21,13 @@ interface BalanceReportService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceReportService
 
     /** create balance reports */
     fun create(internalAccountId: String, params: BalanceReportCreateParams): BalanceReport =
@@ -121,6 +130,15 @@ interface BalanceReportService {
      * A view of [BalanceReportService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceReportService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post

@@ -27,6 +27,7 @@ import com.moderntreasury.api.models.PaymentOrderRetrieveParams
 import com.moderntreasury.api.models.PaymentOrderUpdateParams
 import com.moderntreasury.api.services.blocking.paymentOrders.ReversalService
 import com.moderntreasury.api.services.blocking.paymentOrders.ReversalServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PaymentOrderServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -39,6 +40,9 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
     private val reversals: ReversalService by lazy { ReversalServiceImpl(clientOptions) }
 
     override fun withRawResponse(): PaymentOrderService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentOrderService =
+        PaymentOrderServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun reversals(): ReversalService = reversals
 
@@ -85,6 +89,13 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         private val reversals: ReversalService.WithRawResponse by lazy {
             ReversalServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PaymentOrderService.WithRawResponse =
+            PaymentOrderServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun reversals(): ReversalService.WithRawResponse = reversals
 

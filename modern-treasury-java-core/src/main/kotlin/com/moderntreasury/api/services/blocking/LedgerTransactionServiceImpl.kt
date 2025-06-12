@@ -26,6 +26,7 @@ import com.moderntreasury.api.models.LedgerTransactionRetrieveParams
 import com.moderntreasury.api.models.LedgerTransactionUpdateParams
 import com.moderntreasury.api.services.blocking.ledgerTransactions.VersionService
 import com.moderntreasury.api.services.blocking.ledgerTransactions.VersionServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class LedgerTransactionServiceImpl internal constructor(private val clientOption
     private val versions: VersionService by lazy { VersionServiceImpl(clientOptions) }
 
     override fun withRawResponse(): LedgerTransactionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LedgerTransactionService =
+        LedgerTransactionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun versions(): VersionService = versions
 
@@ -91,6 +95,13 @@ class LedgerTransactionServiceImpl internal constructor(private val clientOption
         private val versions: VersionService.WithRawResponse by lazy {
             VersionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LedgerTransactionService.WithRawResponse =
+            LedgerTransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun versions(): VersionService.WithRawResponse = versions
 

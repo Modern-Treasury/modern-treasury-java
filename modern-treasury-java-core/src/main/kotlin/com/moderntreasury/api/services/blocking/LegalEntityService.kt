@@ -3,6 +3,7 @@
 package com.moderntreasury.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LegalEntity
@@ -11,6 +12,7 @@ import com.moderntreasury.api.models.LegalEntityListPage
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
 import com.moderntreasury.api.models.LegalEntityUpdateParams
+import java.util.function.Consumer
 
 interface LegalEntityService {
 
@@ -18,6 +20,13 @@ interface LegalEntityService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityService
 
     /** create legal_entity */
     fun create(params: LegalEntityCreateParams): LegalEntity = create(params, RequestOptions.none())
@@ -108,6 +117,15 @@ interface LegalEntityService {
      * A view of [LegalEntityService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LegalEntityService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /api/legal_entities`, but is otherwise the same as

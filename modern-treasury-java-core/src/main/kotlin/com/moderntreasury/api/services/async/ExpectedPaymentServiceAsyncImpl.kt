@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.ExpectedPaymentListParams
 import com.moderntreasury.api.models.ExpectedPaymentRetrieveParams
 import com.moderntreasury.api.models.ExpectedPaymentUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExpectedPaymentServiceAsyncImpl
@@ -34,6 +35,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExpectedPayment
     }
 
     override fun withRawResponse(): ExpectedPaymentServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ExpectedPaymentServiceAsync =
+        ExpectedPaymentServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExpectedPaymentCreateParams,
@@ -74,6 +80,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExpectedPayment
         ExpectedPaymentServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExpectedPaymentServiceAsync.WithRawResponse =
+            ExpectedPaymentServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExpectedPayment> =
             jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -19,6 +19,7 @@ import com.moderntreasury.api.models.Event
 import com.moderntreasury.api.models.EventListPage
 import com.moderntreasury.api.models.EventListParams
 import com.moderntreasury.api.models.EventRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -29,6 +30,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
     }
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService =
+        EventServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(params: EventRetrieveParams, requestOptions: RequestOptions): Event =
         // get /api/events/{id}
@@ -42,6 +46,13 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
         EventService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): EventService.WithRawResponse =
+            EventServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<Event> =
             jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

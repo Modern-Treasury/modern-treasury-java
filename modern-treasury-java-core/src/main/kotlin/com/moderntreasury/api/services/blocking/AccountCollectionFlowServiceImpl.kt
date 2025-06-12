@@ -22,6 +22,7 @@ import com.moderntreasury.api.models.AccountCollectionFlowListPage
 import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
 import com.moderntreasury.api.models.AccountCollectionFlowUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountCollectionFlowServiceImpl
@@ -32,6 +33,11 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
     }
 
     override fun withRawResponse(): AccountCollectionFlowService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): AccountCollectionFlowService =
+        AccountCollectionFlowServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: AccountCollectionFlowCreateParams,
@@ -65,6 +71,13 @@ internal constructor(private val clientOptions: ClientOptions) : AccountCollecti
         AccountCollectionFlowService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountCollectionFlowService.WithRawResponse =
+            AccountCollectionFlowServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountCollectionFlow> =
             jsonHandler<AccountCollectionFlow>(clientOptions.jsonMapper)

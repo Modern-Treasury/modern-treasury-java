@@ -24,6 +24,7 @@ import com.moderntreasury.api.models.BalanceReportDeleteParams
 import com.moderntreasury.api.models.BalanceReportListPage
 import com.moderntreasury.api.models.BalanceReportListParams
 import com.moderntreasury.api.models.BalanceReportRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BalanceReportServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class BalanceReportServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): BalanceReportService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceReportService =
+        BalanceReportServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BalanceReportCreateParams,
@@ -65,6 +69,13 @@ class BalanceReportServiceImpl internal constructor(private val clientOptions: C
         BalanceReportService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceReportService.WithRawResponse =
+            BalanceReportServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<BalanceReport> =
             jsonHandler<BalanceReport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
