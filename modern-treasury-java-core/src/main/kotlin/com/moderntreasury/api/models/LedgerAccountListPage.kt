@@ -20,10 +20,11 @@ private constructor(
     private val items: List<LedgerAccount>,
 ) : Page<LedgerAccount> {
 
-    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
+    fun perPage(): Optional<String> =
+        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("after_cursor").firstOrNull())
+        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
