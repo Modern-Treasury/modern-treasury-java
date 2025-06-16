@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.2.1 (2025-06-16)
+
+Full Changelog: [v7.2.0...v7.2.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.0...v7.2.1)
+
+### Bug Fixes
+
+* **client:** incorrect page response header names ([e142027](https://github.com/Modern-Treasury/modern-treasury-java/commit/e14202768dfe48337bb6f728018b6f6bf0c420fc))
+
 ## 7.2.0 (2025-06-16)
 
 Full Changelog: [v7.1.1...v7.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.1.1...v7.2.0)
