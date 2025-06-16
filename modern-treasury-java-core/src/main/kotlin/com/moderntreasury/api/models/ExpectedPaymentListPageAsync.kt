@@ -23,10 +23,11 @@ private constructor(
     private val items: List<ExpectedPayment>,
 ) : PageAsync<ExpectedPayment> {
 
-    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("per_page").firstOrNull())
+    fun perPage(): Optional<String> =
+        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
     fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("after_cursor").firstOrNull())
+        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
