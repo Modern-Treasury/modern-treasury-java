@@ -11,6 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
+import kotlin.jvm.optionals.getOrNull
 
 /** @see [VirtualAccountServiceAsync.list] */
 class VirtualAccountListPageAsync
@@ -27,10 +28,14 @@ private constructor(
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    override fun hasNextPage(): Boolean = items().isNotEmpty()
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
-    fun nextPageParams(): VirtualAccountListParams =
-        throw IllegalStateException("Cannot construct next page params")
+    fun nextPageParams(): VirtualAccountListParams {
+        val nextCursor =
+            afterCursor().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().afterCursor(nextCursor).build()
+    }
 
     override fun nextPage(): CompletableFuture<VirtualAccountListPageAsync> =
         service.list(nextPageParams())
