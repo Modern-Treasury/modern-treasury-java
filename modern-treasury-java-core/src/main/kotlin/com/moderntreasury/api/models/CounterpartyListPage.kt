@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.CounterpartyService
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** @see [CounterpartyService.list] */
 class CounterpartyListPage
@@ -24,10 +25,14 @@ private constructor(
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    override fun hasNextPage(): Boolean = items().isNotEmpty()
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
-    fun nextPageParams(): CounterpartyListParams =
-        throw IllegalStateException("Cannot construct next page params")
+    fun nextPageParams(): CounterpartyListParams {
+        val nextCursor =
+            afterCursor().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().afterCursor(nextCursor).build()
+    }
 
     override fun nextPage(): CounterpartyListPage = service.list(nextPageParams())
 

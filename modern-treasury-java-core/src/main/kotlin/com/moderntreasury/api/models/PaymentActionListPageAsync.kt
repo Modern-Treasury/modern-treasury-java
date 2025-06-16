@@ -11,6 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
+import kotlin.jvm.optionals.getOrNull
 
 /** @see [PaymentActionServiceAsync.list] */
 class PaymentActionListPageAsync
@@ -27,10 +28,14 @@ private constructor(
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    override fun hasNextPage(): Boolean = items().isNotEmpty()
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
-    fun nextPageParams(): PaymentActionListParams =
-        throw IllegalStateException("Cannot construct next page params")
+    fun nextPageParams(): PaymentActionListParams {
+        val nextCursor =
+            afterCursor().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().afterCursor(nextCursor).build()
+    }
 
     override fun nextPage(): CompletableFuture<PaymentActionListPageAsync> =
         service.list(nextPageParams())

@@ -9,6 +9,7 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.services.blocking.LedgerAccountBalanceMonitorService
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** @see [LedgerAccountBalanceMonitorService.list] */
 class LedgerAccountBalanceMonitorListPage
@@ -24,10 +25,14 @@ private constructor(
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("after_cursor").firstOrNull())
 
-    override fun hasNextPage(): Boolean = items().isNotEmpty()
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
 
-    fun nextPageParams(): LedgerAccountBalanceMonitorListParams =
-        throw IllegalStateException("Cannot construct next page params")
+    fun nextPageParams(): LedgerAccountBalanceMonitorListParams {
+        val nextCursor =
+            afterCursor().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().afterCursor(nextCursor).build()
+    }
 
     override fun nextPage(): LedgerAccountBalanceMonitorListPage = service.list(nextPageParams())
 
