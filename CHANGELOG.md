@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.2.0 (2025-06-16)
+
+Full Changelog: [v7.1.1...v7.2.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.1.1...v7.2.0)
+
+### Features
+
+* **api:** api update ([564a5bb](https://github.com/Modern-Treasury/modern-treasury-java/commit/564a5bb2779cd71e8a5e3129792adc5e490c3b69))
+* **api:** api update ([482933f](https://github.com/Modern-Treasury/modern-treasury-java/commit/482933f54190e74553e451e9b84604c4a13db328))
+* **client:** add a `withOptions` method ([90fac4c](https://github.com/Modern-Treasury/modern-treasury-java/commit/90fac4c65c6f0f3db2faf5abc99bf770488bc99a))
+* **client:** implement per-endpoint base URL support ([cb4fbd8](https://github.com/Modern-Treasury/modern-treasury-java/commit/cb4fbd8f03387c28c63c5e17bbab04611c813fc4))
+
+
+### Bug Fixes
+
+* **client:** header pagination bug ([1f4c7c5](https://github.com/Modern-Treasury/modern-treasury-java/commit/1f4c7c525858a2c5fd438a41a3193d202e92d38f))
+* **client:** linting ([21379ce](https://github.com/Modern-Treasury/modern-treasury-java/commit/21379ce3fd721a8e0dd18e9072f53be88444a103))
+* **tests:** fix test value ([15e789f](https://github.com/Modern-Treasury/modern-treasury-java/commit/15e789f01faa3062cc5b9d8881d509d8547bf583))
+
 ## 7.1.1 (2025-05-29)
 
 Full Changelog: [v7.1.0...v7.1.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.1.0...v7.1.1)
