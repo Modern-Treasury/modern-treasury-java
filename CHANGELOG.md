@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.2.2 (2025-06-17)
+
+Full Changelog: [v7.2.1...v7.2.2](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.1...v7.2.2)
+
+### Chores
+
+* **ci:** enable for pull requests ([82124d0](https://github.com/Modern-Treasury/modern-treasury-java/commit/82124d011ac3ee26f31df1e4394caed473944491))
+
 ## 7.2.1 (2025-06-16)
 
 Full Changelog: [v7.2.0...v7.2.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.0...v7.2.1)
