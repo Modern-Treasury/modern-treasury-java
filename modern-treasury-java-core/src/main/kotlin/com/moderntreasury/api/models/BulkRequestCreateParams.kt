@@ -1896,9 +1896,9 @@ private constructor(
                 accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
             /**
-             * The party that will pay the fees for the payment order. Only applies to wire payment
-             * orders. Can be one of shared, sender, or receiver, which correspond respectively with
-             * the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+             * The party that will pay the fees for the payment order. See
+             * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+             * differences between the options.
              *
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
@@ -2778,9 +2778,9 @@ private constructor(
                 }
 
                 /**
-                 * The party that will pay the fees for the payment order. Only applies to wire
-                 * payment orders. Can be one of shared, sender, or receiver, which correspond
-                 * respectively with the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+                 * The party that will pay the fees for the payment order. See
+                 * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+                 * differences between the options.
                  */
                 fun chargeBearer(chargeBearer: ChargeBearer?) =
                     chargeBearer(JsonField.ofNullable(chargeBearer))
@@ -3919,9 +3919,9 @@ private constructor(
             }
 
             /**
-             * The party that will pay the fees for the payment order. Only applies to wire payment
-             * orders. Can be one of shared, sender, or receiver, which correspond respectively with
-             * the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+             * The party that will pay the fees for the payment order. See
+             * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+             * differences between the options.
              */
             class ChargeBearer
             @JsonCreator
@@ -10399,6 +10399,8 @@ private constructor(
 
                             @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
 
+                            @JvmField val IL_BANK_CODE = of("il_bank_code")
+
                             @JvmField val IN_IFSC = of("in_ifsc")
 
                             @JvmField val JP_ZENGIN_CODE = of("jp_zengin_code")
@@ -10441,6 +10443,7 @@ private constructor(
                             HK_INTERBANK_CLEARING_CODE,
                             HU_INTERBANK_CLEARING_CODE,
                             ID_SKNBI_CODE,
+                            IL_BANK_CODE,
                             IN_IFSC,
                             JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
@@ -10476,6 +10479,7 @@ private constructor(
                             HK_INTERBANK_CLEARING_CODE,
                             HU_INTERBANK_CLEARING_CODE,
                             ID_SKNBI_CODE,
+                            IL_BANK_CODE,
                             IN_IFSC,
                             JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
@@ -10513,6 +10517,7 @@ private constructor(
                                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                                 HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                                 ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
+                                IL_BANK_CODE -> Value.IL_BANK_CODE
                                 IN_IFSC -> Value.IN_IFSC
                                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
@@ -10548,6 +10553,7 @@ private constructor(
                                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                                 HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                                 ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
+                                IL_BANK_CODE -> Known.IL_BANK_CODE
                                 IN_IFSC -> Known.IN_IFSC
                                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE
@@ -17819,6 +17825,7 @@ private constructor(
             private val metadata: JsonField<Metadata>,
             private val posted: JsonField<Boolean>,
             private val type: JsonField<Type>,
+            private val vendorCustomerId: JsonField<String>,
             private val vendorDescription: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -17848,6 +17855,9 @@ private constructor(
                 @ExcludeMissing
                 posted: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+                @JsonProperty("vendor_customer_id")
+                @ExcludeMissing
+                vendorCustomerId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("vendor_description")
                 @ExcludeMissing
                 vendorDescription: JsonField<String> = JsonMissing.of(),
@@ -17861,6 +17871,7 @@ private constructor(
                 metadata,
                 posted,
                 type,
+                vendorCustomerId,
                 vendorDescription,
                 mutableMapOf(),
             )
@@ -17945,6 +17956,15 @@ private constructor(
              *   (e.g. if the server responded with an unexpected value).
              */
             fun type(): Optional<Type> = type.getOptional("type")
+
+            /**
+             * An identifier given to this transaction by the bank, often `null`.
+             *
+             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun vendorCustomerId(): Optional<String> =
+                vendorCustomerId.getOptional("vendor_customer_id")
 
             /**
              * The transaction detail text that often appears in on your bank statement and in your
@@ -18038,6 +18058,16 @@ private constructor(
             @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             /**
+             * Returns the raw JSON value of [vendorCustomerId].
+             *
+             * Unlike [vendorCustomerId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("vendor_customer_id")
+            @ExcludeMissing
+            fun _vendorCustomerId(): JsonField<String> = vendorCustomerId
+
+            /**
              * Returns the raw JSON value of [vendorDescription].
              *
              * Unlike [vendorDescription], this method doesn't throw if the JSON field has an
@@ -18090,6 +18120,7 @@ private constructor(
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var posted: JsonField<Boolean> = JsonMissing.of()
                 private var type: JsonField<Type> = JsonMissing.of()
+                private var vendorCustomerId: JsonField<String> = JsonMissing.of()
                 private var vendorDescription: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -18104,6 +18135,7 @@ private constructor(
                     metadata = transactionCreateRequest.metadata
                     posted = transactionCreateRequest.posted
                     type = transactionCreateRequest.type
+                    vendorCustomerId = transactionCreateRequest.vendorCustomerId
                     vendorDescription = transactionCreateRequest.vendorDescription
                     additionalProperties =
                         transactionCreateRequest.additionalProperties.toMutableMap()
@@ -18257,6 +18289,28 @@ private constructor(
                  */
                 fun type(type: JsonField<Type>) = apply { this.type = type }
 
+                /** An identifier given to this transaction by the bank, often `null`. */
+                fun vendorCustomerId(vendorCustomerId: String?) =
+                    vendorCustomerId(JsonField.ofNullable(vendorCustomerId))
+
+                /**
+                 * Alias for calling [Builder.vendorCustomerId] with
+                 * `vendorCustomerId.orElse(null)`.
+                 */
+                fun vendorCustomerId(vendorCustomerId: Optional<String>) =
+                    vendorCustomerId(vendorCustomerId.getOrNull())
+
+                /**
+                 * Sets [Builder.vendorCustomerId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.vendorCustomerId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {
+                    this.vendorCustomerId = vendorCustomerId
+                }
+
                 /**
                  * The transaction detail text that often appears in on your bank statement and in
                  * your banking portal.
@@ -18332,6 +18386,7 @@ private constructor(
                         metadata,
                         posted,
                         type,
+                        vendorCustomerId,
                         vendorDescription,
                         additionalProperties.toMutableMap(),
                     )
@@ -18353,6 +18408,7 @@ private constructor(
                 metadata().ifPresent { it.validate() }
                 posted()
                 type().ifPresent { it.validate() }
+                vendorCustomerId()
                 vendorDescription()
                 validated = true
             }
@@ -18382,6 +18438,7 @@ private constructor(
                     (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                     (if (posted.asKnown().isPresent) 1 else 0) +
                     (type.asKnown().getOrNull()?.validity() ?: 0) +
+                    (if (vendorCustomerId.asKnown().isPresent) 1 else 0) +
                     (if (vendorDescription.asKnown().isPresent) 1 else 0)
 
             /**
@@ -18831,17 +18888,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TransactionCreateRequest && amount == other.amount && asOfDate == other.asOfDate && direction == other.direction && internalAccountId == other.internalAccountId && vendorCode == other.vendorCode && vendorCodeType == other.vendorCodeType && metadata == other.metadata && posted == other.posted && type == other.type && vendorDescription == other.vendorDescription && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TransactionCreateRequest && amount == other.amount && asOfDate == other.asOfDate && direction == other.direction && internalAccountId == other.internalAccountId && vendorCode == other.vendorCode && vendorCodeType == other.vendorCodeType && metadata == other.metadata && posted == other.posted && type == other.type && vendorCustomerId == other.vendorCustomerId && vendorDescription == other.vendorDescription && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, direction, internalAccountId, vendorCode, vendorCodeType, metadata, posted, type, vendorDescription, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, direction, internalAccountId, vendorCode, vendorCodeType, metadata, posted, type, vendorCustomerId, vendorDescription, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
+                "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorCustomerId=$vendorCustomerId, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
         }
 
         class Id
@@ -19209,9 +19266,9 @@ private constructor(
             fun amount(): Optional<Long> = amount.getOptional("amount")
 
             /**
-             * The party that will pay the fees for the payment order. Only applies to wire payment
-             * orders. Can be one of shared, sender, or receiver, which correspond respectively with
-             * the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+             * The party that will pay the fees for the payment order. See
+             * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+             * differences between the options.
              *
              * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
@@ -20059,9 +20116,9 @@ private constructor(
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
                 /**
-                 * The party that will pay the fees for the payment order. Only applies to wire
-                 * payment orders. Can be one of shared, sender, or receiver, which correspond
-                 * respectively with the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+                 * The party that will pay the fees for the payment order. See
+                 * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+                 * differences between the options.
                  */
                 fun chargeBearer(chargeBearer: ChargeBearer?) =
                     chargeBearer(JsonField.ofNullable(chargeBearer))
@@ -21096,9 +21153,9 @@ private constructor(
             }
 
             /**
-             * The party that will pay the fees for the payment order. Only applies to wire payment
-             * orders. Can be one of shared, sender, or receiver, which correspond respectively with
-             * the SWIFT 71A values `SHA`, `OUR`, `BEN`.
+             * The party that will pay the fees for the payment order. See
+             * https://docs.moderntreasury.com/payments/docs/charge-bearer to understand the
+             * differences between the options.
              */
             class ChargeBearer
             @JsonCreator
@@ -25591,6 +25648,8 @@ private constructor(
 
                             @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
 
+                            @JvmField val IL_BANK_CODE = of("il_bank_code")
+
                             @JvmField val IN_IFSC = of("in_ifsc")
 
                             @JvmField val JP_ZENGIN_CODE = of("jp_zengin_code")
@@ -25633,6 +25692,7 @@ private constructor(
                             HK_INTERBANK_CLEARING_CODE,
                             HU_INTERBANK_CLEARING_CODE,
                             ID_SKNBI_CODE,
+                            IL_BANK_CODE,
                             IN_IFSC,
                             JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
@@ -25668,6 +25728,7 @@ private constructor(
                             HK_INTERBANK_CLEARING_CODE,
                             HU_INTERBANK_CLEARING_CODE,
                             ID_SKNBI_CODE,
+                            IL_BANK_CODE,
                             IN_IFSC,
                             JP_ZENGIN_CODE,
                             MY_BRANCH_CODE,
@@ -25705,6 +25766,7 @@ private constructor(
                                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                                 HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                                 ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
+                                IL_BANK_CODE -> Value.IL_BANK_CODE
                                 IN_IFSC -> Value.IN_IFSC
                                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Value.MY_BRANCH_CODE
@@ -25740,6 +25802,7 @@ private constructor(
                                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                                 HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                                 ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
+                                IL_BANK_CODE -> Known.IL_BANK_CODE
                                 IN_IFSC -> Known.IN_IFSC
                                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                                 MY_BRANCH_CODE -> Known.MY_BRANCH_CODE

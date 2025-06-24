@@ -108,6 +108,14 @@ private constructor(
     fun type(): Optional<Type> = body.type()
 
     /**
+     * An identifier given to this transaction by the bank, often `null`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun vendorCustomerId(): Optional<String> = body.vendorCustomerId()
+
+    /**
      * The transaction detail text that often appears in on your bank statement and in your banking
      * portal.
      *
@@ -179,6 +187,14 @@ private constructor(
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _type(): JsonField<Type> = body._type()
+
+    /**
+     * Returns the raw JSON value of [vendorCustomerId].
+     *
+     * Unlike [vendorCustomerId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _vendorCustomerId(): JsonField<String> = body._vendorCustomerId()
 
     /**
      * Returns the raw JSON value of [vendorDescription].
@@ -379,6 +395,26 @@ private constructor(
          */
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
+        /** An identifier given to this transaction by the bank, often `null`. */
+        fun vendorCustomerId(vendorCustomerId: String?) = apply {
+            body.vendorCustomerId(vendorCustomerId)
+        }
+
+        /** Alias for calling [Builder.vendorCustomerId] with `vendorCustomerId.orElse(null)`. */
+        fun vendorCustomerId(vendorCustomerId: Optional<String>) =
+            vendorCustomerId(vendorCustomerId.getOrNull())
+
+        /**
+         * Sets [Builder.vendorCustomerId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.vendorCustomerId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {
+            body.vendorCustomerId(vendorCustomerId)
+        }
+
         /**
          * The transaction detail text that often appears in on your bank statement and in your
          * banking portal.
@@ -561,6 +597,7 @@ private constructor(
         private val metadata: JsonField<Metadata>,
         private val posted: JsonField<Boolean>,
         private val type: JsonField<Type>,
+        private val vendorCustomerId: JsonField<String>,
         private val vendorDescription: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -588,6 +625,9 @@ private constructor(
             metadata: JsonField<Metadata> = JsonMissing.of(),
             @JsonProperty("posted") @ExcludeMissing posted: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("vendor_customer_id")
+            @ExcludeMissing
+            vendorCustomerId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("vendor_description")
             @ExcludeMissing
             vendorDescription: JsonField<String> = JsonMissing.of(),
@@ -601,6 +641,7 @@ private constructor(
             metadata,
             posted,
             type,
+            vendorCustomerId,
             vendorDescription,
             mutableMapOf(),
         )
@@ -681,6 +722,15 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun type(): Optional<Type> = type.getOptional("type")
+
+        /**
+         * An identifier given to this transaction by the bank, often `null`.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun vendorCustomerId(): Optional<String> =
+            vendorCustomerId.getOptional("vendor_customer_id")
 
         /**
          * The transaction detail text that often appears in on your bank statement and in your
@@ -764,6 +814,16 @@ private constructor(
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
+         * Returns the raw JSON value of [vendorCustomerId].
+         *
+         * Unlike [vendorCustomerId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("vendor_customer_id")
+        @ExcludeMissing
+        fun _vendorCustomerId(): JsonField<String> = vendorCustomerId
+
+        /**
          * Returns the raw JSON value of [vendorDescription].
          *
          * Unlike [vendorDescription], this method doesn't throw if the JSON field has an unexpected
@@ -815,6 +875,7 @@ private constructor(
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var posted: JsonField<Boolean> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
+            private var vendorCustomerId: JsonField<String> = JsonMissing.of()
             private var vendorDescription: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -829,6 +890,7 @@ private constructor(
                 metadata = transactionCreateRequest.metadata
                 posted = transactionCreateRequest.posted
                 type = transactionCreateRequest.type
+                vendorCustomerId = transactionCreateRequest.vendorCustomerId
                 vendorDescription = transactionCreateRequest.vendorDescription
                 additionalProperties = transactionCreateRequest.additionalProperties.toMutableMap()
             }
@@ -976,6 +1038,27 @@ private constructor(
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
+            /** An identifier given to this transaction by the bank, often `null`. */
+            fun vendorCustomerId(vendorCustomerId: String?) =
+                vendorCustomerId(JsonField.ofNullable(vendorCustomerId))
+
+            /**
+             * Alias for calling [Builder.vendorCustomerId] with `vendorCustomerId.orElse(null)`.
+             */
+            fun vendorCustomerId(vendorCustomerId: Optional<String>) =
+                vendorCustomerId(vendorCustomerId.getOrNull())
+
+            /**
+             * Sets [Builder.vendorCustomerId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.vendorCustomerId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {
+                this.vendorCustomerId = vendorCustomerId
+            }
+
             /**
              * The transaction detail text that often appears in on your bank statement and in your
              * banking portal.
@@ -1047,6 +1130,7 @@ private constructor(
                     metadata,
                     posted,
                     type,
+                    vendorCustomerId,
                     vendorDescription,
                     additionalProperties.toMutableMap(),
                 )
@@ -1068,6 +1152,7 @@ private constructor(
             metadata().ifPresent { it.validate() }
             posted()
             type().ifPresent { it.validate() }
+            vendorCustomerId()
             vendorDescription()
             validated = true
         }
@@ -1097,6 +1182,7 @@ private constructor(
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (posted.asKnown().isPresent) 1 else 0) +
                 (type.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (vendorCustomerId.asKnown().isPresent) 1 else 0) +
                 (if (vendorDescription.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
@@ -1104,17 +1190,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionCreateRequest && amount == other.amount && asOfDate == other.asOfDate && direction == other.direction && internalAccountId == other.internalAccountId && vendorCode == other.vendorCode && vendorCodeType == other.vendorCodeType && metadata == other.metadata && posted == other.posted && type == other.type && vendorDescription == other.vendorDescription && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TransactionCreateRequest && amount == other.amount && asOfDate == other.asOfDate && direction == other.direction && internalAccountId == other.internalAccountId && vendorCode == other.vendorCode && vendorCodeType == other.vendorCodeType && metadata == other.metadata && posted == other.posted && type == other.type && vendorCustomerId == other.vendorCustomerId && vendorDescription == other.vendorDescription && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, direction, internalAccountId, vendorCode, vendorCodeType, metadata, posted, type, vendorDescription, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, asOfDate, direction, internalAccountId, vendorCode, vendorCodeType, metadata, posted, type, vendorCustomerId, vendorDescription, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
+            "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorCustomerId=$vendorCustomerId, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
