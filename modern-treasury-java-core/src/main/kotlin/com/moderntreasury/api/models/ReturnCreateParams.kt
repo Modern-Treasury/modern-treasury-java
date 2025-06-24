@@ -63,6 +63,16 @@ private constructor(
      */
     fun code(): Optional<Code> = body.code()
 
+    /**
+     * Only relevant for ACH NOC returns. This is an object containing all of the new and corrected
+     * information provided by the bank that was previously incorrect on the original outgoing
+     * payment.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun corrections(): Optional<Corrections> = body.corrections()
+
     /** The raw data from the return file that we get from the bank. */
     fun _data(): JsonValue = body._data()
 
@@ -111,6 +121,13 @@ private constructor(
      * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _code(): JsonField<Code> = body._code()
+
+    /**
+     * Returns the raw JSON value of [corrections].
+     *
+     * Unlike [corrections], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _corrections(): JsonField<Corrections> = body._corrections()
 
     /**
      * Returns the raw JSON value of [dateOfDeath].
@@ -171,7 +188,7 @@ private constructor(
          * - [returnableType]
          * - [additionalInformation]
          * - [code]
-         * - [data]
+         * - [corrections]
          * - etc.
          */
         fun body(body: ReturnCreateRequest) = apply { this.body = body.toBuilder() }
@@ -250,6 +267,27 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<Code>) = apply { body.code(code) }
+
+        /**
+         * Only relevant for ACH NOC returns. This is an object containing all of the new and
+         * corrected information provided by the bank that was previously incorrect on the original
+         * outgoing payment.
+         */
+        fun corrections(corrections: Corrections?) = apply { body.corrections(corrections) }
+
+        /** Alias for calling [Builder.corrections] with `corrections.orElse(null)`. */
+        fun corrections(corrections: Optional<Corrections>) = corrections(corrections.getOrNull())
+
+        /**
+         * Sets [Builder.corrections] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.corrections] with a well-typed [Corrections] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun corrections(corrections: JsonField<Corrections>) = apply {
+            body.corrections(corrections)
+        }
 
         /** The raw data from the return file that we get from the bank. */
         fun data(data: JsonValue) = apply { body.data(data) }
@@ -439,6 +477,7 @@ private constructor(
         private val returnableType: JsonField<ReturnableType>,
         private val additionalInformation: JsonField<String>,
         private val code: JsonField<Code>,
+        private val corrections: JsonField<Corrections>,
         private val data: JsonValue,
         private val dateOfDeath: JsonField<LocalDate>,
         private val reason: JsonField<String>,
@@ -457,6 +496,9 @@ private constructor(
             @ExcludeMissing
             additionalInformation: JsonField<String> = JsonMissing.of(),
             @JsonProperty("code") @ExcludeMissing code: JsonField<Code> = JsonMissing.of(),
+            @JsonProperty("corrections")
+            @ExcludeMissing
+            corrections: JsonField<Corrections> = JsonMissing.of(),
             @JsonProperty("data") @ExcludeMissing data: JsonValue = JsonMissing.of(),
             @JsonProperty("date_of_death")
             @ExcludeMissing
@@ -467,6 +509,7 @@ private constructor(
             returnableType,
             additionalInformation,
             code,
+            corrections,
             data,
             dateOfDeath,
             reason,
@@ -506,6 +549,16 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun code(): Optional<Code> = code.getOptional("code")
+
+        /**
+         * Only relevant for ACH NOC returns. This is an object containing all of the new and
+         * corrected information provided by the bank that was previously incorrect on the original
+         * outgoing payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun corrections(): Optional<Corrections> = corrections.getOptional("corrections")
 
         /** The raw data from the return file that we get from the bank. */
         @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
@@ -566,6 +619,15 @@ private constructor(
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<Code> = code
 
         /**
+         * Returns the raw JSON value of [corrections].
+         *
+         * Unlike [corrections], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("corrections")
+        @ExcludeMissing
+        fun _corrections(): JsonField<Corrections> = corrections
+
+        /**
          * Returns the raw JSON value of [dateOfDeath].
          *
          * Unlike [dateOfDeath], this method doesn't throw if the JSON field has an unexpected type.
@@ -614,6 +676,7 @@ private constructor(
             private var returnableType: JsonField<ReturnableType>? = null
             private var additionalInformation: JsonField<String> = JsonMissing.of()
             private var code: JsonField<Code> = JsonMissing.of()
+            private var corrections: JsonField<Corrections> = JsonMissing.of()
             private var data: JsonValue = JsonMissing.of()
             private var dateOfDeath: JsonField<LocalDate> = JsonMissing.of()
             private var reason: JsonField<String> = JsonMissing.of()
@@ -625,6 +688,7 @@ private constructor(
                 returnableType = returnCreateRequest.returnableType
                 additionalInformation = returnCreateRequest.additionalInformation
                 code = returnCreateRequest.code
+                corrections = returnCreateRequest.corrections
                 data = returnCreateRequest.data
                 dateOfDeath = returnCreateRequest.dateOfDeath
                 reason = returnCreateRequest.reason
@@ -708,6 +772,29 @@ private constructor(
              */
             fun code(code: JsonField<Code>) = apply { this.code = code }
 
+            /**
+             * Only relevant for ACH NOC returns. This is an object containing all of the new and
+             * corrected information provided by the bank that was previously incorrect on the
+             * original outgoing payment.
+             */
+            fun corrections(corrections: Corrections?) =
+                corrections(JsonField.ofNullable(corrections))
+
+            /** Alias for calling [Builder.corrections] with `corrections.orElse(null)`. */
+            fun corrections(corrections: Optional<Corrections>) =
+                corrections(corrections.getOrNull())
+
+            /**
+             * Sets [Builder.corrections] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.corrections] with a well-typed [Corrections] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun corrections(corrections: JsonField<Corrections>) = apply {
+                this.corrections = corrections
+            }
+
             /** The raw data from the return file that we get from the bank. */
             fun data(data: JsonValue) = apply { this.data = data }
 
@@ -788,6 +875,7 @@ private constructor(
                     checkRequired("returnableType", returnableType),
                     additionalInformation,
                     code,
+                    corrections,
                     data,
                     dateOfDeath,
                     reason,
@@ -806,6 +894,7 @@ private constructor(
             returnableType().validate()
             additionalInformation()
             code().ifPresent { it.validate() }
+            corrections().ifPresent { it.validate() }
             dateOfDeath()
             reason()
             validated = true
@@ -831,6 +920,7 @@ private constructor(
                 (returnableType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (additionalInformation.asKnown().isPresent) 1 else 0) +
                 (code.asKnown().getOrNull()?.validity() ?: 0) +
+                (corrections.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (dateOfDeath.asKnown().isPresent) 1 else 0) +
                 (if (reason.asKnown().isPresent) 1 else 0)
 
@@ -839,17 +929,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReturnCreateRequest && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && data == other.data && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ReturnCreateRequest && returnableId == other.returnableId && returnableType == other.returnableType && additionalInformation == other.additionalInformation && code == other.code && corrections == other.corrections && data == other.data && dateOfDeath == other.dateOfDeath && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(returnableId, returnableType, additionalInformation, code, data, dateOfDeath, reason, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(returnableId, returnableType, additionalInformation, code, corrections, data, dateOfDeath, reason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ReturnCreateRequest{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, data=$data, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
+            "ReturnCreateRequest{returnableId=$returnableId, returnableType=$returnableType, additionalInformation=$additionalInformation, code=$code, corrections=$corrections, data=$data, dateOfDeath=$dateOfDeath, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     /** The type of object being returned. Currently, this may only be incoming_payment_detail. */
@@ -1650,6 +1740,426 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
+    }
+
+    /**
+     * Only relevant for ACH NOC returns. This is an object containing all of the new and corrected
+     * information provided by the bank that was previously incorrect on the original outgoing
+     * payment.
+     */
+    class Corrections
+    private constructor(
+        private val accountNumber: JsonField<String>,
+        private val companyId: JsonField<String>,
+        private val companyName: JsonField<String>,
+        private val individualIdentificationNumber: JsonField<String>,
+        private val routingNumber: JsonField<String>,
+        private val transactionCode: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("account_number")
+            @ExcludeMissing
+            accountNumber: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("company_id")
+            @ExcludeMissing
+            companyId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("company_name")
+            @ExcludeMissing
+            companyName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("individual_identification_number")
+            @ExcludeMissing
+            individualIdentificationNumber: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("routing_number")
+            @ExcludeMissing
+            routingNumber: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("transaction_code")
+            @ExcludeMissing
+            transactionCode: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            accountNumber,
+            companyId,
+            companyName,
+            individualIdentificationNumber,
+            routingNumber,
+            transactionCode,
+            mutableMapOf(),
+        )
+
+        /**
+         * The updated account number that should replace the one originally used on the outgoing
+         * payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun accountNumber(): Optional<String> = accountNumber.getOptional("account_number")
+
+        /**
+         * The updated company ID that should replace the one originally used on the outgoing
+         * payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun companyId(): Optional<String> = companyId.getOptional("company_id")
+
+        /**
+         * The updated company name that should replace the one originally used on the outgoing
+         * payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun companyName(): Optional<String> = companyName.getOptional("company_name")
+
+        /**
+         * The updated individual identification number that should replace the one originally used
+         * on the outgoing payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun individualIdentificationNumber(): Optional<String> =
+            individualIdentificationNumber.getOptional("individual_identification_number")
+
+        /**
+         * The updated routing number that should replace the one originally used on the outgoing
+         * payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun routingNumber(): Optional<String> = routingNumber.getOptional("routing_number")
+
+        /**
+         * The updated account type code that should replace the one originally used on the outgoing
+         * payment.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun transactionCode(): Optional<String> = transactionCode.getOptional("transaction_code")
+
+        /**
+         * Returns the raw JSON value of [accountNumber].
+         *
+         * Unlike [accountNumber], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("account_number")
+        @ExcludeMissing
+        fun _accountNumber(): JsonField<String> = accountNumber
+
+        /**
+         * Returns the raw JSON value of [companyId].
+         *
+         * Unlike [companyId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("company_id") @ExcludeMissing fun _companyId(): JsonField<String> = companyId
+
+        /**
+         * Returns the raw JSON value of [companyName].
+         *
+         * Unlike [companyName], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("company_name")
+        @ExcludeMissing
+        fun _companyName(): JsonField<String> = companyName
+
+        /**
+         * Returns the raw JSON value of [individualIdentificationNumber].
+         *
+         * Unlike [individualIdentificationNumber], this method doesn't throw if the JSON field has
+         * an unexpected type.
+         */
+        @JsonProperty("individual_identification_number")
+        @ExcludeMissing
+        fun _individualIdentificationNumber(): JsonField<String> = individualIdentificationNumber
+
+        /**
+         * Returns the raw JSON value of [routingNumber].
+         *
+         * Unlike [routingNumber], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("routing_number")
+        @ExcludeMissing
+        fun _routingNumber(): JsonField<String> = routingNumber
+
+        /**
+         * Returns the raw JSON value of [transactionCode].
+         *
+         * Unlike [transactionCode], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transaction_code")
+        @ExcludeMissing
+        fun _transactionCode(): JsonField<String> = transactionCode
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Corrections]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Corrections]. */
+        class Builder internal constructor() {
+
+            private var accountNumber: JsonField<String> = JsonMissing.of()
+            private var companyId: JsonField<String> = JsonMissing.of()
+            private var companyName: JsonField<String> = JsonMissing.of()
+            private var individualIdentificationNumber: JsonField<String> = JsonMissing.of()
+            private var routingNumber: JsonField<String> = JsonMissing.of()
+            private var transactionCode: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(corrections: Corrections) = apply {
+                accountNumber = corrections.accountNumber
+                companyId = corrections.companyId
+                companyName = corrections.companyName
+                individualIdentificationNumber = corrections.individualIdentificationNumber
+                routingNumber = corrections.routingNumber
+                transactionCode = corrections.transactionCode
+                additionalProperties = corrections.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The updated account number that should replace the one originally used on the
+             * outgoing payment.
+             */
+            fun accountNumber(accountNumber: String?) =
+                accountNumber(JsonField.ofNullable(accountNumber))
+
+            /** Alias for calling [Builder.accountNumber] with `accountNumber.orElse(null)`. */
+            fun accountNumber(accountNumber: Optional<String>) =
+                accountNumber(accountNumber.getOrNull())
+
+            /**
+             * Sets [Builder.accountNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountNumber] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun accountNumber(accountNumber: JsonField<String>) = apply {
+                this.accountNumber = accountNumber
+            }
+
+            /**
+             * The updated company ID that should replace the one originally used on the outgoing
+             * payment.
+             */
+            fun companyId(companyId: String?) = companyId(JsonField.ofNullable(companyId))
+
+            /** Alias for calling [Builder.companyId] with `companyId.orElse(null)`. */
+            fun companyId(companyId: Optional<String>) = companyId(companyId.getOrNull())
+
+            /**
+             * Sets [Builder.companyId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.companyId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun companyId(companyId: JsonField<String>) = apply { this.companyId = companyId }
+
+            /**
+             * The updated company name that should replace the one originally used on the outgoing
+             * payment.
+             */
+            fun companyName(companyName: String?) = companyName(JsonField.ofNullable(companyName))
+
+            /** Alias for calling [Builder.companyName] with `companyName.orElse(null)`. */
+            fun companyName(companyName: Optional<String>) = companyName(companyName.getOrNull())
+
+            /**
+             * Sets [Builder.companyName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.companyName] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun companyName(companyName: JsonField<String>) = apply {
+                this.companyName = companyName
+            }
+
+            /**
+             * The updated individual identification number that should replace the one originally
+             * used on the outgoing payment.
+             */
+            fun individualIdentificationNumber(individualIdentificationNumber: String?) =
+                individualIdentificationNumber(JsonField.ofNullable(individualIdentificationNumber))
+
+            /**
+             * Alias for calling [Builder.individualIdentificationNumber] with
+             * `individualIdentificationNumber.orElse(null)`.
+             */
+            fun individualIdentificationNumber(individualIdentificationNumber: Optional<String>) =
+                individualIdentificationNumber(individualIdentificationNumber.getOrNull())
+
+            /**
+             * Sets [Builder.individualIdentificationNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.individualIdentificationNumber] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun individualIdentificationNumber(individualIdentificationNumber: JsonField<String>) =
+                apply {
+                    this.individualIdentificationNumber = individualIdentificationNumber
+                }
+
+            /**
+             * The updated routing number that should replace the one originally used on the
+             * outgoing payment.
+             */
+            fun routingNumber(routingNumber: String?) =
+                routingNumber(JsonField.ofNullable(routingNumber))
+
+            /** Alias for calling [Builder.routingNumber] with `routingNumber.orElse(null)`. */
+            fun routingNumber(routingNumber: Optional<String>) =
+                routingNumber(routingNumber.getOrNull())
+
+            /**
+             * Sets [Builder.routingNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.routingNumber] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun routingNumber(routingNumber: JsonField<String>) = apply {
+                this.routingNumber = routingNumber
+            }
+
+            /**
+             * The updated account type code that should replace the one originally used on the
+             * outgoing payment.
+             */
+            fun transactionCode(transactionCode: String?) =
+                transactionCode(JsonField.ofNullable(transactionCode))
+
+            /** Alias for calling [Builder.transactionCode] with `transactionCode.orElse(null)`. */
+            fun transactionCode(transactionCode: Optional<String>) =
+                transactionCode(transactionCode.getOrNull())
+
+            /**
+             * Sets [Builder.transactionCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionCode(transactionCode: JsonField<String>) = apply {
+                this.transactionCode = transactionCode
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Corrections].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Corrections =
+                Corrections(
+                    accountNumber,
+                    companyId,
+                    companyName,
+                    individualIdentificationNumber,
+                    routingNumber,
+                    transactionCode,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Corrections = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountNumber()
+            companyId()
+            companyName()
+            individualIdentificationNumber()
+            routingNumber()
+            transactionCode()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountNumber.asKnown().isPresent) 1 else 0) +
+                (if (companyId.asKnown().isPresent) 1 else 0) +
+                (if (companyName.asKnown().isPresent) 1 else 0) +
+                (if (individualIdentificationNumber.asKnown().isPresent) 1 else 0) +
+                (if (routingNumber.asKnown().isPresent) 1 else 0) +
+                (if (transactionCode.asKnown().isPresent) 1 else 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Corrections && accountNumber == other.accountNumber && companyId == other.companyId && companyName == other.companyName && individualIdentificationNumber == other.individualIdentificationNumber && routingNumber == other.routingNumber && transactionCode == other.transactionCode && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(accountNumber, companyId, companyName, individualIdentificationNumber, routingNumber, transactionCode, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Corrections{accountNumber=$accountNumber, companyId=$companyId, companyName=$companyName, individualIdentificationNumber=$individualIdentificationNumber, routingNumber=$routingNumber, transactionCode=$transactionCode, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

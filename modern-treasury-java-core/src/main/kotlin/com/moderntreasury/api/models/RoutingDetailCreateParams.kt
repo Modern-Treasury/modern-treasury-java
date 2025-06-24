@@ -660,6 +660,8 @@ private constructor(
 
             @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
 
+            @JvmField val IL_BANK_CODE = of("il_bank_code")
+
             @JvmField val IN_IFSC = of("in_ifsc")
 
             @JvmField val JP_ZENGIN_CODE = of("jp_zengin_code")
@@ -696,6 +698,7 @@ private constructor(
             HK_INTERBANK_CLEARING_CODE,
             HU_INTERBANK_CLEARING_CODE,
             ID_SKNBI_CODE,
+            IL_BANK_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MX_BANK_IDENTIFIER,
@@ -729,6 +732,7 @@ private constructor(
             HK_INTERBANK_CLEARING_CODE,
             HU_INTERBANK_CLEARING_CODE,
             ID_SKNBI_CODE,
+            IL_BANK_CODE,
             IN_IFSC,
             JP_ZENGIN_CODE,
             MX_BANK_IDENTIFIER,
@@ -766,6 +770,7 @@ private constructor(
                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
                 HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                 ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
+                IL_BANK_CODE -> Value.IL_BANK_CODE
                 IN_IFSC -> Value.IN_IFSC
                 JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
                 MX_BANK_IDENTIFIER -> Value.MX_BANK_IDENTIFIER
@@ -801,6 +806,7 @@ private constructor(
                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
                 HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                 ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
+                IL_BANK_CODE -> Known.IL_BANK_CODE
                 IN_IFSC -> Known.IN_IFSC
                 JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
                 MX_BANK_IDENTIFIER -> Known.MX_BANK_IDENTIFIER
