@@ -43,6 +43,7 @@ private constructor(
     private val partyType: JsonField<PartyType>,
     private val routingDetails: JsonField<List<RoutingDetail>>,
     private val updatedAt: JsonField<OffsetDateTime>,
+    private val vendorId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -94,6 +95,7 @@ private constructor(
         @JsonProperty("updated_at")
         @ExcludeMissing
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("vendor_id") @ExcludeMissing vendorId: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
         accountCapabilities,
@@ -115,6 +117,7 @@ private constructor(
         partyType,
         routingDetails,
         updatedAt,
+        vendorId,
         mutableMapOf(),
     )
 
@@ -190,7 +193,7 @@ private constructor(
     fun ledgerAccountId(): Optional<String> = ledgerAccountId.getOptional("ledger_account_id")
 
     /**
-     * The Legal Entity associated to this account
+     * The Legal Entity associated to this account.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -273,6 +276,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
+
+    /**
+     * The vendor ID associated with this account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun vendorId(): Optional<String> = vendorId.getOptional("vendor_id")
 
     /**
      * Returns the raw JSON value of [id].
@@ -439,6 +450,13 @@ private constructor(
     @ExcludeMissing
     fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
 
+    /**
+     * Returns the raw JSON value of [vendorId].
+     *
+     * Unlike [vendorId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("vendor_id") @ExcludeMissing fun _vendorId(): JsonField<String> = vendorId
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -478,6 +496,7 @@ private constructor(
          * .partyType()
          * .routingDetails()
          * .updatedAt()
+         * .vendorId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -506,6 +525,7 @@ private constructor(
         private var partyType: JsonField<PartyType>? = null
         private var routingDetails: JsonField<MutableList<RoutingDetail>>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
+        private var vendorId: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -530,6 +550,7 @@ private constructor(
             partyType = internalAccount.partyType
             routingDetails = internalAccount.routingDetails.map { it.toMutableList() }
             updatedAt = internalAccount.updatedAt
+            vendorId = internalAccount.vendorId
             additionalProperties = internalAccount.additionalProperties.toMutableMap()
         }
 
@@ -693,7 +714,7 @@ private constructor(
             this.ledgerAccountId = ledgerAccountId
         }
 
-        /** The Legal Entity associated to this account */
+        /** The Legal Entity associated to this account. */
         fun legalEntityId(legalEntityId: String?) =
             legalEntityId(JsonField.ofNullable(legalEntityId))
 
@@ -866,6 +887,20 @@ private constructor(
          */
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
+        /** The vendor ID associated with this account. */
+        fun vendorId(vendorId: String?) = vendorId(JsonField.ofNullable(vendorId))
+
+        /** Alias for calling [Builder.vendorId] with `vendorId.orElse(null)`. */
+        fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
+
+        /**
+         * Sets [Builder.vendorId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.vendorId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun vendorId(vendorId: JsonField<String>) = apply { this.vendorId = vendorId }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -912,6 +947,7 @@ private constructor(
          * .partyType()
          * .routingDetails()
          * .updatedAt()
+         * .vendorId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -938,6 +974,7 @@ private constructor(
                 checkRequired("partyType", partyType),
                 checkRequired("routingDetails", routingDetails).map { it.toImmutable() },
                 checkRequired("updatedAt", updatedAt),
+                checkRequired("vendorId", vendorId),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -969,6 +1006,7 @@ private constructor(
         partyType().ifPresent { it.validate() }
         routingDetails().forEach { it.validate() }
         updatedAt()
+        vendorId()
         validated = true
     }
 
@@ -1006,7 +1044,8 @@ private constructor(
             (if (partyName.asKnown().isPresent) 1 else 0) +
             (partyType.asKnown().getOrNull()?.validity() ?: 0) +
             (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            (if (updatedAt.asKnown().isPresent) 1 else 0)
+            (if (updatedAt.asKnown().isPresent) 1 else 0) +
+            (if (vendorId.asKnown().isPresent) 1 else 0)
 
     class AccountCapability
     private constructor(
@@ -2824,15 +2863,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InternalAccount && id == other.id && accountCapabilities == other.accountCapabilities && accountDetails == other.accountDetails && accountType == other.accountType && connection == other.connection && counterpartyId == other.counterpartyId && createdAt == other.createdAt && currency == other.currency && ledgerAccountId == other.ledgerAccountId && legalEntityId == other.legalEntityId && liveMode == other.liveMode && metadata == other.metadata && name == other.name && object_ == other.object_ && parentAccountId == other.parentAccountId && partyAddress == other.partyAddress && partyName == other.partyName && partyType == other.partyType && routingDetails == other.routingDetails && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is InternalAccount && id == other.id && accountCapabilities == other.accountCapabilities && accountDetails == other.accountDetails && accountType == other.accountType && connection == other.connection && counterpartyId == other.counterpartyId && createdAt == other.createdAt && currency == other.currency && ledgerAccountId == other.ledgerAccountId && legalEntityId == other.legalEntityId && liveMode == other.liveMode && metadata == other.metadata && name == other.name && object_ == other.object_ && parentAccountId == other.parentAccountId && partyAddress == other.partyAddress && partyName == other.partyName && partyType == other.partyType && routingDetails == other.routingDetails && updatedAt == other.updatedAt && vendorId == other.vendorId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountCapabilities, accountDetails, accountType, connection, counterpartyId, createdAt, currency, ledgerAccountId, legalEntityId, liveMode, metadata, name, object_, parentAccountId, partyAddress, partyName, partyType, routingDetails, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountCapabilities, accountDetails, accountType, connection, counterpartyId, createdAt, currency, ledgerAccountId, legalEntityId, liveMode, metadata, name, object_, parentAccountId, partyAddress, partyName, partyType, routingDetails, updatedAt, vendorId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }
