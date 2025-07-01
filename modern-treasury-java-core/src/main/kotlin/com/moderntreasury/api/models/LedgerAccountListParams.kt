@@ -27,6 +27,7 @@ private constructor(
     private val ledgerId: String?,
     private val metadata: Metadata?,
     private val name: List<String>?,
+    private val normalBalance: TransactionDirection?,
     private val pendingBalanceAmount: PendingBalanceAmount?,
     private val perPage: Long?,
     private val postedBalanceAmount: PostedBalanceAmount?,
@@ -85,6 +86,8 @@ private constructor(
      */
     fun name(): Optional<List<String>> = Optional.ofNullable(name)
 
+    fun normalBalance(): Optional<TransactionDirection> = Optional.ofNullable(normalBalance)
+
     /**
      * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
      * balance amount.
@@ -136,6 +139,7 @@ private constructor(
         private var ledgerId: String? = null
         private var metadata: Metadata? = null
         private var name: MutableList<String>? = null
+        private var normalBalance: TransactionDirection? = null
         private var pendingBalanceAmount: PendingBalanceAmount? = null
         private var perPage: Long? = null
         private var postedBalanceAmount: PostedBalanceAmount? = null
@@ -156,6 +160,7 @@ private constructor(
             ledgerId = ledgerAccountListParams.ledgerId
             metadata = ledgerAccountListParams.metadata
             name = ledgerAccountListParams.name?.toMutableList()
+            normalBalance = ledgerAccountListParams.normalBalance
             pendingBalanceAmount = ledgerAccountListParams.pendingBalanceAmount
             perPage = ledgerAccountListParams.perPage
             postedBalanceAmount = ledgerAccountListParams.postedBalanceAmount
@@ -273,6 +278,14 @@ private constructor(
         fun addName(name: String) = apply {
             this.name = (this.name ?: mutableListOf()).apply { add(name) }
         }
+
+        fun normalBalance(normalBalance: TransactionDirection?) = apply {
+            this.normalBalance = normalBalance
+        }
+
+        /** Alias for calling [Builder.normalBalance] with `normalBalance.orElse(null)`. */
+        fun normalBalance(normalBalance: Optional<TransactionDirection>) =
+            normalBalance(normalBalance.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), `eq` (=), or `not_eq` (!=) to filter by
@@ -441,6 +454,7 @@ private constructor(
                 ledgerId,
                 metadata,
                 name?.toImmutable(),
+                normalBalance,
                 pendingBalanceAmount,
                 perPage,
                 postedBalanceAmount,
@@ -515,6 +529,7 @@ private constructor(
                     }
                 }
                 name?.forEach { put("name[]", it) }
+                normalBalance?.let { put("normal_balance", it.toString()) }
                 pendingBalanceAmount?.let {
                     it.eq().ifPresent { put("pending_balance_amount[eq]", it.toString()) }
                     it.gt().ifPresent { put("pending_balance_amount[gt]", it.toString()) }
@@ -1651,11 +1666,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && externalId == other.externalId && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is LedgerAccountListParams && id == other.id && afterCursor == other.afterCursor && availableBalanceAmount == other.availableBalanceAmount && balances == other.balances && createdAt == other.createdAt && currency == other.currency && externalId == other.externalId && ledgerAccountCategoryId == other.ledgerAccountCategoryId && ledgerId == other.ledgerId && metadata == other.metadata && name == other.name && normalBalance == other.normalBalance && pendingBalanceAmount == other.pendingBalanceAmount && perPage == other.perPage && postedBalanceAmount == other.postedBalanceAmount && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, externalId, ledgerAccountCategoryId, ledgerId, metadata, name, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, availableBalanceAmount, balances, createdAt, currency, externalId, ledgerAccountCategoryId, ledgerId, metadata, name, normalBalance, pendingBalanceAmount, perPage, postedBalanceAmount, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, externalId=$externalId, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "LedgerAccountListParams{id=$id, afterCursor=$afterCursor, availableBalanceAmount=$availableBalanceAmount, balances=$balances, createdAt=$createdAt, currency=$currency, externalId=$externalId, ledgerAccountCategoryId=$ledgerAccountCategoryId, ledgerId=$ledgerId, metadata=$metadata, name=$name, normalBalance=$normalBalance, pendingBalanceAmount=$pendingBalanceAmount, perPage=$perPage, postedBalanceAmount=$postedBalanceAmount, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
