@@ -28,7 +28,6 @@ import com.moderntreasury.api.services.async.LedgerAccountServiceAsync
 import com.moderntreasury.api.services.async.LedgerAccountSettlementServiceAsync
 import com.moderntreasury.api.services.async.LedgerAccountStatementServiceAsync
 import com.moderntreasury.api.services.async.LedgerEntryServiceAsync
-import com.moderntreasury.api.services.async.LedgerEventHandlerServiceAsync
 import com.moderntreasury.api.services.async.LedgerServiceAsync
 import com.moderntreasury.api.services.async.LedgerTransactionServiceAsync
 import com.moderntreasury.api.services.async.LegalEntityAssociationServiceAsync
@@ -119,8 +118,6 @@ interface ModernTreasuryClientAsync {
     fun ledgerAccountStatements(): LedgerAccountStatementServiceAsync
 
     fun ledgerEntries(): LedgerEntryServiceAsync
-
-    fun ledgerEventHandlers(): LedgerEventHandlerServiceAsync
 
     fun ledgerTransactions(): LedgerTransactionServiceAsync
 
@@ -242,8 +239,6 @@ interface ModernTreasuryClientAsync {
         fun ledgerAccountStatements(): LedgerAccountStatementServiceAsync.WithRawResponse
 
         fun ledgerEntries(): LedgerEntryServiceAsync.WithRawResponse
-
-        fun ledgerEventHandlers(): LedgerEventHandlerServiceAsync.WithRawResponse
 
         fun ledgerTransactions(): LedgerTransactionServiceAsync.WithRawResponse
 

@@ -59,8 +59,6 @@ import com.moderntreasury.api.services.blocking.LedgerAccountStatementService
 import com.moderntreasury.api.services.blocking.LedgerAccountStatementServiceImpl
 import com.moderntreasury.api.services.blocking.LedgerEntryService
 import com.moderntreasury.api.services.blocking.LedgerEntryServiceImpl
-import com.moderntreasury.api.services.blocking.LedgerEventHandlerService
-import com.moderntreasury.api.services.blocking.LedgerEventHandlerServiceImpl
 import com.moderntreasury.api.services.blocking.LedgerService
 import com.moderntreasury.api.services.blocking.LedgerServiceImpl
 import com.moderntreasury.api.services.blocking.LedgerTransactionService
@@ -180,10 +178,6 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
         LedgerEntryServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val ledgerEventHandlers: LedgerEventHandlerService by lazy {
-        LedgerEventHandlerServiceImpl(clientOptionsWithUserAgent)
-    }
-
     private val ledgerTransactions: LedgerTransactionService by lazy {
         LedgerTransactionServiceImpl(clientOptionsWithUserAgent)
     }
@@ -299,8 +293,6 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
     override fun ledgerAccountStatements(): LedgerAccountStatementService = ledgerAccountStatements
 
     override fun ledgerEntries(): LedgerEntryService = ledgerEntries
-
-    override fun ledgerEventHandlers(): LedgerEventHandlerService = ledgerEventHandlers
 
     override fun ledgerTransactions(): LedgerTransactionService = ledgerTransactions
 
@@ -425,10 +417,6 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
             LedgerEntryServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
-        private val ledgerEventHandlers: LedgerEventHandlerService.WithRawResponse by lazy {
-            LedgerEventHandlerServiceImpl.WithRawResponseImpl(clientOptions)
-        }
-
         private val ledgerTransactions: LedgerTransactionService.WithRawResponse by lazy {
             LedgerTransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -549,9 +537,6 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
             ledgerAccountStatements
 
         override fun ledgerEntries(): LedgerEntryService.WithRawResponse = ledgerEntries
-
-        override fun ledgerEventHandlers(): LedgerEventHandlerService.WithRawResponse =
-            ledgerEventHandlers
 
         override fun ledgerTransactions(): LedgerTransactionService.WithRawResponse =
             ledgerTransactions
