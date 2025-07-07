@@ -16,15 +16,13 @@ internal class LegalEntityUpdateParamsTest {
         LegalEntityUpdateParams.builder()
             .id("id")
             .addAddress(
-                LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
+                LegalEntityAddressCreateRequest.builder()
                     .country("country")
                     .line1("line1")
                     .locality("locality")
                     .postalCode("postal_code")
                     .region("region")
-                    .addAddressType(
-                        LegalEntityUpdateParams.LegalEntityAddressCreateRequest.AddressType.BUSINESS
-                    )
+                    .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
                     .build()
             )
@@ -66,9 +64,9 @@ internal class LegalEntityUpdateParamsTest {
             .email("email")
             .firstName("first_name")
             .addIdentification(
-                LegalEntityUpdateParams.IdentificationCreateRequest.builder()
+                IdentificationCreateRequest.builder()
                     .idNumber("id_number")
-                    .idType(LegalEntityUpdateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                     .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
                     .issuingRegion("issuing_region")
@@ -145,16 +143,13 @@ internal class LegalEntityUpdateParamsTest {
             LegalEntityUpdateParams.builder()
                 .id("id")
                 .addAddress(
-                    LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
+                    LegalEntityAddressCreateRequest.builder()
                         .country("country")
                         .line1("line1")
                         .locality("locality")
                         .postalCode("postal_code")
                         .region("region")
-                        .addAddressType(
-                            LegalEntityUpdateParams.LegalEntityAddressCreateRequest.AddressType
-                                .BUSINESS
-                        )
+                        .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                         .line2("line2")
                         .build()
                 )
@@ -196,9 +191,9 @@ internal class LegalEntityUpdateParamsTest {
                 .email("email")
                 .firstName("first_name")
                 .addIdentification(
-                    LegalEntityUpdateParams.IdentificationCreateRequest.builder()
+                    IdentificationCreateRequest.builder()
                         .idNumber("id_number")
-                        .idType(LegalEntityUpdateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                        .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                         .expirationDate(LocalDate.parse("2019-12-27"))
                         .issuingCountry("issuing_country")
                         .issuingRegion("issuing_region")
@@ -267,15 +262,13 @@ internal class LegalEntityUpdateParamsTest {
 
         assertThat(body.addresses().getOrNull())
             .containsExactly(
-                LegalEntityUpdateParams.LegalEntityAddressCreateRequest.builder()
+                LegalEntityAddressCreateRequest.builder()
                     .country("country")
                     .line1("line1")
                     .locality("locality")
                     .postalCode("postal_code")
                     .region("region")
-                    .addAddressType(
-                        LegalEntityUpdateParams.LegalEntityAddressCreateRequest.AddressType.BUSINESS
-                    )
+                    .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
                     .build()
             )
@@ -320,9 +313,9 @@ internal class LegalEntityUpdateParamsTest {
         assertThat(body.firstName()).contains("first_name")
         assertThat(body.identifications().getOrNull())
             .containsExactly(
-                LegalEntityUpdateParams.IdentificationCreateRequest.builder()
+                IdentificationCreateRequest.builder()
                     .idNumber("id_number")
-                    .idType(LegalEntityUpdateParams.IdentificationCreateRequest.IdType.AR_CUIL)
+                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                     .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
                     .issuingRegion("issuing_region")

@@ -33,7 +33,7 @@ internal class TransactionTest {
                 .direction("direction")
                 .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .foreignExchangeRate(
-                    Transaction.ForeignExchangeRate.builder()
+                    ForeignExchangeRate.builder()
                         .baseAmount(0L)
                         .baseCurrency(Currency.AED)
                         .exponent(0L)
@@ -90,7 +90,7 @@ internal class TransactionTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transaction.foreignExchangeRate())
             .contains(
-                Transaction.ForeignExchangeRate.builder()
+                ForeignExchangeRate.builder()
                     .baseAmount(0L)
                     .baseCurrency(Currency.AED)
                     .exponent(0L)
@@ -152,7 +152,7 @@ internal class TransactionTest {
                 .direction("direction")
                 .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .foreignExchangeRate(
-                    Transaction.ForeignExchangeRate.builder()
+                    ForeignExchangeRate.builder()
                         .baseAmount(0L)
                         .baseCurrency(Currency.AED)
                         .exponent(0L)

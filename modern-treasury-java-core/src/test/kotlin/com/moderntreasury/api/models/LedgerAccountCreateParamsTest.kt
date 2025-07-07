@@ -3,7 +3,6 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
-import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,20 +11,24 @@ internal class LedgerAccountCreateParamsTest {
     @Test
     fun create() {
         LedgerAccountCreateParams.builder()
-            .currency("currency")
-            .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-            .name("name")
-            .normalBalance(TransactionDirection.CREDIT)
-            .currencyExponent(0L)
-            .description("description")
-            .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-            .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-            .ledgerableType(LedgerAccountCreateParams.LedgerableType.COUNTERPARTY)
-            .metadata(
-                LedgerAccountCreateParams.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+            .ledgerAccountCreateRequest(
+                LedgerAccountCreateRequest.builder()
+                    .currency("currency")
+                    .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .name("name")
+                    .normalBalance(TransactionDirection.CREDIT)
+                    .currencyExponent(0L)
+                    .description("description")
+                    .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
+                    .metadata(
+                        LedgerAccountCreateRequest.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
                     .build()
             )
             .build()
@@ -35,43 +38,49 @@ internal class LedgerAccountCreateParamsTest {
     fun body() {
         val params =
             LedgerAccountCreateParams.builder()
-                .currency("currency")
-                .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .name("name")
-                .normalBalance(TransactionDirection.CREDIT)
-                .currencyExponent(0L)
-                .description("description")
-                .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .ledgerableType(LedgerAccountCreateParams.LedgerableType.COUNTERPARTY)
-                .metadata(
-                    LedgerAccountCreateParams.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                .ledgerAccountCreateRequest(
+                    LedgerAccountCreateRequest.builder()
+                        .currency("currency")
+                        .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .name("name")
+                        .normalBalance(TransactionDirection.CREDIT)
+                        .currencyExponent(0L)
+                        .description("description")
+                        .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
+                        .metadata(
+                            LedgerAccountCreateRequest.Metadata.builder()
+                                .putAdditionalProperty("key", JsonValue.from("value"))
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                                .build()
+                        )
                         .build()
                 )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.ledgerId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.normalBalance()).isEqualTo(TransactionDirection.CREDIT)
-        assertThat(body.currencyExponent()).contains(0L)
-        assertThat(body.description()).contains("description")
-        assertThat(body.ledgerAccountCategoryIds().getOrNull())
-            .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.ledgerableId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.ledgerableType())
-            .contains(LedgerAccountCreateParams.LedgerableType.COUNTERPARTY)
-        assertThat(body.metadata())
-            .contains(
-                LedgerAccountCreateParams.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+        assertThat(body)
+            .isEqualTo(
+                LedgerAccountCreateRequest.builder()
+                    .currency("currency")
+                    .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .name("name")
+                    .normalBalance(TransactionDirection.CREDIT)
+                    .currencyExponent(0L)
+                    .description("description")
+                    .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
+                    .metadata(
+                        LedgerAccountCreateRequest.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
                     .build()
             )
     }
@@ -80,17 +89,26 @@ internal class LedgerAccountCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             LedgerAccountCreateParams.builder()
-                .currency("currency")
-                .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .name("name")
-                .normalBalance(TransactionDirection.CREDIT)
+                .ledgerAccountCreateRequest(
+                    LedgerAccountCreateRequest.builder()
+                        .currency("currency")
+                        .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .name("name")
+                        .normalBalance(TransactionDirection.CREDIT)
+                        .build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.ledgerId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.normalBalance()).isEqualTo(TransactionDirection.CREDIT)
+        assertThat(body)
+            .isEqualTo(
+                LedgerAccountCreateRequest.builder()
+                    .currency("currency")
+                    .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .name("name")
+                    .normalBalance(TransactionDirection.CREDIT)
+                    .build()
+            )
     }
 }
