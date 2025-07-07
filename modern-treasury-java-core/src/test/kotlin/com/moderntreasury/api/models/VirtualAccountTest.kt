@@ -51,7 +51,7 @@ internal class VirtualAccountTest {
                     RoutingDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .bankAddress(
-                            RoutingDetail.Address.builder()
+                            Address.builder()
                                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .country("country")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -124,7 +124,7 @@ internal class VirtualAccountTest {
                 RoutingDetail.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .bankAddress(
-                        RoutingDetail.Address.builder()
+                        Address.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .country("country")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -194,7 +194,7 @@ internal class VirtualAccountTest {
                     RoutingDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .bankAddress(
-                            RoutingDetail.Address.builder()
+                            Address.builder()
                                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .country("country")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

@@ -33,17 +33,15 @@ internal class CounterpartyCreateParamsTest {
                     )
                     .accountType(ExternalAccountType.BASE_WALLET)
                     .addContactDetail(
-                        CounterpartyCreateParams.Account.ContactDetailCreateRequest.builder()
+                        ContactDetailCreateRequest.builder()
                             .contactIdentifier("contact_identifier")
                             .contactIdentifierType(
-                                CounterpartyCreateParams.Account.ContactDetailCreateRequest
-                                    .ContactIdentifierType
-                                    .EMAIL
+                                ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                             )
                             .build()
                     )
                     .ledgerAccount(
-                        CounterpartyCreateParams.Account.LedgerAccountCreateRequest.builder()
+                        LedgerAccountCreateRequest.builder()
                             .currency("currency")
                             .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .name("name")
@@ -52,14 +50,9 @@ internal class CounterpartyCreateParamsTest {
                             .description("description")
                             .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .ledgerableType(
-                                CounterpartyCreateParams.Account.LedgerAccountCreateRequest
-                                    .LedgerableType
-                                    .COUNTERPARTY
-                            )
+                            .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
                             .metadata(
-                                CounterpartyCreateParams.Account.LedgerAccountCreateRequest.Metadata
-                                    .builder()
+                                LedgerAccountCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -76,7 +69,7 @@ internal class CounterpartyCreateParamsTest {
                     )
                     .name("name")
                     .partyAddress(
-                        CounterpartyCreateParams.Account.AddressRequest.builder()
+                        AddressRequest.builder()
                             .country("country")
                             .line1("line1")
                             .line2("line2")
@@ -110,20 +103,13 @@ internal class CounterpartyCreateParamsTest {
                         CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityType.BUSINESS
                     )
                     .addAddress(
-                        CounterpartyCreateParams.LegalEntityCreateRequest
-                            .LegalEntityAddressCreateRequest
-                            .builder()
+                        LegalEntityAddressCreateRequest.builder()
                             .country("country")
                             .line1("line1")
                             .locality("locality")
                             .postalCode("postal_code")
                             .region("region")
-                            .addAddressType(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .LegalEntityAddressCreateRequest
-                                    .AddressType
-                                    .BUSINESS
-                            )
+                            .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
                             .build()
                     )
@@ -165,16 +151,9 @@ internal class CounterpartyCreateParamsTest {
                     .email("email")
                     .firstName("first_name")
                     .addIdentification(
-                        CounterpartyCreateParams.LegalEntityCreateRequest
-                            .IdentificationCreateRequest
-                            .builder()
+                        IdentificationCreateRequest.builder()
                             .idNumber("id_number")
-                            .idType(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .IdentificationCreateRequest
-                                    .IdType
-                                    .AR_CUIL
-                            )
+                            .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                             .expirationDate(LocalDate.parse("2019-12-27"))
                             .issuingCountry("issuing_country")
                             .issuingRegion("issuing_region")
@@ -206,28 +185,16 @@ internal class CounterpartyCreateParamsTest {
                                     .BENEFICIAL_OWNER
                             )
                             .childLegalEntity(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .LegalEntityAssociationInlineCreateRequest
-                                    .ChildLegalEntityCreate
-                                    .builder()
+                                ChildLegalEntityCreate.builder()
                                     .addAddress(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalEntityAddressCreateRequest
-                                            .builder()
+                                        LegalEntityAddressCreateRequest.builder()
                                             .country("country")
                                             .line1("line1")
                                             .locality("locality")
                                             .postalCode("postal_code")
                                             .region("region")
                                             .addAddressType(
-                                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                                    .LegalEntityAssociationInlineCreateRequest
-                                                    .ChildLegalEntityCreate
-                                                    .LegalEntityAddressCreateRequest
-                                                    .AddressType
-                                                    .BUSINESS
+                                                LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                             )
                                             .line2("line2")
                                             .build()
@@ -288,20 +255,9 @@ internal class CounterpartyCreateParamsTest {
                                     .email("email")
                                     .firstName("first_name")
                                     .addIdentification(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .IdentificationCreateRequest
-                                            .builder()
+                                        IdentificationCreateRequest.builder()
                                             .idNumber("id_number")
-                                            .idType(
-                                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                                    .LegalEntityAssociationInlineCreateRequest
-                                                    .ChildLegalEntityCreate
-                                                    .IdentificationCreateRequest
-                                                    .IdType
-                                                    .AR_CUIL
-                                            )
+                                            .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                                             .expirationDate(LocalDate.parse("2019-12-27"))
                                             .issuingCountry("issuing_country")
                                             .issuingRegion("issuing_region")
@@ -330,25 +286,13 @@ internal class CounterpartyCreateParamsTest {
                                     )
                                     .lastName("last_name")
                                     .legalEntityType(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalEntityType
-                                            .BUSINESS
+                                        ChildLegalEntityCreate.LegalEntityType.BUSINESS
                                     )
                                     .legalStructure(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalStructure
-                                            .CORPORATION
+                                        ChildLegalEntityCreate.LegalStructure.CORPORATION
                                     )
                                     .metadata(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .Metadata
-                                            .builder()
+                                        ChildLegalEntityCreate.Metadata.builder()
                                             .putAdditionalProperty("key", JsonValue.from("value"))
                                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                                             .putAdditionalProperty(
@@ -359,24 +303,14 @@ internal class CounterpartyCreateParamsTest {
                                     )
                                     .middleName("middle_name")
                                     .addPhoneNumber(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .PhoneNumber
-                                            .builder()
+                                        ChildLegalEntityCreate.PhoneNumber.builder()
                                             .phoneNumber("phone_number")
                                             .build()
                                     )
                                     .politicallyExposedPerson(true)
                                     .preferredName("preferred_name")
                                     .prefix("prefix")
-                                    .riskRating(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .RiskRating
-                                            .LOW
-                                    )
+                                    .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                     .suffix("suffix")
                                     .wealthAndEmploymentDetails(
                                         WealthAndEmploymentDetails.builder()
@@ -511,17 +445,15 @@ internal class CounterpartyCreateParamsTest {
                         )
                         .accountType(ExternalAccountType.BASE_WALLET)
                         .addContactDetail(
-                            CounterpartyCreateParams.Account.ContactDetailCreateRequest.builder()
+                            ContactDetailCreateRequest.builder()
                                 .contactIdentifier("contact_identifier")
                                 .contactIdentifierType(
-                                    CounterpartyCreateParams.Account.ContactDetailCreateRequest
-                                        .ContactIdentifierType
-                                        .EMAIL
+                                    ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                                 )
                                 .build()
                         )
                         .ledgerAccount(
-                            CounterpartyCreateParams.Account.LedgerAccountCreateRequest.builder()
+                            LedgerAccountCreateRequest.builder()
                                 .currency("currency")
                                 .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .name("name")
@@ -531,14 +463,10 @@ internal class CounterpartyCreateParamsTest {
                                 .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .ledgerableType(
-                                    CounterpartyCreateParams.Account.LedgerAccountCreateRequest
-                                        .LedgerableType
-                                        .COUNTERPARTY
+                                    LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY
                                 )
                                 .metadata(
-                                    CounterpartyCreateParams.Account.LedgerAccountCreateRequest
-                                        .Metadata
-                                        .builder()
+                                    LedgerAccountCreateRequest.Metadata.builder()
                                         .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -555,7 +483,7 @@ internal class CounterpartyCreateParamsTest {
                         )
                         .name("name")
                         .partyAddress(
-                            CounterpartyCreateParams.Account.AddressRequest.builder()
+                            AddressRequest.builder()
                                 .country("country")
                                 .line1("line1")
                                 .line2("line2")
@@ -591,19 +519,14 @@ internal class CounterpartyCreateParamsTest {
                                 .BUSINESS
                         )
                         .addAddress(
-                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                .LegalEntityAddressCreateRequest
-                                .builder()
+                            LegalEntityAddressCreateRequest.builder()
                                 .country("country")
                                 .line1("line1")
                                 .locality("locality")
                                 .postalCode("postal_code")
                                 .region("region")
                                 .addAddressType(
-                                    CounterpartyCreateParams.LegalEntityCreateRequest
-                                        .LegalEntityAddressCreateRequest
-                                        .AddressType
-                                        .BUSINESS
+                                    LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                 )
                                 .line2("line2")
                                 .build()
@@ -646,16 +569,9 @@ internal class CounterpartyCreateParamsTest {
                         .email("email")
                         .firstName("first_name")
                         .addIdentification(
-                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                .IdentificationCreateRequest
-                                .builder()
+                            IdentificationCreateRequest.builder()
                                 .idNumber("id_number")
-                                .idType(
-                                    CounterpartyCreateParams.LegalEntityCreateRequest
-                                        .IdentificationCreateRequest
-                                        .IdType
-                                        .AR_CUIL
-                                )
+                                .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                                 .expirationDate(LocalDate.parse("2019-12-27"))
                                 .issuingCountry("issuing_country")
                                 .issuingRegion("issuing_region")
@@ -687,28 +603,16 @@ internal class CounterpartyCreateParamsTest {
                                         .BENEFICIAL_OWNER
                                 )
                                 .childLegalEntity(
-                                    CounterpartyCreateParams.LegalEntityCreateRequest
-                                        .LegalEntityAssociationInlineCreateRequest
-                                        .ChildLegalEntityCreate
-                                        .builder()
+                                    ChildLegalEntityCreate.builder()
                                         .addAddress(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .LegalEntityAddressCreateRequest
-                                                .builder()
+                                            LegalEntityAddressCreateRequest.builder()
                                                 .country("country")
                                                 .line1("line1")
                                                 .locality("locality")
                                                 .postalCode("postal_code")
                                                 .region("region")
                                                 .addAddressType(
-                                                    CounterpartyCreateParams
-                                                        .LegalEntityCreateRequest
-                                                        .LegalEntityAssociationInlineCreateRequest
-                                                        .ChildLegalEntityCreate
-                                                        .LegalEntityAddressCreateRequest
-                                                        .AddressType
+                                                    LegalEntityAddressCreateRequest.AddressType
                                                         .BUSINESS
                                                 )
                                                 .line2("line2")
@@ -770,21 +674,9 @@ internal class CounterpartyCreateParamsTest {
                                         .email("email")
                                         .firstName("first_name")
                                         .addIdentification(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .IdentificationCreateRequest
-                                                .builder()
+                                            IdentificationCreateRequest.builder()
                                                 .idNumber("id_number")
-                                                .idType(
-                                                    CounterpartyCreateParams
-                                                        .LegalEntityCreateRequest
-                                                        .LegalEntityAssociationInlineCreateRequest
-                                                        .ChildLegalEntityCreate
-                                                        .IdentificationCreateRequest
-                                                        .IdType
-                                                        .AR_CUIL
-                                                )
+                                                .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                                                 .expirationDate(LocalDate.parse("2019-12-27"))
                                                 .issuingCountry("issuing_country")
                                                 .issuingRegion("issuing_region")
@@ -814,25 +706,13 @@ internal class CounterpartyCreateParamsTest {
                                         )
                                         .lastName("last_name")
                                         .legalEntityType(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .LegalEntityType
-                                                .BUSINESS
+                                            ChildLegalEntityCreate.LegalEntityType.BUSINESS
                                         )
                                         .legalStructure(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .LegalStructure
-                                                .CORPORATION
+                                            ChildLegalEntityCreate.LegalStructure.CORPORATION
                                         )
                                         .metadata(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .Metadata
-                                                .builder()
+                                            ChildLegalEntityCreate.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "key",
                                                     JsonValue.from("value"),
@@ -846,24 +726,14 @@ internal class CounterpartyCreateParamsTest {
                                         )
                                         .middleName("middle_name")
                                         .addPhoneNumber(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .PhoneNumber
-                                                .builder()
+                                            ChildLegalEntityCreate.PhoneNumber.builder()
                                                 .phoneNumber("phone_number")
                                                 .build()
                                         )
                                         .politicallyExposedPerson(true)
                                         .preferredName("preferred_name")
                                         .prefix("prefix")
-                                        .riskRating(
-                                            CounterpartyCreateParams.LegalEntityCreateRequest
-                                                .LegalEntityAssociationInlineCreateRequest
-                                                .ChildLegalEntityCreate
-                                                .RiskRating
-                                                .LOW
-                                        )
+                                        .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                         .suffix("suffix")
                                         .wealthAndEmploymentDetails(
                                             WealthAndEmploymentDetails.builder()
@@ -1005,17 +875,15 @@ internal class CounterpartyCreateParamsTest {
                     )
                     .accountType(ExternalAccountType.BASE_WALLET)
                     .addContactDetail(
-                        CounterpartyCreateParams.Account.ContactDetailCreateRequest.builder()
+                        ContactDetailCreateRequest.builder()
                             .contactIdentifier("contact_identifier")
                             .contactIdentifierType(
-                                CounterpartyCreateParams.Account.ContactDetailCreateRequest
-                                    .ContactIdentifierType
-                                    .EMAIL
+                                ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                             )
                             .build()
                     )
                     .ledgerAccount(
-                        CounterpartyCreateParams.Account.LedgerAccountCreateRequest.builder()
+                        LedgerAccountCreateRequest.builder()
                             .currency("currency")
                             .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .name("name")
@@ -1024,14 +892,9 @@ internal class CounterpartyCreateParamsTest {
                             .description("description")
                             .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .ledgerableType(
-                                CounterpartyCreateParams.Account.LedgerAccountCreateRequest
-                                    .LedgerableType
-                                    .COUNTERPARTY
-                            )
+                            .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
                             .metadata(
-                                CounterpartyCreateParams.Account.LedgerAccountCreateRequest.Metadata
-                                    .builder()
+                                LedgerAccountCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -1048,7 +911,7 @@ internal class CounterpartyCreateParamsTest {
                     )
                     .name("name")
                     .partyAddress(
-                        CounterpartyCreateParams.Account.AddressRequest.builder()
+                        AddressRequest.builder()
                             .country("country")
                             .line1("line1")
                             .line2("line2")
@@ -1083,20 +946,13 @@ internal class CounterpartyCreateParamsTest {
                         CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityType.BUSINESS
                     )
                     .addAddress(
-                        CounterpartyCreateParams.LegalEntityCreateRequest
-                            .LegalEntityAddressCreateRequest
-                            .builder()
+                        LegalEntityAddressCreateRequest.builder()
                             .country("country")
                             .line1("line1")
                             .locality("locality")
                             .postalCode("postal_code")
                             .region("region")
-                            .addAddressType(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .LegalEntityAddressCreateRequest
-                                    .AddressType
-                                    .BUSINESS
-                            )
+                            .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
                             .build()
                     )
@@ -1138,16 +994,9 @@ internal class CounterpartyCreateParamsTest {
                     .email("email")
                     .firstName("first_name")
                     .addIdentification(
-                        CounterpartyCreateParams.LegalEntityCreateRequest
-                            .IdentificationCreateRequest
-                            .builder()
+                        IdentificationCreateRequest.builder()
                             .idNumber("id_number")
-                            .idType(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .IdentificationCreateRequest
-                                    .IdType
-                                    .AR_CUIL
-                            )
+                            .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                             .expirationDate(LocalDate.parse("2019-12-27"))
                             .issuingCountry("issuing_country")
                             .issuingRegion("issuing_region")
@@ -1179,28 +1028,16 @@ internal class CounterpartyCreateParamsTest {
                                     .BENEFICIAL_OWNER
                             )
                             .childLegalEntity(
-                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                    .LegalEntityAssociationInlineCreateRequest
-                                    .ChildLegalEntityCreate
-                                    .builder()
+                                ChildLegalEntityCreate.builder()
                                     .addAddress(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalEntityAddressCreateRequest
-                                            .builder()
+                                        LegalEntityAddressCreateRequest.builder()
                                             .country("country")
                                             .line1("line1")
                                             .locality("locality")
                                             .postalCode("postal_code")
                                             .region("region")
                                             .addAddressType(
-                                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                                    .LegalEntityAssociationInlineCreateRequest
-                                                    .ChildLegalEntityCreate
-                                                    .LegalEntityAddressCreateRequest
-                                                    .AddressType
-                                                    .BUSINESS
+                                                LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                             )
                                             .line2("line2")
                                             .build()
@@ -1261,20 +1098,9 @@ internal class CounterpartyCreateParamsTest {
                                     .email("email")
                                     .firstName("first_name")
                                     .addIdentification(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .IdentificationCreateRequest
-                                            .builder()
+                                        IdentificationCreateRequest.builder()
                                             .idNumber("id_number")
-                                            .idType(
-                                                CounterpartyCreateParams.LegalEntityCreateRequest
-                                                    .LegalEntityAssociationInlineCreateRequest
-                                                    .ChildLegalEntityCreate
-                                                    .IdentificationCreateRequest
-                                                    .IdType
-                                                    .AR_CUIL
-                                            )
+                                            .idType(IdentificationCreateRequest.IdType.AR_CUIL)
                                             .expirationDate(LocalDate.parse("2019-12-27"))
                                             .issuingCountry("issuing_country")
                                             .issuingRegion("issuing_region")
@@ -1303,25 +1129,13 @@ internal class CounterpartyCreateParamsTest {
                                     )
                                     .lastName("last_name")
                                     .legalEntityType(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalEntityType
-                                            .BUSINESS
+                                        ChildLegalEntityCreate.LegalEntityType.BUSINESS
                                     )
                                     .legalStructure(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .LegalStructure
-                                            .CORPORATION
+                                        ChildLegalEntityCreate.LegalStructure.CORPORATION
                                     )
                                     .metadata(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .Metadata
-                                            .builder()
+                                        ChildLegalEntityCreate.Metadata.builder()
                                             .putAdditionalProperty("key", JsonValue.from("value"))
                                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                                             .putAdditionalProperty(
@@ -1332,24 +1146,14 @@ internal class CounterpartyCreateParamsTest {
                                     )
                                     .middleName("middle_name")
                                     .addPhoneNumber(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .PhoneNumber
-                                            .builder()
+                                        ChildLegalEntityCreate.PhoneNumber.builder()
                                             .phoneNumber("phone_number")
                                             .build()
                                     )
                                     .politicallyExposedPerson(true)
                                     .preferredName("preferred_name")
                                     .prefix("prefix")
-                                    .riskRating(
-                                        CounterpartyCreateParams.LegalEntityCreateRequest
-                                            .LegalEntityAssociationInlineCreateRequest
-                                            .ChildLegalEntityCreate
-                                            .RiskRating
-                                            .LOW
-                                    )
+                                    .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                     .suffix("suffix")
                                     .wealthAndEmploymentDetails(
                                         WealthAndEmploymentDetails.builder()
