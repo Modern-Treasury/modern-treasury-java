@@ -10,6 +10,8 @@ import com.moderntreasury.api.models.InternalAccountCreateParams
 import com.moderntreasury.api.models.InternalAccountListPageAsync
 import com.moderntreasury.api.models.InternalAccountListParams
 import com.moderntreasury.api.models.InternalAccountRetrieveParams
+import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityParams
+import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityResponse
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServiceAsync
 import java.util.concurrent.CompletableFuture
@@ -123,6 +125,33 @@ interface InternalAccountServiceAsync {
     /** @see [list] */
     fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none(), requestOptions)
+
+    /** update account_capability */
+    fun updateAccountCapability(
+        id: String,
+        params: InternalAccountUpdateAccountCapabilityParams,
+    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
+        updateAccountCapability(id, params, RequestOptions.none())
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        id: String,
+        params: InternalAccountUpdateAccountCapabilityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
+        updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        params: InternalAccountUpdateAccountCapabilityParams
+    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
+        updateAccountCapability(params, RequestOptions.none())
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        params: InternalAccountUpdateAccountCapabilityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse>
 
     /**
      * A view of [InternalAccountServiceAsync] that provides access to raw HTTP responses for each
@@ -262,5 +291,36 @@ interface InternalAccountServiceAsync {
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(InternalAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `patch
+         * /api/internal_accounts/{internal_account_id}/account_capabilities/{id}`, but is otherwise
+         * the same as [InternalAccountServiceAsync.updateAccountCapability].
+         */
+        fun updateAccountCapability(
+            id: String,
+            params: InternalAccountUpdateAccountCapabilityParams,
+        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+            updateAccountCapability(id, params, RequestOptions.none())
+
+        /** @see [updateAccountCapability] */
+        fun updateAccountCapability(
+            id: String,
+            params: InternalAccountUpdateAccountCapabilityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+            updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [updateAccountCapability] */
+        fun updateAccountCapability(
+            params: InternalAccountUpdateAccountCapabilityParams
+        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+            updateAccountCapability(params, RequestOptions.none())
+
+        /** @see [updateAccountCapability] */
+        fun updateAccountCapability(
+            params: InternalAccountUpdateAccountCapabilityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>>
     }
 }
