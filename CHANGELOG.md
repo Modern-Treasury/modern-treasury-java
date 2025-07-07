@@ -1,5 +1,34 @@
 # Changelog
 
+## 7.3.0 (2025-07-07)
+
+Full Changelog: [v7.2.1...v7.3.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.1...v7.3.0)
+
+### Features
+
+* **api:** api update ([9878971](https://github.com/Modern-Treasury/modern-treasury-java/commit/98789718b8e741323afe82d448c50381804a5e01))
+* **api:** api update ([8228c82](https://github.com/Modern-Treasury/modern-treasury-java/commit/8228c821222c56856de81474b5a9b6c4e2f0ad5d))
+* **api:** api update ([f3457f3](https://github.com/Modern-Treasury/modern-treasury-java/commit/f3457f3b69b52f74b567564d8e4d87733d696234))
+* **api:** api update ([ebebe01](https://github.com/Modern-Treasury/modern-treasury-java/commit/ebebe014e88a325e69da23f561de25a5c66df629))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([9d417db](https://github.com/Modern-Treasury/modern-treasury-java/commit/9d417dbb348fafa717552871c43e7c566c9394a9))
+* **client:** bump max requests per host to max requests (5 -&gt; 64) ([7467ae9](https://github.com/Modern-Treasury/modern-treasury-java/commit/7467ae93d624e154e26cd89ee2dea2155148d547))
+* **client:** don't close client on `withOptions` usage when original is gc'd ([78a9080](https://github.com/Modern-Treasury/modern-treasury-java/commit/78a90809fc50f58241e1c35ba842d83814b8be11))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([82124d0](https://github.com/Modern-Treasury/modern-treasury-java/commit/82124d011ac3ee26f31df1e4394caed473944491))
+* **ci:** only run for pushes and fork pull requests ([f36a1a9](https://github.com/Modern-Treasury/modern-treasury-java/commit/f36a1a9f6ab1e0b87f6f9d5f1602848f1a3b2569))
+
+
+### Refactors
+
+* **internal:** minor `ClientOptionsTest` change ([b4a712e](https://github.com/Modern-Treasury/modern-treasury-java/commit/b4a712e2380c527751c74777f8eedcd8729cf518))
+
 ## 7.2.1 (2025-06-16)
 
 Full Changelog: [v7.2.0...v7.2.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.0...v7.2.1)
