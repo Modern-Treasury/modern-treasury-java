@@ -11,6 +11,8 @@ import com.moderntreasury.api.models.InternalAccountCreateParams
 import com.moderntreasury.api.models.InternalAccountListPage
 import com.moderntreasury.api.models.InternalAccountListParams
 import com.moderntreasury.api.models.InternalAccountRetrieveParams
+import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityParams
+import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityResponse
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportService
 import java.util.function.Consumer
@@ -118,6 +120,33 @@ interface InternalAccountService {
     /** @see [list] */
     fun list(requestOptions: RequestOptions): InternalAccountListPage =
         list(InternalAccountListParams.none(), requestOptions)
+
+    /** update account_capability */
+    fun updateAccountCapability(
+        id: String,
+        params: InternalAccountUpdateAccountCapabilityParams,
+    ): InternalAccountUpdateAccountCapabilityResponse =
+        updateAccountCapability(id, params, RequestOptions.none())
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        id: String,
+        params: InternalAccountUpdateAccountCapabilityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InternalAccountUpdateAccountCapabilityResponse =
+        updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        params: InternalAccountUpdateAccountCapabilityParams
+    ): InternalAccountUpdateAccountCapabilityResponse =
+        updateAccountCapability(params, RequestOptions.none())
+
+    /** @see [updateAccountCapability] */
+    fun updateAccountCapability(
+        params: InternalAccountUpdateAccountCapabilityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InternalAccountUpdateAccountCapabilityResponse
 
     /**
      * A view of [InternalAccountService] that provides access to raw HTTP responses for each
@@ -258,5 +287,40 @@ interface InternalAccountService {
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<InternalAccountListPage> =
             list(InternalAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `patch
+         * /api/internal_accounts/{internal_account_id}/account_capabilities/{id}`, but is otherwise
+         * the same as [InternalAccountService.updateAccountCapability].
+         */
+        @MustBeClosed
+        fun updateAccountCapability(
+            id: String,
+            params: InternalAccountUpdateAccountCapabilityParams,
+        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+            updateAccountCapability(id, params, RequestOptions.none())
+
+        /** @see [updateAccountCapability] */
+        @MustBeClosed
+        fun updateAccountCapability(
+            id: String,
+            params: InternalAccountUpdateAccountCapabilityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+            updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [updateAccountCapability] */
+        @MustBeClosed
+        fun updateAccountCapability(
+            params: InternalAccountUpdateAccountCapabilityParams
+        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+            updateAccountCapability(params, RequestOptions.none())
+
+        /** @see [updateAccountCapability] */
+        @MustBeClosed
+        fun updateAccountCapability(
+            params: InternalAccountUpdateAccountCapabilityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>
     }
 }
