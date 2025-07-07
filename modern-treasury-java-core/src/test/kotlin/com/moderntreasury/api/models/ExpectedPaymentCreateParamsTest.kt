@@ -24,46 +24,32 @@ internal class ExpectedPaymentCreateParamsTest {
             .direction(ExpectedPaymentCreateParams.Direction.CREDIT)
             .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .ledgerTransaction(
-                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.builder()
+                LedgerTransactionCreateRequest.builder()
                     .addLedgerEntry(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                            .LedgerEntryCreateRequest
-                            .builder()
+                        LedgerEntryCreateRequest.builder()
                             .amount(0L)
                             .direction(TransactionDirection.CREDIT)
                             .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .availableBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .AvailableBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
                             .lockVersion(0L)
                             .metadata(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .Metadata
-                                    .builder()
+                                LedgerEntryCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                     .build()
                             )
                             .pendingBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .PendingBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.PendingBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
                             .postedBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .PostedBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.PostedBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
@@ -75,21 +61,15 @@ internal class ExpectedPaymentCreateParamsTest {
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .externalId("external_id")
                     .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .ledgerableType(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.LedgerableType
-                            .EXPECTED_PAYMENT
-                    )
+                    .ledgerableType(LedgerTransactionCreateRequest.LedgerableType.EXPECTED_PAYMENT)
                     .metadata(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Metadata
-                            .builder()
+                        LedgerTransactionCreateRequest.Metadata.builder()
                             .putAdditionalProperty("key", JsonValue.from("value"))
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .putAdditionalProperty("modern", JsonValue.from("treasury"))
                             .build()
                     )
-                    .status(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Status.ARCHIVED
-                    )
+                    .status(LedgerTransactionCreateRequest.Status.ARCHIVED)
                     .build()
             )
             .ledgerTransactionId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -154,46 +134,32 @@ internal class ExpectedPaymentCreateParamsTest {
                 .direction(ExpectedPaymentCreateParams.Direction.CREDIT)
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .ledgerTransaction(
-                    ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.builder()
+                    LedgerTransactionCreateRequest.builder()
                         .addLedgerEntry(
-                            ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                .LedgerEntryCreateRequest
-                                .builder()
+                            LedgerEntryCreateRequest.builder()
                                 .amount(0L)
                                 .direction(TransactionDirection.CREDIT)
                                 .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .availableBalanceAmount(
-                                    ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                        .LedgerEntryCreateRequest
-                                        .AvailableBalanceAmount
-                                        .builder()
+                                    LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
                                         .putAdditionalProperty("foo", JsonValue.from(0))
                                         .build()
                                 )
                                 .lockVersion(0L)
                                 .metadata(
-                                    ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                        .LedgerEntryCreateRequest
-                                        .Metadata
-                                        .builder()
+                                    LedgerEntryCreateRequest.Metadata.builder()
                                         .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                         .build()
                                 )
                                 .pendingBalanceAmount(
-                                    ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                        .LedgerEntryCreateRequest
-                                        .PendingBalanceAmount
-                                        .builder()
+                                    LedgerEntryCreateRequest.PendingBalanceAmount.builder()
                                         .putAdditionalProperty("foo", JsonValue.from(0))
                                         .build()
                                 )
                                 .postedBalanceAmount(
-                                    ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                        .LedgerEntryCreateRequest
-                                        .PostedBalanceAmount
-                                        .builder()
+                                    LedgerEntryCreateRequest.PostedBalanceAmount.builder()
                                         .putAdditionalProperty("foo", JsonValue.from(0))
                                         .build()
                                 )
@@ -206,22 +172,16 @@ internal class ExpectedPaymentCreateParamsTest {
                         .externalId("external_id")
                         .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .ledgerableType(
-                            ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                .LedgerableType
-                                .EXPECTED_PAYMENT
+                            LedgerTransactionCreateRequest.LedgerableType.EXPECTED_PAYMENT
                         )
                         .metadata(
-                            ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Metadata
-                                .builder()
+                            LedgerTransactionCreateRequest.Metadata.builder()
                                 .putAdditionalProperty("key", JsonValue.from("value"))
                                 .putAdditionalProperty("foo", JsonValue.from("bar"))
                                 .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                 .build()
                         )
-                        .status(
-                            ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Status
-                                .ARCHIVED
-                        )
+                        .status(LedgerTransactionCreateRequest.Status.ARCHIVED)
                         .build()
                 )
                 .ledgerTransactionId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -284,46 +244,32 @@ internal class ExpectedPaymentCreateParamsTest {
         assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.ledgerTransaction())
             .contains(
-                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.builder()
+                LedgerTransactionCreateRequest.builder()
                     .addLedgerEntry(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                            .LedgerEntryCreateRequest
-                            .builder()
+                        LedgerEntryCreateRequest.builder()
                             .amount(0L)
                             .direction(TransactionDirection.CREDIT)
                             .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .availableBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .AvailableBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
                             .lockVersion(0L)
                             .metadata(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .Metadata
-                                    .builder()
+                                LedgerEntryCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                     .build()
                             )
                             .pendingBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .PendingBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.PendingBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
                             .postedBalanceAmount(
-                                ExpectedPaymentCreateParams.LedgerTransactionCreateRequest
-                                    .LedgerEntryCreateRequest
-                                    .PostedBalanceAmount
-                                    .builder()
+                                LedgerEntryCreateRequest.PostedBalanceAmount.builder()
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
@@ -335,21 +281,15 @@ internal class ExpectedPaymentCreateParamsTest {
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .externalId("external_id")
                     .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .ledgerableType(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.LedgerableType
-                            .EXPECTED_PAYMENT
-                    )
+                    .ledgerableType(LedgerTransactionCreateRequest.LedgerableType.EXPECTED_PAYMENT)
                     .metadata(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Metadata
-                            .builder()
+                        LedgerTransactionCreateRequest.Metadata.builder()
                             .putAdditionalProperty("key", JsonValue.from("value"))
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .putAdditionalProperty("modern", JsonValue.from("treasury"))
                             .build()
                     )
-                    .status(
-                        ExpectedPaymentCreateParams.LedgerTransactionCreateRequest.Status.ARCHIVED
-                    )
+                    .status(LedgerTransactionCreateRequest.Status.ARCHIVED)
                     .build()
             )
         assertThat(body.ledgerTransactionId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")

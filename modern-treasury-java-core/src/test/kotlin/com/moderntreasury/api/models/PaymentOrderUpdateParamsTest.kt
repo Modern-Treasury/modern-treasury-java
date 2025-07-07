@@ -16,7 +16,7 @@ internal class PaymentOrderUpdateParamsTest {
         PaymentOrderUpdateParams.builder()
             .id("id")
             .accounting(
-                PaymentOrderUpdateParams.Accounting.builder()
+                Accounting.builder()
                     .accountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .classId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
@@ -77,19 +77,15 @@ internal class PaymentOrderUpdateParamsTest {
                     )
                     .accountType(ExternalAccountType.BASE_WALLET)
                     .addContactDetail(
-                        PaymentOrderUpdateParams.ReceivingAccount.ContactDetailCreateRequest
-                            .builder()
+                        ContactDetailCreateRequest.builder()
                             .contactIdentifier("contact_identifier")
                             .contactIdentifierType(
-                                PaymentOrderUpdateParams.ReceivingAccount.ContactDetailCreateRequest
-                                    .ContactIdentifierType
-                                    .EMAIL
+                                ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                             )
                             .build()
                     )
                     .ledgerAccount(
-                        PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                            .builder()
+                        LedgerAccountCreateRequest.builder()
                             .currency("currency")
                             .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .name("name")
@@ -98,15 +94,9 @@ internal class PaymentOrderUpdateParamsTest {
                             .description("description")
                             .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .ledgerableType(
-                                PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                                    .LedgerableType
-                                    .COUNTERPARTY
-                            )
+                            .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
                             .metadata(
-                                PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                                    .Metadata
-                                    .builder()
+                                LedgerAccountCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -123,7 +113,7 @@ internal class PaymentOrderUpdateParamsTest {
                     )
                     .name("name")
                     .partyAddress(
-                        PaymentOrderUpdateParams.ReceivingAccount.AddressRequest.builder()
+                        AddressRequest.builder()
                             .country("country")
                             .line1("line1")
                             .line2("line2")
@@ -181,7 +171,7 @@ internal class PaymentOrderUpdateParamsTest {
             PaymentOrderUpdateParams.builder()
                 .id("id")
                 .accounting(
-                    PaymentOrderUpdateParams.Accounting.builder()
+                    Accounting.builder()
                         .accountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .classId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .build()
@@ -242,20 +232,15 @@ internal class PaymentOrderUpdateParamsTest {
                         )
                         .accountType(ExternalAccountType.BASE_WALLET)
                         .addContactDetail(
-                            PaymentOrderUpdateParams.ReceivingAccount.ContactDetailCreateRequest
-                                .builder()
+                            ContactDetailCreateRequest.builder()
                                 .contactIdentifier("contact_identifier")
                                 .contactIdentifierType(
-                                    PaymentOrderUpdateParams.ReceivingAccount
-                                        .ContactDetailCreateRequest
-                                        .ContactIdentifierType
-                                        .EMAIL
+                                    ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                                 )
                                 .build()
                         )
                         .ledgerAccount(
-                            PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                                .builder()
+                            LedgerAccountCreateRequest.builder()
                                 .currency("currency")
                                 .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .name("name")
@@ -265,16 +250,10 @@ internal class PaymentOrderUpdateParamsTest {
                                 .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .ledgerableType(
-                                    PaymentOrderUpdateParams.ReceivingAccount
-                                        .LedgerAccountCreateRequest
-                                        .LedgerableType
-                                        .COUNTERPARTY
+                                    LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY
                                 )
                                 .metadata(
-                                    PaymentOrderUpdateParams.ReceivingAccount
-                                        .LedgerAccountCreateRequest
-                                        .Metadata
-                                        .builder()
+                                    LedgerAccountCreateRequest.Metadata.builder()
                                         .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -291,7 +270,7 @@ internal class PaymentOrderUpdateParamsTest {
                         )
                         .name("name")
                         .partyAddress(
-                            PaymentOrderUpdateParams.ReceivingAccount.AddressRequest.builder()
+                            AddressRequest.builder()
                                 .country("country")
                                 .line1("line1")
                                 .line2("line2")
@@ -338,7 +317,7 @@ internal class PaymentOrderUpdateParamsTest {
 
         assertThat(body.accounting())
             .contains(
-                PaymentOrderUpdateParams.Accounting.builder()
+                Accounting.builder()
                     .accountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .classId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
@@ -401,19 +380,15 @@ internal class PaymentOrderUpdateParamsTest {
                     )
                     .accountType(ExternalAccountType.BASE_WALLET)
                     .addContactDetail(
-                        PaymentOrderUpdateParams.ReceivingAccount.ContactDetailCreateRequest
-                            .builder()
+                        ContactDetailCreateRequest.builder()
                             .contactIdentifier("contact_identifier")
                             .contactIdentifierType(
-                                PaymentOrderUpdateParams.ReceivingAccount.ContactDetailCreateRequest
-                                    .ContactIdentifierType
-                                    .EMAIL
+                                ContactDetailCreateRequest.ContactIdentifierType.EMAIL
                             )
                             .build()
                     )
                     .ledgerAccount(
-                        PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                            .builder()
+                        LedgerAccountCreateRequest.builder()
                             .currency("currency")
                             .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .name("name")
@@ -422,15 +397,9 @@ internal class PaymentOrderUpdateParamsTest {
                             .description("description")
                             .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .ledgerableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .ledgerableType(
-                                PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                                    .LedgerableType
-                                    .COUNTERPARTY
-                            )
+                            .ledgerableType(LedgerAccountCreateRequest.LedgerableType.COUNTERPARTY)
                             .metadata(
-                                PaymentOrderUpdateParams.ReceivingAccount.LedgerAccountCreateRequest
-                                    .Metadata
-                                    .builder()
+                                LedgerAccountCreateRequest.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -447,7 +416,7 @@ internal class PaymentOrderUpdateParamsTest {
                     )
                     .name("name")
                     .partyAddress(
-                        PaymentOrderUpdateParams.ReceivingAccount.AddressRequest.builder()
+                        AddressRequest.builder()
                             .country("country")
                             .line1("line1")
                             .line2("line2")
