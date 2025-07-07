@@ -2205,6 +2205,8 @@ private constructor(
 
             @JvmField val GOLDMAN_SACHS = of("goldman_sachs")
 
+            @JvmField val HIFI = of("hifi")
+
             @JvmField val ISO20022 = of("iso20022")
 
             @JvmField val JPMC = of("jpmc")
@@ -2248,6 +2250,7 @@ private constructor(
             DWOLLA,
             EVOLVE,
             GOLDMAN_SACHS,
+            HIFI,
             ISO20022,
             JPMC,
             MX,
@@ -2286,6 +2289,7 @@ private constructor(
             DWOLLA,
             EVOLVE,
             GOLDMAN_SACHS,
+            HIFI,
             ISO20022,
             JPMC,
             MX,
@@ -2328,6 +2332,7 @@ private constructor(
                 DWOLLA -> Value.DWOLLA
                 EVOLVE -> Value.EVOLVE
                 GOLDMAN_SACHS -> Value.GOLDMAN_SACHS
+                HIFI -> Value.HIFI
                 ISO20022 -> Value.ISO20022
                 JPMC -> Value.JPMC
                 MX -> Value.MX
@@ -2368,6 +2373,7 @@ private constructor(
                 DWOLLA -> Known.DWOLLA
                 EVOLVE -> Known.EVOLVE
                 GOLDMAN_SACHS -> Known.GOLDMAN_SACHS
+                HIFI -> Known.HIFI
                 ISO20022 -> Known.ISO20022
                 JPMC -> Known.JPMC
                 MX -> Known.MX
