@@ -765,6 +765,9 @@ private constructor(
 
         companion object {
 
+            @JvmField
+            val EVOLVE_NON_PROCESSING_TRANSACTION = of("evolve_non_processing_transaction")
+
             @JvmField val STOP = of("stop")
 
             @JvmField val ISSUE = of("issue")
@@ -774,6 +777,7 @@ private constructor(
 
         /** An enum containing [Type]'s known values. */
         enum class Known {
+            EVOLVE_NON_PROCESSING_TRANSACTION,
             STOP,
             ISSUE,
         }
@@ -788,6 +792,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            EVOLVE_NON_PROCESSING_TRANSACTION,
             STOP,
             ISSUE,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
@@ -803,6 +808,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                EVOLVE_NON_PROCESSING_TRANSACTION -> Value.EVOLVE_NON_PROCESSING_TRANSACTION
                 STOP -> Value.STOP
                 ISSUE -> Value.ISSUE
                 else -> Value._UNKNOWN
@@ -819,6 +825,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                EVOLVE_NON_PROCESSING_TRANSACTION -> Known.EVOLVE_NON_PROCESSING_TRANSACTION
                 STOP -> Known.STOP
                 ISSUE -> Known.ISSUE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
