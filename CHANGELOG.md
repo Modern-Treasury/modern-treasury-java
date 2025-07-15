@@ -1,5 +1,25 @@
 # Changelog
 
+## 7.4.0 (2025-07-15)
+
+Full Changelog: [v7.3.0...v7.4.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.3.0...v7.4.0)
+
+### Features
+
+* **api:** api update ([f39b4e7](https://github.com/Modern-Treasury/modern-treasury-java/commit/f39b4e790a1f1093c0fe8207e065162c445139c6))
+* **api:** api update ([17e0081](https://github.com/Modern-Treasury/modern-treasury-java/commit/17e0081003cb4f56f296de5d298892c35b7f7903))
+* **api:** api update ([aa26088](https://github.com/Modern-Treasury/modern-treasury-java/commit/aa26088b32a45424b84d1fe6dd5a15e8eef9d18f))
+* **api:** api update ([d99621d](https://github.com/Modern-Treasury/modern-treasury-java/commit/d99621d787bdbf5a9ea0a38c0c3a7a4941e4c830))
+* **api:** manual updates ([bfaed4f](https://github.com/Modern-Treasury/modern-treasury-java/commit/bfaed4f16d8eb1c1ce676f2f50b888f88fdbb3ea))
+* **api:** manual updates ([000721d](https://github.com/Modern-Treasury/modern-treasury-java/commit/000721db403fe4e4a5356ab2f5bf51a2610135c6))
+* **api:** manual updates ([37e2fee](https://github.com/Modern-Treasury/modern-treasury-java/commit/37e2fee8b8af602db02872d4deff0dbd0482ac2b))
+* **api:** manual updates ([b8d9967](https://github.com/Modern-Treasury/modern-treasury-java/commit/b8d996772172fa3b8beabf55c6bcfef12ccea5f2))
+
+
+### Chores
+
+* **ci:** ensure docs generation always succeeds ([c91aa66](https://github.com/Modern-Treasury/modern-treasury-java/commit/c91aa663f773400b993fdce6c9bbec2929e409a7))
+
 ## 7.3.0 (2025-07-07)
 
 Full Changelog: [v7.2.1...v7.3.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.2.1...v7.3.0)
