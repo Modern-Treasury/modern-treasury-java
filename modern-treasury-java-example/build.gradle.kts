@@ -17,5 +17,12 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 application {
-    mainClass = "com.moderntreasury.api.example.Main"
+    // Use `./gradlew :modern-treasury-java-example:run` to run `Main`
+    // Use `./gradlew :modern-treasury-java-example:run -Dexample=Something` to run `SomethingExample`
+    mainClass = "com.moderntreasury.api.example.${
+        if (project.hasProperty("example"))
+            "${project.property("example")}Example"
+        else
+            "Main"
+    }"
 }
