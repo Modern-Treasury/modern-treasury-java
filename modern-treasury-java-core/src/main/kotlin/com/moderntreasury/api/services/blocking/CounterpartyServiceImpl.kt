@@ -3,13 +3,12 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse
@@ -85,7 +84,8 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CounterpartyService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -95,7 +95,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             )
 
         private val createHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Counterparty>(clientOptions.jsonMapper)
 
         override fun create(
             params: CounterpartyCreateParams,
@@ -111,7 +111,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -123,7 +123,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Counterparty>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: CounterpartyRetrieveParams,
@@ -141,7 +141,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -153,7 +153,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val updateHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Counterparty>(clientOptions.jsonMapper)
 
         override fun update(
             params: CounterpartyUpdateParams,
@@ -172,7 +172,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -184,7 +184,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val listHandler: Handler<List<Counterparty>> =
-            jsonHandler<List<Counterparty>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<List<Counterparty>>(clientOptions.jsonMapper)
 
         override fun list(
             params: CounterpartyListParams,
@@ -199,7 +199,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -218,7 +218,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Void?> = emptyHandler()
 
         override fun delete(
             params: CounterpartyDeleteParams,
@@ -237,12 +237,13 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { deleteHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { deleteHandler.handle(it) }
+            }
         }
 
         private val collectAccountHandler: Handler<CounterpartyCollectAccountResponse> =
             jsonHandler<CounterpartyCollectAccountResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun collectAccount(
             params: CounterpartyCollectAccountParams,
@@ -266,7 +267,7 @@ class CounterpartyServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { collectAccountHandler.handle(it) }
                     .also {

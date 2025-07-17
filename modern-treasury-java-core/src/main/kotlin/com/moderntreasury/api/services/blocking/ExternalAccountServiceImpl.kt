@@ -3,13 +3,12 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse
@@ -93,7 +92,8 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ExternalAccountService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -103,7 +103,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             )
 
         private val createHandler: Handler<ExternalAccount> =
-            jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExternalAccount>(clientOptions.jsonMapper)
 
         override fun create(
             params: ExternalAccountCreateParams,
@@ -119,7 +119,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -131,7 +131,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
         }
 
         private val retrieveHandler: Handler<ExternalAccount> =
-            jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExternalAccount>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: ExternalAccountRetrieveParams,
@@ -149,7 +149,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -161,7 +161,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
         }
 
         private val updateHandler: Handler<ExternalAccount> =
-            jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExternalAccount>(clientOptions.jsonMapper)
 
         override fun update(
             params: ExternalAccountUpdateParams,
@@ -180,7 +180,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -193,7 +193,6 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
 
         private val listHandler: Handler<List<ExternalAccount>> =
             jsonHandler<List<ExternalAccount>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ExternalAccountListParams,
@@ -208,7 +207,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -227,7 +226,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Void?> = emptyHandler()
 
         override fun delete(
             params: ExternalAccountDeleteParams,
@@ -246,11 +245,13 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { deleteHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { deleteHandler.handle(it) }
+            }
         }
 
         private val completeVerificationHandler: Handler<ExternalAccount> =
-            jsonHandler<ExternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExternalAccount>(clientOptions.jsonMapper)
 
         override fun completeVerification(
             params: ExternalAccountCompleteVerificationParams,
@@ -274,7 +275,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { completeVerificationHandler.handle(it) }
                     .also {
@@ -287,7 +288,6 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
 
         private val verifyHandler: Handler<ExternalAccountVerifyResponse> =
             jsonHandler<ExternalAccountVerifyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun verify(
             params: ExternalAccountVerifyParams,
@@ -306,7 +306,7 @@ class ExternalAccountServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { verifyHandler.handle(it) }
                     .also {

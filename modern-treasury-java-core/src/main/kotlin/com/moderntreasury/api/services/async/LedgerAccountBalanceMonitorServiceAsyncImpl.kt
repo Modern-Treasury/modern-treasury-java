@@ -3,14 +3,14 @@
 package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
@@ -83,7 +83,8 @@ internal constructor(private val clientOptions: ClientOptions) :
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         LedgerAccountBalanceMonitorServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -94,7 +95,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val createHandler: Handler<LedgerAccountBalanceMonitor> =
             jsonHandler<LedgerAccountBalanceMonitor>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: LedgerAccountBalanceMonitorCreateParams,
@@ -112,7 +112,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -126,7 +126,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val retrieveHandler: Handler<LedgerAccountBalanceMonitor> =
             jsonHandler<LedgerAccountBalanceMonitor>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: LedgerAccountBalanceMonitorRetrieveParams,
@@ -146,7 +145,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -160,7 +159,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val updateHandler: Handler<LedgerAccountBalanceMonitor> =
             jsonHandler<LedgerAccountBalanceMonitor>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: LedgerAccountBalanceMonitorUpdateParams,
@@ -181,7 +179,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -195,7 +193,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val listHandler: Handler<List<LedgerAccountBalanceMonitor>> =
             jsonHandler<List<LedgerAccountBalanceMonitor>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: LedgerAccountBalanceMonitorListParams,
@@ -212,7 +209,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -237,7 +234,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val deleteHandler: Handler<LedgerAccountBalanceMonitor> =
             jsonHandler<LedgerAccountBalanceMonitor>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: LedgerAccountBalanceMonitorDeleteParams,
@@ -258,7 +254,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

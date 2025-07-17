@@ -3,13 +3,12 @@
 package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.emptyHandler
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse
@@ -71,7 +70,8 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         AccountDetailServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -81,7 +81,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             )
 
         private val createHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
 
         override fun create(
             params: AccountDetailCreateParams,
@@ -107,7 +107,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -120,7 +120,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
         }
 
         private val retrieveHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: AccountDetailRetrieveParams,
@@ -146,7 +146,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -160,7 +160,6 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
 
         private val listHandler: Handler<List<AccountDetail>> =
             jsonHandler<List<AccountDetail>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: AccountDetailListParams,
@@ -185,7 +184,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -206,7 +205,7 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Void?> = emptyHandler()
 
         override fun delete(
             params: AccountDetailDeleteParams,
@@ -233,7 +232,9 @@ class AccountDetailServiceAsyncImpl internal constructor(private val clientOptio
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable { response.use { deleteHandler.handle(it) } }
+                    errorHandler.handle(response).parseable {
+                        response.use { deleteHandler.handle(it) }
+                    }
                 }
         }
     }
