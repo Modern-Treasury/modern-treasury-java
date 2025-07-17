@@ -3,14 +3,14 @@
 package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
@@ -88,7 +88,8 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         InternalAccountServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val balanceReports: BalanceReportServiceAsync.WithRawResponse by lazy {
             BalanceReportServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -104,7 +105,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         override fun balanceReports(): BalanceReportServiceAsync.WithRawResponse = balanceReports
 
         private val createHandler: Handler<InternalAccount> =
-            jsonHandler<InternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<InternalAccount>(clientOptions.jsonMapper)
 
         override fun create(
             params: InternalAccountCreateParams,
@@ -122,7 +123,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -135,7 +136,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         }
 
         private val retrieveHandler: Handler<InternalAccount> =
-            jsonHandler<InternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<InternalAccount>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: InternalAccountRetrieveParams,
@@ -155,7 +156,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -168,7 +169,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         }
 
         private val updateHandler: Handler<InternalAccount> =
-            jsonHandler<InternalAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<InternalAccount>(clientOptions.jsonMapper)
 
         override fun update(
             params: InternalAccountUpdateParams,
@@ -189,7 +190,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -203,7 +204,6 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
 
         private val listHandler: Handler<List<InternalAccount>> =
             jsonHandler<List<InternalAccount>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: InternalAccountListParams,
@@ -220,7 +220,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -244,7 +244,6 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         private val updateAccountCapabilityHandler:
             Handler<InternalAccountUpdateAccountCapabilityResponse> =
             jsonHandler<InternalAccountUpdateAccountCapabilityResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams,
@@ -271,7 +270,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateAccountCapabilityHandler.handle(it) }
                             .also {

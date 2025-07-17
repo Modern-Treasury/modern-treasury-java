@@ -3,14 +3,14 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
@@ -76,7 +76,8 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         LedgerAccountService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -86,7 +87,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
             )
 
         private val createHandler: Handler<LedgerAccount> =
-            jsonHandler<LedgerAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<LedgerAccount>(clientOptions.jsonMapper)
 
         override fun create(
             params: LedgerAccountCreateParams,
@@ -102,7 +103,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -114,7 +115,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
         }
 
         private val retrieveHandler: Handler<LedgerAccount> =
-            jsonHandler<LedgerAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<LedgerAccount>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: LedgerAccountRetrieveParams,
@@ -132,7 +133,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -144,7 +145,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
         }
 
         private val updateHandler: Handler<LedgerAccount> =
-            jsonHandler<LedgerAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<LedgerAccount>(clientOptions.jsonMapper)
 
         override fun update(
             params: LedgerAccountUpdateParams,
@@ -163,7 +164,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -176,7 +177,6 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
 
         private val listHandler: Handler<List<LedgerAccount>> =
             jsonHandler<List<LedgerAccount>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: LedgerAccountListParams,
@@ -191,7 +191,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -211,7 +211,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
         }
 
         private val deleteHandler: Handler<LedgerAccount> =
-            jsonHandler<LedgerAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<LedgerAccount>(clientOptions.jsonMapper)
 
         override fun delete(
             params: LedgerAccountDeleteParams,
@@ -230,7 +230,7 @@ class LedgerAccountServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
