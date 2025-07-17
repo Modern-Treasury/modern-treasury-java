@@ -293,7 +293,7 @@ internal class LegalEntityTest {
                         .ownershipPercentage(0L)
                         .parentLegalEntityId("parent_legal_entity_id")
                         .addRelationshipType(
-                            LegalEntityAssociation.RelationshipType.BENEFICIAL_OWNER
+                            LegalEntityAssociation.RelationshipType.AUTHORIZED_SIGNER
                         )
                         .title("title")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -602,7 +602,7 @@ internal class LegalEntityTest {
                     .object_("object")
                     .ownershipPercentage(0L)
                     .parentLegalEntityId("parent_legal_entity_id")
-                    .addRelationshipType(LegalEntityAssociation.RelationshipType.BENEFICIAL_OWNER)
+                    .addRelationshipType(LegalEntityAssociation.RelationshipType.AUTHORIZED_SIGNER)
                     .title("title")
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
@@ -936,7 +936,7 @@ internal class LegalEntityTest {
                         .ownershipPercentage(0L)
                         .parentLegalEntityId("parent_legal_entity_id")
                         .addRelationshipType(
-                            LegalEntityAssociation.RelationshipType.BENEFICIAL_OWNER
+                            LegalEntityAssociation.RelationshipType.AUTHORIZED_SIGNER
                         )
                         .title("title")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
