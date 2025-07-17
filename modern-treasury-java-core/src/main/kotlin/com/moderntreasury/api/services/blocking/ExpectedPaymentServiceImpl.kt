@@ -3,14 +3,14 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
@@ -76,7 +76,8 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ExpectedPaymentService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -86,7 +87,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
             )
 
         private val createHandler: Handler<ExpectedPayment> =
-            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper)
 
         override fun create(
             params: ExpectedPaymentCreateParams,
@@ -102,7 +103,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -114,7 +115,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
         }
 
         private val retrieveHandler: Handler<ExpectedPayment> =
-            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: ExpectedPaymentRetrieveParams,
@@ -132,7 +133,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -144,7 +145,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
         }
 
         private val updateHandler: Handler<ExpectedPayment> =
-            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper)
 
         override fun update(
             params: ExpectedPaymentUpdateParams,
@@ -163,7 +164,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -176,7 +177,6 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
 
         private val listHandler: Handler<List<ExpectedPayment>> =
             jsonHandler<List<ExpectedPayment>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ExpectedPaymentListParams,
@@ -191,7 +191,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -211,7 +211,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
         }
 
         private val deleteHandler: Handler<ExpectedPayment> =
-            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ExpectedPayment>(clientOptions.jsonMapper)
 
         override fun delete(
             params: ExpectedPaymentDeleteParams,
@@ -230,7 +230,7 @@ class ExpectedPaymentServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

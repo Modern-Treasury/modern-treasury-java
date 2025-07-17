@@ -3,14 +3,14 @@
 package com.moderntreasury.api.services.blocking
 
 import com.moderntreasury.api.core.ClientOptions
-import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
-import com.moderntreasury.api.core.handlers.withErrorHandler
 import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
@@ -84,7 +84,8 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PaymentOrderService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val reversals: ReversalService.WithRawResponse by lazy {
             ReversalServiceImpl.WithRawResponseImpl(clientOptions)
@@ -100,7 +101,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         override fun reversals(): ReversalService.WithRawResponse = reversals
 
         private val createHandler: Handler<PaymentOrder> =
-            jsonHandler<PaymentOrder>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PaymentOrder>(clientOptions.jsonMapper)
 
         override fun create(
             params: PaymentOrderCreateParams,
@@ -116,7 +117,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -128,7 +129,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<PaymentOrder> =
-            jsonHandler<PaymentOrder>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PaymentOrder>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PaymentOrderRetrieveParams,
@@ -146,7 +147,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -158,7 +159,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val updateHandler: Handler<PaymentOrder> =
-            jsonHandler<PaymentOrder>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PaymentOrder>(clientOptions.jsonMapper)
 
         override fun update(
             params: PaymentOrderUpdateParams,
@@ -177,7 +178,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -189,7 +190,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val listHandler: Handler<List<PaymentOrder>> =
-            jsonHandler<List<PaymentOrder>>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<List<PaymentOrder>>(clientOptions.jsonMapper)
 
         override fun list(
             params: PaymentOrderListParams,
@@ -204,7 +205,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -224,7 +225,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
         }
 
         private val createAsyncHandler: Handler<AsyncResponse> =
-            jsonHandler<AsyncResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AsyncResponse>(clientOptions.jsonMapper)
 
         override fun createAsync(
             params: PaymentOrderCreateAsyncParams,
@@ -240,7 +241,7 @@ class PaymentOrderServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createAsyncHandler.handle(it) }
                     .also {
