@@ -23,6 +23,7 @@ private constructor(
     private val createdAtLowerBound: OffsetDateTime?,
     private val createdAtUpperBound: OffsetDateTime?,
     private val direction: TransactionDirection?,
+    private val externalId: String?,
     private val internalAccountId: String?,
     private val metadata: Metadata?,
     private val perPage: Long?,
@@ -47,6 +48,8 @@ private constructor(
 
     /** One of credit, debit */
     fun direction(): Optional<TransactionDirection> = Optional.ofNullable(direction)
+
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     /** Specify internal_account_id to see expected_payments for a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
@@ -98,6 +101,7 @@ private constructor(
         private var createdAtLowerBound: OffsetDateTime? = null
         private var createdAtUpperBound: OffsetDateTime? = null
         private var direction: TransactionDirection? = null
+        private var externalId: String? = null
         private var internalAccountId: String? = null
         private var metadata: Metadata? = null
         private var perPage: Long? = null
@@ -115,6 +119,7 @@ private constructor(
             createdAtLowerBound = expectedPaymentListParams.createdAtLowerBound
             createdAtUpperBound = expectedPaymentListParams.createdAtUpperBound
             direction = expectedPaymentListParams.direction
+            externalId = expectedPaymentListParams.externalId
             internalAccountId = expectedPaymentListParams.internalAccountId
             metadata = expectedPaymentListParams.metadata
             perPage = expectedPaymentListParams.perPage
@@ -165,6 +170,11 @@ private constructor(
 
         /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
+
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
         fun internalAccountId(internalAccountId: String?) = apply {
@@ -343,6 +353,7 @@ private constructor(
                 createdAtLowerBound,
                 createdAtUpperBound,
                 direction,
+                externalId,
                 internalAccountId,
                 metadata,
                 perPage,
@@ -369,6 +380,7 @@ private constructor(
                     put("created_at_upper_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
                 }
                 direction?.let { put("direction", it.toString()) }
+                externalId?.let { put("external_id", it) }
                 internalAccountId?.let { put("internal_account_id", it) }
                 metadata?.let {
                     it._additionalProperties().keys().forEach { key ->
@@ -958,11 +970,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExpectedPaymentListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtLowerBound == other.createdAtLowerBound && createdAtUpperBound == other.createdAtUpperBound && direction == other.direction && internalAccountId == other.internalAccountId && metadata == other.metadata && perPage == other.perPage && status == other.status && type == other.type && updatedAtLowerBound == other.updatedAtLowerBound && updatedAtUpperBound == other.updatedAtUpperBound && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is ExpectedPaymentListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtLowerBound == other.createdAtLowerBound && createdAtUpperBound == other.createdAtUpperBound && direction == other.direction && externalId == other.externalId && internalAccountId == other.internalAccountId && metadata == other.metadata && perPage == other.perPage && status == other.status && type == other.type && updatedAtLowerBound == other.updatedAtLowerBound && updatedAtUpperBound == other.updatedAtUpperBound && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, createdAtLowerBound, createdAtUpperBound, direction, internalAccountId, metadata, perPage, status, type, updatedAtLowerBound, updatedAtUpperBound, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, createdAtLowerBound, createdAtUpperBound, direction, externalId, internalAccountId, metadata, perPage, status, type, updatedAtLowerBound, updatedAtUpperBound, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExpectedPaymentListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, status=$status, type=$type, updatedAtLowerBound=$updatedAtLowerBound, updatedAtUpperBound=$updatedAtUpperBound, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "ExpectedPaymentListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, direction=$direction, externalId=$externalId, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, status=$status, type=$type, updatedAtLowerBound=$updatedAtLowerBound, updatedAtUpperBound=$updatedAtUpperBound, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

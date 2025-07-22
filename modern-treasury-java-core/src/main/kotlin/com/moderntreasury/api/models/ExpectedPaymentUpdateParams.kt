@@ -102,6 +102,14 @@ private constructor(
     fun direction(): Optional<Direction> = body.direction()
 
     /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = body.externalId()
+
+    /**
      * The ID of the Internal Account for the expected payment.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -226,6 +234,13 @@ private constructor(
      * Unlike [direction], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _direction(): JsonField<Direction> = body._direction()
+
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _externalId(): JsonField<String> = body._externalId()
 
     /**
      * Returns the raw JSON value of [internalAccountId].
@@ -500,6 +515,21 @@ private constructor(
          * value.
          */
         fun direction(direction: JsonField<Direction>) = apply { body.direction(direction) }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
 
         /** The ID of the Internal Account for the expected payment. */
         fun internalAccountId(internalAccountId: String?) = apply {
@@ -817,6 +847,7 @@ private constructor(
         private val dateUpperBound: JsonField<LocalDate>,
         private val description: JsonField<String>,
         private val direction: JsonField<Direction>,
+        private val externalId: JsonField<String>,
         private val internalAccountId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val reconciliationFilters: JsonValue,
@@ -855,6 +886,9 @@ private constructor(
             @JsonProperty("direction")
             @ExcludeMissing
             direction: JsonField<Direction> = JsonMissing.of(),
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("internal_account_id")
             @ExcludeMissing
             internalAccountId: JsonField<String> = JsonMissing.of(),
@@ -889,6 +923,7 @@ private constructor(
             dateUpperBound,
             description,
             direction,
+            externalId,
             internalAccountId,
             metadata,
             reconciliationFilters,
@@ -967,6 +1002,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun direction(): Optional<Direction> = direction.getOptional("direction")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
         /**
          * The ID of the Internal Account for the expected payment.
@@ -1119,6 +1162,15 @@ private constructor(
         fun _direction(): JsonField<Direction> = direction
 
         /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
+        /**
          * Returns the raw JSON value of [internalAccountId].
          *
          * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected
@@ -1212,6 +1264,7 @@ private constructor(
             private var dateUpperBound: JsonField<LocalDate> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var direction: JsonField<Direction> = JsonMissing.of()
+            private var externalId: JsonField<String> = JsonMissing.of()
             private var internalAccountId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var reconciliationFilters: JsonValue = JsonMissing.of()
@@ -1234,6 +1287,7 @@ private constructor(
                 dateUpperBound = expectedPaymentUpdateRequest.dateUpperBound
                 description = expectedPaymentUpdateRequest.description
                 direction = expectedPaymentUpdateRequest.direction
+                externalId = expectedPaymentUpdateRequest.externalId
                 internalAccountId = expectedPaymentUpdateRequest.internalAccountId
                 metadata = expectedPaymentUpdateRequest.metadata
                 reconciliationFilters = expectedPaymentUpdateRequest.reconciliationFilters
@@ -1420,6 +1474,21 @@ private constructor(
              * supported value.
              */
             fun direction(direction: JsonField<Direction>) = apply { this.direction = direction }
+
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
             /** The ID of the Internal Account for the expected payment. */
             fun internalAccountId(internalAccountId: String?) =
@@ -1629,6 +1698,7 @@ private constructor(
                     dateUpperBound,
                     description,
                     direction,
+                    externalId,
                     internalAccountId,
                     metadata,
                     reconciliationFilters,
@@ -1657,6 +1727,7 @@ private constructor(
             dateUpperBound()
             description()
             direction().ifPresent { it.validate() }
+            externalId()
             internalAccountId()
             metadata().ifPresent { it.validate() }
             reconciliationRuleVariables().ifPresent { it.forEach { it.validate() } }
@@ -1691,6 +1762,7 @@ private constructor(
                 (if (dateUpperBound.asKnown().isPresent) 1 else 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (direction.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (externalId.asKnown().isPresent) 1 else 0) +
                 (if (internalAccountId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (reconciliationRuleVariables.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
@@ -1705,17 +1777,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExpectedPaymentUpdateRequest && amountLowerBound == other.amountLowerBound && amountUpperBound == other.amountUpperBound && counterpartyId == other.counterpartyId && currency == other.currency && dateLowerBound == other.dateLowerBound && dateUpperBound == other.dateUpperBound && description == other.description && direction == other.direction && internalAccountId == other.internalAccountId && metadata == other.metadata && reconciliationFilters == other.reconciliationFilters && reconciliationGroups == other.reconciliationGroups && reconciliationRuleVariables == other.reconciliationRuleVariables && remittanceInformation == other.remittanceInformation && statementDescriptor == other.statementDescriptor && status == other.status && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExpectedPaymentUpdateRequest && amountLowerBound == other.amountLowerBound && amountUpperBound == other.amountUpperBound && counterpartyId == other.counterpartyId && currency == other.currency && dateLowerBound == other.dateLowerBound && dateUpperBound == other.dateUpperBound && description == other.description && direction == other.direction && externalId == other.externalId && internalAccountId == other.internalAccountId && metadata == other.metadata && reconciliationFilters == other.reconciliationFilters && reconciliationGroups == other.reconciliationGroups && reconciliationRuleVariables == other.reconciliationRuleVariables && remittanceInformation == other.remittanceInformation && statementDescriptor == other.statementDescriptor && status == other.status && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amountLowerBound, amountUpperBound, counterpartyId, currency, dateLowerBound, dateUpperBound, description, direction, internalAccountId, metadata, reconciliationFilters, reconciliationGroups, reconciliationRuleVariables, remittanceInformation, statementDescriptor, status, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amountLowerBound, amountUpperBound, counterpartyId, currency, dateLowerBound, dateUpperBound, description, direction, externalId, internalAccountId, metadata, reconciliationFilters, reconciliationGroups, reconciliationRuleVariables, remittanceInformation, statementDescriptor, status, type, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExpectedPaymentUpdateRequest{amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, status=$status, type=$type, additionalProperties=$additionalProperties}"
+            "ExpectedPaymentUpdateRequest{amountLowerBound=$amountLowerBound, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, externalId=$externalId, internalAccountId=$internalAccountId, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, status=$status, type=$type, additionalProperties=$additionalProperties}"
     }
 
     /**
