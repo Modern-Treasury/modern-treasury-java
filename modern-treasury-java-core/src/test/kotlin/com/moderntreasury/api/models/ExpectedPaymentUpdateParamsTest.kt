@@ -22,6 +22,7 @@ internal class ExpectedPaymentUpdateParamsTest {
             .dateUpperBound(LocalDate.parse("2019-12-27"))
             .description("description")
             .direction(ExpectedPaymentUpdateParams.Direction.CREDIT)
+            .externalId("external_id")
             .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .metadata(
                 ExpectedPaymentUpdateParams.Metadata.builder()
@@ -79,6 +80,7 @@ internal class ExpectedPaymentUpdateParamsTest {
                 .dateUpperBound(LocalDate.parse("2019-12-27"))
                 .description("description")
                 .direction(ExpectedPaymentUpdateParams.Direction.CREDIT)
+                .externalId("external_id")
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .metadata(
                     ExpectedPaymentUpdateParams.Metadata.builder()
@@ -123,6 +125,7 @@ internal class ExpectedPaymentUpdateParamsTest {
         assertThat(body.dateUpperBound()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.description()).contains("description")
         assertThat(body.direction()).contains(ExpectedPaymentUpdateParams.Direction.CREDIT)
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
             .contains(
