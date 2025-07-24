@@ -45,8 +45,10 @@ private constructor(
      */
     fun version(): Optional<Version> = Optional.ofNullable(version)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -302,6 +304,7 @@ private constructor(
      */
     class CreatedAt private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -402,6 +405,7 @@ private constructor(
      */
     class Version private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)

@@ -30,8 +30,10 @@ private constructor(
     /** An identifier assigned by the vendor to your organization. */
     fun vendorCustomerId(): Optional<String> = Optional.ofNullable(vendorCustomerId)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

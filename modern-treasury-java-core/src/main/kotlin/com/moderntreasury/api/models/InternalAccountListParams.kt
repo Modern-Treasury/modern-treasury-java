@@ -53,8 +53,10 @@ private constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -305,6 +307,7 @@ private constructor(
      */
     class Metadata private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)

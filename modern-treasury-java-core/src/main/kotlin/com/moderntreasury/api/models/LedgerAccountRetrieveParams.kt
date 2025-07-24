@@ -32,8 +32,10 @@ private constructor(
      */
     fun balances(): Optional<Balances> = Optional.ofNullable(balances)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -266,6 +268,7 @@ private constructor(
         fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
             Optional.ofNullable(effectiveAtUpperBound)
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)

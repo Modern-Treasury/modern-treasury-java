@@ -114,8 +114,10 @@ private constructor(
      */
     fun updatedAt(): Optional<UpdatedAt> = Optional.ofNullable(updatedAt)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -585,6 +587,7 @@ private constructor(
      */
     class EffectiveAt private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -685,6 +688,7 @@ private constructor(
      */
     class EffectiveDate private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -940,6 +944,7 @@ private constructor(
      */
     class Metadata private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -1050,6 +1055,7 @@ private constructor(
 
         fun effectiveAt(): Optional<EffectiveAt> = Optional.ofNullable(effectiveAt)
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -1429,6 +1435,7 @@ private constructor(
      */
     class PostedAt private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
@@ -1882,6 +1889,7 @@ private constructor(
      */
     class UpdatedAt private constructor(private val additionalProperties: QueryParams) {
 
+        /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
 
         fun toBuilder() = Builder().from(this)
