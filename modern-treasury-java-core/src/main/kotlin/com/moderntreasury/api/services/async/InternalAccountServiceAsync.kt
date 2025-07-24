@@ -37,7 +37,7 @@ interface InternalAccountServiceAsync {
     fun create(params: InternalAccountCreateParams): CompletableFuture<InternalAccount> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: InternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,7 +47,7 @@ interface InternalAccountServiceAsync {
     fun retrieve(id: String): CompletableFuture<InternalAccount> =
         retrieve(id, InternalAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
@@ -55,23 +55,23 @@ interface InternalAccountServiceAsync {
     ): CompletableFuture<InternalAccount> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
     ): CompletableFuture<InternalAccount> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: InternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: InternalAccountRetrieveParams): CompletableFuture<InternalAccount> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<InternalAccount> =
         retrieve(id, InternalAccountRetrieveParams.none(), requestOptions)
 
@@ -79,7 +79,7 @@ interface InternalAccountServiceAsync {
     fun update(id: String): CompletableFuture<InternalAccount> =
         update(id, InternalAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
@@ -87,23 +87,23 @@ interface InternalAccountServiceAsync {
     ): CompletableFuture<InternalAccount> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
     ): CompletableFuture<InternalAccount> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: InternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: InternalAccountUpdateParams): CompletableFuture<InternalAccount> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<InternalAccount> =
         update(id, InternalAccountUpdateParams.none(), requestOptions)
 
@@ -111,18 +111,18 @@ interface InternalAccountServiceAsync {
     fun list(): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: InternalAccountListParams = InternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccountListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: InternalAccountListParams = InternalAccountListParams.none()
     ): CompletableFuture<InternalAccountListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none(), requestOptions)
 
@@ -133,7 +133,7 @@ interface InternalAccountServiceAsync {
     ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
         updateAccountCapability(id, params, RequestOptions.none())
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
@@ -141,13 +141,13 @@ interface InternalAccountServiceAsync {
     ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
         updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams
     ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
         updateAccountCapability(params, RequestOptions.none())
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -179,7 +179,7 @@ interface InternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: InternalAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -192,7 +192,7 @@ interface InternalAccountServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(id, InternalAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
@@ -200,26 +200,26 @@ interface InternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: InternalAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: InternalAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -233,7 +233,7 @@ interface InternalAccountServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(id, InternalAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
@@ -241,26 +241,26 @@ interface InternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: InternalAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: InternalAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -274,19 +274,19 @@ interface InternalAccountServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(InternalAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
@@ -303,7 +303,7 @@ interface InternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
             updateAccountCapability(id, params, RequestOptions.none())
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         fun updateAccountCapability(
             id: String,
             params: InternalAccountUpdateAccountCapabilityParams,
@@ -311,13 +311,13 @@ interface InternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
             updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams
         ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
             updateAccountCapability(params, RequestOptions.none())
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams,
             requestOptions: RequestOptions = RequestOptions.none(),

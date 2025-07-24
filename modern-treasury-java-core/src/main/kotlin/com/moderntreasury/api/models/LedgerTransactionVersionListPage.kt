@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [VersionService.list] */
+/** @see VersionService.list */
 class LedgerTransactionVersionListPage
 private constructor(
     private val service: VersionService,

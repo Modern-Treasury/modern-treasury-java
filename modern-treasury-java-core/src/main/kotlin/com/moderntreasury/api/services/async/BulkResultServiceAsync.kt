@@ -30,48 +30,48 @@ interface BulkResultServiceAsync {
     fun retrieve(id: String): CompletableFuture<BulkResult> =
         retrieve(id, BulkResultRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResult> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
     ): CompletableFuture<BulkResult> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResult>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BulkResultRetrieveParams): CompletableFuture<BulkResult> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<BulkResult> =
         retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
     /** list bulk_results */
     fun list(): CompletableFuture<BulkResultListPageAsync> = list(BulkResultListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BulkResultListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BulkResultListParams = BulkResultListParams.none()
     ): CompletableFuture<BulkResultListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<BulkResultListPageAsync> =
         list(BulkResultListParams.none(), requestOptions)
 
@@ -97,7 +97,7 @@ interface BulkResultServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<BulkResult>> =
             retrieve(id, BulkResultRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
@@ -105,25 +105,25 @@ interface BulkResultServiceAsync {
         ): CompletableFuture<HttpResponseFor<BulkResult>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<BulkResult>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResult>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BulkResultRetrieveParams
         ): CompletableFuture<HttpResponseFor<BulkResult>> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -137,19 +137,19 @@ interface BulkResultServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
             list(BulkResultListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BulkResultListParams = BulkResultListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BulkResultListParams = BulkResultListParams.none()
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BulkResultListPageAsync>> =

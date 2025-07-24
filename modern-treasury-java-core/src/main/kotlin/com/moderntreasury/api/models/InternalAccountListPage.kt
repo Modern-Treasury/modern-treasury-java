@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [InternalAccountService.list] */
+/** @see InternalAccountService.list */
 class InternalAccountListPage
 private constructor(
     private val service: InternalAccountService,

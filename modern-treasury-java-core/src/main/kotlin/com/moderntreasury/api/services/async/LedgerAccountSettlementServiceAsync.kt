@@ -36,7 +36,7 @@ interface LedgerAccountSettlementServiceAsync {
         params: LedgerAccountSettlementCreateParams
     ): CompletableFuture<LedgerAccountSettlement> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,7 +46,7 @@ interface LedgerAccountSettlementServiceAsync {
     fun retrieve(id: String): CompletableFuture<LedgerAccountSettlement> =
         retrieve(id, LedgerAccountSettlementRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountSettlementRetrieveParams =
@@ -55,24 +55,24 @@ interface LedgerAccountSettlementServiceAsync {
     ): CompletableFuture<LedgerAccountSettlement> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountSettlementRetrieveParams = LedgerAccountSettlementRetrieveParams.none(),
     ): CompletableFuture<LedgerAccountSettlement> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlement>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountSettlementRetrieveParams
     ): CompletableFuture<LedgerAccountSettlement> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -83,7 +83,7 @@ interface LedgerAccountSettlementServiceAsync {
     fun update(id: String): CompletableFuture<LedgerAccountSettlement> =
         update(id, LedgerAccountSettlementUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
@@ -91,24 +91,24 @@ interface LedgerAccountSettlementServiceAsync {
     ): CompletableFuture<LedgerAccountSettlement> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
     ): CompletableFuture<LedgerAccountSettlement> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlement>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerAccountSettlementUpdateParams
     ): CompletableFuture<LedgerAccountSettlement> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         requestOptions: RequestOptions,
@@ -119,18 +119,18 @@ interface LedgerAccountSettlementServiceAsync {
     fun list(): CompletableFuture<LedgerAccountSettlementListPageAsync> =
         list(LedgerAccountSettlementListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountSettlementListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
     ): CompletableFuture<LedgerAccountSettlementListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<LedgerAccountSettlementListPageAsync> =
@@ -162,7 +162,7 @@ interface LedgerAccountSettlementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: LedgerAccountSettlementCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -175,7 +175,7 @@ interface LedgerAccountSettlementServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(id, LedgerAccountSettlementRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountSettlementRetrieveParams =
@@ -184,7 +184,7 @@ interface LedgerAccountSettlementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountSettlementRetrieveParams =
@@ -192,19 +192,19 @@ interface LedgerAccountSettlementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -218,7 +218,7 @@ interface LedgerAccountSettlementServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(id, LedgerAccountSettlementUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: LedgerAccountSettlementUpdateParams =
@@ -227,26 +227,26 @@ interface LedgerAccountSettlementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: LedgerAccountSettlementUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: LedgerAccountSettlementUpdateParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlement>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -260,19 +260,19 @@ interface LedgerAccountSettlementServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
             list(LedgerAccountSettlementListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerAccountSettlementListPageAsync>> =

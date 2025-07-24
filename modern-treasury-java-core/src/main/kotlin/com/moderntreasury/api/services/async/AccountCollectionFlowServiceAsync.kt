@@ -33,7 +33,7 @@ interface AccountCollectionFlowServiceAsync {
         params: AccountCollectionFlowCreateParams
     ): CompletableFuture<AccountCollectionFlow> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +43,7 @@ interface AccountCollectionFlowServiceAsync {
     fun retrieve(id: String): CompletableFuture<AccountCollectionFlow> =
         retrieve(id, AccountCollectionFlowRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
@@ -51,24 +51,24 @@ interface AccountCollectionFlowServiceAsync {
     ): CompletableFuture<AccountCollectionFlow> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
     ): CompletableFuture<AccountCollectionFlow> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountCollectionFlowRetrieveParams
     ): CompletableFuture<AccountCollectionFlow> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -81,7 +81,7 @@ interface AccountCollectionFlowServiceAsync {
         params: AccountCollectionFlowUpdateParams,
     ): CompletableFuture<AccountCollectionFlow> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: AccountCollectionFlowUpdateParams,
@@ -89,12 +89,12 @@ interface AccountCollectionFlowServiceAsync {
     ): CompletableFuture<AccountCollectionFlow> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: AccountCollectionFlowUpdateParams
     ): CompletableFuture<AccountCollectionFlow> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: AccountCollectionFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,18 +104,18 @@ interface AccountCollectionFlowServiceAsync {
     fun list(): CompletableFuture<AccountCollectionFlowListPageAsync> =
         list(AccountCollectionFlowListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlowListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
     ): CompletableFuture<AccountCollectionFlowListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<AccountCollectionFlowListPageAsync> =
@@ -145,7 +145,7 @@ interface AccountCollectionFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: AccountCollectionFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -158,7 +158,7 @@ interface AccountCollectionFlowServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             retrieve(id, AccountCollectionFlowRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: AccountCollectionFlowRetrieveParams =
@@ -167,26 +167,26 @@ interface AccountCollectionFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: AccountCollectionFlowRetrieveParams = AccountCollectionFlowRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: AccountCollectionFlowRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: AccountCollectionFlowRetrieveParams
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -203,7 +203,7 @@ interface AccountCollectionFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: AccountCollectionFlowUpdateParams,
@@ -211,13 +211,13 @@ interface AccountCollectionFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: AccountCollectionFlowUpdateParams
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: AccountCollectionFlowUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -230,19 +230,19 @@ interface AccountCollectionFlowServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>> =
             list(AccountCollectionFlowListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: AccountCollectionFlowListParams = AccountCollectionFlowListParams.none()
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlowListPageAsync>> =

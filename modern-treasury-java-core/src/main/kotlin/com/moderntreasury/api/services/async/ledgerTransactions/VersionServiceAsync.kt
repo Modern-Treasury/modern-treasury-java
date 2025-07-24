@@ -28,19 +28,19 @@ interface VersionServiceAsync {
     fun list(): CompletableFuture<LedgerTransactionVersionListPageAsync> =
         list(LedgerTransactionVersionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransactionVersionListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
     ): CompletableFuture<LedgerTransactionVersionListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<LedgerTransactionVersionListPageAsync> =
@@ -67,19 +67,19 @@ interface VersionServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
             list(LedgerTransactionVersionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerTransactionVersionListPageAsync>> =

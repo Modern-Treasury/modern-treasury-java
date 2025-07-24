@@ -29,47 +29,47 @@ interface BulkResultService {
     /** get bulk_result */
     fun retrieve(id: String): BulkResult = retrieve(id, BulkResultRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResult = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
     ): BulkResult = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BulkResultRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResult
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BulkResultRetrieveParams): BulkResult =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): BulkResult =
         retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
 
     /** list bulk_results */
     fun list(): BulkResultListPage = list(BulkResultListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BulkResultListParams = BulkResultListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkResultListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BulkResultListParams = BulkResultListParams.none()): BulkResultListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BulkResultListPage =
         list(BulkResultListParams.none(), requestOptions)
 
@@ -93,7 +93,7 @@ interface BulkResultService {
         fun retrieve(id: String): HttpResponseFor<BulkResult> =
             retrieve(id, BulkResultRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -101,26 +101,26 @@ interface BulkResultService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkResult> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkResultRetrieveParams = BulkResultRetrieveParams.none(),
         ): HttpResponseFor<BulkResult> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BulkResultRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkResult>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BulkResultRetrieveParams): HttpResponseFor<BulkResult> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BulkResult> =
             retrieve(id, BulkResultRetrieveParams.none(), requestOptions)
@@ -132,20 +132,20 @@ interface BulkResultService {
         @MustBeClosed
         fun list(): HttpResponseFor<BulkResultListPage> = list(BulkResultListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkResultListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BulkResultListParams = BulkResultListParams.none()
         ): HttpResponseFor<BulkResultListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BulkResultListPage> =
             list(BulkResultListParams.none(), requestOptions)

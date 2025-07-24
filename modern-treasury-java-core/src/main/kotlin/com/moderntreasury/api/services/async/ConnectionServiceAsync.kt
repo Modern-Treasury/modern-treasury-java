@@ -27,18 +27,18 @@ interface ConnectionServiceAsync {
     /** Get a list of all connections. */
     fun list(): CompletableFuture<ConnectionListPageAsync> = list(ConnectionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ConnectionListParams = ConnectionListParams.none()
     ): CompletableFuture<ConnectionListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ConnectionListPageAsync> =
         list(ConnectionListParams.none(), requestOptions)
 
@@ -64,19 +64,19 @@ interface ConnectionServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>> =
             list(ConnectionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ConnectionListParams = ConnectionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ConnectionListParams = ConnectionListParams.none()
         ): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ConnectionListPageAsync>> =

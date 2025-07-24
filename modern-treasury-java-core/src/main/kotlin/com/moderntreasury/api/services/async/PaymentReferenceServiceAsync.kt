@@ -31,7 +31,7 @@ interface PaymentReferenceServiceAsync {
     fun retrieve(id: String): CompletableFuture<PaymentReference> =
         retrieve(id, PaymentReferenceRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
@@ -39,23 +39,23 @@ interface PaymentReferenceServiceAsync {
     ): CompletableFuture<PaymentReference> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
     ): CompletableFuture<PaymentReference> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReference>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentReferenceRetrieveParams): CompletableFuture<PaymentReference> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentReference> =
         retrieve(id, PaymentReferenceRetrieveParams.none(), requestOptions)
 
@@ -63,18 +63,18 @@ interface PaymentReferenceServiceAsync {
     fun list(): CompletableFuture<PaymentReferenceListPageAsync> =
         list(PaymentReferenceListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReferenceListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none()
     ): CompletableFuture<PaymentReferenceListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentReferenceListPageAsync> =
         list(PaymentReferenceListParams.none(), requestOptions)
 
@@ -83,7 +83,7 @@ interface PaymentReferenceServiceAsync {
     fun retireve(id: String): CompletableFuture<PaymentReference> =
         retireve(id, PaymentReferenceRetireveParams.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         id: String,
@@ -92,26 +92,26 @@ interface PaymentReferenceServiceAsync {
     ): CompletableFuture<PaymentReference> =
         retireve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         id: String,
         params: PaymentReferenceRetireveParams = PaymentReferenceRetireveParams.none(),
     ): CompletableFuture<PaymentReference> = retireve(id, params, RequestOptions.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentReference>
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(params: PaymentReferenceRetireveParams): CompletableFuture<PaymentReference> =
         retireve(params, RequestOptions.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentReference> =
         retireve(id, PaymentReferenceRetireveParams.none(), requestOptions)
@@ -138,7 +138,7 @@ interface PaymentReferenceServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retrieve(id, PaymentReferenceRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
@@ -146,26 +146,26 @@ interface PaymentReferenceServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentReferenceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentReference>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentReferenceRetrieveParams
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -179,19 +179,19 @@ interface PaymentReferenceServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>> =
             list(PaymentReferenceListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none()
         ): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PaymentReferenceListPageAsync>> =
@@ -205,7 +205,7 @@ interface PaymentReferenceServiceAsync {
         fun retireve(id: String): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retireve(id, PaymentReferenceRetireveParams.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         fun retireve(
             id: String,
@@ -214,7 +214,7 @@ interface PaymentReferenceServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retireve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         fun retireve(
             id: String,
@@ -222,21 +222,21 @@ interface PaymentReferenceServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retireve(id, params, RequestOptions.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         fun retireve(
             params: PaymentReferenceRetireveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentReference>>
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         fun retireve(
             params: PaymentReferenceRetireveParams
         ): CompletableFuture<HttpResponseFor<PaymentReference>> =
             retireve(params, RequestOptions.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         fun retireve(
             id: String,

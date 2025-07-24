@@ -29,48 +29,48 @@ interface EventServiceAsync {
     /** get event */
     fun retrieve(id: String): CompletableFuture<Event> = retrieve(id, EventRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Event> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
     ): CompletableFuture<Event> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Event>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: EventRetrieveParams): CompletableFuture<Event> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Event> =
         retrieve(id, EventRetrieveParams.none(), requestOptions)
 
     /** list events */
     fun list(): CompletableFuture<EventListPageAsync> = list(EventListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: EventListParams = EventListParams.none()
     ): CompletableFuture<EventListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<EventListPageAsync> =
         list(EventListParams.none(), requestOptions)
 
@@ -93,7 +93,7 @@ interface EventServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Event>> =
             retrieve(id, EventRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
@@ -101,23 +101,23 @@ interface EventServiceAsync {
         ): CompletableFuture<HttpResponseFor<Event>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Event>> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Event>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(params: EventRetrieveParams): CompletableFuture<HttpResponseFor<Event>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -131,19 +131,19 @@ interface EventServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
             list(EventListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: EventListParams = EventListParams.none()
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =

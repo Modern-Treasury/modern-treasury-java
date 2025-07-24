@@ -38,7 +38,7 @@ interface LedgerAccountCategoryService {
     fun create(params: LedgerAccountCategoryCreateParams): LedgerAccountCategory =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountCategoryCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,30 +48,30 @@ interface LedgerAccountCategoryService {
     fun retrieve(id: String): LedgerAccountCategory =
         retrieve(id, LedgerAccountCategoryRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
     ): LedgerAccountCategory = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountCategoryRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LedgerAccountCategoryRetrieveParams): LedgerAccountCategory =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): LedgerAccountCategory =
         retrieve(id, LedgerAccountCategoryRetrieveParams.none(), requestOptions)
 
@@ -79,48 +79,48 @@ interface LedgerAccountCategoryService {
     fun update(id: String): LedgerAccountCategory =
         update(id, LedgerAccountCategoryUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
     ): LedgerAccountCategory = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerAccountCategoryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LedgerAccountCategoryUpdateParams): LedgerAccountCategory =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): LedgerAccountCategory =
         update(id, LedgerAccountCategoryUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger account categories. */
     fun list(): LedgerAccountCategoryListPage = list(LedgerAccountCategoryListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountCategoryListParams = LedgerAccountCategoryListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategoryListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountCategoryListParams = LedgerAccountCategoryListParams.none()
     ): LedgerAccountCategoryListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): LedgerAccountCategoryListPage =
         list(LedgerAccountCategoryListParams.none(), requestOptions)
 
@@ -128,30 +128,30 @@ interface LedgerAccountCategoryService {
     fun delete(id: String): LedgerAccountCategory =
         delete(id, LedgerAccountCategoryDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
     ): LedgerAccountCategory = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: LedgerAccountCategoryDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountCategory
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: LedgerAccountCategoryDeleteParams): LedgerAccountCategory =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): LedgerAccountCategory =
         delete(id, LedgerAccountCategoryDeleteParams.none(), requestOptions)
 
@@ -161,7 +161,7 @@ interface LedgerAccountCategoryService {
         params: LedgerAccountCategoryAddLedgerAccountParams,
     ) = addLedgerAccount(ledgerAccountId, params, RequestOptions.none())
 
-    /** @see [addLedgerAccount] */
+    /** @see addLedgerAccount */
     fun addLedgerAccount(
         ledgerAccountId: String,
         params: LedgerAccountCategoryAddLedgerAccountParams,
@@ -172,11 +172,11 @@ interface LedgerAccountCategoryService {
             requestOptions,
         )
 
-    /** @see [addLedgerAccount] */
+    /** @see addLedgerAccount */
     fun addLedgerAccount(params: LedgerAccountCategoryAddLedgerAccountParams) =
         addLedgerAccount(params, RequestOptions.none())
 
-    /** @see [addLedgerAccount] */
+    /** @see addLedgerAccount */
     fun addLedgerAccount(
         params: LedgerAccountCategoryAddLedgerAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -188,18 +188,18 @@ interface LedgerAccountCategoryService {
         params: LedgerAccountCategoryAddNestedCategoryParams,
     ) = addNestedCategory(subCategoryId, params, RequestOptions.none())
 
-    /** @see [addNestedCategory] */
+    /** @see addNestedCategory */
     fun addNestedCategory(
         subCategoryId: String,
         params: LedgerAccountCategoryAddNestedCategoryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = addNestedCategory(params.toBuilder().subCategoryId(subCategoryId).build(), requestOptions)
 
-    /** @see [addNestedCategory] */
+    /** @see addNestedCategory */
     fun addNestedCategory(params: LedgerAccountCategoryAddNestedCategoryParams) =
         addNestedCategory(params, RequestOptions.none())
 
-    /** @see [addNestedCategory] */
+    /** @see addNestedCategory */
     fun addNestedCategory(
         params: LedgerAccountCategoryAddNestedCategoryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -211,7 +211,7 @@ interface LedgerAccountCategoryService {
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
     ) = removeLedgerAccount(ledgerAccountId, params, RequestOptions.none())
 
-    /** @see [removeLedgerAccount] */
+    /** @see removeLedgerAccount */
     fun removeLedgerAccount(
         ledgerAccountId: String,
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
@@ -222,11 +222,11 @@ interface LedgerAccountCategoryService {
             requestOptions,
         )
 
-    /** @see [removeLedgerAccount] */
+    /** @see removeLedgerAccount */
     fun removeLedgerAccount(params: LedgerAccountCategoryRemoveLedgerAccountParams) =
         removeLedgerAccount(params, RequestOptions.none())
 
-    /** @see [removeLedgerAccount] */
+    /** @see removeLedgerAccount */
     fun removeLedgerAccount(
         params: LedgerAccountCategoryRemoveLedgerAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -238,7 +238,7 @@ interface LedgerAccountCategoryService {
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
     ) = removeNestedCategory(subCategoryId, params, RequestOptions.none())
 
-    /** @see [removeNestedCategory] */
+    /** @see removeNestedCategory */
     fun removeNestedCategory(
         subCategoryId: String,
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
@@ -249,11 +249,11 @@ interface LedgerAccountCategoryService {
             requestOptions,
         )
 
-    /** @see [removeNestedCategory] */
+    /** @see removeNestedCategory */
     fun removeNestedCategory(params: LedgerAccountCategoryRemoveNestedCategoryParams) =
         removeNestedCategory(params, RequestOptions.none())
 
-    /** @see [removeNestedCategory] */
+    /** @see removeNestedCategory */
     fun removeNestedCategory(
         params: LedgerAccountCategoryRemoveNestedCategoryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -283,7 +283,7 @@ interface LedgerAccountCategoryService {
             params: LedgerAccountCategoryCreateParams
         ): HttpResponseFor<LedgerAccountCategory> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: LedgerAccountCategoryCreateParams,
@@ -298,7 +298,7 @@ interface LedgerAccountCategoryService {
         fun retrieve(id: String): HttpResponseFor<LedgerAccountCategory> =
             retrieve(id, LedgerAccountCategoryRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -308,27 +308,27 @@ interface LedgerAccountCategoryService {
         ): HttpResponseFor<LedgerAccountCategory> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerAccountCategoryRetrieveParams = LedgerAccountCategoryRetrieveParams.none(),
         ): HttpResponseFor<LedgerAccountCategory> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountCategoryRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountCategory>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountCategoryRetrieveParams
         ): HttpResponseFor<LedgerAccountCategory> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -344,7 +344,7 @@ interface LedgerAccountCategoryService {
         fun update(id: String): HttpResponseFor<LedgerAccountCategory> =
             update(id, LedgerAccountCategoryUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -353,27 +353,27 @@ interface LedgerAccountCategoryService {
         ): HttpResponseFor<LedgerAccountCategory> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountCategoryUpdateParams = LedgerAccountCategoryUpdateParams.none(),
         ): HttpResponseFor<LedgerAccountCategory> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerAccountCategoryUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountCategory>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerAccountCategoryUpdateParams
         ): HttpResponseFor<LedgerAccountCategory> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -389,20 +389,20 @@ interface LedgerAccountCategoryService {
         fun list(): HttpResponseFor<LedgerAccountCategoryListPage> =
             list(LedgerAccountCategoryListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerAccountCategoryListParams = LedgerAccountCategoryListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountCategoryListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerAccountCategoryListParams = LedgerAccountCategoryListParams.none()
         ): HttpResponseFor<LedgerAccountCategoryListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerAccountCategoryListPage> =
             list(LedgerAccountCategoryListParams.none(), requestOptions)
@@ -415,7 +415,7 @@ interface LedgerAccountCategoryService {
         fun delete(id: String): HttpResponseFor<LedgerAccountCategory> =
             delete(id, LedgerAccountCategoryDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -424,27 +424,27 @@ interface LedgerAccountCategoryService {
         ): HttpResponseFor<LedgerAccountCategory> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: LedgerAccountCategoryDeleteParams = LedgerAccountCategoryDeleteParams.none(),
         ): HttpResponseFor<LedgerAccountCategory> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: LedgerAccountCategoryDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountCategory>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: LedgerAccountCategoryDeleteParams
         ): HttpResponseFor<LedgerAccountCategory> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -463,7 +463,7 @@ interface LedgerAccountCategoryService {
             params: LedgerAccountCategoryAddLedgerAccountParams,
         ): HttpResponse = addLedgerAccount(ledgerAccountId, params, RequestOptions.none())
 
-        /** @see [addLedgerAccount] */
+        /** @see addLedgerAccount */
         @MustBeClosed
         fun addLedgerAccount(
             ledgerAccountId: String,
@@ -475,12 +475,12 @@ interface LedgerAccountCategoryService {
                 requestOptions,
             )
 
-        /** @see [addLedgerAccount] */
+        /** @see addLedgerAccount */
         @MustBeClosed
         fun addLedgerAccount(params: LedgerAccountCategoryAddLedgerAccountParams): HttpResponse =
             addLedgerAccount(params, RequestOptions.none())
 
-        /** @see [addLedgerAccount] */
+        /** @see addLedgerAccount */
         @MustBeClosed
         fun addLedgerAccount(
             params: LedgerAccountCategoryAddLedgerAccountParams,
@@ -498,7 +498,7 @@ interface LedgerAccountCategoryService {
             params: LedgerAccountCategoryAddNestedCategoryParams,
         ): HttpResponse = addNestedCategory(subCategoryId, params, RequestOptions.none())
 
-        /** @see [addNestedCategory] */
+        /** @see addNestedCategory */
         @MustBeClosed
         fun addNestedCategory(
             subCategoryId: String,
@@ -510,12 +510,12 @@ interface LedgerAccountCategoryService {
                 requestOptions,
             )
 
-        /** @see [addNestedCategory] */
+        /** @see addNestedCategory */
         @MustBeClosed
         fun addNestedCategory(params: LedgerAccountCategoryAddNestedCategoryParams): HttpResponse =
             addNestedCategory(params, RequestOptions.none())
 
-        /** @see [addNestedCategory] */
+        /** @see addNestedCategory */
         @MustBeClosed
         fun addNestedCategory(
             params: LedgerAccountCategoryAddNestedCategoryParams,
@@ -533,7 +533,7 @@ interface LedgerAccountCategoryService {
             params: LedgerAccountCategoryRemoveLedgerAccountParams,
         ): HttpResponse = removeLedgerAccount(ledgerAccountId, params, RequestOptions.none())
 
-        /** @see [removeLedgerAccount] */
+        /** @see removeLedgerAccount */
         @MustBeClosed
         fun removeLedgerAccount(
             ledgerAccountId: String,
@@ -545,13 +545,13 @@ interface LedgerAccountCategoryService {
                 requestOptions,
             )
 
-        /** @see [removeLedgerAccount] */
+        /** @see removeLedgerAccount */
         @MustBeClosed
         fun removeLedgerAccount(
             params: LedgerAccountCategoryRemoveLedgerAccountParams
         ): HttpResponse = removeLedgerAccount(params, RequestOptions.none())
 
-        /** @see [removeLedgerAccount] */
+        /** @see removeLedgerAccount */
         @MustBeClosed
         fun removeLedgerAccount(
             params: LedgerAccountCategoryRemoveLedgerAccountParams,
@@ -569,7 +569,7 @@ interface LedgerAccountCategoryService {
             params: LedgerAccountCategoryRemoveNestedCategoryParams,
         ): HttpResponse = removeNestedCategory(subCategoryId, params, RequestOptions.none())
 
-        /** @see [removeNestedCategory] */
+        /** @see removeNestedCategory */
         @MustBeClosed
         fun removeNestedCategory(
             subCategoryId: String,
@@ -581,13 +581,13 @@ interface LedgerAccountCategoryService {
                 requestOptions,
             )
 
-        /** @see [removeNestedCategory] */
+        /** @see removeNestedCategory */
         @MustBeClosed
         fun removeNestedCategory(
             params: LedgerAccountCategoryRemoveNestedCategoryParams
         ): HttpResponse = removeNestedCategory(params, RequestOptions.none())
 
-        /** @see [removeNestedCategory] */
+        /** @see removeNestedCategory */
         @MustBeClosed
         fun removeNestedCategory(
             params: LedgerAccountCategoryRemoveNestedCategoryParams,

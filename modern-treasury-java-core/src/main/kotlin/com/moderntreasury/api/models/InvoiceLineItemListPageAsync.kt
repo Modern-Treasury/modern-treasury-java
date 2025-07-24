@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LineItemServiceAsync.list] */
+/** @see LineItemServiceAsync.list */
 class InvoiceLineItemListPageAsync
 private constructor(
     private val service: LineItemServiceAsync,

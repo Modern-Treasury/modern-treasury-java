@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [AccountDetailService.list] */
+/** @see AccountDetailService.list */
 class AccountDetailListPage
 private constructor(
     private val service: AccountDetailService,

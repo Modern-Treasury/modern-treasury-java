@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LedgerAccountCategoryService.list] */
+/** @see LedgerAccountCategoryService.list */
 class LedgerAccountCategoryListPage
 private constructor(
     private val service: LedgerAccountCategoryService,

@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CounterpartyService.list] */
+/** @see CounterpartyService.list */
 class CounterpartyListPage
 private constructor(
     private val service: CounterpartyService,

@@ -33,18 +33,18 @@ interface LineItemService {
     fun create(invoiceId: String, params: InvoiceLineItemCreateParams): InvoiceLineItem =
         create(invoiceId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         invoiceId: String,
         params: InvoiceLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceLineItem = create(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: InvoiceLineItemCreateParams): InvoiceLineItem =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: InvoiceLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,18 +54,18 @@ interface LineItemService {
     fun retrieve(id: String, params: InvoiceLineItemRetrieveParams): InvoiceLineItem =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: InvoiceLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceLineItem = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: InvoiceLineItemRetrieveParams): InvoiceLineItem =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: InvoiceLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -75,18 +75,18 @@ interface LineItemService {
     fun update(id: String, params: InvoiceLineItemUpdateParams): InvoiceLineItem =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: InvoiceLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceLineItem = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: InvoiceLineItemUpdateParams): InvoiceLineItem =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: InvoiceLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -96,7 +96,7 @@ interface LineItemService {
     fun list(invoiceId: String): InvoiceLineItemListPage =
         list(invoiceId, InvoiceLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         invoiceId: String,
         params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
@@ -104,23 +104,23 @@ interface LineItemService {
     ): InvoiceLineItemListPage =
         list(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         invoiceId: String,
         params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
     ): InvoiceLineItemListPage = list(invoiceId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: InvoiceLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceLineItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: InvoiceLineItemListParams): InvoiceLineItemListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(invoiceId: String, requestOptions: RequestOptions): InvoiceLineItemListPage =
         list(invoiceId, InvoiceLineItemListParams.none(), requestOptions)
 
@@ -128,18 +128,18 @@ interface LineItemService {
     fun delete(id: String, params: InvoiceLineItemDeleteParams): InvoiceLineItem =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: InvoiceLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceLineItem = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: InvoiceLineItemDeleteParams): InvoiceLineItem =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: InvoiceLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -165,7 +165,7 @@ interface LineItemService {
             params: InvoiceLineItemCreateParams,
         ): HttpResponseFor<InvoiceLineItem> = create(invoiceId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             invoiceId: String,
@@ -174,12 +174,12 @@ interface LineItemService {
         ): HttpResponseFor<InvoiceLineItem> =
             create(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(params: InvoiceLineItemCreateParams): HttpResponseFor<InvoiceLineItem> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: InvoiceLineItemCreateParams,
@@ -196,7 +196,7 @@ interface LineItemService {
             params: InvoiceLineItemRetrieveParams,
         ): HttpResponseFor<InvoiceLineItem> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -205,12 +205,12 @@ interface LineItemService {
         ): HttpResponseFor<InvoiceLineItem> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: InvoiceLineItemRetrieveParams): HttpResponseFor<InvoiceLineItem> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: InvoiceLineItemRetrieveParams,
@@ -228,7 +228,7 @@ interface LineItemService {
             params: InvoiceLineItemUpdateParams,
         ): HttpResponseFor<InvoiceLineItem> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -237,12 +237,12 @@ interface LineItemService {
         ): HttpResponseFor<InvoiceLineItem> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: InvoiceLineItemUpdateParams): HttpResponseFor<InvoiceLineItem> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: InvoiceLineItemUpdateParams,
@@ -257,7 +257,7 @@ interface LineItemService {
         fun list(invoiceId: String): HttpResponseFor<InvoiceLineItemListPage> =
             list(invoiceId, InvoiceLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             invoiceId: String,
@@ -266,26 +266,26 @@ interface LineItemService {
         ): HttpResponseFor<InvoiceLineItemListPage> =
             list(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             invoiceId: String,
             params: InvoiceLineItemListParams = InvoiceLineItemListParams.none(),
         ): HttpResponseFor<InvoiceLineItemListPage> = list(invoiceId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: InvoiceLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvoiceLineItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: InvoiceLineItemListParams): HttpResponseFor<InvoiceLineItemListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             invoiceId: String,
@@ -304,7 +304,7 @@ interface LineItemService {
             params: InvoiceLineItemDeleteParams,
         ): HttpResponseFor<InvoiceLineItem> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -313,12 +313,12 @@ interface LineItemService {
         ): HttpResponseFor<InvoiceLineItem> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: InvoiceLineItemDeleteParams): HttpResponseFor<InvoiceLineItem> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: InvoiceLineItemDeleteParams,

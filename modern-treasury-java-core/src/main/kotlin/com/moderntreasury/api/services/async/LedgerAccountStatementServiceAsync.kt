@@ -32,7 +32,7 @@ interface LedgerAccountStatementServiceAsync {
     ): CompletableFuture<LedgerAccountStatementCreateResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountStatementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,7 +42,7 @@ interface LedgerAccountStatementServiceAsync {
     fun retrieve(id: String): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
         retrieve(id, LedgerAccountStatementRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
@@ -50,26 +50,26 @@ interface LedgerAccountStatementServiceAsync {
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams
     ): CompletableFuture<LedgerAccountStatementRetrieveResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -100,7 +100,7 @@ interface LedgerAccountStatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementCreateResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: LedgerAccountStatementCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,7 +115,7 @@ interface LedgerAccountStatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
             retrieve(id, LedgerAccountStatementRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountStatementRetrieveParams =
@@ -124,7 +124,7 @@ interface LedgerAccountStatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountStatementRetrieveParams =
@@ -132,19 +132,19 @@ interface LedgerAccountStatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerAccountStatementRetrieveResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,

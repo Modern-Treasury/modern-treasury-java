@@ -30,48 +30,48 @@ interface PaymentReferenceService {
     /** get payment_reference */
     fun retrieve(id: String): PaymentReference = retrieve(id, PaymentReferenceRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
     ): PaymentReference = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentReferenceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentReferenceRetrieveParams): PaymentReference =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PaymentReference =
         retrieve(id, PaymentReferenceRetrieveParams.none(), requestOptions)
 
     /** list payment_references */
     fun list(): PaymentReferenceListPage = list(PaymentReferenceListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReferenceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentReferenceListParams = PaymentReferenceListParams.none()
     ): PaymentReferenceListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PaymentReferenceListPage =
         list(PaymentReferenceListParams.none(), requestOptions)
 
@@ -79,7 +79,7 @@ interface PaymentReferenceService {
     @Deprecated("use `retrieve` instead")
     fun retireve(id: String): PaymentReference = retireve(id, PaymentReferenceRetireveParams.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         id: String,
@@ -87,26 +87,26 @@ interface PaymentReferenceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference = retireve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         id: String,
         params: PaymentReferenceRetireveParams = PaymentReferenceRetireveParams.none(),
     ): PaymentReference = retireve(id, params, RequestOptions.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(
         params: PaymentReferenceRetireveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentReference
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(params: PaymentReferenceRetireveParams): PaymentReference =
         retireve(params, RequestOptions.none())
 
-    /** @see [retireve] */
+    /** @see retireve */
     @Deprecated("use `retrieve` instead")
     fun retireve(id: String, requestOptions: RequestOptions): PaymentReference =
         retireve(id, PaymentReferenceRetireveParams.none(), requestOptions)
@@ -134,7 +134,7 @@ interface PaymentReferenceService {
         fun retrieve(id: String): HttpResponseFor<PaymentReference> =
             retrieve(id, PaymentReferenceRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -143,26 +143,26 @@ interface PaymentReferenceService {
         ): HttpResponseFor<PaymentReference> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PaymentReferenceRetrieveParams = PaymentReferenceRetrieveParams.none(),
         ): HttpResponseFor<PaymentReference> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentReferenceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentReference>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PaymentReferenceRetrieveParams): HttpResponseFor<PaymentReference> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -178,20 +178,20 @@ interface PaymentReferenceService {
         fun list(): HttpResponseFor<PaymentReferenceListPage> =
             list(PaymentReferenceListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentReferenceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentReferenceListParams = PaymentReferenceListParams.none()
         ): HttpResponseFor<PaymentReferenceListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentReferenceListPage> =
             list(PaymentReferenceListParams.none(), requestOptions)
@@ -205,7 +205,7 @@ interface PaymentReferenceService {
         fun retireve(id: String): HttpResponseFor<PaymentReference> =
             retireve(id, PaymentReferenceRetireveParams.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(
@@ -215,7 +215,7 @@ interface PaymentReferenceService {
         ): HttpResponseFor<PaymentReference> =
             retireve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(
@@ -223,7 +223,7 @@ interface PaymentReferenceService {
             params: PaymentReferenceRetireveParams = PaymentReferenceRetireveParams.none(),
         ): HttpResponseFor<PaymentReference> = retireve(id, params, RequestOptions.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(
@@ -231,13 +231,13 @@ interface PaymentReferenceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentReference>
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(params: PaymentReferenceRetireveParams): HttpResponseFor<PaymentReference> =
             retireve(params, RequestOptions.none())
 
-        /** @see [retireve] */
+        /** @see retireve */
         @Deprecated("use `retrieve` instead")
         @MustBeClosed
         fun retireve(

@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ConnectionServiceAsync.list] */
+/** @see ConnectionServiceAsync.list */
 class ConnectionListPageAsync
 private constructor(
     private val service: ConnectionServiceAsync,

@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [TransactionService.list] */
+/** @see TransactionService.list */
 class TransactionListPage
 private constructor(
     private val service: TransactionService,

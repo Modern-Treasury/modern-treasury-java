@@ -33,7 +33,7 @@ interface LineItemService {
     fun create(params: TransactionLineItemCreateParams): TransactionLineItem =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: TransactionLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,77 +43,77 @@ interface LineItemService {
     fun retrieve(id: String): TransactionLineItem =
         retrieve(id, TransactionLineItemRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItem = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
     ): TransactionLineItem = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: TransactionLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItem
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: TransactionLineItemRetrieveParams): TransactionLineItem =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): TransactionLineItem =
         retrieve(id, TransactionLineItemRetrieveParams.none(), requestOptions)
 
     /** list transaction_line_items */
     fun list(): TransactionLineItemListPage = list(TransactionLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionLineItemListParams = TransactionLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionLineItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionLineItemListParams = TransactionLineItemListParams.none()
     ): TransactionLineItemListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): TransactionLineItemListPage =
         list(TransactionLineItemListParams.none(), requestOptions)
 
     /** delete transaction line item */
     fun delete(id: String) = delete(id, TransactionLineItemDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
     ) = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: TransactionLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: TransactionLineItemDeleteParams) = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions) =
         delete(id, TransactionLineItemDeleteParams.none(), requestOptions)
 
@@ -135,7 +135,7 @@ interface LineItemService {
         fun create(params: TransactionLineItemCreateParams): HttpResponseFor<TransactionLineItem> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: TransactionLineItemCreateParams,
@@ -150,7 +150,7 @@ interface LineItemService {
         fun retrieve(id: String): HttpResponseFor<TransactionLineItem> =
             retrieve(id, TransactionLineItemRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -159,27 +159,27 @@ interface LineItemService {
         ): HttpResponseFor<TransactionLineItem> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: TransactionLineItemRetrieveParams = TransactionLineItemRetrieveParams.none(),
         ): HttpResponseFor<TransactionLineItem> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: TransactionLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionLineItem>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: TransactionLineItemRetrieveParams
         ): HttpResponseFor<TransactionLineItem> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -195,20 +195,20 @@ interface LineItemService {
         fun list(): HttpResponseFor<TransactionLineItemListPage> =
             list(TransactionLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: TransactionLineItemListParams = TransactionLineItemListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionLineItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: TransactionLineItemListParams = TransactionLineItemListParams.none()
         ): HttpResponseFor<TransactionLineItemListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionLineItemListPage> =
             list(TransactionLineItemListParams.none(), requestOptions)
@@ -220,7 +220,7 @@ interface LineItemService {
         @MustBeClosed
         fun delete(id: String): HttpResponse = delete(id, TransactionLineItemDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -228,26 +228,26 @@ interface LineItemService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: TransactionLineItemDeleteParams = TransactionLineItemDeleteParams.none(),
         ): HttpResponse = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: TransactionLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: TransactionLineItemDeleteParams): HttpResponse =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponse =
             delete(id, TransactionLineItemDeleteParams.none(), requestOptions)

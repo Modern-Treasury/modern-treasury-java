@@ -34,7 +34,7 @@ interface PaymentActionService {
     fun create(params: PaymentActionCreateParams): PaymentActionCreateResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PaymentActionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,30 +44,30 @@ interface PaymentActionService {
     fun retrieve(id: String): PaymentActionRetrieveResponse =
         retrieve(id, PaymentActionRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentActionRetrieveResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
     ): PaymentActionRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentActionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentActionRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentActionRetrieveParams): PaymentActionRetrieveResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PaymentActionRetrieveResponse =
         retrieve(id, PaymentActionRetrieveParams.none(), requestOptions)
 
@@ -75,18 +75,18 @@ interface PaymentActionService {
     fun update(id: String, params: PaymentActionUpdateParams): PaymentActionUpdateResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentActionUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PaymentActionUpdateParams): PaymentActionUpdateResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -95,18 +95,18 @@ interface PaymentActionService {
     /** Get a list of all payment actions. */
     fun list(): PaymentActionListPage = list(PaymentActionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentActionListParams = PaymentActionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentActionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentActionListParams = PaymentActionListParams.none()
     ): PaymentActionListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PaymentActionListPage =
         list(PaymentActionListParams.none(), requestOptions)
 
@@ -133,7 +133,7 @@ interface PaymentActionService {
             params: PaymentActionCreateParams
         ): HttpResponseFor<PaymentActionCreateResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PaymentActionCreateParams,
@@ -148,7 +148,7 @@ interface PaymentActionService {
         fun retrieve(id: String): HttpResponseFor<PaymentActionRetrieveResponse> =
             retrieve(id, PaymentActionRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -157,7 +157,7 @@ interface PaymentActionService {
         ): HttpResponseFor<PaymentActionRetrieveResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -165,20 +165,20 @@ interface PaymentActionService {
         ): HttpResponseFor<PaymentActionRetrieveResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentActionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentActionRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentActionRetrieveParams
         ): HttpResponseFor<PaymentActionRetrieveResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -196,7 +196,7 @@ interface PaymentActionService {
             params: PaymentActionUpdateParams,
         ): HttpResponseFor<PaymentActionUpdateResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -205,13 +205,13 @@ interface PaymentActionService {
         ): HttpResponseFor<PaymentActionUpdateResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PaymentActionUpdateParams
         ): HttpResponseFor<PaymentActionUpdateResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PaymentActionUpdateParams,
@@ -225,20 +225,20 @@ interface PaymentActionService {
         @MustBeClosed
         fun list(): HttpResponseFor<PaymentActionListPage> = list(PaymentActionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentActionListParams = PaymentActionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentActionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentActionListParams = PaymentActionListParams.none()
         ): HttpResponseFor<PaymentActionListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentActionListPage> =
             list(PaymentActionListParams.none(), requestOptions)
