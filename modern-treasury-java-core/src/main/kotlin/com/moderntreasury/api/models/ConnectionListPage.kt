@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ConnectionService.list] */
+/** @see ConnectionService.list */
 class ConnectionListPage
 private constructor(
     private val service: ConnectionService,

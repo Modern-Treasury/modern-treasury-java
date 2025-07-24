@@ -31,7 +31,7 @@ interface ForeignExchangeQuoteServiceAsync {
     fun create(params: ForeignExchangeQuoteCreateParams): CompletableFuture<ForeignExchangeQuote> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ForeignExchangeQuoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,7 +41,7 @@ interface ForeignExchangeQuoteServiceAsync {
     fun retrieve(id: String): CompletableFuture<ForeignExchangeQuote> =
         retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
@@ -49,24 +49,24 @@ interface ForeignExchangeQuoteServiceAsync {
     ): CompletableFuture<ForeignExchangeQuote> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
     ): CompletableFuture<ForeignExchangeQuote> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuote>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams
     ): CompletableFuture<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -77,18 +77,18 @@ interface ForeignExchangeQuoteServiceAsync {
     fun list(): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
         list(ForeignExchangeQuoteListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ForeignExchangeQuoteListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
     ): CompletableFuture<ForeignExchangeQuoteListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ForeignExchangeQuoteListPageAsync> =
         list(ForeignExchangeQuoteListParams.none(), requestOptions)
 
@@ -116,7 +116,7 @@ interface ForeignExchangeQuoteServiceAsync {
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ForeignExchangeQuoteCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -129,7 +129,7 @@ interface ForeignExchangeQuoteServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
             retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
@@ -137,26 +137,26 @@ interface ForeignExchangeQuoteServiceAsync {
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuote>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -170,19 +170,19 @@ interface ForeignExchangeQuoteServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>> =
             list(ForeignExchangeQuoteListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ForeignExchangeQuoteListPageAsync>> =

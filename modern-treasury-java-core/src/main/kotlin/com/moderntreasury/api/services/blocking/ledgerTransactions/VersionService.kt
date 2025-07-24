@@ -27,18 +27,18 @@ interface VersionService {
     /** Get a list of ledger transaction versions. */
     fun list(): LedgerTransactionVersionListPage = list(LedgerTransactionVersionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerTransactionVersionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
     ): LedgerTransactionVersionListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): LedgerTransactionVersionListPage =
         list(LedgerTransactionVersionListParams.none(), requestOptions)
 
@@ -60,20 +60,20 @@ interface VersionService {
         fun list(): HttpResponseFor<LedgerTransactionVersionListPage> =
             list(LedgerTransactionVersionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerTransactionVersionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerTransactionVersionListParams = LedgerTransactionVersionListParams.none()
         ): HttpResponseFor<LedgerTransactionVersionListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

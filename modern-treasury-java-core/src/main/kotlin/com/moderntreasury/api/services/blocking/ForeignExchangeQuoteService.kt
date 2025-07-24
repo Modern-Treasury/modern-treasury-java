@@ -31,7 +31,7 @@ interface ForeignExchangeQuoteService {
     fun create(params: ForeignExchangeQuoteCreateParams): ForeignExchangeQuote =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ForeignExchangeQuoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,48 +41,48 @@ interface ForeignExchangeQuoteService {
     fun retrieve(id: String): ForeignExchangeQuote =
         retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
     ): ForeignExchangeQuote = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ForeignExchangeQuoteRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuote
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ForeignExchangeQuoteRetrieveParams): ForeignExchangeQuote =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): ForeignExchangeQuote =
         retrieve(id, ForeignExchangeQuoteRetrieveParams.none(), requestOptions)
 
     /** list foreign_exchange_quotes */
     fun list(): ForeignExchangeQuoteListPage = list(ForeignExchangeQuoteListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ForeignExchangeQuoteListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
     ): ForeignExchangeQuoteListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ForeignExchangeQuoteListPage =
         list(ForeignExchangeQuoteListParams.none(), requestOptions)
 
@@ -110,7 +110,7 @@ interface ForeignExchangeQuoteService {
             params: ForeignExchangeQuoteCreateParams
         ): HttpResponseFor<ForeignExchangeQuote> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: ForeignExchangeQuoteCreateParams,
@@ -125,7 +125,7 @@ interface ForeignExchangeQuoteService {
         fun retrieve(id: String): HttpResponseFor<ForeignExchangeQuote> =
             retrieve(id, ForeignExchangeQuoteRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -134,27 +134,27 @@ interface ForeignExchangeQuoteService {
         ): HttpResponseFor<ForeignExchangeQuote> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: ForeignExchangeQuoteRetrieveParams = ForeignExchangeQuoteRetrieveParams.none(),
         ): HttpResponseFor<ForeignExchangeQuote> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ForeignExchangeQuote>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: ForeignExchangeQuoteRetrieveParams
         ): HttpResponseFor<ForeignExchangeQuote> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -170,20 +170,20 @@ interface ForeignExchangeQuoteService {
         fun list(): HttpResponseFor<ForeignExchangeQuoteListPage> =
             list(ForeignExchangeQuoteListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ForeignExchangeQuoteListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ForeignExchangeQuoteListParams = ForeignExchangeQuoteListParams.none()
         ): HttpResponseFor<ForeignExchangeQuoteListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ForeignExchangeQuoteListPage> =
             list(ForeignExchangeQuoteListParams.none(), requestOptions)

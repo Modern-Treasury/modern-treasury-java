@@ -29,7 +29,7 @@ interface LegalEntityAssociationServiceAsync {
         params: LegalEntityAssociationCreateParams
     ): CompletableFuture<LegalEntityAssociation> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LegalEntityAssociationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,7 +59,7 @@ interface LegalEntityAssociationServiceAsync {
         ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: LegalEntityAssociationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

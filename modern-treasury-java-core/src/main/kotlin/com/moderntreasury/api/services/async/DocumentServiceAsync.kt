@@ -31,7 +31,7 @@ interface DocumentServiceAsync {
     fun create(params: DocumentCreateParams): CompletableFuture<Document> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: DocumentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,48 +41,48 @@ interface DocumentServiceAsync {
     fun retrieve(id: String): CompletableFuture<Document> =
         retrieve(id, DocumentRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
     ): CompletableFuture<Document> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DocumentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: DocumentRetrieveParams): CompletableFuture<Document> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Document> =
         retrieve(id, DocumentRetrieveParams.none(), requestOptions)
 
     /** Get a list of documents. */
     fun list(): CompletableFuture<DocumentListPageAsync> = list(DocumentListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DocumentListParams = DocumentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DocumentListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DocumentListParams = DocumentListParams.none()
     ): CompletableFuture<DocumentListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<DocumentListPageAsync> =
         list(DocumentListParams.none(), requestOptions)
 
@@ -107,7 +107,7 @@ interface DocumentServiceAsync {
         fun create(params: DocumentCreateParams): CompletableFuture<HttpResponseFor<Document>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: DocumentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -120,7 +120,7 @@ interface DocumentServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(id, DocumentRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
@@ -128,24 +128,24 @@ interface DocumentServiceAsync {
         ): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: DocumentRetrieveParams = DocumentRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: DocumentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Document>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(params: DocumentRetrieveParams): CompletableFuture<HttpResponseFor<Document>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -159,19 +159,19 @@ interface DocumentServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
             list(DocumentListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: DocumentListParams = DocumentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: DocumentListParams = DocumentListParams.none()
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DocumentListPageAsync>> =

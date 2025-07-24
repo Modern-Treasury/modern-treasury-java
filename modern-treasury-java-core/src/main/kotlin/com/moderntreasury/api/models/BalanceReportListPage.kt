@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [BalanceReportService.list] */
+/** @see BalanceReportService.list */
 class BalanceReportListPage
 private constructor(
     private val service: BalanceReportService,

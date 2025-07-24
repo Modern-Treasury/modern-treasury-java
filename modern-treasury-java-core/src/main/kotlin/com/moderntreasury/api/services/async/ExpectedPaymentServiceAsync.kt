@@ -32,18 +32,18 @@ interface ExpectedPaymentServiceAsync {
     /** create expected payment */
     fun create(): CompletableFuture<ExpectedPayment> = create(ExpectedPaymentCreateParams.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
     ): CompletableFuture<ExpectedPayment> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
         create(ExpectedPaymentCreateParams.none(), requestOptions)
 
@@ -51,7 +51,7 @@ interface ExpectedPaymentServiceAsync {
     fun retrieve(id: String): CompletableFuture<ExpectedPayment> =
         retrieve(id, ExpectedPaymentRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
@@ -59,23 +59,23 @@ interface ExpectedPaymentServiceAsync {
     ): CompletableFuture<ExpectedPayment> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
     ): CompletableFuture<ExpectedPayment> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ExpectedPaymentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ExpectedPaymentRetrieveParams): CompletableFuture<ExpectedPayment> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
         retrieve(id, ExpectedPaymentRetrieveParams.none(), requestOptions)
 
@@ -83,7 +83,7 @@ interface ExpectedPaymentServiceAsync {
     fun update(id: String): CompletableFuture<ExpectedPayment> =
         update(id, ExpectedPaymentUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
@@ -91,23 +91,23 @@ interface ExpectedPaymentServiceAsync {
     ): CompletableFuture<ExpectedPayment> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
     ): CompletableFuture<ExpectedPayment> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ExpectedPaymentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ExpectedPaymentUpdateParams): CompletableFuture<ExpectedPayment> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
         update(id, ExpectedPaymentUpdateParams.none(), requestOptions)
 
@@ -115,18 +115,18 @@ interface ExpectedPaymentServiceAsync {
     fun list(): CompletableFuture<ExpectedPaymentListPageAsync> =
         list(ExpectedPaymentListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPaymentListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ExpectedPaymentListParams = ExpectedPaymentListParams.none()
     ): CompletableFuture<ExpectedPaymentListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ExpectedPaymentListPageAsync> =
         list(ExpectedPaymentListParams.none(), requestOptions)
 
@@ -134,7 +134,7 @@ interface ExpectedPaymentServiceAsync {
     fun delete(id: String): CompletableFuture<ExpectedPayment> =
         delete(id, ExpectedPaymentDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
@@ -142,23 +142,23 @@ interface ExpectedPaymentServiceAsync {
     ): CompletableFuture<ExpectedPayment> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
     ): CompletableFuture<ExpectedPayment> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ExpectedPaymentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExpectedPayment>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ExpectedPaymentDeleteParams): CompletableFuture<ExpectedPayment> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
         delete(id, ExpectedPaymentDeleteParams.none(), requestOptions)
 
@@ -184,19 +184,19 @@ interface ExpectedPaymentServiceAsync {
         fun create(): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             create(ExpectedPaymentCreateParams.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
@@ -209,7 +209,7 @@ interface ExpectedPaymentServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(id, ExpectedPaymentRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
@@ -217,26 +217,26 @@ interface ExpectedPaymentServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ExpectedPaymentRetrieveParams = ExpectedPaymentRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ExpectedPaymentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ExpectedPaymentRetrieveParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -250,7 +250,7 @@ interface ExpectedPaymentServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(id, ExpectedPaymentUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
@@ -258,26 +258,26 @@ interface ExpectedPaymentServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ExpectedPaymentUpdateParams = ExpectedPaymentUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ExpectedPaymentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ExpectedPaymentUpdateParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -291,19 +291,19 @@ interface ExpectedPaymentServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
             list(ExpectedPaymentListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ExpectedPaymentListParams = ExpectedPaymentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ExpectedPaymentListParams = ExpectedPaymentListParams.none()
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExpectedPaymentListPageAsync>> =
@@ -316,7 +316,7 @@ interface ExpectedPaymentServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(id, ExpectedPaymentDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
@@ -324,26 +324,26 @@ interface ExpectedPaymentServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ExpectedPaymentDeleteParams = ExpectedPaymentDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ExpectedPaymentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ExpectedPaymentDeleteParams
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

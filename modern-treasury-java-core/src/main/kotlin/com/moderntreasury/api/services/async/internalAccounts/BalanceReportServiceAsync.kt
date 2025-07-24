@@ -35,7 +35,7 @@ interface BalanceReportServiceAsync {
         params: BalanceReportCreateParams,
     ): CompletableFuture<BalanceReport> = create(internalAccountId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         internalAccountId: String,
         params: BalanceReportCreateParams,
@@ -43,11 +43,11 @@ interface BalanceReportServiceAsync {
     ): CompletableFuture<BalanceReport> =
         create(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BalanceReportCreateParams): CompletableFuture<BalanceReport> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BalanceReportCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,7 +59,7 @@ interface BalanceReportServiceAsync {
         params: BalanceReportRetrieveParams,
     ): CompletableFuture<BalanceReport> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: BalanceReportRetrieveParams.Id,
         params: BalanceReportRetrieveParams,
@@ -67,11 +67,11 @@ interface BalanceReportServiceAsync {
     ): CompletableFuture<BalanceReport> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BalanceReportRetrieveParams): CompletableFuture<BalanceReport> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BalanceReportRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -81,7 +81,7 @@ interface BalanceReportServiceAsync {
     fun list(internalAccountId: String): CompletableFuture<BalanceReportListPageAsync> =
         list(internalAccountId, BalanceReportListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         internalAccountId: String,
         params: BalanceReportListParams = BalanceReportListParams.none(),
@@ -89,24 +89,24 @@ interface BalanceReportServiceAsync {
     ): CompletableFuture<BalanceReportListPageAsync> =
         list(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         internalAccountId: String,
         params: BalanceReportListParams = BalanceReportListParams.none(),
     ): CompletableFuture<BalanceReportListPageAsync> =
         list(internalAccountId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceReportListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceReportListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BalanceReportListParams): CompletableFuture<BalanceReportListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         internalAccountId: String,
         requestOptions: RequestOptions,
@@ -117,18 +117,18 @@ interface BalanceReportServiceAsync {
     fun delete(id: String, params: BalanceReportDeleteParams): CompletableFuture<Void?> =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BalanceReportDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BalanceReportDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BalanceReportDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -160,7 +160,7 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             create(internalAccountId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             internalAccountId: String,
             params: BalanceReportCreateParams,
@@ -168,12 +168,12 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             create(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: BalanceReportCreateParams
         ): CompletableFuture<HttpResponseFor<BalanceReport>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: BalanceReportCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -190,7 +190,7 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: BalanceReportRetrieveParams.Id,
             params: BalanceReportRetrieveParams,
@@ -198,13 +198,13 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BalanceReportRetrieveParams
         ): CompletableFuture<HttpResponseFor<BalanceReport>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BalanceReportRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -220,7 +220,7 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(internalAccountId, BalanceReportListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             internalAccountId: String,
             params: BalanceReportListParams = BalanceReportListParams.none(),
@@ -228,26 +228,26 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(params.toBuilder().internalAccountId(internalAccountId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             internalAccountId: String,
             params: BalanceReportListParams = BalanceReportListParams.none(),
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(internalAccountId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BalanceReportListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BalanceReportListParams
         ): CompletableFuture<HttpResponseFor<BalanceReportListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             internalAccountId: String,
             requestOptions: RequestOptions,
@@ -262,7 +262,7 @@ interface BalanceReportServiceAsync {
         fun delete(id: String, params: BalanceReportDeleteParams): CompletableFuture<HttpResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: BalanceReportDeleteParams,
@@ -270,11 +270,11 @@ interface BalanceReportServiceAsync {
         ): CompletableFuture<HttpResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: BalanceReportDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: BalanceReportDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),

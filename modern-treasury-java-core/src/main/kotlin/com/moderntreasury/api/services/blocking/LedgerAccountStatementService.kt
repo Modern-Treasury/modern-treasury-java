@@ -30,7 +30,7 @@ interface LedgerAccountStatementService {
     fun create(params: LedgerAccountStatementCreateParams): LedgerAccountStatementCreateResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountStatementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -40,7 +40,7 @@ interface LedgerAccountStatementService {
     fun retrieve(id: String): LedgerAccountStatementRetrieveResponse =
         retrieve(id, LedgerAccountStatementRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
@@ -48,24 +48,24 @@ interface LedgerAccountStatementService {
     ): LedgerAccountStatementRetrieveResponse =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountStatementRetrieveParams = LedgerAccountStatementRetrieveParams.none(),
     ): LedgerAccountStatementRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountStatementRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountStatementRetrieveParams
     ): LedgerAccountStatementRetrieveResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -97,7 +97,7 @@ interface LedgerAccountStatementService {
         ): HttpResponseFor<LedgerAccountStatementCreateResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: LedgerAccountStatementCreateParams,
@@ -112,7 +112,7 @@ interface LedgerAccountStatementService {
         fun retrieve(id: String): HttpResponseFor<LedgerAccountStatementRetrieveResponse> =
             retrieve(id, LedgerAccountStatementRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -122,7 +122,7 @@ interface LedgerAccountStatementService {
         ): HttpResponseFor<LedgerAccountStatementRetrieveResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -131,21 +131,21 @@ interface LedgerAccountStatementService {
         ): HttpResponseFor<LedgerAccountStatementRetrieveResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountStatementRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountStatementRetrieveParams
         ): HttpResponseFor<LedgerAccountStatementRetrieveResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,

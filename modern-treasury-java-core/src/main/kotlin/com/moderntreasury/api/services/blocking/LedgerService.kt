@@ -32,7 +32,7 @@ interface LedgerService {
     /** Create a ledger. */
     fun create(params: LedgerCreateParams): Ledger = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,98 +41,98 @@ interface LedgerService {
     /** Get details on a single ledger. */
     fun retrieve(id: String): Ledger = retrieve(id, LedgerRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerRetrieveParams = LedgerRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, params: LedgerRetrieveParams = LedgerRetrieveParams.none()): Ledger =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LedgerRetrieveParams): Ledger = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): Ledger =
         retrieve(id, LedgerRetrieveParams.none(), requestOptions)
 
     /** Update the details of a ledger. */
     fun update(id: String): Ledger = update(id, LedgerUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerUpdateParams = LedgerUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, params: LedgerUpdateParams = LedgerUpdateParams.none()): Ledger =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LedgerUpdateParams): Ledger = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): Ledger =
         update(id, LedgerUpdateParams.none(), requestOptions)
 
     /** Get a list of ledgers. */
     fun list(): LedgerListPage = list(LedgerListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerListParams = LedgerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: LedgerListParams = LedgerListParams.none()): LedgerListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): LedgerListPage =
         list(LedgerListParams.none(), requestOptions)
 
     /** Delete a ledger. */
     fun delete(id: String): Ledger = delete(id, LedgerDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: LedgerDeleteParams = LedgerDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, params: LedgerDeleteParams = LedgerDeleteParams.none()): Ledger =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: LedgerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Ledger
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: LedgerDeleteParams): Ledger = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): Ledger =
         delete(id, LedgerDeleteParams.none(), requestOptions)
 
@@ -154,7 +154,7 @@ interface LedgerService {
         fun create(params: LedgerCreateParams): HttpResponseFor<Ledger> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: LedgerCreateParams,
@@ -169,7 +169,7 @@ interface LedgerService {
         fun retrieve(id: String): HttpResponseFor<Ledger> =
             retrieve(id, LedgerRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -177,26 +177,26 @@ interface LedgerService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerRetrieveParams = LedgerRetrieveParams.none(),
         ): HttpResponseFor<Ledger> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: LedgerRetrieveParams): HttpResponseFor<Ledger> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Ledger> =
             retrieve(id, LedgerRetrieveParams.none(), requestOptions)
@@ -208,7 +208,7 @@ interface LedgerService {
         @MustBeClosed
         fun update(id: String): HttpResponseFor<Ledger> = update(id, LedgerUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -216,26 +216,26 @@ interface LedgerService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger> = update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: LedgerUpdateParams = LedgerUpdateParams.none(),
         ): HttpResponseFor<Ledger> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: LedgerUpdateParams): HttpResponseFor<Ledger> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<Ledger> =
             update(id, LedgerUpdateParams.none(), requestOptions)
@@ -246,20 +246,20 @@ interface LedgerService {
          */
         @MustBeClosed fun list(): HttpResponseFor<LedgerListPage> = list(LedgerListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerListParams = LedgerListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerListParams = LedgerListParams.none()
         ): HttpResponseFor<LedgerListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerListPage> =
             list(LedgerListParams.none(), requestOptions)
@@ -271,7 +271,7 @@ interface LedgerService {
         @MustBeClosed
         fun delete(id: String): HttpResponseFor<Ledger> = delete(id, LedgerDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -279,26 +279,26 @@ interface LedgerService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: LedgerDeleteParams = LedgerDeleteParams.none(),
         ): HttpResponseFor<Ledger> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: LedgerDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Ledger>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: LedgerDeleteParams): HttpResponseFor<Ledger> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<Ledger> =
             delete(id, LedgerDeleteParams.none(), requestOptions)

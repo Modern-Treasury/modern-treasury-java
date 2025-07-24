@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [VirtualAccountService.list] */
+/** @see VirtualAccountService.list */
 class VirtualAccountListPage
 private constructor(
     private val service: VirtualAccountService,

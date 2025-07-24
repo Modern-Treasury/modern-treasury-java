@@ -162,17 +162,17 @@ interface ModernTreasuryClientAsync {
      */
     fun ping(): CompletableFuture<PingResponse> = ping(ClientPingParams.none())
 
-    /** @see [ping] */
+    /** @see ping */
     fun ping(
         params: ClientPingParams = ClientPingParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PingResponse>
 
-    /** @see [ping] */
+    /** @see ping */
     fun ping(params: ClientPingParams = ClientPingParams.none()): CompletableFuture<PingResponse> =
         ping(params, RequestOptions.none())
 
-    /** @see [ping] */
+    /** @see ping */
     fun ping(requestOptions: RequestOptions): CompletableFuture<PingResponse> =
         ping(ClientPingParams.none(), requestOptions)
 
@@ -282,18 +282,18 @@ interface ModernTreasuryClientAsync {
          */
         fun ping(): CompletableFuture<HttpResponseFor<PingResponse>> = ping(ClientPingParams.none())
 
-        /** @see [ping] */
+        /** @see ping */
         fun ping(
             params: ClientPingParams = ClientPingParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PingResponse>>
 
-        /** @see [ping] */
+        /** @see ping */
         fun ping(
             params: ClientPingParams = ClientPingParams.none()
         ): CompletableFuture<HttpResponseFor<PingResponse>> = ping(params, RequestOptions.none())
 
-        /** @see [ping] */
+        /** @see ping */
         fun ping(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<PingResponse>> =
             ping(ClientPingParams.none(), requestOptions)
     }

@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ReversalService.list] */
+/** @see ReversalService.list */
 class PaymentOrderReversalListPage
 private constructor(
     private val service: ReversalService,

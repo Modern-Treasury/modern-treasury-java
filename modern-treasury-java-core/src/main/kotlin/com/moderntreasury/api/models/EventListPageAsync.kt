@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [EventServiceAsync.list] */
+/** @see EventServiceAsync.list */
 class EventListPageAsync
 private constructor(
     private val service: EventServiceAsync,

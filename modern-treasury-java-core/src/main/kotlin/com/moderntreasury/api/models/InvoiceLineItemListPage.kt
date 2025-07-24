@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LineItemService.list] */
+/** @see LineItemService.list */
 class InvoiceLineItemListPage
 private constructor(
     private val service: LineItemService,

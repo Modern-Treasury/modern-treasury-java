@@ -29,7 +29,7 @@ interface ValidationService {
         params: ValidationValidateRoutingNumberParams
     ): RoutingNumberLookupRequest = validateRoutingNumber(params, RequestOptions.none())
 
-    /** @see [validateRoutingNumber] */
+    /** @see validateRoutingNumber */
     fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -57,7 +57,7 @@ interface ValidationService {
         ): HttpResponseFor<RoutingNumberLookupRequest> =
             validateRoutingNumber(params, RequestOptions.none())
 
-        /** @see [validateRoutingNumber] */
+        /** @see validateRoutingNumber */
         @MustBeClosed
         fun validateRoutingNumber(
             params: ValidationValidateRoutingNumberParams,

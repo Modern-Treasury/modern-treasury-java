@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [InternalAccountServiceAsync.list] */
+/** @see InternalAccountServiceAsync.list */
 class InternalAccountListPageAsync
 private constructor(
     private val service: InternalAccountServiceAsync,

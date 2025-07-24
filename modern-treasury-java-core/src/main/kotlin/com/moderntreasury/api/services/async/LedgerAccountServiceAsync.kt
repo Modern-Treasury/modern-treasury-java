@@ -33,7 +33,7 @@ interface LedgerAccountServiceAsync {
     fun create(params: LedgerAccountCreateParams): CompletableFuture<LedgerAccount> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +43,7 @@ interface LedgerAccountServiceAsync {
     fun retrieve(id: String): CompletableFuture<LedgerAccount> =
         retrieve(id, LedgerAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
@@ -51,23 +51,23 @@ interface LedgerAccountServiceAsync {
     ): CompletableFuture<LedgerAccount> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
     ): CompletableFuture<LedgerAccount> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LedgerAccountRetrieveParams): CompletableFuture<LedgerAccount> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerAccount> =
         retrieve(id, LedgerAccountRetrieveParams.none(), requestOptions)
 
@@ -75,48 +75,48 @@ interface LedgerAccountServiceAsync {
     fun update(id: String): CompletableFuture<LedgerAccount> =
         update(id, LedgerAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
     ): CompletableFuture<LedgerAccount> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LedgerAccountUpdateParams): CompletableFuture<LedgerAccount> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerAccount> =
         update(id, LedgerAccountUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger accounts. */
     fun list(): CompletableFuture<LedgerAccountListPageAsync> = list(LedgerAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountListParams = LedgerAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccountListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountListParams = LedgerAccountListParams.none()
     ): CompletableFuture<LedgerAccountListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<LedgerAccountListPageAsync> =
         list(LedgerAccountListParams.none(), requestOptions)
 
@@ -124,30 +124,30 @@ interface LedgerAccountServiceAsync {
     fun delete(id: String): CompletableFuture<LedgerAccount> =
         delete(id, LedgerAccountDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
     ): CompletableFuture<LedgerAccount> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: LedgerAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: LedgerAccountDeleteParams): CompletableFuture<LedgerAccount> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<LedgerAccount> =
         delete(id, LedgerAccountDeleteParams.none(), requestOptions)
 
@@ -174,7 +174,7 @@ interface LedgerAccountServiceAsync {
             params: LedgerAccountCreateParams
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: LedgerAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -187,7 +187,7 @@ interface LedgerAccountServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             retrieve(id, LedgerAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
@@ -195,26 +195,26 @@ interface LedgerAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LedgerAccountRetrieveParams = LedgerAccountRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LedgerAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -228,7 +228,7 @@ interface LedgerAccountServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             update(id, LedgerAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
@@ -236,25 +236,25 @@ interface LedgerAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: LedgerAccountUpdateParams = LedgerAccountUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: LedgerAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: LedgerAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -268,19 +268,19 @@ interface LedgerAccountServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<LedgerAccountListPageAsync>> =
             list(LedgerAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerAccountListParams = LedgerAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccountListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LedgerAccountListParams = LedgerAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<LedgerAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LedgerAccountListPageAsync>> =
@@ -293,7 +293,7 @@ interface LedgerAccountServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             delete(id, LedgerAccountDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
@@ -301,25 +301,25 @@ interface LedgerAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: LedgerAccountDeleteParams = LedgerAccountDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: LedgerAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: LedgerAccountDeleteParams
         ): CompletableFuture<HttpResponseFor<LedgerAccount>> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

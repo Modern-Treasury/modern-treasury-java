@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [RoutingDetailServiceAsync.list] */
+/** @see RoutingDetailServiceAsync.list */
 class RoutingDetailListPageAsync
 private constructor(
     private val service: RoutingDetailServiceAsync,

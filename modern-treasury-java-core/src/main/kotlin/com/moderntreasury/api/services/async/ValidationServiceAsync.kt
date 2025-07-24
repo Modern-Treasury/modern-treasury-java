@@ -30,7 +30,7 @@ interface ValidationServiceAsync {
     ): CompletableFuture<RoutingNumberLookupRequest> =
         validateRoutingNumber(params, RequestOptions.none())
 
-    /** @see [validateRoutingNumber] */
+    /** @see validateRoutingNumber */
     fun validateRoutingNumber(
         params: ValidationValidateRoutingNumberParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +60,7 @@ interface ValidationServiceAsync {
         ): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>> =
             validateRoutingNumber(params, RequestOptions.none())
 
-        /** @see [validateRoutingNumber] */
+        /** @see validateRoutingNumber */
         fun validateRoutingNumber(
             params: ValidationValidateRoutingNumberParams,
             requestOptions: RequestOptions = RequestOptions.none(),

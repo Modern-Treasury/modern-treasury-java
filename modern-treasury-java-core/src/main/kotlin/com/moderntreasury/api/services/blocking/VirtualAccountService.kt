@@ -33,7 +33,7 @@ interface VirtualAccountService {
     fun create(params: VirtualAccountCreateParams): VirtualAccount =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: VirtualAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,108 +42,108 @@ interface VirtualAccountService {
     /** get virtual_account */
     fun retrieve(id: String): VirtualAccount = retrieve(id, VirtualAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
     ): VirtualAccount = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: VirtualAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: VirtualAccountRetrieveParams): VirtualAccount =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): VirtualAccount =
         retrieve(id, VirtualAccountRetrieveParams.none(), requestOptions)
 
     /** update virtual_account */
     fun update(id: String): VirtualAccount = update(id, VirtualAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
     ): VirtualAccount = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: VirtualAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: VirtualAccountUpdateParams): VirtualAccount =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): VirtualAccount =
         update(id, VirtualAccountUpdateParams.none(), requestOptions)
 
     /** Get a list of virtual accounts. */
     fun list(): VirtualAccountListPage = list(VirtualAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: VirtualAccountListParams = VirtualAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccountListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: VirtualAccountListParams = VirtualAccountListParams.none()
     ): VirtualAccountListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): VirtualAccountListPage =
         list(VirtualAccountListParams.none(), requestOptions)
 
     /** delete virtual_account */
     fun delete(id: String): VirtualAccount = delete(id, VirtualAccountDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
     ): VirtualAccount = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: VirtualAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): VirtualAccount
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: VirtualAccountDeleteParams): VirtualAccount =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): VirtualAccount =
         delete(id, VirtualAccountDeleteParams.none(), requestOptions)
 
@@ -169,7 +169,7 @@ interface VirtualAccountService {
         fun create(params: VirtualAccountCreateParams): HttpResponseFor<VirtualAccount> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: VirtualAccountCreateParams,
@@ -184,7 +184,7 @@ interface VirtualAccountService {
         fun retrieve(id: String): HttpResponseFor<VirtualAccount> =
             retrieve(id, VirtualAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -193,26 +193,26 @@ interface VirtualAccountService {
         ): HttpResponseFor<VirtualAccount> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
         ): HttpResponseFor<VirtualAccount> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: VirtualAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<VirtualAccount>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: VirtualAccountRetrieveParams): HttpResponseFor<VirtualAccount> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<VirtualAccount> =
             retrieve(id, VirtualAccountRetrieveParams.none(), requestOptions)
@@ -225,7 +225,7 @@ interface VirtualAccountService {
         fun update(id: String): HttpResponseFor<VirtualAccount> =
             update(id, VirtualAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -234,26 +234,26 @@ interface VirtualAccountService {
         ): HttpResponseFor<VirtualAccount> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
         ): HttpResponseFor<VirtualAccount> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: VirtualAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<VirtualAccount>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: VirtualAccountUpdateParams): HttpResponseFor<VirtualAccount> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<VirtualAccount> =
             update(id, VirtualAccountUpdateParams.none(), requestOptions)
@@ -265,20 +265,20 @@ interface VirtualAccountService {
         @MustBeClosed
         fun list(): HttpResponseFor<VirtualAccountListPage> = list(VirtualAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<VirtualAccountListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none()
         ): HttpResponseFor<VirtualAccountListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<VirtualAccountListPage> =
             list(VirtualAccountListParams.none(), requestOptions)
@@ -291,7 +291,7 @@ interface VirtualAccountService {
         fun delete(id: String): HttpResponseFor<VirtualAccount> =
             delete(id, VirtualAccountDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -300,26 +300,26 @@ interface VirtualAccountService {
         ): HttpResponseFor<VirtualAccount> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
         ): HttpResponseFor<VirtualAccount> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: VirtualAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<VirtualAccount>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: VirtualAccountDeleteParams): HttpResponseFor<VirtualAccount> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<VirtualAccount> =
             delete(id, VirtualAccountDeleteParams.none(), requestOptions)

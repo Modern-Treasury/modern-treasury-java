@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ExpectedPaymentServiceAsync.list] */
+/** @see ExpectedPaymentServiceAsync.list */
 class ExpectedPaymentListPageAsync
 private constructor(
     private val service: ExpectedPaymentServiceAsync,

@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LedgerEntryServiceAsync.list] */
+/** @see LedgerEntryServiceAsync.list */
 class LedgerEntryListPageAsync
 private constructor(
     private val service: LedgerEntryServiceAsync,

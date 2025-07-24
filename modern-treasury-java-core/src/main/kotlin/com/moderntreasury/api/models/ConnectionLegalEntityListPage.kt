@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ConnectionLegalEntityService.list] */
+/** @see ConnectionLegalEntityService.list */
 class ConnectionLegalEntityListPage
 private constructor(
     private val service: ConnectionLegalEntityService,

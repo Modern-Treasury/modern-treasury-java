@@ -33,7 +33,7 @@ interface VirtualAccountServiceAsync {
     fun create(params: VirtualAccountCreateParams): CompletableFuture<VirtualAccount> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: VirtualAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +43,7 @@ interface VirtualAccountServiceAsync {
     fun retrieve(id: String): CompletableFuture<VirtualAccount> =
         retrieve(id, VirtualAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
@@ -51,23 +51,23 @@ interface VirtualAccountServiceAsync {
     ): CompletableFuture<VirtualAccount> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
     ): CompletableFuture<VirtualAccount> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: VirtualAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccount>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: VirtualAccountRetrieveParams): CompletableFuture<VirtualAccount> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<VirtualAccount> =
         retrieve(id, VirtualAccountRetrieveParams.none(), requestOptions)
 
@@ -75,30 +75,30 @@ interface VirtualAccountServiceAsync {
     fun update(id: String): CompletableFuture<VirtualAccount> =
         update(id, VirtualAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccount> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
     ): CompletableFuture<VirtualAccount> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: VirtualAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccount>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: VirtualAccountUpdateParams): CompletableFuture<VirtualAccount> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<VirtualAccount> =
         update(id, VirtualAccountUpdateParams.none(), requestOptions)
 
@@ -106,18 +106,18 @@ interface VirtualAccountServiceAsync {
     fun list(): CompletableFuture<VirtualAccountListPageAsync> =
         list(VirtualAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: VirtualAccountListParams = VirtualAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccountListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: VirtualAccountListParams = VirtualAccountListParams.none()
     ): CompletableFuture<VirtualAccountListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<VirtualAccountListPageAsync> =
         list(VirtualAccountListParams.none(), requestOptions)
 
@@ -125,30 +125,30 @@ interface VirtualAccountServiceAsync {
     fun delete(id: String): CompletableFuture<VirtualAccount> =
         delete(id, VirtualAccountDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccount> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
     ): CompletableFuture<VirtualAccount> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: VirtualAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<VirtualAccount>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: VirtualAccountDeleteParams): CompletableFuture<VirtualAccount> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<VirtualAccount> =
         delete(id, VirtualAccountDeleteParams.none(), requestOptions)
 
@@ -176,7 +176,7 @@ interface VirtualAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: VirtualAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -189,7 +189,7 @@ interface VirtualAccountServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(id, VirtualAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
@@ -197,26 +197,26 @@ interface VirtualAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: VirtualAccountRetrieveParams = VirtualAccountRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: VirtualAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: VirtualAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -230,7 +230,7 @@ interface VirtualAccountServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(id, VirtualAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
@@ -238,26 +238,26 @@ interface VirtualAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: VirtualAccountUpdateParams = VirtualAccountUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: VirtualAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: VirtualAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -271,19 +271,19 @@ interface VirtualAccountServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
             list(VirtualAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: VirtualAccountListParams = VirtualAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<VirtualAccountListPageAsync>> =
@@ -296,7 +296,7 @@ interface VirtualAccountServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(id, VirtualAccountDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
@@ -304,26 +304,26 @@ interface VirtualAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: VirtualAccountDeleteParams = VirtualAccountDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: VirtualAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<VirtualAccount>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: VirtualAccountDeleteParams
         ): CompletableFuture<HttpResponseFor<VirtualAccount>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

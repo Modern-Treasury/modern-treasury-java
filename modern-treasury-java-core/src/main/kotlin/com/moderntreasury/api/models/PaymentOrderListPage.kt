@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PaymentOrderService.list] */
+/** @see PaymentOrderService.list */
 class PaymentOrderListPage
 private constructor(
     private val service: PaymentOrderService,

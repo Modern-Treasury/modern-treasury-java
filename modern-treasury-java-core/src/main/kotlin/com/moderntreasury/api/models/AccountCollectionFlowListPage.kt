@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [AccountCollectionFlowService.list] */
+/** @see AccountCollectionFlowService.list */
 class AccountCollectionFlowListPage
 private constructor(
     private val service: AccountCollectionFlowService,
