@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [VersionServiceAsync.list] */
+/** @see VersionServiceAsync.list */
 class LedgerTransactionVersionListPageAsync
 private constructor(
     private val service: VersionServiceAsync,

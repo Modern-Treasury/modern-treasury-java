@@ -36,7 +36,7 @@ interface CounterpartyServiceAsync {
     fun create(params: CounterpartyCreateParams): CompletableFuture<Counterparty> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CounterpartyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,30 +46,30 @@ interface CounterpartyServiceAsync {
     fun retrieve(id: String): CompletableFuture<Counterparty> =
         retrieve(id, CounterpartyRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
     ): CompletableFuture<Counterparty> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CounterpartyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CounterpartyRetrieveParams): CompletableFuture<Counterparty> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Counterparty> =
         retrieve(id, CounterpartyRetrieveParams.none(), requestOptions)
 
@@ -77,78 +77,78 @@ interface CounterpartyServiceAsync {
     fun update(id: String): CompletableFuture<Counterparty> =
         update(id, CounterpartyUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
     ): CompletableFuture<Counterparty> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CounterpartyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counterparty>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CounterpartyUpdateParams): CompletableFuture<Counterparty> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<Counterparty> =
         update(id, CounterpartyUpdateParams.none(), requestOptions)
 
     /** Get a paginated list of all counterparties. */
     fun list(): CompletableFuture<CounterpartyListPageAsync> = list(CounterpartyListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterpartyListParams = CounterpartyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterpartyListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterpartyListParams = CounterpartyListParams.none()
     ): CompletableFuture<CounterpartyListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<CounterpartyListPageAsync> =
         list(CounterpartyListParams.none(), requestOptions)
 
     /** Deletes a given counterparty. */
     fun delete(id: String): CompletableFuture<Void?> = delete(id, CounterpartyDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
     ): CompletableFuture<Void?> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CounterpartyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CounterpartyDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
         delete(id, CounterpartyDeleteParams.none(), requestOptions)
 
@@ -159,7 +159,7 @@ interface CounterpartyServiceAsync {
     ): CompletableFuture<CounterpartyCollectAccountResponse> =
         collectAccount(id, params, RequestOptions.none())
 
-    /** @see [collectAccount] */
+    /** @see collectAccount */
     fun collectAccount(
         id: String,
         params: CounterpartyCollectAccountParams,
@@ -167,13 +167,13 @@ interface CounterpartyServiceAsync {
     ): CompletableFuture<CounterpartyCollectAccountResponse> =
         collectAccount(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [collectAccount] */
+    /** @see collectAccount */
     fun collectAccount(
         params: CounterpartyCollectAccountParams
     ): CompletableFuture<CounterpartyCollectAccountResponse> =
         collectAccount(params, RequestOptions.none())
 
-    /** @see [collectAccount] */
+    /** @see collectAccount */
     fun collectAccount(
         params: CounterpartyCollectAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -202,7 +202,7 @@ interface CounterpartyServiceAsync {
             params: CounterpartyCreateParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: CounterpartyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -215,7 +215,7 @@ interface CounterpartyServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(id, CounterpartyRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
@@ -223,26 +223,26 @@ interface CounterpartyServiceAsync {
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: CounterpartyRetrieveParams = CounterpartyRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CounterpartyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CounterpartyRetrieveParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -256,7 +256,7 @@ interface CounterpartyServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<Counterparty>> =
             update(id, CounterpartyUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
@@ -264,25 +264,25 @@ interface CounterpartyServiceAsync {
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: CounterpartyUpdateParams = CounterpartyUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CounterpartyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Counterparty>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CounterpartyUpdateParams
         ): CompletableFuture<HttpResponseFor<Counterparty>> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -296,19 +296,19 @@ interface CounterpartyServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
             list(CounterpartyListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: CounterpartyListParams = CounterpartyListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> =
@@ -321,7 +321,7 @@ interface CounterpartyServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponse> =
             delete(id, CounterpartyDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
@@ -329,23 +329,23 @@ interface CounterpartyServiceAsync {
         ): CompletableFuture<HttpResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: CounterpartyDeleteParams = CounterpartyDeleteParams.none(),
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: CounterpartyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: CounterpartyDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
             delete(id, CounterpartyDeleteParams.none(), requestOptions)
 
@@ -359,7 +359,7 @@ interface CounterpartyServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> =
             collectAccount(id, params, RequestOptions.none())
 
-        /** @see [collectAccount] */
+        /** @see collectAccount */
         fun collectAccount(
             id: String,
             params: CounterpartyCollectAccountParams,
@@ -367,13 +367,13 @@ interface CounterpartyServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> =
             collectAccount(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [collectAccount] */
+        /** @see collectAccount */
         fun collectAccount(
             params: CounterpartyCollectAccountParams
         ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> =
             collectAccount(params, RequestOptions.none())
 
-        /** @see [collectAccount] */
+        /** @see collectAccount */
         fun collectAccount(
             params: CounterpartyCollectAccountParams,
             requestOptions: RequestOptions = RequestOptions.none(),

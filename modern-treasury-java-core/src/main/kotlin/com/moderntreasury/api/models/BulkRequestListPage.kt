@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [BulkRequestService.list] */
+/** @see BulkRequestService.list */
 class BulkRequestListPage
 private constructor(
     private val service: BulkRequestService,

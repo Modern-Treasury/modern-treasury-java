@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ExternalAccountService.list] */
+/** @see ExternalAccountService.list */
 class ExternalAccountListPage
 private constructor(
     private val service: ExternalAccountService,

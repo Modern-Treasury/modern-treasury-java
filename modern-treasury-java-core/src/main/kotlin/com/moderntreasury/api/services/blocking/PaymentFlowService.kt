@@ -31,7 +31,7 @@ interface PaymentFlowService {
     /** create payment_flow */
     fun create(params: PaymentFlowCreateParams): PaymentFlow = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -40,30 +40,30 @@ interface PaymentFlowService {
     /** get payment_flow */
     fun retrieve(id: String): PaymentFlow = retrieve(id, PaymentFlowRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
     ): PaymentFlow = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentFlowRetrieveParams): PaymentFlow =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PaymentFlow =
         retrieve(id, PaymentFlowRetrieveParams.none(), requestOptions)
 
@@ -71,17 +71,17 @@ interface PaymentFlowService {
     fun update(id: String, params: PaymentFlowUpdateParams): PaymentFlow =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlow = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PaymentFlowUpdateParams): PaymentFlow = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -90,17 +90,17 @@ interface PaymentFlowService {
     /** list payment_flows */
     fun list(): PaymentFlowListPage = list(PaymentFlowListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentFlowListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: PaymentFlowListParams = PaymentFlowListParams.none()): PaymentFlowListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PaymentFlowListPage =
         list(PaymentFlowListParams.none(), requestOptions)
 
@@ -126,7 +126,7 @@ interface PaymentFlowService {
         fun create(params: PaymentFlowCreateParams): HttpResponseFor<PaymentFlow> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PaymentFlowCreateParams,
@@ -141,7 +141,7 @@ interface PaymentFlowService {
         fun retrieve(id: String): HttpResponseFor<PaymentFlow> =
             retrieve(id, PaymentFlowRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -150,26 +150,26 @@ interface PaymentFlowService {
         ): HttpResponseFor<PaymentFlow> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
         ): HttpResponseFor<PaymentFlow> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentFlowRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentFlow>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PaymentFlowRetrieveParams): HttpResponseFor<PaymentFlow> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<PaymentFlow> =
             retrieve(id, PaymentFlowRetrieveParams.none(), requestOptions)
@@ -182,7 +182,7 @@ interface PaymentFlowService {
         fun update(id: String, params: PaymentFlowUpdateParams): HttpResponseFor<PaymentFlow> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -190,12 +190,12 @@ interface PaymentFlowService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentFlow> = update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: PaymentFlowUpdateParams): HttpResponseFor<PaymentFlow> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PaymentFlowUpdateParams,
@@ -209,20 +209,20 @@ interface PaymentFlowService {
         @MustBeClosed
         fun list(): HttpResponseFor<PaymentFlowListPage> = list(PaymentFlowListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentFlowListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none()
         ): HttpResponseFor<PaymentFlowListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentFlowListPage> =
             list(PaymentFlowListParams.none(), requestOptions)

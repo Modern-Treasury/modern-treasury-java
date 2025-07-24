@@ -30,7 +30,7 @@ interface ReturnService {
     /** Create a return. */
     fun create(params: ReturnCreateParams): ReturnObject = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ReturnCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,47 +39,47 @@ interface ReturnService {
     /** Get a single return. */
     fun retrieve(id: String): ReturnObject = retrieve(id, ReturnRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ReturnRetrieveParams = ReturnRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnObject = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ReturnRetrieveParams = ReturnRetrieveParams.none(),
     ): ReturnObject = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ReturnRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnObject
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ReturnRetrieveParams): ReturnObject =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): ReturnObject =
         retrieve(id, ReturnRetrieveParams.none(), requestOptions)
 
     /** Get a list of returns. */
     fun list(): ReturnListPage = list(ReturnListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ReturnListParams = ReturnListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReturnListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: ReturnListParams = ReturnListParams.none()): ReturnListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ReturnListPage =
         list(ReturnListParams.none(), requestOptions)
 
@@ -101,7 +101,7 @@ interface ReturnService {
         fun create(params: ReturnCreateParams): HttpResponseFor<ReturnObject> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: ReturnCreateParams,
@@ -116,7 +116,7 @@ interface ReturnService {
         fun retrieve(id: String): HttpResponseFor<ReturnObject> =
             retrieve(id, ReturnRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -125,26 +125,26 @@ interface ReturnService {
         ): HttpResponseFor<ReturnObject> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: ReturnRetrieveParams = ReturnRetrieveParams.none(),
         ): HttpResponseFor<ReturnObject> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: ReturnRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReturnObject>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: ReturnRetrieveParams): HttpResponseFor<ReturnObject> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<ReturnObject> =
             retrieve(id, ReturnRetrieveParams.none(), requestOptions)
@@ -155,20 +155,20 @@ interface ReturnService {
          */
         @MustBeClosed fun list(): HttpResponseFor<ReturnListPage> = list(ReturnListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReturnListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ReturnListParams = ReturnListParams.none()
         ): HttpResponseFor<ReturnListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ReturnListPage> =
             list(ReturnListParams.none(), requestOptions)

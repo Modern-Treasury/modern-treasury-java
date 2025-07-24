@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [InvoiceService.list] */
+/** @see InvoiceService.list */
 class InvoiceListPage
 private constructor(
     private val service: InvoiceService,

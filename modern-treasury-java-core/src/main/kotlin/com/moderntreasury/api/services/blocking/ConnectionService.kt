@@ -27,17 +27,17 @@ interface ConnectionService {
     /** Get a list of all connections. */
     fun list(): ConnectionListPage = list(ConnectionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ConnectionListParams = ConnectionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ConnectionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: ConnectionListParams = ConnectionListParams.none()): ConnectionListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ConnectionListPage =
         list(ConnectionListParams.none(), requestOptions)
 
@@ -60,20 +60,20 @@ interface ConnectionService {
         @MustBeClosed
         fun list(): HttpResponseFor<ConnectionListPage> = list(ConnectionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ConnectionListParams = ConnectionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ConnectionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ConnectionListParams = ConnectionListParams.none()
         ): HttpResponseFor<ConnectionListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ConnectionListPage> =
             list(ConnectionListParams.none(), requestOptions)

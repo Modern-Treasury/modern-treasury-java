@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LedgerTransactionService.list] */
+/** @see LedgerTransactionService.list */
 class LedgerTransactionListPage
 private constructor(
     private val service: LedgerTransactionService,

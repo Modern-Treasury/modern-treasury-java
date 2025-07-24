@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [EventService.list] */
+/** @see EventService.list */
 class EventListPage
 private constructor(
     private val service: EventService,

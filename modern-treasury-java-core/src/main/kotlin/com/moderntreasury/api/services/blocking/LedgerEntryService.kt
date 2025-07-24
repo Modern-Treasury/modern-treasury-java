@@ -30,76 +30,76 @@ interface LedgerEntryService {
     /** Get details on a single ledger entry. */
     fun retrieve(id: String): LedgerEntry = retrieve(id, LedgerEntryRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
     ): LedgerEntry = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerEntryRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LedgerEntryRetrieveParams): LedgerEntry =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): LedgerEntry =
         retrieve(id, LedgerEntryRetrieveParams.none(), requestOptions)
 
     /** Update the details of a ledger entry. */
     fun update(id: String): LedgerEntry = update(id, LedgerEntryUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
     ): LedgerEntry = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerEntryUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntry
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LedgerEntryUpdateParams): LedgerEntry = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): LedgerEntry =
         update(id, LedgerEntryUpdateParams.none(), requestOptions)
 
     /** Get a list of all ledger entries. */
     fun list(): LedgerEntryListPage = list(LedgerEntryListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerEntryListParams = LedgerEntryListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerEntryListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: LedgerEntryListParams = LedgerEntryListParams.none()): LedgerEntryListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): LedgerEntryListPage =
         list(LedgerEntryListParams.none(), requestOptions)
 
@@ -125,7 +125,7 @@ interface LedgerEntryService {
         fun retrieve(id: String): HttpResponseFor<LedgerEntry> =
             retrieve(id, LedgerEntryRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -134,26 +134,26 @@ interface LedgerEntryService {
         ): HttpResponseFor<LedgerEntry> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: LedgerEntryRetrieveParams = LedgerEntryRetrieveParams.none(),
         ): HttpResponseFor<LedgerEntry> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerEntryRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEntry>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: LedgerEntryRetrieveParams): HttpResponseFor<LedgerEntry> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<LedgerEntry> =
             retrieve(id, LedgerEntryRetrieveParams.none(), requestOptions)
@@ -166,7 +166,7 @@ interface LedgerEntryService {
         fun update(id: String): HttpResponseFor<LedgerEntry> =
             update(id, LedgerEntryUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -174,26 +174,26 @@ interface LedgerEntryService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEntry> = update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: LedgerEntryUpdateParams = LedgerEntryUpdateParams.none(),
         ): HttpResponseFor<LedgerEntry> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerEntryUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEntry>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: LedgerEntryUpdateParams): HttpResponseFor<LedgerEntry> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<LedgerEntry> =
             update(id, LedgerEntryUpdateParams.none(), requestOptions)
@@ -205,20 +205,20 @@ interface LedgerEntryService {
         @MustBeClosed
         fun list(): HttpResponseFor<LedgerEntryListPage> = list(LedgerEntryListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerEntryListParams = LedgerEntryListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerEntryListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerEntryListParams = LedgerEntryListParams.none()
         ): HttpResponseFor<LedgerEntryListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerEntryListPage> =
             list(LedgerEntryListParams.none(), requestOptions)

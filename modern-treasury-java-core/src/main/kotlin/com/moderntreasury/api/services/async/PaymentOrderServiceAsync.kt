@@ -37,7 +37,7 @@ interface PaymentOrderServiceAsync {
     fun create(params: PaymentOrderCreateParams): CompletableFuture<PaymentOrder> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PaymentOrderCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,30 +47,30 @@ interface PaymentOrderServiceAsync {
     fun retrieve(id: String): CompletableFuture<PaymentOrder> =
         retrieve(id, PaymentOrderRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentOrderRetrieveParams = PaymentOrderRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentOrderRetrieveParams = PaymentOrderRetrieveParams.none(),
     ): CompletableFuture<PaymentOrder> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentOrderRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentOrderRetrieveParams): CompletableFuture<PaymentOrder> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentOrder> =
         retrieve(id, PaymentOrderRetrieveParams.none(), requestOptions)
 
@@ -78,48 +78,48 @@ interface PaymentOrderServiceAsync {
     fun update(id: String): CompletableFuture<PaymentOrder> =
         update(id, PaymentOrderUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PaymentOrderUpdateParams = PaymentOrderUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PaymentOrderUpdateParams = PaymentOrderUpdateParams.none(),
     ): CompletableFuture<PaymentOrder> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PaymentOrderUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrder>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PaymentOrderUpdateParams): CompletableFuture<PaymentOrder> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentOrder> =
         update(id, PaymentOrderUpdateParams.none(), requestOptions)
 
     /** Get a list of all payment orders */
     fun list(): CompletableFuture<PaymentOrderListPageAsync> = list(PaymentOrderListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentOrderListParams = PaymentOrderListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentOrderListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentOrderListParams = PaymentOrderListParams.none()
     ): CompletableFuture<PaymentOrderListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentOrderListPageAsync> =
         list(PaymentOrderListParams.none(), requestOptions)
 
@@ -127,7 +127,7 @@ interface PaymentOrderServiceAsync {
     fun createAsync(params: PaymentOrderCreateAsyncParams): CompletableFuture<AsyncResponse> =
         createAsync(params, RequestOptions.none())
 
-    /** @see [createAsync] */
+    /** @see createAsync */
     fun createAsync(
         params: PaymentOrderCreateAsyncParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -158,7 +158,7 @@ interface PaymentOrderServiceAsync {
             params: PaymentOrderCreateParams
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PaymentOrderCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,7 +171,7 @@ interface PaymentOrderServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             retrieve(id, PaymentOrderRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentOrderRetrieveParams = PaymentOrderRetrieveParams.none(),
@@ -179,26 +179,26 @@ interface PaymentOrderServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentOrderRetrieveParams = PaymentOrderRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentOrderRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrder>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentOrderRetrieveParams
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -212,7 +212,7 @@ interface PaymentOrderServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             update(id, PaymentOrderUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PaymentOrderUpdateParams = PaymentOrderUpdateParams.none(),
@@ -220,25 +220,25 @@ interface PaymentOrderServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PaymentOrderUpdateParams = PaymentOrderUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PaymentOrderUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrder>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PaymentOrderUpdateParams
         ): CompletableFuture<HttpResponseFor<PaymentOrder>> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -252,19 +252,19 @@ interface PaymentOrderServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>> =
             list(PaymentOrderListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentOrderListParams = PaymentOrderListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentOrderListParams = PaymentOrderListParams.none()
         ): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PaymentOrderListPageAsync>> =
@@ -279,7 +279,7 @@ interface PaymentOrderServiceAsync {
         ): CompletableFuture<HttpResponseFor<AsyncResponse>> =
             createAsync(params, RequestOptions.none())
 
-        /** @see [createAsync] */
+        /** @see createAsync */
         fun createAsync(
             params: PaymentOrderCreateAsyncParams,
             requestOptions: RequestOptions = RequestOptions.none(),

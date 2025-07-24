@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [BulkResultServiceAsync.list] */
+/** @see BulkResultServiceAsync.list */
 class BulkResultListPageAsync
 private constructor(
     private val service: BulkResultServiceAsync,

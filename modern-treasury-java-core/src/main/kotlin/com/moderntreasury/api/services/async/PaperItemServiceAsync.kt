@@ -30,48 +30,48 @@ interface PaperItemServiceAsync {
     fun retrieve(id: String): CompletableFuture<PaperItem> =
         retrieve(id, PaperItemRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItem> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
     ): CompletableFuture<PaperItem> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaperItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItem>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaperItemRetrieveParams): CompletableFuture<PaperItem> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaperItem> =
         retrieve(id, PaperItemRetrieveParams.none(), requestOptions)
 
     /** Get a list of all paper items. */
     fun list(): CompletableFuture<PaperItemListPageAsync> = list(PaperItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaperItemListParams = PaperItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaperItemListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaperItemListParams = PaperItemListParams.none()
     ): CompletableFuture<PaperItemListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaperItemListPageAsync> =
         list(PaperItemListParams.none(), requestOptions)
 
@@ -96,7 +96,7 @@ interface PaperItemServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaperItem>> =
             retrieve(id, PaperItemRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
@@ -104,25 +104,25 @@ interface PaperItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaperItem>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaperItemRetrieveParams = PaperItemRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PaperItem>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaperItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaperItem>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaperItemRetrieveParams
         ): CompletableFuture<HttpResponseFor<PaperItem>> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -136,19 +136,19 @@ interface PaperItemServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>> =
             list(PaperItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaperItemListParams = PaperItemListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaperItemListParams = PaperItemListParams.none()
         ): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PaperItemListPageAsync>> =

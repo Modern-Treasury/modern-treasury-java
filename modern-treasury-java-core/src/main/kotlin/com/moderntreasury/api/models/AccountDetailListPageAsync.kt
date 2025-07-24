@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [AccountDetailServiceAsync.list] */
+/** @see AccountDetailServiceAsync.list */
 class AccountDetailListPageAsync
 private constructor(
     private val service: AccountDetailServiceAsync,

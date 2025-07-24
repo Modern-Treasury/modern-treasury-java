@@ -30,7 +30,7 @@ interface BulkRequestService {
     /** create bulk_request */
     fun create(params: BulkRequestCreateParams): BulkRequest = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BulkRequestCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,47 +39,47 @@ interface BulkRequestService {
     /** get bulk_request */
     fun retrieve(id: String): BulkRequest = retrieve(id, BulkRequestRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkRequestRetrieveParams = BulkRequestRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkRequest = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BulkRequestRetrieveParams = BulkRequestRetrieveParams.none(),
     ): BulkRequest = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BulkRequestRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkRequest
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BulkRequestRetrieveParams): BulkRequest =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): BulkRequest =
         retrieve(id, BulkRequestRetrieveParams.none(), requestOptions)
 
     /** list bulk_requests */
     fun list(): BulkRequestListPage = list(BulkRequestListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BulkRequestListParams = BulkRequestListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BulkRequestListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BulkRequestListParams = BulkRequestListParams.none()): BulkRequestListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BulkRequestListPage =
         list(BulkRequestListParams.none(), requestOptions)
 
@@ -105,7 +105,7 @@ interface BulkRequestService {
         fun create(params: BulkRequestCreateParams): HttpResponseFor<BulkRequest> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BulkRequestCreateParams,
@@ -120,7 +120,7 @@ interface BulkRequestService {
         fun retrieve(id: String): HttpResponseFor<BulkRequest> =
             retrieve(id, BulkRequestRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -129,26 +129,26 @@ interface BulkRequestService {
         ): HttpResponseFor<BulkRequest> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: BulkRequestRetrieveParams = BulkRequestRetrieveParams.none(),
         ): HttpResponseFor<BulkRequest> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BulkRequestRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkRequest>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BulkRequestRetrieveParams): HttpResponseFor<BulkRequest> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BulkRequest> =
             retrieve(id, BulkRequestRetrieveParams.none(), requestOptions)
@@ -160,20 +160,20 @@ interface BulkRequestService {
         @MustBeClosed
         fun list(): HttpResponseFor<BulkRequestListPage> = list(BulkRequestListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BulkRequestListParams = BulkRequestListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BulkRequestListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BulkRequestListParams = BulkRequestListParams.none()
         ): HttpResponseFor<BulkRequestListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BulkRequestListPage> =
             list(BulkRequestListParams.none(), requestOptions)

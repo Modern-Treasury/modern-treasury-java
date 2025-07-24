@@ -37,7 +37,7 @@ interface ExternalAccountServiceAsync {
     fun create(params: ExternalAccountCreateParams): CompletableFuture<ExternalAccount> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ExternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,7 +47,7 @@ interface ExternalAccountServiceAsync {
     fun retrieve(id: String): CompletableFuture<ExternalAccount> =
         retrieve(id, ExternalAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
@@ -55,23 +55,23 @@ interface ExternalAccountServiceAsync {
     ): CompletableFuture<ExternalAccount> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
     ): CompletableFuture<ExternalAccount> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ExternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ExternalAccountRetrieveParams): CompletableFuture<ExternalAccount> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<ExternalAccount> =
         retrieve(id, ExternalAccountRetrieveParams.none(), requestOptions)
 
@@ -79,7 +79,7 @@ interface ExternalAccountServiceAsync {
     fun update(id: String): CompletableFuture<ExternalAccount> =
         update(id, ExternalAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
@@ -87,23 +87,23 @@ interface ExternalAccountServiceAsync {
     ): CompletableFuture<ExternalAccount> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
     ): CompletableFuture<ExternalAccount> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ExternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ExternalAccountUpdateParams): CompletableFuture<ExternalAccount> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<ExternalAccount> =
         update(id, ExternalAccountUpdateParams.none(), requestOptions)
 
@@ -111,18 +111,18 @@ interface ExternalAccountServiceAsync {
     fun list(): CompletableFuture<ExternalAccountListPageAsync> =
         list(ExternalAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ExternalAccountListParams = ExternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccountListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ExternalAccountListParams = ExternalAccountListParams.none()
     ): CompletableFuture<ExternalAccountListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ExternalAccountListPageAsync> =
         list(ExternalAccountListParams.none(), requestOptions)
 
@@ -130,30 +130,30 @@ interface ExternalAccountServiceAsync {
     fun delete(id: String): CompletableFuture<Void?> =
         delete(id, ExternalAccountDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
     ): CompletableFuture<Void?> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ExternalAccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ExternalAccountDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
         delete(id, ExternalAccountDeleteParams.none(), requestOptions)
 
@@ -161,7 +161,7 @@ interface ExternalAccountServiceAsync {
     fun completeVerification(id: String): CompletableFuture<ExternalAccount> =
         completeVerification(id, ExternalAccountCompleteVerificationParams.none())
 
-    /** @see [completeVerification] */
+    /** @see completeVerification */
     fun completeVerification(
         id: String,
         params: ExternalAccountCompleteVerificationParams =
@@ -170,25 +170,25 @@ interface ExternalAccountServiceAsync {
     ): CompletableFuture<ExternalAccount> =
         completeVerification(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [completeVerification] */
+    /** @see completeVerification */
     fun completeVerification(
         id: String,
         params: ExternalAccountCompleteVerificationParams =
             ExternalAccountCompleteVerificationParams.none(),
     ): CompletableFuture<ExternalAccount> = completeVerification(id, params, RequestOptions.none())
 
-    /** @see [completeVerification] */
+    /** @see completeVerification */
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalAccount>
 
-    /** @see [completeVerification] */
+    /** @see completeVerification */
     fun completeVerification(
         params: ExternalAccountCompleteVerificationParams
     ): CompletableFuture<ExternalAccount> = completeVerification(params, RequestOptions.none())
 
-    /** @see [completeVerification] */
+    /** @see completeVerification */
     fun completeVerification(
         id: String,
         requestOptions: RequestOptions,
@@ -201,7 +201,7 @@ interface ExternalAccountServiceAsync {
         params: ExternalAccountVerifyParams,
     ): CompletableFuture<ExternalAccountVerifyResponse> = verify(id, params, RequestOptions.none())
 
-    /** @see [verify] */
+    /** @see verify */
     fun verify(
         id: String,
         params: ExternalAccountVerifyParams,
@@ -209,12 +209,12 @@ interface ExternalAccountServiceAsync {
     ): CompletableFuture<ExternalAccountVerifyResponse> =
         verify(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [verify] */
+    /** @see verify */
     fun verify(
         params: ExternalAccountVerifyParams
     ): CompletableFuture<ExternalAccountVerifyResponse> = verify(params, RequestOptions.none())
 
-    /** @see [verify] */
+    /** @see verify */
     fun verify(
         params: ExternalAccountVerifyParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -244,7 +244,7 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ExternalAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -257,7 +257,7 @@ interface ExternalAccountServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(id, ExternalAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
@@ -265,26 +265,26 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ExternalAccountRetrieveParams = ExternalAccountRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ExternalAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ExternalAccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -298,7 +298,7 @@ interface ExternalAccountServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(id, ExternalAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
@@ -306,26 +306,26 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ExternalAccountUpdateParams = ExternalAccountUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ExternalAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ExternalAccountUpdateParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -339,19 +339,19 @@ interface ExternalAccountServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
             list(ExternalAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ExternalAccountListParams = ExternalAccountListParams.none()
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ExternalAccountListPageAsync>> =
@@ -364,7 +364,7 @@ interface ExternalAccountServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponse> =
             delete(id, ExternalAccountDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
@@ -372,23 +372,23 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ExternalAccountDeleteParams = ExternalAccountDeleteParams.none(),
         ): CompletableFuture<HttpResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ExternalAccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: ExternalAccountDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponse> =
             delete(id, ExternalAccountDeleteParams.none(), requestOptions)
 
@@ -399,7 +399,7 @@ interface ExternalAccountServiceAsync {
         fun completeVerification(id: String): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(id, ExternalAccountCompleteVerificationParams.none())
 
-        /** @see [completeVerification] */
+        /** @see completeVerification */
         fun completeVerification(
             id: String,
             params: ExternalAccountCompleteVerificationParams =
@@ -408,7 +408,7 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [completeVerification] */
+        /** @see completeVerification */
         fun completeVerification(
             id: String,
             params: ExternalAccountCompleteVerificationParams =
@@ -416,19 +416,19 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(id, params, RequestOptions.none())
 
-        /** @see [completeVerification] */
+        /** @see completeVerification */
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalAccount>>
 
-        /** @see [completeVerification] */
+        /** @see completeVerification */
         fun completeVerification(
             params: ExternalAccountCompleteVerificationParams
         ): CompletableFuture<HttpResponseFor<ExternalAccount>> =
             completeVerification(params, RequestOptions.none())
 
-        /** @see [completeVerification] */
+        /** @see completeVerification */
         fun completeVerification(
             id: String,
             requestOptions: RequestOptions,
@@ -449,7 +449,7 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccountVerifyResponse>> =
             verify(id, params, RequestOptions.none())
 
-        /** @see [verify] */
+        /** @see verify */
         fun verify(
             id: String,
             params: ExternalAccountVerifyParams,
@@ -457,13 +457,13 @@ interface ExternalAccountServiceAsync {
         ): CompletableFuture<HttpResponseFor<ExternalAccountVerifyResponse>> =
             verify(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [verify] */
+        /** @see verify */
         fun verify(
             params: ExternalAccountVerifyParams
         ): CompletableFuture<HttpResponseFor<ExternalAccountVerifyResponse>> =
             verify(params, RequestOptions.none())
 
-        /** @see [verify] */
+        /** @see verify */
         fun verify(
             params: ExternalAccountVerifyParams,
             requestOptions: RequestOptions = RequestOptions.none(),

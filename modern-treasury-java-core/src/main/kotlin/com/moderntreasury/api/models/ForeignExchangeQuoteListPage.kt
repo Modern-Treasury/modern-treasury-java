@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ForeignExchangeQuoteService.list] */
+/** @see ForeignExchangeQuoteService.list */
 class ForeignExchangeQuoteListPage
 private constructor(
     private val service: ForeignExchangeQuoteService,

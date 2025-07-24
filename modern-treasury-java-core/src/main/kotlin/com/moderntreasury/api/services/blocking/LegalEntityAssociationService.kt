@@ -28,7 +28,7 @@ interface LegalEntityAssociationService {
     fun create(params: LegalEntityAssociationCreateParams): LegalEntityAssociation =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LegalEntityAssociationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +58,7 @@ interface LegalEntityAssociationService {
             params: LegalEntityAssociationCreateParams
         ): HttpResponseFor<LegalEntityAssociation> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: LegalEntityAssociationCreateParams,

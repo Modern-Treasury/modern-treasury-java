@@ -29,44 +29,44 @@ interface EventService {
     /** get event */
     fun retrieve(id: String): Event = retrieve(id, EventRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, params: EventRetrieveParams = EventRetrieveParams.none()): Event =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: EventRetrieveParams): Event = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): Event =
         retrieve(id, EventRetrieveParams.none(), requestOptions)
 
     /** list events */
     fun list(): EventListPage = list(EventListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: EventListParams = EventListParams.none()): EventListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): EventListPage =
         list(EventListParams.none(), requestOptions)
 
@@ -87,7 +87,7 @@ interface EventService {
         @MustBeClosed
         fun retrieve(id: String): HttpResponseFor<Event> = retrieve(id, EventRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -95,26 +95,26 @@ interface EventService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
         ): HttpResponseFor<Event> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: EventRetrieveParams): HttpResponseFor<Event> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Event> =
             retrieve(id, EventRetrieveParams.none(), requestOptions)
@@ -125,19 +125,19 @@ interface EventService {
          */
         @MustBeClosed fun list(): HttpResponseFor<EventListPage> = list(EventListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: EventListParams = EventListParams.none()): HttpResponseFor<EventListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPage> =
             list(EventListParams.none(), requestOptions)

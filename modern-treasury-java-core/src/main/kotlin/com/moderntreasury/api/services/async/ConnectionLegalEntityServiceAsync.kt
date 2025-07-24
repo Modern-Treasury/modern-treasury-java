@@ -33,7 +33,7 @@ interface ConnectionLegalEntityServiceAsync {
         params: ConnectionLegalEntityCreateParams
     ): CompletableFuture<ConnectionLegalEntity> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ConnectionLegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +43,7 @@ interface ConnectionLegalEntityServiceAsync {
     fun retrieve(id: String): CompletableFuture<ConnectionLegalEntity> =
         retrieve(id, ConnectionLegalEntityRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
@@ -51,24 +51,24 @@ interface ConnectionLegalEntityServiceAsync {
     ): CompletableFuture<ConnectionLegalEntity> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
     ): CompletableFuture<ConnectionLegalEntity> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ConnectionLegalEntityRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ConnectionLegalEntityRetrieveParams
     ): CompletableFuture<ConnectionLegalEntity> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -79,7 +79,7 @@ interface ConnectionLegalEntityServiceAsync {
     fun update(id: String): CompletableFuture<ConnectionLegalEntity> =
         update(id, ConnectionLegalEntityUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
@@ -87,24 +87,24 @@ interface ConnectionLegalEntityServiceAsync {
     ): CompletableFuture<ConnectionLegalEntity> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
     ): CompletableFuture<ConnectionLegalEntity> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ConnectionLegalEntityUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntity>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ConnectionLegalEntityUpdateParams
     ): CompletableFuture<ConnectionLegalEntity> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         requestOptions: RequestOptions,
@@ -115,18 +115,18 @@ interface ConnectionLegalEntityServiceAsync {
     fun list(): CompletableFuture<ConnectionLegalEntityListPageAsync> =
         list(ConnectionLegalEntityListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ConnectionLegalEntityListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none()
     ): CompletableFuture<ConnectionLegalEntityListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<ConnectionLegalEntityListPageAsync> =
@@ -156,7 +156,7 @@ interface ConnectionLegalEntityServiceAsync {
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ConnectionLegalEntityCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -169,7 +169,7 @@ interface ConnectionLegalEntityServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             retrieve(id, ConnectionLegalEntityRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ConnectionLegalEntityRetrieveParams =
@@ -178,26 +178,26 @@ interface ConnectionLegalEntityServiceAsync {
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ConnectionLegalEntityRetrieveParams = ConnectionLegalEntityRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ConnectionLegalEntityRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ConnectionLegalEntityRetrieveParams
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -211,7 +211,7 @@ interface ConnectionLegalEntityServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             update(id, ConnectionLegalEntityUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
@@ -219,26 +219,26 @@ interface ConnectionLegalEntityServiceAsync {
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ConnectionLegalEntityUpdateParams = ConnectionLegalEntityUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ConnectionLegalEntityUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ConnectionLegalEntityUpdateParams
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntity>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -252,19 +252,19 @@ interface ConnectionLegalEntityServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ConnectionLegalEntityListPageAsync>> =
             list(ConnectionLegalEntityListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntityListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ConnectionLegalEntityListParams = ConnectionLegalEntityListParams.none()
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntityListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ConnectionLegalEntityListPageAsync>> =

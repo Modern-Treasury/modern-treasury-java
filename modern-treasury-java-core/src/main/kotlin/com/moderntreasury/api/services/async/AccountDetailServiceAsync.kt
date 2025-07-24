@@ -35,7 +35,7 @@ interface AccountDetailServiceAsync {
         params: AccountDetailCreateParams,
     ): CompletableFuture<AccountDetail> = create(accountId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         accountId: String,
         params: AccountDetailCreateParams,
@@ -43,11 +43,11 @@ interface AccountDetailServiceAsync {
     ): CompletableFuture<AccountDetail> =
         create(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: AccountDetailCreateParams): CompletableFuture<AccountDetail> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: AccountDetailCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,7 +59,7 @@ interface AccountDetailServiceAsync {
         params: AccountDetailRetrieveParams,
     ): CompletableFuture<AccountDetail> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountDetailRetrieveParams,
@@ -67,11 +67,11 @@ interface AccountDetailServiceAsync {
     ): CompletableFuture<AccountDetail> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: AccountDetailRetrieveParams): CompletableFuture<AccountDetail> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountDetailRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +84,7 @@ interface AccountDetailServiceAsync {
     ): CompletableFuture<AccountDetailListPageAsync> =
         list(accountId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         accountId: String,
         params: AccountDetailListParams,
@@ -92,11 +92,11 @@ interface AccountDetailServiceAsync {
     ): CompletableFuture<AccountDetailListPageAsync> =
         list(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: AccountDetailListParams): CompletableFuture<AccountDetailListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AccountDetailListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -106,18 +106,18 @@ interface AccountDetailServiceAsync {
     fun delete(id: String, params: AccountDetailDeleteParams): CompletableFuture<Void?> =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: AccountDetailDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: AccountDetailDeleteParams): CompletableFuture<Void?> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: AccountDetailDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -148,7 +148,7 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             create(accountId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             accountId: String,
             params: AccountDetailCreateParams,
@@ -156,12 +156,12 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             create(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: AccountDetailCreateParams
         ): CompletableFuture<HttpResponseFor<AccountDetail>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: AccountDetailCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -178,7 +178,7 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: AccountDetailRetrieveParams,
@@ -186,13 +186,13 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: AccountDetailRetrieveParams
         ): CompletableFuture<HttpResponseFor<AccountDetail>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: AccountDetailRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -208,7 +208,7 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
             list(accountId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             accountId: String,
             params: AccountDetailListParams,
@@ -216,13 +216,13 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
             list(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: AccountDetailListParams
         ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: AccountDetailListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -236,7 +236,7 @@ interface AccountDetailServiceAsync {
         fun delete(id: String, params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: AccountDetailDeleteParams,
@@ -244,11 +244,11 @@ interface AccountDetailServiceAsync {
         ): CompletableFuture<HttpResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: AccountDetailDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),

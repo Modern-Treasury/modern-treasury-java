@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ReturnServiceAsync.list] */
+/** @see ReturnServiceAsync.list */
 class ReturnListPageAsync
 private constructor(
     private val service: ReturnServiceAsync,

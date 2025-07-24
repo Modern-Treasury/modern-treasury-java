@@ -31,18 +31,18 @@ interface ReversalService {
     fun create(paymentOrderId: String, params: PaymentOrderReversalCreateParams): Reversal =
         create(paymentOrderId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         paymentOrderId: String,
         params: PaymentOrderReversalCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Reversal = create(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: PaymentOrderReversalCreateParams): Reversal =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PaymentOrderReversalCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,18 +52,18 @@ interface ReversalService {
     fun retrieve(reversalId: String, params: PaymentOrderReversalRetrieveParams): Reversal =
         retrieve(reversalId, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         reversalId: String,
         params: PaymentOrderReversalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Reversal = retrieve(params.toBuilder().reversalId(reversalId).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentOrderReversalRetrieveParams): Reversal =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentOrderReversalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -73,7 +73,7 @@ interface ReversalService {
     fun list(paymentOrderId: String): PaymentOrderReversalListPage =
         list(paymentOrderId, PaymentOrderReversalListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         paymentOrderId: String,
         params: PaymentOrderReversalListParams = PaymentOrderReversalListParams.none(),
@@ -81,23 +81,23 @@ interface ReversalService {
     ): PaymentOrderReversalListPage =
         list(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         paymentOrderId: String,
         params: PaymentOrderReversalListParams = PaymentOrderReversalListParams.none(),
     ): PaymentOrderReversalListPage = list(paymentOrderId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentOrderReversalListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentOrderReversalListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: PaymentOrderReversalListParams): PaymentOrderReversalListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(paymentOrderId: String, requestOptions: RequestOptions): PaymentOrderReversalListPage =
         list(paymentOrderId, PaymentOrderReversalListParams.none(), requestOptions)
 
@@ -121,7 +121,7 @@ interface ReversalService {
             params: PaymentOrderReversalCreateParams,
         ): HttpResponseFor<Reversal> = create(paymentOrderId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             paymentOrderId: String,
@@ -130,12 +130,12 @@ interface ReversalService {
         ): HttpResponseFor<Reversal> =
             create(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(params: PaymentOrderReversalCreateParams): HttpResponseFor<Reversal> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PaymentOrderReversalCreateParams,
@@ -153,7 +153,7 @@ interface ReversalService {
             params: PaymentOrderReversalRetrieveParams,
         ): HttpResponseFor<Reversal> = retrieve(reversalId, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             reversalId: String,
@@ -162,12 +162,12 @@ interface ReversalService {
         ): HttpResponseFor<Reversal> =
             retrieve(params.toBuilder().reversalId(reversalId).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PaymentOrderReversalRetrieveParams): HttpResponseFor<Reversal> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentOrderReversalRetrieveParams,
@@ -182,7 +182,7 @@ interface ReversalService {
         fun list(paymentOrderId: String): HttpResponseFor<PaymentOrderReversalListPage> =
             list(paymentOrderId, PaymentOrderReversalListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             paymentOrderId: String,
@@ -191,7 +191,7 @@ interface ReversalService {
         ): HttpResponseFor<PaymentOrderReversalListPage> =
             list(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             paymentOrderId: String,
@@ -199,20 +199,20 @@ interface ReversalService {
         ): HttpResponseFor<PaymentOrderReversalListPage> =
             list(paymentOrderId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentOrderReversalListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentOrderReversalListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PaymentOrderReversalListParams
         ): HttpResponseFor<PaymentOrderReversalListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             paymentOrderId: String,

@@ -31,18 +31,18 @@ interface LineItemServiceAsync {
     fun retrieve(id: String, params: LineItemRetrieveParams): CompletableFuture<LineItem> =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LineItemRetrieveParams): CompletableFuture<LineItem> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,18 +52,18 @@ interface LineItemServiceAsync {
     fun update(id: String, params: LineItemUpdateParams): CompletableFuture<LineItem> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LineItem> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LineItemUpdateParams): CompletableFuture<LineItem> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -75,7 +75,7 @@ interface LineItemServiceAsync {
         params: LineItemListParams,
     ): CompletableFuture<LineItemListPageAsync> = list(itemizableId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         itemizableId: String,
         params: LineItemListParams,
@@ -83,11 +83,11 @@ interface LineItemServiceAsync {
     ): CompletableFuture<LineItemListPageAsync> =
         list(params.toBuilder().itemizableId(itemizableId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: LineItemListParams): CompletableFuture<LineItemListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -118,7 +118,7 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItem>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: LineItemRetrieveParams,
@@ -126,11 +126,11 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItem>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(params: LineItemRetrieveParams): CompletableFuture<HttpResponseFor<LineItem>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: LineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -146,7 +146,7 @@ interface LineItemServiceAsync {
             params: LineItemUpdateParams,
         ): CompletableFuture<HttpResponseFor<LineItem>> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: LineItemUpdateParams,
@@ -154,11 +154,11 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItem>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(params: LineItemUpdateParams): CompletableFuture<HttpResponseFor<LineItem>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: LineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -174,7 +174,7 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> =
             list(itemizableId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             itemizableId: String,
             params: LineItemListParams,
@@ -182,13 +182,13 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> =
             list(params.toBuilder().itemizableId(itemizableId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LineItemListParams
         ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: LineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -35,7 +35,7 @@ interface LedgerAccountSettlementService {
     fun create(params: LedgerAccountSettlementCreateParams): LedgerAccountSettlement =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: LedgerAccountSettlementCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -45,7 +45,7 @@ interface LedgerAccountSettlementService {
     fun retrieve(id: String): LedgerAccountSettlement =
         retrieve(id, LedgerAccountSettlementRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountSettlementRetrieveParams =
@@ -53,23 +53,23 @@ interface LedgerAccountSettlementService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: LedgerAccountSettlementRetrieveParams = LedgerAccountSettlementRetrieveParams.none(),
     ): LedgerAccountSettlement = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: LedgerAccountSettlementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: LedgerAccountSettlementRetrieveParams): LedgerAccountSettlement =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): LedgerAccountSettlement =
         retrieve(id, LedgerAccountSettlementRetrieveParams.none(), requestOptions)
 
@@ -77,48 +77,48 @@ interface LedgerAccountSettlementService {
     fun update(id: String): LedgerAccountSettlement =
         update(id, LedgerAccountSettlementUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
     ): LedgerAccountSettlement = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: LedgerAccountSettlementUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlement
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: LedgerAccountSettlementUpdateParams): LedgerAccountSettlement =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): LedgerAccountSettlement =
         update(id, LedgerAccountSettlementUpdateParams.none(), requestOptions)
 
     /** Get a list of ledger account settlements. */
     fun list(): LedgerAccountSettlementListPage = list(LedgerAccountSettlementListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccountSettlementListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
     ): LedgerAccountSettlementListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): LedgerAccountSettlementListPage =
         list(LedgerAccountSettlementListParams.none(), requestOptions)
 
@@ -148,7 +148,7 @@ interface LedgerAccountSettlementService {
             params: LedgerAccountSettlementCreateParams
         ): HttpResponseFor<LedgerAccountSettlement> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: LedgerAccountSettlementCreateParams,
@@ -163,7 +163,7 @@ interface LedgerAccountSettlementService {
         fun retrieve(id: String): HttpResponseFor<LedgerAccountSettlement> =
             retrieve(id, LedgerAccountSettlementRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -173,7 +173,7 @@ interface LedgerAccountSettlementService {
         ): HttpResponseFor<LedgerAccountSettlement> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -181,20 +181,20 @@ interface LedgerAccountSettlementService {
                 LedgerAccountSettlementRetrieveParams.none(),
         ): HttpResponseFor<LedgerAccountSettlement> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountSettlement>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: LedgerAccountSettlementRetrieveParams
         ): HttpResponseFor<LedgerAccountSettlement> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -210,7 +210,7 @@ interface LedgerAccountSettlementService {
         fun update(id: String): HttpResponseFor<LedgerAccountSettlement> =
             update(id, LedgerAccountSettlementUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -220,27 +220,27 @@ interface LedgerAccountSettlementService {
         ): HttpResponseFor<LedgerAccountSettlement> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: LedgerAccountSettlementUpdateParams = LedgerAccountSettlementUpdateParams.none(),
         ): HttpResponseFor<LedgerAccountSettlement> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountSettlement>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: LedgerAccountSettlementUpdateParams
         ): HttpResponseFor<LedgerAccountSettlement> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -256,20 +256,20 @@ interface LedgerAccountSettlementService {
         fun list(): HttpResponseFor<LedgerAccountSettlementListPage> =
             list(LedgerAccountSettlementListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccountSettlementListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: LedgerAccountSettlementListParams = LedgerAccountSettlementListParams.none()
         ): HttpResponseFor<LedgerAccountSettlementListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LedgerAccountSettlementListPage> =
             list(LedgerAccountSettlementListParams.none(), requestOptions)

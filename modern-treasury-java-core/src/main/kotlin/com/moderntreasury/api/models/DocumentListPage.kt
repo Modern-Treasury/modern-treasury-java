@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [DocumentService.list] */
+/** @see DocumentService.list */
 class DocumentListPage
 private constructor(
     private val service: DocumentService,

@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LegalEntityServiceAsync.list] */
+/** @see LegalEntityServiceAsync.list */
 class LegalEntityListPageAsync
 private constructor(
     private val service: LegalEntityServiceAsync,

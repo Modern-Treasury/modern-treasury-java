@@ -32,7 +32,7 @@ interface PaymentFlowServiceAsync {
     fun create(params: PaymentFlowCreateParams): CompletableFuture<PaymentFlow> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,30 +42,30 @@ interface PaymentFlowServiceAsync {
     fun retrieve(id: String): CompletableFuture<PaymentFlow> =
         retrieve(id, PaymentFlowRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
     ): CompletableFuture<PaymentFlow> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentFlowRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PaymentFlowRetrieveParams): CompletableFuture<PaymentFlow> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentFlow> =
         retrieve(id, PaymentFlowRetrieveParams.none(), requestOptions)
 
@@ -73,18 +73,18 @@ interface PaymentFlowServiceAsync {
     fun update(id: String, params: PaymentFlowUpdateParams): CompletableFuture<PaymentFlow> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PaymentFlowUpdateParams): CompletableFuture<PaymentFlow> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PaymentFlowUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -93,18 +93,18 @@ interface PaymentFlowServiceAsync {
     /** list payment_flows */
     fun list(): CompletableFuture<PaymentFlowListPageAsync> = list(PaymentFlowListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentFlowListParams = PaymentFlowListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlowListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PaymentFlowListParams = PaymentFlowListParams.none()
     ): CompletableFuture<PaymentFlowListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PaymentFlowListPageAsync> =
         list(PaymentFlowListParams.none(), requestOptions)
 
@@ -131,7 +131,7 @@ interface PaymentFlowServiceAsync {
             params: PaymentFlowCreateParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PaymentFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -144,7 +144,7 @@ interface PaymentFlowServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             retrieve(id, PaymentFlowRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
@@ -152,25 +152,25 @@ interface PaymentFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentFlowRetrieveParams = PaymentFlowRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentFlowRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlow>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PaymentFlowRetrieveParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -187,7 +187,7 @@ interface PaymentFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PaymentFlowUpdateParams,
@@ -195,12 +195,12 @@ interface PaymentFlowServiceAsync {
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PaymentFlowUpdateParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PaymentFlowUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -213,19 +213,19 @@ interface PaymentFlowServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
             list(PaymentFlowListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PaymentFlowListParams = PaymentFlowListParams.none()
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PaymentFlowListPageAsync>> =

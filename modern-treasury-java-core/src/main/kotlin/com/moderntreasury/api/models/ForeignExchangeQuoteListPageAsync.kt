@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ForeignExchangeQuoteServiceAsync.list] */
+/** @see ForeignExchangeQuoteServiceAsync.list */
 class ForeignExchangeQuoteListPageAsync
 private constructor(
     private val service: ForeignExchangeQuoteServiceAsync,

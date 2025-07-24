@@ -37,7 +37,7 @@ interface InternalAccountService {
     fun create(params: InternalAccountCreateParams): InternalAccount =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: InternalAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,78 +46,78 @@ interface InternalAccountService {
     /** get internal account */
     fun retrieve(id: String): InternalAccount = retrieve(id, InternalAccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccount = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
     ): InternalAccount = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: InternalAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccount
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: InternalAccountRetrieveParams): InternalAccount =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): InternalAccount =
         retrieve(id, InternalAccountRetrieveParams.none(), requestOptions)
 
     /** update internal account */
     fun update(id: String): InternalAccount = update(id, InternalAccountUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccount = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
     ): InternalAccount = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: InternalAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccount
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: InternalAccountUpdateParams): InternalAccount =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): InternalAccount =
         update(id, InternalAccountUpdateParams.none(), requestOptions)
 
     /** list internal accounts */
     fun list(): InternalAccountListPage = list(InternalAccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: InternalAccountListParams = InternalAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccountListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: InternalAccountListParams = InternalAccountListParams.none()
     ): InternalAccountListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): InternalAccountListPage =
         list(InternalAccountListParams.none(), requestOptions)
 
@@ -128,7 +128,7 @@ interface InternalAccountService {
     ): InternalAccountUpdateAccountCapabilityResponse =
         updateAccountCapability(id, params, RequestOptions.none())
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
@@ -136,13 +136,13 @@ interface InternalAccountService {
     ): InternalAccountUpdateAccountCapabilityResponse =
         updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams
     ): InternalAccountUpdateAccountCapabilityResponse =
         updateAccountCapability(params, RequestOptions.none())
 
-    /** @see [updateAccountCapability] */
+    /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -173,7 +173,7 @@ interface InternalAccountService {
         fun create(params: InternalAccountCreateParams): HttpResponseFor<InternalAccount> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: InternalAccountCreateParams,
@@ -188,7 +188,7 @@ interface InternalAccountService {
         fun retrieve(id: String): HttpResponseFor<InternalAccount> =
             retrieve(id, InternalAccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -197,26 +197,26 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccount> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: InternalAccountRetrieveParams = InternalAccountRetrieveParams.none(),
         ): HttpResponseFor<InternalAccount> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: InternalAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InternalAccount>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: InternalAccountRetrieveParams): HttpResponseFor<InternalAccount> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<InternalAccount> =
             retrieve(id, InternalAccountRetrieveParams.none(), requestOptions)
@@ -229,7 +229,7 @@ interface InternalAccountService {
         fun update(id: String): HttpResponseFor<InternalAccount> =
             update(id, InternalAccountUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -238,26 +238,26 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccount> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
             params: InternalAccountUpdateParams = InternalAccountUpdateParams.none(),
         ): HttpResponseFor<InternalAccount> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: InternalAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InternalAccount>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: InternalAccountUpdateParams): HttpResponseFor<InternalAccount> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<InternalAccount> =
             update(id, InternalAccountUpdateParams.none(), requestOptions)
@@ -270,20 +270,20 @@ interface InternalAccountService {
         fun list(): HttpResponseFor<InternalAccountListPage> =
             list(InternalAccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InternalAccountListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: InternalAccountListParams = InternalAccountListParams.none()
         ): HttpResponseFor<InternalAccountListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<InternalAccountListPage> =
             list(InternalAccountListParams.none(), requestOptions)
@@ -300,7 +300,7 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
             updateAccountCapability(id, params, RequestOptions.none())
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         @MustBeClosed
         fun updateAccountCapability(
             id: String,
@@ -309,14 +309,14 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
             updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         @MustBeClosed
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams
         ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
             updateAccountCapability(params, RequestOptions.none())
 
-        /** @see [updateAccountCapability] */
+        /** @see updateAccountCapability */
         @MustBeClosed
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams,

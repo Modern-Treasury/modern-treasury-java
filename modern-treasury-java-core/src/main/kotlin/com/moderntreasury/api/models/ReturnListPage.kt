@@ -11,7 +11,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ReturnService.list] */
+/** @see ReturnService.list */
 class ReturnListPage
 private constructor(
     private val service: ReturnService,
