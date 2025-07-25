@@ -14,6 +14,7 @@ class ExternalAccountListParams
 private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
+    private val externalId: String?,
     private val metadata: Metadata?,
     private val partyName: String?,
     private val perPage: Long?,
@@ -24,6 +25,9 @@ private constructor(
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+
+    /** An optional user-defined 180 character unique identifier. */
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     /**
      * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
@@ -59,6 +63,7 @@ private constructor(
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
+        private var externalId: String? = null
         private var metadata: Metadata? = null
         private var partyName: String? = null
         private var perPage: Long? = null
@@ -69,6 +74,7 @@ private constructor(
         internal fun from(externalAccountListParams: ExternalAccountListParams) = apply {
             afterCursor = externalAccountListParams.afterCursor
             counterpartyId = externalAccountListParams.counterpartyId
+            externalId = externalAccountListParams.externalId
             metadata = externalAccountListParams.metadata
             partyName = externalAccountListParams.partyName
             perPage = externalAccountListParams.perPage
@@ -86,6 +92,12 @@ private constructor(
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /**
          * For example, if you want to query for records with metadata key `Type` and value `Loan`,
@@ -221,6 +233,7 @@ private constructor(
             ExternalAccountListParams(
                 afterCursor,
                 counterpartyId,
+                externalId,
                 metadata,
                 partyName,
                 perPage,
@@ -236,6 +249,7 @@ private constructor(
             .apply {
                 afterCursor?.let { put("after_cursor", it) }
                 counterpartyId?.let { put("counterparty_id", it) }
+                externalId?.let { put("external_id", it) }
                 metadata?.let {
                     it._additionalProperties().keys().forEach { key ->
                         it._additionalProperties().values(key).forEach { value ->
@@ -355,11 +369,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalAccountListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && metadata == other.metadata && partyName == other.partyName && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is ExternalAccountListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && externalId == other.externalId && metadata == other.metadata && partyName == other.partyName && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, metadata, partyName, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, externalId, metadata, partyName, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExternalAccountListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, metadata=$metadata, partyName=$partyName, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "ExternalAccountListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, externalId=$externalId, metadata=$metadata, partyName=$partyName, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

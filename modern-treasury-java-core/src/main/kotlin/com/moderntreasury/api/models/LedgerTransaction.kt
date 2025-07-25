@@ -25,6 +25,7 @@ import kotlin.jvm.optionals.getOrNull
 class LedgerTransaction
 private constructor(
     private val id: JsonField<String>,
+    private val archivedReason: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val description: JsonField<String>,
     private val effectiveAt: JsonField<OffsetDateTime>,
@@ -49,6 +50,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("archived_reason")
+        @ExcludeMissing
+        archivedReason: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -95,6 +99,7 @@ private constructor(
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     ) : this(
         id,
+        archivedReason,
         createdAt,
         description,
         effectiveAt,
@@ -121,6 +126,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
+
+    /**
+     * Reason for why a ledger transaction was automatically archived, typically due to a balance
+     * lock failure. This is a system-generated field and is only populated when applicable.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun archivedReason(): Optional<String> = archivedReason.getOptional("archived_reason")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -276,6 +290,15 @@ private constructor(
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+    /**
+     * Returns the raw JSON value of [archivedReason].
+     *
+     * Unlike [archivedReason], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("archived_reason")
+    @ExcludeMissing
+    fun _archivedReason(): JsonField<String> = archivedReason
 
     /**
      * Returns the raw JSON value of [createdAt].
@@ -446,6 +469,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
+         * .archivedReason()
          * .createdAt()
          * .description()
          * .effectiveAt()
@@ -473,6 +497,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
+        private var archivedReason: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var description: JsonField<String>? = null
         private var effectiveAt: JsonField<OffsetDateTime>? = null
@@ -496,6 +521,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(ledgerTransaction: LedgerTransaction) = apply {
             id = ledgerTransaction.id
+            archivedReason = ledgerTransaction.archivedReason
             createdAt = ledgerTransaction.createdAt
             description = ledgerTransaction.description
             effectiveAt = ledgerTransaction.effectiveAt
@@ -526,6 +552,29 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /**
+         * Reason for why a ledger transaction was automatically archived, typically due to a
+         * balance lock failure. This is a system-generated field and is only populated when
+         * applicable.
+         */
+        fun archivedReason(archivedReason: String?) =
+            archivedReason(JsonField.ofNullable(archivedReason))
+
+        /** Alias for calling [Builder.archivedReason] with `archivedReason.orElse(null)`. */
+        fun archivedReason(archivedReason: Optional<String>) =
+            archivedReason(archivedReason.getOrNull())
+
+        /**
+         * Sets [Builder.archivedReason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.archivedReason] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun archivedReason(archivedReason: JsonField<String>) = apply {
+            this.archivedReason = archivedReason
+        }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -860,6 +909,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
+         * .archivedReason()
          * .createdAt()
          * .description()
          * .effectiveAt()
@@ -885,6 +935,7 @@ private constructor(
         fun build(): LedgerTransaction =
             LedgerTransaction(
                 checkRequired("id", id),
+                checkRequired("archivedReason", archivedReason),
                 checkRequired("createdAt", createdAt),
                 checkRequired("description", description),
                 checkRequired("effectiveAt", effectiveAt),
@@ -918,6 +969,7 @@ private constructor(
         }
 
         id()
+        archivedReason()
         createdAt()
         description()
         effectiveAt()
@@ -955,6 +1007,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
+            (if (archivedReason.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (if (effectiveAt.asKnown().isPresent) 1 else 0) +
@@ -1375,15 +1428,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerTransaction && id == other.id && createdAt == other.createdAt && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerEntries == other.ledgerEntries && ledgerId == other.ledgerId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && partiallyPostsLedgerTransactionId == other.partiallyPostsLedgerTransactionId && postedAt == other.postedAt && reversedByLedgerTransactionId == other.reversedByLedgerTransactionId && reversesLedgerTransactionId == other.reversesLedgerTransactionId && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LedgerTransaction && id == other.id && archivedReason == other.archivedReason && createdAt == other.createdAt && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerEntries == other.ledgerEntries && ledgerId == other.ledgerId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && partiallyPostsLedgerTransactionId == other.partiallyPostsLedgerTransactionId && postedAt == other.postedAt && reversedByLedgerTransactionId == other.reversedByLedgerTransactionId && reversesLedgerTransactionId == other.reversesLedgerTransactionId && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, description, effectiveAt, effectiveDate, externalId, ledgerEntries, ledgerId, ledgerableId, ledgerableType, liveMode, metadata, object_, partiallyPostsLedgerTransactionId, postedAt, reversedByLedgerTransactionId, reversesLedgerTransactionId, status, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, archivedReason, createdAt, description, effectiveAt, effectiveDate, externalId, ledgerEntries, ledgerId, ledgerableId, ledgerableType, liveMode, metadata, object_, partiallyPostsLedgerTransactionId, postedAt, reversedByLedgerTransactionId, reversesLedgerTransactionId, status, updatedAt, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerTransaction{id=$id, createdAt=$createdAt, description=$description, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, externalId=$externalId, ledgerEntries=$ledgerEntries, ledgerId=$ledgerId, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, partiallyPostsLedgerTransactionId=$partiallyPostsLedgerTransactionId, postedAt=$postedAt, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, reversesLedgerTransactionId=$reversesLedgerTransactionId, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LedgerTransaction{id=$id, archivedReason=$archivedReason, createdAt=$createdAt, description=$description, effectiveAt=$effectiveAt, effectiveDate=$effectiveDate, externalId=$externalId, ledgerEntries=$ledgerEntries, ledgerId=$ledgerId, ledgerableId=$ledgerableId, ledgerableType=$ledgerableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, partiallyPostsLedgerTransactionId=$partiallyPostsLedgerTransactionId, postedAt=$postedAt, reversedByLedgerTransactionId=$reversedByLedgerTransactionId, reversesLedgerTransactionId=$reversesLedgerTransactionId, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
