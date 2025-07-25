@@ -5051,6 +5051,7 @@ private constructor(
         private val accountDetails: MultipartField<List<AccountDetail>>,
         private val accountType: MultipartField<ExternalAccountType>,
         private val contactDetails: MultipartField<List<ContactDetailCreateRequest>>,
+        private val externalId: MultipartField<String>,
         private val ledgerAccount: MultipartField<LedgerAccountCreateRequest>,
         private val metadata: MultipartField<Metadata>,
         private val name: MultipartField<String>,
@@ -5085,6 +5086,14 @@ private constructor(
          */
         fun contactDetails(): Optional<List<ContactDetailCreateRequest>> =
             contactDetails.value.getOptional("contact_details")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.value.getOptional("external_id")
 
         /**
          * Specifies a ledger account object that will be created with the external account. The
@@ -5194,6 +5203,16 @@ private constructor(
         @JsonProperty("contact_details")
         @ExcludeMissing
         fun _contactDetails(): MultipartField<List<ContactDetailCreateRequest>> = contactDetails
+
+        /**
+         * Returns the raw multipart value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): MultipartField<String> = externalId
 
         /**
          * Returns the raw multipart value of [ledgerAccount].
@@ -5307,6 +5326,7 @@ private constructor(
             private var accountType: MultipartField<ExternalAccountType> = MultipartField.of(null)
             private var contactDetails: MultipartField<MutableList<ContactDetailCreateRequest>>? =
                 null
+            private var externalId: MultipartField<String> = MultipartField.of(null)
             private var ledgerAccount: MultipartField<LedgerAccountCreateRequest> =
                 MultipartField.of(null)
             private var metadata: MultipartField<Metadata> = MultipartField.of(null)
@@ -5324,6 +5344,7 @@ private constructor(
                 accountDetails = receivingAccount.accountDetails.map { it.toMutableList() }
                 accountType = receivingAccount.accountType
                 contactDetails = receivingAccount.contactDetails.map { it.toMutableList() }
+                externalId = receivingAccount.externalId
                 ledgerAccount = receivingAccount.ledgerAccount
                 metadata = receivingAccount.metadata
                 name = receivingAccount.name
@@ -5402,6 +5423,23 @@ private constructor(
                     (contactDetails ?: MultipartField.of(mutableListOf())).also {
                         checkKnown("contactDetails", it).add(contactDetail)
                     }
+            }
+
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(MultipartField.of(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: MultipartField<String>) = apply {
+                this.externalId = externalId
             }
 
             /**
@@ -5589,6 +5627,7 @@ private constructor(
                     (accountDetails ?: MultipartField.of(null)).map { it.toImmutable() },
                     accountType,
                     (contactDetails ?: MultipartField.of(null)).map { it.toImmutable() },
+                    externalId,
                     ledgerAccount,
                     metadata,
                     name,
@@ -5612,6 +5651,7 @@ private constructor(
             accountDetails().ifPresent { it.forEach { it.validate() } }
             accountType().ifPresent { it.validate() }
             contactDetails().ifPresent { it.forEach { it.validate() } }
+            externalId()
             ledgerAccount().ifPresent { it.validate() }
             metadata().ifPresent { it.validate() }
             name()
@@ -7073,17 +7113,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReceivingAccount && accountDetails == other.accountDetails && accountType == other.accountType && contactDetails == other.contactDetails && ledgerAccount == other.ledgerAccount && metadata == other.metadata && name == other.name && partyAddress == other.partyAddress && partyIdentifier == other.partyIdentifier && partyName == other.partyName && partyType == other.partyType && plaidProcessorToken == other.plaidProcessorToken && routingDetails == other.routingDetails && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ReceivingAccount && accountDetails == other.accountDetails && accountType == other.accountType && contactDetails == other.contactDetails && externalId == other.externalId && ledgerAccount == other.ledgerAccount && metadata == other.metadata && name == other.name && partyAddress == other.partyAddress && partyIdentifier == other.partyIdentifier && partyName == other.partyName && partyType == other.partyType && plaidProcessorToken == other.plaidProcessorToken && routingDetails == other.routingDetails && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountDetails, accountType, contactDetails, ledgerAccount, metadata, name, partyAddress, partyIdentifier, partyName, partyType, plaidProcessorToken, routingDetails, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountDetails, accountType, contactDetails, externalId, ledgerAccount, metadata, name, partyAddress, partyIdentifier, partyName, partyType, plaidProcessorToken, routingDetails, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ReceivingAccount{accountDetails=$accountDetails, accountType=$accountType, contactDetails=$contactDetails, ledgerAccount=$ledgerAccount, metadata=$metadata, name=$name, partyAddress=$partyAddress, partyIdentifier=$partyIdentifier, partyName=$partyName, partyType=$partyType, plaidProcessorToken=$plaidProcessorToken, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
+            "ReceivingAccount{accountDetails=$accountDetails, accountType=$accountType, contactDetails=$contactDetails, externalId=$externalId, ledgerAccount=$ledgerAccount, metadata=$metadata, name=$name, partyAddress=$partyAddress, partyIdentifier=$partyIdentifier, partyName=$partyName, partyType=$partyType, plaidProcessorToken=$plaidProcessorToken, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
