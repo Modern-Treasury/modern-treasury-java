@@ -1107,8 +1107,6 @@ private constructor(
 
             @JvmField val CONNECTION = of("connection")
 
-            @JvmField val CONVERSATION = of("conversation")
-
             @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
         }
 
@@ -1125,7 +1123,6 @@ private constructor(
             PAYMENT_ORDER,
             TRANSACTION,
             CONNECTION,
-            CONVERSATION,
         }
 
         /**
@@ -1149,7 +1146,6 @@ private constructor(
             PAYMENT_ORDER,
             TRANSACTION,
             CONNECTION,
-            CONVERSATION,
             /**
              * An enum member indicating that [DocumentableType] was instantiated with an unknown
              * value.
@@ -1177,7 +1173,6 @@ private constructor(
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 TRANSACTION -> Value.TRANSACTION
                 CONNECTION -> Value.CONNECTION
-                CONVERSATION -> Value.CONVERSATION
                 else -> Value._UNKNOWN
             }
 
@@ -1203,7 +1198,6 @@ private constructor(
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 TRANSACTION -> Known.TRANSACTION
                 CONNECTION -> Known.CONNECTION
-                CONVERSATION -> Known.CONVERSATION
                 else -> throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
             }
 
