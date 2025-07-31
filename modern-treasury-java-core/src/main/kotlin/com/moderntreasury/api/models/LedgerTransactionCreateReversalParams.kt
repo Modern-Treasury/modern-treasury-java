@@ -911,8 +911,6 @@ private constructor(
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val PAPER_ITEM = of("paper_item")
-
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
             @JvmField val RETURN = of("return")
@@ -926,7 +924,6 @@ private constructor(
         enum class Known {
             EXPECTED_PAYMENT,
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             RETURN,
             REVERSAL,
@@ -944,7 +941,6 @@ private constructor(
         enum class Value {
             EXPECTED_PAYMENT,
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             RETURN,
             REVERSAL,
@@ -966,7 +962,6 @@ private constructor(
             when (this) {
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Value.PAPER_ITEM
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 RETURN -> Value.RETURN
                 REVERSAL -> Value.REVERSAL
@@ -986,7 +981,6 @@ private constructor(
             when (this) {
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Known.PAPER_ITEM
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 RETURN -> Known.RETURN
                 REVERSAL -> Known.REVERSAL
