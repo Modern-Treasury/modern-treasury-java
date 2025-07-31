@@ -848,8 +848,6 @@ private constructor(
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val PAPER_ITEM = of("paper_item")
-
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
             @JvmField val PAYMENT_ORDER_ATTEMPT = of("payment_order_attempt")
@@ -864,7 +862,6 @@ private constructor(
         /** An enum containing [TransactableType]'s known values. */
         enum class Known {
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             PAYMENT_ORDER_ATTEMPT,
             RETURN,
@@ -882,7 +879,6 @@ private constructor(
          */
         enum class Value {
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             PAYMENT_ORDER_ATTEMPT,
             RETURN,
@@ -904,7 +900,6 @@ private constructor(
         fun value(): Value =
             when (this) {
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Value.PAPER_ITEM
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 PAYMENT_ORDER_ATTEMPT -> Value.PAYMENT_ORDER_ATTEMPT
                 RETURN -> Value.RETURN
@@ -924,7 +919,6 @@ private constructor(
         fun known(): Known =
             when (this) {
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Known.PAPER_ITEM
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 PAYMENT_ORDER_ATTEMPT -> Known.PAYMENT_ORDER_ATTEMPT
                 RETURN -> Known.RETURN

@@ -272,8 +272,6 @@ private constructor(
 
             @JvmField val ORGANIZATIONS = of("organizations")
 
-            @JvmField val PAPER_ITEMS = of("paper_items")
-
             @JvmField val PAYMENT_ORDERS = of("payment_orders")
 
             @JvmField val TRANSACTIONS = of("transactions")
@@ -292,7 +290,6 @@ private constructor(
             INCOMING_PAYMENT_DETAILS,
             INTERNAL_ACCOUNTS,
             ORGANIZATIONS,
-            PAPER_ITEMS,
             PAYMENT_ORDERS,
             TRANSACTIONS,
             CONNECTIONS,
@@ -315,7 +312,6 @@ private constructor(
             INCOMING_PAYMENT_DETAILS,
             INTERNAL_ACCOUNTS,
             ORGANIZATIONS,
-            PAPER_ITEMS,
             PAYMENT_ORDERS,
             TRANSACTIONS,
             CONNECTIONS,
@@ -342,7 +338,6 @@ private constructor(
                 INCOMING_PAYMENT_DETAILS -> Value.INCOMING_PAYMENT_DETAILS
                 INTERNAL_ACCOUNTS -> Value.INTERNAL_ACCOUNTS
                 ORGANIZATIONS -> Value.ORGANIZATIONS
-                PAPER_ITEMS -> Value.PAPER_ITEMS
                 PAYMENT_ORDERS -> Value.PAYMENT_ORDERS
                 TRANSACTIONS -> Value.TRANSACTIONS
                 CONNECTIONS -> Value.CONNECTIONS
@@ -367,7 +362,6 @@ private constructor(
                 INCOMING_PAYMENT_DETAILS -> Known.INCOMING_PAYMENT_DETAILS
                 INTERNAL_ACCOUNTS -> Known.INTERNAL_ACCOUNTS
                 ORGANIZATIONS -> Known.ORGANIZATIONS
-                PAPER_ITEMS -> Known.PAPER_ITEMS
                 PAYMENT_ORDERS -> Known.PAYMENT_ORDERS
                 TRANSACTIONS -> Known.TRANSACTIONS
                 CONNECTIONS -> Known.CONNECTIONS
