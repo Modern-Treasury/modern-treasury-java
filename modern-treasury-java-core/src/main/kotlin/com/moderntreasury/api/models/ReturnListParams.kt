@@ -43,8 +43,8 @@ private constructor(
     fun returnableId(): Optional<String> = Optional.ofNullable(returnableId)
 
     /**
-     * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
-     * accompanied by `returnable_id`.
+     * One of `payment_order`, `reversal`, or `incoming_payment_detail`. Must be accompanied by
+     * `returnable_id`.
      */
     fun returnableType(): Optional<ReturnableType> = Optional.ofNullable(returnableType)
 
@@ -131,8 +131,8 @@ private constructor(
         fun returnableId(returnableId: Optional<String>) = returnableId(returnableId.getOrNull())
 
         /**
-         * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
-         * accompanied by `returnable_id`.
+         * One of `payment_order`, `reversal`, or `incoming_payment_detail`. Must be accompanied by
+         * `returnable_id`.
          */
         fun returnableType(returnableType: ReturnableType?) = apply {
             this.returnableType = returnableType
@@ -274,8 +274,8 @@ private constructor(
             .build()
 
     /**
-     * One of `payment_order`, `paper_item`, `reversal`, or `incoming_payment_detail`. Must be
-     * accompanied by `returnable_id`.
+     * One of `payment_order`, `reversal`, or `incoming_payment_detail`. Must be accompanied by
+     * `returnable_id`.
      */
     class ReturnableType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
