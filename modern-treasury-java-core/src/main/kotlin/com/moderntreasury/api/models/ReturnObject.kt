@@ -3448,8 +3448,6 @@ private constructor(
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
 
-            @JvmField val PAPER_ITEM = of("paper_item")
-
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
             @JvmField val RETURN = of("return")
@@ -3462,7 +3460,6 @@ private constructor(
         /** An enum containing [ReturnableType]'s known values. */
         enum class Known {
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             RETURN,
             REVERSAL,
@@ -3479,7 +3476,6 @@ private constructor(
          */
         enum class Value {
             INCOMING_PAYMENT_DETAIL,
-            PAPER_ITEM,
             PAYMENT_ORDER,
             RETURN,
             REVERSAL,
@@ -3500,7 +3496,6 @@ private constructor(
         fun value(): Value =
             when (this) {
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Value.PAPER_ITEM
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 RETURN -> Value.RETURN
                 REVERSAL -> Value.REVERSAL
@@ -3519,7 +3514,6 @@ private constructor(
         fun known(): Known =
             when (this) {
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
-                PAPER_ITEM -> Known.PAPER_ITEM
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 RETURN -> Known.RETURN
                 REVERSAL -> Known.REVERSAL
@@ -3898,8 +3892,6 @@ private constructor(
 
             @JvmField val MANUAL = of("manual")
 
-            @JvmField val PAPER_ITEM = of("paper_item")
-
             @JvmField val SEPA = of("sepa")
 
             @JvmField val WIRE = of("wire")
@@ -3919,7 +3911,6 @@ private constructor(
             EFT,
             INTERAC,
             MANUAL,
-            PAPER_ITEM,
             SEPA,
             WIRE,
         }
@@ -3944,7 +3935,6 @@ private constructor(
             EFT,
             INTERAC,
             MANUAL,
-            PAPER_ITEM,
             SEPA,
             WIRE,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
@@ -3970,7 +3960,6 @@ private constructor(
                 EFT -> Value.EFT
                 INTERAC -> Value.INTERAC
                 MANUAL -> Value.MANUAL
-                PAPER_ITEM -> Value.PAPER_ITEM
                 SEPA -> Value.SEPA
                 WIRE -> Value.WIRE
                 else -> Value._UNKNOWN
@@ -3997,7 +3986,6 @@ private constructor(
                 EFT -> Known.EFT
                 INTERAC -> Known.INTERAC
                 MANUAL -> Known.MANUAL
-                PAPER_ITEM -> Known.PAPER_ITEM
                 SEPA -> Known.SEPA
                 WIRE -> Known.WIRE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
