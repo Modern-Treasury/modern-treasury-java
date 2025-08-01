@@ -33,7 +33,6 @@ import com.moderntreasury.api.services.async.LedgerTransactionServiceAsync
 import com.moderntreasury.api.services.async.LegalEntityAssociationServiceAsync
 import com.moderntreasury.api.services.async.LegalEntityServiceAsync
 import com.moderntreasury.api.services.async.LineItemServiceAsync
-import com.moderntreasury.api.services.async.PaperItemServiceAsync
 import com.moderntreasury.api.services.async.PaymentActionServiceAsync
 import com.moderntreasury.api.services.async.PaymentFlowServiceAsync
 import com.moderntreasury.api.services.async.PaymentOrderServiceAsync
@@ -133,8 +132,6 @@ interface ModernTreasuryClientAsync {
     fun transactions(): TransactionServiceAsync
 
     fun validations(): ValidationServiceAsync
-
-    fun paperItems(): PaperItemServiceAsync
 
     fun virtualAccounts(): VirtualAccountServiceAsync
 
@@ -252,8 +249,6 @@ interface ModernTreasuryClientAsync {
         fun transactions(): TransactionServiceAsync.WithRawResponse
 
         fun validations(): ValidationServiceAsync.WithRawResponse
-
-        fun paperItems(): PaperItemServiceAsync.WithRawResponse
 
         fun virtualAccounts(): VirtualAccountServiceAsync.WithRawResponse
 
