@@ -1,5 +1,50 @@
 # Changelog
 
+## 7.5.0 (2025-08-01)
+
+Full Changelog: [v7.4.0...v7.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.4.0...v7.5.0)
+
+### Features
+
+* add retryable exception ([206f1ec](https://github.com/Modern-Treasury/modern-treasury-java/commit/206f1ec7c659eefa2832bb60919a212d9c9df83b))
+* **api:** api update ([7e38d40](https://github.com/Modern-Treasury/modern-treasury-java/commit/7e38d4013e0aada8d1d1c8734e6ddadd355a75d6))
+* **api:** api update ([b9cfb3f](https://github.com/Modern-Treasury/modern-treasury-java/commit/b9cfb3f4f3bf5a961e0b4eff9bc80e64a0e8e47a))
+* **api:** api update ([6befc54](https://github.com/Modern-Treasury/modern-treasury-java/commit/6befc547832eb02fbebd183888d4e9c515d0f5ba))
+* **api:** api update ([9f26fac](https://github.com/Modern-Treasury/modern-treasury-java/commit/9f26fac9ddd72baa21d319d761df4abdf477c0d3))
+* **api:** api update ([01784df](https://github.com/Modern-Treasury/modern-treasury-java/commit/01784dfc985d27a4b4c9843ce31e4aaa8625f745))
+* **api:** api update ([4b1914e](https://github.com/Modern-Treasury/modern-treasury-java/commit/4b1914ec63004b3e30ae476c70282f613690019d))
+* **api:** api update ([2be2b18](https://github.com/Modern-Treasury/modern-treasury-java/commit/2be2b18d4264deeef24711d2148e83694df7abd0))
+* **client:** add `{QueryParams,Headers}#put(String, JsonValue)` methods ([b2cd869](https://github.com/Modern-Treasury/modern-treasury-java/commit/b2cd8694152a324b68c2bb46f3b3a4d16d427350))
+* **client:** add https config options ([80dbf24](https://github.com/Modern-Treasury/modern-treasury-java/commit/80dbf24e5821a84037746c8964debf377142734f))
+* **client:** allow configuring env via system properties ([a2734b1](https://github.com/Modern-Treasury/modern-treasury-java/commit/a2734b12eac658c1e45a645a52f64ee676999a9d))
+* **client:** allow setting additional multipart body props ([924bc63](https://github.com/Modern-Treasury/modern-treasury-java/commit/924bc636e2c6cc6eb60308e64c6382364213faad))
+* **client:** ensure compat with proguard ([b569f99](https://github.com/Modern-Treasury/modern-treasury-java/commit/b569f9980eb24eb57a68e6716fbdb6c2f75614f9))
+
+
+### Bug Fixes
+
+* **client:** accidental mutability of some classes ([168350c](https://github.com/Modern-Treasury/modern-treasury-java/commit/168350cec038c76d81538ac58fe665c86692aa2c))
+* **client:** ensure error handling always occurs ([5736643](https://github.com/Modern-Treasury/modern-treasury-java/commit/57366433b7714389137a2fd01e6dffb71ca3f37b))
+* **client:** r8 support ([56d9ef0](https://github.com/Modern-Treasury/modern-treasury-java/commit/56d9ef0423e0d99592c67dc9c458b686caed6017))
+* **client:** some bad `_additionalBodyProperties` serialization ([9e82bf9](https://github.com/Modern-Treasury/modern-treasury-java/commit/9e82bf9d3e94e886bbfc5cdf5323c6d8b57a33fd))
+* **client:** unique model names ([139210f](https://github.com/Modern-Treasury/modern-treasury-java/commit/139210feb2b3cc238c13c50c44438a290048b72e))
+
+
+### Chores
+
+* **ci:** bump `actions/setup-java` to v4 ([4b5bee6](https://github.com/Modern-Treasury/modern-treasury-java/commit/4b5bee66f46e2d2e6ef7aefaf99f385f7781cd37))
+* **internal:** allow running specific example from cli ([c50b1c7](https://github.com/Modern-Treasury/modern-treasury-java/commit/c50b1c7198f9503b89a3ee6c73bcdb2f253e38d7))
+* **internal:** bump ci test timeout ([1ee8322](https://github.com/Modern-Treasury/modern-treasury-java/commit/1ee8322a1589453bd7cca0267cfd8f54025525ae))
+* **internal:** reduce proguard ci logging ([a48f369](https://github.com/Modern-Treasury/modern-treasury-java/commit/a48f3696d1637a29022c258867fc0d01df9950f2))
+* **internal:** refactor delegating from client to options ([0565bd4](https://github.com/Modern-Treasury/modern-treasury-java/commit/0565bd439da2547b9f91f96f8869b0ecee490ddd))
+* **internal:** remove unnecessary `[...]` in `[@see](https://github.com/see)` ([9d01d7a](https://github.com/Modern-Treasury/modern-treasury-java/commit/9d01d7a7a0c2d8fbe6715d98ad1cd8384d67f73a))
+
+
+### Documentation
+
+* fix missing readme comment ([0e78838](https://github.com/Modern-Treasury/modern-treasury-java/commit/0e788388d8289127a33635739f0e90419fc6e9ac))
+* more code comments ([55f9724](https://github.com/Modern-Treasury/modern-treasury-java/commit/55f9724ebdaaa28bb1e78a4591684ba1d7463b81))
+
 ## 7.4.0 (2025-07-15)
 
 Full Changelog: [v7.3.0...v7.4.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.3.0...v7.4.0)
