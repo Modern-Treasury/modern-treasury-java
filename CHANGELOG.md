@@ -1,5 +1,25 @@
 # Changelog
 
+## 7.6.0 (2025-08-08)
+
+Full Changelog: [v7.5.0...v7.6.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.5.0...v7.6.0)
+
+### Features
+
+* **api:** api update ([c9b270d](https://github.com/Modern-Treasury/modern-treasury-java/commit/c9b270d200e7e3dd42d551d4ea5aa32e916ef30c))
+* **api:** api update ([766cf0b](https://github.com/Modern-Treasury/modern-treasury-java/commit/766cf0b827c2cec5b46d3306f5f2cc73c9f2560f))
+* **api:** manual updates ([85729b1](https://github.com/Modern-Treasury/modern-treasury-java/commit/85729b1b112c4c2caf4f9ffb6f110ce0f62d9fce))
+* **api:** manual updates ([2ac733e](https://github.com/Modern-Treasury/modern-treasury-java/commit/2ac733e17cb81217cf8773bdd7bfda2d8fb21630))
+
+
+### Chores
+
+* **example:** fix run example comment ([43f5fa3](https://github.com/Modern-Treasury/modern-treasury-java/commit/43f5fa37f271c767be26c1c1f2e4b9cf2b18fce1))
+* increase max gradle JVM heap to 8GB ([8cd56ab](https://github.com/Modern-Treasury/modern-treasury-java/commit/8cd56ab374073f19dcb8ca866dccc883e16dc586))
+* **internal:** add async lock helper ([3a68be1](https://github.com/Modern-Treasury/modern-treasury-java/commit/3a68be1b997cb37f7ebc6db4b1fe8eafb6d604f1))
+* **internal:** update comment in script ([72d36ac](https://github.com/Modern-Treasury/modern-treasury-java/commit/72d36ac87144620feaa3bd1c978babc704824fe7))
+* update @stainless-api/prism-cli to v5.15.0 ([5431759](https://github.com/Modern-Treasury/modern-treasury-java/commit/543175926ab029150797b2c865686bd21267e041))
+
 ## 7.5.0 (2025-08-01)
 
 Full Changelog: [v7.4.0...v7.5.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.4.0...v7.5.0)
