@@ -1215,6 +1215,8 @@ private constructor(
 
             @JvmField val POSTED = of("posted")
 
+            @JvmField val DRAFTING = of("drafting")
+
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }
 
@@ -1222,6 +1224,7 @@ private constructor(
         enum class Known {
             PENDING,
             POSTED,
+            DRAFTING,
         }
 
         /**
@@ -1236,6 +1239,7 @@ private constructor(
         enum class Value {
             PENDING,
             POSTED,
+            DRAFTING,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1251,6 +1255,7 @@ private constructor(
             when (this) {
                 PENDING -> Value.PENDING
                 POSTED -> Value.POSTED
+                DRAFTING -> Value.DRAFTING
                 else -> Value._UNKNOWN
             }
 
@@ -1267,6 +1272,7 @@ private constructor(
             when (this) {
                 PENDING -> Known.PENDING
                 POSTED -> Known.POSTED
+                DRAFTING -> Known.DRAFTING
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
             }
 
