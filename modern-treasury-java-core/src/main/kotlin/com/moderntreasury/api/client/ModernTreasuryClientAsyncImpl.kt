@@ -214,7 +214,6 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         ValidationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
-
     private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
 
     private val virtualAccounts: VirtualAccountServiceAsync by lazy {
