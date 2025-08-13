@@ -830,12 +830,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalAccountUpdateRequest && accountType == other.accountType && counterpartyId == other.counterpartyId && metadata == other.metadata && name == other.name && partyAddress == other.partyAddress && partyName == other.partyName && partyType == other.partyType && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ExternalAccountUpdateRequest &&
+                accountType == other.accountType &&
+                counterpartyId == other.counterpartyId &&
+                metadata == other.metadata &&
+                name == other.name &&
+                partyAddress == other.partyAddress &&
+                partyName == other.partyName &&
+                partyType == other.partyType &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountType, counterpartyId, metadata, name, partyAddress, partyName, partyType, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountType,
+                counterpartyId,
+                metadata,
+                name,
+                partyAddress,
+                partyName,
+                partyType,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -936,12 +953,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1070,7 +1085,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PartyType && value == other.value /* spotless:on */
+            return other is PartyType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1083,10 +1098,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalAccountUpdateParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExternalAccountUpdateParams &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ExternalAccountUpdateParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

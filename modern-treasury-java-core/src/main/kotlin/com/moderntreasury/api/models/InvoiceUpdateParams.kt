@@ -2563,12 +2563,65 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceUpdateRequest && contactDetails == other.contactDetails && counterpartyBillingAddress == other.counterpartyBillingAddress && counterpartyId == other.counterpartyId && counterpartyShippingAddress == other.counterpartyShippingAddress && currency == other.currency && description == other.description && dueDate == other.dueDate && fallbackPaymentMethod == other.fallbackPaymentMethod && ingestLedgerEntries == other.ingestLedgerEntries && invoiceLineItems == other.invoiceLineItems && invoicerAddress == other.invoicerAddress && ledgerAccountSettlementId == other.ledgerAccountSettlementId && metadata == other.metadata && notificationEmailAddresses == other.notificationEmailAddresses && notificationsEnabled == other.notificationsEnabled && originatingAccountId == other.originatingAccountId && paymentEffectiveDate == other.paymentEffectiveDate && paymentMethod == other.paymentMethod && paymentType == other.paymentType && receivingAccountId == other.receivingAccountId && recipientEmail == other.recipientEmail && recipientName == other.recipientName && remindAfterOverdueDays == other.remindAfterOverdueDays && status == other.status && virtualAccountId == other.virtualAccountId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is InvoiceUpdateRequest &&
+                contactDetails == other.contactDetails &&
+                counterpartyBillingAddress == other.counterpartyBillingAddress &&
+                counterpartyId == other.counterpartyId &&
+                counterpartyShippingAddress == other.counterpartyShippingAddress &&
+                currency == other.currency &&
+                description == other.description &&
+                dueDate == other.dueDate &&
+                fallbackPaymentMethod == other.fallbackPaymentMethod &&
+                ingestLedgerEntries == other.ingestLedgerEntries &&
+                invoiceLineItems == other.invoiceLineItems &&
+                invoicerAddress == other.invoicerAddress &&
+                ledgerAccountSettlementId == other.ledgerAccountSettlementId &&
+                metadata == other.metadata &&
+                notificationEmailAddresses == other.notificationEmailAddresses &&
+                notificationsEnabled == other.notificationsEnabled &&
+                originatingAccountId == other.originatingAccountId &&
+                paymentEffectiveDate == other.paymentEffectiveDate &&
+                paymentMethod == other.paymentMethod &&
+                paymentType == other.paymentType &&
+                receivingAccountId == other.receivingAccountId &&
+                recipientEmail == other.recipientEmail &&
+                recipientName == other.recipientName &&
+                remindAfterOverdueDays == other.remindAfterOverdueDays &&
+                status == other.status &&
+                virtualAccountId == other.virtualAccountId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(contactDetails, counterpartyBillingAddress, counterpartyId, counterpartyShippingAddress, currency, description, dueDate, fallbackPaymentMethod, ingestLedgerEntries, invoiceLineItems, invoicerAddress, ledgerAccountSettlementId, metadata, notificationEmailAddresses, notificationsEnabled, originatingAccountId, paymentEffectiveDate, paymentMethod, paymentType, receivingAccountId, recipientEmail, recipientName, remindAfterOverdueDays, status, virtualAccountId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                contactDetails,
+                counterpartyBillingAddress,
+                counterpartyId,
+                counterpartyShippingAddress,
+                currency,
+                description,
+                dueDate,
+                fallbackPaymentMethod,
+                ingestLedgerEntries,
+                invoiceLineItems,
+                invoicerAddress,
+                ledgerAccountSettlementId,
+                metadata,
+                notificationEmailAddresses,
+                notificationsEnabled,
+                originatingAccountId,
+                paymentEffectiveDate,
+                paymentMethod,
+                paymentType,
+                receivingAccountId,
+                recipientEmail,
+                recipientName,
+                remindAfterOverdueDays,
+                status,
+                virtualAccountId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2904,12 +2957,19 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterpartyBillingAddress && country == other.country && line1 == other.line1 && locality == other.locality && postalCode == other.postalCode && region == other.region && line2 == other.line2 && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CounterpartyBillingAddress &&
+                country == other.country &&
+                line1 == other.line1 &&
+                locality == other.locality &&
+                postalCode == other.postalCode &&
+                region == other.region &&
+                line2 == other.line2 &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3245,12 +3305,19 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterpartyShippingAddress && country == other.country && line1 == other.line1 && locality == other.locality && postalCode == other.postalCode && region == other.region && line2 == other.line2 && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CounterpartyShippingAddress &&
+                country == other.country &&
+                line1 == other.line1 &&
+                locality == other.locality &&
+                postalCode == other.postalCode &&
+                region == other.region &&
+                line2 == other.line2 &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3754,12 +3821,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Metadata && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -3771,12 +3836,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceLineItemCreateRequest && name == other.name && unitAmount == other.unitAmount && description == other.description && direction == other.direction && metadata == other.metadata && quantity == other.quantity && unitAmountDecimal == other.unitAmountDecimal && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is InvoiceLineItemCreateRequest &&
+                name == other.name &&
+                unitAmount == other.unitAmount &&
+                description == other.description &&
+                direction == other.direction &&
+                metadata == other.metadata &&
+                quantity == other.quantity &&
+                unitAmountDecimal == other.unitAmountDecimal &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(name, unitAmount, description, direction, metadata, quantity, unitAmountDecimal, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                name,
+                unitAmount,
+                description,
+                direction,
+                metadata,
+                quantity,
+                unitAmountDecimal,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -4110,12 +4192,19 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoicerAddress && country == other.country && line1 == other.line1 && locality == other.locality && postalCode == other.postalCode && region == other.region && line2 == other.line2 && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is InvoicerAddress &&
+                country == other.country &&
+                line1 == other.line1 &&
+                locality == other.locality &&
+                postalCode == other.postalCode &&
+                region == other.region &&
+                line2 == other.line2 &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(country, line1, locality, postalCode, region, line2, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -4213,12 +4302,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -4361,7 +4448,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentMethod && value == other.value /* spotless:on */
+            return other is PaymentMethod && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -4374,10 +4461,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceUpdateParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is InvoiceUpdateParams &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "InvoiceUpdateParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

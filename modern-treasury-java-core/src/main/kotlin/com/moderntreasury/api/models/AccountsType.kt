@@ -124,7 +124,7 @@ class AccountsType @JsonCreator private constructor(private val value: JsonField
             return true
         }
 
-        return /* spotless:off */ other is AccountsType && value == other.value /* spotless:on */
+        return other is AccountsType && value == other.value
     }
 
     override fun hashCode() = value.hashCode()

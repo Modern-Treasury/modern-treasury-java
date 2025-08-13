@@ -1155,7 +1155,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReferenceNumberType && value == other.value /* spotless:on */
+            return other is ReferenceNumberType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1297,7 +1297,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReferenceableType && value == other.value /* spotless:on */
+            return other is ReferenceableType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1310,12 +1310,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentReference && id == other.id && createdAt == other.createdAt && liveMode == other.liveMode && object_ == other.object_ && referenceNumber == other.referenceNumber && referenceNumberType == other.referenceNumberType && referenceableId == other.referenceableId && referenceableType == other.referenceableType && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PaymentReference &&
+            id == other.id &&
+            createdAt == other.createdAt &&
+            liveMode == other.liveMode &&
+            object_ == other.object_ &&
+            referenceNumber == other.referenceNumber &&
+            referenceNumberType == other.referenceNumberType &&
+            referenceableId == other.referenceableId &&
+            referenceableType == other.referenceableType &&
+            updatedAt == other.updatedAt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, liveMode, object_, referenceNumber, referenceNumberType, referenceableId, referenceableType, updatedAt, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            createdAt,
+            liveMode,
+            object_,
+            referenceNumber,
+            referenceNumberType,
+            referenceableId,
+            referenceableType,
+            updatedAt,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

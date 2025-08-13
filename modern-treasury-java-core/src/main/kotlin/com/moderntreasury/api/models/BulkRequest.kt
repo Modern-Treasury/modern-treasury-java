@@ -735,7 +735,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ActionType && value == other.value /* spotless:on */
+            return other is ActionType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -833,12 +833,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -998,7 +996,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ResourceType && value == other.value /* spotless:on */
+            return other is ResourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1132,7 +1130,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1145,12 +1143,39 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BulkRequest && id == other.id && actionType == other.actionType && createdAt == other.createdAt && failedResultCount == other.failedResultCount && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && resourceType == other.resourceType && status == other.status && successResultCount == other.successResultCount && totalResourceCount == other.totalResourceCount && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BulkRequest &&
+            id == other.id &&
+            actionType == other.actionType &&
+            createdAt == other.createdAt &&
+            failedResultCount == other.failedResultCount &&
+            liveMode == other.liveMode &&
+            metadata == other.metadata &&
+            object_ == other.object_ &&
+            resourceType == other.resourceType &&
+            status == other.status &&
+            successResultCount == other.successResultCount &&
+            totalResourceCount == other.totalResourceCount &&
+            updatedAt == other.updatedAt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, actionType, createdAt, failedResultCount, liveMode, metadata, object_, resourceType, status, successResultCount, totalResourceCount, updatedAt, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            actionType,
+            createdAt,
+            failedResultCount,
+            liveMode,
+            metadata,
+            object_,
+            resourceType,
+            status,
+            successResultCount,
+            totalResourceCount,
+            updatedAt,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -412,7 +412,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReturnableType && value == other.value /* spotless:on */
+            return other is ReturnableType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -425,10 +425,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ReturnListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && internalAccountId == other.internalAccountId && perPage == other.perPage && returnableId == other.returnableId && returnableType == other.returnableType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ReturnListParams &&
+            afterCursor == other.afterCursor &&
+            counterpartyId == other.counterpartyId &&
+            internalAccountId == other.internalAccountId &&
+            perPage == other.perPage &&
+            returnableId == other.returnableId &&
+            returnableType == other.returnableType &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, counterpartyId, internalAccountId, perPage, returnableId, returnableType, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            afterCursor,
+            counterpartyId,
+            internalAccountId,
+            perPage,
+            returnableId,
+            returnableType,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ReturnListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, perPage=$perPage, returnableId=$returnableId, returnableType=$returnableType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

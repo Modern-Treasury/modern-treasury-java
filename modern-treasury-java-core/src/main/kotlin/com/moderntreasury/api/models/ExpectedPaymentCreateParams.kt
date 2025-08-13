@@ -1958,12 +1958,55 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExpectedPaymentCreateRequest && amountLowerBound == other.amountLowerBound && amountUpperBound == other.amountUpperBound && counterpartyId == other.counterpartyId && currency == other.currency && dateLowerBound == other.dateLowerBound && dateUpperBound == other.dateUpperBound && description == other.description && direction == other.direction && externalId == other.externalId && internalAccountId == other.internalAccountId && ledgerTransaction == other.ledgerTransaction && ledgerTransactionId == other.ledgerTransactionId && lineItems == other.lineItems && metadata == other.metadata && reconciliationFilters == other.reconciliationFilters && reconciliationGroups == other.reconciliationGroups && reconciliationRuleVariables == other.reconciliationRuleVariables && remittanceInformation == other.remittanceInformation && statementDescriptor == other.statementDescriptor && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ExpectedPaymentCreateRequest &&
+                amountLowerBound == other.amountLowerBound &&
+                amountUpperBound == other.amountUpperBound &&
+                counterpartyId == other.counterpartyId &&
+                currency == other.currency &&
+                dateLowerBound == other.dateLowerBound &&
+                dateUpperBound == other.dateUpperBound &&
+                description == other.description &&
+                direction == other.direction &&
+                externalId == other.externalId &&
+                internalAccountId == other.internalAccountId &&
+                ledgerTransaction == other.ledgerTransaction &&
+                ledgerTransactionId == other.ledgerTransactionId &&
+                lineItems == other.lineItems &&
+                metadata == other.metadata &&
+                reconciliationFilters == other.reconciliationFilters &&
+                reconciliationGroups == other.reconciliationGroups &&
+                reconciliationRuleVariables == other.reconciliationRuleVariables &&
+                remittanceInformation == other.remittanceInformation &&
+                statementDescriptor == other.statementDescriptor &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amountLowerBound, amountUpperBound, counterpartyId, currency, dateLowerBound, dateUpperBound, description, direction, externalId, internalAccountId, ledgerTransaction, ledgerTransactionId, lineItems, metadata, reconciliationFilters, reconciliationGroups, reconciliationRuleVariables, remittanceInformation, statementDescriptor, type, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                amountLowerBound,
+                amountUpperBound,
+                counterpartyId,
+                currency,
+                dateLowerBound,
+                dateUpperBound,
+                description,
+                direction,
+                externalId,
+                internalAccountId,
+                ledgerTransaction,
+                ledgerTransactionId,
+                lineItems,
+                metadata,
+                reconciliationFilters,
+                reconciliationGroups,
+                reconciliationRuleVariables,
+                remittanceInformation,
+                statementDescriptor,
+                type,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2096,7 +2139,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Direction && value == other.value /* spotless:on */
+            return other is Direction && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2479,12 +2522,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Metadata && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -2496,12 +2537,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemRequest && amount == other.amount && accountingCategoryId == other.accountingCategoryId && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItemRequest &&
+                amount == other.amount &&
+                accountingCategoryId == other.accountingCategoryId &&
+                description == other.description &&
+                metadata == other.metadata &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, accountingCategoryId, description, metadata, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(amount, accountingCategoryId, description, metadata, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2599,12 +2645,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2616,10 +2660,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExpectedPaymentCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExpectedPaymentCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ExpectedPaymentCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
