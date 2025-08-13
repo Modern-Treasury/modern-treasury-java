@@ -324,7 +324,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Id && value == other.value /* spotless:on */
+            return other is Id && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -337,10 +337,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceReportRetrieveParams && internalAccountId == other.internalAccountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceReportRetrieveParams &&
+            internalAccountId == other.internalAccountId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(internalAccountId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(internalAccountId, id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BalanceReportRetrieveParams{internalAccountId=$internalAccountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

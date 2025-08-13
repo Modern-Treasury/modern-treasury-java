@@ -365,12 +365,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -467,12 +465,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UpdatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is UpdatedAt && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -484,10 +480,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerListParams && id == other.id && afterCursor == other.afterCursor && metadata == other.metadata && perPage == other.perPage && updatedAt == other.updatedAt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is LedgerListParams &&
+            id == other.id &&
+            afterCursor == other.afterCursor &&
+            metadata == other.metadata &&
+            perPage == other.perPage &&
+            updatedAt == other.updatedAt &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, afterCursor, metadata, perPage, updatedAt, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            id,
+            afterCursor,
+            metadata,
+            perPage,
+            updatedAt,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "LedgerListParams{id=$id, afterCursor=$afterCursor, metadata=$metadata, perPage=$perPage, updatedAt=$updatedAt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

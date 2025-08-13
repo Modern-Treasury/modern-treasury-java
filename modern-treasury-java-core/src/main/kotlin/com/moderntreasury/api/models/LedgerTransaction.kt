@@ -1176,7 +1176,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LedgerableType && value == other.value /* spotless:on */
+            return other is LedgerableType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1274,12 +1274,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1412,7 +1410,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1425,12 +1423,55 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LedgerTransaction && id == other.id && archivedReason == other.archivedReason && createdAt == other.createdAt && description == other.description && effectiveAt == other.effectiveAt && effectiveDate == other.effectiveDate && externalId == other.externalId && ledgerEntries == other.ledgerEntries && ledgerId == other.ledgerId && ledgerableId == other.ledgerableId && ledgerableType == other.ledgerableType && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && partiallyPostsLedgerTransactionId == other.partiallyPostsLedgerTransactionId && postedAt == other.postedAt && reversedByLedgerTransactionId == other.reversedByLedgerTransactionId && reversesLedgerTransactionId == other.reversesLedgerTransactionId && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is LedgerTransaction &&
+            id == other.id &&
+            archivedReason == other.archivedReason &&
+            createdAt == other.createdAt &&
+            description == other.description &&
+            effectiveAt == other.effectiveAt &&
+            effectiveDate == other.effectiveDate &&
+            externalId == other.externalId &&
+            ledgerEntries == other.ledgerEntries &&
+            ledgerId == other.ledgerId &&
+            ledgerableId == other.ledgerableId &&
+            ledgerableType == other.ledgerableType &&
+            liveMode == other.liveMode &&
+            metadata == other.metadata &&
+            object_ == other.object_ &&
+            partiallyPostsLedgerTransactionId == other.partiallyPostsLedgerTransactionId &&
+            postedAt == other.postedAt &&
+            reversedByLedgerTransactionId == other.reversedByLedgerTransactionId &&
+            reversesLedgerTransactionId == other.reversesLedgerTransactionId &&
+            status == other.status &&
+            updatedAt == other.updatedAt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, archivedReason, createdAt, description, effectiveAt, effectiveDate, externalId, ledgerEntries, ledgerId, ledgerableId, ledgerableType, liveMode, metadata, object_, partiallyPostsLedgerTransactionId, postedAt, reversedByLedgerTransactionId, reversesLedgerTransactionId, status, updatedAt, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            archivedReason,
+            createdAt,
+            description,
+            effectiveAt,
+            effectiveDate,
+            externalId,
+            ledgerEntries,
+            ledgerId,
+            ledgerableId,
+            ledgerableType,
+            liveMode,
+            metadata,
+            object_,
+            partiallyPostsLedgerTransactionId,
+            postedAt,
+            reversedByLedgerTransactionId,
+            reversesLedgerTransactionId,
+            status,
+            updatedAt,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

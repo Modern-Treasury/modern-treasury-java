@@ -395,7 +395,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ActionType && value == other.value /* spotless:on */
+            return other is ActionType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -492,12 +492,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -657,7 +655,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ResourceType && value == other.value /* spotless:on */
+            return other is ResourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -791,7 +789,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -804,10 +802,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BulkRequestListParams && actionType == other.actionType && afterCursor == other.afterCursor && metadata == other.metadata && perPage == other.perPage && resourceType == other.resourceType && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BulkRequestListParams &&
+            actionType == other.actionType &&
+            afterCursor == other.afterCursor &&
+            metadata == other.metadata &&
+            perPage == other.perPage &&
+            resourceType == other.resourceType &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(actionType, afterCursor, metadata, perPage, resourceType, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            actionType,
+            afterCursor,
+            metadata,
+            perPage,
+            resourceType,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BulkRequestListParams{actionType=$actionType, afterCursor=$afterCursor, metadata=$metadata, perPage=$perPage, resourceType=$resourceType, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

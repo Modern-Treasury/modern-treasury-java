@@ -1483,7 +1483,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Direction && value == other.value /* spotless:on */
+            return other is Direction && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1581,12 +1581,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1723,7 +1721,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReconciliationMethod && value == other.value /* spotless:on */
+            return other is ReconciliationMethod && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1863,7 +1861,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1876,12 +1874,69 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExpectedPayment && id == other.id && amountLowerBound == other.amountLowerBound && amountUpperBound == other.amountUpperBound && counterpartyId == other.counterpartyId && createdAt == other.createdAt && currency == other.currency && dateLowerBound == other.dateLowerBound && dateUpperBound == other.dateUpperBound && description == other.description && direction == other.direction && externalId == other.externalId && internalAccountId == other.internalAccountId && ledgerTransactionId == other.ledgerTransactionId && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && reconciliationFilters == other.reconciliationFilters && reconciliationGroups == other.reconciliationGroups && reconciliationMethod == other.reconciliationMethod && reconciliationRuleVariables == other.reconciliationRuleVariables && remittanceInformation == other.remittanceInformation && statementDescriptor == other.statementDescriptor && status == other.status && transactionId == other.transactionId && transactionLineItemId == other.transactionLineItemId && type == other.type && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ExpectedPayment &&
+            id == other.id &&
+            amountLowerBound == other.amountLowerBound &&
+            amountUpperBound == other.amountUpperBound &&
+            counterpartyId == other.counterpartyId &&
+            createdAt == other.createdAt &&
+            currency == other.currency &&
+            dateLowerBound == other.dateLowerBound &&
+            dateUpperBound == other.dateUpperBound &&
+            description == other.description &&
+            direction == other.direction &&
+            externalId == other.externalId &&
+            internalAccountId == other.internalAccountId &&
+            ledgerTransactionId == other.ledgerTransactionId &&
+            liveMode == other.liveMode &&
+            metadata == other.metadata &&
+            object_ == other.object_ &&
+            reconciliationFilters == other.reconciliationFilters &&
+            reconciliationGroups == other.reconciliationGroups &&
+            reconciliationMethod == other.reconciliationMethod &&
+            reconciliationRuleVariables == other.reconciliationRuleVariables &&
+            remittanceInformation == other.remittanceInformation &&
+            statementDescriptor == other.statementDescriptor &&
+            status == other.status &&
+            transactionId == other.transactionId &&
+            transactionLineItemId == other.transactionLineItemId &&
+            type == other.type &&
+            updatedAt == other.updatedAt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amountLowerBound, amountUpperBound, counterpartyId, createdAt, currency, dateLowerBound, dateUpperBound, description, direction, externalId, internalAccountId, ledgerTransactionId, liveMode, metadata, object_, reconciliationFilters, reconciliationGroups, reconciliationMethod, reconciliationRuleVariables, remittanceInformation, statementDescriptor, status, transactionId, transactionLineItemId, type, updatedAt, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amountLowerBound,
+            amountUpperBound,
+            counterpartyId,
+            createdAt,
+            currency,
+            dateLowerBound,
+            dateUpperBound,
+            description,
+            direction,
+            externalId,
+            internalAccountId,
+            ledgerTransactionId,
+            liveMode,
+            metadata,
+            object_,
+            reconciliationFilters,
+            reconciliationGroups,
+            reconciliationMethod,
+            reconciliationRuleVariables,
+            remittanceInformation,
+            statementDescriptor,
+            status,
+            transactionId,
+            transactionLineItemId,
+            type,
+            updatedAt,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

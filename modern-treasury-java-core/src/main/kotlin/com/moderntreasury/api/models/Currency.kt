@@ -1289,7 +1289,7 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             return true
         }
 
-        return /* spotless:off */ other is Currency && value == other.value /* spotless:on */
+        return other is Currency && value == other.value
     }
 
     override fun hashCode() = value.hashCode()

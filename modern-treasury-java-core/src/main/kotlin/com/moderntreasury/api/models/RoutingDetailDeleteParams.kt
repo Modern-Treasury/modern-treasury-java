@@ -363,7 +363,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountsType && value == other.value /* spotless:on */
+            return other is AccountsType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -376,10 +376,24 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is RoutingDetailDeleteParams && accountsType == other.accountsType && accountId == other.accountId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is RoutingDetailDeleteParams &&
+            accountsType == other.accountsType &&
+            accountId == other.accountId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountsType, accountId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            accountsType,
+            accountId,
+            id,
+            additionalHeaders,
+            additionalQueryParams,
+            additionalBodyProperties,
+        )
 
     override fun toString() =
         "RoutingDetailDeleteParams{accountsType=$accountsType, accountId=$accountId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
