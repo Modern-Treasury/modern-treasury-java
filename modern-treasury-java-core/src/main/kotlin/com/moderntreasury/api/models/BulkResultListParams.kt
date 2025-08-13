@@ -447,7 +447,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntityType && value == other.value /* spotless:on */
+            return other is EntityType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -575,7 +575,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is RequestType && value == other.value /* spotless:on */
+            return other is RequestType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -709,7 +709,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -722,10 +722,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BulkResultListParams && afterCursor == other.afterCursor && entityId == other.entityId && entityType == other.entityType && perPage == other.perPage && requestId == other.requestId && requestType == other.requestType && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BulkResultListParams &&
+            afterCursor == other.afterCursor &&
+            entityId == other.entityId &&
+            entityType == other.entityType &&
+            perPage == other.perPage &&
+            requestId == other.requestId &&
+            requestType == other.requestType &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, entityId, entityType, perPage, requestId, requestType, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            afterCursor,
+            entityId,
+            entityType,
+            perPage,
+            requestId,
+            requestType,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BulkResultListParams{afterCursor=$afterCursor, entityId=$entityId, entityType=$entityType, perPage=$perPage, requestId=$requestId, requestType=$requestType, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

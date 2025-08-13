@@ -414,7 +414,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DocumentableType && value == other.value /* spotless:on */
+            return other is DocumentableType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -427,10 +427,24 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DocumentListParams && afterCursor == other.afterCursor && documentableId == other.documentableId && documentableType == other.documentableType && perPage == other.perPage && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DocumentListParams &&
+            afterCursor == other.afterCursor &&
+            documentableId == other.documentableId &&
+            documentableType == other.documentableType &&
+            perPage == other.perPage &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(afterCursor, documentableId, documentableType, perPage, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            afterCursor,
+            documentableId,
+            documentableType,
+            perPage,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "DocumentListParams{afterCursor=$afterCursor, documentableId=$documentableId, documentableType=$documentableType, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

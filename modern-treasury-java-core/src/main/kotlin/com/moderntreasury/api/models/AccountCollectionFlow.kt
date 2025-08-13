@@ -704,7 +704,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentType && value == other.value /* spotless:on */
+            return other is PaymentType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -932,7 +932,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReceivingCountry && value == other.value /* spotless:on */
+            return other is ReceivingCountry && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1075,7 +1075,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1088,12 +1088,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountCollectionFlow && counterpartyId == other.counterpartyId && paymentTypes == other.paymentTypes && id == other.id && clientToken == other.clientToken && createdAt == other.createdAt && externalAccountId == other.externalAccountId && liveMode == other.liveMode && object_ == other.object_ && receivingCountries == other.receivingCountries && status == other.status && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountCollectionFlow &&
+            counterpartyId == other.counterpartyId &&
+            paymentTypes == other.paymentTypes &&
+            id == other.id &&
+            clientToken == other.clientToken &&
+            createdAt == other.createdAt &&
+            externalAccountId == other.externalAccountId &&
+            liveMode == other.liveMode &&
+            object_ == other.object_ &&
+            receivingCountries == other.receivingCountries &&
+            status == other.status &&
+            updatedAt == other.updatedAt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(counterpartyId, paymentTypes, id, clientToken, createdAt, externalAccountId, liveMode, object_, receivingCountries, status, updatedAt, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            counterpartyId,
+            paymentTypes,
+            id,
+            clientToken,
+            createdAt,
+            externalAccountId,
+            liveMode,
+            object_,
+            receivingCountries,
+            status,
+            updatedAt,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

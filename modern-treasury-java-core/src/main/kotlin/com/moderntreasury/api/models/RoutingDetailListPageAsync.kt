@@ -132,10 +132,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is RoutingDetailListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items /* spotless:on */
+        return other is RoutingDetailListPageAsync &&
+            service == other.service &&
+            streamHandlerExecutor == other.streamHandlerExecutor &&
+            params == other.params &&
+            headers == other.headers &&
+            items == other.items
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, headers, items) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(service, streamHandlerExecutor, params, headers, items)
 
     override fun toString() =
         "RoutingDetailListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
