@@ -1,5 +1,20 @@
 # Changelog
 
+## 7.8.0 (2025-08-13)
+
+Full Changelog: [v7.7.0...v7.8.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.7.0...v7.8.0)
+
+### Features
+
+* **api:** api update ([9ffbac9](https://github.com/Modern-Treasury/modern-treasury-java/commit/9ffbac90ea6c0c63eac8068195f671efd4c4c5d8))
+* **api:** api update ([b1e1f79](https://github.com/Modern-Treasury/modern-treasury-java/commit/b1e1f79cf6eb66c52b7feb614287e9ed1ff8ef08))
+* **api:** manual updates ([eac9e87](https://github.com/Modern-Treasury/modern-treasury-java/commit/eac9e874bd94092e8b5051afe0c92d031cac3ba0))
+
+
+### Chores
+
+* **internal:** format identity methods ([9bd64a3](https://github.com/Modern-Treasury/modern-treasury-java/commit/9bd64a3933325bb1b90d43f0f00576366b6f1308))
+
 ## 7.7.0 (2025-08-12)
 
 Full Changelog: [v7.6.0...v7.7.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.6.0...v7.7.0)
