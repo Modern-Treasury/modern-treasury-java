@@ -1,5 +1,20 @@
 # Changelog
 
+## 7.8.1 (2025-08-14)
+
+Full Changelog: [v7.8.0...v7.8.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.8.0...v7.8.1)
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([7088a88](https://github.com/Modern-Treasury/modern-treasury-java/commit/7088a8838975ee320b057c6b9aaca9dbf8ae48ff))
+
+
+### Chores
+
+* **ci:** add build job ([58dd0be](https://github.com/Modern-Treasury/modern-treasury-java/commit/58dd0be1539ca6aac9833b84dd1f6d408048a54c))
+* **internal:** dynamically determine included projects ([f58c232](https://github.com/Modern-Treasury/modern-treasury-java/commit/f58c232a720544b5b367cebe19d580846987690a))
+* **internal:** support passing arguments to test script ([a22b980](https://github.com/Modern-Treasury/modern-treasury-java/commit/a22b98073045cb3a03614ee99c55aaecb632abe1))
+
 ## 7.8.0 (2025-08-13)
 
 Full Changelog: [v7.7.0...v7.8.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.7.0...v7.8.0)
