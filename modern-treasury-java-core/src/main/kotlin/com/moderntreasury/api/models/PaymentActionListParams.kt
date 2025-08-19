@@ -629,6 +629,8 @@ private constructor(
 
             @JvmField val SENT = of("sent")
 
+            @JvmField val ACKNOWLEDGED = of("acknowledged")
+
             @JvmField val FAILED = of("failed")
 
             @JvmField val CANCELLED = of("cancelled")
@@ -642,6 +644,7 @@ private constructor(
             PROCESSABLE,
             PROCESSING,
             SENT,
+            ACKNOWLEDGED,
             FAILED,
             CANCELLED,
         }
@@ -660,6 +663,7 @@ private constructor(
             PROCESSABLE,
             PROCESSING,
             SENT,
+            ACKNOWLEDGED,
             FAILED,
             CANCELLED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
@@ -679,6 +683,7 @@ private constructor(
                 PROCESSABLE -> Value.PROCESSABLE
                 PROCESSING -> Value.PROCESSING
                 SENT -> Value.SENT
+                ACKNOWLEDGED -> Value.ACKNOWLEDGED
                 FAILED -> Value.FAILED
                 CANCELLED -> Value.CANCELLED
                 else -> Value._UNKNOWN
@@ -699,6 +704,7 @@ private constructor(
                 PROCESSABLE -> Known.PROCESSABLE
                 PROCESSING -> Known.PROCESSING
                 SENT -> Known.SENT
+                ACKNOWLEDGED -> Known.ACKNOWLEDGED
                 FAILED -> Known.FAILED
                 CANCELLED -> Known.CANCELLED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
@@ -773,11 +779,6 @@ private constructor(
 
         companion object {
 
-            @JvmField
-            val EVOLVE_NON_PROCESSING_TRANSACTION = of("evolve_non_processing_transaction")
-
-            @JvmField val CONTROL_FILE = of("control_file")
-
             @JvmField val STOP = of("stop")
 
             @JvmField val ISSUE = of("issue")
@@ -787,8 +788,6 @@ private constructor(
 
         /** An enum containing [Type]'s known values. */
         enum class Known {
-            EVOLVE_NON_PROCESSING_TRANSACTION,
-            CONTROL_FILE,
             STOP,
             ISSUE,
         }
@@ -803,8 +802,6 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            EVOLVE_NON_PROCESSING_TRANSACTION,
-            CONTROL_FILE,
             STOP,
             ISSUE,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
@@ -820,8 +817,6 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                EVOLVE_NON_PROCESSING_TRANSACTION -> Value.EVOLVE_NON_PROCESSING_TRANSACTION
-                CONTROL_FILE -> Value.CONTROL_FILE
                 STOP -> Value.STOP
                 ISSUE -> Value.ISSUE
                 else -> Value._UNKNOWN
@@ -838,8 +833,6 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                EVOLVE_NON_PROCESSING_TRANSACTION -> Known.EVOLVE_NON_PROCESSING_TRANSACTION
-                CONTROL_FILE -> Known.CONTROL_FILE
                 STOP -> Known.STOP
                 ISSUE -> Known.ISSUE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
