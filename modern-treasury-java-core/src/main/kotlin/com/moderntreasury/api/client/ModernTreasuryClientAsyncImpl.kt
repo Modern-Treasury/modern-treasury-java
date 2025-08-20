@@ -346,7 +346,7 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         // get /api/ping
         withRawResponse().ping(params, requestOptions).thenApply { it.parse() }
 
-    override fun close() = clientOptions.httpClient.close()
+    override fun close() = clientOptions.close()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ModernTreasuryClientAsync.WithRawResponse {
