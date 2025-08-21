@@ -159,11 +159,11 @@ private constructor(
      * in the ledger account settlement. The default value is the created_at timestamp of the ledger
      * account settlement.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
      */
-    fun effectiveAtUpperBound(): OffsetDateTime =
-        effectiveAtUpperBound.getRequired("effective_at_upper_bound")
+    fun effectiveAtUpperBound(): Optional<OffsetDateTime> =
+        effectiveAtUpperBound.getOptional("effective_at_upper_bound")
 
     /**
      * The id of the ledger that this ledger account settlement belongs to.
@@ -582,8 +582,15 @@ private constructor(
          * included in the ledger account settlement. The default value is the created_at timestamp
          * of the ledger account settlement.
          */
-        fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime) =
-            effectiveAtUpperBound(JsonField.of(effectiveAtUpperBound))
+        fun effectiveAtUpperBound(effectiveAtUpperBound: OffsetDateTime?) =
+            effectiveAtUpperBound(JsonField.ofNullable(effectiveAtUpperBound))
+
+        /**
+         * Alias for calling [Builder.effectiveAtUpperBound] with
+         * `effectiveAtUpperBound.orElse(null)`.
+         */
+        fun effectiveAtUpperBound(effectiveAtUpperBound: Optional<OffsetDateTime>) =
+            effectiveAtUpperBound(effectiveAtUpperBound.getOrNull())
 
         /**
          * Sets [Builder.effectiveAtUpperBound] to an arbitrary JSON value.
