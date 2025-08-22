@@ -1,5 +1,38 @@
 # Changelog
 
+## 7.9.0 (2025-08-22)
+
+Full Changelog: [v7.8.0...v7.9.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.8.0...v7.9.0)
+
+### Features
+
+* **api:** api update ([2ad324d](https://github.com/Modern-Treasury/modern-treasury-java/commit/2ad324d8a6b95884d08f6a2f40314480264b2c06))
+* **api:** api update ([c228a11](https://github.com/Modern-Treasury/modern-treasury-java/commit/c228a114a2e3af3210bc381da99e22e48c09e05b))
+
+
+### Bug Fixes
+
+* **client:** ensure correct binary content type ([2e60b63](https://github.com/Modern-Treasury/modern-treasury-java/commit/2e60b63d8108d5d46ecd90275c21331afb4ee4f1))
+* **client:** missing multipart content type ([d6bacd8](https://github.com/Modern-Treasury/modern-treasury-java/commit/d6bacd85de740a46a3ccd6989ef61de383967a2c))
+
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([7088a88](https://github.com/Modern-Treasury/modern-treasury-java/commit/7088a8838975ee320b057c6b9aaca9dbf8ae48ff))
+
+
+### Chores
+
+* **ci:** add build job ([58dd0be](https://github.com/Modern-Treasury/modern-treasury-java/commit/58dd0be1539ca6aac9833b84dd1f6d408048a54c))
+* **ci:** reduce log noise ([687b997](https://github.com/Modern-Treasury/modern-treasury-java/commit/687b997d72d7884801adfcb0ecf8310eea2d61e1))
+* **client:** refactor closing / shutdown ([f8a18b4](https://github.com/Modern-Treasury/modern-treasury-java/commit/f8a18b41ed9bde3edd5caea35a332d6235107efa))
+* **client:** rename parameter ([2e60b63](https://github.com/Modern-Treasury/modern-treasury-java/commit/2e60b63d8108d5d46ecd90275c21331afb4ee4f1))
+* **internal:** dynamically determine included projects ([f58c232](https://github.com/Modern-Treasury/modern-treasury-java/commit/f58c232a720544b5b367cebe19d580846987690a))
+* **internal:** fix multipart tests ([8c163ad](https://github.com/Modern-Treasury/modern-treasury-java/commit/8c163ad7086312a5c6852e5dddf2fedf170eb4f2))
+* **internal:** support passing arguments to test script ([a22b980](https://github.com/Modern-Treasury/modern-treasury-java/commit/a22b98073045cb3a03614ee99c55aaecb632abe1))
+* **internal:** support running formatters directly ([3b35c7a](https://github.com/Modern-Treasury/modern-treasury-java/commit/3b35c7aa5e0853a4b3f8e7e74d70b7e80e9895c5))
+* remove memory upper bound from publishing step ([bf48bea](https://github.com/Modern-Treasury/modern-treasury-java/commit/bf48bea79098725079b59a83db3d015ab4263b26))
+
 ## 7.8.0 (2025-08-13)
 
 Full Changelog: [v7.7.0...v7.8.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.7.0...v7.8.0)
