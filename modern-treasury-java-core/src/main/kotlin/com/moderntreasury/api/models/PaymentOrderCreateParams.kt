@@ -2716,7 +2716,12 @@ private constructor(
              * documents, the request's content type must be `multipart/form-data`.
              */
             fun documents(documents: List<DocumentCreateRequest>) =
-                documents(MultipartField.of(documents))
+                documents(
+                    MultipartField.builder<List<DocumentCreateRequest>>()
+                        .value(documents)
+                        .contentType("application/octet-stream")
+                        .build()
+                )
 
             /**
              * Sets [Builder.documents] to an arbitrary multipart value.
@@ -2736,9 +2741,12 @@ private constructor(
              */
             fun addDocument(document: DocumentCreateRequest) = apply {
                 documents =
-                    (documents ?: MultipartField.of(mutableListOf())).also {
-                        checkKnown("documents", it).add(document)
-                    }
+                    (documents
+                            ?: MultipartField.builder<MutableList<DocumentCreateRequest>>()
+                                .value(mutableListOf())
+                                .contentType("application/octet-stream")
+                                .build())
+                        .also { checkKnown("documents", it).add(document) }
             }
 
             /**
@@ -3954,11 +3962,11 @@ private constructor(
 
             fun file(file: ByteArray) = file(file.inputStream())
 
-            fun file(file: Path) =
+            fun file(path: Path) =
                 file(
                     MultipartField.builder<InputStream>()
-                        .value(file.inputStream())
-                        .filename(file.name)
+                        .value(path.inputStream())
+                        .filename(path.name)
                         .build()
                 )
 

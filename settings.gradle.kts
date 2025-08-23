@@ -1,7 +1,14 @@
 rootProject.name = "modern-treasury-java-root"
 
-include("modern-treasury-java")
-include("modern-treasury-java-client-okhttp")
-include("modern-treasury-java-core")
-include("modern-treasury-java-proguard-test")
-include("modern-treasury-java-example")
+val projectNames = rootDir.listFiles()
+    ?.asSequence()
+    .orEmpty()
+    .filter { file ->
+        file.isDirectory &&
+        file.name.startsWith("modern-treasury-java") &&
+        file.listFiles()?.asSequence().orEmpty().any { it.name == "build.gradle.kts" }
+    }
+    .map { it.name }
+    .toList()
+println("projects: $projectNames")
+projectNames.forEach { include(it) }
