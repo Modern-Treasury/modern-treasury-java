@@ -618,6 +618,8 @@ private constructor(
 
             @JvmField val ETHEREUM = of("ethereum")
 
+            @JvmField val GB_FPS = of("gb_fps")
+
             @JvmField val HU_ICS = of("hu_ics")
 
             @JvmField val INTERAC = of("interac")
@@ -679,6 +681,7 @@ private constructor(
             DK_NETS,
             EFT,
             ETHEREUM,
+            GB_FPS,
             HU_ICS,
             INTERAC,
             MASAV,
@@ -725,6 +728,7 @@ private constructor(
             DK_NETS,
             EFT,
             ETHEREUM,
+            GB_FPS,
             HU_ICS,
             INTERAC,
             MASAV,
@@ -774,6 +778,7 @@ private constructor(
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 ETHEREUM -> Value.ETHEREUM
+                GB_FPS -> Value.GB_FPS
                 HU_ICS -> Value.HU_ICS
                 INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
@@ -822,6 +827,7 @@ private constructor(
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 ETHEREUM -> Known.ETHEREUM
+                GB_FPS -> Known.GB_FPS
                 HU_ICS -> Known.HU_ICS
                 INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV

@@ -2716,7 +2716,12 @@ private constructor(
              * documents, the request's content type must be `multipart/form-data`.
              */
             fun documents(documents: List<DocumentCreateRequest>) =
-                documents(MultipartField.of(documents))
+                documents(
+                    MultipartField.builder<List<DocumentCreateRequest>>()
+                        .value(documents)
+                        .contentType("application/octet-stream")
+                        .build()
+                )
 
             /**
              * Sets [Builder.documents] to an arbitrary multipart value.
@@ -2736,9 +2741,12 @@ private constructor(
              */
             fun addDocument(document: DocumentCreateRequest) = apply {
                 documents =
-                    (documents ?: MultipartField.of(mutableListOf())).also {
-                        checkKnown("documents", it).add(document)
-                    }
+                    (documents
+                            ?: MultipartField.builder<MutableList<DocumentCreateRequest>>()
+                                .value(mutableListOf())
+                                .contentType("application/octet-stream")
+                                .build())
+                        .also { checkKnown("documents", it).add(document) }
             }
 
             /**
@@ -3954,11 +3962,11 @@ private constructor(
 
             fun file(file: ByteArray) = file(file.inputStream())
 
-            fun file(file: Path) =
+            fun file(path: Path) =
                 file(
                     MultipartField.builder<InputStream>()
-                        .value(file.inputStream())
-                        .filename(file.name)
+                        .value(path.inputStream())
+                        .filename(path.name)
                         .build()
                 )
 
@@ -6875,6 +6883,8 @@ private constructor(
 
                     @JvmField val ETHEREUM = of("ethereum")
 
+                    @JvmField val GB_FPS = of("gb_fps")
+
                     @JvmField val HU_ICS = of("hu_ics")
 
                     @JvmField val INTERAC = of("interac")
@@ -6936,6 +6946,7 @@ private constructor(
                     DK_NETS,
                     EFT,
                     ETHEREUM,
+                    GB_FPS,
                     HU_ICS,
                     INTERAC,
                     MASAV,
@@ -6982,6 +6993,7 @@ private constructor(
                     DK_NETS,
                     EFT,
                     ETHEREUM,
+                    GB_FPS,
                     HU_ICS,
                     INTERAC,
                     MASAV,
@@ -7032,6 +7044,7 @@ private constructor(
                         DK_NETS -> Value.DK_NETS
                         EFT -> Value.EFT
                         ETHEREUM -> Value.ETHEREUM
+                        GB_FPS -> Value.GB_FPS
                         HU_ICS -> Value.HU_ICS
                         INTERAC -> Value.INTERAC
                         MASAV -> Value.MASAV
@@ -7080,6 +7093,7 @@ private constructor(
                         DK_NETS -> Known.DK_NETS
                         EFT -> Known.EFT
                         ETHEREUM -> Known.ETHEREUM
+                        GB_FPS -> Known.GB_FPS
                         HU_ICS -> Known.HU_ICS
                         INTERAC -> Known.INTERAC
                         MASAV -> Known.MASAV
