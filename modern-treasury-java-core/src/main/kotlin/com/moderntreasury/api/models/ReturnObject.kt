@@ -2778,6 +2778,10 @@ private constructor(
 
                 @JvmField val BNK_DEV_TRANSFER_ID = of("bnk_dev_transfer_id")
 
+                @JvmField
+                val BNY_MELLON_TRANSACTION_REFERENCE_NUMBER =
+                    of("bny_mellon_transaction_reference_number")
+
                 @JvmField val BOFA_END_TO_END_ID = of("bofa_end_to_end_id")
 
                 @JvmField val BOFA_TRANSACTION_ID = of("bofa_transaction_id")
@@ -2971,6 +2975,7 @@ private constructor(
                 BANKPROV_PAYMENT_ID,
                 BNK_DEV_PRENOTIFICATION_ID,
                 BNK_DEV_TRANSFER_ID,
+                BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 BRALE_TRANSFER_ID,
@@ -3072,6 +3077,7 @@ private constructor(
                 BANKPROV_PAYMENT_ID,
                 BNK_DEV_PRENOTIFICATION_ID,
                 BNK_DEV_TRANSFER_ID,
+                BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 BRALE_TRANSFER_ID,
@@ -3175,6 +3181,8 @@ private constructor(
                     BANKPROV_PAYMENT_ID -> Value.BANKPROV_PAYMENT_ID
                     BNK_DEV_PRENOTIFICATION_ID -> Value.BNK_DEV_PRENOTIFICATION_ID
                     BNK_DEV_TRANSFER_ID -> Value.BNK_DEV_TRANSFER_ID
+                    BNY_MELLON_TRANSACTION_REFERENCE_NUMBER ->
+                        Value.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                     BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
                     BRALE_TRANSFER_ID -> Value.BRALE_TRANSFER_ID
@@ -3281,6 +3289,8 @@ private constructor(
                     BANKPROV_PAYMENT_ID -> Known.BANKPROV_PAYMENT_ID
                     BNK_DEV_PRENOTIFICATION_ID -> Known.BNK_DEV_PRENOTIFICATION_ID
                     BNK_DEV_TRANSFER_ID -> Known.BNK_DEV_TRANSFER_ID
+                    BNY_MELLON_TRANSACTION_REFERENCE_NUMBER ->
+                        Known.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                     BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
                     BRALE_TRANSFER_ID -> Known.BRALE_TRANSFER_ID
