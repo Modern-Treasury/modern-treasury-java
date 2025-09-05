@@ -75,12 +75,6 @@ private constructor(
     fun type(): PaymentOrderType = body.type()
 
     /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun accounting(): Optional<Accounting> = body.accounting()
-
-    /**
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      *
@@ -89,16 +83,6 @@ private constructor(
      */
     @Deprecated("deprecated")
     fun accountingCategoryId(): Optional<String> = body.accountingCategoryId()
-
-    /**
-     * The ID of one of your accounting ledger classes. Note that these will only be accessible if
-     * your accounting system has been connected.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    @Deprecated("deprecated")
-    fun accountingLedgerClassId(): Optional<String> = body.accountingLedgerClassId()
 
     /**
      * The party that will pay the fees for the payment order. See
@@ -400,13 +384,6 @@ private constructor(
     fun _type(): MultipartField<PaymentOrderType> = body._type()
 
     /**
-     * Returns the raw multipart value of [accounting].
-     *
-     * Unlike [accounting], this method doesn't throw if the multipart field has an unexpected type.
-     */
-    fun _accounting(): MultipartField<Accounting> = body._accounting()
-
-    /**
      * Returns the raw multipart value of [accountingCategoryId].
      *
      * Unlike [accountingCategoryId], this method doesn't throw if the multipart field has an
@@ -414,15 +391,6 @@ private constructor(
      */
     @Deprecated("deprecated")
     fun _accountingCategoryId(): MultipartField<String> = body._accountingCategoryId()
-
-    /**
-     * Returns the raw multipart value of [accountingLedgerClassId].
-     *
-     * Unlike [accountingLedgerClassId], this method doesn't throw if the multipart field has an
-     * unexpected type.
-     */
-    @Deprecated("deprecated")
-    fun _accountingLedgerClassId(): MultipartField<String> = body._accountingLedgerClassId()
 
     /**
      * Returns the raw multipart value of [chargeBearer].
@@ -703,7 +671,7 @@ private constructor(
          * - [direction]
          * - [originatingAccountId]
          * - [type]
-         * - [accounting]
+         * - [accountingCategoryId]
          * - etc.
          */
         fun body(body: PaymentOrderCreateRequest) = apply { this.body = body.toBuilder() }
@@ -771,19 +739,6 @@ private constructor(
          */
         fun type(type: MultipartField<PaymentOrderType>) = apply { body.type(type) }
 
-        fun accounting(accounting: Accounting) = apply { body.accounting(accounting) }
-
-        /**
-         * Sets [Builder.accounting] to an arbitrary multipart value.
-         *
-         * You should usually call [Builder.accounting] with a well-typed [Accounting] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun accounting(accounting: MultipartField<Accounting>) = apply {
-            body.accounting(accounting)
-        }
-
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
@@ -811,35 +766,6 @@ private constructor(
         @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: MultipartField<String>) = apply {
             body.accountingCategoryId(accountingCategoryId)
-        }
-
-        /**
-         * The ID of one of your accounting ledger classes. Note that these will only be accessible
-         * if your accounting system has been connected.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: String?) = apply {
-            body.accountingLedgerClassId(accountingLedgerClassId)
-        }
-
-        /**
-         * Alias for calling [Builder.accountingLedgerClassId] with
-         * `accountingLedgerClassId.orElse(null)`.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
-
-        /**
-         * Sets [Builder.accountingLedgerClassId] to an arbitrary multipart value.
-         *
-         * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: MultipartField<String>) = apply {
-            body.accountingLedgerClassId(accountingLedgerClassId)
         }
 
         /**
@@ -1609,9 +1535,7 @@ private constructor(
                 "direction" to _direction(),
                 "originating_account_id" to _originatingAccountId(),
                 "type" to _type(),
-                "accounting" to _accounting(),
                 "accounting_category_id" to _accountingCategoryId(),
-                "accounting_ledger_class_id" to _accountingLedgerClassId(),
                 "charge_bearer" to _chargeBearer(),
                 "currency" to _currency(),
                 "description" to _description(),
@@ -1654,9 +1578,7 @@ private constructor(
         private val direction: MultipartField<Direction>,
         private val originatingAccountId: MultipartField<String>,
         private val type: MultipartField<PaymentOrderType>,
-        private val accounting: MultipartField<Accounting>,
         private val accountingCategoryId: MultipartField<String>,
-        private val accountingLedgerClassId: MultipartField<String>,
         private val chargeBearer: MultipartField<ChargeBearer>,
         private val currency: MultipartField<Currency>,
         private val description: MultipartField<String>,
@@ -1729,12 +1651,6 @@ private constructor(
         fun type(): PaymentOrderType = type.value.getRequired("type")
 
         /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun accounting(): Optional<Accounting> = accounting.value.getOptional("accounting")
-
-        /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          *
@@ -1744,17 +1660,6 @@ private constructor(
         @Deprecated("deprecated")
         fun accountingCategoryId(): Optional<String> =
             accountingCategoryId.value.getOptional("accounting_category_id")
-
-        /**
-         * The ID of one of your accounting ledger classes. Note that these will only be accessible
-         * if your accounting system has been connected.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(): Optional<String> =
-            accountingLedgerClassId.value.getOptional("accounting_ledger_class_id")
 
         /**
          * The party that will pay the fees for the payment order. See
@@ -2082,16 +1987,6 @@ private constructor(
         @JsonProperty("type") @ExcludeMissing fun _type(): MultipartField<PaymentOrderType> = type
 
         /**
-         * Returns the raw multipart value of [accounting].
-         *
-         * Unlike [accounting], this method doesn't throw if the multipart field has an unexpected
-         * type.
-         */
-        @JsonProperty("accounting")
-        @ExcludeMissing
-        fun _accounting(): MultipartField<Accounting> = accounting
-
-        /**
          * Returns the raw multipart value of [accountingCategoryId].
          *
          * Unlike [accountingCategoryId], this method doesn't throw if the multipart field has an
@@ -2101,17 +1996,6 @@ private constructor(
         @JsonProperty("accounting_category_id")
         @ExcludeMissing
         fun _accountingCategoryId(): MultipartField<String> = accountingCategoryId
-
-        /**
-         * Returns the raw multipart value of [accountingLedgerClassId].
-         *
-         * Unlike [accountingLedgerClassId], this method doesn't throw if the multipart field has an
-         * unexpected type.
-         */
-        @Deprecated("deprecated")
-        @JsonProperty("accounting_ledger_class_id")
-        @ExcludeMissing
-        fun _accountingLedgerClassId(): MultipartField<String> = accountingLedgerClassId
 
         /**
          * Returns the raw multipart value of [chargeBearer].
@@ -2440,9 +2324,7 @@ private constructor(
             private var direction: MultipartField<Direction>? = null
             private var originatingAccountId: MultipartField<String>? = null
             private var type: MultipartField<PaymentOrderType>? = null
-            private var accounting: MultipartField<Accounting> = MultipartField.of(null)
             private var accountingCategoryId: MultipartField<String> = MultipartField.of(null)
-            private var accountingLedgerClassId: MultipartField<String> = MultipartField.of(null)
             private var chargeBearer: MultipartField<ChargeBearer> = MultipartField.of(null)
             private var currency: MultipartField<Currency> = MultipartField.of(null)
             private var description: MultipartField<String> = MultipartField.of(null)
@@ -2486,9 +2368,7 @@ private constructor(
                 direction = paymentOrderCreateRequest.direction
                 originatingAccountId = paymentOrderCreateRequest.originatingAccountId
                 type = paymentOrderCreateRequest.type
-                accounting = paymentOrderCreateRequest.accounting
                 accountingCategoryId = paymentOrderCreateRequest.accountingCategoryId
-                accountingLedgerClassId = paymentOrderCreateRequest.accountingLedgerClassId
                 chargeBearer = paymentOrderCreateRequest.chargeBearer
                 currency = paymentOrderCreateRequest.currency
                 description = paymentOrderCreateRequest.description
@@ -2590,19 +2470,6 @@ private constructor(
              */
             fun type(type: MultipartField<PaymentOrderType>) = apply { this.type = type }
 
-            fun accounting(accounting: Accounting) = accounting(MultipartField.of(accounting))
-
-            /**
-             * Sets [Builder.accounting] to an arbitrary multipart value.
-             *
-             * You should usually call [Builder.accounting] with a well-typed [Accounting] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun accounting(accounting: MultipartField<Accounting>) = apply {
-                this.accounting = accounting
-            }
-
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
@@ -2629,34 +2496,6 @@ private constructor(
             @Deprecated("deprecated")
             fun accountingCategoryId(accountingCategoryId: MultipartField<String>) = apply {
                 this.accountingCategoryId = accountingCategoryId
-            }
-
-            /**
-             * The ID of one of your accounting ledger classes. Note that these will only be
-             * accessible if your accounting system has been connected.
-             */
-            @Deprecated("deprecated")
-            fun accountingLedgerClassId(accountingLedgerClassId: String?) =
-                accountingLedgerClassId(MultipartField.of(accountingLedgerClassId))
-
-            /**
-             * Alias for calling [Builder.accountingLedgerClassId] with
-             * `accountingLedgerClassId.orElse(null)`.
-             */
-            @Deprecated("deprecated")
-            fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-                accountingLedgerClassId(accountingLedgerClassId.getOrNull())
-
-            /**
-             * Sets [Builder.accountingLedgerClassId] to an arbitrary multipart value.
-             *
-             * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            @Deprecated("deprecated")
-            fun accountingLedgerClassId(accountingLedgerClassId: MultipartField<String>) = apply {
-                this.accountingLedgerClassId = accountingLedgerClassId
             }
 
             /**
@@ -3342,9 +3181,7 @@ private constructor(
                     checkRequired("direction", direction),
                     checkRequired("originatingAccountId", originatingAccountId),
                     checkRequired("type", type),
-                    accounting,
                     accountingCategoryId,
-                    accountingLedgerClassId,
                     chargeBearer,
                     currency,
                     description,
@@ -3389,9 +3226,7 @@ private constructor(
             direction().validate()
             originatingAccountId()
             type().validate()
-            accounting().ifPresent { it.validate() }
             accountingCategoryId()
-            accountingLedgerClassId()
             chargeBearer().ifPresent { it.validate() }
             currency().ifPresent { it.validate() }
             description()
@@ -3442,9 +3277,7 @@ private constructor(
                 direction == other.direction &&
                 originatingAccountId == other.originatingAccountId &&
                 type == other.type &&
-                accounting == other.accounting &&
                 accountingCategoryId == other.accountingCategoryId &&
-                accountingLedgerClassId == other.accountingLedgerClassId &&
                 chargeBearer == other.chargeBearer &&
                 currency == other.currency &&
                 description == other.description &&
@@ -3483,9 +3316,7 @@ private constructor(
                 direction,
                 originatingAccountId,
                 type,
-                accounting,
                 accountingCategoryId,
-                accountingLedgerClassId,
                 chargeBearer,
                 currency,
                 description,
@@ -3522,7 +3353,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accountingCategoryId=$accountingCategoryId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
     }
 
     /**
