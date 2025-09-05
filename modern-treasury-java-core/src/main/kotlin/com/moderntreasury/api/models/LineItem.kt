@@ -23,9 +23,7 @@ import kotlin.jvm.optionals.getOrNull
 class LineItem
 private constructor(
     private val id: JsonField<String>,
-    private val accounting: JsonField<Accounting>,
     private val accountingCategoryId: JsonField<String>,
-    private val accountingLedgerClassId: JsonField<String>,
     private val amount: JsonField<Long>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val description: JsonField<String>,
@@ -41,15 +39,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("accounting")
-        @ExcludeMissing
-        accounting: JsonField<Accounting> = JsonMissing.of(),
         @JsonProperty("accounting_category_id")
         @ExcludeMissing
         accountingCategoryId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("accounting_ledger_class_id")
-        @ExcludeMissing
-        accountingLedgerClassId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
@@ -71,9 +63,7 @@ private constructor(
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     ) : this(
         id,
-        accounting,
         accountingCategoryId,
-        accountingLedgerClassId,
         amount,
         createdAt,
         description,
@@ -93,12 +83,6 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun accounting(): Accounting = accounting.getRequired("accounting")
-
-    /**
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      *
@@ -107,17 +91,6 @@ private constructor(
      */
     fun accountingCategoryId(): Optional<String> =
         accountingCategoryId.getOptional("accounting_category_id")
-
-    /**
-     * The ID of one of the class objects in your accounting system. Class objects track segments of
-     * your business independent of client or project. Note that these will only be accessible if
-     * your accounting system has been connected.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun accountingLedgerClassId(): Optional<String> =
-        accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -194,15 +167,6 @@ private constructor(
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * Returns the raw JSON value of [accounting].
-     *
-     * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("accounting")
-    @ExcludeMissing
-    fun _accounting(): JsonField<Accounting> = accounting
-
-    /**
      * Returns the raw JSON value of [accountingCategoryId].
      *
      * Unlike [accountingCategoryId], this method doesn't throw if the JSON field has an unexpected
@@ -211,16 +175,6 @@ private constructor(
     @JsonProperty("accounting_category_id")
     @ExcludeMissing
     fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
-
-    /**
-     * Returns the raw JSON value of [accountingLedgerClassId].
-     *
-     * Unlike [accountingLedgerClassId], this method doesn't throw if the JSON field has an
-     * unexpected type.
-     */
-    @JsonProperty("accounting_ledger_class_id")
-    @ExcludeMissing
-    fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
 
     /**
      * Returns the raw JSON value of [amount].
@@ -313,9 +267,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .accounting()
          * .accountingCategoryId()
-         * .accountingLedgerClassId()
          * .amount()
          * .createdAt()
          * .description()
@@ -334,9 +286,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var accounting: JsonField<Accounting>? = null
         private var accountingCategoryId: JsonField<String>? = null
-        private var accountingLedgerClassId: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var description: JsonField<String>? = null
@@ -351,9 +301,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(lineItem: LineItem) = apply {
             id = lineItem.id
-            accounting = lineItem.accounting
             accountingCategoryId = lineItem.accountingCategoryId
-            accountingLedgerClassId = lineItem.accountingLedgerClassId
             amount = lineItem.amount
             createdAt = lineItem.createdAt
             description = lineItem.description
@@ -375,17 +323,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        fun accounting(accounting: Accounting) = accounting(JsonField.of(accounting))
-
-        /**
-         * Sets [Builder.accounting] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.accounting] with a well-typed [Accounting] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun accounting(accounting: JsonField<Accounting>) = apply { this.accounting = accounting }
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
@@ -410,32 +347,6 @@ private constructor(
          */
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             this.accountingCategoryId = accountingCategoryId
-        }
-
-        /**
-         * The ID of one of the class objects in your accounting system. Class objects track
-         * segments of your business independent of client or project. Note that these will only be
-         * accessible if your accounting system has been connected.
-         */
-        fun accountingLedgerClassId(accountingLedgerClassId: String?) =
-            accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
-
-        /**
-         * Alias for calling [Builder.accountingLedgerClassId] with
-         * `accountingLedgerClassId.orElse(null)`.
-         */
-        fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
-
-        /**
-         * Sets [Builder.accountingLedgerClassId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
-            this.accountingLedgerClassId = accountingLedgerClassId
         }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
@@ -581,9 +492,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .accounting()
          * .accountingCategoryId()
-         * .accountingLedgerClassId()
          * .amount()
          * .createdAt()
          * .description()
@@ -600,9 +509,7 @@ private constructor(
         fun build(): LineItem =
             LineItem(
                 checkRequired("id", id),
-                checkRequired("accounting", accounting),
                 checkRequired("accountingCategoryId", accountingCategoryId),
-                checkRequired("accountingLedgerClassId", accountingLedgerClassId),
                 checkRequired("amount", amount),
                 checkRequired("createdAt", createdAt),
                 checkRequired("description", description),
@@ -624,9 +531,7 @@ private constructor(
         }
 
         id()
-        accounting().validate()
         accountingCategoryId()
-        accountingLedgerClassId()
         amount()
         createdAt()
         description()
@@ -655,9 +560,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (accounting.asKnown().getOrNull()?.validity() ?: 0) +
             (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
-            (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
@@ -907,9 +810,7 @@ private constructor(
 
         return other is LineItem &&
             id == other.id &&
-            accounting == other.accounting &&
             accountingCategoryId == other.accountingCategoryId &&
-            accountingLedgerClassId == other.accountingLedgerClassId &&
             amount == other.amount &&
             createdAt == other.createdAt &&
             description == other.description &&
@@ -925,9 +826,7 @@ private constructor(
     private val hashCode: Int by lazy {
         Objects.hash(
             id,
-            accounting,
             accountingCategoryId,
-            accountingLedgerClassId,
             amount,
             createdAt,
             description,
@@ -944,5 +843,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LineItem{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, createdAt=$createdAt, description=$description, itemizableId=$itemizableId, itemizableType=$itemizableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LineItem{id=$id, accountingCategoryId=$accountingCategoryId, amount=$amount, createdAt=$createdAt, description=$description, itemizableId=$itemizableId, itemizableType=$itemizableType, liveMode=$liveMode, metadata=$metadata, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }

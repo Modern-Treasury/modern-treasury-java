@@ -36,9 +36,7 @@ import kotlin.jvm.optionals.getOrNull
 class PaymentOrder
 private constructor(
     private val id: JsonField<String>,
-    private val accounting: JsonField<Accounting>,
     private val accountingCategoryId: JsonField<String>,
-    private val accountingLedgerClassId: JsonField<String>,
     private val amount: JsonField<Long>,
     private val chargeBearer: JsonField<ChargeBearer>,
     private val counterpartyId: JsonField<String>,
@@ -89,15 +87,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("accounting")
-        @ExcludeMissing
-        accounting: JsonField<Accounting> = JsonMissing.of(),
         @JsonProperty("accounting_category_id")
         @ExcludeMissing
         accountingCategoryId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("accounting_ledger_class_id")
-        @ExcludeMissing
-        accountingLedgerClassId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("charge_bearer")
         @ExcludeMissing
@@ -215,9 +207,7 @@ private constructor(
         vendorFailureReason: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
-        accounting,
         accountingCategoryId,
-        accountingLedgerClassId,
         amount,
         chargeBearer,
         counterpartyId,
@@ -272,12 +262,6 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun accounting(): Accounting = accounting.getRequired("accounting")
-
-    /**
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      *
@@ -287,17 +271,6 @@ private constructor(
     @Deprecated("deprecated")
     fun accountingCategoryId(): Optional<String> =
         accountingCategoryId.getOptional("accounting_category_id")
-
-    /**
-     * The ID of one of your accounting ledger classes. Note that these will only be accessible if
-     * your accounting system has been connected.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    @Deprecated("deprecated")
-    fun accountingLedgerClassId(): Optional<String> =
-        accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000 (cents).
@@ -699,15 +672,6 @@ private constructor(
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * Returns the raw JSON value of [accounting].
-     *
-     * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("accounting")
-    @ExcludeMissing
-    fun _accounting(): JsonField<Accounting> = accounting
-
-    /**
      * Returns the raw JSON value of [accountingCategoryId].
      *
      * Unlike [accountingCategoryId], this method doesn't throw if the JSON field has an unexpected
@@ -717,17 +681,6 @@ private constructor(
     @JsonProperty("accounting_category_id")
     @ExcludeMissing
     fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
-
-    /**
-     * Returns the raw JSON value of [accountingLedgerClassId].
-     *
-     * Unlike [accountingLedgerClassId], this method doesn't throw if the JSON field has an
-     * unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("accounting_ledger_class_id")
-    @ExcludeMissing
-    fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
 
     /**
      * Returns the raw JSON value of [amount].
@@ -1135,9 +1088,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .accounting()
          * .accountingCategoryId()
-         * .accountingLedgerClassId()
          * .amount()
          * .chargeBearer()
          * .counterpartyId()
@@ -1191,9 +1142,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var accounting: JsonField<Accounting>? = null
         private var accountingCategoryId: JsonField<String>? = null
-        private var accountingLedgerClassId: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
         private var chargeBearer: JsonField<ChargeBearer>? = null
         private var counterpartyId: JsonField<String>? = null
@@ -1244,9 +1193,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(paymentOrder: PaymentOrder) = apply {
             id = paymentOrder.id
-            accounting = paymentOrder.accounting
             accountingCategoryId = paymentOrder.accountingCategoryId
-            accountingLedgerClassId = paymentOrder.accountingLedgerClassId
             amount = paymentOrder.amount
             chargeBearer = paymentOrder.chargeBearer
             counterpartyId = paymentOrder.counterpartyId
@@ -1304,17 +1251,6 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun accounting(accounting: Accounting) = accounting(JsonField.of(accounting))
-
-        /**
-         * Sets [Builder.accounting] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.accounting] with a well-typed [Accounting] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun accounting(accounting: JsonField<Accounting>) = apply { this.accounting = accounting }
-
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
@@ -1341,34 +1277,6 @@ private constructor(
         @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             this.accountingCategoryId = accountingCategoryId
-        }
-
-        /**
-         * The ID of one of your accounting ledger classes. Note that these will only be accessible
-         * if your accounting system has been connected.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: String?) =
-            accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
-
-        /**
-         * Alias for calling [Builder.accountingLedgerClassId] with
-         * `accountingLedgerClassId.orElse(null)`.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
-            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
-
-        /**
-         * Sets [Builder.accountingLedgerClassId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        @Deprecated("deprecated")
-        fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
-            this.accountingLedgerClassId = accountingLedgerClassId
         }
 
         /**
@@ -2270,9 +2178,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .accounting()
          * .accountingCategoryId()
-         * .accountingLedgerClassId()
          * .amount()
          * .chargeBearer()
          * .counterpartyId()
@@ -2324,9 +2230,7 @@ private constructor(
         fun build(): PaymentOrder =
             PaymentOrder(
                 checkRequired("id", id),
-                checkRequired("accounting", accounting),
                 checkRequired("accountingCategoryId", accountingCategoryId),
-                checkRequired("accountingLedgerClassId", accountingLedgerClassId),
                 checkRequired("amount", amount),
                 checkRequired("chargeBearer", chargeBearer),
                 checkRequired("counterpartyId", counterpartyId),
@@ -2386,9 +2290,7 @@ private constructor(
         }
 
         id()
-        accounting().validate()
         accountingCategoryId()
-        accountingLedgerClassId()
         amount()
         chargeBearer().ifPresent { it.validate() }
         counterpartyId()
@@ -2451,9 +2353,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (accounting.asKnown().getOrNull()?.validity() ?: 0) +
             (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
-            (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (chargeBearer.asKnown().getOrNull()?.validity() ?: 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
@@ -4915,9 +4815,7 @@ private constructor(
 
         return other is PaymentOrder &&
             id == other.id &&
-            accounting == other.accounting &&
             accountingCategoryId == other.accountingCategoryId &&
-            accountingLedgerClassId == other.accountingLedgerClassId &&
             amount == other.amount &&
             chargeBearer == other.chargeBearer &&
             counterpartyId == other.counterpartyId &&
@@ -4968,9 +4866,7 @@ private constructor(
     private val hashCode: Int by lazy {
         Objects.hash(
             id,
-            accounting,
             accountingCategoryId,
-            accountingLedgerClassId,
             amount,
             chargeBearer,
             counterpartyId,
@@ -5022,5 +4918,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
+        "PaymentOrder{id=$id, accountingCategoryId=$accountingCategoryId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
 }
