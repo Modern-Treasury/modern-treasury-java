@@ -37,6 +37,12 @@ private constructor(
     fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    @Deprecated("deprecated") fun accounting(): Optional<Accounting> = body.accounting()
+
+    /**
      * The ID of one of your accounting categories. Note that these will only be accessible if your
      * accounting system has been connected.
      *
@@ -45,6 +51,16 @@ private constructor(
      */
     @Deprecated("deprecated")
     fun accountingCategoryId(): Optional<String> = body.accountingCategoryId()
+
+    /**
+     * The ID of one of your accounting ledger classes. Note that these will only be accessible if
+     * your accounting system has been connected.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun accountingLedgerClassId(): Optional<String> = body.accountingLedgerClassId()
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000 (cents).
@@ -342,6 +358,13 @@ private constructor(
     fun ultimateReceivingPartyName(): Optional<String> = body.ultimateReceivingPartyName()
 
     /**
+     * Returns the raw JSON value of [accounting].
+     *
+     * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @Deprecated("deprecated") fun _accounting(): JsonField<Accounting> = body._accounting()
+
+    /**
      * Returns the raw JSON value of [accountingCategoryId].
      *
      * Unlike [accountingCategoryId], this method doesn't throw if the JSON field has an unexpected
@@ -349,6 +372,15 @@ private constructor(
      */
     @Deprecated("deprecated")
     fun _accountingCategoryId(): JsonField<String> = body._accountingCategoryId()
+
+    /**
+     * Returns the raw JSON value of [accountingLedgerClassId].
+     *
+     * Unlike [accountingLedgerClassId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @Deprecated("deprecated")
+    fun _accountingLedgerClassId(): JsonField<String> = body._accountingLedgerClassId()
 
     /**
      * Returns the raw JSON value of [amount].
@@ -627,14 +659,27 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accounting]
          * - [accountingCategoryId]
+         * - [accountingLedgerClassId]
          * - [amount]
          * - [chargeBearer]
-         * - [counterpartyId]
-         * - [currency]
          * - etc.
          */
         fun body(body: PaymentOrderUpdateRequest) = apply { this.body = body.toBuilder() }
+
+        @Deprecated("deprecated")
+        fun accounting(accounting: Accounting) = apply { body.accounting(accounting) }
+
+        /**
+         * Sets [Builder.accounting] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accounting] with a well-typed [Accounting] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        @Deprecated("deprecated")
+        fun accounting(accounting: JsonField<Accounting>) = apply { body.accounting(accounting) }
 
         /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
@@ -663,6 +708,35 @@ private constructor(
         @Deprecated("deprecated")
         fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
             body.accountingCategoryId(accountingCategoryId)
+        }
+
+        /**
+         * The ID of one of your accounting ledger classes. Note that these will only be accessible
+         * if your accounting system has been connected.
+         */
+        @Deprecated("deprecated")
+        fun accountingLedgerClassId(accountingLedgerClassId: String?) = apply {
+            body.accountingLedgerClassId(accountingLedgerClassId)
+        }
+
+        /**
+         * Alias for calling [Builder.accountingLedgerClassId] with
+         * `accountingLedgerClassId.orElse(null)`.
+         */
+        @Deprecated("deprecated")
+        fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
+            accountingLedgerClassId(accountingLedgerClassId.getOrNull())
+
+        /**
+         * Sets [Builder.accountingLedgerClassId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        @Deprecated("deprecated")
+        fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
+            body.accountingLedgerClassId(accountingLedgerClassId)
         }
 
         /**
@@ -1454,7 +1528,9 @@ private constructor(
 
     class PaymentOrderUpdateRequest
     private constructor(
+        private val accounting: JsonField<Accounting>,
         private val accountingCategoryId: JsonField<String>,
+        private val accountingLedgerClassId: JsonField<String>,
         private val amount: JsonField<Long>,
         private val chargeBearer: JsonField<ChargeBearer>,
         private val counterpartyId: JsonField<String>,
@@ -1491,9 +1567,15 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("accounting")
+            @ExcludeMissing
+            accounting: JsonField<Accounting> = JsonMissing.of(),
             @JsonProperty("accounting_category_id")
             @ExcludeMissing
             accountingCategoryId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("accounting_ledger_class_id")
+            @ExcludeMissing
+            accountingLedgerClassId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("charge_bearer")
             @ExcludeMissing
@@ -1582,7 +1664,9 @@ private constructor(
             @ExcludeMissing
             ultimateReceivingPartyName: JsonField<String> = JsonMissing.of(),
         ) : this(
+            accounting,
             accountingCategoryId,
+            accountingLedgerClassId,
             amount,
             chargeBearer,
             counterpartyId,
@@ -1618,6 +1702,13 @@ private constructor(
         )
 
         /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        @Deprecated("deprecated")
+        fun accounting(): Optional<Accounting> = accounting.getOptional("accounting")
+
+        /**
          * The ID of one of your accounting categories. Note that these will only be accessible if
          * your accounting system has been connected.
          *
@@ -1627,6 +1718,17 @@ private constructor(
         @Deprecated("deprecated")
         fun accountingCategoryId(): Optional<String> =
             accountingCategoryId.getOptional("accounting_category_id")
+
+        /**
+         * The ID of one of your accounting ledger classes. Note that these will only be accessible
+         * if your accounting system has been connected.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        @Deprecated("deprecated")
+        fun accountingLedgerClassId(): Optional<String> =
+            accountingLedgerClassId.getOptional("accounting_ledger_class_id")
 
         /**
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000
@@ -1938,6 +2040,16 @@ private constructor(
             ultimateReceivingPartyName.getOptional("ultimate_receiving_party_name")
 
         /**
+         * Returns the raw JSON value of [accounting].
+         *
+         * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @Deprecated("deprecated")
+        @JsonProperty("accounting")
+        @ExcludeMissing
+        fun _accounting(): JsonField<Accounting> = accounting
+
+        /**
          * Returns the raw JSON value of [accountingCategoryId].
          *
          * Unlike [accountingCategoryId], this method doesn't throw if the JSON field has an
@@ -1947,6 +2059,17 @@ private constructor(
         @JsonProperty("accounting_category_id")
         @ExcludeMissing
         fun _accountingCategoryId(): JsonField<String> = accountingCategoryId
+
+        /**
+         * Returns the raw JSON value of [accountingLedgerClassId].
+         *
+         * Unlike [accountingLedgerClassId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @Deprecated("deprecated")
+        @JsonProperty("accounting_ledger_class_id")
+        @ExcludeMissing
+        fun _accountingLedgerClassId(): JsonField<String> = accountingLedgerClassId
 
         /**
          * Returns the raw JSON value of [amount].
@@ -2259,7 +2382,9 @@ private constructor(
         /** A builder for [PaymentOrderUpdateRequest]. */
         class Builder internal constructor() {
 
+            private var accounting: JsonField<Accounting> = JsonMissing.of()
             private var accountingCategoryId: JsonField<String> = JsonMissing.of()
+            private var accountingLedgerClassId: JsonField<String> = JsonMissing.of()
             private var amount: JsonField<Long> = JsonMissing.of()
             private var chargeBearer: JsonField<ChargeBearer> = JsonMissing.of()
             private var counterpartyId: JsonField<String> = JsonMissing.of()
@@ -2296,7 +2421,9 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(paymentOrderUpdateRequest: PaymentOrderUpdateRequest) = apply {
+                accounting = paymentOrderUpdateRequest.accounting
                 accountingCategoryId = paymentOrderUpdateRequest.accountingCategoryId
+                accountingLedgerClassId = paymentOrderUpdateRequest.accountingLedgerClassId
                 amount = paymentOrderUpdateRequest.amount
                 chargeBearer = paymentOrderUpdateRequest.chargeBearer
                 counterpartyId = paymentOrderUpdateRequest.counterpartyId
@@ -2334,6 +2461,21 @@ private constructor(
                 additionalProperties = paymentOrderUpdateRequest.additionalProperties.toMutableMap()
             }
 
+            @Deprecated("deprecated")
+            fun accounting(accounting: Accounting) = accounting(JsonField.of(accounting))
+
+            /**
+             * Sets [Builder.accounting] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accounting] with a well-typed [Accounting] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            @Deprecated("deprecated")
+            fun accounting(accounting: JsonField<Accounting>) = apply {
+                this.accounting = accounting
+            }
+
             /**
              * The ID of one of your accounting categories. Note that these will only be accessible
              * if your accounting system has been connected.
@@ -2360,6 +2502,34 @@ private constructor(
             @Deprecated("deprecated")
             fun accountingCategoryId(accountingCategoryId: JsonField<String>) = apply {
                 this.accountingCategoryId = accountingCategoryId
+            }
+
+            /**
+             * The ID of one of your accounting ledger classes. Note that these will only be
+             * accessible if your accounting system has been connected.
+             */
+            @Deprecated("deprecated")
+            fun accountingLedgerClassId(accountingLedgerClassId: String?) =
+                accountingLedgerClassId(JsonField.ofNullable(accountingLedgerClassId))
+
+            /**
+             * Alias for calling [Builder.accountingLedgerClassId] with
+             * `accountingLedgerClassId.orElse(null)`.
+             */
+            @Deprecated("deprecated")
+            fun accountingLedgerClassId(accountingLedgerClassId: Optional<String>) =
+                accountingLedgerClassId(accountingLedgerClassId.getOrNull())
+
+            /**
+             * Sets [Builder.accountingLedgerClassId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingLedgerClassId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            @Deprecated("deprecated")
+            fun accountingLedgerClassId(accountingLedgerClassId: JsonField<String>) = apply {
+                this.accountingLedgerClassId = accountingLedgerClassId
             }
 
             /**
@@ -3044,7 +3214,9 @@ private constructor(
              */
             fun build(): PaymentOrderUpdateRequest =
                 PaymentOrderUpdateRequest(
+                    accounting,
                     accountingCategoryId,
+                    accountingLedgerClassId,
                     amount,
                     chargeBearer,
                     counterpartyId,
@@ -3087,7 +3259,9 @@ private constructor(
                 return@apply
             }
 
+            accounting().ifPresent { it.validate() }
             accountingCategoryId()
+            accountingLedgerClassId()
             amount()
             chargeBearer().ifPresent { it.validate() }
             counterpartyId()
@@ -3138,7 +3312,9 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
+            (accounting.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
+                (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
                 (if (amount.asKnown().isPresent) 1 else 0) +
                 (chargeBearer.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (counterpartyId.asKnown().isPresent) 1 else 0) +
@@ -3177,7 +3353,9 @@ private constructor(
             }
 
             return other is PaymentOrderUpdateRequest &&
+                accounting == other.accounting &&
                 accountingCategoryId == other.accountingCategoryId &&
+                accountingLedgerClassId == other.accountingLedgerClassId &&
                 amount == other.amount &&
                 chargeBearer == other.chargeBearer &&
                 counterpartyId == other.counterpartyId &&
@@ -3214,7 +3392,9 @@ private constructor(
 
         private val hashCode: Int by lazy {
             Objects.hash(
+                accounting,
                 accountingCategoryId,
+                accountingLedgerClassId,
                 amount,
                 chargeBearer,
                 counterpartyId,
@@ -3253,7 +3433,216 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderUpdateRequest{accountingCategoryId=$accountingCategoryId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, currency=$currency, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, type=$type, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderUpdateRequest{accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, currency=$currency, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, type=$type, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+    }
+
+    @Deprecated("deprecated")
+    class Accounting
+    private constructor(
+        private val accountId: JsonField<String>,
+        private val classId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("account_id")
+            @ExcludeMissing
+            accountId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("class_id") @ExcludeMissing classId: JsonField<String> = JsonMissing.of(),
+        ) : this(accountId, classId, mutableMapOf())
+
+        /**
+         * The ID of one of your accounting categories. Note that these will only be accessible if
+         * your accounting system has been connected.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        @Deprecated("deprecated")
+        fun accountId(): Optional<String> = accountId.getOptional("account_id")
+
+        /**
+         * The ID of one of the class objects in your accounting system. Class objects track
+         * segments of your business independent of client or project. Note that these will only be
+         * accessible if your accounting system has been connected.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        @Deprecated("deprecated") fun classId(): Optional<String> = classId.getOptional("class_id")
+
+        /**
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @Deprecated("deprecated")
+        @JsonProperty("account_id")
+        @ExcludeMissing
+        fun _accountId(): JsonField<String> = accountId
+
+        /**
+         * Returns the raw JSON value of [classId].
+         *
+         * Unlike [classId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @Deprecated("deprecated")
+        @JsonProperty("class_id")
+        @ExcludeMissing
+        fun _classId(): JsonField<String> = classId
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Accounting]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Accounting]. */
+        class Builder internal constructor() {
+
+            private var accountId: JsonField<String> = JsonMissing.of()
+            private var classId: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(accounting: Accounting) = apply {
+                accountId = accounting.accountId
+                classId = accounting.classId
+                additionalProperties = accounting.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The ID of one of your accounting categories. Note that these will only be accessible
+             * if your accounting system has been connected.
+             */
+            @Deprecated("deprecated")
+            fun accountId(accountId: String?) = accountId(JsonField.ofNullable(accountId))
+
+            /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
+            @Deprecated("deprecated")
+            fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
+
+            /**
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            @Deprecated("deprecated")
+            fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
+
+            /**
+             * The ID of one of the class objects in your accounting system. Class objects track
+             * segments of your business independent of client or project. Note that these will only
+             * be accessible if your accounting system has been connected.
+             */
+            @Deprecated("deprecated")
+            fun classId(classId: String?) = classId(JsonField.ofNullable(classId))
+
+            /** Alias for calling [Builder.classId] with `classId.orElse(null)`. */
+            @Deprecated("deprecated")
+            fun classId(classId: Optional<String>) = classId(classId.getOrNull())
+
+            /**
+             * Sets [Builder.classId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.classId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            @Deprecated("deprecated")
+            fun classId(classId: JsonField<String>) = apply { this.classId = classId }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Accounting].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Accounting =
+                Accounting(accountId, classId, additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Accounting = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountId()
+            classId()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountId.asKnown().isPresent) 1 else 0) +
+                (if (classId.asKnown().isPresent) 1 else 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Accounting &&
+                accountId == other.accountId &&
+                classId == other.classId &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(accountId, classId, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Accounting{accountId=$accountId, classId=$classId, additionalProperties=$additionalProperties}"
     }
 
     /**
