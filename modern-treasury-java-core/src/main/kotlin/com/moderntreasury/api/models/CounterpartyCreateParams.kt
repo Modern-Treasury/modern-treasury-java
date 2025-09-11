@@ -49,7 +49,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun accounting(): Optional<Accounting> = body.accounting()
+    @Deprecated("deprecated") fun accounting(): Optional<Accounting> = body.accounting()
 
     /**
      * The accounts for this counterparty.
@@ -141,7 +141,7 @@ private constructor(
      *
      * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _accounting(): JsonField<Accounting> = body._accounting()
+    @Deprecated("deprecated") fun _accounting(): JsonField<Accounting> = body._accounting()
 
     /**
      * Returns the raw JSON value of [accounts].
@@ -292,6 +292,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
+        @Deprecated("deprecated")
         fun accounting(accounting: Accounting) = apply { body.accounting(accounting) }
 
         /**
@@ -301,6 +302,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun accounting(accounting: JsonField<Accounting>) = apply { body.accounting(accounting) }
 
         /** The accounts for this counterparty. */
@@ -698,6 +700,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
+        @Deprecated("deprecated")
         fun accounting(): Optional<Accounting> = accounting.getOptional("accounting")
 
         /**
@@ -797,6 +800,7 @@ private constructor(
          *
          * Unlike [accounting], this method doesn't throw if the JSON field has an unexpected type.
          */
+        @Deprecated("deprecated")
         @JsonProperty("accounting")
         @ExcludeMissing
         fun _accounting(): JsonField<Accounting> = accounting
@@ -968,6 +972,7 @@ private constructor(
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
+            @Deprecated("deprecated")
             fun accounting(accounting: Accounting) = accounting(JsonField.of(accounting))
 
             /**
@@ -977,6 +982,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
+            @Deprecated("deprecated")
             fun accounting(accounting: JsonField<Accounting>) = apply {
                 this.accounting = accounting
             }
@@ -1301,6 +1307,7 @@ private constructor(
             "CounterpartyCreateRequest{name=$name, accounting=$accounting, accounts=$accounts, email=$email, bodyExternalId=$bodyExternalId, ledgerType=$ledgerType, legalEntity=$legalEntity, legalEntityId=$legalEntityId, metadata=$metadata, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, verificationStatus=$verificationStatus, additionalProperties=$additionalProperties}"
     }
 
+    @Deprecated("deprecated")
     class Accounting
     private constructor(
         private val type: JsonField<Type>,
