@@ -1,5 +1,24 @@
 # Changelog
 
+## 7.11.0 (2025-09-15)
+
+Full Changelog: [v7.10.0...v7.11.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.10.0...v7.11.0)
+
+### Features
+
+* **api:** api update ([a985289](https://github.com/Modern-Treasury/modern-treasury-java/commit/a9852893218614dce2ae398b03c2e1f6896227e4))
+
+
+### Bug Fixes
+
+* **client:** incorrect `getPackageVersion` impl ([91d3a88](https://github.com/Modern-Treasury/modern-treasury-java/commit/91d3a888676b0727227681bd67772ddbda5e1ca9))
+
+
+### Chores
+
+* **internal:** codegen related update ([0753e18](https://github.com/Modern-Treasury/modern-treasury-java/commit/0753e18fcf46705935c9063955c39c1f9105a7a7))
+* **internal:** codegen related update ([2b4ef5b](https://github.com/Modern-Treasury/modern-treasury-java/commit/2b4ef5b64c4df876c42904f9c7fe4cb7ba06009a))
+
 ## 7.10.0 (2025-09-11)
 
 Full Changelog: [v7.9.0...v7.10.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.9.0...v7.10.0)
