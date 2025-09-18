@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccount
 import com.moderntreasury.api.models.LedgerAccountCreateParams
+import com.moderntreasury.api.models.LedgerAccountCreateRequest
 import com.moderntreasury.api.models.LedgerAccountDeleteParams
 import com.moderntreasury.api.models.LedgerAccountListPage
 import com.moderntreasury.api.models.LedgerAccountListParams
@@ -38,6 +39,22 @@ interface LedgerAccountService {
         params: LedgerAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LedgerAccount
+
+    /** @see create */
+    fun create(
+        ledgerAccountCreateRequest: LedgerAccountCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LedgerAccount =
+        create(
+            LedgerAccountCreateParams.builder()
+                .ledgerAccountCreateRequest(ledgerAccountCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(ledgerAccountCreateRequest: LedgerAccountCreateRequest): LedgerAccount =
+        create(ledgerAccountCreateRequest, RequestOptions.none())
 
     /** Get details on a single ledger account. */
     fun retrieve(id: String): LedgerAccount = retrieve(id, LedgerAccountRetrieveParams.none())
@@ -175,6 +192,26 @@ interface LedgerAccountService {
             params: LedgerAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LedgerAccount>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            ledgerAccountCreateRequest: LedgerAccountCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LedgerAccount> =
+            create(
+                LedgerAccountCreateParams.builder()
+                    .ledgerAccountCreateRequest(ledgerAccountCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            ledgerAccountCreateRequest: LedgerAccountCreateRequest
+        ): HttpResponseFor<LedgerAccount> =
+            create(ledgerAccountCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_accounts/{id}`, but is otherwise the
