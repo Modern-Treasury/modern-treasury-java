@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerTransaction
 import com.moderntreasury.api.models.LedgerTransactionCreateParams
 import com.moderntreasury.api.models.LedgerTransactionCreatePartialPostParams
+import com.moderntreasury.api.models.LedgerTransactionCreateRequest
 import com.moderntreasury.api.models.LedgerTransactionCreateReversalParams
 import com.moderntreasury.api.models.LedgerTransactionListPageAsync
 import com.moderntreasury.api.models.LedgerTransactionListParams
@@ -42,6 +43,24 @@ interface LedgerTransactionServiceAsync {
         params: LedgerTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerTransaction>
+
+    /** @see create */
+    fun create(
+        ledgerTransactionCreateRequest: LedgerTransactionCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerTransaction> =
+        create(
+            LedgerTransactionCreateParams.builder()
+                .ledgerTransactionCreateRequest(ledgerTransactionCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        ledgerTransactionCreateRequest: LedgerTransactionCreateRequest
+    ): CompletableFuture<LedgerTransaction> =
+        create(ledgerTransactionCreateRequest, RequestOptions.none())
 
     /** Get details on a single ledger transaction. */
     fun retrieve(id: String): CompletableFuture<LedgerTransaction> =
@@ -219,6 +238,24 @@ interface LedgerTransactionServiceAsync {
             params: LedgerTransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerTransaction>>
+
+        /** @see create */
+        fun create(
+            ledgerTransactionCreateRequest: LedgerTransactionCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            create(
+                LedgerTransactionCreateParams.builder()
+                    .ledgerTransactionCreateRequest(ledgerTransactionCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        fun create(
+            ledgerTransactionCreateRequest: LedgerTransactionCreateRequest
+        ): CompletableFuture<HttpResponseFor<LedgerTransaction>> =
+            create(ledgerTransactionCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_transactions/{id}`, but is otherwise the

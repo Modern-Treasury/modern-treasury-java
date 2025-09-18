@@ -7,6 +7,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LedgerAccount
 import com.moderntreasury.api.models.LedgerAccountCreateParams
+import com.moderntreasury.api.models.LedgerAccountCreateRequest
 import com.moderntreasury.api.models.LedgerAccountDeleteParams
 import com.moderntreasury.api.models.LedgerAccountListPageAsync
 import com.moderntreasury.api.models.LedgerAccountListParams
@@ -38,6 +39,23 @@ interface LedgerAccountServiceAsync {
         params: LedgerAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LedgerAccount>
+
+    /** @see create */
+    fun create(
+        ledgerAccountCreateRequest: LedgerAccountCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LedgerAccount> =
+        create(
+            LedgerAccountCreateParams.builder()
+                .ledgerAccountCreateRequest(ledgerAccountCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        ledgerAccountCreateRequest: LedgerAccountCreateRequest
+    ): CompletableFuture<LedgerAccount> = create(ledgerAccountCreateRequest, RequestOptions.none())
 
     /** Get details on a single ledger account. */
     fun retrieve(id: String): CompletableFuture<LedgerAccount> =
@@ -179,6 +197,24 @@ interface LedgerAccountServiceAsync {
             params: LedgerAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LedgerAccount>>
+
+        /** @see create */
+        fun create(
+            ledgerAccountCreateRequest: LedgerAccountCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
+            create(
+                LedgerAccountCreateParams.builder()
+                    .ledgerAccountCreateRequest(ledgerAccountCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        fun create(
+            ledgerAccountCreateRequest: LedgerAccountCreateRequest
+        ): CompletableFuture<HttpResponseFor<LedgerAccount>> =
+            create(ledgerAccountCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/ledger_accounts/{id}`, but is otherwise the
