@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.moderntreasury.api.client.ModernTreasuryClientAsync
 import com.moderntreasury.api.client.ModernTreasuryClientAsyncImpl
 import com.moderntreasury.api.core.ClientOptions
+import com.moderntreasury.api.core.Sleeper
 import com.moderntreasury.api.core.Timeout
 import com.moderntreasury.api.core.http.AsyncStreamResponse
 import com.moderntreasury.api.core.http.Headers
@@ -134,6 +135,17 @@ class ModernTreasuryOkHttpClientAsync private constructor() {
         fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
             clientOptions.streamHandlerExecutor(streamHandlerExecutor)
         }
+
+        /**
+         * The interface to use for delaying execution, like during retries.
+         *
+         * This is primarily useful for using fake delays in tests.
+         *
+         * Defaults to real execution delays.
+         *
+         * This class takes ownership of the sleeper and closes it when closed.
+         */
+        fun sleeper(sleeper: Sleeper) = apply { clientOptions.sleeper(sleeper) }
 
         /**
          * The clock to use for operations that require timing, like retries.
