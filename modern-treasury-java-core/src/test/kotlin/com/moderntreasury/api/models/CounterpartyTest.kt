@@ -251,7 +251,7 @@ internal class CounterpartyTest {
         assertThat(counterparty.sendRemittanceAdvice()).isEqualTo(true)
         assertThat(counterparty.updatedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(counterparty.verificationStatus()).contains("verification_status")
+        assertThat(counterparty.verificationStatus()).isEqualTo("verification_status")
     }
 
     @Test
