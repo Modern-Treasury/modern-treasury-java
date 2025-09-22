@@ -188,12 +188,11 @@ private constructor(
     /**
      * The verification status of the counterparty.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     @Deprecated("deprecated")
-    fun verificationStatus(): Optional<String> =
-        verificationStatus.getOptional("verification_status")
+    fun verificationStatus(): String = verificationStatus.getRequired("verification_status")
 
     /**
      * Returns the raw JSON value of [id].
@@ -581,15 +580,8 @@ private constructor(
 
         /** The verification status of the counterparty. */
         @Deprecated("deprecated")
-        fun verificationStatus(verificationStatus: String?) =
-            verificationStatus(JsonField.ofNullable(verificationStatus))
-
-        /**
-         * Alias for calling [Builder.verificationStatus] with `verificationStatus.orElse(null)`.
-         */
-        @Deprecated("deprecated")
-        fun verificationStatus(verificationStatus: Optional<String>) =
-            verificationStatus(verificationStatus.getOrNull())
+        fun verificationStatus(verificationStatus: String) =
+            verificationStatus(JsonField.of(verificationStatus))
 
         /**
          * Sets [Builder.verificationStatus] to an arbitrary JSON value.

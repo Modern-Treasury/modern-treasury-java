@@ -458,16 +458,9 @@ private constructor(
 
         /** The verification status of the counterparty. */
         @Deprecated("deprecated")
-        fun verificationStatus(verificationStatus: String?) = apply {
+        fun verificationStatus(verificationStatus: String) = apply {
             body.verificationStatus(verificationStatus)
         }
-
-        /**
-         * Alias for calling [Builder.verificationStatus] with `verificationStatus.orElse(null)`.
-         */
-        @Deprecated("deprecated")
-        fun verificationStatus(verificationStatus: Optional<String>) =
-            verificationStatus(verificationStatus.getOrNull())
 
         /**
          * Sets [Builder.verificationStatus] to an arbitrary JSON value.
@@ -1161,16 +1154,8 @@ private constructor(
 
             /** The verification status of the counterparty. */
             @Deprecated("deprecated")
-            fun verificationStatus(verificationStatus: String?) =
-                verificationStatus(JsonField.ofNullable(verificationStatus))
-
-            /**
-             * Alias for calling [Builder.verificationStatus] with
-             * `verificationStatus.orElse(null)`.
-             */
-            @Deprecated("deprecated")
-            fun verificationStatus(verificationStatus: Optional<String>) =
-                verificationStatus(verificationStatus.getOrNull())
+            fun verificationStatus(verificationStatus: String) =
+                verificationStatus(JsonField.of(verificationStatus))
 
             /**
              * Sets [Builder.verificationStatus] to an arbitrary JSON value.
