@@ -472,7 +472,7 @@ internal class CounterpartyCreateParamsTest {
             )
             .sendRemittanceAdvice(true)
             .taxpayerIdentifier("taxpayer_identifier")
-            .verificationStatus(CounterpartyCreateParams.VerificationStatus.DENIED)
+            .verificationStatus("verification_status")
             .build()
     }
 
@@ -951,7 +951,7 @@ internal class CounterpartyCreateParamsTest {
                 )
                 .sendRemittanceAdvice(true)
                 .taxpayerIdentifier("taxpayer_identifier")
-                .verificationStatus(CounterpartyCreateParams.VerificationStatus.DENIED)
+                .verificationStatus("verification_status")
                 .build()
 
         val queryParams = params._queryParams()
@@ -1444,7 +1444,7 @@ internal class CounterpartyCreateParamsTest {
                 )
                 .sendRemittanceAdvice(true)
                 .taxpayerIdentifier("taxpayer_identifier")
-                .verificationStatus(CounterpartyCreateParams.VerificationStatus.DENIED)
+                .verificationStatus("verification_status")
                 .build()
 
         val body = params._body()
@@ -1909,8 +1909,7 @@ internal class CounterpartyCreateParamsTest {
             )
         assertThat(body.sendRemittanceAdvice()).contains(true)
         assertThat(body.taxpayerIdentifier()).contains("taxpayer_identifier")
-        assertThat(body.verificationStatus())
-            .contains(CounterpartyCreateParams.VerificationStatus.DENIED)
+        assertThat(body.verificationStatus()).contains("verification_status")
     }
 
     @Test
