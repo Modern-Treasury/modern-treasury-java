@@ -10,6 +10,8 @@ import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -19,6 +21,8 @@ class InvoiceListParams
 private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
+    private val createdAtEnd: OffsetDateTime?,
+    private val createdAtStart: OffsetDateTime?,
     private val dueDateEnd: LocalDate?,
     private val dueDateStart: LocalDate?,
     private val expectedPaymentId: String?,
@@ -35,6 +39,12 @@ private constructor(
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+
+    /** An inclusive upper bound for searching created_at */
+    fun createdAtEnd(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtEnd)
+
+    /** An inclusive lower bound for searching created_at */
+    fun createdAtStart(): Optional<OffsetDateTime> = Optional.ofNullable(createdAtStart)
 
     /** An inclusive upper bound for searching due_date */
     fun dueDateEnd(): Optional<LocalDate> = Optional.ofNullable(dueDateEnd)
@@ -82,6 +92,8 @@ private constructor(
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
+        private var createdAtEnd: OffsetDateTime? = null
+        private var createdAtStart: OffsetDateTime? = null
         private var dueDateEnd: LocalDate? = null
         private var dueDateStart: LocalDate? = null
         private var expectedPaymentId: String? = null
@@ -98,6 +110,8 @@ private constructor(
         internal fun from(invoiceListParams: InvoiceListParams) = apply {
             afterCursor = invoiceListParams.afterCursor
             counterpartyId = invoiceListParams.counterpartyId
+            createdAtEnd = invoiceListParams.createdAtEnd
+            createdAtStart = invoiceListParams.createdAtStart
             dueDateEnd = invoiceListParams.dueDateEnd
             dueDateStart = invoiceListParams.dueDateStart
             expectedPaymentId = invoiceListParams.expectedPaymentId
@@ -121,6 +135,22 @@ private constructor(
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
+
+        /** An inclusive upper bound for searching created_at */
+        fun createdAtEnd(createdAtEnd: OffsetDateTime?) = apply { this.createdAtEnd = createdAtEnd }
+
+        /** Alias for calling [Builder.createdAtEnd] with `createdAtEnd.orElse(null)`. */
+        fun createdAtEnd(createdAtEnd: Optional<OffsetDateTime>) =
+            createdAtEnd(createdAtEnd.getOrNull())
+
+        /** An inclusive lower bound for searching created_at */
+        fun createdAtStart(createdAtStart: OffsetDateTime?) = apply {
+            this.createdAtStart = createdAtStart
+        }
+
+        /** Alias for calling [Builder.createdAtStart] with `createdAtStart.orElse(null)`. */
+        fun createdAtStart(createdAtStart: Optional<OffsetDateTime>) =
+            createdAtStart(createdAtStart.getOrNull())
 
         /** An inclusive upper bound for searching due_date */
         fun dueDateEnd(dueDateEnd: LocalDate?) = apply { this.dueDateEnd = dueDateEnd }
@@ -298,6 +328,8 @@ private constructor(
             InvoiceListParams(
                 afterCursor,
                 counterpartyId,
+                createdAtEnd,
+                createdAtStart,
                 dueDateEnd,
                 dueDateStart,
                 expectedPaymentId,
@@ -319,6 +351,12 @@ private constructor(
             .apply {
                 afterCursor?.let { put("after_cursor", it) }
                 counterpartyId?.let { put("counterparty_id", it) }
+                createdAtEnd?.let {
+                    put("created_at_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                createdAtStart?.let {
+                    put("created_at_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
                 dueDateEnd?.let { put("due_date_end", it.toString()) }
                 dueDateStart?.let { put("due_date_start", it.toString()) }
                 expectedPaymentId?.let { put("expected_payment_id", it) }
@@ -596,6 +634,8 @@ private constructor(
         return other is InvoiceListParams &&
             afterCursor == other.afterCursor &&
             counterpartyId == other.counterpartyId &&
+            createdAtEnd == other.createdAtEnd &&
+            createdAtStart == other.createdAtStart &&
             dueDateEnd == other.dueDateEnd &&
             dueDateStart == other.dueDateStart &&
             expectedPaymentId == other.expectedPaymentId &&
@@ -613,6 +653,8 @@ private constructor(
         Objects.hash(
             afterCursor,
             counterpartyId,
+            createdAtEnd,
+            createdAtStart,
             dueDateEnd,
             dueDateStart,
             expectedPaymentId,
@@ -627,5 +669,5 @@ private constructor(
         )
 
     override fun toString() =
-        "InvoiceListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, dueDateEnd=$dueDateEnd, dueDateStart=$dueDateStart, expectedPaymentId=$expectedPaymentId, metadata=$metadata, number=$number, originatingAccountId=$originatingAccountId, paymentOrderId=$paymentOrderId, perPage=$perPage, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "InvoiceListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, dueDateEnd=$dueDateEnd, dueDateStart=$dueDateStart, expectedPaymentId=$expectedPaymentId, metadata=$metadata, number=$number, originatingAccountId=$originatingAccountId, paymentOrderId=$paymentOrderId, perPage=$perPage, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
