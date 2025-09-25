@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LegalEntityAddressCreateRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val country: JsonField<String>,
     private val line1: JsonField<String>,

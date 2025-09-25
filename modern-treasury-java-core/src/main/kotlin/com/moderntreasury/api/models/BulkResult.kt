@@ -33,6 +33,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class BulkResult
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -936,6 +937,7 @@ private constructor(
         }
 
         class BulkError
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val createdAt: JsonField<OffsetDateTime>,
@@ -1297,6 +1299,7 @@ private constructor(
                     (if (updatedAt.asKnown().isPresent) 1 else 0)
 
             class RequestError
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val code: JsonField<String>,
                 private val message: JsonField<String>,

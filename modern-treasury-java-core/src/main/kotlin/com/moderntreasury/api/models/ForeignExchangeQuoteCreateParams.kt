@@ -409,6 +409,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class ForeignExchangeQuoteCreateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val internalAccountId: JsonField<String>,
         private val targetCurrency: JsonField<Currency>,

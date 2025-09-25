@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccount
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val balances: JsonField<LedgerBalancesWithEffectiveAt>,
@@ -793,6 +794,7 @@ private constructor(
      * the sum of the pending and posted outgoing amounts.
      */
     class LedgerBalancesWithEffectiveAt
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val availableBalance: JsonField<LedgerBalance>,
         private val effectiveAtLowerBound: JsonField<OffsetDateTime>,

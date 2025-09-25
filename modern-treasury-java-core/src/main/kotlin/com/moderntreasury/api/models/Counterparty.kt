@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class Counterparty
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accounts: JsonField<List<Account>>,
@@ -714,6 +715,7 @@ private constructor(
             (if (verificationStatus.asKnown().isPresent) 1 else 0)
 
     class Account
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val accountDetails: JsonField<List<AccountDetail>>,
