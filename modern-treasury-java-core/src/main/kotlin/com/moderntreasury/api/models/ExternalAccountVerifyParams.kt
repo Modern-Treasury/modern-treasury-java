@@ -402,6 +402,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class ExternalAccountVerifyRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val originatingAccountId: JsonField<String>,
         private val paymentType: JsonField<PaymentType>,

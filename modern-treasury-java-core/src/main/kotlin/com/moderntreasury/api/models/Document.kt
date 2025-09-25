@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class Document
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -619,6 +620,7 @@ private constructor(
             (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     class DocumentDetail
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val createdAt: JsonField<OffsetDateTime>,
@@ -1269,6 +1271,7 @@ private constructor(
     }
 
     class File
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val contentType: JsonField<String>,
         private val filename: JsonField<String>,

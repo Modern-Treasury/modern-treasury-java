@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerTransactionCreateRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val ledgerEntries: JsonField<List<LedgerEntryCreateRequest>>,
     private val description: JsonField<String>,

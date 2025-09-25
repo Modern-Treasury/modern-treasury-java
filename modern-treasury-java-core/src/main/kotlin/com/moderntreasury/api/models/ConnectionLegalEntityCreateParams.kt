@@ -316,6 +316,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class ConnectionLegalEntityCreateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val connectionId: JsonField<String>,
         private val legalEntity: JsonField<LegalEntity>,
@@ -573,6 +574,7 @@ private constructor(
 
     /** The legal entity. */
     class LegalEntity
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val addresses: JsonField<List<LegalEntityAddressCreateRequest>>,
         private val bankSettings: JsonField<LegalEntityBankSetting>,
@@ -1919,6 +1921,7 @@ private constructor(
                 (if (website.asKnown().isPresent) 1 else 0)
 
         class LegalEntityBankSetting
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val backupWithholdingPercentage: JsonField<Long>,
@@ -2569,6 +2572,7 @@ private constructor(
         }
 
         class LegalEntityAssociationInlineCreateRequest
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val relationshipTypes: JsonField<List<RelationshipType>>,
             private val childLegalEntity: JsonField<ChildLegalEntityCreate>,
@@ -3508,6 +3512,7 @@ private constructor(
 
         /** A list of phone numbers in E.164 format. */
         class PhoneNumber
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val phoneNumber: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -3795,6 +3800,7 @@ private constructor(
         }
 
         class LegalEntityWealthEmploymentDetail
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val annualIncome: JsonField<Long>,

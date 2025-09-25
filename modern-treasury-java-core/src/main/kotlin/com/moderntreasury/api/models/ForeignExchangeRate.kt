@@ -17,6 +17,7 @@ import java.util.Objects
 import kotlin.jvm.optionals.getOrNull
 
 class ForeignExchangeRate
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val baseAmount: JsonField<Long>,
     private val baseCurrency: JsonField<Currency>,

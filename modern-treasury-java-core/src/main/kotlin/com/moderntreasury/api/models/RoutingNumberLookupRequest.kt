@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class RoutingNumberLookupRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bankAddress: JsonField<AddressRequest>,
     private val bankName: JsonField<String>,

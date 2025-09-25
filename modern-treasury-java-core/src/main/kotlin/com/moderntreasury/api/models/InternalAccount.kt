@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class InternalAccount
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountCapabilities: JsonField<List<AccountCapability>>,
@@ -1087,6 +1088,7 @@ private constructor(
             (if (vendorId.asKnown().isPresent) 1 else 0)
 
     class AccountCapability
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val createdAt: JsonField<OffsetDateTime>,

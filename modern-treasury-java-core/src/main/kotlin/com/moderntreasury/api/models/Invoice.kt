@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class Invoice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val amountPaid: JsonField<Long>,
@@ -1940,6 +1941,7 @@ private constructor(
 
     /** The counterparty's billing address. */
     class CounterpartyBillingAddress
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val country: JsonField<String>,
         private val line1: JsonField<String>,
@@ -2288,6 +2290,7 @@ private constructor(
 
     /** The counterparty's shipping address where physical goods should be delivered. */
     class CounterpartyShippingAddress
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val country: JsonField<String>,
         private val line1: JsonField<String>,
@@ -2636,6 +2639,7 @@ private constructor(
 
     /** The invoice issuer's business address. */
     class InvoicerAddress
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val country: JsonField<String>,
         private val line1: JsonField<String>,

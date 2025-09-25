@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerAccountBalanceMonitor
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val alertCondition: JsonField<AlertCondition>,
@@ -580,6 +581,7 @@ private constructor(
 
     /** Describes the condition that must be satisfied for the monitor to be triggered. */
     class AlertCondition
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val field: JsonField<String>,
         private val operator: JsonField<String>,
@@ -834,6 +836,7 @@ private constructor(
      * version.
      */
     class CurrentLedgerAccountBalanceState
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val balances: JsonField<LedgerBalances>,
         private val ledgerAccountLockVersion: JsonField<Long>,
