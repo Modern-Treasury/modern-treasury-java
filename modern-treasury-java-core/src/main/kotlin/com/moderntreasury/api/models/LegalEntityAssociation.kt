@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LegalEntityAssociation
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val childLegalEntity: JsonField<ChildLegalEntity>,
@@ -603,6 +604,7 @@ private constructor(
 
     /** The child legal entity. */
     class ChildLegalEntity
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val addresses: JsonField<List<LegalEntityAddress>>,
@@ -2170,6 +2172,7 @@ private constructor(
                 (if (website.asKnown().isPresent) 1 else 0)
 
         class LegalEntityAddress
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val addressTypes: JsonField<List<AddressType>>,
@@ -3034,6 +3037,7 @@ private constructor(
         }
 
         class LegalEntityBankSetting
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val backupWithholdingPercentage: JsonField<Long>,
@@ -3684,6 +3688,7 @@ private constructor(
         }
 
         class Identification
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val createdAt: JsonField<OffsetDateTime>,
@@ -4939,6 +4944,7 @@ private constructor(
 
         /** A list of phone numbers in E.164 format. */
         class PhoneNumber
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val phoneNumber: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -5226,6 +5232,7 @@ private constructor(
         }
 
         class LegalEntityWealthEmploymentDetail
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val id: JsonField<String>,
             private val annualIncome: JsonField<Long>,

@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LedgerTransactionVersion
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val archivedReason: JsonField<String>,
@@ -1076,6 +1077,7 @@ private constructor(
             (if (version.asKnown().isPresent) 1 else 0)
 
     class LedgerEntryOfTransactionVersion
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val amount: JsonField<Long>,

@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AccountCollectionFlow
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val counterpartyId: JsonField<String>,
     private val paymentTypes: JsonField<List<PaymentType>>,

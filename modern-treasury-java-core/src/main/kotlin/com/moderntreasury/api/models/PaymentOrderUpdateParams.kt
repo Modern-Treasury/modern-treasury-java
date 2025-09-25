@@ -1527,6 +1527,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class PaymentOrderUpdateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accounting: JsonField<Accounting>,
         private val accountingCategoryId: JsonField<String>,
@@ -3438,6 +3439,7 @@ private constructor(
 
     @Deprecated("deprecated")
     class Accounting
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountId: JsonField<String>,
         private val classId: JsonField<String>,
@@ -4191,6 +4193,7 @@ private constructor(
     }
 
     class LineItemRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val accountingCategoryId: JsonField<String>,
@@ -4835,6 +4838,7 @@ private constructor(
      * `receiving_account_id`, you may pass the id of an external account or an internal account.
      */
     class ReceivingAccount
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountDetails: JsonField<List<AccountDetail>>,
         private val accountType: JsonField<ExternalAccountType>,
@@ -5521,6 +5525,7 @@ private constructor(
                 (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
 
         class AccountDetail
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val accountNumber: JsonField<String>,
             private val accountNumberType: JsonField<AccountNumberType>,
@@ -6179,6 +6184,7 @@ private constructor(
         }
 
         class RoutingDetail
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val routingNumber: JsonField<String>,
             private val routingNumberType: JsonField<RoutingNumberType>,

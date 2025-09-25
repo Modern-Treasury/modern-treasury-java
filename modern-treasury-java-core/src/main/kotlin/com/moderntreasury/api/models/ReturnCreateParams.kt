@@ -474,6 +474,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class ReturnCreateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val returnableId: JsonField<String>,
         private val returnableType: JsonField<ReturnableType>,
@@ -1769,6 +1770,7 @@ private constructor(
      * payment.
      */
     class Corrections
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountNumber: JsonField<String>,
         private val companyId: JsonField<String>,

@@ -353,6 +353,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class RoutingDetailCreateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val routingNumber: JsonField<String>,
         private val routingNumberType: JsonField<RoutingNumberType>,

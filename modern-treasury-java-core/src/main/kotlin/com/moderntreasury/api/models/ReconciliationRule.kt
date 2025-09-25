@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class ReconciliationRule
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amountLowerBound: JsonField<Long>,
     private val amountUpperBound: JsonField<Long>,
