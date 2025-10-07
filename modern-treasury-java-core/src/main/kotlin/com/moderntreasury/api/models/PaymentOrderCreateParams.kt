@@ -287,6 +287,14 @@ private constructor(
     fun receivingAccountId(): Optional<String> = body.receivingAccountId()
 
     /**
+     * True if the object is reconciled, false otherwise.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun reconciled(): Optional<Boolean> = body.reconciled()
+
+    /**
      * For `ach`, this field will be passed through on an addenda record. For `wire` payments the
      * field will be passed through as the "Originator to Beneficiary Information", also known as
      * OBI or Fedwire tag 6000.
@@ -578,6 +586,13 @@ private constructor(
      * unexpected type.
      */
     fun _receivingAccountId(): MultipartField<String> = body._receivingAccountId()
+
+    /**
+     * Returns the raw multipart value of [reconciled].
+     *
+     * Unlike [reconciled], this method doesn't throw if the multipart field has an unexpected type.
+     */
+    fun _reconciled(): MultipartField<Boolean> = body._reconciled()
 
     /**
      * Returns the raw multipart value of [remittanceInformation].
@@ -1242,6 +1257,18 @@ private constructor(
             body.receivingAccountId(receivingAccountId)
         }
 
+        /** True if the object is reconciled, false otherwise. */
+        fun reconciled(reconciled: Boolean) = apply { body.reconciled(reconciled) }
+
+        /**
+         * Sets [Builder.reconciled] to an arbitrary multipart value.
+         *
+         * You should usually call [Builder.reconciled] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun reconciled(reconciled: MultipartField<Boolean>) = apply { body.reconciled(reconciled) }
+
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
          * the field will be passed through as the "Originator to Beneficiary Information", also
@@ -1634,6 +1661,7 @@ private constructor(
                 "purpose" to _purpose(),
                 "receiving_account" to _receivingAccount(),
                 "receiving_account_id" to _receivingAccountId(),
+                "reconciled" to _reconciled(),
                 "remittance_information" to _remittanceInformation(),
                 "send_remittance_advice" to _sendRemittanceAdvice(),
                 "statement_descriptor" to _statementDescriptor(),
@@ -1679,6 +1707,7 @@ private constructor(
         private val purpose: MultipartField<String>,
         private val receivingAccount: MultipartField<ReceivingAccount>,
         private val receivingAccountId: MultipartField<String>,
+        private val reconciled: MultipartField<Boolean>,
         private val remittanceInformation: MultipartField<String>,
         private val sendRemittanceAdvice: MultipartField<Boolean>,
         private val statementDescriptor: MultipartField<String>,
@@ -1955,6 +1984,14 @@ private constructor(
          */
         fun receivingAccountId(): Optional<String> =
             receivingAccountId.value.getOptional("receiving_account_id")
+
+        /**
+         * True if the object is reconciled, false otherwise.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun reconciled(): Optional<Boolean> = reconciled.value.getOptional("reconciled")
 
         /**
          * For `ach`, this field will be passed through on an addenda record. For `wire` payments
@@ -2317,6 +2354,16 @@ private constructor(
         fun _receivingAccountId(): MultipartField<String> = receivingAccountId
 
         /**
+         * Returns the raw multipart value of [reconciled].
+         *
+         * Unlike [reconciled], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("reconciled")
+        @ExcludeMissing
+        fun _reconciled(): MultipartField<Boolean> = reconciled
+
+        /**
          * Returns the raw multipart value of [remittanceInformation].
          *
          * Unlike [remittanceInformation], this method doesn't throw if the multipart field has an
@@ -2469,6 +2516,7 @@ private constructor(
             private var purpose: MultipartField<String> = MultipartField.of(null)
             private var receivingAccount: MultipartField<ReceivingAccount> = MultipartField.of(null)
             private var receivingAccountId: MultipartField<String> = MultipartField.of(null)
+            private var reconciled: MultipartField<Boolean> = MultipartField.of(null)
             private var remittanceInformation: MultipartField<String> = MultipartField.of(null)
             private var sendRemittanceAdvice: MultipartField<Boolean> = MultipartField.of(null)
             private var statementDescriptor: MultipartField<String> = MultipartField.of(null)
@@ -2513,6 +2561,7 @@ private constructor(
                 purpose = paymentOrderCreateRequest.purpose
                 receivingAccount = paymentOrderCreateRequest.receivingAccount
                 receivingAccountId = paymentOrderCreateRequest.receivingAccountId
+                reconciled = paymentOrderCreateRequest.reconciled
                 remittanceInformation = paymentOrderCreateRequest.remittanceInformation
                 sendRemittanceAdvice = paymentOrderCreateRequest.sendRemittanceAdvice
                 statementDescriptor = paymentOrderCreateRequest.statementDescriptor
@@ -3083,6 +3132,20 @@ private constructor(
                 this.receivingAccountId = receivingAccountId
             }
 
+            /** True if the object is reconciled, false otherwise. */
+            fun reconciled(reconciled: Boolean) = reconciled(MultipartField.of(reconciled))
+
+            /**
+             * Sets [Builder.reconciled] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.reconciled] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun reconciled(reconciled: MultipartField<Boolean>) = apply {
+                this.reconciled = reconciled
+            }
+
             /**
              * For `ach`, this field will be passed through on an addenda record. For `wire`
              * payments the field will be passed through as the "Originator to Beneficiary
@@ -3371,6 +3434,7 @@ private constructor(
                     purpose,
                     receivingAccount,
                     receivingAccountId,
+                    reconciled,
                     remittanceInformation,
                     sendRemittanceAdvice,
                     statementDescriptor,
@@ -3418,6 +3482,7 @@ private constructor(
             purpose()
             receivingAccount().ifPresent { it.validate() }
             receivingAccountId()
+            reconciled()
             remittanceInformation()
             sendRemittanceAdvice()
             statementDescriptor()
@@ -3471,6 +3536,7 @@ private constructor(
                 purpose == other.purpose &&
                 receivingAccount == other.receivingAccount &&
                 receivingAccountId == other.receivingAccountId &&
+                reconciled == other.reconciled &&
                 remittanceInformation == other.remittanceInformation &&
                 sendRemittanceAdvice == other.sendRemittanceAdvice &&
                 statementDescriptor == other.statementDescriptor &&
@@ -3512,6 +3578,7 @@ private constructor(
                 purpose,
                 receivingAccount,
                 receivingAccountId,
+                reconciled,
                 remittanceInformation,
                 sendRemittanceAdvice,
                 statementDescriptor,
@@ -3528,7 +3595,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciled=$reconciled, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
     }
 
     /**
