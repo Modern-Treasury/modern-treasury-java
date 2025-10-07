@@ -32,6 +32,7 @@ private constructor(
     private val object_: JsonField<String>,
     private val paymentOrderId: JsonField<String>,
     private val reason: JsonField<Reason>,
+    private val reconciled: JsonField<Boolean>,
     private val status: JsonField<Status>,
     private val transactionIds: JsonField<List<String?>>,
     private val updatedAt: JsonField<OffsetDateTime>,
@@ -54,6 +55,9 @@ private constructor(
         @ExcludeMissing
         paymentOrderId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<Reason> = JsonMissing.of(),
+        @JsonProperty("reconciled")
+        @ExcludeMissing
+        reconciled: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("transaction_ids")
         @ExcludeMissing
@@ -70,6 +74,7 @@ private constructor(
         object_,
         paymentOrderId,
         reason,
+        reconciled,
         status,
         transactionIds,
         updatedAt,
@@ -135,6 +140,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun reason(): Reason = reason.getRequired("reason")
+
+    /**
+     * True if the object is reconciled, false otherwise.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun reconciled(): Boolean = reconciled.getRequired("reconciled")
 
     /**
      * The current status of the reversal.
@@ -220,6 +233,13 @@ private constructor(
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
 
     /**
+     * Returns the raw JSON value of [reconciled].
+     *
+     * Unlike [reconciled], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("reconciled") @ExcludeMissing fun _reconciled(): JsonField<Boolean> = reconciled
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -271,6 +291,7 @@ private constructor(
          * .object_()
          * .paymentOrderId()
          * .reason()
+         * .reconciled()
          * .status()
          * .transactionIds()
          * .updatedAt()
@@ -290,6 +311,7 @@ private constructor(
         private var object_: JsonField<String>? = null
         private var paymentOrderId: JsonField<String>? = null
         private var reason: JsonField<Reason>? = null
+        private var reconciled: JsonField<Boolean>? = null
         private var status: JsonField<Status>? = null
         private var transactionIds: JsonField<MutableList<String?>>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
@@ -305,6 +327,7 @@ private constructor(
             object_ = reversal.object_
             paymentOrderId = reversal.paymentOrderId
             reason = reversal.reason
+            reconciled = reversal.reconciled
             status = reversal.status
             transactionIds = reversal.transactionIds.map { it.toMutableList() }
             updatedAt = reversal.updatedAt
@@ -422,6 +445,18 @@ private constructor(
          */
         fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
+        /** True if the object is reconciled, false otherwise. */
+        fun reconciled(reconciled: Boolean) = reconciled(JsonField.of(reconciled))
+
+        /**
+         * Sets [Builder.reconciled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reconciled] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun reconciled(reconciled: JsonField<Boolean>) = apply { this.reconciled = reconciled }
+
         /** The current status of the reversal. */
         fun status(status: Status) = status(JsonField.of(status))
 
@@ -504,6 +539,7 @@ private constructor(
          * .object_()
          * .paymentOrderId()
          * .reason()
+         * .reconciled()
          * .status()
          * .transactionIds()
          * .updatedAt()
@@ -521,6 +557,7 @@ private constructor(
                 checkRequired("object_", object_),
                 checkRequired("paymentOrderId", paymentOrderId),
                 checkRequired("reason", reason),
+                checkRequired("reconciled", reconciled),
                 checkRequired("status", status),
                 checkRequired("transactionIds", transactionIds).map { it.toImmutable() },
                 checkRequired("updatedAt", updatedAt),
@@ -543,6 +580,7 @@ private constructor(
         object_()
         paymentOrderId()
         reason().validate()
+        reconciled()
         status().validate()
         transactionIds()
         updatedAt()
@@ -572,6 +610,7 @@ private constructor(
             (if (object_.asKnown().isPresent) 1 else 0) +
             (if (paymentOrderId.asKnown().isPresent) 1 else 0) +
             (reason.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (reconciled.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (transactionIds.asKnown().getOrNull()?.sumOf { (if (it == null) 0 else 1).toInt() }
                 ?: 0) +
@@ -989,6 +1028,7 @@ private constructor(
             object_ == other.object_ &&
             paymentOrderId == other.paymentOrderId &&
             reason == other.reason &&
+            reconciled == other.reconciled &&
             status == other.status &&
             transactionIds == other.transactionIds &&
             updatedAt == other.updatedAt &&
@@ -1005,6 +1045,7 @@ private constructor(
             object_,
             paymentOrderId,
             reason,
+            reconciled,
             status,
             transactionIds,
             updatedAt,
@@ -1015,5 +1056,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Reversal{id=$id, createdAt=$createdAt, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, paymentOrderId=$paymentOrderId, reason=$reason, status=$status, transactionIds=$transactionIds, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "Reversal{id=$id, createdAt=$createdAt, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, paymentOrderId=$paymentOrderId, reason=$reason, reconciled=$reconciled, status=$status, transactionIds=$transactionIds, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
