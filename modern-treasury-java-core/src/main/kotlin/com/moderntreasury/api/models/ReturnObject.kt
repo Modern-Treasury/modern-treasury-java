@@ -40,7 +40,7 @@ private constructor(
     private val liveMode: JsonField<Boolean>,
     private val object_: JsonField<String>,
     private val reason: JsonField<String>,
-    private val reconciled: JsonField<Boolean>,
+    private val reconciliationStatus: JsonField<ReconciliationStatus>,
     private val referenceNumbers: JsonField<List<PaymentReference>>,
     private val returnableId: JsonField<String>,
     private val returnableType: JsonField<ReturnableType>,
@@ -88,9 +88,9 @@ private constructor(
         @JsonProperty("live_mode") @ExcludeMissing liveMode: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("reconciled")
+        @JsonProperty("reconciliation_status")
         @ExcludeMissing
-        reconciled: JsonField<Boolean> = JsonMissing.of(),
+        reconciliationStatus: JsonField<ReconciliationStatus> = JsonMissing.of(),
         @JsonProperty("reference_numbers")
         @ExcludeMissing
         referenceNumbers: JsonField<List<PaymentReference>> = JsonMissing.of(),
@@ -132,7 +132,7 @@ private constructor(
         liveMode,
         object_,
         reason,
-        reconciled,
+        reconciliationStatus,
         referenceNumbers,
         returnableId,
         returnableType,
@@ -267,12 +267,13 @@ private constructor(
     fun reason(): Optional<String> = reason.getOptional("reason")
 
     /**
-     * True if the object is reconciled, false otherwise.
+     * One of `unreconciled`, `tentatively_reconciled` or `reconciled`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun reconciled(): Boolean = reconciled.getRequired("reconciled")
+    fun reconciliationStatus(): ReconciliationStatus =
+        reconciliationStatus.getRequired("reconciliation_status")
 
     /**
      * An array of Payment Reference objects.
@@ -484,11 +485,14 @@ private constructor(
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
     /**
-     * Returns the raw JSON value of [reconciled].
+     * Returns the raw JSON value of [reconciliationStatus].
      *
-     * Unlike [reconciled], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [reconciliationStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
-    @JsonProperty("reconciled") @ExcludeMissing fun _reconciled(): JsonField<Boolean> = reconciled
+    @JsonProperty("reconciliation_status")
+    @ExcludeMissing
+    fun _reconciliationStatus(): JsonField<ReconciliationStatus> = reconciliationStatus
 
     /**
      * Returns the raw JSON value of [referenceNumbers].
@@ -611,7 +615,7 @@ private constructor(
          * .liveMode()
          * .object_()
          * .reason()
-         * .reconciled()
+         * .reconciliationStatus()
          * .referenceNumbers()
          * .returnableId()
          * .returnableType()
@@ -644,7 +648,7 @@ private constructor(
         private var liveMode: JsonField<Boolean>? = null
         private var object_: JsonField<String>? = null
         private var reason: JsonField<String>? = null
-        private var reconciled: JsonField<Boolean>? = null
+        private var reconciliationStatus: JsonField<ReconciliationStatus>? = null
         private var referenceNumbers: JsonField<MutableList<PaymentReference>>? = null
         private var returnableId: JsonField<String>? = null
         private var returnableType: JsonField<ReturnableType>? = null
@@ -675,7 +679,7 @@ private constructor(
             liveMode = returnObject.liveMode
             object_ = returnObject.object_
             reason = returnObject.reason
-            reconciled = returnObject.reconciled
+            reconciliationStatus = returnObject.reconciliationStatus
             referenceNumbers = returnObject.referenceNumbers.map { it.toMutableList() }
             returnableId = returnObject.returnableId
             returnableType = returnObject.returnableType
@@ -933,17 +937,20 @@ private constructor(
          */
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
-        /** True if the object is reconciled, false otherwise. */
-        fun reconciled(reconciled: Boolean) = reconciled(JsonField.of(reconciled))
+        /** One of `unreconciled`, `tentatively_reconciled` or `reconciled`. */
+        fun reconciliationStatus(reconciliationStatus: ReconciliationStatus) =
+            reconciliationStatus(JsonField.of(reconciliationStatus))
 
         /**
-         * Sets [Builder.reconciled] to an arbitrary JSON value.
+         * Sets [Builder.reconciliationStatus] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.reconciled] with a well-typed [Boolean] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.reconciliationStatus] with a well-typed
+         * [ReconciliationStatus] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
          */
-        fun reconciled(reconciled: JsonField<Boolean>) = apply { this.reconciled = reconciled }
+        fun reconciliationStatus(reconciliationStatus: JsonField<ReconciliationStatus>) = apply {
+            this.reconciliationStatus = reconciliationStatus
+        }
 
         /** An array of Payment Reference objects. */
         fun referenceNumbers(referenceNumbers: List<PaymentReference>) =
@@ -1165,7 +1172,7 @@ private constructor(
          * .liveMode()
          * .object_()
          * .reason()
-         * .reconciled()
+         * .reconciliationStatus()
          * .referenceNumbers()
          * .returnableId()
          * .returnableType()
@@ -1196,7 +1203,7 @@ private constructor(
                 checkRequired("liveMode", liveMode),
                 checkRequired("object_", object_),
                 checkRequired("reason", reason),
-                checkRequired("reconciled", reconciled),
+                checkRequired("reconciliationStatus", reconciliationStatus),
                 checkRequired("referenceNumbers", referenceNumbers).map { it.toImmutable() },
                 checkRequired("returnableId", returnableId),
                 checkRequired("returnableType", returnableType),
@@ -1234,7 +1241,7 @@ private constructor(
         liveMode()
         object_()
         reason()
-        reconciled()
+        reconciliationStatus().validate()
         referenceNumbers().forEach { it.validate() }
         returnableId()
         returnableType().ifPresent { it.validate() }
@@ -1278,7 +1285,7 @@ private constructor(
             (if (liveMode.asKnown().isPresent) 1 else 0) +
             (if (object_.asKnown().isPresent) 1 else 0) +
             (if (reason.asKnown().isPresent) 1 else 0) +
-            (if (reconciled.asKnown().isPresent) 1 else 0) +
+            (reconciliationStatus.asKnown().getOrNull()?.validity() ?: 0) +
             (referenceNumbers.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (returnableId.asKnown().isPresent) 1 else 0) +
             (returnableType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -2398,6 +2405,147 @@ private constructor(
 
         override fun toString() =
             "Corrections{accountNumber=$accountNumber, companyId=$companyId, companyName=$companyName, individualIdentificationNumber=$individualIdentificationNumber, routingNumber=$routingNumber, transactionCode=$transactionCode, additionalProperties=$additionalProperties}"
+    }
+
+    /** One of `unreconciled`, `tentatively_reconciled` or `reconciled`. */
+    class ReconciliationStatus
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val RECONCILED = of("reconciled")
+
+            @JvmField val UNRECONCILED = of("unreconciled")
+
+            @JvmField val TENTATIVELY_RECONCILED = of("tentatively_reconciled")
+
+            @JvmStatic fun of(value: String) = ReconciliationStatus(JsonField.of(value))
+        }
+
+        /** An enum containing [ReconciliationStatus]'s known values. */
+        enum class Known {
+            RECONCILED,
+            UNRECONCILED,
+            TENTATIVELY_RECONCILED,
+        }
+
+        /**
+         * An enum containing [ReconciliationStatus]'s known values, as well as an [_UNKNOWN]
+         * member.
+         *
+         * An instance of [ReconciliationStatus] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            RECONCILED,
+            UNRECONCILED,
+            TENTATIVELY_RECONCILED,
+            /**
+             * An enum member indicating that [ReconciliationStatus] was instantiated with an
+             * unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                RECONCILED -> Value.RECONCILED
+                UNRECONCILED -> Value.UNRECONCILED
+                TENTATIVELY_RECONCILED -> Value.TENTATIVELY_RECONCILED
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                RECONCILED -> Known.RECONCILED
+                UNRECONCILED -> Known.UNRECONCILED
+                TENTATIVELY_RECONCILED -> Known.TENTATIVELY_RECONCILED
+                else ->
+                    throw ModernTreasuryInvalidDataException("Unknown ReconciliationStatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                ModernTreasuryInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): ReconciliationStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ReconciliationStatus && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class PaymentReference
@@ -4162,7 +4310,7 @@ private constructor(
             liveMode == other.liveMode &&
             object_ == other.object_ &&
             reason == other.reason &&
-            reconciled == other.reconciled &&
+            reconciliationStatus == other.reconciliationStatus &&
             referenceNumbers == other.referenceNumbers &&
             returnableId == other.returnableId &&
             returnableType == other.returnableType &&
@@ -4194,7 +4342,7 @@ private constructor(
             liveMode,
             object_,
             reason,
-            reconciled,
+            reconciliationStatus,
             referenceNumbers,
             returnableId,
             returnableType,
@@ -4213,5 +4361,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ReturnObject{id=$id, amount=$amount, code=$code, corrections=$corrections, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, discardedAt=$discardedAt, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, reconciled=$reconciled, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, data=$data, additionalProperties=$additionalProperties}"
+        "ReturnObject{id=$id, amount=$amount, code=$code, corrections=$corrections, createdAt=$createdAt, currency=$currency, currentReturn=$currentReturn, dateOfDeath=$dateOfDeath, discardedAt=$discardedAt, failureReason=$failureReason, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, object_=$object_, reason=$reason, reconciliationStatus=$reconciliationStatus, referenceNumbers=$referenceNumbers, returnableId=$returnableId, returnableType=$returnableType, role=$role, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, additionalInformation=$additionalInformation, data=$data, additionalProperties=$additionalProperties}"
 }
