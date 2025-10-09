@@ -1,5 +1,40 @@
 # Changelog
 
+## 7.12.0 (2025-10-09)
+
+Full Changelog: [v7.11.0...v7.12.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.11.0...v7.12.0)
+
+### Features
+
+* **api:** api update ([96ccb5d](https://github.com/Modern-Treasury/modern-treasury-java/commit/96ccb5dc457a2323754073bc7796ad4f4043f494))
+* **api:** api update ([8911c58](https://github.com/Modern-Treasury/modern-treasury-java/commit/8911c580c1b09cc1aaecb671627c7012c8300122))
+* **api:** api update ([b661a4d](https://github.com/Modern-Treasury/modern-treasury-java/commit/b661a4d75a82a4ec16f78d76052ed4ffa3eb8f2c))
+* **api:** api update ([6693f30](https://github.com/Modern-Treasury/modern-treasury-java/commit/6693f30669a4853ca476263789dd9a62a2186d69))
+* **api:** api update ([2883104](https://github.com/Modern-Treasury/modern-treasury-java/commit/28831047dd09bc52fb654106b5fc29cb9ad04d0b))
+* **api:** api update ([7989342](https://github.com/Modern-Treasury/modern-treasury-java/commit/7989342a7689aa2d65d9c36c14f2f6e67961ede2))
+* **api:** api update ([f08d5fd](https://github.com/Modern-Treasury/modern-treasury-java/commit/f08d5fd12de650b2e5e3028a23721efbbb405762))
+* **api:** api update ([a238c45](https://github.com/Modern-Treasury/modern-treasury-java/commit/a238c4595d2dc2f0cc1893e7514c43d71c799c12))
+* **api:** api update ([b987c13](https://github.com/Modern-Treasury/modern-treasury-java/commit/b987c138feb4f2445634c33b832643a67bbcec30))
+* **api:** api update ([83f748f](https://github.com/Modern-Treasury/modern-treasury-java/commit/83f748ff12c55c0e0044b644e046bd369f12195f))
+* **api:** api update ([8f11eec](https://github.com/Modern-Treasury/modern-treasury-java/commit/8f11eec80b13b305744140a61ac7aaf9e30eef6e))
+* **client:** add convenience overloads for some methods ([e3046ea](https://github.com/Modern-Treasury/modern-treasury-java/commit/e3046ea6ec0f09f14fd3b99d4a20151af5697da4))
+* **client:** expose sleeper option ([0472cd6](https://github.com/Modern-Treasury/modern-treasury-java/commit/0472cd6973f5e9316999f8dc01fd50e5d239cf55))
+
+
+### Bug Fixes
+
+* **client:** deserialization of empty objects ([fd42947](https://github.com/Modern-Treasury/modern-treasury-java/commit/fd42947b0fbfe3312a9da9e55c944763a2fe97d6))
+* **client:** ensure single timer is created per client ([0472cd6](https://github.com/Modern-Treasury/modern-treasury-java/commit/0472cd6973f5e9316999f8dc01fd50e5d239cf55))
+
+
+### Chores
+
+* improve example values ([ff89121](https://github.com/Modern-Treasury/modern-treasury-java/commit/ff8912101bd8932802b7441f208b6909d30497d6))
+* **internal:** codegen related update ([5848254](https://github.com/Modern-Treasury/modern-treasury-java/commit/5848254b55c3e1c6b72d07f2512594c9165fd324))
+* **internal:** improve examples ([cd9cde9](https://github.com/Modern-Treasury/modern-treasury-java/commit/cd9cde9badd914fb4ba6eeca778e0396558575fa))
+* **internal:** use some smaller example values ([b3448e0](https://github.com/Modern-Treasury/modern-treasury-java/commit/b3448e03f9e5f6e195bea8ac3d011ea636d07c84))
+* **internal:** use some smaller example values ([de04048](https://github.com/Modern-Treasury/modern-treasury-java/commit/de04048ed910459f040b870e6ae505891e00461d))
+
 ## 7.11.0 (2025-09-15)
 
 Full Changelog: [v7.10.0...v7.11.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.10.0...v7.11.0)
