@@ -7536,20 +7536,20 @@ private constructor(
 
         companion object {
 
-            @JvmField val RECONCILED = of("reconciled")
-
             @JvmField val UNRECONCILED = of("unreconciled")
 
             @JvmField val TENTATIVELY_RECONCILED = of("tentatively_reconciled")
+
+            @JvmField val RECONCILED = of("reconciled")
 
             @JvmStatic fun of(value: String) = ReconciliationStatus(JsonField.of(value))
         }
 
         /** An enum containing [ReconciliationStatus]'s known values. */
         enum class Known {
-            RECONCILED,
             UNRECONCILED,
             TENTATIVELY_RECONCILED,
+            RECONCILED,
         }
 
         /**
@@ -7563,9 +7563,9 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            RECONCILED,
             UNRECONCILED,
             TENTATIVELY_RECONCILED,
+            RECONCILED,
             /**
              * An enum member indicating that [ReconciliationStatus] was instantiated with an
              * unknown value.
@@ -7582,9 +7582,9 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                RECONCILED -> Value.RECONCILED
                 UNRECONCILED -> Value.UNRECONCILED
                 TENTATIVELY_RECONCILED -> Value.TENTATIVELY_RECONCILED
+                RECONCILED -> Value.RECONCILED
                 else -> Value._UNKNOWN
             }
 
@@ -7599,9 +7599,9 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                RECONCILED -> Known.RECONCILED
                 UNRECONCILED -> Known.UNRECONCILED
                 TENTATIVELY_RECONCILED -> Known.TENTATIVELY_RECONCILED
+                RECONCILED -> Known.RECONCILED
                 else ->
                     throw ModernTreasuryInvalidDataException("Unknown ReconciliationStatus: $value")
             }
