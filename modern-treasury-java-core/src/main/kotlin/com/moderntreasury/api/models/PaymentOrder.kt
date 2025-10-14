@@ -5269,13 +5269,6 @@ private constructor(
 
                 @JvmField val BRALE_TRANSFER_ID = of("brale_transfer_id")
 
-                @JvmField
-                val BRIDGE_DESTINATION_TRANSACTION_HASH = of("bridge_destination_transaction_hash")
-
-                @JvmField val BRIDGE_SOURCE_TRANSACTION_HASH = of("bridge_source_transaction_hash")
-
-                @JvmField val BRIDGE_TRANSFER_ID = of("bridge_transfer_id")
-
                 @JvmField val CHECK_NUMBER = of("check_number")
 
                 @JvmField val CITIBANK_REFERENCE_NUMBER = of("citibank_reference_number")
@@ -5462,9 +5455,6 @@ private constructor(
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 BRALE_TRANSFER_ID,
-                BRIDGE_DESTINATION_TRANSACTION_HASH,
-                BRIDGE_SOURCE_TRANSACTION_HASH,
-                BRIDGE_TRANSFER_ID,
                 CHECK_NUMBER,
                 CITIBANK_REFERENCE_NUMBER,
                 CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
@@ -5565,9 +5555,6 @@ private constructor(
                 BOFA_END_TO_END_ID,
                 BOFA_TRANSACTION_ID,
                 BRALE_TRANSFER_ID,
-                BRIDGE_DESTINATION_TRANSACTION_HASH,
-                BRIDGE_SOURCE_TRANSACTION_HASH,
-                BRIDGE_TRANSFER_ID,
                 CHECK_NUMBER,
                 CITIBANK_REFERENCE_NUMBER,
                 CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER,
@@ -5671,9 +5658,6 @@ private constructor(
                     BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
                     BRALE_TRANSFER_ID -> Value.BRALE_TRANSFER_ID
-                    BRIDGE_DESTINATION_TRANSACTION_HASH -> Value.BRIDGE_DESTINATION_TRANSACTION_HASH
-                    BRIDGE_SOURCE_TRANSACTION_HASH -> Value.BRIDGE_SOURCE_TRANSACTION_HASH
-                    BRIDGE_TRANSFER_ID -> Value.BRIDGE_TRANSFER_ID
                     CHECK_NUMBER -> Value.CHECK_NUMBER
                     CITIBANK_REFERENCE_NUMBER -> Value.CITIBANK_REFERENCE_NUMBER
                     CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
@@ -5780,9 +5764,6 @@ private constructor(
                     BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
                     BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
                     BRALE_TRANSFER_ID -> Known.BRALE_TRANSFER_ID
-                    BRIDGE_DESTINATION_TRANSACTION_HASH -> Known.BRIDGE_DESTINATION_TRANSACTION_HASH
-                    BRIDGE_SOURCE_TRANSACTION_HASH -> Known.BRIDGE_SOURCE_TRANSACTION_HASH
-                    BRIDGE_TRANSFER_ID -> Known.BRIDGE_TRANSFER_ID
                     CHECK_NUMBER -> Known.CHECK_NUMBER
                     CITIBANK_REFERENCE_NUMBER -> Known.CITIBANK_REFERENCE_NUMBER
                     CITIBANK_WORLDLINK_CLEARING_SYSTEM_REFERENCE_NUMBER ->
