@@ -29,7 +29,7 @@ private constructor(
     fun afterCursor(): Optional<String> =
         Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
-    override fun hasNextPage(): Boolean = items().isNotEmpty() && afterCursor().isPresent
+    override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): VirtualAccountListParams {
         val nextCursor =
