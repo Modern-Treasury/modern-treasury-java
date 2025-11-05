@@ -9,6 +9,7 @@ import com.moderntreasury.api.models.InternalAccount
 import com.moderntreasury.api.models.InternalAccountCreateParams
 import com.moderntreasury.api.models.InternalAccountListPageAsync
 import com.moderntreasury.api.models.InternalAccountListParams
+import com.moderntreasury.api.models.InternalAccountRequestClosureParams
 import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityParams
 import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityResponse
@@ -125,6 +126,42 @@ interface InternalAccountServiceAsync {
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none(), requestOptions)
+
+    /** request closure of internal account */
+    fun requestClosure(id: String): CompletableFuture<InternalAccount> =
+        requestClosure(id, InternalAccountRequestClosureParams.none())
+
+    /** @see requestClosure */
+    fun requestClosure(
+        id: String,
+        params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InternalAccount> =
+        requestClosure(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see requestClosure */
+    fun requestClosure(
+        id: String,
+        params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
+    ): CompletableFuture<InternalAccount> = requestClosure(id, params, RequestOptions.none())
+
+    /** @see requestClosure */
+    fun requestClosure(
+        params: InternalAccountRequestClosureParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<InternalAccount>
+
+    /** @see requestClosure */
+    fun requestClosure(
+        params: InternalAccountRequestClosureParams
+    ): CompletableFuture<InternalAccount> = requestClosure(params, RequestOptions.none())
+
+    /** @see requestClosure */
+    fun requestClosure(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<InternalAccount> =
+        requestClosure(id, InternalAccountRequestClosureParams.none(), requestOptions)
 
     /** update account_capability */
     fun updateAccountCapability(
@@ -291,6 +328,48 @@ interface InternalAccountServiceAsync {
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<InternalAccountListPageAsync>> =
             list(InternalAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /api/internal_accounts/{id}/request_closure`, but
+         * is otherwise the same as [InternalAccountServiceAsync.requestClosure].
+         */
+        fun requestClosure(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            requestClosure(id, InternalAccountRequestClosureParams.none())
+
+        /** @see requestClosure */
+        fun requestClosure(
+            id: String,
+            params: InternalAccountRequestClosureParams =
+                InternalAccountRequestClosureParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            requestClosure(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see requestClosure */
+        fun requestClosure(
+            id: String,
+            params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            requestClosure(id, params, RequestOptions.none())
+
+        /** @see requestClosure */
+        fun requestClosure(
+            params: InternalAccountRequestClosureParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<InternalAccount>>
+
+        /** @see requestClosure */
+        fun requestClosure(
+            params: InternalAccountRequestClosureParams
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            requestClosure(params, RequestOptions.none())
+
+        /** @see requestClosure */
+        fun requestClosure(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<InternalAccount>> =
+            requestClosure(id, InternalAccountRequestClosureParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch
