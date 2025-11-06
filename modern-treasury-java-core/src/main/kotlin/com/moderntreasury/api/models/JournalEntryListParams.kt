@@ -7,17 +7,27 @@ import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieve a list of journal entries */
 class JournalEntryListParams
 private constructor(
     private val journalReportId: String,
+    private val page: Long?,
+    private val perPage: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     /** The ID of the journal report */
     fun journalReportId(): String = journalReportId
+
+    /** Page number for pagination */
+    fun page(): Optional<Long> = Optional.ofNullable(page)
+
+    /** Number of items per page */
+    fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -44,12 +54,16 @@ private constructor(
     class Builder internal constructor() {
 
         private var journalReportId: String? = null
+        private var page: Long? = null
+        private var perPage: Long? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
         internal fun from(journalEntryListParams: JournalEntryListParams) = apply {
             journalReportId = journalEntryListParams.journalReportId
+            page = journalEntryListParams.page
+            perPage = journalEntryListParams.perPage
             additionalHeaders = journalEntryListParams.additionalHeaders.toBuilder()
             additionalQueryParams = journalEntryListParams.additionalQueryParams.toBuilder()
         }
@@ -58,6 +72,32 @@ private constructor(
         fun journalReportId(journalReportId: String) = apply {
             this.journalReportId = journalReportId
         }
+
+        /** Page number for pagination */
+        fun page(page: Long?) = apply { this.page = page }
+
+        /**
+         * Alias for [Builder.page].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun page(page: Long) = page(page as Long?)
+
+        /** Alias for calling [Builder.page] with `page.orElse(null)`. */
+        fun page(page: Optional<Long>) = page(page.getOrNull())
+
+        /** Number of items per page */
+        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+
+        /**
+         * Alias for [Builder.perPage].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun perPage(perPage: Long) = perPage(perPage as Long?)
+
+        /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
+        fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -172,6 +212,8 @@ private constructor(
         fun build(): JournalEntryListParams =
             JournalEntryListParams(
                 checkRequired("journalReportId", journalReportId),
+                page,
+                perPage,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -183,6 +225,8 @@ private constructor(
         QueryParams.builder()
             .apply {
                 put("journal_report_id", journalReportId)
+                page?.let { put("page", it.toString()) }
+                perPage?.let { put("per_page", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -194,13 +238,15 @@ private constructor(
 
         return other is JournalEntryListParams &&
             journalReportId == other.journalReportId &&
+            page == other.page &&
+            perPage == other.perPage &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
-        Objects.hash(journalReportId, additionalHeaders, additionalQueryParams)
+        Objects.hash(journalReportId, page, perPage, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "JournalEntryListParams{journalReportId=$journalReportId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "JournalEntryListParams{journalReportId=$journalReportId, page=$page, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
