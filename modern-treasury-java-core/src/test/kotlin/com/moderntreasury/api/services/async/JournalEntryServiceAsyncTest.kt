@@ -38,7 +38,11 @@ internal class JournalEntryServiceAsyncTest {
 
         val future =
             journalEntryServiceAsync.list(
-                JournalEntryListParams.builder().journalReportId("journal_report_id").build()
+                JournalEntryListParams.builder()
+                    .journalReportId("journal_report_id")
+                    .page(0L)
+                    .perPage(0L)
+                    .build()
             )
 
         val response = future.get()
