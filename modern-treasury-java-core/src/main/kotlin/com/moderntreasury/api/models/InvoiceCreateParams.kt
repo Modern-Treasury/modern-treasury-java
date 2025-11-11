@@ -119,16 +119,6 @@ private constructor(
     fun fallbackPaymentMethod(): Optional<String> = body.fallbackPaymentMethod()
 
     /**
-     * Whether to ingest the ledger_entries to populate the invoice line items. If this is false,
-     * then a line item must be provided. If this is true, line_items must be empty. Ignored if
-     * ledger_account_settlement_id is empty.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun ingestLedgerEntries(): Optional<Boolean> = body.ingestLedgerEntries()
-
-    /**
      * An array of invoice line items. The API supports a maximum of 50 invoice line items per
      * invoice. If a greater number of invoice line items is required, please contact support.
      *
@@ -144,14 +134,6 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun invoicerAddress(): Optional<InvoicerAddress> = body.invoicerAddress()
-
-    /**
-     * The ID of the virtual account the invoice should be paid to.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun ledgerAccountSettlementId(): Optional<String> = body.ledgerAccountSettlementId()
 
     /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -332,14 +314,6 @@ private constructor(
     fun _fallbackPaymentMethod(): JsonField<String> = body._fallbackPaymentMethod()
 
     /**
-     * Returns the raw JSON value of [ingestLedgerEntries].
-     *
-     * Unlike [ingestLedgerEntries], this method doesn't throw if the JSON field has an unexpected
-     * type.
-     */
-    fun _ingestLedgerEntries(): JsonField<Boolean> = body._ingestLedgerEntries()
-
-    /**
      * Returns the raw JSON value of [invoiceLineItems].
      *
      * Unlike [invoiceLineItems], this method doesn't throw if the JSON field has an unexpected
@@ -354,14 +328,6 @@ private constructor(
      * Unlike [invoicerAddress], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _invoicerAddress(): JsonField<InvoicerAddress> = body._invoicerAddress()
-
-    /**
-     * Returns the raw JSON value of [ledgerAccountSettlementId].
-     *
-     * Unlike [ledgerAccountSettlementId], this method doesn't throw if the JSON field has an
-     * unexpected type.
-     */
-    fun _ledgerAccountSettlementId(): JsonField<String> = body._ledgerAccountSettlementId()
 
     /**
      * Returns the raw JSON value of [metadata].
@@ -693,40 +659,6 @@ private constructor(
         }
 
         /**
-         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
-         * false, then a line item must be provided. If this is true, line_items must be empty.
-         * Ignored if ledger_account_settlement_id is empty.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Boolean?) = apply {
-            body.ingestLedgerEntries(ingestLedgerEntries)
-        }
-
-        /**
-         * Alias for [Builder.ingestLedgerEntries].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Boolean) =
-            ingestLedgerEntries(ingestLedgerEntries as Boolean?)
-
-        /**
-         * Alias for calling [Builder.ingestLedgerEntries] with `ingestLedgerEntries.orElse(null)`.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
-            ingestLedgerEntries(ingestLedgerEntries.getOrNull())
-
-        /**
-         * Sets [Builder.ingestLedgerEntries] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.ingestLedgerEntries] with a well-typed [Boolean] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun ingestLedgerEntries(ingestLedgerEntries: JsonField<Boolean>) = apply {
-            body.ingestLedgerEntries(ingestLedgerEntries)
-        }
-
-        /**
          * An array of invoice line items. The API supports a maximum of 50 invoice line items per
          * invoice. If a greater number of invoice line items is required, please contact support.
          */
@@ -777,29 +709,6 @@ private constructor(
          */
         fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
             body.invoicerAddress(invoicerAddress)
-        }
-
-        /** The ID of the virtual account the invoice should be paid to. */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) = apply {
-            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
-        }
-
-        /**
-         * Alias for calling [Builder.ledgerAccountSettlementId] with
-         * `ledgerAccountSettlementId.orElse(null)`.
-         */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-            ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
-
-        /**
-         * Sets [Builder.ledgerAccountSettlementId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.ledgerAccountSettlementId] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
-            body.ledgerAccountSettlementId(ledgerAccountSettlementId)
         }
 
         /**
@@ -1207,10 +1116,8 @@ private constructor(
         private val currency: JsonField<Currency>,
         private val description: JsonField<String>,
         private val fallbackPaymentMethod: JsonField<String>,
-        private val ingestLedgerEntries: JsonField<Boolean>,
         private val invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>>,
         private val invoicerAddress: JsonField<InvoicerAddress>,
-        private val ledgerAccountSettlementId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val notificationEmailAddresses: JsonField<List<String>>,
         private val notificationsEnabled: JsonField<Boolean>,
@@ -1257,18 +1164,12 @@ private constructor(
             @JsonProperty("fallback_payment_method")
             @ExcludeMissing
             fallbackPaymentMethod: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("ingest_ledger_entries")
-            @ExcludeMissing
-            ingestLedgerEntries: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("invoice_line_items")
             @ExcludeMissing
             invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>> = JsonMissing.of(),
             @JsonProperty("invoicer_address")
             @ExcludeMissing
             invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of(),
-            @JsonProperty("ledger_account_settlement_id")
-            @ExcludeMissing
-            ledgerAccountSettlementId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -1313,10 +1214,8 @@ private constructor(
             currency,
             description,
             fallbackPaymentMethod,
-            ingestLedgerEntries,
             invoiceLineItems,
             invoicerAddress,
-            ledgerAccountSettlementId,
             metadata,
             notificationEmailAddresses,
             notificationsEnabled,
@@ -1420,17 +1319,6 @@ private constructor(
             fallbackPaymentMethod.getOptional("fallback_payment_method")
 
         /**
-         * Whether to ingest the ledger_entries to populate the invoice line items. If this is
-         * false, then a line item must be provided. If this is true, line_items must be empty.
-         * Ignored if ledger_account_settlement_id is empty.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun ingestLedgerEntries(): Optional<Boolean> =
-            ingestLedgerEntries.getOptional("ingest_ledger_entries")
-
-        /**
          * An array of invoice line items. The API supports a maximum of 50 invoice line items per
          * invoice. If a greater number of invoice line items is required, please contact support.
          *
@@ -1448,15 +1336,6 @@ private constructor(
          */
         fun invoicerAddress(): Optional<InvoicerAddress> =
             invoicerAddress.getOptional("invoicer_address")
-
-        /**
-         * The ID of the virtual account the invoice should be paid to.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun ledgerAccountSettlementId(): Optional<String> =
-            ledgerAccountSettlementId.getOptional("ledger_account_settlement_id")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -1664,16 +1543,6 @@ private constructor(
         fun _fallbackPaymentMethod(): JsonField<String> = fallbackPaymentMethod
 
         /**
-         * Returns the raw JSON value of [ingestLedgerEntries].
-         *
-         * Unlike [ingestLedgerEntries], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("ingest_ledger_entries")
-        @ExcludeMissing
-        fun _ingestLedgerEntries(): JsonField<Boolean> = ingestLedgerEntries
-
-        /**
          * Returns the raw JSON value of [invoiceLineItems].
          *
          * Unlike [invoiceLineItems], this method doesn't throw if the JSON field has an unexpected
@@ -1692,16 +1561,6 @@ private constructor(
         @JsonProperty("invoicer_address")
         @ExcludeMissing
         fun _invoicerAddress(): JsonField<InvoicerAddress> = invoicerAddress
-
-        /**
-         * Returns the raw JSON value of [ledgerAccountSettlementId].
-         *
-         * Unlike [ledgerAccountSettlementId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("ledger_account_settlement_id")
-        @ExcludeMissing
-        fun _ledgerAccountSettlementId(): JsonField<String> = ledgerAccountSettlementId
 
         /**
          * Returns the raw JSON value of [metadata].
@@ -1851,11 +1710,9 @@ private constructor(
             private var currency: JsonField<Currency> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var fallbackPaymentMethod: JsonField<String> = JsonMissing.of()
-            private var ingestLedgerEntries: JsonField<Boolean> = JsonMissing.of()
             private var invoiceLineItems: JsonField<MutableList<InvoiceLineItemCreateRequest>>? =
                 null
             private var invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of()
-            private var ledgerAccountSettlementId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var notificationEmailAddresses: JsonField<MutableList<String>>? = null
             private var notificationsEnabled: JsonField<Boolean> = JsonMissing.of()
@@ -1881,10 +1738,8 @@ private constructor(
                 currency = invoiceCreateRequest.currency
                 description = invoiceCreateRequest.description
                 fallbackPaymentMethod = invoiceCreateRequest.fallbackPaymentMethod
-                ingestLedgerEntries = invoiceCreateRequest.ingestLedgerEntries
                 invoiceLineItems = invoiceCreateRequest.invoiceLineItems.map { it.toMutableList() }
                 invoicerAddress = invoiceCreateRequest.invoicerAddress
-                ledgerAccountSettlementId = invoiceCreateRequest.ledgerAccountSettlementId
                 metadata = invoiceCreateRequest.metadata
                 notificationEmailAddresses =
                     invoiceCreateRequest.notificationEmailAddresses.map { it.toMutableList() }
@@ -2098,40 +1953,6 @@ private constructor(
             }
 
             /**
-             * Whether to ingest the ledger_entries to populate the invoice line items. If this is
-             * false, then a line item must be provided. If this is true, line_items must be empty.
-             * Ignored if ledger_account_settlement_id is empty.
-             */
-            fun ingestLedgerEntries(ingestLedgerEntries: Boolean?) =
-                ingestLedgerEntries(JsonField.ofNullable(ingestLedgerEntries))
-
-            /**
-             * Alias for [Builder.ingestLedgerEntries].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun ingestLedgerEntries(ingestLedgerEntries: Boolean) =
-                ingestLedgerEntries(ingestLedgerEntries as Boolean?)
-
-            /**
-             * Alias for calling [Builder.ingestLedgerEntries] with
-             * `ingestLedgerEntries.orElse(null)`.
-             */
-            fun ingestLedgerEntries(ingestLedgerEntries: Optional<Boolean>) =
-                ingestLedgerEntries(ingestLedgerEntries.getOrNull())
-
-            /**
-             * Sets [Builder.ingestLedgerEntries] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.ingestLedgerEntries] with a well-typed [Boolean]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun ingestLedgerEntries(ingestLedgerEntries: JsonField<Boolean>) = apply {
-                this.ingestLedgerEntries = ingestLedgerEntries
-            }
-
-            /**
              * An array of invoice line items. The API supports a maximum of 50 invoice line items
              * per invoice. If a greater number of invoice line items is required, please contact
              * support.
@@ -2186,28 +2007,6 @@ private constructor(
              */
             fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
                 this.invoicerAddress = invoicerAddress
-            }
-
-            /** The ID of the virtual account the invoice should be paid to. */
-            fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) =
-                ledgerAccountSettlementId(JsonField.ofNullable(ledgerAccountSettlementId))
-
-            /**
-             * Alias for calling [Builder.ledgerAccountSettlementId] with
-             * `ledgerAccountSettlementId.orElse(null)`.
-             */
-            fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
-                ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
-
-            /**
-             * Sets [Builder.ledgerAccountSettlementId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.ledgerAccountSettlementId] with a well-typed
-             * [String] value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
-             */
-            fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
-                this.ledgerAccountSettlementId = ledgerAccountSettlementId
             }
 
             /**
@@ -2507,10 +2306,8 @@ private constructor(
                     currency,
                     description,
                     fallbackPaymentMethod,
-                    ingestLedgerEntries,
                     (invoiceLineItems ?: JsonMissing.of()).map { it.toImmutable() },
                     invoicerAddress,
-                    ledgerAccountSettlementId,
                     metadata,
                     (notificationEmailAddresses ?: JsonMissing.of()).map { it.toImmutable() },
                     notificationsEnabled,
@@ -2543,10 +2340,8 @@ private constructor(
             currency().ifPresent { it.validate() }
             description()
             fallbackPaymentMethod()
-            ingestLedgerEntries()
             invoiceLineItems().ifPresent { it.forEach { it.validate() } }
             invoicerAddress().ifPresent { it.validate() }
-            ledgerAccountSettlementId()
             metadata().ifPresent { it.validate() }
             notificationEmailAddresses()
             notificationsEnabled()
@@ -2587,10 +2382,8 @@ private constructor(
                 (currency.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (if (fallbackPaymentMethod.asKnown().isPresent) 1 else 0) +
-                (if (ingestLedgerEntries.asKnown().isPresent) 1 else 0) +
                 (invoiceLineItems.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (invoicerAddress.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (ledgerAccountSettlementId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (notificationEmailAddresses.asKnown().getOrNull()?.size ?: 0) +
                 (if (notificationsEnabled.asKnown().isPresent) 1 else 0) +
@@ -2619,10 +2412,8 @@ private constructor(
                 currency == other.currency &&
                 description == other.description &&
                 fallbackPaymentMethod == other.fallbackPaymentMethod &&
-                ingestLedgerEntries == other.ingestLedgerEntries &&
                 invoiceLineItems == other.invoiceLineItems &&
                 invoicerAddress == other.invoicerAddress &&
-                ledgerAccountSettlementId == other.ledgerAccountSettlementId &&
                 metadata == other.metadata &&
                 notificationEmailAddresses == other.notificationEmailAddresses &&
                 notificationsEnabled == other.notificationsEnabled &&
@@ -2649,10 +2440,8 @@ private constructor(
                 currency,
                 description,
                 fallbackPaymentMethod,
-                ingestLedgerEntries,
                 invoiceLineItems,
                 invoicerAddress,
-                ledgerAccountSettlementId,
                 metadata,
                 notificationEmailAddresses,
                 notificationsEnabled,
@@ -2671,7 +2460,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InvoiceCreateRequest{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, ingestLedgerEntries=$ingestLedgerEntries, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, ledgerAccountSettlementId=$ledgerAccountSettlementId, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "InvoiceCreateRequest{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
     /** The counterparty's billing address. */

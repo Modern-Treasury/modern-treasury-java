@@ -61,6 +61,12 @@ internal class InvoiceTest {
                     ExpectedPayment.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .amountLowerBound(0L)
+                        .amountReconciled(0L)
+                        .amountReconciledDirection(ExpectedPayment.AmountReconciledDirection.CREDIT)
+                        .amountUnreconciled(0L)
+                        .amountUnreconciledDirection(
+                            ExpectedPayment.AmountUnreconciledDirection.CREDIT
+                        )
                         .amountUpperBound(0L)
                         .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -443,6 +449,10 @@ internal class InvoiceTest {
                 ExpectedPayment.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .amountLowerBound(0L)
+                    .amountReconciled(0L)
+                    .amountReconciledDirection(ExpectedPayment.AmountReconciledDirection.CREDIT)
+                    .amountUnreconciled(0L)
+                    .amountUnreconciledDirection(ExpectedPayment.AmountUnreconciledDirection.CREDIT)
                     .amountUpperBound(0L)
                     .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -823,6 +833,12 @@ internal class InvoiceTest {
                     ExpectedPayment.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .amountLowerBound(0L)
+                        .amountReconciled(0L)
+                        .amountReconciledDirection(ExpectedPayment.AmountReconciledDirection.CREDIT)
+                        .amountUnreconciled(0L)
+                        .amountUnreconciledDirection(
+                            ExpectedPayment.AmountUnreconciledDirection.CREDIT
+                        )
                         .amountUpperBound(0L)
                         .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
