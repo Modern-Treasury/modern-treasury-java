@@ -53,7 +53,6 @@ internal class InvoiceCreateParamsTest {
             .currency(Currency.AED)
             .description("description")
             .fallbackPaymentMethod("fallback_payment_method")
-            .ingestLedgerEntries(true)
             .addInvoiceLineItem(
                 InvoiceCreateParams.InvoiceLineItemCreateRequest.builder()
                     .name("name")
@@ -81,7 +80,6 @@ internal class InvoiceCreateParamsTest {
                     .line2("line2")
                     .build()
             )
-            .ledgerAccountSettlementId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .metadata(
                 InvoiceCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -145,7 +143,6 @@ internal class InvoiceCreateParamsTest {
                 .currency(Currency.AED)
                 .description("description")
                 .fallbackPaymentMethod("fallback_payment_method")
-                .ingestLedgerEntries(true)
                 .addInvoiceLineItem(
                     InvoiceCreateParams.InvoiceLineItemCreateRequest.builder()
                         .name("name")
@@ -173,7 +170,6 @@ internal class InvoiceCreateParamsTest {
                         .line2("line2")
                         .build()
                 )
-                .ledgerAccountSettlementId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .metadata(
                     InvoiceCreateParams.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -237,7 +233,6 @@ internal class InvoiceCreateParamsTest {
         assertThat(body.currency()).contains(Currency.AED)
         assertThat(body.description()).contains("description")
         assertThat(body.fallbackPaymentMethod()).contains("fallback_payment_method")
-        assertThat(body.ingestLedgerEntries()).contains(true)
         assertThat(body.invoiceLineItems().getOrNull())
             .containsExactly(
                 InvoiceCreateParams.InvoiceLineItemCreateRequest.builder()
@@ -267,8 +262,6 @@ internal class InvoiceCreateParamsTest {
                     .line2("line2")
                     .build()
             )
-        assertThat(body.ledgerAccountSettlementId())
-            .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
             .contains(
                 InvoiceCreateParams.Metadata.builder()

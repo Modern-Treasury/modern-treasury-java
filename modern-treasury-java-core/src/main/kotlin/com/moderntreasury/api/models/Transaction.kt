@@ -1784,7 +1784,7 @@ private constructor(
 
             @JvmField val JPMC = of("jpmc")
 
-            @JvmField val MT_FOF = of("mt_fof")
+            @JvmField val MT_FLOW = of("mt_flow")
 
             @JvmField val MX = of("mx")
 
@@ -1826,7 +1826,7 @@ private constructor(
             HIFI,
             ISO20022,
             JPMC,
-            MT_FOF,
+            MT_FLOW,
             MX,
             PAYPAL,
             PNC,
@@ -1865,7 +1865,7 @@ private constructor(
             HIFI,
             ISO20022,
             JPMC,
-            MT_FOF,
+            MT_FLOW,
             MX,
             PAYPAL,
             PNC,
@@ -1908,7 +1908,7 @@ private constructor(
                 HIFI -> Value.HIFI
                 ISO20022 -> Value.ISO20022
                 JPMC -> Value.JPMC
-                MT_FOF -> Value.MT_FOF
+                MT_FLOW -> Value.MT_FLOW
                 MX -> Value.MX
                 PAYPAL -> Value.PAYPAL
                 PNC -> Value.PNC
@@ -1949,7 +1949,7 @@ private constructor(
                 HIFI -> Known.HIFI
                 ISO20022 -> Known.ISO20022
                 JPMC -> Known.JPMC
-                MT_FOF -> Known.MT_FOF
+                MT_FLOW -> Known.MT_FLOW
                 MX -> Known.MX
                 PAYPAL -> Known.PAYPAL
                 PNC -> Known.PNC

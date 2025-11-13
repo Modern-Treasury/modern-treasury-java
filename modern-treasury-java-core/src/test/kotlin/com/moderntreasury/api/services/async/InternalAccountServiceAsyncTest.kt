@@ -139,6 +139,22 @@ internal class InternalAccountServiceAsyncTest {
     }
 
     @Test
+    fun requestClosure() {
+        val client =
+            ModernTreasuryOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .organizationId("my-organization-ID")
+                .build()
+        val internalAccountServiceAsync = client.internalAccounts()
+
+        val internalAccountFuture = internalAccountServiceAsync.requestClosure("id")
+
+        val internalAccount = internalAccountFuture.get()
+        internalAccount.validate()
+    }
+
+    @Test
     fun updateAccountCapability() {
         val client =
             ModernTreasuryOkHttpClientAsync.builder()

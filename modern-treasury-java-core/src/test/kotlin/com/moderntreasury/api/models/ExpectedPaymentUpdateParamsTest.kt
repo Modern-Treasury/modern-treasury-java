@@ -15,6 +15,12 @@ internal class ExpectedPaymentUpdateParamsTest {
         ExpectedPaymentUpdateParams.builder()
             .id("id")
             .amountLowerBound(0L)
+            .amountReconciled(0L)
+            .amountReconciledDirection(ExpectedPaymentUpdateParams.AmountReconciledDirection.CREDIT)
+            .amountUnreconciled(0L)
+            .amountUnreconciledDirection(
+                ExpectedPaymentUpdateParams.AmountUnreconciledDirection.CREDIT
+            )
             .amountUpperBound(0L)
             .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .currency(Currency.AED)
@@ -73,6 +79,14 @@ internal class ExpectedPaymentUpdateParamsTest {
             ExpectedPaymentUpdateParams.builder()
                 .id("id")
                 .amountLowerBound(0L)
+                .amountReconciled(0L)
+                .amountReconciledDirection(
+                    ExpectedPaymentUpdateParams.AmountReconciledDirection.CREDIT
+                )
+                .amountUnreconciled(0L)
+                .amountUnreconciledDirection(
+                    ExpectedPaymentUpdateParams.AmountUnreconciledDirection.CREDIT
+                )
                 .amountUpperBound(0L)
                 .counterpartyId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .currency(Currency.AED)
@@ -118,6 +132,12 @@ internal class ExpectedPaymentUpdateParamsTest {
         val body = params._body()
 
         assertThat(body.amountLowerBound()).contains(0L)
+        assertThat(body.amountReconciled()).contains(0L)
+        assertThat(body.amountReconciledDirection())
+            .contains(ExpectedPaymentUpdateParams.AmountReconciledDirection.CREDIT)
+        assertThat(body.amountUnreconciled()).contains(0L)
+        assertThat(body.amountUnreconciledDirection())
+            .contains(ExpectedPaymentUpdateParams.AmountUnreconciledDirection.CREDIT)
         assertThat(body.amountUpperBound()).contains(0L)
         assertThat(body.counterpartyId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.currency()).contains(Currency.AED)

@@ -342,6 +342,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun ledgerAccountSettlementId(): Optional<String> =
         ledgerAccountSettlementId.getOptional("ledger_account_settlement_id")
 
@@ -669,6 +670,7 @@ private constructor(
      * Unlike [ledgerAccountSettlementId], this method doesn't throw if the JSON field has an
      * unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("ledger_account_settlement_id")
     @ExcludeMissing
     fun _ledgerAccountSettlementId(): JsonField<String> = ledgerAccountSettlementId
@@ -1281,6 +1283,7 @@ private constructor(
         }
 
         /** The ledger account settlement object linked to the invoice. */
+        @Deprecated("deprecated")
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: String?) =
             ledgerAccountSettlementId(JsonField.ofNullable(ledgerAccountSettlementId))
 
@@ -1288,6 +1291,7 @@ private constructor(
          * Alias for calling [Builder.ledgerAccountSettlementId] with
          * `ledgerAccountSettlementId.orElse(null)`.
          */
+        @Deprecated("deprecated")
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: Optional<String>) =
             ledgerAccountSettlementId(ledgerAccountSettlementId.getOrNull())
 
@@ -1298,6 +1302,7 @@ private constructor(
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
+        @Deprecated("deprecated")
         fun ledgerAccountSettlementId(ledgerAccountSettlementId: JsonField<String>) = apply {
             this.ledgerAccountSettlementId = ledgerAccountSettlementId
         }
