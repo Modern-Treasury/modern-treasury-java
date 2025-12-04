@@ -528,6 +528,8 @@ private constructor(
 
         companion object {
 
+            @JvmField val CLOSED = of("closed")
+
             @JvmField val COMPLETED = of("completed")
 
             @JvmField val DENIED = of("denied")
@@ -536,15 +538,19 @@ private constructor(
 
             @JvmField val PROCESSING = of("processing")
 
+            @JvmField val SUSPENDED = of("suspended")
+
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
         }
 
         /** An enum containing [Status]'s known values. */
         enum class Known {
+            CLOSED,
             COMPLETED,
             DENIED,
             FAILED,
             PROCESSING,
+            SUSPENDED,
         }
 
         /**
@@ -557,10 +563,12 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            CLOSED,
             COMPLETED,
             DENIED,
             FAILED,
             PROCESSING,
+            SUSPENDED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -574,10 +582,12 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                CLOSED -> Value.CLOSED
                 COMPLETED -> Value.COMPLETED
                 DENIED -> Value.DENIED
                 FAILED -> Value.FAILED
                 PROCESSING -> Value.PROCESSING
+                SUSPENDED -> Value.SUSPENDED
                 else -> Value._UNKNOWN
             }
 
@@ -592,10 +602,12 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                CLOSED -> Known.CLOSED
                 COMPLETED -> Known.COMPLETED
                 DENIED -> Known.DENIED
                 FAILED -> Known.FAILED
                 PROCESSING -> Known.PROCESSING
+                SUSPENDED -> Known.SUSPENDED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
             }
 
