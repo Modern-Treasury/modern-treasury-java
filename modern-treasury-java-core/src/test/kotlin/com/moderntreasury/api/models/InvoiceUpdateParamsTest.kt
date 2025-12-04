@@ -52,7 +52,6 @@ internal class InvoiceUpdateParamsTest {
             .description("description")
             .dueDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .fallbackPaymentMethod("fallback_payment_method")
-            .ingestLedgerEntries(true)
             .addInvoiceLineItem(
                 InvoiceUpdateParams.InvoiceLineItemCreateRequest.builder()
                     .name("name")
@@ -80,7 +79,6 @@ internal class InvoiceUpdateParamsTest {
                     .line2("line2")
                     .build()
             )
-            .ledgerAccountSettlementId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .metadata(
                 InvoiceUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -154,7 +152,6 @@ internal class InvoiceUpdateParamsTest {
                 .description("description")
                 .dueDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .fallbackPaymentMethod("fallback_payment_method")
-                .ingestLedgerEntries(true)
                 .addInvoiceLineItem(
                     InvoiceUpdateParams.InvoiceLineItemCreateRequest.builder()
                         .name("name")
@@ -182,7 +179,6 @@ internal class InvoiceUpdateParamsTest {
                         .line2("line2")
                         .build()
                 )
-                .ledgerAccountSettlementId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .metadata(
                     InvoiceUpdateParams.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -246,7 +242,6 @@ internal class InvoiceUpdateParamsTest {
         assertThat(body.description()).contains("description")
         assertThat(body.dueDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.fallbackPaymentMethod()).contains("fallback_payment_method")
-        assertThat(body.ingestLedgerEntries()).contains(true)
         assertThat(body.invoiceLineItems().getOrNull())
             .containsExactly(
                 InvoiceUpdateParams.InvoiceLineItemCreateRequest.builder()
@@ -276,8 +271,6 @@ internal class InvoiceUpdateParamsTest {
                     .line2("line2")
                     .build()
             )
-        assertThat(body.ledgerAccountSettlementId())
-            .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
             .contains(
                 InvoiceUpdateParams.Metadata.builder()

@@ -106,6 +106,7 @@ internal class InternalAccountServiceAsyncTest {
             internalAccountServiceAsync.update(
                 InternalAccountUpdateParams.builder()
                     .id("id")
+                    .contraLedgerAccountId("contra_ledger_account_id")
                     .counterpartyId("counterparty_id")
                     .ledgerAccountId("ledger_account_id")
                     .metadata(
@@ -136,6 +137,22 @@ internal class InternalAccountServiceAsyncTest {
 
         val page = pageFuture.get()
         page.items().forEach { it.validate() }
+    }
+
+    @Test
+    fun requestClosure() {
+        val client =
+            ModernTreasuryOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .organizationId("my-organization-ID")
+                .build()
+        val internalAccountServiceAsync = client.internalAccounts()
+
+        val internalAccountFuture = internalAccountServiceAsync.requestClosure("id")
+
+        val internalAccount = internalAccountFuture.get()
+        internalAccount.validate()
     }
 
     @Test

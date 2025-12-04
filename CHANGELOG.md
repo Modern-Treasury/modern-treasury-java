@@ -1,5 +1,27 @@
 # Changelog
 
+## 7.15.0 (2025-12-04)
+
+Full Changelog: [v7.14.0...v7.15.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.14.0...v7.15.0)
+
+### Features
+
+* **api:** api update ([288cd06](https://github.com/Modern-Treasury/modern-treasury-java/commit/288cd06729476ebfa15875a5f6c622183d093638))
+* **api:** api update ([3a4c934](https://github.com/Modern-Treasury/modern-treasury-java/commit/3a4c93498f09ce5415743ec806a9f7bd4be2ca75))
+* **api:** api update ([ba445d0](https://github.com/Modern-Treasury/modern-treasury-java/commit/ba445d009a1b4456a2bd12889603fa90a13b205a))
+* **api:** manual updates ([b3373ef](https://github.com/Modern-Treasury/modern-treasury-java/commit/b3373efeaaf51398a9c0ab178698eb0c653acc4f))
+
+
+### Bug Fixes
+
+* **client:** cancel okhttp call when future cancelled ([e76f035](https://github.com/Modern-Treasury/modern-treasury-java/commit/e76f035804115741c82d4a4eac584ae53b898ddb))
+* **client:** multi-value header serialization ([847c7cc](https://github.com/Modern-Treasury/modern-treasury-java/commit/847c7ccbb771c05c17e32c04bb13b8383a651050))
+
+
+### Documentation
+
+* remove `$` for better copy-pasteabality ([c335c33](https://github.com/Modern-Treasury/modern-treasury-java/commit/c335c331c82e5c53c70b7a81be580fa760bd4998))
+
 ## 7.14.0 (2025-11-05)
 
 Full Changelog: [v7.13.0...v7.14.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.13.0...v7.14.0)

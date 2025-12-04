@@ -13,6 +13,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.Proxy
 import java.time.Duration
+import java.util.concurrent.CancellationException
 import java.util.concurrent.CompletableFuture
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLSocketFactory
@@ -29,8 +30,8 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.BufferedSink
 
-class OkHttpClient private constructor(private val okHttpClient: okhttp3.OkHttpClient) :
-    HttpClient {
+class OkHttpClient
+private constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClient) : HttpClient {
 
     override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
         val call = newCall(request, requestOptions)
@@ -50,20 +51,25 @@ class OkHttpClient private constructor(private val okHttpClient: okhttp3.OkHttpC
     ): CompletableFuture<HttpResponse> {
         val future = CompletableFuture<HttpResponse>()
 
-        request.body?.run { future.whenComplete { _, _ -> close() } }
-
-        newCall(request, requestOptions)
-            .enqueue(
-                object : Callback {
-                    override fun onResponse(call: Call, response: Response) {
-                        future.complete(response.toResponse())
-                    }
-
-                    override fun onFailure(call: Call, e: IOException) {
-                        future.completeExceptionally(ModernTreasuryIoException("Request failed", e))
-                    }
+        val call = newCall(request, requestOptions)
+        call.enqueue(
+            object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    future.complete(response.toResponse())
                 }
-            )
+
+                override fun onFailure(call: Call, e: IOException) {
+                    future.completeExceptionally(ModernTreasuryIoException("Request failed", e))
+                }
+            }
+        )
+
+        future.whenComplete { _, e ->
+            if (e is CancellationException) {
+                call.cancel()
+            }
+            request.body?.close()
+        }
 
         return future
     }
@@ -109,19 +115,19 @@ class OkHttpClient private constructor(private val okHttpClient: okhttp3.OkHttpC
 
         val builder = Request.Builder().url(toUrl()).method(method.name, body)
         headers.names().forEach { name ->
-            headers.values(name).forEach { builder.header(name, it) }
+            headers.values(name).forEach { builder.addHeader(name, it) }
         }
 
         if (
             !headers.names().contains("X-Stainless-Read-Timeout") && client.readTimeoutMillis != 0
         ) {
-            builder.header(
+            builder.addHeader(
                 "X-Stainless-Read-Timeout",
                 Duration.ofMillis(client.readTimeoutMillis.toLong()).seconds.toString(),
             )
         }
         if (!headers.names().contains("X-Stainless-Timeout") && client.callTimeoutMillis != 0) {
-            builder.header(
+            builder.addHeader(
                 "X-Stainless-Timeout",
                 Duration.ofMillis(client.callTimeoutMillis.toLong()).seconds.toString(),
             )

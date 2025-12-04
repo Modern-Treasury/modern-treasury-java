@@ -29,6 +29,7 @@ private constructor(
     private val accountDetails: JsonField<List<AccountDetail>>,
     private val accountType: JsonField<AccountType>,
     private val connection: JsonField<Connection>,
+    private val contraLedgerAccountId: JsonField<String>,
     private val counterpartyId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<Currency>,
@@ -64,6 +65,9 @@ private constructor(
         @JsonProperty("connection")
         @ExcludeMissing
         connection: JsonField<Connection> = JsonMissing.of(),
+        @JsonProperty("contra_ledger_account_id")
+        @ExcludeMissing
+        contraLedgerAccountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("counterparty_id")
         @ExcludeMissing
         counterpartyId: JsonField<String> = JsonMissing.of(),
@@ -105,6 +109,7 @@ private constructor(
         accountDetails,
         accountType,
         connection,
+        contraLedgerAccountId,
         counterpartyId,
         createdAt,
         currency,
@@ -164,6 +169,16 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun connection(): Connection = connection.getRequired("connection")
+
+    /**
+     * If the internal account links to a contra ledger account in Modern Treasury, the id of the
+     * contra ledger account will be populated here.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun contraLedgerAccountId(): Optional<String> =
+        contraLedgerAccountId.getOptional("contra_ledger_account_id")
 
     /**
      * The Counterparty associated to this account.
@@ -342,6 +357,16 @@ private constructor(
     fun _connection(): JsonField<Connection> = connection
 
     /**
+     * Returns the raw JSON value of [contraLedgerAccountId].
+     *
+     * Unlike [contraLedgerAccountId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("contra_ledger_account_id")
+    @ExcludeMissing
+    fun _contraLedgerAccountId(): JsonField<String> = contraLedgerAccountId
+
+    /**
      * Returns the raw JSON value of [counterpartyId].
      *
      * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected type.
@@ -500,6 +525,7 @@ private constructor(
          * .accountDetails()
          * .accountType()
          * .connection()
+         * .contraLedgerAccountId()
          * .counterpartyId()
          * .createdAt()
          * .currency()
@@ -530,6 +556,7 @@ private constructor(
         private var accountDetails: JsonField<MutableList<AccountDetail>>? = null
         private var accountType: JsonField<AccountType>? = null
         private var connection: JsonField<Connection>? = null
+        private var contraLedgerAccountId: JsonField<String>? = null
         private var counterpartyId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<Currency>? = null
@@ -556,6 +583,7 @@ private constructor(
             accountDetails = internalAccount.accountDetails.map { it.toMutableList() }
             accountType = internalAccount.accountType
             connection = internalAccount.connection
+            contraLedgerAccountId = internalAccount.contraLedgerAccountId
             counterpartyId = internalAccount.counterpartyId
             createdAt = internalAccount.createdAt
             currency = internalAccount.currency
@@ -671,6 +699,31 @@ private constructor(
          * supported value.
          */
         fun connection(connection: JsonField<Connection>) = apply { this.connection = connection }
+
+        /**
+         * If the internal account links to a contra ledger account in Modern Treasury, the id of
+         * the contra ledger account will be populated here.
+         */
+        fun contraLedgerAccountId(contraLedgerAccountId: String?) =
+            contraLedgerAccountId(JsonField.ofNullable(contraLedgerAccountId))
+
+        /**
+         * Alias for calling [Builder.contraLedgerAccountId] with
+         * `contraLedgerAccountId.orElse(null)`.
+         */
+        fun contraLedgerAccountId(contraLedgerAccountId: Optional<String>) =
+            contraLedgerAccountId(contraLedgerAccountId.getOrNull())
+
+        /**
+         * Sets [Builder.contraLedgerAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contraLedgerAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun contraLedgerAccountId(contraLedgerAccountId: JsonField<String>) = apply {
+            this.contraLedgerAccountId = contraLedgerAccountId
+        }
 
         /** The Counterparty associated to this account. */
         fun counterpartyId(counterpartyId: String?) =
@@ -968,6 +1021,7 @@ private constructor(
          * .accountDetails()
          * .accountType()
          * .connection()
+         * .contraLedgerAccountId()
          * .counterpartyId()
          * .createdAt()
          * .currency()
@@ -996,6 +1050,7 @@ private constructor(
                 checkRequired("accountDetails", accountDetails).map { it.toImmutable() },
                 checkRequired("accountType", accountType),
                 checkRequired("connection", connection),
+                checkRequired("contraLedgerAccountId", contraLedgerAccountId),
                 checkRequired("counterpartyId", counterpartyId),
                 checkRequired("createdAt", createdAt),
                 checkRequired("currency", currency),
@@ -1029,6 +1084,7 @@ private constructor(
         accountDetails().forEach { it.validate() }
         accountType().ifPresent { it.validate() }
         connection().validate()
+        contraLedgerAccountId()
         counterpartyId()
         createdAt()
         currency().validate()
@@ -1069,6 +1125,7 @@ private constructor(
             (accountDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (accountType.asKnown().getOrNull()?.validity() ?: 0) +
             (connection.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (contraLedgerAccountId.asKnown().isPresent) 1 else 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (currency.asKnown().getOrNull()?.validity() ?: 0) +
@@ -2523,6 +2580,7 @@ private constructor(
             accountDetails == other.accountDetails &&
             accountType == other.accountType &&
             connection == other.connection &&
+            contraLedgerAccountId == other.contraLedgerAccountId &&
             counterpartyId == other.counterpartyId &&
             createdAt == other.createdAt &&
             currency == other.currency &&
@@ -2550,6 +2608,7 @@ private constructor(
             accountDetails,
             accountType,
             connection,
+            contraLedgerAccountId,
             counterpartyId,
             createdAt,
             currency,
@@ -2574,5 +2633,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }
