@@ -1788,6 +1788,8 @@ private constructor(
 
             @JvmField val MX = of("mx")
 
+            @JvmField val PAXOS = of("paxos")
+
             @JvmField val PAYPAL = of("paypal")
 
             @JvmField val PNC = of("pnc")
@@ -1828,6 +1830,7 @@ private constructor(
             JPMC,
             MT_FLOW,
             MX,
+            PAXOS,
             PAYPAL,
             PNC,
             SIGNET,
@@ -1867,6 +1870,7 @@ private constructor(
             JPMC,
             MT_FLOW,
             MX,
+            PAXOS,
             PAYPAL,
             PNC,
             SIGNET,
@@ -1910,6 +1914,7 @@ private constructor(
                 JPMC -> Value.JPMC
                 MT_FLOW -> Value.MT_FLOW
                 MX -> Value.MX
+                PAXOS -> Value.PAXOS
                 PAYPAL -> Value.PAYPAL
                 PNC -> Value.PNC
                 SIGNET -> Value.SIGNET
@@ -1951,6 +1956,7 @@ private constructor(
                 JPMC -> Known.JPMC
                 MT_FLOW -> Known.MT_FLOW
                 MX -> Known.MX
+                PAXOS -> Known.PAXOS
                 PAYPAL -> Known.PAYPAL
                 PNC -> Known.PNC
                 SIGNET -> Known.SIGNET
