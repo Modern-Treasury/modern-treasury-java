@@ -38,6 +38,7 @@ private constructor(
     private val identifications: JsonField<List<IdentificationCreateRequest>>,
     private val industryClassifications: JsonField<List<LegalEntityIndustryClassification>>,
     private val lastName: JsonField<String>,
+    private val legalEntityAssociations: JsonField<List<JsonValue>>,
     private val legalEntityType: JsonField<LegalEntityType>,
     private val legalStructure: JsonField<LegalStructure>,
     private val metadata: JsonField<Metadata>,
@@ -89,6 +90,9 @@ private constructor(
         industryClassifications: JsonField<List<LegalEntityIndustryClassification>> =
             JsonMissing.of(),
         @JsonProperty("last_name") @ExcludeMissing lastName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("legal_entity_associations")
+        @ExcludeMissing
+        legalEntityAssociations: JsonField<List<JsonValue>> = JsonMissing.of(),
         @JsonProperty("legal_entity_type")
         @ExcludeMissing
         legalEntityType: JsonField<LegalEntityType> = JsonMissing.of(),
@@ -131,6 +135,7 @@ private constructor(
         identifications,
         industryClassifications,
         lastName,
+        legalEntityAssociations,
         legalEntityType,
         legalStructure,
         metadata,
@@ -249,6 +254,15 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun lastName(): Optional<String> = lastName.getOptional("last_name")
+
+    /**
+     * The legal entity associations and its child legal entities.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun legalEntityAssociations(): Optional<List<JsonValue>> =
+        legalEntityAssociations.getOptional("legal_entity_associations")
 
     /**
      * The type of legal entity.
@@ -462,6 +476,16 @@ private constructor(
     @JsonProperty("last_name") @ExcludeMissing fun _lastName(): JsonField<String> = lastName
 
     /**
+     * Returns the raw JSON value of [legalEntityAssociations].
+     *
+     * Unlike [legalEntityAssociations], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("legal_entity_associations")
+    @ExcludeMissing
+    fun _legalEntityAssociations(): JsonField<List<JsonValue>> = legalEntityAssociations
+
+    /**
      * Returns the raw JSON value of [legalEntityType].
      *
      * Unlike [legalEntityType], this method doesn't throw if the JSON field has an unexpected type.
@@ -598,6 +622,7 @@ private constructor(
             JsonField<MutableList<LegalEntityIndustryClassification>>? =
             null
         private var lastName: JsonField<String> = JsonMissing.of()
+        private var legalEntityAssociations: JsonField<MutableList<JsonValue>>? = null
         private var legalEntityType: JsonField<LegalEntityType> = JsonMissing.of()
         private var legalStructure: JsonField<LegalStructure> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -630,6 +655,8 @@ private constructor(
             industryClassifications =
                 childLegalEntityCreate.industryClassifications.map { it.toMutableList() }
             lastName = childLegalEntityCreate.lastName
+            legalEntityAssociations =
+                childLegalEntityCreate.legalEntityAssociations.map { it.toMutableList() }
             legalEntityType = childLegalEntityCreate.legalEntityType
             legalStructure = childLegalEntityCreate.legalStructure
             metadata = childLegalEntityCreate.metadata
@@ -905,6 +932,40 @@ private constructor(
          */
         fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
+        /** The legal entity associations and its child legal entities. */
+        fun legalEntityAssociations(legalEntityAssociations: List<JsonValue>?) =
+            legalEntityAssociations(JsonField.ofNullable(legalEntityAssociations))
+
+        /**
+         * Alias for calling [Builder.legalEntityAssociations] with
+         * `legalEntityAssociations.orElse(null)`.
+         */
+        fun legalEntityAssociations(legalEntityAssociations: Optional<List<JsonValue>>) =
+            legalEntityAssociations(legalEntityAssociations.getOrNull())
+
+        /**
+         * Sets [Builder.legalEntityAssociations] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.legalEntityAssociations] with a well-typed
+         * `List<JsonValue>` value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun legalEntityAssociations(legalEntityAssociations: JsonField<List<JsonValue>>) = apply {
+            this.legalEntityAssociations = legalEntityAssociations.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [JsonValue] to [legalEntityAssociations].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addLegalEntityAssociation(legalEntityAssociation: JsonValue) = apply {
+            legalEntityAssociations =
+                (legalEntityAssociations ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("legalEntityAssociations", it).add(legalEntityAssociation)
+                }
+        }
+
         /** The type of legal entity. */
         fun legalEntityType(legalEntityType: LegalEntityType) =
             legalEntityType(JsonField.of(legalEntityType))
@@ -1161,6 +1222,7 @@ private constructor(
                 (identifications ?: JsonMissing.of()).map { it.toImmutable() },
                 (industryClassifications ?: JsonMissing.of()).map { it.toImmutable() },
                 lastName,
+                (legalEntityAssociations ?: JsonMissing.of()).map { it.toImmutable() },
                 legalEntityType,
                 legalStructure,
                 metadata,
@@ -1197,6 +1259,7 @@ private constructor(
         identifications().ifPresent { it.forEach { it.validate() } }
         industryClassifications().ifPresent { it.forEach { it.validate() } }
         lastName()
+        legalEntityAssociations()
         legalEntityType().ifPresent { it.validate() }
         legalStructure().ifPresent { it.validate() }
         metadata().ifPresent { it.validate() }
@@ -1240,6 +1303,7 @@ private constructor(
             (identifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (industryClassifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (lastName.asKnown().isPresent) 1 else 0) +
+            (legalEntityAssociations.asKnown().getOrNull()?.size ?: 0) +
             (legalEntityType.asKnown().getOrNull()?.validity() ?: 0) +
             (legalStructure.asKnown().getOrNull()?.validity() ?: 0) +
             (metadata.asKnown().getOrNull()?.validity() ?: 0) +
@@ -4792,6 +4856,7 @@ private constructor(
             identifications == other.identifications &&
             industryClassifications == other.industryClassifications &&
             lastName == other.lastName &&
+            legalEntityAssociations == other.legalEntityAssociations &&
             legalEntityType == other.legalEntityType &&
             legalStructure == other.legalStructure &&
             metadata == other.metadata &&
@@ -4822,6 +4887,7 @@ private constructor(
             identifications,
             industryClassifications,
             lastName,
+            legalEntityAssociations,
             legalEntityType,
             legalStructure,
             metadata,
@@ -4841,5 +4907,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ChildLegalEntityCreate{addresses=$addresses, bankSettings=$bankSettings, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, lastName=$lastName, legalEntityType=$legalEntityType, legalStructure=$legalStructure, metadata=$metadata, middleName=$middleName, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, riskRating=$riskRating, suffix=$suffix, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "ChildLegalEntityCreate{addresses=$addresses, bankSettings=$bankSettings, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, metadata=$metadata, middleName=$middleName, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, riskRating=$riskRating, suffix=$suffix, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }

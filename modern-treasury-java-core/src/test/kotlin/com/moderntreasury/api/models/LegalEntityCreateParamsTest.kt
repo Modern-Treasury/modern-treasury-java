@@ -170,6 +170,7 @@ internal class LegalEntityCreateParamsTest {
                                     .build()
                             )
                             .lastName("last_name")
+                            .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                             .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
                             .metadata(
@@ -478,6 +479,7 @@ internal class LegalEntityCreateParamsTest {
                                         .build()
                                 )
                                 .lastName("last_name")
+                                .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                                 .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                                 .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
                                 .metadata(
@@ -783,6 +785,7 @@ internal class LegalEntityCreateParamsTest {
                                     .build()
                             )
                             .lastName("last_name")
+                            .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                             .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
                             .metadata(
