@@ -40,6 +40,7 @@ internal class LegalEntityUpdateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .businessDescription("business_description")
             .businessName("business_name")
             .citizenshipCountry("citizenship_country")
             .complianceDetails(
@@ -58,10 +59,12 @@ internal class LegalEntityUpdateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .countryOfIncorporation("country_of_incorporation")
             .dateFormed(LocalDate.parse("2019-12-27"))
             .dateOfBirth(LocalDate.parse("2019-12-27"))
             .addDoingBusinessAsName("string")
             .email("email")
+            .expectedActivityVolume(0L)
             .firstName("first_name")
             .addIdentification(
                 IdentificationCreateRequest.builder()
@@ -84,6 +87,7 @@ internal class LegalEntityUpdateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .intendedUse("intended_use")
             .lastName("last_name")
             .legalStructure(LegalEntityUpdateParams.LegalStructure.CORPORATION)
             .metadata(
@@ -94,12 +98,14 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
             .middleName("middle_name")
+            .addOperatingJurisdiction("string")
             .addPhoneNumber(
                 LegalEntityUpdateParams.PhoneNumber.builder().phoneNumber("phone_number").build()
             )
             .politicallyExposedPerson(true)
             .preferredName("preferred_name")
             .prefix("prefix")
+            .addPrimarySocialMediaSite("string")
             .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
             .suffix("suffix")
             .wealthAndEmploymentDetails(
@@ -185,6 +191,7 @@ internal class LegalEntityUpdateParamsTest {
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .businessDescription("business_description")
                 .businessName("business_name")
                 .citizenshipCountry("citizenship_country")
                 .complianceDetails(
@@ -203,10 +210,12 @@ internal class LegalEntityUpdateParamsTest {
                         .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .countryOfIncorporation("country_of_incorporation")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
                 .addDoingBusinessAsName("string")
                 .email("email")
+                .expectedActivityVolume(0L)
                 .firstName("first_name")
                 .addIdentification(
                     IdentificationCreateRequest.builder()
@@ -231,6 +240,7 @@ internal class LegalEntityUpdateParamsTest {
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .intendedUse("intended_use")
                 .lastName("last_name")
                 .legalStructure(LegalEntityUpdateParams.LegalStructure.CORPORATION)
                 .metadata(
@@ -241,6 +251,7 @@ internal class LegalEntityUpdateParamsTest {
                         .build()
                 )
                 .middleName("middle_name")
+                .addOperatingJurisdiction("string")
                 .addPhoneNumber(
                     LegalEntityUpdateParams.PhoneNumber.builder()
                         .phoneNumber("phone_number")
@@ -249,6 +260,7 @@ internal class LegalEntityUpdateParamsTest {
                 .politicallyExposedPerson(true)
                 .preferredName("preferred_name")
                 .prefix("prefix")
+                .addPrimarySocialMediaSite("string")
                 .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
                 .suffix("suffix")
                 .wealthAndEmploymentDetails(
@@ -324,6 +336,7 @@ internal class LegalEntityUpdateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.businessDescription()).contains("business_description")
         assertThat(body.businessName()).contains("business_name")
         assertThat(body.citizenshipCountry()).contains("citizenship_country")
         assertThat(body.complianceDetails())
@@ -343,10 +356,12 @@ internal class LegalEntityUpdateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.countryOfIncorporation()).contains("country_of_incorporation")
         assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.doingBusinessAsNames().getOrNull()).containsExactly("string")
         assertThat(body.email()).contains("email")
+        assertThat(body.expectedActivityVolume()).contains(0L)
         assertThat(body.firstName()).contains("first_name")
         assertThat(body.identifications().getOrNull())
             .containsExactly(
@@ -371,6 +386,7 @@ internal class LegalEntityUpdateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.intendedUse()).contains("intended_use")
         assertThat(body.lastName()).contains("last_name")
         assertThat(body.legalStructure())
             .contains(LegalEntityUpdateParams.LegalStructure.CORPORATION)
@@ -383,6 +399,7 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
         assertThat(body.middleName()).contains("middle_name")
+        assertThat(body.operatingJurisdictions().getOrNull()).containsExactly("string")
         assertThat(body.phoneNumbers().getOrNull())
             .containsExactly(
                 LegalEntityUpdateParams.PhoneNumber.builder().phoneNumber("phone_number").build()
@@ -390,6 +407,7 @@ internal class LegalEntityUpdateParamsTest {
         assertThat(body.politicallyExposedPerson()).contains(true)
         assertThat(body.preferredName()).contains("preferred_name")
         assertThat(body.prefix()).contains("prefix")
+        assertThat(body.primarySocialMediaSites().getOrNull()).containsExactly("string")
         assertThat(body.riskRating()).contains(LegalEntityUpdateParams.RiskRating.LOW)
         assertThat(body.suffix()).contains("suffix")
         assertThat(body.wealthAndEmploymentDetails())
