@@ -578,16 +578,20 @@ private constructor(
     private constructor(
         private val addresses: JsonField<List<LegalEntityAddressCreateRequest>>,
         private val bankSettings: JsonField<LegalEntityBankSetting>,
+        private val businessDescription: JsonField<String>,
         private val businessName: JsonField<String>,
         private val citizenshipCountry: JsonField<String>,
         private val complianceDetails: JsonField<LegalEntityComplianceDetail>,
+        private val countryOfIncorporation: JsonField<String>,
         private val dateFormed: JsonField<LocalDate>,
         private val dateOfBirth: JsonField<LocalDate>,
         private val doingBusinessAsNames: JsonField<List<String>>,
         private val email: JsonField<String>,
+        private val expectedActivityVolume: JsonField<Long>,
         private val firstName: JsonField<String>,
         private val identifications: JsonField<List<IdentificationCreateRequest>>,
         private val industryClassifications: JsonField<List<LegalEntityIndustryClassification>>,
+        private val intendedUse: JsonField<String>,
         private val lastName: JsonField<String>,
         private val legalEntityAssociations:
             JsonField<List<LegalEntityAssociationInlineCreateRequest>>,
@@ -595,10 +599,12 @@ private constructor(
         private val legalStructure: JsonField<LegalStructure>,
         private val metadata: JsonField<Metadata>,
         private val middleName: JsonField<String>,
+        private val operatingJurisdictions: JsonField<List<String>>,
         private val phoneNumbers: JsonField<List<PhoneNumber>>,
         private val politicallyExposedPerson: JsonField<Boolean>,
         private val preferredName: JsonField<String>,
         private val prefix: JsonField<String>,
+        private val primarySocialMediaSites: JsonField<List<String>>,
         private val riskRating: JsonField<RiskRating>,
         private val suffix: JsonField<String>,
         private val wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail>,
@@ -614,6 +620,9 @@ private constructor(
             @JsonProperty("bank_settings")
             @ExcludeMissing
             bankSettings: JsonField<LegalEntityBankSetting> = JsonMissing.of(),
+            @JsonProperty("business_description")
+            @ExcludeMissing
+            businessDescription: JsonField<String> = JsonMissing.of(),
             @JsonProperty("business_name")
             @ExcludeMissing
             businessName: JsonField<String> = JsonMissing.of(),
@@ -623,6 +632,9 @@ private constructor(
             @JsonProperty("compliance_details")
             @ExcludeMissing
             complianceDetails: JsonField<LegalEntityComplianceDetail> = JsonMissing.of(),
+            @JsonProperty("country_of_incorporation")
+            @ExcludeMissing
+            countryOfIncorporation: JsonField<String> = JsonMissing.of(),
             @JsonProperty("date_formed")
             @ExcludeMissing
             dateFormed: JsonField<LocalDate> = JsonMissing.of(),
@@ -633,6 +645,9 @@ private constructor(
             @ExcludeMissing
             doingBusinessAsNames: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("email") @ExcludeMissing email: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expected_activity_volume")
+            @ExcludeMissing
+            expectedActivityVolume: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("first_name")
             @ExcludeMissing
             firstName: JsonField<String> = JsonMissing.of(),
@@ -643,6 +658,9 @@ private constructor(
             @ExcludeMissing
             industryClassifications: JsonField<List<LegalEntityIndustryClassification>> =
                 JsonMissing.of(),
+            @JsonProperty("intended_use")
+            @ExcludeMissing
+            intendedUse: JsonField<String> = JsonMissing.of(),
             @JsonProperty("last_name")
             @ExcludeMissing
             lastName: JsonField<String> = JsonMissing.of(),
@@ -662,6 +680,9 @@ private constructor(
             @JsonProperty("middle_name")
             @ExcludeMissing
             middleName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("operating_jurisdictions")
+            @ExcludeMissing
+            operatingJurisdictions: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("phone_numbers")
             @ExcludeMissing
             phoneNumbers: JsonField<List<PhoneNumber>> = JsonMissing.of(),
@@ -672,6 +693,9 @@ private constructor(
             @ExcludeMissing
             preferredName: JsonField<String> = JsonMissing.of(),
             @JsonProperty("prefix") @ExcludeMissing prefix: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("primary_social_media_sites")
+            @ExcludeMissing
+            primarySocialMediaSites: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("risk_rating")
             @ExcludeMissing
             riskRating: JsonField<RiskRating> = JsonMissing.of(),
@@ -684,26 +708,32 @@ private constructor(
         ) : this(
             addresses,
             bankSettings,
+            businessDescription,
             businessName,
             citizenshipCountry,
             complianceDetails,
+            countryOfIncorporation,
             dateFormed,
             dateOfBirth,
             doingBusinessAsNames,
             email,
+            expectedActivityVolume,
             firstName,
             identifications,
             industryClassifications,
+            intendedUse,
             lastName,
             legalEntityAssociations,
             legalEntityType,
             legalStructure,
             metadata,
             middleName,
+            operatingJurisdictions,
             phoneNumbers,
             politicallyExposedPerson,
             preferredName,
             prefix,
+            primarySocialMediaSites,
             riskRating,
             suffix,
             wealthAndEmploymentDetails,
@@ -728,6 +758,15 @@ private constructor(
             bankSettings.getOptional("bank_settings")
 
         /**
+         * A description of the business.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun businessDescription(): Optional<String> =
+            businessDescription.getOptional("business_description")
+
+        /**
          * The business's legal business name.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -750,6 +789,16 @@ private constructor(
          */
         fun complianceDetails(): Optional<LegalEntityComplianceDetail> =
             complianceDetails.getOptional("compliance_details")
+
+        /**
+         * The country code where the business is incorporated in the ISO 3166-1 alpha-2 or alpha-3
+         * formats.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun countryOfIncorporation(): Optional<String> =
+            countryOfIncorporation.getOptional("country_of_incorporation")
 
         /**
          * A business's formation date (YYYY-MM-DD).
@@ -783,6 +832,15 @@ private constructor(
         fun email(): Optional<String> = email.getOptional("email")
 
         /**
+         * Monthly expected transaction volume in entity's local currency.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun expectedActivityVolume(): Optional<Long> =
+            expectedActivityVolume.getOptional("expected_activity_volume")
+
+        /**
          * An individual's first name.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -807,6 +865,14 @@ private constructor(
          */
         fun industryClassifications(): Optional<List<LegalEntityIndustryClassification>> =
             industryClassifications.getOptional("industry_classifications")
+
+        /**
+         * A description of the intended use of the legal entity.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun intendedUse(): Optional<String> = intendedUse.getOptional("intended_use")
 
         /**
          * An individual's last name.
@@ -860,6 +926,15 @@ private constructor(
         fun middleName(): Optional<String> = middleName.getOptional("middle_name")
 
         /**
+         * A list of countries where the business operates (ISO 3166-1 alpha-2 or alpha-3 codes).
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun operatingJurisdictions(): Optional<List<String>> =
+            operatingJurisdictions.getOptional("operating_jurisdictions")
+
+        /**
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
@@ -889,6 +964,15 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun prefix(): Optional<String> = prefix.getOptional("prefix")
+
+        /**
+         * A list of primary social media URLs for the business.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun primarySocialMediaSites(): Optional<List<String>> =
+            primarySocialMediaSites.getOptional("primary_social_media_sites")
 
         /**
          * The risk rating of the legal entity. One of low, medium, high.
@@ -941,6 +1025,16 @@ private constructor(
         fun _bankSettings(): JsonField<LegalEntityBankSetting> = bankSettings
 
         /**
+         * Returns the raw JSON value of [businessDescription].
+         *
+         * Unlike [businessDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("business_description")
+        @ExcludeMissing
+        fun _businessDescription(): JsonField<String> = businessDescription
+
+        /**
          * Returns the raw JSON value of [businessName].
          *
          * Unlike [businessName], this method doesn't throw if the JSON field has an unexpected
@@ -969,6 +1063,16 @@ private constructor(
         @JsonProperty("compliance_details")
         @ExcludeMissing
         fun _complianceDetails(): JsonField<LegalEntityComplianceDetail> = complianceDetails
+
+        /**
+         * Returns the raw JSON value of [countryOfIncorporation].
+         *
+         * Unlike [countryOfIncorporation], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("country_of_incorporation")
+        @ExcludeMissing
+        fun _countryOfIncorporation(): JsonField<String> = countryOfIncorporation
 
         /**
          * Returns the raw JSON value of [dateFormed].
@@ -1006,6 +1110,16 @@ private constructor(
         @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
 
         /**
+         * Returns the raw JSON value of [expectedActivityVolume].
+         *
+         * Unlike [expectedActivityVolume], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("expected_activity_volume")
+        @ExcludeMissing
+        fun _expectedActivityVolume(): JsonField<Long> = expectedActivityVolume
+
+        /**
          * Returns the raw JSON value of [firstName].
          *
          * Unlike [firstName], this method doesn't throw if the JSON field has an unexpected type.
@@ -1032,6 +1146,15 @@ private constructor(
         @ExcludeMissing
         fun _industryClassifications(): JsonField<List<LegalEntityIndustryClassification>> =
             industryClassifications
+
+        /**
+         * Returns the raw JSON value of [intendedUse].
+         *
+         * Unlike [intendedUse], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("intended_use")
+        @ExcludeMissing
+        fun _intendedUse(): JsonField<String> = intendedUse
 
         /**
          * Returns the raw JSON value of [lastName].
@@ -1088,6 +1211,16 @@ private constructor(
         fun _middleName(): JsonField<String> = middleName
 
         /**
+         * Returns the raw JSON value of [operatingJurisdictions].
+         *
+         * Unlike [operatingJurisdictions], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("operating_jurisdictions")
+        @ExcludeMissing
+        fun _operatingJurisdictions(): JsonField<List<String>> = operatingJurisdictions
+
+        /**
          * Returns the raw JSON value of [phoneNumbers].
          *
          * Unlike [phoneNumbers], this method doesn't throw if the JSON field has an unexpected
@@ -1123,6 +1256,16 @@ private constructor(
          * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
+
+        /**
+         * Returns the raw JSON value of [primarySocialMediaSites].
+         *
+         * Unlike [primarySocialMediaSites], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("primary_social_media_sites")
+        @ExcludeMissing
+        fun _primarySocialMediaSites(): JsonField<List<String>> = primarySocialMediaSites
 
         /**
          * Returns the raw JSON value of [riskRating].
@@ -1181,18 +1324,22 @@ private constructor(
 
             private var addresses: JsonField<MutableList<LegalEntityAddressCreateRequest>>? = null
             private var bankSettings: JsonField<LegalEntityBankSetting> = JsonMissing.of()
+            private var businessDescription: JsonField<String> = JsonMissing.of()
             private var businessName: JsonField<String> = JsonMissing.of()
             private var citizenshipCountry: JsonField<String> = JsonMissing.of()
             private var complianceDetails: JsonField<LegalEntityComplianceDetail> = JsonMissing.of()
+            private var countryOfIncorporation: JsonField<String> = JsonMissing.of()
             private var dateFormed: JsonField<LocalDate> = JsonMissing.of()
             private var dateOfBirth: JsonField<LocalDate> = JsonMissing.of()
             private var doingBusinessAsNames: JsonField<MutableList<String>>? = null
             private var email: JsonField<String> = JsonMissing.of()
+            private var expectedActivityVolume: JsonField<Long> = JsonMissing.of()
             private var firstName: JsonField<String> = JsonMissing.of()
             private var identifications: JsonField<MutableList<IdentificationCreateRequest>>? = null
             private var industryClassifications:
                 JsonField<MutableList<LegalEntityIndustryClassification>>? =
                 null
+            private var intendedUse: JsonField<String> = JsonMissing.of()
             private var lastName: JsonField<String> = JsonMissing.of()
             private var legalEntityAssociations:
                 JsonField<MutableList<LegalEntityAssociationInlineCreateRequest>>? =
@@ -1201,10 +1348,12 @@ private constructor(
             private var legalStructure: JsonField<LegalStructure> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var middleName: JsonField<String> = JsonMissing.of()
+            private var operatingJurisdictions: JsonField<MutableList<String>>? = null
             private var phoneNumbers: JsonField<MutableList<PhoneNumber>>? = null
             private var politicallyExposedPerson: JsonField<Boolean> = JsonMissing.of()
             private var preferredName: JsonField<String> = JsonMissing.of()
             private var prefix: JsonField<String> = JsonMissing.of()
+            private var primarySocialMediaSites: JsonField<MutableList<String>>? = null
             private var riskRating: JsonField<RiskRating> = JsonMissing.of()
             private var suffix: JsonField<String> = JsonMissing.of()
             private var wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail> =
@@ -1216,17 +1365,21 @@ private constructor(
             internal fun from(legalEntity: LegalEntity) = apply {
                 addresses = legalEntity.addresses.map { it.toMutableList() }
                 bankSettings = legalEntity.bankSettings
+                businessDescription = legalEntity.businessDescription
                 businessName = legalEntity.businessName
                 citizenshipCountry = legalEntity.citizenshipCountry
                 complianceDetails = legalEntity.complianceDetails
+                countryOfIncorporation = legalEntity.countryOfIncorporation
                 dateFormed = legalEntity.dateFormed
                 dateOfBirth = legalEntity.dateOfBirth
                 doingBusinessAsNames = legalEntity.doingBusinessAsNames.map { it.toMutableList() }
                 email = legalEntity.email
+                expectedActivityVolume = legalEntity.expectedActivityVolume
                 firstName = legalEntity.firstName
                 identifications = legalEntity.identifications.map { it.toMutableList() }
                 industryClassifications =
                     legalEntity.industryClassifications.map { it.toMutableList() }
+                intendedUse = legalEntity.intendedUse
                 lastName = legalEntity.lastName
                 legalEntityAssociations =
                     legalEntity.legalEntityAssociations.map { it.toMutableList() }
@@ -1234,10 +1387,14 @@ private constructor(
                 legalStructure = legalEntity.legalStructure
                 metadata = legalEntity.metadata
                 middleName = legalEntity.middleName
+                operatingJurisdictions =
+                    legalEntity.operatingJurisdictions.map { it.toMutableList() }
                 phoneNumbers = legalEntity.phoneNumbers.map { it.toMutableList() }
                 politicallyExposedPerson = legalEntity.politicallyExposedPerson
                 preferredName = legalEntity.preferredName
                 prefix = legalEntity.prefix
+                primarySocialMediaSites =
+                    legalEntity.primarySocialMediaSites.map { it.toMutableList() }
                 riskRating = legalEntity.riskRating
                 suffix = legalEntity.suffix
                 wealthAndEmploymentDetails = legalEntity.wealthAndEmploymentDetails
@@ -1288,6 +1445,28 @@ private constructor(
              */
             fun bankSettings(bankSettings: JsonField<LegalEntityBankSetting>) = apply {
                 this.bankSettings = bankSettings
+            }
+
+            /** A description of the business. */
+            fun businessDescription(businessDescription: String?) =
+                businessDescription(JsonField.ofNullable(businessDescription))
+
+            /**
+             * Alias for calling [Builder.businessDescription] with
+             * `businessDescription.orElse(null)`.
+             */
+            fun businessDescription(businessDescription: Optional<String>) =
+                businessDescription(businessDescription.getOrNull())
+
+            /**
+             * Sets [Builder.businessDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.businessDescription] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun businessDescription(businessDescription: JsonField<String>) = apply {
+                this.businessDescription = businessDescription
             }
 
             /** The business's legal business name. */
@@ -1351,6 +1530,31 @@ private constructor(
                 apply {
                     this.complianceDetails = complianceDetails
                 }
+
+            /**
+             * The country code where the business is incorporated in the ISO 3166-1 alpha-2 or
+             * alpha-3 formats.
+             */
+            fun countryOfIncorporation(countryOfIncorporation: String?) =
+                countryOfIncorporation(JsonField.ofNullable(countryOfIncorporation))
+
+            /**
+             * Alias for calling [Builder.countryOfIncorporation] with
+             * `countryOfIncorporation.orElse(null)`.
+             */
+            fun countryOfIncorporation(countryOfIncorporation: Optional<String>) =
+                countryOfIncorporation(countryOfIncorporation.getOrNull())
+
+            /**
+             * Sets [Builder.countryOfIncorporation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.countryOfIncorporation] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun countryOfIncorporation(countryOfIncorporation: JsonField<String>) = apply {
+                this.countryOfIncorporation = countryOfIncorporation
+            }
 
             /** A business's formation date (YYYY-MM-DD). */
             fun dateFormed(dateFormed: LocalDate?) = dateFormed(JsonField.ofNullable(dateFormed))
@@ -1428,6 +1632,36 @@ private constructor(
              */
             fun email(email: JsonField<String>) = apply { this.email = email }
 
+            /** Monthly expected transaction volume in entity's local currency. */
+            fun expectedActivityVolume(expectedActivityVolume: Long?) =
+                expectedActivityVolume(JsonField.ofNullable(expectedActivityVolume))
+
+            /**
+             * Alias for [Builder.expectedActivityVolume].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun expectedActivityVolume(expectedActivityVolume: Long) =
+                expectedActivityVolume(expectedActivityVolume as Long?)
+
+            /**
+             * Alias for calling [Builder.expectedActivityVolume] with
+             * `expectedActivityVolume.orElse(null)`.
+             */
+            fun expectedActivityVolume(expectedActivityVolume: Optional<Long>) =
+                expectedActivityVolume(expectedActivityVolume.getOrNull())
+
+            /**
+             * Sets [Builder.expectedActivityVolume] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.expectedActivityVolume] with a well-typed [Long]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun expectedActivityVolume(expectedActivityVolume: JsonField<Long>) = apply {
+                this.expectedActivityVolume = expectedActivityVolume
+            }
+
             /** An individual's first name. */
             fun firstName(firstName: String?) = firstName(JsonField.ofNullable(firstName))
 
@@ -1501,6 +1735,23 @@ private constructor(
                     (industryClassifications ?: JsonField.of(mutableListOf())).also {
                         checkKnown("industryClassifications", it).add(industryClassification)
                     }
+            }
+
+            /** A description of the intended use of the legal entity. */
+            fun intendedUse(intendedUse: String?) = intendedUse(JsonField.ofNullable(intendedUse))
+
+            /** Alias for calling [Builder.intendedUse] with `intendedUse.orElse(null)`. */
+            fun intendedUse(intendedUse: Optional<String>) = intendedUse(intendedUse.getOrNull())
+
+            /**
+             * Sets [Builder.intendedUse] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.intendedUse] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun intendedUse(intendedUse: JsonField<String>) = apply {
+                this.intendedUse = intendedUse
             }
 
             /** An individual's last name. */
@@ -1623,6 +1874,36 @@ private constructor(
              */
             fun middleName(middleName: JsonField<String>) = apply { this.middleName = middleName }
 
+            /**
+             * A list of countries where the business operates (ISO 3166-1 alpha-2 or alpha-3
+             * codes).
+             */
+            fun operatingJurisdictions(operatingJurisdictions: List<String>) =
+                operatingJurisdictions(JsonField.of(operatingJurisdictions))
+
+            /**
+             * Sets [Builder.operatingJurisdictions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.operatingJurisdictions] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun operatingJurisdictions(operatingJurisdictions: JsonField<List<String>>) = apply {
+                this.operatingJurisdictions = operatingJurisdictions.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [operatingJurisdictions].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addOperatingJurisdiction(operatingJurisdiction: String) = apply {
+                operatingJurisdictions =
+                    (operatingJurisdictions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("operatingJurisdictions", it).add(operatingJurisdiction)
+                    }
+            }
+
             fun phoneNumbers(phoneNumbers: List<PhoneNumber>) =
                 phoneNumbers(JsonField.of(phoneNumbers))
 
@@ -1712,6 +1993,33 @@ private constructor(
              * supported value.
              */
             fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
+
+            /** A list of primary social media URLs for the business. */
+            fun primarySocialMediaSites(primarySocialMediaSites: List<String>) =
+                primarySocialMediaSites(JsonField.of(primarySocialMediaSites))
+
+            /**
+             * Sets [Builder.primarySocialMediaSites] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.primarySocialMediaSites] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun primarySocialMediaSites(primarySocialMediaSites: JsonField<List<String>>) = apply {
+                this.primarySocialMediaSites = primarySocialMediaSites.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [primarySocialMediaSites].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addPrimarySocialMediaSite(primarySocialMediaSite: String) = apply {
+                primarySocialMediaSites =
+                    (primarySocialMediaSites ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("primarySocialMediaSites", it).add(primarySocialMediaSite)
+                    }
+            }
 
             /** The risk rating of the legal entity. One of low, medium, high. */
             fun riskRating(riskRating: RiskRating?) = riskRating(JsonField.ofNullable(riskRating))
@@ -1811,26 +2119,32 @@ private constructor(
                 LegalEntity(
                     (addresses ?: JsonMissing.of()).map { it.toImmutable() },
                     bankSettings,
+                    businessDescription,
                     businessName,
                     citizenshipCountry,
                     complianceDetails,
+                    countryOfIncorporation,
                     dateFormed,
                     dateOfBirth,
                     (doingBusinessAsNames ?: JsonMissing.of()).map { it.toImmutable() },
                     email,
+                    expectedActivityVolume,
                     firstName,
                     (identifications ?: JsonMissing.of()).map { it.toImmutable() },
                     (industryClassifications ?: JsonMissing.of()).map { it.toImmutable() },
+                    intendedUse,
                     lastName,
                     (legalEntityAssociations ?: JsonMissing.of()).map { it.toImmutable() },
                     legalEntityType,
                     legalStructure,
                     metadata,
                     middleName,
+                    (operatingJurisdictions ?: JsonMissing.of()).map { it.toImmutable() },
                     (phoneNumbers ?: JsonMissing.of()).map { it.toImmutable() },
                     politicallyExposedPerson,
                     preferredName,
                     prefix,
+                    (primarySocialMediaSites ?: JsonMissing.of()).map { it.toImmutable() },
                     riskRating,
                     suffix,
                     wealthAndEmploymentDetails,
@@ -1848,26 +2162,32 @@ private constructor(
 
             addresses().ifPresent { it.forEach { it.validate() } }
             bankSettings().ifPresent { it.validate() }
+            businessDescription()
             businessName()
             citizenshipCountry()
             complianceDetails().ifPresent { it.validate() }
+            countryOfIncorporation()
             dateFormed()
             dateOfBirth()
             doingBusinessAsNames()
             email()
+            expectedActivityVolume()
             firstName()
             identifications().ifPresent { it.forEach { it.validate() } }
             industryClassifications().ifPresent { it.forEach { it.validate() } }
+            intendedUse()
             lastName()
             legalEntityAssociations().ifPresent { it.forEach { it.validate() } }
             legalEntityType().ifPresent { it.validate() }
             legalStructure().ifPresent { it.validate() }
             metadata().ifPresent { it.validate() }
             middleName()
+            operatingJurisdictions()
             phoneNumbers().ifPresent { it.forEach { it.validate() } }
             politicallyExposedPerson()
             preferredName()
             prefix()
+            primarySocialMediaSites()
             riskRating().ifPresent { it.validate() }
             suffix()
             wealthAndEmploymentDetails().ifPresent { it.validate() }
@@ -1893,17 +2213,21 @@ private constructor(
         internal fun validity(): Int =
             (addresses.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (bankSettings.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (businessDescription.asKnown().isPresent) 1 else 0) +
                 (if (businessName.asKnown().isPresent) 1 else 0) +
                 (if (citizenshipCountry.asKnown().isPresent) 1 else 0) +
                 (complianceDetails.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (countryOfIncorporation.asKnown().isPresent) 1 else 0) +
                 (if (dateFormed.asKnown().isPresent) 1 else 0) +
                 (if (dateOfBirth.asKnown().isPresent) 1 else 0) +
                 (doingBusinessAsNames.asKnown().getOrNull()?.size ?: 0) +
                 (if (email.asKnown().isPresent) 1 else 0) +
+                (if (expectedActivityVolume.asKnown().isPresent) 1 else 0) +
                 (if (firstName.asKnown().isPresent) 1 else 0) +
                 (identifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (industryClassifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
                     ?: 0) +
+                (if (intendedUse.asKnown().isPresent) 1 else 0) +
                 (if (lastName.asKnown().isPresent) 1 else 0) +
                 (legalEntityAssociations.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
                     ?: 0) +
@@ -1911,10 +2235,12 @@ private constructor(
                 (legalStructure.asKnown().getOrNull()?.validity() ?: 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (middleName.asKnown().isPresent) 1 else 0) +
+                (operatingJurisdictions.asKnown().getOrNull()?.size ?: 0) +
                 (phoneNumbers.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (politicallyExposedPerson.asKnown().isPresent) 1 else 0) +
                 (if (preferredName.asKnown().isPresent) 1 else 0) +
                 (if (prefix.asKnown().isPresent) 1 else 0) +
+                (primarySocialMediaSites.asKnown().getOrNull()?.size ?: 0) +
                 (riskRating.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (suffix.asKnown().isPresent) 1 else 0) +
                 (wealthAndEmploymentDetails.asKnown().getOrNull()?.validity() ?: 0) +
@@ -6077,26 +6403,32 @@ private constructor(
             return other is LegalEntity &&
                 addresses == other.addresses &&
                 bankSettings == other.bankSettings &&
+                businessDescription == other.businessDescription &&
                 businessName == other.businessName &&
                 citizenshipCountry == other.citizenshipCountry &&
                 complianceDetails == other.complianceDetails &&
+                countryOfIncorporation == other.countryOfIncorporation &&
                 dateFormed == other.dateFormed &&
                 dateOfBirth == other.dateOfBirth &&
                 doingBusinessAsNames == other.doingBusinessAsNames &&
                 email == other.email &&
+                expectedActivityVolume == other.expectedActivityVolume &&
                 firstName == other.firstName &&
                 identifications == other.identifications &&
                 industryClassifications == other.industryClassifications &&
+                intendedUse == other.intendedUse &&
                 lastName == other.lastName &&
                 legalEntityAssociations == other.legalEntityAssociations &&
                 legalEntityType == other.legalEntityType &&
                 legalStructure == other.legalStructure &&
                 metadata == other.metadata &&
                 middleName == other.middleName &&
+                operatingJurisdictions == other.operatingJurisdictions &&
                 phoneNumbers == other.phoneNumbers &&
                 politicallyExposedPerson == other.politicallyExposedPerson &&
                 preferredName == other.preferredName &&
                 prefix == other.prefix &&
+                primarySocialMediaSites == other.primarySocialMediaSites &&
                 riskRating == other.riskRating &&
                 suffix == other.suffix &&
                 wealthAndEmploymentDetails == other.wealthAndEmploymentDetails &&
@@ -6108,26 +6440,32 @@ private constructor(
             Objects.hash(
                 addresses,
                 bankSettings,
+                businessDescription,
                 businessName,
                 citizenshipCountry,
                 complianceDetails,
+                countryOfIncorporation,
                 dateFormed,
                 dateOfBirth,
                 doingBusinessAsNames,
                 email,
+                expectedActivityVolume,
                 firstName,
                 identifications,
                 industryClassifications,
+                intendedUse,
                 lastName,
                 legalEntityAssociations,
                 legalEntityType,
                 legalStructure,
                 metadata,
                 middleName,
+                operatingJurisdictions,
                 phoneNumbers,
                 politicallyExposedPerson,
                 preferredName,
                 prefix,
+                primarySocialMediaSites,
                 riskRating,
                 suffix,
                 wealthAndEmploymentDetails,
@@ -6139,7 +6477,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntity{addresses=$addresses, bankSettings=$bankSettings, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, metadata=$metadata, middleName=$middleName, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, riskRating=$riskRating, suffix=$suffix, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+            "LegalEntity{addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, metadata=$metadata, middleName=$middleName, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, riskRating=$riskRating, suffix=$suffix, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
