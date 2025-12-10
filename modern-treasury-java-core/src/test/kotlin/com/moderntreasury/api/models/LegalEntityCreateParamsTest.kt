@@ -40,6 +40,7 @@ internal class LegalEntityCreateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .businessDescription("business_description")
             .businessName("business_name")
             .citizenshipCountry("citizenship_country")
             .complianceDetails(
@@ -58,10 +59,12 @@ internal class LegalEntityCreateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .countryOfIncorporation("country_of_incorporation")
             .dateFormed(LocalDate.parse("2019-12-27"))
             .dateOfBirth(LocalDate.parse("2019-12-27"))
             .addDoingBusinessAsName("string")
             .email("email")
+            .expectedActivityVolume(0L)
             .firstName("first_name")
             .addIdentification(
                 IdentificationCreateRequest.builder()
@@ -84,6 +87,7 @@ internal class LegalEntityCreateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .intendedUse("intended_use")
             .lastName("last_name")
             .addLegalEntityAssociation(
                 LegalEntityCreateParams.LegalEntityAssociationInlineCreateRequest.builder()
@@ -121,6 +125,7 @@ internal class LegalEntityCreateParamsTest {
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .businessDescription("business_description")
                             .businessName("business_name")
                             .citizenshipCountry("citizenship_country")
                             .complianceDetails(
@@ -141,10 +146,12 @@ internal class LegalEntityCreateParamsTest {
                                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
                             .addDoingBusinessAsName("string")
                             .email("email")
+                            .expectedActivityVolume(0L)
                             .firstName("first_name")
                             .addIdentification(
                                 IdentificationCreateRequest.builder()
@@ -169,6 +176,7 @@ internal class LegalEntityCreateParamsTest {
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .intendedUse("intended_use")
                             .lastName("last_name")
                             .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
@@ -181,6 +189,7 @@ internal class LegalEntityCreateParamsTest {
                                     .build()
                             )
                             .middleName("middle_name")
+                            .addOperatingJurisdiction("string")
                             .addPhoneNumber(
                                 ChildLegalEntityCreate.PhoneNumber.builder()
                                     .phoneNumber("phone_number")
@@ -189,6 +198,7 @@ internal class LegalEntityCreateParamsTest {
                             .politicallyExposedPerson(true)
                             .preferredName("preferred_name")
                             .prefix("prefix")
+                            .addPrimarySocialMediaSite("string")
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .suffix("suffix")
                             .wealthAndEmploymentDetails(
@@ -254,12 +264,14 @@ internal class LegalEntityCreateParamsTest {
                     .build()
             )
             .middleName("middle_name")
+            .addOperatingJurisdiction("string")
             .addPhoneNumber(
                 LegalEntityCreateParams.PhoneNumber.builder().phoneNumber("phone_number").build()
             )
             .politicallyExposedPerson(true)
             .preferredName("preferred_name")
             .prefix("prefix")
+            .addPrimarySocialMediaSite("string")
             .riskRating(LegalEntityCreateParams.RiskRating.LOW)
             .suffix("suffix")
             .wealthAndEmploymentDetails(
@@ -336,6 +348,7 @@ internal class LegalEntityCreateParamsTest {
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .businessDescription("business_description")
                 .businessName("business_name")
                 .citizenshipCountry("citizenship_country")
                 .complianceDetails(
@@ -354,10 +367,12 @@ internal class LegalEntityCreateParamsTest {
                         .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .countryOfIncorporation("country_of_incorporation")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
                 .addDoingBusinessAsName("string")
                 .email("email")
+                .expectedActivityVolume(0L)
                 .firstName("first_name")
                 .addIdentification(
                     IdentificationCreateRequest.builder()
@@ -382,6 +397,7 @@ internal class LegalEntityCreateParamsTest {
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .intendedUse("intended_use")
                 .lastName("last_name")
                 .addLegalEntityAssociation(
                     LegalEntityCreateParams.LegalEntityAssociationInlineCreateRequest.builder()
@@ -421,6 +437,7 @@ internal class LegalEntityCreateParamsTest {
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
+                                .businessDescription("business_description")
                                 .businessName("business_name")
                                 .citizenshipCountry("citizenship_country")
                                 .complianceDetails(
@@ -447,10 +464,12 @@ internal class LegalEntityCreateParamsTest {
                                         )
                                         .build()
                                 )
+                                .countryOfIncorporation("country_of_incorporation")
                                 .dateFormed(LocalDate.parse("2019-12-27"))
                                 .dateOfBirth(LocalDate.parse("2019-12-27"))
                                 .addDoingBusinessAsName("string")
                                 .email("email")
+                                .expectedActivityVolume(0L)
                                 .firstName("first_name")
                                 .addIdentification(
                                     IdentificationCreateRequest.builder()
@@ -478,6 +497,7 @@ internal class LegalEntityCreateParamsTest {
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
+                                .intendedUse("intended_use")
                                 .lastName("last_name")
                                 .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                                 .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
@@ -490,6 +510,7 @@ internal class LegalEntityCreateParamsTest {
                                         .build()
                                 )
                                 .middleName("middle_name")
+                                .addOperatingJurisdiction("string")
                                 .addPhoneNumber(
                                     ChildLegalEntityCreate.PhoneNumber.builder()
                                         .phoneNumber("phone_number")
@@ -498,6 +519,7 @@ internal class LegalEntityCreateParamsTest {
                                 .politicallyExposedPerson(true)
                                 .preferredName("preferred_name")
                                 .prefix("prefix")
+                                .addPrimarySocialMediaSite("string")
                                 .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                 .suffix("suffix")
                                 .wealthAndEmploymentDetails(
@@ -566,6 +588,7 @@ internal class LegalEntityCreateParamsTest {
                         .build()
                 )
                 .middleName("middle_name")
+                .addOperatingJurisdiction("string")
                 .addPhoneNumber(
                     LegalEntityCreateParams.PhoneNumber.builder()
                         .phoneNumber("phone_number")
@@ -574,6 +597,7 @@ internal class LegalEntityCreateParamsTest {
                 .politicallyExposedPerson(true)
                 .preferredName("preferred_name")
                 .prefix("prefix")
+                .addPrimarySocialMediaSite("string")
                 .riskRating(LegalEntityCreateParams.RiskRating.LOW)
                 .suffix("suffix")
                 .wealthAndEmploymentDetails(
@@ -651,6 +675,7 @@ internal class LegalEntityCreateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.businessDescription()).contains("business_description")
         assertThat(body.businessName()).contains("business_name")
         assertThat(body.citizenshipCountry()).contains("citizenship_country")
         assertThat(body.complianceDetails())
@@ -670,10 +695,12 @@ internal class LegalEntityCreateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.countryOfIncorporation()).contains("country_of_incorporation")
         assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.doingBusinessAsNames().getOrNull()).containsExactly("string")
         assertThat(body.email()).contains("email")
+        assertThat(body.expectedActivityVolume()).contains(0L)
         assertThat(body.firstName()).contains("first_name")
         assertThat(body.identifications().getOrNull())
             .containsExactly(
@@ -698,6 +725,7 @@ internal class LegalEntityCreateParamsTest {
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.intendedUse()).contains("intended_use")
         assertThat(body.lastName()).contains("last_name")
         assertThat(body.legalEntityAssociations().getOrNull())
             .containsExactly(
@@ -736,6 +764,7 @@ internal class LegalEntityCreateParamsTest {
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .businessDescription("business_description")
                             .businessName("business_name")
                             .citizenshipCountry("citizenship_country")
                             .complianceDetails(
@@ -756,10 +785,12 @@ internal class LegalEntityCreateParamsTest {
                                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
                             .addDoingBusinessAsName("string")
                             .email("email")
+                            .expectedActivityVolume(0L)
                             .firstName("first_name")
                             .addIdentification(
                                 IdentificationCreateRequest.builder()
@@ -784,6 +815,7 @@ internal class LegalEntityCreateParamsTest {
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .intendedUse("intended_use")
                             .lastName("last_name")
                             .addLegalEntityAssociation(JsonValue.from(mapOf<String, Any>()))
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
@@ -796,6 +828,7 @@ internal class LegalEntityCreateParamsTest {
                                     .build()
                             )
                             .middleName("middle_name")
+                            .addOperatingJurisdiction("string")
                             .addPhoneNumber(
                                 ChildLegalEntityCreate.PhoneNumber.builder()
                                     .phoneNumber("phone_number")
@@ -804,6 +837,7 @@ internal class LegalEntityCreateParamsTest {
                             .politicallyExposedPerson(true)
                             .preferredName("preferred_name")
                             .prefix("prefix")
+                            .addPrimarySocialMediaSite("string")
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .suffix("suffix")
                             .wealthAndEmploymentDetails(
@@ -871,6 +905,7 @@ internal class LegalEntityCreateParamsTest {
                     .build()
             )
         assertThat(body.middleName()).contains("middle_name")
+        assertThat(body.operatingJurisdictions().getOrNull()).containsExactly("string")
         assertThat(body.phoneNumbers().getOrNull())
             .containsExactly(
                 LegalEntityCreateParams.PhoneNumber.builder().phoneNumber("phone_number").build()
@@ -878,6 +913,7 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.politicallyExposedPerson()).contains(true)
         assertThat(body.preferredName()).contains("preferred_name")
         assertThat(body.prefix()).contains("prefix")
+        assertThat(body.primarySocialMediaSites().getOrNull()).containsExactly("string")
         assertThat(body.riskRating()).contains(LegalEntityCreateParams.RiskRating.LOW)
         assertThat(body.suffix()).contains("suffix")
         assertThat(body.wealthAndEmploymentDetails())
