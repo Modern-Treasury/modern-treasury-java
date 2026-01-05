@@ -3082,6 +3082,8 @@ private constructor(
 
                 @JvmField val PARTIAL_SWIFT_MIR = of("partial_swift_mir")
 
+                @JvmField val PAXOS_ORCHESTRATION_ID = of("paxos_orchestration_id")
+
                 @JvmField val PAXOS_TRANSFER_ID = of("paxos_transfer_id")
 
                 @JvmField val PNC_CLEARING_REFERENCE = of("pnc_clearing_reference")
@@ -3218,6 +3220,7 @@ private constructor(
                 MT_FLOW_TRANSFER_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
+                PAXOS_ORCHESTRATION_ID,
                 PAXOS_TRANSFER_ID,
                 PNC_CLEARING_REFERENCE,
                 PNC_INSTRUCTION_ID,
@@ -3321,6 +3324,7 @@ private constructor(
                 MT_FLOW_TRANSFER_ID,
                 OTHER,
                 PARTIAL_SWIFT_MIR,
+                PAXOS_ORCHESTRATION_ID,
                 PAXOS_TRANSFER_ID,
                 PNC_CLEARING_REFERENCE,
                 PNC_INSTRUCTION_ID,
@@ -3428,6 +3432,7 @@ private constructor(
                     MT_FLOW_TRANSFER_ID -> Value.MT_FLOW_TRANSFER_ID
                     OTHER -> Value.OTHER
                     PARTIAL_SWIFT_MIR -> Value.PARTIAL_SWIFT_MIR
+                    PAXOS_ORCHESTRATION_ID -> Value.PAXOS_ORCHESTRATION_ID
                     PAXOS_TRANSFER_ID -> Value.PAXOS_TRANSFER_ID
                     PNC_CLEARING_REFERENCE -> Value.PNC_CLEARING_REFERENCE
                     PNC_INSTRUCTION_ID -> Value.PNC_INSTRUCTION_ID
@@ -3537,6 +3542,7 @@ private constructor(
                     MT_FLOW_TRANSFER_ID -> Known.MT_FLOW_TRANSFER_ID
                     OTHER -> Known.OTHER
                     PARTIAL_SWIFT_MIR -> Known.PARTIAL_SWIFT_MIR
+                    PAXOS_ORCHESTRATION_ID -> Known.PAXOS_ORCHESTRATION_ID
                     PAXOS_TRANSFER_ID -> Known.PAXOS_TRANSFER_ID
                     PNC_CLEARING_REFERENCE -> Known.PNC_CLEARING_REFERENCE
                     PNC_INSTRUCTION_ID -> Known.PNC_INSTRUCTION_ID

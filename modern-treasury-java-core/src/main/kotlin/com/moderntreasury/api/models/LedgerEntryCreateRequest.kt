@@ -13,6 +13,7 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
+import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
@@ -25,6 +26,7 @@ private constructor(
     private val direction: JsonField<TransactionDirection>,
     private val ledgerAccountId: JsonField<String>,
     private val availableBalanceAmount: JsonField<AvailableBalanceAmount>,
+    private val effectiveAt: JsonField<OffsetDateTime>,
     private val lockVersion: JsonField<Long>,
     private val metadata: JsonField<Metadata>,
     private val pendingBalanceAmount: JsonField<PendingBalanceAmount>,
@@ -45,6 +47,9 @@ private constructor(
         @JsonProperty("available_balance_amount")
         @ExcludeMissing
         availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of(),
+        @JsonProperty("effective_at")
+        @ExcludeMissing
+        effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("lock_version")
         @ExcludeMissing
         lockVersion: JsonField<Long> = JsonMissing.of(),
@@ -63,6 +68,7 @@ private constructor(
         direction,
         ledgerAccountId,
         availableBalanceAmount,
+        effectiveAt,
         lockVersion,
         metadata,
         pendingBalanceAmount,
@@ -108,6 +114,15 @@ private constructor(
      */
     fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
         availableBalanceAmount.getOptional("available_balance_amount")
+
+    /**
+     * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+     * purposes.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun effectiveAt(): Optional<OffsetDateTime> = effectiveAt.getOptional("effective_at")
 
     /**
      * Lock version of the ledger account. This can be passed when creating a ledger transaction to
@@ -194,6 +209,15 @@ private constructor(
     fun _availableBalanceAmount(): JsonField<AvailableBalanceAmount> = availableBalanceAmount
 
     /**
+     * Returns the raw JSON value of [effectiveAt].
+     *
+     * Unlike [effectiveAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("effective_at")
+    @ExcludeMissing
+    fun _effectiveAt(): JsonField<OffsetDateTime> = effectiveAt
+
+    /**
      * Returns the raw JSON value of [lockVersion].
      *
      * Unlike [lockVersion], this method doesn't throw if the JSON field has an unexpected type.
@@ -272,6 +296,7 @@ private constructor(
         private var direction: JsonField<TransactionDirection>? = null
         private var ledgerAccountId: JsonField<String>? = null
         private var availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of()
+        private var effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lockVersion: JsonField<Long> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var pendingBalanceAmount: JsonField<PendingBalanceAmount> = JsonMissing.of()
@@ -285,6 +310,7 @@ private constructor(
             direction = ledgerEntryCreateRequest.direction
             ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
             availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
+            effectiveAt = ledgerEntryCreateRequest.effectiveAt
             lockVersion = ledgerEntryCreateRequest.lockVersion
             metadata = ledgerEntryCreateRequest.metadata
             pendingBalanceAmount = ledgerEntryCreateRequest.pendingBalanceAmount
@@ -368,6 +394,23 @@ private constructor(
             apply {
                 this.availableBalanceAmount = availableBalanceAmount
             }
+
+        /**
+         * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+         * purposes.
+         */
+        fun effectiveAt(effectiveAt: OffsetDateTime) = effectiveAt(JsonField.of(effectiveAt))
+
+        /**
+         * Sets [Builder.effectiveAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.effectiveAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun effectiveAt(effectiveAt: JsonField<OffsetDateTime>) = apply {
+            this.effectiveAt = effectiveAt
+        }
 
         /**
          * Lock version of the ledger account. This can be passed when creating a ledger transaction
@@ -535,6 +578,7 @@ private constructor(
                 checkRequired("direction", direction),
                 checkRequired("ledgerAccountId", ledgerAccountId),
                 availableBalanceAmount,
+                effectiveAt,
                 lockVersion,
                 metadata,
                 pendingBalanceAmount,
@@ -555,6 +599,7 @@ private constructor(
         direction().validate()
         ledgerAccountId()
         availableBalanceAmount().ifPresent { it.validate() }
+        effectiveAt()
         lockVersion()
         metadata().ifPresent { it.validate() }
         pendingBalanceAmount().ifPresent { it.validate() }
@@ -582,6 +627,7 @@ private constructor(
             (direction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
             (availableBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (effectiveAt.asKnown().isPresent) 1 else 0) +
             (if (lockVersion.asKnown().isPresent) 1 else 0) +
             (metadata.asKnown().getOrNull()?.validity() ?: 0) +
             (pendingBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1019,6 +1065,7 @@ private constructor(
             direction == other.direction &&
             ledgerAccountId == other.ledgerAccountId &&
             availableBalanceAmount == other.availableBalanceAmount &&
+            effectiveAt == other.effectiveAt &&
             lockVersion == other.lockVersion &&
             metadata == other.metadata &&
             pendingBalanceAmount == other.pendingBalanceAmount &&
@@ -1033,6 +1080,7 @@ private constructor(
             direction,
             ledgerAccountId,
             availableBalanceAmount,
+            effectiveAt,
             lockVersion,
             metadata,
             pendingBalanceAmount,
@@ -1045,5 +1093,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
+        "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, effectiveAt=$effectiveAt, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
 }
