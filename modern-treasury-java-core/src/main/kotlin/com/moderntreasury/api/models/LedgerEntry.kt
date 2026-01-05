@@ -28,6 +28,7 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val direction: JsonField<TransactionDirection>,
     private val discardedAt: JsonField<OffsetDateTime>,
+    private val effectiveAt: JsonField<OffsetDateTime>,
     private val ledgerAccountCurrency: JsonField<String>,
     private val ledgerAccountCurrencyExponent: JsonField<Long>,
     private val ledgerAccountId: JsonField<String>,
@@ -55,6 +56,9 @@ private constructor(
         @JsonProperty("discarded_at")
         @ExcludeMissing
         discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("effective_at")
+        @ExcludeMissing
+        effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("ledger_account_currency")
         @ExcludeMissing
         ledgerAccountCurrency: JsonField<String> = JsonMissing.of(),
@@ -86,6 +90,7 @@ private constructor(
         createdAt,
         direction,
         discardedAt,
+        effectiveAt,
         ledgerAccountCurrency,
         ledgerAccountCurrencyExponent,
         ledgerAccountId,
@@ -136,6 +141,15 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
+
+    /**
+     * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+     * purposes.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun effectiveAt(): OffsetDateTime = effectiveAt.getRequired("effective_at")
 
     /**
      * The currency of the ledger account.
@@ -275,6 +289,15 @@ private constructor(
     fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
 
     /**
+     * Returns the raw JSON value of [effectiveAt].
+     *
+     * Unlike [effectiveAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("effective_at")
+    @ExcludeMissing
+    fun _effectiveAt(): JsonField<OffsetDateTime> = effectiveAt
+
+    /**
      * Returns the raw JSON value of [ledgerAccountCurrency].
      *
      * Unlike [ledgerAccountCurrency], this method doesn't throw if the JSON field has an unexpected
@@ -395,6 +418,7 @@ private constructor(
          * .createdAt()
          * .direction()
          * .discardedAt()
+         * .effectiveAt()
          * .ledgerAccountCurrency()
          * .ledgerAccountCurrencyExponent()
          * .ledgerAccountId()
@@ -419,6 +443,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var direction: JsonField<TransactionDirection>? = null
         private var discardedAt: JsonField<OffsetDateTime>? = null
+        private var effectiveAt: JsonField<OffsetDateTime>? = null
         private var ledgerAccountCurrency: JsonField<String>? = null
         private var ledgerAccountCurrencyExponent: JsonField<Long>? = null
         private var ledgerAccountId: JsonField<String>? = null
@@ -439,6 +464,7 @@ private constructor(
             createdAt = ledgerEntry.createdAt
             direction = ledgerEntry.direction
             discardedAt = ledgerEntry.discardedAt
+            effectiveAt = ledgerEntry.effectiveAt
             ledgerAccountCurrency = ledgerEntry.ledgerAccountCurrency
             ledgerAccountCurrencyExponent = ledgerEntry.ledgerAccountCurrencyExponent
             ledgerAccountId = ledgerEntry.ledgerAccountId
@@ -523,6 +549,23 @@ private constructor(
          */
         fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
             this.discardedAt = discardedAt
+        }
+
+        /**
+         * The timestamp (ISO8601 format) at which the ledger transaction happened for reporting
+         * purposes.
+         */
+        fun effectiveAt(effectiveAt: OffsetDateTime) = effectiveAt(JsonField.of(effectiveAt))
+
+        /**
+         * Sets [Builder.effectiveAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.effectiveAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun effectiveAt(effectiveAt: JsonField<OffsetDateTime>) = apply {
+            this.effectiveAt = effectiveAt
         }
 
         /** The currency of the ledger account. */
@@ -744,6 +787,7 @@ private constructor(
          * .createdAt()
          * .direction()
          * .discardedAt()
+         * .effectiveAt()
          * .ledgerAccountCurrency()
          * .ledgerAccountCurrencyExponent()
          * .ledgerAccountId()
@@ -766,6 +810,7 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("direction", direction),
                 checkRequired("discardedAt", discardedAt),
+                checkRequired("effectiveAt", effectiveAt),
                 checkRequired("ledgerAccountCurrency", ledgerAccountCurrency),
                 checkRequired("ledgerAccountCurrencyExponent", ledgerAccountCurrencyExponent),
                 checkRequired("ledgerAccountId", ledgerAccountId),
@@ -793,6 +838,7 @@ private constructor(
         createdAt()
         direction().validate()
         discardedAt()
+        effectiveAt()
         ledgerAccountCurrency()
         ledgerAccountCurrencyExponent()
         ledgerAccountId()
@@ -827,6 +873,7 @@ private constructor(
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (direction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (if (effectiveAt.asKnown().isPresent) 1 else 0) +
             (if (ledgerAccountCurrency.asKnown().isPresent) 1 else 0) +
             (if (ledgerAccountCurrencyExponent.asKnown().isPresent) 1 else 0) +
             (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
@@ -1087,6 +1134,7 @@ private constructor(
             createdAt == other.createdAt &&
             direction == other.direction &&
             discardedAt == other.discardedAt &&
+            effectiveAt == other.effectiveAt &&
             ledgerAccountCurrency == other.ledgerAccountCurrency &&
             ledgerAccountCurrencyExponent == other.ledgerAccountCurrencyExponent &&
             ledgerAccountId == other.ledgerAccountId &&
@@ -1108,6 +1156,7 @@ private constructor(
             createdAt,
             direction,
             discardedAt,
+            effectiveAt,
             ledgerAccountCurrency,
             ledgerAccountCurrencyExponent,
             ledgerAccountId,
@@ -1126,5 +1175,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, effectiveAt=$effectiveAt, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
