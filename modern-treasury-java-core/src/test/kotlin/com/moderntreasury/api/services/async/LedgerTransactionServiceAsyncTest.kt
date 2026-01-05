@@ -42,6 +42,7 @@ internal class LedgerTransactionServiceAsyncTest {
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
+                            .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .lockVersion(0L)
                             .metadata(
                                 LedgerEntryCreateRequest.Metadata.builder()
@@ -126,6 +127,7 @@ internal class LedgerTransactionServiceAsyncTest {
                                     .putAdditionalProperty("foo", JsonValue.from(0))
                                     .build()
                             )
+                            .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .lockVersion(0L)
                             .metadata(
                                 LedgerEntryCreateRequest.Metadata.builder()
