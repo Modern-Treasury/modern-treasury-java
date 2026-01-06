@@ -7,6 +7,7 @@ import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Document
+import com.moderntreasury.api.models.DocumentCreate
 import com.moderntreasury.api.models.DocumentCreateParams
 import com.moderntreasury.api.models.DocumentListPage
 import com.moderntreasury.api.models.DocumentListParams
@@ -35,6 +36,20 @@ interface DocumentService {
         params: DocumentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
+
+    /** @see create */
+    fun create(
+        documentCreate: DocumentCreate,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Document =
+        create(
+            DocumentCreateParams.builder().documentCreate(documentCreate).build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(documentCreate: DocumentCreate): Document =
+        create(documentCreate, RequestOptions.none())
 
     /** Get an existing document. */
     fun retrieve(id: String): Document = retrieve(id, DocumentRetrieveParams.none())
@@ -106,6 +121,22 @@ interface DocumentService {
             params: DocumentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Document>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            documentCreate: DocumentCreate,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document> =
+            create(
+                DocumentCreateParams.builder().documentCreate(documentCreate).build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(documentCreate: DocumentCreate): HttpResponseFor<Document> =
+            create(documentCreate, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/documents/{id}`, but is otherwise the same as

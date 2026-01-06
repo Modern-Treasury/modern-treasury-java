@@ -18,7 +18,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class PaymentActionUpdateResponse
+class PaymentAction
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
@@ -246,7 +246,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [PaymentActionUpdateResponse].
+         * Returns a mutable builder for constructing an instance of [PaymentAction].
          *
          * The following fields are required:
          * ```java
@@ -266,7 +266,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [PaymentActionUpdateResponse]. */
+    /** A builder for [PaymentAction]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -283,19 +283,19 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(paymentActionUpdateResponse: PaymentActionUpdateResponse) = apply {
-            id = paymentActionUpdateResponse.id
-            actionableId = paymentActionUpdateResponse.actionableId
-            actionableType = paymentActionUpdateResponse.actionableType
-            createdAt = paymentActionUpdateResponse.createdAt
-            details = paymentActionUpdateResponse.details
-            internalAccountId = paymentActionUpdateResponse.internalAccountId
-            liveMode = paymentActionUpdateResponse.liveMode
-            object_ = paymentActionUpdateResponse.object_
-            status = paymentActionUpdateResponse.status
-            type = paymentActionUpdateResponse.type
-            updatedAt = paymentActionUpdateResponse.updatedAt
-            additionalProperties = paymentActionUpdateResponse.additionalProperties.toMutableMap()
+        internal fun from(paymentAction: PaymentAction) = apply {
+            id = paymentAction.id
+            actionableId = paymentAction.actionableId
+            actionableType = paymentAction.actionableType
+            createdAt = paymentAction.createdAt
+            details = paymentAction.details
+            internalAccountId = paymentAction.internalAccountId
+            liveMode = paymentAction.liveMode
+            object_ = paymentAction.object_
+            status = paymentAction.status
+            type = paymentAction.type
+            updatedAt = paymentAction.updatedAt
+            additionalProperties = paymentAction.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -456,7 +456,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [PaymentActionUpdateResponse].
+         * Returns an immutable instance of [PaymentAction].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -477,8 +477,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): PaymentActionUpdateResponse =
-            PaymentActionUpdateResponse(
+        fun build(): PaymentAction =
+            PaymentAction(
                 checkRequired("id", id),
                 checkRequired("actionableId", actionableId),
                 checkRequired("actionableType", actionableType),
@@ -496,7 +496,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): PaymentActionUpdateResponse = apply {
+    fun validate(): PaymentAction = apply {
         if (validated) {
             return@apply
         }
@@ -545,7 +545,7 @@ private constructor(
             return true
         }
 
-        return other is PaymentActionUpdateResponse &&
+        return other is PaymentAction &&
             id == other.id &&
             actionableId == other.actionableId &&
             actionableType == other.actionableType &&
@@ -580,5 +580,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentActionUpdateResponse{id=$id, actionableId=$actionableId, actionableType=$actionableType, createdAt=$createdAt, details=$details, internalAccountId=$internalAccountId, liveMode=$liveMode, object_=$object_, status=$status, type=$type, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "PaymentAction{id=$id, actionableId=$actionableId, actionableType=$actionableType, createdAt=$createdAt, details=$details, internalAccountId=$internalAccountId, liveMode=$liveMode, object_=$object_, status=$status, type=$type, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
