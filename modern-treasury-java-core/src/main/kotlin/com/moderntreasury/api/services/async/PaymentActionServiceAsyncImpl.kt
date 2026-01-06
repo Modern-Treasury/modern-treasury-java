@@ -16,15 +16,12 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
+import com.moderntreasury.api.models.PaymentAction
 import com.moderntreasury.api.models.PaymentActionCreateParams
-import com.moderntreasury.api.models.PaymentActionCreateResponse
 import com.moderntreasury.api.models.PaymentActionListPageAsync
 import com.moderntreasury.api.models.PaymentActionListParams
-import com.moderntreasury.api.models.PaymentActionListResponse
 import com.moderntreasury.api.models.PaymentActionRetrieveParams
-import com.moderntreasury.api.models.PaymentActionRetrieveResponse
 import com.moderntreasury.api.models.PaymentActionUpdateParams
-import com.moderntreasury.api.models.PaymentActionUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
@@ -44,21 +41,21 @@ class PaymentActionServiceAsyncImpl internal constructor(private val clientOptio
     override fun create(
         params: PaymentActionCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PaymentActionCreateResponse> =
+    ): CompletableFuture<PaymentAction> =
         // post /api/payment_actions
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: PaymentActionRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PaymentActionRetrieveResponse> =
+    ): CompletableFuture<PaymentAction> =
         // get /api/payment_actions/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PaymentActionUpdateResponse> =
+    ): CompletableFuture<PaymentAction> =
         // patch /api/payment_actions/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -82,13 +79,13 @@ class PaymentActionServiceAsyncImpl internal constructor(private val clientOptio
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<PaymentActionCreateResponse> =
-            jsonHandler<PaymentActionCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<PaymentAction> =
+            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
 
         override fun create(
             params: PaymentActionCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PaymentActionCreateResponse>> {
+        ): CompletableFuture<HttpResponseFor<PaymentAction>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -113,13 +110,13 @@ class PaymentActionServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val retrieveHandler: Handler<PaymentActionRetrieveResponse> =
-            jsonHandler<PaymentActionRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<PaymentAction> =
+            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PaymentActionRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> {
+        ): CompletableFuture<HttpResponseFor<PaymentAction>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -146,13 +143,13 @@ class PaymentActionServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val updateHandler: Handler<PaymentActionUpdateResponse> =
-            jsonHandler<PaymentActionUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<PaymentAction> =
+            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
 
         override fun update(
             params: PaymentActionUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PaymentActionUpdateResponse>> {
+        ): CompletableFuture<HttpResponseFor<PaymentAction>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -180,8 +177,8 @@ class PaymentActionServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val listHandler: Handler<List<PaymentActionListResponse>> =
-            jsonHandler<List<PaymentActionListResponse>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<PaymentAction>> =
+            jsonHandler<List<PaymentAction>>(clientOptions.jsonMapper)
 
         override fun list(
             params: PaymentActionListParams,

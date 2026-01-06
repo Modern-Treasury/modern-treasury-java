@@ -6,14 +6,12 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
+import com.moderntreasury.api.models.Hold
 import com.moderntreasury.api.models.HoldCreateParams
-import com.moderntreasury.api.models.HoldCreateResponse
 import com.moderntreasury.api.models.HoldListPage
 import com.moderntreasury.api.models.HoldListParams
 import com.moderntreasury.api.models.HoldRetrieveParams
-import com.moderntreasury.api.models.HoldRetrieveResponse
 import com.moderntreasury.api.models.HoldUpdateParams
-import com.moderntreasury.api.models.HoldUpdateResponse
 import java.util.function.Consumer
 
 interface HoldService {
@@ -31,46 +29,43 @@ interface HoldService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): HoldService
 
     /** Create a new hold */
-    fun create(params: HoldCreateParams): HoldCreateResponse = create(params, RequestOptions.none())
+    fun create(params: HoldCreateParams): Hold = create(params, RequestOptions.none())
 
     /** @see create */
     fun create(
         params: HoldCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): HoldCreateResponse
+    ): Hold
 
     /** Get a specific hold */
-    fun retrieve(id: String): HoldRetrieveResponse = retrieve(id, HoldRetrieveParams.none())
+    fun retrieve(id: String): Hold = retrieve(id, HoldRetrieveParams.none())
 
     /** @see retrieve */
     fun retrieve(
         id: String,
         params: HoldRetrieveParams = HoldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): HoldRetrieveResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    ): Hold = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: HoldRetrieveParams = HoldRetrieveParams.none(),
-    ): HoldRetrieveResponse = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: HoldRetrieveParams = HoldRetrieveParams.none()): Hold =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         params: HoldRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): HoldRetrieveResponse
+    ): Hold
 
     /** @see retrieve */
-    fun retrieve(params: HoldRetrieveParams): HoldRetrieveResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(params: HoldRetrieveParams): Hold = retrieve(params, RequestOptions.none())
 
     /** @see retrieve */
-    fun retrieve(id: String, requestOptions: RequestOptions): HoldRetrieveResponse =
+    fun retrieve(id: String, requestOptions: RequestOptions): Hold =
         retrieve(id, HoldRetrieveParams.none(), requestOptions)
 
     /** Update a hold */
-    fun update(id: String, params: HoldUpdateParams): HoldUpdateResponse =
+    fun update(id: String, params: HoldUpdateParams): Hold =
         update(id, params, RequestOptions.none())
 
     /** @see update */
@@ -78,16 +73,16 @@ interface HoldService {
         id: String,
         params: HoldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): HoldUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
+    ): Hold = update(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see update */
-    fun update(params: HoldUpdateParams): HoldUpdateResponse = update(params, RequestOptions.none())
+    fun update(params: HoldUpdateParams): Hold = update(params, RequestOptions.none())
 
     /** @see update */
     fun update(
         params: HoldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): HoldUpdateResponse
+    ): Hold
 
     /** Get a list of holds. */
     fun list(): HoldListPage = list(HoldListParams.none())
@@ -121,7 +116,7 @@ interface HoldService {
          * [HoldService.create].
          */
         @MustBeClosed
-        fun create(params: HoldCreateParams): HttpResponseFor<HoldCreateResponse> =
+        fun create(params: HoldCreateParams): HttpResponseFor<Hold> =
             create(params, RequestOptions.none())
 
         /** @see create */
@@ -129,15 +124,14 @@ interface HoldService {
         fun create(
             params: HoldCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HoldCreateResponse>
+        ): HttpResponseFor<Hold>
 
         /**
          * Returns a raw HTTP response for `get /api/holds/{id}`, but is otherwise the same as
          * [HoldService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(id: String): HttpResponseFor<HoldRetrieveResponse> =
-            retrieve(id, HoldRetrieveParams.none())
+        fun retrieve(id: String): HttpResponseFor<Hold> = retrieve(id, HoldRetrieveParams.none())
 
         /** @see retrieve */
         @MustBeClosed
@@ -145,34 +139,30 @@ interface HoldService {
             id: String,
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HoldRetrieveResponse> =
-            retrieve(params.toBuilder().id(id).build(), requestOptions)
+        ): HttpResponseFor<Hold> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
-        ): HttpResponseFor<HoldRetrieveResponse> = retrieve(id, params, RequestOptions.none())
+        ): HttpResponseFor<Hold> = retrieve(id, params, RequestOptions.none())
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: HoldRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HoldRetrieveResponse>
+        ): HttpResponseFor<Hold>
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(params: HoldRetrieveParams): HttpResponseFor<HoldRetrieveResponse> =
+        fun retrieve(params: HoldRetrieveParams): HttpResponseFor<Hold> =
             retrieve(params, RequestOptions.none())
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<HoldRetrieveResponse> =
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Hold> =
             retrieve(id, HoldRetrieveParams.none(), requestOptions)
 
         /**
@@ -180,7 +170,7 @@ interface HoldService {
          * [HoldService.update].
          */
         @MustBeClosed
-        fun update(id: String, params: HoldUpdateParams): HttpResponseFor<HoldUpdateResponse> =
+        fun update(id: String, params: HoldUpdateParams): HttpResponseFor<Hold> =
             update(id, params, RequestOptions.none())
 
         /** @see update */
@@ -189,12 +179,11 @@ interface HoldService {
             id: String,
             params: HoldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HoldUpdateResponse> =
-            update(params.toBuilder().id(id).build(), requestOptions)
+        ): HttpResponseFor<Hold> = update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see update */
         @MustBeClosed
-        fun update(params: HoldUpdateParams): HttpResponseFor<HoldUpdateResponse> =
+        fun update(params: HoldUpdateParams): HttpResponseFor<Hold> =
             update(params, RequestOptions.none())
 
         /** @see update */
@@ -202,7 +191,7 @@ interface HoldService {
         fun update(
             params: HoldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<HoldUpdateResponse>
+        ): HttpResponseFor<Hold>
 
         /**
          * Returns a raw HTTP response for `get /api/holds`, but is otherwise the same as

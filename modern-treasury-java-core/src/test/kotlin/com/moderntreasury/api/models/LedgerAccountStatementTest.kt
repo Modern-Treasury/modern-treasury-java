@@ -9,12 +9,12 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class LedgerAccountStatementRetrieveResponseTest {
+internal class LedgerAccountStatementTest {
 
     @Test
     fun create() {
-        val ledgerAccountStatementRetrieveResponse =
-            LedgerAccountStatementRetrieveResponse.builder()
+        val ledgerAccountStatement =
+            LedgerAccountStatement.builder()
                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .description("description")
@@ -57,7 +57,7 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                 .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .liveMode(true)
                 .metadata(
-                    LedgerAccountStatementRetrieveResponse.Metadata.builder()
+                    LedgerAccountStatement.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -98,16 +98,15 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
-        assertThat(ledgerAccountStatementRetrieveResponse.id())
-            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(ledgerAccountStatementRetrieveResponse.createdAt())
+        assertThat(ledgerAccountStatement.id()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(ledgerAccountStatement.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(ledgerAccountStatementRetrieveResponse.description()).contains("description")
-        assertThat(ledgerAccountStatementRetrieveResponse.effectiveAtLowerBound())
+        assertThat(ledgerAccountStatement.description()).contains("description")
+        assertThat(ledgerAccountStatement.effectiveAtLowerBound())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(ledgerAccountStatementRetrieveResponse.effectiveAtUpperBound())
+        assertThat(ledgerAccountStatement.effectiveAtUpperBound())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(ledgerAccountStatementRetrieveResponse.endingBalance())
+        assertThat(ledgerAccountStatement.endingBalance())
             .isEqualTo(
                 LedgerBalances.builder()
                     .availableBalance(
@@ -139,24 +138,24 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                     )
                     .build()
             )
-        assertThat(ledgerAccountStatementRetrieveResponse.ledgerAccountId())
+        assertThat(ledgerAccountStatement.ledgerAccountId())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(ledgerAccountStatementRetrieveResponse.ledgerAccountLockVersion()).isEqualTo(0L)
-        assertThat(ledgerAccountStatementRetrieveResponse.ledgerAccountNormalBalance())
+        assertThat(ledgerAccountStatement.ledgerAccountLockVersion()).isEqualTo(0L)
+        assertThat(ledgerAccountStatement.ledgerAccountNormalBalance())
             .isEqualTo(TransactionDirection.CREDIT)
-        assertThat(ledgerAccountStatementRetrieveResponse.ledgerId())
+        assertThat(ledgerAccountStatement.ledgerId())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(ledgerAccountStatementRetrieveResponse.liveMode()).isEqualTo(true)
-        assertThat(ledgerAccountStatementRetrieveResponse.metadata())
+        assertThat(ledgerAccountStatement.liveMode()).isEqualTo(true)
+        assertThat(ledgerAccountStatement.metadata())
             .isEqualTo(
-                LedgerAccountStatementRetrieveResponse.Metadata.builder()
+                LedgerAccountStatement.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
-        assertThat(ledgerAccountStatementRetrieveResponse.object_()).isEqualTo("object")
-        assertThat(ledgerAccountStatementRetrieveResponse.startingBalance())
+        assertThat(ledgerAccountStatement.object_()).isEqualTo("object")
+        assertThat(ledgerAccountStatement.startingBalance())
             .isEqualTo(
                 LedgerBalances.builder()
                     .availableBalance(
@@ -188,15 +187,15 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                     )
                     .build()
             )
-        assertThat(ledgerAccountStatementRetrieveResponse.updatedAt())
+        assertThat(ledgerAccountStatement.updatedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
-        val ledgerAccountStatementRetrieveResponse =
-            LedgerAccountStatementRetrieveResponse.builder()
+        val ledgerAccountStatement =
+            LedgerAccountStatement.builder()
                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .description("description")
@@ -239,7 +238,7 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                 .ledgerId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .liveMode(true)
                 .metadata(
-                    LedgerAccountStatementRetrieveResponse.Metadata.builder()
+                    LedgerAccountStatement.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
@@ -280,13 +279,12 @@ internal class LedgerAccountStatementRetrieveResponseTest {
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
-        val roundtrippedLedgerAccountStatementRetrieveResponse =
+        val roundtrippedLedgerAccountStatement =
             jsonMapper.readValue(
-                jsonMapper.writeValueAsString(ledgerAccountStatementRetrieveResponse),
-                jacksonTypeRef<LedgerAccountStatementRetrieveResponse>(),
+                jsonMapper.writeValueAsString(ledgerAccountStatement),
+                jacksonTypeRef<LedgerAccountStatement>(),
             )
 
-        assertThat(roundtrippedLedgerAccountStatementRetrieveResponse)
-            .isEqualTo(ledgerAccountStatementRetrieveResponse)
+        assertThat(roundtrippedLedgerAccountStatement).isEqualTo(ledgerAccountStatement)
     }
 }

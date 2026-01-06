@@ -12,19 +12,23 @@ internal class InvoiceLineItemCreateParamsTest {
     fun create() {
         InvoiceLineItemCreateParams.builder()
             .invoiceId("invoice_id")
-            .name("name")
-            .unitAmount(0L)
-            .description("description")
-            .direction("direction")
-            .metadata(
-                InvoiceLineItemCreateParams.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+            .invoiceLineItemCreate(
+                InvoiceLineItemCreate.builder()
+                    .name("name")
+                    .unitAmount(0L)
+                    .description("description")
+                    .direction("direction")
+                    .metadata(
+                        InvoiceLineItemCreate.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .quantity(0L)
+                    .unitAmountDecimal("unit_amount_decimal")
                     .build()
             )
-            .quantity(0L)
-            .unitAmountDecimal("unit_amount_decimal")
             .build()
     }
 
@@ -33,8 +37,9 @@ internal class InvoiceLineItemCreateParamsTest {
         val params =
             InvoiceLineItemCreateParams.builder()
                 .invoiceId("invoice_id")
-                .name("name")
-                .unitAmount(0L)
+                .invoiceLineItemCreate(
+                    InvoiceLineItemCreate.builder().name("name").unitAmount(0L).build()
+                )
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("invoice_id")
@@ -47,37 +52,45 @@ internal class InvoiceLineItemCreateParamsTest {
         val params =
             InvoiceLineItemCreateParams.builder()
                 .invoiceId("invoice_id")
-                .name("name")
-                .unitAmount(0L)
-                .description("description")
-                .direction("direction")
-                .metadata(
-                    InvoiceLineItemCreateParams.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                .invoiceLineItemCreate(
+                    InvoiceLineItemCreate.builder()
+                        .name("name")
+                        .unitAmount(0L)
+                        .description("description")
+                        .direction("direction")
+                        .metadata(
+                            InvoiceLineItemCreate.Metadata.builder()
+                                .putAdditionalProperty("key", JsonValue.from("value"))
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                                .build()
+                        )
+                        .quantity(0L)
+                        .unitAmountDecimal("unit_amount_decimal")
                         .build()
                 )
-                .quantity(0L)
-                .unitAmountDecimal("unit_amount_decimal")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.unitAmount()).isEqualTo(0L)
-        assertThat(body.description()).contains("description")
-        assertThat(body.direction()).contains("direction")
-        assertThat(body.metadata())
-            .contains(
-                InvoiceLineItemCreateParams.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+        assertThat(body)
+            .isEqualTo(
+                InvoiceLineItemCreate.builder()
+                    .name("name")
+                    .unitAmount(0L)
+                    .description("description")
+                    .direction("direction")
+                    .metadata(
+                        InvoiceLineItemCreate.Metadata.builder()
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .quantity(0L)
+                    .unitAmountDecimal("unit_amount_decimal")
                     .build()
             )
-        assertThat(body.quantity()).contains(0L)
-        assertThat(body.unitAmountDecimal()).contains("unit_amount_decimal")
     }
 
     @Test
@@ -85,13 +98,14 @@ internal class InvoiceLineItemCreateParamsTest {
         val params =
             InvoiceLineItemCreateParams.builder()
                 .invoiceId("invoice_id")
-                .name("name")
-                .unitAmount(0L)
+                .invoiceLineItemCreate(
+                    InvoiceLineItemCreate.builder().name("name").unitAmount(0L).build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.name()).isEqualTo("name")
-        assertThat(body.unitAmount()).isEqualTo(0L)
+        assertThat(body)
+            .isEqualTo(InvoiceLineItemCreate.builder().name("name").unitAmount(0L).build())
     }
 }

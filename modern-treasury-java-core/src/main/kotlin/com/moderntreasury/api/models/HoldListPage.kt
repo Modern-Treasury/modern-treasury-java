@@ -17,8 +17,8 @@ private constructor(
     private val service: HoldService,
     private val params: HoldListParams,
     private val headers: Headers,
-    private val items: List<HoldListResponse>,
-) : Page<HoldListResponse> {
+    private val items: List<Hold>,
+) : Page<Hold> {
 
     fun perPage(): Optional<String> =
         Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
@@ -37,13 +37,13 @@ private constructor(
 
     override fun nextPage(): HoldListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager<HoldListResponse> = AutoPager.from(this)
+    fun autoPager(): AutoPager<Hold> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): HoldListParams = params
 
     /** The response that this page was parsed from. */
-    override fun items(): List<HoldListResponse> = items
+    override fun items(): List<Hold> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -69,7 +69,7 @@ private constructor(
         private var service: HoldService? = null
         private var params: HoldListParams? = null
         private var headers: Headers? = null
-        private var items: List<HoldListResponse>? = null
+        private var items: List<Hold>? = null
 
         @JvmSynthetic
         internal fun from(holdListPage: HoldListPage) = apply {
@@ -87,7 +87,7 @@ private constructor(
         fun headers(headers: Headers) = apply { this.headers = headers }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<HoldListResponse>) = apply { this.items = items }
+        fun items(items: List<Hold>) = apply { this.items = items }
 
         /**
          * Returns an immutable instance of [HoldListPage].
