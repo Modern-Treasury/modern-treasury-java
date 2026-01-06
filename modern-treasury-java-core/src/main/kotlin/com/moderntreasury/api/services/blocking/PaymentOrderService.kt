@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.AsyncResponse
 import com.moderntreasury.api.models.PaymentOrder
+import com.moderntreasury.api.models.PaymentOrderAsyncCreate
 import com.moderntreasury.api.models.PaymentOrderCreateAsyncParams
 import com.moderntreasury.api.models.PaymentOrderCreateParams
 import com.moderntreasury.api.models.PaymentOrderListPage
@@ -129,6 +130,22 @@ interface PaymentOrderService {
         params: PaymentOrderCreateAsyncParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AsyncResponse
+
+    /** @see createAsync */
+    fun createAsync(
+        paymentOrderAsyncCreate: PaymentOrderAsyncCreate,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AsyncResponse =
+        createAsync(
+            PaymentOrderCreateAsyncParams.builder()
+                .paymentOrderAsyncCreate(paymentOrderAsyncCreate)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see createAsync */
+    fun createAsync(paymentOrderAsyncCreate: PaymentOrderAsyncCreate): AsyncResponse =
+        createAsync(paymentOrderAsyncCreate, RequestOptions.none())
 
     /**
      * A view of [PaymentOrderService] that provides access to raw HTTP responses for each method.
@@ -281,5 +298,25 @@ interface PaymentOrderService {
             params: PaymentOrderCreateAsyncParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AsyncResponse>
+
+        /** @see createAsync */
+        @MustBeClosed
+        fun createAsync(
+            paymentOrderAsyncCreate: PaymentOrderAsyncCreate,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AsyncResponse> =
+            createAsync(
+                PaymentOrderCreateAsyncParams.builder()
+                    .paymentOrderAsyncCreate(paymentOrderAsyncCreate)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see createAsync */
+        @MustBeClosed
+        fun createAsync(
+            paymentOrderAsyncCreate: PaymentOrderAsyncCreate
+        ): HttpResponseFor<AsyncResponse> =
+            createAsync(paymentOrderAsyncCreate, RequestOptions.none())
     }
 }
