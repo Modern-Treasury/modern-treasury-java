@@ -20,8 +20,8 @@ private constructor(
     private val streamHandlerExecutor: Executor,
     private val params: HoldListParams,
     private val headers: Headers,
-    private val items: List<Hold>,
-) : PageAsync<Hold> {
+    private val items: List<HoldListResponse>,
+) : PageAsync<HoldListResponse> {
 
     fun perPage(): Optional<String> =
         Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
@@ -40,13 +40,14 @@ private constructor(
 
     override fun nextPage(): CompletableFuture<HoldListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Hold> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<HoldListResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): HoldListParams = params
 
     /** The response that this page was parsed from. */
-    override fun items(): List<Hold> = items
+    override fun items(): List<HoldListResponse> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -74,7 +75,7 @@ private constructor(
         private var streamHandlerExecutor: Executor? = null
         private var params: HoldListParams? = null
         private var headers: Headers? = null
-        private var items: List<Hold>? = null
+        private var items: List<HoldListResponse>? = null
 
         @JvmSynthetic
         internal fun from(holdListPageAsync: HoldListPageAsync) = apply {
@@ -97,7 +98,7 @@ private constructor(
         fun headers(headers: Headers) = apply { this.headers = headers }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<Hold>) = apply { this.items = items }
+        fun items(items: List<HoldListResponse>) = apply { this.items = items }
 
         /**
          * Returns an immutable instance of [HoldListPageAsync].

@@ -6,7 +6,6 @@ import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ExpectedPayment
-import com.moderntreasury.api.models.ExpectedPaymentCreate
 import com.moderntreasury.api.models.ExpectedPaymentCreateParams
 import com.moderntreasury.api.models.ExpectedPaymentDeleteParams
 import com.moderntreasury.api.models.ExpectedPaymentListPageAsync
@@ -43,22 +42,6 @@ interface ExpectedPaymentServiceAsync {
     fun create(
         params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
     ): CompletableFuture<ExpectedPayment> = create(params, RequestOptions.none())
-
-    /** @see create */
-    fun create(
-        expectedPaymentCreate: ExpectedPaymentCreate,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ExpectedPayment> =
-        create(
-            ExpectedPaymentCreateParams.builder()
-                .expectedPaymentCreate(expectedPaymentCreate)
-                .build(),
-            requestOptions,
-        )
-
-    /** @see create */
-    fun create(expectedPaymentCreate: ExpectedPaymentCreate): CompletableFuture<ExpectedPayment> =
-        create(expectedPaymentCreate, RequestOptions.none())
 
     /** @see create */
     fun create(requestOptions: RequestOptions): CompletableFuture<ExpectedPayment> =
@@ -212,24 +195,6 @@ interface ExpectedPaymentServiceAsync {
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
         ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
             create(params, RequestOptions.none())
-
-        /** @see create */
-        fun create(
-            expectedPaymentCreate: ExpectedPaymentCreate,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
-            create(
-                ExpectedPaymentCreateParams.builder()
-                    .expectedPaymentCreate(expectedPaymentCreate)
-                    .build(),
-                requestOptions,
-            )
-
-        /** @see create */
-        fun create(
-            expectedPaymentCreate: ExpectedPaymentCreate
-        ): CompletableFuture<HttpResponseFor<ExpectedPayment>> =
-            create(expectedPaymentCreate, RequestOptions.none())
 
         /** @see create */
         fun create(

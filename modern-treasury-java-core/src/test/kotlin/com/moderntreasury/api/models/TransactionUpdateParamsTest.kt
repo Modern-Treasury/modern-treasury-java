@@ -3,7 +3,6 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
-import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,13 +12,9 @@ internal class TransactionUpdateParamsTest {
     fun create() {
         TransactionUpdateParams.builder()
             .id("id")
-            .transactionUpdate(
-                TransactionUpdate.builder()
-                    .metadata(
-                        TransactionUpdate.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
+            .metadata(
+                TransactionUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .build()
@@ -39,27 +34,19 @@ internal class TransactionUpdateParamsTest {
         val params =
             TransactionUpdateParams.builder()
                 .id("id")
-                .transactionUpdate(
-                    TransactionUpdate.builder()
-                        .metadata(
-                            TransactionUpdate.Metadata.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("string"))
-                                .build()
-                        )
+                .metadata(
+                    TransactionUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .build()
 
-        val body = params._body().getOrNull()
+        val body = params._body()
 
-        assertThat(body)
-            .isEqualTo(
-                TransactionUpdate.builder()
-                    .metadata(
-                        TransactionUpdate.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
+        assertThat(body.metadata())
+            .contains(
+                TransactionUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
     }
@@ -68,6 +55,6 @@ internal class TransactionUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params = TransactionUpdateParams.builder().id("id").build()
 
-        val body = params._body().getOrNull()
+        val body = params._body()
     }
 }

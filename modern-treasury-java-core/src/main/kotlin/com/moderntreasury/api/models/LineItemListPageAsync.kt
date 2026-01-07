@@ -20,8 +20,8 @@ private constructor(
     private val streamHandlerExecutor: Executor,
     private val params: LineItemListParams,
     private val headers: Headers,
-    private val items: List<LineItemListResponse>,
-) : PageAsync<LineItemListResponse> {
+    private val items: List<LineItem>,
+) : PageAsync<LineItem> {
 
     fun perPage(): Optional<String> =
         Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
@@ -41,14 +41,13 @@ private constructor(
     override fun nextPage(): CompletableFuture<LineItemListPageAsync> =
         service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<LineItemListResponse> =
-        AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<LineItem> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): LineItemListParams = params
 
     /** The response that this page was parsed from. */
-    override fun items(): List<LineItemListResponse> = items
+    override fun items(): List<LineItem> = items
 
     fun toBuilder() = Builder().from(this)
 
@@ -76,7 +75,7 @@ private constructor(
         private var streamHandlerExecutor: Executor? = null
         private var params: LineItemListParams? = null
         private var headers: Headers? = null
-        private var items: List<LineItemListResponse>? = null
+        private var items: List<LineItem>? = null
 
         @JvmSynthetic
         internal fun from(lineItemListPageAsync: LineItemListPageAsync) = apply {
@@ -99,7 +98,7 @@ private constructor(
         fun headers(headers: Headers) = apply { this.headers = headers }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<LineItemListResponse>) = apply { this.items = items }
+        fun items(items: List<LineItem>) = apply { this.items = items }
 
         /**
          * Returns an immutable instance of [LineItemListPageAsync].

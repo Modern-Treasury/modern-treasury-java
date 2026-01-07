@@ -5,12 +5,14 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
-import com.moderntreasury.api.models.Hold
 import com.moderntreasury.api.models.HoldCreateParams
+import com.moderntreasury.api.models.HoldCreateResponse
 import com.moderntreasury.api.models.HoldListPageAsync
 import com.moderntreasury.api.models.HoldListParams
 import com.moderntreasury.api.models.HoldRetrieveParams
+import com.moderntreasury.api.models.HoldRetrieveResponse
 import com.moderntreasury.api.models.HoldUpdateParams
+import com.moderntreasury.api.models.HoldUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -29,47 +31,52 @@ interface HoldServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): HoldServiceAsync
 
     /** Create a new hold */
-    fun create(params: HoldCreateParams): CompletableFuture<Hold> =
+    fun create(params: HoldCreateParams): CompletableFuture<HoldCreateResponse> =
         create(params, RequestOptions.none())
 
     /** @see create */
     fun create(
         params: HoldCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Hold>
+    ): CompletableFuture<HoldCreateResponse>
 
     /** Get a specific hold */
-    fun retrieve(id: String): CompletableFuture<Hold> = retrieve(id, HoldRetrieveParams.none())
+    fun retrieve(id: String): CompletableFuture<HoldRetrieveResponse> =
+        retrieve(id, HoldRetrieveParams.none())
 
     /** @see retrieve */
     fun retrieve(
         id: String,
         params: HoldRetrieveParams = HoldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Hold> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    ): CompletableFuture<HoldRetrieveResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
         id: String,
         params: HoldRetrieveParams = HoldRetrieveParams.none(),
-    ): CompletableFuture<Hold> = retrieve(id, params, RequestOptions.none())
+    ): CompletableFuture<HoldRetrieveResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         params: HoldRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Hold>
+    ): CompletableFuture<HoldRetrieveResponse>
 
     /** @see retrieve */
-    fun retrieve(params: HoldRetrieveParams): CompletableFuture<Hold> =
+    fun retrieve(params: HoldRetrieveParams): CompletableFuture<HoldRetrieveResponse> =
         retrieve(params, RequestOptions.none())
 
     /** @see retrieve */
-    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Hold> =
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<HoldRetrieveResponse> =
         retrieve(id, HoldRetrieveParams.none(), requestOptions)
 
     /** Update a hold */
-    fun update(id: String, params: HoldUpdateParams): CompletableFuture<Hold> =
+    fun update(id: String, params: HoldUpdateParams): CompletableFuture<HoldUpdateResponse> =
         update(id, params, RequestOptions.none())
 
     /** @see update */
@@ -77,17 +84,18 @@ interface HoldServiceAsync {
         id: String,
         params: HoldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Hold> = update(params.toBuilder().id(id).build(), requestOptions)
+    ): CompletableFuture<HoldUpdateResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see update */
-    fun update(params: HoldUpdateParams): CompletableFuture<Hold> =
+    fun update(params: HoldUpdateParams): CompletableFuture<HoldUpdateResponse> =
         update(params, RequestOptions.none())
 
     /** @see update */
     fun update(
         params: HoldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Hold>
+    ): CompletableFuture<HoldUpdateResponse>
 
     /** Get a list of holds. */
     fun list(): CompletableFuture<HoldListPageAsync> = list(HoldListParams.none())
@@ -120,20 +128,22 @@ interface HoldServiceAsync {
          * Returns a raw HTTP response for `post /api/holds`, but is otherwise the same as
          * [HoldServiceAsync.create].
          */
-        fun create(params: HoldCreateParams): CompletableFuture<HttpResponseFor<Hold>> =
+        fun create(
+            params: HoldCreateParams
+        ): CompletableFuture<HttpResponseFor<HoldCreateResponse>> =
             create(params, RequestOptions.none())
 
         /** @see create */
         fun create(
             params: HoldCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>>
+        ): CompletableFuture<HttpResponseFor<HoldCreateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /api/holds/{id}`, but is otherwise the same as
          * [HoldServiceAsync.retrieve].
          */
-        fun retrieve(id: String): CompletableFuture<HttpResponseFor<Hold>> =
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>> =
             retrieve(id, HoldRetrieveParams.none())
 
         /** @see retrieve */
@@ -141,37 +151,43 @@ interface HoldServiceAsync {
             id: String,
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>> =
+        ): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see retrieve */
         fun retrieve(
             id: String,
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>> = retrieve(id, params, RequestOptions.none())
+        ): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             params: HoldRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>>
+        ): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>>
 
         /** @see retrieve */
-        fun retrieve(params: HoldRetrieveParams): CompletableFuture<HttpResponseFor<Hold>> =
+        fun retrieve(
+            params: HoldRetrieveParams
+        ): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Hold>> =
+        ): CompletableFuture<HttpResponseFor<HoldRetrieveResponse>> =
             retrieve(id, HoldRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /api/holds/{id}`, but is otherwise the same as
          * [HoldServiceAsync.update].
          */
-        fun update(id: String, params: HoldUpdateParams): CompletableFuture<HttpResponseFor<Hold>> =
+        fun update(
+            id: String,
+            params: HoldUpdateParams,
+        ): CompletableFuture<HttpResponseFor<HoldUpdateResponse>> =
             update(id, params, RequestOptions.none())
 
         /** @see update */
@@ -179,18 +195,20 @@ interface HoldServiceAsync {
             id: String,
             params: HoldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>> =
+        ): CompletableFuture<HttpResponseFor<HoldUpdateResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see update */
-        fun update(params: HoldUpdateParams): CompletableFuture<HttpResponseFor<Hold>> =
+        fun update(
+            params: HoldUpdateParams
+        ): CompletableFuture<HttpResponseFor<HoldUpdateResponse>> =
             update(params, RequestOptions.none())
 
         /** @see update */
         fun update(
             params: HoldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Hold>>
+        ): CompletableFuture<HttpResponseFor<HoldUpdateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /api/holds`, but is otherwise the same as

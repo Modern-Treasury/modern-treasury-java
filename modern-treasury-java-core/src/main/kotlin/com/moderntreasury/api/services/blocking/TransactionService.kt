@@ -8,7 +8,6 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Transaction
-import com.moderntreasury.api.models.TransactionCreate
 import com.moderntreasury.api.models.TransactionCreateParams
 import com.moderntreasury.api.models.TransactionDeleteParams
 import com.moderntreasury.api.models.TransactionListPage
@@ -42,20 +41,6 @@ interface TransactionService {
         params: TransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
-
-    /** @see create */
-    fun create(
-        transactionCreate: TransactionCreate,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction =
-        create(
-            TransactionCreateParams.builder().transactionCreate(transactionCreate).build(),
-            requestOptions,
-        )
-
-    /** @see create */
-    fun create(transactionCreate: TransactionCreate): Transaction =
-        create(transactionCreate, RequestOptions.none())
 
     /** Get details on a single transaction. */
     fun retrieve(id: String): Transaction = retrieve(id, TransactionRetrieveParams.none())
@@ -190,22 +175,6 @@ interface TransactionService {
             params: TransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction>
-
-        /** @see create */
-        @MustBeClosed
-        fun create(
-            transactionCreate: TransactionCreate,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction> =
-            create(
-                TransactionCreateParams.builder().transactionCreate(transactionCreate).build(),
-                requestOptions,
-            )
-
-        /** @see create */
-        @MustBeClosed
-        fun create(transactionCreate: TransactionCreate): HttpResponseFor<Transaction> =
-            create(transactionCreate, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the same
