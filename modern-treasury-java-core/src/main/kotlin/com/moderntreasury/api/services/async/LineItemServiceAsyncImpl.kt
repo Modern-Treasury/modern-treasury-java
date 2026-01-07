@@ -16,13 +16,11 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
+import com.moderntreasury.api.models.LineItem
 import com.moderntreasury.api.models.LineItemListPageAsync
 import com.moderntreasury.api.models.LineItemListParams
-import com.moderntreasury.api.models.LineItemListResponse
 import com.moderntreasury.api.models.LineItemRetrieveParams
-import com.moderntreasury.api.models.LineItemRetrieveResponse
 import com.moderntreasury.api.models.LineItemUpdateParams
-import com.moderntreasury.api.models.LineItemUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
@@ -42,14 +40,14 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun retrieve(
         params: LineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LineItemRetrieveResponse> =
+    ): CompletableFuture<LineItem> =
         // get /api/{itemizable_type}/{itemizable_id}/line_items/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: LineItemUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LineItemUpdateResponse> =
+    ): CompletableFuture<LineItem> =
         // patch /api/{itemizable_type}/{itemizable_id}/line_items/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +71,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val retrieveHandler: Handler<LineItemRetrieveResponse> =
-            jsonHandler<LineItemRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<LineItem> =
+            jsonHandler<LineItem>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: LineItemRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItemRetrieveResponse>> {
+        ): CompletableFuture<HttpResponseFor<LineItem>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -112,13 +110,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val updateHandler: Handler<LineItemUpdateResponse> =
-            jsonHandler<LineItemUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<LineItem> =
+            jsonHandler<LineItem>(clientOptions.jsonMapper)
 
         override fun update(
             params: LineItemUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItemUpdateResponse>> {
+        ): CompletableFuture<HttpResponseFor<LineItem>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -152,8 +150,8 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val listHandler: Handler<List<LineItemListResponse>> =
-            jsonHandler<List<LineItemListResponse>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<LineItem>> =
+            jsonHandler<List<LineItem>>(clientOptions.jsonMapper)
 
         override fun list(
             params: LineItemListParams,

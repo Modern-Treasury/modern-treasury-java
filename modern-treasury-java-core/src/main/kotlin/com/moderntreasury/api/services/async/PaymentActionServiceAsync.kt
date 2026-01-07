@@ -5,12 +5,14 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
-import com.moderntreasury.api.models.PaymentAction
 import com.moderntreasury.api.models.PaymentActionCreateParams
+import com.moderntreasury.api.models.PaymentActionCreateResponse
 import com.moderntreasury.api.models.PaymentActionListPageAsync
 import com.moderntreasury.api.models.PaymentActionListParams
 import com.moderntreasury.api.models.PaymentActionRetrieveParams
+import com.moderntreasury.api.models.PaymentActionRetrieveResponse
 import com.moderntreasury.api.models.PaymentActionUpdateParams
+import com.moderntreasury.api.models.PaymentActionUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -29,17 +31,17 @@ interface PaymentActionServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentActionServiceAsync
 
     /** Create a payment action. */
-    fun create(params: PaymentActionCreateParams): CompletableFuture<PaymentAction> =
+    fun create(params: PaymentActionCreateParams): CompletableFuture<PaymentActionCreateResponse> =
         create(params, RequestOptions.none())
 
     /** @see create */
     fun create(
         params: PaymentActionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PaymentAction>
+    ): CompletableFuture<PaymentActionCreateResponse>
 
     /** Get details on a single payment action. */
-    fun retrieve(id: String): CompletableFuture<PaymentAction> =
+    fun retrieve(id: String): CompletableFuture<PaymentActionRetrieveResponse> =
         retrieve(id, PaymentActionRetrieveParams.none())
 
     /** @see retrieve */
@@ -47,49 +49,57 @@ interface PaymentActionServiceAsync {
         id: String,
         params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PaymentAction> =
+    ): CompletableFuture<PaymentActionRetrieveResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
         id: String,
         params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
-    ): CompletableFuture<PaymentAction> = retrieve(id, params, RequestOptions.none())
+    ): CompletableFuture<PaymentActionRetrieveResponse> =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see retrieve */
     fun retrieve(
         params: PaymentActionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PaymentAction>
+    ): CompletableFuture<PaymentActionRetrieveResponse>
 
     /** @see retrieve */
-    fun retrieve(params: PaymentActionRetrieveParams): CompletableFuture<PaymentAction> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(
+        params: PaymentActionRetrieveParams
+    ): CompletableFuture<PaymentActionRetrieveResponse> = retrieve(params, RequestOptions.none())
 
     /** @see retrieve */
-    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PaymentAction> =
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PaymentActionRetrieveResponse> =
         retrieve(id, PaymentActionRetrieveParams.none(), requestOptions)
 
     /** Update a single payment action. */
-    fun update(id: String, params: PaymentActionUpdateParams): CompletableFuture<PaymentAction> =
-        update(id, params, RequestOptions.none())
+    fun update(
+        id: String,
+        params: PaymentActionUpdateParams,
+    ): CompletableFuture<PaymentActionUpdateResponse> = update(id, params, RequestOptions.none())
 
     /** @see update */
     fun update(
         id: String,
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PaymentAction> = update(params.toBuilder().id(id).build(), requestOptions)
+    ): CompletableFuture<PaymentActionUpdateResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see update */
-    fun update(params: PaymentActionUpdateParams): CompletableFuture<PaymentAction> =
+    fun update(params: PaymentActionUpdateParams): CompletableFuture<PaymentActionUpdateResponse> =
         update(params, RequestOptions.none())
 
     /** @see update */
     fun update(
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PaymentAction>
+    ): CompletableFuture<PaymentActionUpdateResponse>
 
     /** Get a list of all payment actions. */
     fun list(): CompletableFuture<PaymentActionListPageAsync> = list(PaymentActionListParams.none())
@@ -130,19 +140,22 @@ interface PaymentActionServiceAsync {
          */
         fun create(
             params: PaymentActionCreateParams
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> = create(params, RequestOptions.none())
+        ): CompletableFuture<HttpResponseFor<PaymentActionCreateResponse>> =
+            create(params, RequestOptions.none())
 
         /** @see create */
         fun create(
             params: PaymentActionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>>
+        ): CompletableFuture<HttpResponseFor<PaymentActionCreateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /api/payment_actions/{id}`, but is otherwise the
          * same as [PaymentActionServiceAsync.retrieve].
          */
-        fun retrieve(id: String): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        fun retrieve(
+            id: String
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> =
             retrieve(id, PaymentActionRetrieveParams.none())
 
         /** @see retrieve */
@@ -150,33 +163,33 @@ interface PaymentActionServiceAsync {
             id: String,
             params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see retrieve */
         fun retrieve(
             id: String,
             params: PaymentActionRetrieveParams = PaymentActionRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> =
             retrieve(id, params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             params: PaymentActionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>>
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>>
 
         /** @see retrieve */
         fun retrieve(
             params: PaymentActionRetrieveParams
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionRetrieveResponse>> =
             retrieve(id, PaymentActionRetrieveParams.none(), requestOptions)
 
         /**
@@ -186,7 +199,7 @@ interface PaymentActionServiceAsync {
         fun update(
             id: String,
             params: PaymentActionUpdateParams,
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionUpdateResponse>> =
             update(id, params, RequestOptions.none())
 
         /** @see update */
@@ -194,19 +207,20 @@ interface PaymentActionServiceAsync {
             id: String,
             params: PaymentActionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> =
+        ): CompletableFuture<HttpResponseFor<PaymentActionUpdateResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see update */
         fun update(
             params: PaymentActionUpdateParams
-        ): CompletableFuture<HttpResponseFor<PaymentAction>> = update(params, RequestOptions.none())
+        ): CompletableFuture<HttpResponseFor<PaymentActionUpdateResponse>> =
+            update(params, RequestOptions.none())
 
         /** @see update */
         fun update(
             params: PaymentActionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PaymentAction>>
+        ): CompletableFuture<HttpResponseFor<PaymentActionUpdateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /api/payment_actions`, but is otherwise the same as

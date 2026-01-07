@@ -6,7 +6,6 @@ import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LegalEntity
-import com.moderntreasury.api.models.LegalEntityCreate
 import com.moderntreasury.api.models.LegalEntityCreateParams
 import com.moderntreasury.api.models.LegalEntityListPageAsync
 import com.moderntreasury.api.models.LegalEntityListParams
@@ -38,20 +37,6 @@ interface LegalEntityServiceAsync {
         params: LegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
-
-    /** @see create */
-    fun create(
-        legalEntityCreate: LegalEntityCreate,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<LegalEntity> =
-        create(
-            LegalEntityCreateParams.builder().legalEntityCreate(legalEntityCreate).build(),
-            requestOptions,
-        )
-
-    /** @see create */
-    fun create(legalEntityCreate: LegalEntityCreate): CompletableFuture<LegalEntity> =
-        create(legalEntityCreate, RequestOptions.none())
 
     /** Get details on a single legal entity. */
     fun retrieve(id: String): CompletableFuture<LegalEntity> =
@@ -161,22 +146,6 @@ interface LegalEntityServiceAsync {
             params: LegalEntityCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LegalEntity>>
-
-        /** @see create */
-        fun create(
-            legalEntityCreate: LegalEntityCreate,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
-            create(
-                LegalEntityCreateParams.builder().legalEntityCreate(legalEntityCreate).build(),
-                requestOptions,
-            )
-
-        /** @see create */
-        fun create(
-            legalEntityCreate: LegalEntityCreate
-        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
-            create(legalEntityCreate, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same

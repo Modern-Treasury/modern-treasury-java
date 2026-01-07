@@ -2,15 +2,21 @@
 
 package com.moderntreasury.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.moderntreasury.api.core.Enum
+import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
+import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -20,7 +26,7 @@ class AccountDetailCreateParams
 private constructor(
     private val accountsType: AccountsType,
     private val accountId: String?,
-    private val accountDetailCreate: AccountDetailCreate,
+    private val body: AccountDetailCreateRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -29,10 +35,39 @@ private constructor(
 
     fun accountId(): Optional<String> = Optional.ofNullable(accountId)
 
-    fun accountDetailCreate(): AccountDetailCreate = accountDetailCreate
+    /**
+     * The account number for the bank account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun accountNumber(): String = body.accountNumber()
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> =
-        accountDetailCreate._additionalProperties()
+    /**
+     * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account number
+     * is in a generic format.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun accountNumberType(): Optional<AccountNumberType> = body.accountNumberType()
+
+    /**
+     * Returns the raw JSON value of [accountNumber].
+     *
+     * Unlike [accountNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _accountNumber(): JsonField<String> = body._accountNumber()
+
+    /**
+     * Returns the raw JSON value of [accountNumberType].
+     *
+     * Unlike [accountNumberType], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _accountNumberType(): JsonField<AccountNumberType> = body._accountNumberType()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -50,7 +85,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountDetailCreate()
+         * .accountNumber()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -61,7 +96,7 @@ private constructor(
 
         private var accountsType: AccountsType? = null
         private var accountId: String? = null
-        private var accountDetailCreate: AccountDetailCreate? = null
+        private var body: AccountDetailCreateRequest.Builder = AccountDetailCreateRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -69,7 +104,7 @@ private constructor(
         internal fun from(accountDetailCreateParams: AccountDetailCreateParams) = apply {
             accountsType = accountDetailCreateParams.accountsType
             accountId = accountDetailCreateParams.accountId
-            accountDetailCreate = accountDetailCreateParams.accountDetailCreate
+            body = accountDetailCreateParams.body.toBuilder()
             additionalHeaders = accountDetailCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = accountDetailCreateParams.additionalQueryParams.toBuilder()
         }
@@ -81,8 +116,66 @@ private constructor(
         /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
-        fun accountDetailCreate(accountDetailCreate: AccountDetailCreate) = apply {
-            this.accountDetailCreate = accountDetailCreate
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountNumber]
+         * - [accountNumberType]
+         */
+        fun body(body: AccountDetailCreateRequest) = apply { this.body = body.toBuilder() }
+
+        /** The account number for the bank account. */
+        fun accountNumber(accountNumber: String) = apply { body.accountNumber(accountNumber) }
+
+        /**
+         * Sets [Builder.accountNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun accountNumber(accountNumber: JsonField<String>) = apply {
+            body.accountNumber(accountNumber)
+        }
+
+        /**
+         * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
+         * number is in a generic format.
+         */
+        fun accountNumberType(accountNumberType: AccountNumberType) = apply {
+            body.accountNumberType(accountNumberType)
+        }
+
+        /**
+         * Sets [Builder.accountNumberType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountNumberType] with a well-typed [AccountNumberType]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun accountNumberType(accountNumberType: JsonField<AccountNumberType>) = apply {
+            body.accountNumberType(accountNumberType)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -191,7 +284,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .accountsType()
-         * .accountDetailCreate()
+         * .accountNumber()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -200,13 +293,13 @@ private constructor(
             AccountDetailCreateParams(
                 checkRequired("accountsType", accountsType),
                 accountId,
-                checkRequired("accountDetailCreate", accountDetailCreate),
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
     }
 
-    fun _body(): AccountDetailCreate = accountDetailCreate
+    fun _body(): AccountDetailCreateRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -218,6 +311,434 @@ private constructor(
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class AccountDetailCreateRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val accountNumber: JsonField<String>,
+        private val accountNumberType: JsonField<AccountNumberType>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("account_number")
+            @ExcludeMissing
+            accountNumber: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("account_number_type")
+            @ExcludeMissing
+            accountNumberType: JsonField<AccountNumberType> = JsonMissing.of(),
+        ) : this(accountNumber, accountNumberType, mutableMapOf())
+
+        /**
+         * The account number for the bank account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun accountNumber(): String = accountNumber.getRequired("account_number")
+
+        /**
+         * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
+         * number is in a generic format.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun accountNumberType(): Optional<AccountNumberType> =
+            accountNumberType.getOptional("account_number_type")
+
+        /**
+         * Returns the raw JSON value of [accountNumber].
+         *
+         * Unlike [accountNumber], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("account_number")
+        @ExcludeMissing
+        fun _accountNumber(): JsonField<String> = accountNumber
+
+        /**
+         * Returns the raw JSON value of [accountNumberType].
+         *
+         * Unlike [accountNumberType], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("account_number_type")
+        @ExcludeMissing
+        fun _accountNumberType(): JsonField<AccountNumberType> = accountNumberType
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .accountNumber()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [AccountDetailCreateRequest]. */
+        class Builder internal constructor() {
+
+            private var accountNumber: JsonField<String>? = null
+            private var accountNumberType: JsonField<AccountNumberType> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(accountDetailCreateRequest: AccountDetailCreateRequest) = apply {
+                accountNumber = accountDetailCreateRequest.accountNumber
+                accountNumberType = accountDetailCreateRequest.accountNumberType
+                additionalProperties =
+                    accountDetailCreateRequest.additionalProperties.toMutableMap()
+            }
+
+            /** The account number for the bank account. */
+            fun accountNumber(accountNumber: String) = accountNumber(JsonField.of(accountNumber))
+
+            /**
+             * Sets [Builder.accountNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountNumber] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun accountNumber(accountNumber: JsonField<String>) = apply {
+                this.accountNumber = accountNumber
+            }
+
+            /**
+             * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account
+             * number is in a generic format.
+             */
+            fun accountNumberType(accountNumberType: AccountNumberType) =
+                accountNumberType(JsonField.of(accountNumberType))
+
+            /**
+             * Sets [Builder.accountNumberType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountNumberType] with a well-typed
+             * [AccountNumberType] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun accountNumberType(accountNumberType: JsonField<AccountNumberType>) = apply {
+                this.accountNumberType = accountNumberType
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [AccountDetailCreateRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .accountNumber()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): AccountDetailCreateRequest =
+                AccountDetailCreateRequest(
+                    checkRequired("accountNumber", accountNumber),
+                    accountNumberType,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountDetailCreateRequest = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountNumber()
+            accountNumberType().ifPresent { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountNumber.asKnown().isPresent) 1 else 0) +
+                (accountNumberType.asKnown().getOrNull()?.validity() ?: 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AccountDetailCreateRequest &&
+                accountNumber == other.accountNumber &&
+                accountNumberType == other.accountNumberType &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(accountNumber, accountNumberType, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "AccountDetailCreateRequest{accountNumber=$accountNumber, accountNumberType=$accountNumberType, additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * One of `iban`, `clabe`, `wallet_address`, or `other`. Use `other` if the bank account number
+     * is in a generic format.
+     */
+    class AccountNumberType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val AU_NUMBER = of("au_number")
+
+            @JvmField val BASE_ADDRESS = of("base_address")
+
+            @JvmField val CLABE = of("clabe")
+
+            @JvmField val ETHEREUM_ADDRESS = of("ethereum_address")
+
+            @JvmField val HK_NUMBER = of("hk_number")
+
+            @JvmField val IBAN = of("iban")
+
+            @JvmField val ID_NUMBER = of("id_number")
+
+            @JvmField val NZ_NUMBER = of("nz_number")
+
+            @JvmField val OTHER = of("other")
+
+            @JvmField val PAN = of("pan")
+
+            @JvmField val POLYGON_ADDRESS = of("polygon_address")
+
+            @JvmField val SG_NUMBER = of("sg_number")
+
+            @JvmField val SOLANA_ADDRESS = of("solana_address")
+
+            @JvmField val WALLET_ADDRESS = of("wallet_address")
+
+            @JvmStatic fun of(value: String) = AccountNumberType(JsonField.of(value))
+        }
+
+        /** An enum containing [AccountNumberType]'s known values. */
+        enum class Known {
+            AU_NUMBER,
+            BASE_ADDRESS,
+            CLABE,
+            ETHEREUM_ADDRESS,
+            HK_NUMBER,
+            IBAN,
+            ID_NUMBER,
+            NZ_NUMBER,
+            OTHER,
+            PAN,
+            POLYGON_ADDRESS,
+            SG_NUMBER,
+            SOLANA_ADDRESS,
+            WALLET_ADDRESS,
+        }
+
+        /**
+         * An enum containing [AccountNumberType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [AccountNumberType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            AU_NUMBER,
+            BASE_ADDRESS,
+            CLABE,
+            ETHEREUM_ADDRESS,
+            HK_NUMBER,
+            IBAN,
+            ID_NUMBER,
+            NZ_NUMBER,
+            OTHER,
+            PAN,
+            POLYGON_ADDRESS,
+            SG_NUMBER,
+            SOLANA_ADDRESS,
+            WALLET_ADDRESS,
+            /**
+             * An enum member indicating that [AccountNumberType] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                AU_NUMBER -> Value.AU_NUMBER
+                BASE_ADDRESS -> Value.BASE_ADDRESS
+                CLABE -> Value.CLABE
+                ETHEREUM_ADDRESS -> Value.ETHEREUM_ADDRESS
+                HK_NUMBER -> Value.HK_NUMBER
+                IBAN -> Value.IBAN
+                ID_NUMBER -> Value.ID_NUMBER
+                NZ_NUMBER -> Value.NZ_NUMBER
+                OTHER -> Value.OTHER
+                PAN -> Value.PAN
+                POLYGON_ADDRESS -> Value.POLYGON_ADDRESS
+                SG_NUMBER -> Value.SG_NUMBER
+                SOLANA_ADDRESS -> Value.SOLANA_ADDRESS
+                WALLET_ADDRESS -> Value.WALLET_ADDRESS
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                AU_NUMBER -> Known.AU_NUMBER
+                BASE_ADDRESS -> Known.BASE_ADDRESS
+                CLABE -> Known.CLABE
+                ETHEREUM_ADDRESS -> Known.ETHEREUM_ADDRESS
+                HK_NUMBER -> Known.HK_NUMBER
+                IBAN -> Known.IBAN
+                ID_NUMBER -> Known.ID_NUMBER
+                NZ_NUMBER -> Known.NZ_NUMBER
+                OTHER -> Known.OTHER
+                PAN -> Known.PAN
+                POLYGON_ADDRESS -> Known.POLYGON_ADDRESS
+                SG_NUMBER -> Known.SG_NUMBER
+                SOLANA_ADDRESS -> Known.SOLANA_ADDRESS
+                WALLET_ADDRESS -> Known.WALLET_ADDRESS
+                else ->
+                    throw ModernTreasuryInvalidDataException("Unknown AccountNumberType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                ModernTreasuryInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountNumberType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AccountNumberType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     class AccountsType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -351,20 +872,14 @@ private constructor(
         return other is AccountDetailCreateParams &&
             accountsType == other.accountsType &&
             accountId == other.accountId &&
-            accountDetailCreate == other.accountDetailCreate &&
+            body == other.body &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
-        Objects.hash(
-            accountsType,
-            accountId,
-            accountDetailCreate,
-            additionalHeaders,
-            additionalQueryParams,
-        )
+        Objects.hash(accountsType, accountId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "AccountDetailCreateParams{accountsType=$accountsType, accountId=$accountId, accountDetailCreate=$accountDetailCreate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "AccountDetailCreateParams{accountsType=$accountsType, accountId=$accountId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

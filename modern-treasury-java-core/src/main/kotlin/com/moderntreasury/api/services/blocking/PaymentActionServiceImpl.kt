@@ -16,12 +16,15 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepare
-import com.moderntreasury.api.models.PaymentAction
 import com.moderntreasury.api.models.PaymentActionCreateParams
+import com.moderntreasury.api.models.PaymentActionCreateResponse
 import com.moderntreasury.api.models.PaymentActionListPage
 import com.moderntreasury.api.models.PaymentActionListParams
+import com.moderntreasury.api.models.PaymentActionListResponse
 import com.moderntreasury.api.models.PaymentActionRetrieveParams
+import com.moderntreasury.api.models.PaymentActionRetrieveResponse
 import com.moderntreasury.api.models.PaymentActionUpdateParams
+import com.moderntreasury.api.models.PaymentActionUpdateResponse
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -40,21 +43,21 @@ class PaymentActionServiceImpl internal constructor(private val clientOptions: C
     override fun create(
         params: PaymentActionCreateParams,
         requestOptions: RequestOptions,
-    ): PaymentAction =
+    ): PaymentActionCreateResponse =
         // post /api/payment_actions
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: PaymentActionRetrieveParams,
         requestOptions: RequestOptions,
-    ): PaymentAction =
+    ): PaymentActionRetrieveResponse =
         // get /api/payment_actions/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: PaymentActionUpdateParams,
         requestOptions: RequestOptions,
-    ): PaymentAction =
+    ): PaymentActionUpdateResponse =
         // patch /api/payment_actions/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -78,13 +81,13 @@ class PaymentActionServiceImpl internal constructor(private val clientOptions: C
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<PaymentAction> =
-            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
+        private val createHandler: Handler<PaymentActionCreateResponse> =
+            jsonHandler<PaymentActionCreateResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: PaymentActionCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PaymentAction> {
+        ): HttpResponseFor<PaymentActionCreateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -106,13 +109,13 @@ class PaymentActionServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val retrieveHandler: Handler<PaymentAction> =
-            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<PaymentActionRetrieveResponse> =
+            jsonHandler<PaymentActionRetrieveResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PaymentActionRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PaymentAction> {
+        ): HttpResponseFor<PaymentActionRetrieveResponse> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -136,13 +139,13 @@ class PaymentActionServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val updateHandler: Handler<PaymentAction> =
-            jsonHandler<PaymentAction>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<PaymentActionUpdateResponse> =
+            jsonHandler<PaymentActionUpdateResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: PaymentActionUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PaymentAction> {
+        ): HttpResponseFor<PaymentActionUpdateResponse> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -167,8 +170,8 @@ class PaymentActionServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listHandler: Handler<List<PaymentAction>> =
-            jsonHandler<List<PaymentAction>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<PaymentActionListResponse>> =
+            jsonHandler<List<PaymentActionListResponse>>(clientOptions.jsonMapper)
 
         override fun list(
             params: PaymentActionListParams,
