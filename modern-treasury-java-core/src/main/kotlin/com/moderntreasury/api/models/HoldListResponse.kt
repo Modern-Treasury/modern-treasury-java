@@ -20,7 +20,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class Hold
+class HoldListResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
@@ -276,7 +276,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [Hold].
+         * Returns a mutable builder for constructing an instance of [HoldListResponse].
          *
          * The following fields are required:
          * ```java
@@ -292,7 +292,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [Hold]. */
+    /** A builder for [HoldListResponse]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -310,20 +310,20 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(hold: Hold) = apply {
-            id = hold.id
-            createdAt = hold.createdAt
-            object_ = hold.object_
-            status = hold.status
-            targetId = hold.targetId
-            targetType = hold.targetType
-            updatedAt = hold.updatedAt
-            liveMode = hold.liveMode
-            metadata = hold.metadata
-            reason = hold.reason
-            resolution = hold.resolution
-            resolvedAt = hold.resolvedAt
-            additionalProperties = hold.additionalProperties.toMutableMap()
+        internal fun from(holdListResponse: HoldListResponse) = apply {
+            id = holdListResponse.id
+            createdAt = holdListResponse.createdAt
+            object_ = holdListResponse.object_
+            status = holdListResponse.status
+            targetId = holdListResponse.targetId
+            targetType = holdListResponse.targetType
+            updatedAt = holdListResponse.updatedAt
+            liveMode = holdListResponse.liveMode
+            metadata = holdListResponse.metadata
+            reason = holdListResponse.reason
+            resolution = holdListResponse.resolution
+            resolvedAt = holdListResponse.resolvedAt
+            additionalProperties = holdListResponse.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -499,7 +499,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [Hold].
+         * Returns an immutable instance of [HoldListResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -516,8 +516,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): Hold =
-            Hold(
+        fun build(): HoldListResponse =
+            HoldListResponse(
                 checkRequired("id", id),
                 checkRequired("createdAt", createdAt),
                 checkRequired("object_", object_),
@@ -536,7 +536,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): Hold = apply {
+    fun validate(): HoldListResponse = apply {
         if (validated) {
             return@apply
         }
@@ -1063,7 +1063,7 @@ private constructor(
             return true
         }
 
-        return other is Hold &&
+        return other is HoldListResponse &&
             id == other.id &&
             createdAt == other.createdAt &&
             object_ == other.object_ &&
@@ -1100,5 +1100,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Hold{id=$id, createdAt=$createdAt, object_=$object_, status=$status, targetId=$targetId, targetType=$targetType, updatedAt=$updatedAt, liveMode=$liveMode, metadata=$metadata, reason=$reason, resolution=$resolution, resolvedAt=$resolvedAt, additionalProperties=$additionalProperties}"
+        "HoldListResponse{id=$id, createdAt=$createdAt, object_=$object_, status=$status, targetId=$targetId, targetType=$targetType, updatedAt=$updatedAt, liveMode=$liveMode, metadata=$metadata, reason=$reason, resolution=$resolution, resolvedAt=$resolvedAt, additionalProperties=$additionalProperties}"
 }

@@ -6,7 +6,6 @@ import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Document
-import com.moderntreasury.api.models.DocumentCreate
 import com.moderntreasury.api.models.DocumentCreateParams
 import com.moderntreasury.api.models.DocumentListPageAsync
 import com.moderntreasury.api.models.DocumentListParams
@@ -37,20 +36,6 @@ interface DocumentServiceAsync {
         params: DocumentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Document>
-
-    /** @see create */
-    fun create(
-        documentCreate: DocumentCreate,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Document> =
-        create(
-            DocumentCreateParams.builder().documentCreate(documentCreate).build(),
-            requestOptions,
-        )
-
-    /** @see create */
-    fun create(documentCreate: DocumentCreate): CompletableFuture<Document> =
-        create(documentCreate, RequestOptions.none())
 
     /** Get an existing document. */
     fun retrieve(id: String): CompletableFuture<Document> =
@@ -127,20 +112,6 @@ interface DocumentServiceAsync {
             params: DocumentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Document>>
-
-        /** @see create */
-        fun create(
-            documentCreate: DocumentCreate,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Document>> =
-            create(
-                DocumentCreateParams.builder().documentCreate(documentCreate).build(),
-                requestOptions,
-            )
-
-        /** @see create */
-        fun create(documentCreate: DocumentCreate): CompletableFuture<HttpResponseFor<Document>> =
-            create(documentCreate, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/documents/{id}`, but is otherwise the same as
