@@ -26,10 +26,10 @@ internal class DocumentServiceAsyncTest {
         val documentFuture =
             documentServiceAsync.create(
                 DocumentCreateParams.builder()
-                    .documentableId("documentable_id")
-                    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
                     .file("some content".byteInputStream())
                     .documentType("document_type")
+                    .documentableId("documentable_id")
+                    .documentableType(DocumentCreateParams.DocumentableType.CONNECTIONS)
                     .build()
             )
 
