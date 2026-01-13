@@ -31,7 +31,7 @@ internal class DocumentTest {
                 )
                 .documentType("document_type")
                 .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .documentableType(Document.DocumentableType.COUNTERPARTY)
+                .documentableType(Document.DocumentableType.CONNECTION)
                 .file(
                     Document.File.builder()
                         .contentType("content_type")
@@ -63,8 +63,8 @@ internal class DocumentTest {
                     .build()
             )
         assertThat(document.documentType()).contains("document_type")
-        assertThat(document.documentableId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(document.documentableType()).isEqualTo(Document.DocumentableType.COUNTERPARTY)
+        assertThat(document.documentableId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(document.documentableType()).contains(Document.DocumentableType.CONNECTION)
         assertThat(document.file())
             .isEqualTo(
                 Document.File.builder()
@@ -101,7 +101,7 @@ internal class DocumentTest {
                 )
                 .documentType("document_type")
                 .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .documentableType(Document.DocumentableType.COUNTERPARTY)
+                .documentableType(Document.DocumentableType.CONNECTION)
                 .file(
                     Document.File.builder()
                         .contentType("content_type")
