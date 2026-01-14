@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.15.1 (2026-01-14)
+
+Full Changelog: [v7.15.0...v7.15.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.15.0...v7.15.1)
+
 ## 7.15.0 (2026-01-13)
 
 Full Changelog: [v7.14.0...v7.15.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.14.0...v7.15.0)
