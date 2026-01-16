@@ -1,5 +1,25 @@
 # Changelog
 
+## 7.15.2 (2026-01-16)
+
+Full Changelog: [v7.15.1...v7.15.2](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.15.1...v7.15.2)
+
+### Bug Fixes
+
+* **client:** disallow coercion from float to int ([732590c](https://github.com/Modern-Treasury/modern-treasury-java/commit/732590c941aaa40bd6881f8e2d073b8676e26433))
+* **client:** fully respect max retries ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* **client:** send retry count header for max retries 0 ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* date time deserialization leniency ([d97de31](https://github.com/Modern-Treasury/modern-treasury-java/commit/d97de31d7cf11c29ce6c8e7dc9ad475c4f2f6c61))
+
+
+### Chores
+
+* **internal:** clean up maven repo artifact script and add html documentation to repo root ([3c5ae6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/3c5ae6d5e0c2ab0dba492faf7778253068dc3fbc))
+* **internal:** depend on packages directly in example ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* **internal:** improve maven repo docs ([5a6e3fb](https://github.com/Modern-Treasury/modern-treasury-java/commit/5a6e3fba0c4c9977132b8fafa656c43d6b44d1d5))
+* **internal:** update `actions/checkout` version ([d17454d](https://github.com/Modern-Treasury/modern-treasury-java/commit/d17454de0303262f63b6a82f4b972fdb7d938580))
+* test on Jackson 2.14.0 to avoid encountering FasterXML/jackson-databind[#3240](https://github.com/Modern-Treasury/modern-treasury-java/issues/3240) in tests ([d97de31](https://github.com/Modern-Treasury/modern-treasury-java/commit/d97de31d7cf11c29ce6c8e7dc9ad475c4f2f6c61))
+
 ## 7.15.1 (2026-01-14)
 
 Full Changelog: [v7.15.0...v7.15.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.15.0...v7.15.1)
