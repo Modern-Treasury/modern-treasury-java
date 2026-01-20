@@ -120,7 +120,7 @@ private constructor(
     fun email(): Optional<String> = body.email()
 
     /**
-     * Monthly expected transaction volume in entity's local currency.
+     * Monthly expected transaction volume in USD.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -763,7 +763,7 @@ private constructor(
          */
         fun email(email: JsonField<String>) = apply { body.email(email) }
 
-        /** Monthly expected transaction volume in entity's local currency. */
+        /** Monthly expected transaction volume in USD. */
         fun expectedActivityVolume(expectedActivityVolume: Long?) = apply {
             body.expectedActivityVolume(expectedActivityVolume)
         }
@@ -1531,7 +1531,7 @@ private constructor(
         fun email(): Optional<String> = email.getOptional("email")
 
         /**
-         * Monthly expected transaction volume in entity's local currency.
+         * Monthly expected transaction volume in USD.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2289,7 +2289,7 @@ private constructor(
              */
             fun email(email: JsonField<String>) = apply { this.email = email }
 
-            /** Monthly expected transaction volume in entity's local currency. */
+            /** Monthly expected transaction volume in USD. */
             fun expectedActivityVolume(expectedActivityVolume: Long?) =
                 expectedActivityVolume(JsonField.ofNullable(expectedActivityVolume))
 
@@ -4192,7 +4192,7 @@ private constructor(
         fun id(): String = id.getRequired("id")
 
         /**
-         * The annual income of the individual.
+         * The annual income of the individual in USD.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -4587,7 +4587,7 @@ private constructor(
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
-            /** The annual income of the individual. */
+            /** The annual income of the individual in USD. */
             fun annualIncome(annualIncome: Long?) = annualIncome(JsonField.ofNullable(annualIncome))
 
             /**

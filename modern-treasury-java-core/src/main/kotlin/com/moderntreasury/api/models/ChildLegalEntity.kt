@@ -37,6 +37,7 @@ private constructor(
     private val dateFormed: JsonField<LocalDate>,
     private val dateOfBirth: JsonField<LocalDate>,
     private val discardedAt: JsonField<OffsetDateTime>,
+    private val documents: JsonField<List<Document>>,
     private val doingBusinessAsNames: JsonField<List<String>>,
     private val email: JsonField<String>,
     private val expectedActivityVolume: JsonField<Long>,
@@ -102,6 +103,9 @@ private constructor(
         @JsonProperty("discarded_at")
         @ExcludeMissing
         discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("documents")
+        @ExcludeMissing
+        documents: JsonField<List<Document>> = JsonMissing.of(),
         @JsonProperty("doing_business_as_names")
         @ExcludeMissing
         doingBusinessAsNames: JsonField<List<String>> = JsonMissing.of(),
@@ -176,6 +180,7 @@ private constructor(
         dateFormed,
         dateOfBirth,
         discardedAt,
+        documents,
         doingBusinessAsNames,
         email,
         expectedActivityVolume,
@@ -300,6 +305,12 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    fun documents(): List<Document> = documents.getRequired("documents")
+
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun doingBusinessAsNames(): List<String> =
         doingBusinessAsNames.getRequired("doing_business_as_names")
 
@@ -312,7 +323,7 @@ private constructor(
     fun email(): Optional<String> = email.getOptional("email")
 
     /**
-     * Monthly expected transaction volume in entity's local currency.
+     * Monthly expected transaction volume in USD.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -614,6 +625,15 @@ private constructor(
     fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
 
     /**
+     * Returns the raw JSON value of [documents].
+     *
+     * Unlike [documents], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("documents")
+    @ExcludeMissing
+    fun _documents(): JsonField<List<Document>> = documents
+
+    /**
      * Returns the raw JSON value of [doingBusinessAsNames].
      *
      * Unlike [doingBusinessAsNames], this method doesn't throw if the JSON field has an unexpected
@@ -869,6 +889,7 @@ private constructor(
          * .dateFormed()
          * .dateOfBirth()
          * .discardedAt()
+         * .documents()
          * .doingBusinessAsNames()
          * .email()
          * .expectedActivityVolume()
@@ -915,6 +936,7 @@ private constructor(
         private var dateFormed: JsonField<LocalDate>? = null
         private var dateOfBirth: JsonField<LocalDate>? = null
         private var discardedAt: JsonField<OffsetDateTime>? = null
+        private var documents: JsonField<MutableList<Document>>? = null
         private var doingBusinessAsNames: JsonField<MutableList<String>>? = null
         private var email: JsonField<String>? = null
         private var expectedActivityVolume: JsonField<Long>? = null
@@ -959,6 +981,7 @@ private constructor(
             dateFormed = childLegalEntity.dateFormed
             dateOfBirth = childLegalEntity.dateOfBirth
             discardedAt = childLegalEntity.discardedAt
+            documents = childLegalEntity.documents.map { it.toMutableList() }
             doingBusinessAsNames = childLegalEntity.doingBusinessAsNames.map { it.toMutableList() }
             email = childLegalEntity.email
             expectedActivityVolume = childLegalEntity.expectedActivityVolume
@@ -1209,6 +1232,31 @@ private constructor(
             this.discardedAt = discardedAt
         }
 
+        fun documents(documents: List<Document>) = documents(JsonField.of(documents))
+
+        /**
+         * Sets [Builder.documents] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.documents] with a well-typed `List<Document>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun documents(documents: JsonField<List<Document>>) = apply {
+            this.documents = documents.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [Document] to [documents].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addDocument(document: Document) = apply {
+            documents =
+                (documents ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("documents", it).add(document)
+                }
+        }
+
         fun doingBusinessAsNames(doingBusinessAsNames: List<String>) =
             doingBusinessAsNames(JsonField.of(doingBusinessAsNames))
 
@@ -1249,7 +1297,7 @@ private constructor(
          */
         fun email(email: JsonField<String>) = apply { this.email = email }
 
-        /** Monthly expected transaction volume in entity's local currency. */
+        /** Monthly expected transaction volume in USD. */
         fun expectedActivityVolume(expectedActivityVolume: Long?) =
             expectedActivityVolume(JsonField.ofNullable(expectedActivityVolume))
 
@@ -1765,6 +1813,7 @@ private constructor(
          * .dateFormed()
          * .dateOfBirth()
          * .discardedAt()
+         * .documents()
          * .doingBusinessAsNames()
          * .email()
          * .expectedActivityVolume()
@@ -1809,6 +1858,7 @@ private constructor(
                 checkRequired("dateFormed", dateFormed),
                 checkRequired("dateOfBirth", dateOfBirth),
                 checkRequired("discardedAt", discardedAt),
+                checkRequired("documents", documents).map { it.toImmutable() },
                 checkRequired("doingBusinessAsNames", doingBusinessAsNames).map {
                     it.toImmutable()
                 },
@@ -1868,6 +1918,7 @@ private constructor(
         dateFormed()
         dateOfBirth()
         discardedAt()
+        documents().forEach { it.validate() }
         doingBusinessAsNames()
         email()
         expectedActivityVolume()
@@ -1924,6 +1975,7 @@ private constructor(
             (if (dateFormed.asKnown().isPresent) 1 else 0) +
             (if (dateOfBirth.asKnown().isPresent) 1 else 0) +
             (if (discardedAt.asKnown().isPresent) 1 else 0) +
+            (documents.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (doingBusinessAsNames.asKnown().getOrNull()?.size ?: 0) +
             (if (email.asKnown().isPresent) 1 else 0) +
             (if (expectedActivityVolume.asKnown().isPresent) 1 else 0) +
@@ -3424,6 +3476,7 @@ private constructor(
         private val id: JsonField<String>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val discardedAt: JsonField<OffsetDateTime>,
+        private val documents: JsonField<List<Document>>,
         private val expirationDate: JsonField<LocalDate>,
         private val idType: JsonField<IdType>,
         private val issuingCountry: JsonField<String>,
@@ -3443,6 +3496,9 @@ private constructor(
             @JsonProperty("discarded_at")
             @ExcludeMissing
             discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("documents")
+            @ExcludeMissing
+            documents: JsonField<List<Document>> = JsonMissing.of(),
             @JsonProperty("expiration_date")
             @ExcludeMissing
             expirationDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -3464,6 +3520,7 @@ private constructor(
             id,
             createdAt,
             discardedAt,
+            documents,
             expirationDate,
             idType,
             issuingCountry,
@@ -3491,6 +3548,12 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
+
+        /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun documents(): List<Document> = documents.getRequired("documents")
 
         /**
          * The date when the Identification is no longer considered valid by the issuing authority.
@@ -3569,6 +3632,15 @@ private constructor(
         @JsonProperty("discarded_at")
         @ExcludeMissing
         fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
+
+        /**
+         * Returns the raw JSON value of [documents].
+         *
+         * Unlike [documents], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("documents")
+        @ExcludeMissing
+        fun _documents(): JsonField<List<Document>> = documents
 
         /**
          * Returns the raw JSON value of [expirationDate].
@@ -3652,6 +3724,7 @@ private constructor(
              * .id()
              * .createdAt()
              * .discardedAt()
+             * .documents()
              * .expirationDate()
              * .idType()
              * .issuingCountry()
@@ -3670,6 +3743,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var discardedAt: JsonField<OffsetDateTime>? = null
+            private var documents: JsonField<MutableList<Document>>? = null
             private var expirationDate: JsonField<LocalDate>? = null
             private var idType: JsonField<IdType>? = null
             private var issuingCountry: JsonField<String>? = null
@@ -3684,6 +3758,7 @@ private constructor(
                 id = identification.id
                 createdAt = identification.createdAt
                 discardedAt = identification.discardedAt
+                documents = identification.documents.map { it.toMutableList() }
                 expirationDate = identification.expirationDate
                 idType = identification.idType
                 issuingCountry = identification.issuingCountry
@@ -3734,6 +3809,31 @@ private constructor(
              */
             fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
                 this.discardedAt = discardedAt
+            }
+
+            fun documents(documents: List<Document>) = documents(JsonField.of(documents))
+
+            /**
+             * Sets [Builder.documents] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.documents] with a well-typed `List<Document>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun documents(documents: JsonField<List<Document>>) = apply {
+                this.documents = documents.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Document] to [documents].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addDocument(document: Document) = apply {
+                documents =
+                    (documents ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("documents", it).add(document)
+                    }
             }
 
             /**
@@ -3876,6 +3976,7 @@ private constructor(
              * .id()
              * .createdAt()
              * .discardedAt()
+             * .documents()
              * .expirationDate()
              * .idType()
              * .issuingCountry()
@@ -3892,6 +3993,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("createdAt", createdAt),
                     checkRequired("discardedAt", discardedAt),
+                    checkRequired("documents", documents).map { it.toImmutable() },
                     checkRequired("expirationDate", expirationDate),
                     checkRequired("idType", idType),
                     checkRequired("issuingCountry", issuingCountry),
@@ -3913,6 +4015,7 @@ private constructor(
             id()
             createdAt()
             discardedAt()
+            documents().forEach { it.validate() }
             expirationDate()
             idType().validate()
             issuingCountry()
@@ -3942,6 +4045,7 @@ private constructor(
             (if (id.asKnown().isPresent) 1 else 0) +
                 (if (createdAt.asKnown().isPresent) 1 else 0) +
                 (if (discardedAt.asKnown().isPresent) 1 else 0) +
+                (documents.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (expirationDate.asKnown().isPresent) 1 else 0) +
                 (idType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (issuingCountry.asKnown().isPresent) 1 else 0) +
@@ -4209,6 +4313,7 @@ private constructor(
                 id == other.id &&
                 createdAt == other.createdAt &&
                 discardedAt == other.discardedAt &&
+                documents == other.documents &&
                 expirationDate == other.expirationDate &&
                 idType == other.idType &&
                 issuingCountry == other.issuingCountry &&
@@ -4224,6 +4329,7 @@ private constructor(
                 id,
                 createdAt,
                 discardedAt,
+                documents,
                 expirationDate,
                 idType,
                 issuingCountry,
@@ -4238,7 +4344,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Identification{id=$id, createdAt=$createdAt, discardedAt=$discardedAt, expirationDate=$expirationDate, idType=$idType, issuingCountry=$issuingCountry, issuingRegion=$issuingRegion, liveMode=$liveMode, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+            "Identification{id=$id, createdAt=$createdAt, discardedAt=$discardedAt, documents=$documents, expirationDate=$expirationDate, idType=$idType, issuingCountry=$issuingCountry, issuingRegion=$issuingRegion, liveMode=$liveMode, object_=$object_, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
     /** The type of legal entity. */
@@ -5021,7 +5127,7 @@ private constructor(
         fun id(): String = id.getRequired("id")
 
         /**
-         * The annual income of the individual.
+         * The annual income of the individual in USD.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -5416,7 +5522,7 @@ private constructor(
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
-            /** The annual income of the individual. */
+            /** The annual income of the individual in USD. */
             fun annualIncome(annualIncome: Long?) = annualIncome(JsonField.ofNullable(annualIncome))
 
             /**
@@ -7156,6 +7262,7 @@ private constructor(
             dateFormed == other.dateFormed &&
             dateOfBirth == other.dateOfBirth &&
             discardedAt == other.discardedAt &&
+            documents == other.documents &&
             doingBusinessAsNames == other.doingBusinessAsNames &&
             email == other.email &&
             expectedActivityVolume == other.expectedActivityVolume &&
@@ -7199,6 +7306,7 @@ private constructor(
             dateFormed,
             dateOfBirth,
             discardedAt,
+            documents,
             doingBusinessAsNames,
             email,
             expectedActivityVolume,
@@ -7232,5 +7340,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, riskRating=$riskRating, suffix=$suffix, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, riskRating=$riskRating, suffix=$suffix, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }
