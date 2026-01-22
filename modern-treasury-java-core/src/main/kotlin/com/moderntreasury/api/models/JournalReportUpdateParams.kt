@@ -30,6 +30,12 @@ private constructor(
 
     fun id(): Optional<String> = Optional.ofNullable(id)
 
+    /**
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = journalReportUpdateParams.metadata().convert(MyClass.class);
+     * ```
+     */
     fun _metadata(): JsonValue = body._metadata()
 
     /**
@@ -265,6 +271,12 @@ private constructor(
             @JsonProperty("status") @ExcludeMissing status: JsonField<String> = JsonMissing.of(),
         ) : this(metadata, status, mutableMapOf())
 
+        /**
+         * This arbitrary value can be deserialized into a custom type using the `convert` method:
+         * ```java
+         * MyClass myObject = body.metadata().convert(MyClass.class);
+         * ```
+         */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonValue = metadata
 
         /**
