@@ -73,7 +73,14 @@ private constructor(
      */
     fun corrections(): Optional<Corrections> = body.corrections()
 
-    /** The raw data from the return file that we get from the bank. */
+    /**
+     * The raw data from the return file that we get from the bank.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = returnCreateParams.data().convert(MyClass.class);
+     * ```
+     */
     fun _data(): JsonValue = body._data()
 
     /**
@@ -600,7 +607,14 @@ private constructor(
          */
         fun corrections(): Optional<Corrections> = corrections.getOptional("corrections")
 
-        /** The raw data from the return file that we get from the bank. */
+        /**
+         * The raw data from the return file that we get from the bank.
+         *
+         * This arbitrary value can be deserialized into a custom type using the `convert` method:
+         * ```java
+         * MyClass myObject = returnCreateRequest.data().convert(MyClass.class);
+         * ```
+         */
         @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
         /**
