@@ -149,6 +149,7 @@ internal class CounterpartyCreateParamsTest {
                             .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
+                    .connectionId("connection_id")
                     .countryOfIncorporation("country_of_incorporation")
                     .dateFormed(LocalDate.parse("2019-12-27"))
                     .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -253,6 +254,7 @@ internal class CounterpartyCreateParamsTest {
                                             )
                                             .build()
                                     )
+                                    .connectionId("connection_id")
                                     .countryOfIncorporation("country_of_incorporation")
                                     .dateFormed(LocalDate.parse("2019-12-27"))
                                     .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -299,6 +301,7 @@ internal class CounterpartyCreateParamsTest {
                                     .legalStructure(
                                         ChildLegalEntityCreate.LegalStructure.CORPORATION
                                     )
+                                    .listedExchange("listed_exchange")
                                     .metadata(
                                         ChildLegalEntityCreate.Metadata.builder()
                                             .putAdditionalProperty("key", JsonValue.from("value"))
@@ -320,8 +323,25 @@ internal class CounterpartyCreateParamsTest {
                                     .preferredName("preferred_name")
                                     .prefix("prefix")
                                     .addPrimarySocialMediaSite("string")
+                                    .addRegulator(
+                                        ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                            .jurisdiction("jurisdiction")
+                                            .name("name")
+                                            .registrationNumber("registration_number")
+                                            .build()
+                                    )
                                     .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                     .suffix("suffix")
+                                    .thirdPartyVerification(
+                                        ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                            .vendor(
+                                                ChildLegalEntityCreate.ThirdPartyVerification.Vendor
+                                                    .PERSONA
+                                            )
+                                            .vendorVerificationId("vendor_verification_id")
+                                            .build()
+                                    )
+                                    .tickerSymbol("ticker_symbol")
                                     .wealthAndEmploymentDetails(
                                         ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
                                             .builder()
@@ -392,6 +412,7 @@ internal class CounterpartyCreateParamsTest {
                     .legalStructure(
                         CounterpartyCreateParams.LegalEntityCreateRequest.LegalStructure.CORPORATION
                     )
+                    .listedExchange("listed_exchange")
                     .metadata(
                         CounterpartyCreateParams.LegalEntityCreateRequest.Metadata.builder()
                             .putAdditionalProperty("key", JsonValue.from("value"))
@@ -410,8 +431,29 @@ internal class CounterpartyCreateParamsTest {
                     .preferredName("preferred_name")
                     .prefix("prefix")
                     .addPrimarySocialMediaSite("string")
+                    .addRegulator(
+                        CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityRegulator
+                            .builder()
+                            .jurisdiction("jurisdiction")
+                            .name("name")
+                            .registrationNumber("registration_number")
+                            .build()
+                    )
                     .riskRating(CounterpartyCreateParams.LegalEntityCreateRequest.RiskRating.LOW)
                     .suffix("suffix")
+                    .thirdPartyVerification(
+                        CounterpartyCreateParams.LegalEntityCreateRequest.ThirdPartyVerification
+                            .builder()
+                            .vendor(
+                                CounterpartyCreateParams.LegalEntityCreateRequest
+                                    .ThirdPartyVerification
+                                    .Vendor
+                                    .PERSONA
+                            )
+                            .vendorVerificationId("vendor_verification_id")
+                            .build()
+                    )
+                    .tickerSymbol("ticker_symbol")
                     .wealthAndEmploymentDetails(
                         CounterpartyCreateParams.LegalEntityCreateRequest
                             .LegalEntityWealthEmploymentDetail
@@ -628,6 +670,7 @@ internal class CounterpartyCreateParamsTest {
                                 .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .build()
                         )
+                        .connectionId("connection_id")
                         .countryOfIncorporation("country_of_incorporation")
                         .dateFormed(LocalDate.parse("2019-12-27"))
                         .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -733,6 +776,7 @@ internal class CounterpartyCreateParamsTest {
                                                 )
                                                 .build()
                                         )
+                                        .connectionId("connection_id")
                                         .countryOfIncorporation("country_of_incorporation")
                                         .dateFormed(LocalDate.parse("2019-12-27"))
                                         .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -780,6 +824,7 @@ internal class CounterpartyCreateParamsTest {
                                         .legalStructure(
                                             ChildLegalEntityCreate.LegalStructure.CORPORATION
                                         )
+                                        .listedExchange("listed_exchange")
                                         .metadata(
                                             ChildLegalEntityCreate.Metadata.builder()
                                                 .putAdditionalProperty(
@@ -804,8 +849,26 @@ internal class CounterpartyCreateParamsTest {
                                         .preferredName("preferred_name")
                                         .prefix("prefix")
                                         .addPrimarySocialMediaSite("string")
+                                        .addRegulator(
+                                            ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                                .jurisdiction("jurisdiction")
+                                                .name("name")
+                                                .registrationNumber("registration_number")
+                                                .build()
+                                        )
                                         .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                         .suffix("suffix")
+                                        .thirdPartyVerification(
+                                            ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                                .vendor(
+                                                    ChildLegalEntityCreate.ThirdPartyVerification
+                                                        .Vendor
+                                                        .PERSONA
+                                                )
+                                                .vendorVerificationId("vendor_verification_id")
+                                                .build()
+                                        )
+                                        .tickerSymbol("ticker_symbol")
                                         .wealthAndEmploymentDetails(
                                             ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
                                                 .builder()
@@ -877,6 +940,7 @@ internal class CounterpartyCreateParamsTest {
                             CounterpartyCreateParams.LegalEntityCreateRequest.LegalStructure
                                 .CORPORATION
                         )
+                        .listedExchange("listed_exchange")
                         .metadata(
                             CounterpartyCreateParams.LegalEntityCreateRequest.Metadata.builder()
                                 .putAdditionalProperty("key", JsonValue.from("value"))
@@ -895,10 +959,31 @@ internal class CounterpartyCreateParamsTest {
                         .preferredName("preferred_name")
                         .prefix("prefix")
                         .addPrimarySocialMediaSite("string")
+                        .addRegulator(
+                            CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityRegulator
+                                .builder()
+                                .jurisdiction("jurisdiction")
+                                .name("name")
+                                .registrationNumber("registration_number")
+                                .build()
+                        )
                         .riskRating(
                             CounterpartyCreateParams.LegalEntityCreateRequest.RiskRating.LOW
                         )
                         .suffix("suffix")
+                        .thirdPartyVerification(
+                            CounterpartyCreateParams.LegalEntityCreateRequest.ThirdPartyVerification
+                                .builder()
+                                .vendor(
+                                    CounterpartyCreateParams.LegalEntityCreateRequest
+                                        .ThirdPartyVerification
+                                        .Vendor
+                                        .PERSONA
+                                )
+                                .vendorVerificationId("vendor_verification_id")
+                                .build()
+                        )
+                        .tickerSymbol("ticker_symbol")
                         .wealthAndEmploymentDetails(
                             CounterpartyCreateParams.LegalEntityCreateRequest
                                 .LegalEntityWealthEmploymentDetail
@@ -1109,6 +1194,7 @@ internal class CounterpartyCreateParamsTest {
                             .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
+                    .connectionId("connection_id")
                     .countryOfIncorporation("country_of_incorporation")
                     .dateFormed(LocalDate.parse("2019-12-27"))
                     .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -1213,6 +1299,7 @@ internal class CounterpartyCreateParamsTest {
                                             )
                                             .build()
                                     )
+                                    .connectionId("connection_id")
                                     .countryOfIncorporation("country_of_incorporation")
                                     .dateFormed(LocalDate.parse("2019-12-27"))
                                     .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -1259,6 +1346,7 @@ internal class CounterpartyCreateParamsTest {
                                     .legalStructure(
                                         ChildLegalEntityCreate.LegalStructure.CORPORATION
                                     )
+                                    .listedExchange("listed_exchange")
                                     .metadata(
                                         ChildLegalEntityCreate.Metadata.builder()
                                             .putAdditionalProperty("key", JsonValue.from("value"))
@@ -1280,8 +1368,25 @@ internal class CounterpartyCreateParamsTest {
                                     .preferredName("preferred_name")
                                     .prefix("prefix")
                                     .addPrimarySocialMediaSite("string")
+                                    .addRegulator(
+                                        ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                            .jurisdiction("jurisdiction")
+                                            .name("name")
+                                            .registrationNumber("registration_number")
+                                            .build()
+                                    )
                                     .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                     .suffix("suffix")
+                                    .thirdPartyVerification(
+                                        ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                            .vendor(
+                                                ChildLegalEntityCreate.ThirdPartyVerification.Vendor
+                                                    .PERSONA
+                                            )
+                                            .vendorVerificationId("vendor_verification_id")
+                                            .build()
+                                    )
+                                    .tickerSymbol("ticker_symbol")
                                     .wealthAndEmploymentDetails(
                                         ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
                                             .builder()
@@ -1352,6 +1457,7 @@ internal class CounterpartyCreateParamsTest {
                     .legalStructure(
                         CounterpartyCreateParams.LegalEntityCreateRequest.LegalStructure.CORPORATION
                     )
+                    .listedExchange("listed_exchange")
                     .metadata(
                         CounterpartyCreateParams.LegalEntityCreateRequest.Metadata.builder()
                             .putAdditionalProperty("key", JsonValue.from("value"))
@@ -1370,8 +1476,29 @@ internal class CounterpartyCreateParamsTest {
                     .preferredName("preferred_name")
                     .prefix("prefix")
                     .addPrimarySocialMediaSite("string")
+                    .addRegulator(
+                        CounterpartyCreateParams.LegalEntityCreateRequest.LegalEntityRegulator
+                            .builder()
+                            .jurisdiction("jurisdiction")
+                            .name("name")
+                            .registrationNumber("registration_number")
+                            .build()
+                    )
                     .riskRating(CounterpartyCreateParams.LegalEntityCreateRequest.RiskRating.LOW)
                     .suffix("suffix")
+                    .thirdPartyVerification(
+                        CounterpartyCreateParams.LegalEntityCreateRequest.ThirdPartyVerification
+                            .builder()
+                            .vendor(
+                                CounterpartyCreateParams.LegalEntityCreateRequest
+                                    .ThirdPartyVerification
+                                    .Vendor
+                                    .PERSONA
+                            )
+                            .vendorVerificationId("vendor_verification_id")
+                            .build()
+                    )
+                    .tickerSymbol("ticker_symbol")
                     .wealthAndEmploymentDetails(
                         CounterpartyCreateParams.LegalEntityCreateRequest
                             .LegalEntityWealthEmploymentDetail

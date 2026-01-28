@@ -704,6 +704,11 @@ private constructor(
     /**
      * Additional vendor specific fields for this payment. Data must be represented as key-value
      * pairs.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = paymentOrder.vendorAttributes().convert(MyClass.class);
+     * ```
      */
     @JsonProperty("vendor_attributes")
     @ExcludeMissing

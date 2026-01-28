@@ -55,6 +55,11 @@ private constructor(
 
     /**
      * An object passed through to the simulated IPD that could reflect what a vendor would pass.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = incomingPaymentDetailCreateAsyncParams.data().convert(MyClass.class);
+     * ```
      */
     fun _data(): JsonValue = body._data()
 
@@ -544,6 +549,11 @@ private constructor(
         /**
          * An object passed through to the simulated IPD that could reflect what a vendor would
          * pass.
+         *
+         * This arbitrary value can be deserialized into a custom type using the `convert` method:
+         * ```java
+         * MyClass myObject = incomingPaymentDetailCreateRequest.data().convert(MyClass.class);
+         * ```
          */
         @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 

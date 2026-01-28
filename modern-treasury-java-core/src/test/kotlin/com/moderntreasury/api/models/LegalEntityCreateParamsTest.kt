@@ -59,6 +59,7 @@ internal class LegalEntityCreateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .connectionId("connection_id")
             .countryOfIncorporation("country_of_incorporation")
             .dateFormed(LocalDate.parse("2019-12-27"))
             .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -144,6 +145,7 @@ internal class LegalEntityCreateParamsTest {
                                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .connectionId("connection_id")
                             .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -179,6 +181,7 @@ internal class LegalEntityCreateParamsTest {
                             .legalEntityAssociations(listOf())
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                             .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
+                            .listedExchange("listed_exchange")
                             .metadata(
                                 ChildLegalEntityCreate.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -197,8 +200,24 @@ internal class LegalEntityCreateParamsTest {
                             .preferredName("preferred_name")
                             .prefix("prefix")
                             .addPrimarySocialMediaSite("string")
+                            .addRegulator(
+                                ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                    .jurisdiction("jurisdiction")
+                                    .name("name")
+                                    .registrationNumber("registration_number")
+                                    .build()
+                            )
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .suffix("suffix")
+                            .thirdPartyVerification(
+                                ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                    .vendor(
+                                        ChildLegalEntityCreate.ThirdPartyVerification.Vendor.PERSONA
+                                    )
+                                    .vendorVerificationId("vendor_verification_id")
+                                    .build()
+                            )
+                            .tickerSymbol("ticker_symbol")
                             .wealthAndEmploymentDetails(
                                 ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -254,6 +273,7 @@ internal class LegalEntityCreateParamsTest {
                     .build()
             )
             .legalStructure(LegalEntityCreateParams.LegalStructure.CORPORATION)
+            .listedExchange("listed_exchange")
             .metadata(
                 LegalEntityCreateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -270,8 +290,22 @@ internal class LegalEntityCreateParamsTest {
             .preferredName("preferred_name")
             .prefix("prefix")
             .addPrimarySocialMediaSite("string")
+            .addRegulator(
+                LegalEntityCreateParams.LegalEntityRegulator.builder()
+                    .jurisdiction("jurisdiction")
+                    .name("name")
+                    .registrationNumber("registration_number")
+                    .build()
+            )
             .riskRating(LegalEntityCreateParams.RiskRating.LOW)
             .suffix("suffix")
+            .thirdPartyVerification(
+                LegalEntityCreateParams.ThirdPartyVerification.builder()
+                    .vendor(LegalEntityCreateParams.ThirdPartyVerification.Vendor.PERSONA)
+                    .vendorVerificationId("vendor_verification_id")
+                    .build()
+            )
+            .tickerSymbol("ticker_symbol")
             .wealthAndEmploymentDetails(
                 LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -365,6 +399,7 @@ internal class LegalEntityCreateParamsTest {
                         .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .connectionId("connection_id")
                 .countryOfIncorporation("country_of_incorporation")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -460,6 +495,7 @@ internal class LegalEntityCreateParamsTest {
                                         )
                                         .build()
                                 )
+                                .connectionId("connection_id")
                                 .countryOfIncorporation("country_of_incorporation")
                                 .dateFormed(LocalDate.parse("2019-12-27"))
                                 .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -498,6 +534,7 @@ internal class LegalEntityCreateParamsTest {
                                 .legalEntityAssociations(listOf())
                                 .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                                 .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
+                                .listedExchange("listed_exchange")
                                 .metadata(
                                     ChildLegalEntityCreate.Metadata.builder()
                                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -516,8 +553,25 @@ internal class LegalEntityCreateParamsTest {
                                 .preferredName("preferred_name")
                                 .prefix("prefix")
                                 .addPrimarySocialMediaSite("string")
+                                .addRegulator(
+                                    ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                        .jurisdiction("jurisdiction")
+                                        .name("name")
+                                        .registrationNumber("registration_number")
+                                        .build()
+                                )
                                 .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                                 .suffix("suffix")
+                                .thirdPartyVerification(
+                                    ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                        .vendor(
+                                            ChildLegalEntityCreate.ThirdPartyVerification.Vendor
+                                                .PERSONA
+                                        )
+                                        .vendorVerificationId("vendor_verification_id")
+                                        .build()
+                                )
+                                .tickerSymbol("ticker_symbol")
                                 .wealthAndEmploymentDetails(
                                     ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
                                         .builder()
@@ -576,6 +630,7 @@ internal class LegalEntityCreateParamsTest {
                         .build()
                 )
                 .legalStructure(LegalEntityCreateParams.LegalStructure.CORPORATION)
+                .listedExchange("listed_exchange")
                 .metadata(
                     LegalEntityCreateParams.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -594,8 +649,22 @@ internal class LegalEntityCreateParamsTest {
                 .preferredName("preferred_name")
                 .prefix("prefix")
                 .addPrimarySocialMediaSite("string")
+                .addRegulator(
+                    LegalEntityCreateParams.LegalEntityRegulator.builder()
+                        .jurisdiction("jurisdiction")
+                        .name("name")
+                        .registrationNumber("registration_number")
+                        .build()
+                )
                 .riskRating(LegalEntityCreateParams.RiskRating.LOW)
                 .suffix("suffix")
+                .thirdPartyVerification(
+                    LegalEntityCreateParams.ThirdPartyVerification.builder()
+                        .vendor(LegalEntityCreateParams.ThirdPartyVerification.Vendor.PERSONA)
+                        .vendorVerificationId("vendor_verification_id")
+                        .build()
+                )
+                .tickerSymbol("ticker_symbol")
                 .wealthAndEmploymentDetails(
                     LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -691,6 +760,7 @@ internal class LegalEntityCreateParamsTest {
                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(body.connectionId()).contains("connection_id")
         assertThat(body.countryOfIncorporation()).contains("country_of_incorporation")
         assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
@@ -779,6 +849,7 @@ internal class LegalEntityCreateParamsTest {
                                     .validatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
+                            .connectionId("connection_id")
                             .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
@@ -814,6 +885,7 @@ internal class LegalEntityCreateParamsTest {
                             .legalEntityAssociations(listOf())
                             .legalEntityType(ChildLegalEntityCreate.LegalEntityType.BUSINESS)
                             .legalStructure(ChildLegalEntityCreate.LegalStructure.CORPORATION)
+                            .listedExchange("listed_exchange")
                             .metadata(
                                 ChildLegalEntityCreate.Metadata.builder()
                                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -832,8 +904,24 @@ internal class LegalEntityCreateParamsTest {
                             .preferredName("preferred_name")
                             .prefix("prefix")
                             .addPrimarySocialMediaSite("string")
+                            .addRegulator(
+                                ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                                    .jurisdiction("jurisdiction")
+                                    .name("name")
+                                    .registrationNumber("registration_number")
+                                    .build()
+                            )
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .suffix("suffix")
+                            .thirdPartyVerification(
+                                ChildLegalEntityCreate.ThirdPartyVerification.builder()
+                                    .vendor(
+                                        ChildLegalEntityCreate.ThirdPartyVerification.Vendor.PERSONA
+                                    )
+                                    .vendorVerificationId("vendor_verification_id")
+                                    .build()
+                            )
+                            .tickerSymbol("ticker_symbol")
                             .wealthAndEmploymentDetails(
                                 ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -890,6 +978,7 @@ internal class LegalEntityCreateParamsTest {
             )
         assertThat(body.legalStructure())
             .contains(LegalEntityCreateParams.LegalStructure.CORPORATION)
+        assertThat(body.listedExchange()).contains("listed_exchange")
         assertThat(body.metadata())
             .contains(
                 LegalEntityCreateParams.Metadata.builder()
@@ -908,8 +997,24 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.preferredName()).contains("preferred_name")
         assertThat(body.prefix()).contains("prefix")
         assertThat(body.primarySocialMediaSites().getOrNull()).containsExactly("string")
+        assertThat(body.regulators().getOrNull())
+            .containsExactly(
+                LegalEntityCreateParams.LegalEntityRegulator.builder()
+                    .jurisdiction("jurisdiction")
+                    .name("name")
+                    .registrationNumber("registration_number")
+                    .build()
+            )
         assertThat(body.riskRating()).contains(LegalEntityCreateParams.RiskRating.LOW)
         assertThat(body.suffix()).contains("suffix")
+        assertThat(body.thirdPartyVerification())
+            .contains(
+                LegalEntityCreateParams.ThirdPartyVerification.builder()
+                    .vendor(LegalEntityCreateParams.ThirdPartyVerification.Vendor.PERSONA)
+                    .vendorVerificationId("vendor_verification_id")
+                    .build()
+            )
+        assertThat(body.tickerSymbol()).contains("ticker_symbol")
         assertThat(body.wealthAndEmploymentDetails())
             .contains(
                 LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
