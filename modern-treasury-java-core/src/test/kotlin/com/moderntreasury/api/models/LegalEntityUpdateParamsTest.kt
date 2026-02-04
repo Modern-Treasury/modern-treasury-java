@@ -115,6 +115,7 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
             .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
+            .status(LegalEntityUpdateParams.Status.ACTIVE)
             .suffix("suffix")
             .thirdPartyVerification(
                 LegalEntityUpdateParams.ThirdPartyVerification.builder()
@@ -285,6 +286,7 @@ internal class LegalEntityUpdateParamsTest {
                         .build()
                 )
                 .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
+                .status(LegalEntityUpdateParams.Status.ACTIVE)
                 .suffix("suffix")
                 .thirdPartyVerification(
                     LegalEntityUpdateParams.ThirdPartyVerification.builder()
@@ -448,6 +450,7 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
         assertThat(body.riskRating()).contains(LegalEntityUpdateParams.RiskRating.LOW)
+        assertThat(body.status()).contains(LegalEntityUpdateParams.Status.ACTIVE)
         assertThat(body.suffix()).contains("suffix")
         assertThat(body.thirdPartyVerification())
             .contains(
