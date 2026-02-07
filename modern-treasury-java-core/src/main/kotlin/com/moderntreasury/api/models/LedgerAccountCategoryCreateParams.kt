@@ -79,6 +79,14 @@ private constructor(
     fun description(): Optional<String> = body.description()
 
     /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = body.externalId()
+
+    /**
      * The array of ledger account category ids that this ledger account category should be a child
      * of.
      *
@@ -137,6 +145,13 @@ private constructor(
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _description(): JsonField<String> = body._description()
+
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _externalId(): JsonField<String> = body._externalId()
 
     /**
      * Returns the raw JSON value of [ledgerAccountCategoryIds].
@@ -301,6 +316,21 @@ private constructor(
          * value.
          */
         fun description(description: JsonField<String>) = apply { body.description(description) }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
 
         /**
          * The array of ledger account category ids that this ledger account category should be a
@@ -499,6 +529,7 @@ private constructor(
         private val normalBalance: JsonField<TransactionDirection>,
         private val currencyExponent: JsonField<Long>,
         private val description: JsonField<String>,
+        private val externalId: JsonField<String>,
         private val ledgerAccountCategoryIds: JsonField<List<String>>,
         private val metadata: JsonField<Metadata>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -522,6 +553,9 @@ private constructor(
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("ledger_account_category_ids")
             @ExcludeMissing
             ledgerAccountCategoryIds: JsonField<List<String>> = JsonMissing.of(),
@@ -535,6 +569,7 @@ private constructor(
             normalBalance,
             currencyExponent,
             description,
+            externalId,
             ledgerAccountCategoryIds,
             metadata,
             mutableMapOf(),
@@ -587,6 +622,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun description(): Optional<String> = description.getOptional("description")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
         /**
          * The array of ledger account category ids that this ledger account category should be a
@@ -657,6 +700,15 @@ private constructor(
         fun _description(): JsonField<String> = description
 
         /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
+        /**
          * Returns the raw JSON value of [ledgerAccountCategoryIds].
          *
          * Unlike [ledgerAccountCategoryIds], this method doesn't throw if the JSON field has an
@@ -711,6 +763,7 @@ private constructor(
             private var normalBalance: JsonField<TransactionDirection>? = null
             private var currencyExponent: JsonField<Long> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
+            private var externalId: JsonField<String> = JsonMissing.of()
             private var ledgerAccountCategoryIds: JsonField<MutableList<String>>? = null
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -725,6 +778,7 @@ private constructor(
                 normalBalance = ledgerAccountCategoryCreateRequest.normalBalance
                 currencyExponent = ledgerAccountCategoryCreateRequest.currencyExponent
                 description = ledgerAccountCategoryCreateRequest.description
+                externalId = ledgerAccountCategoryCreateRequest.externalId
                 ledgerAccountCategoryIds =
                     ledgerAccountCategoryCreateRequest.ledgerAccountCategoryIds.map {
                         it.toMutableList()
@@ -831,6 +885,21 @@ private constructor(
                 this.description = description
             }
 
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
             /**
              * The array of ledger account category ids that this ledger account category should be
              * a child of.
@@ -920,6 +989,7 @@ private constructor(
                     checkRequired("normalBalance", normalBalance),
                     currencyExponent,
                     description,
+                    externalId,
                     (ledgerAccountCategoryIds ?: JsonMissing.of()).map { it.toImmutable() },
                     metadata,
                     additionalProperties.toMutableMap(),
@@ -939,6 +1009,7 @@ private constructor(
             normalBalance().validate()
             currencyExponent()
             description()
+            externalId()
             ledgerAccountCategoryIds()
             metadata().ifPresent { it.validate() }
             validated = true
@@ -966,6 +1037,7 @@ private constructor(
                 (normalBalance.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (currencyExponent.asKnown().isPresent) 1 else 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
+                (if (externalId.asKnown().isPresent) 1 else 0) +
                 (ledgerAccountCategoryIds.asKnown().getOrNull()?.size ?: 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0)
 
@@ -981,6 +1053,7 @@ private constructor(
                 normalBalance == other.normalBalance &&
                 currencyExponent == other.currencyExponent &&
                 description == other.description &&
+                externalId == other.externalId &&
                 ledgerAccountCategoryIds == other.ledgerAccountCategoryIds &&
                 metadata == other.metadata &&
                 additionalProperties == other.additionalProperties
@@ -994,6 +1067,7 @@ private constructor(
                 normalBalance,
                 currencyExponent,
                 description,
+                externalId,
                 ledgerAccountCategoryIds,
                 metadata,
                 additionalProperties,
@@ -1003,7 +1077,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerAccountCategoryCreateRequest{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerAccountCategoryCreateRequest{currency=$currency, ledgerId=$ledgerId, name=$name, normalBalance=$normalBalance, currencyExponent=$currencyExponent, description=$description, externalId=$externalId, ledgerAccountCategoryIds=$ledgerAccountCategoryIds, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
