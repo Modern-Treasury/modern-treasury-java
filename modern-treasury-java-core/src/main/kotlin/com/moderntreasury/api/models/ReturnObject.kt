@@ -358,7 +358,14 @@ private constructor(
     fun additionalInformation(): Optional<String> =
         additionalInformation.getOptional("additional_information")
 
-    /** The raw data from the return file that we get from the bank. */
+    /**
+     * The raw data from the return file that we get from the bank.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = returnObject.data().convert(MyClass.class);
+     * ```
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonValue = data
 
     /**

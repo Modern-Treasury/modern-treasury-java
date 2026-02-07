@@ -101,7 +101,14 @@ private constructor(
      */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /** The specifc details of the payment action based on type. */
+    /**
+     * The specifc details of the payment action based on type.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = paymentActionUpdateResponse.details().convert(MyClass.class);
+     * ```
+     */
     @JsonProperty("details") @ExcludeMissing fun _details(): JsonValue = details
 
     /**

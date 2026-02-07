@@ -18,6 +18,7 @@ internal class LedgerAccountCategoryCreateParamsTest {
             .normalBalance(TransactionDirection.CREDIT)
             .currencyExponent(0L)
             .description("description")
+            .externalId("external_id")
             .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .metadata(
                 LedgerAccountCategoryCreateParams.Metadata.builder()
@@ -39,6 +40,7 @@ internal class LedgerAccountCategoryCreateParamsTest {
                 .normalBalance(TransactionDirection.CREDIT)
                 .currencyExponent(0L)
                 .description("description")
+                .externalId("external_id")
                 .addLedgerAccountCategoryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .metadata(
                     LedgerAccountCategoryCreateParams.Metadata.builder()
@@ -57,6 +59,7 @@ internal class LedgerAccountCategoryCreateParamsTest {
         assertThat(body.normalBalance()).isEqualTo(TransactionDirection.CREDIT)
         assertThat(body.currencyExponent()).contains(0L)
         assertThat(body.description()).contains("description")
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.ledgerAccountCategoryIds().getOrNull())
             .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.metadata())
