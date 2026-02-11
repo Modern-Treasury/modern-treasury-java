@@ -36,7 +36,7 @@ private constructor(
     private val perPage: Long?,
     private val showBalances: Boolean?,
     private val showDeleted: Boolean?,
-    private val status: List<Status>?,
+    private val status: Status?,
     private val updatedAt: UpdatedAt?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -131,7 +131,7 @@ private constructor(
      * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
      * `archived`. For multiple statuses, use `status[]=pending&status[]=posted`.
      */
-    fun status(): Optional<List<Status>> = Optional.ofNullable(status)
+    fun status(): Optional<Status> = Optional.ofNullable(status)
 
     /**
      * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
@@ -178,7 +178,7 @@ private constructor(
         private var perPage: Long? = null
         private var showBalances: Boolean? = null
         private var showDeleted: Boolean? = null
-        private var status: MutableList<Status>? = null
+        private var status: Status? = null
         private var updatedAt: UpdatedAt? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -204,7 +204,7 @@ private constructor(
             perPage = ledgerEntryListParams.perPage
             showBalances = ledgerEntryListParams.showBalances
             showDeleted = ledgerEntryListParams.showDeleted
-            status = ledgerEntryListParams.status?.toMutableList()
+            status = ledgerEntryListParams.status
             updatedAt = ledgerEntryListParams.updatedAt
             additionalHeaders = ledgerEntryListParams.additionalHeaders.toBuilder()
             additionalQueryParams = ledgerEntryListParams.additionalQueryParams.toBuilder()
@@ -433,19 +433,10 @@ private constructor(
          * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
          * `archived`. For multiple statuses, use `status[]=pending&status[]=posted`.
          */
-        fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
+        fun status(status: Status?) = apply { this.status = status }
 
         /** Alias for calling [Builder.status] with `status.orElse(null)`. */
-        fun status(status: Optional<List<Status>>) = status(status.getOrNull())
-
-        /**
-         * Adds a single [Status] to [Builder.status].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addStatus(status: Status) = apply {
-            this.status = (this.status ?: mutableListOf()).apply { add(status) }
-        }
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /**
          * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to filter by the posted at
@@ -581,7 +572,7 @@ private constructor(
                 perPage,
                 showBalances,
                 showDeleted,
-                status?.toImmutable(),
+                status,
                 updatedAt,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -655,7 +646,7 @@ private constructor(
                 perPage?.let { put("per_page", it.toString()) }
                 showBalances?.let { put("show_balances", it.toString()) }
                 showDeleted?.let { put("show_deleted", it.toString()) }
-                status?.forEach { put("status[]", it.toString()) }
+                status?.let { put("status", it.toString()) }
                 updatedAt?.let {
                     it._additionalProperties().keys().forEach { key ->
                         it._additionalProperties().values(key).forEach { value ->
@@ -1655,6 +1646,10 @@ private constructor(
             "OrderBy{createdAt=$createdAt, effectiveAt=$effectiveAt, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Get all ledger entries that match the status specified. One of `pending`, `posted`, or
+     * `archived`. For multiple statuses, use `status[]=pending&status[]=posted`.
+     */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
