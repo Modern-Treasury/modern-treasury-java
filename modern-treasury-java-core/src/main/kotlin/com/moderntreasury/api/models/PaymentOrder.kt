@@ -41,6 +41,7 @@ private constructor(
     private val accountingCategoryId: JsonField<String>,
     private val accountingLedgerClassId: JsonField<String>,
     private val amount: JsonField<Long>,
+    private val batchId: JsonField<String>,
     private val chargeBearer: JsonField<ChargeBearer>,
     private val counterpartyId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -102,6 +103,7 @@ private constructor(
         @ExcludeMissing
         accountingLedgerClassId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("batch_id") @ExcludeMissing batchId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("charge_bearer")
         @ExcludeMissing
         chargeBearer: JsonField<ChargeBearer> = JsonMissing.of(),
@@ -228,6 +230,7 @@ private constructor(
         accountingCategoryId,
         accountingLedgerClassId,
         amount,
+        batchId,
         chargeBearer,
         counterpartyId,
         createdAt,
@@ -318,6 +321,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun amount(): Long = amount.getRequired("amount")
+
+    /**
+     * The ID of the batch in which the payment order is included. Only populated after the payment
+     * order begins processing.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun batchId(): Optional<String> = batchId.getOptional("batch_id")
 
     /**
      * The party that will pay the fees for the payment order. See
@@ -771,6 +783,13 @@ private constructor(
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
 
     /**
+     * Returns the raw JSON value of [batchId].
+     *
+     * Unlike [batchId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("batch_id") @ExcludeMissing fun _batchId(): JsonField<String> = batchId
+
+    /**
      * Returns the raw JSON value of [chargeBearer].
      *
      * Unlike [chargeBearer], this method doesn't throw if the JSON field has an unexpected type.
@@ -1190,6 +1209,7 @@ private constructor(
          * .accountingCategoryId()
          * .accountingLedgerClassId()
          * .amount()
+         * .batchId()
          * .chargeBearer()
          * .counterpartyId()
          * .createdAt()
@@ -1248,6 +1268,7 @@ private constructor(
         private var accountingCategoryId: JsonField<String>? = null
         private var accountingLedgerClassId: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
+        private var batchId: JsonField<String>? = null
         private var chargeBearer: JsonField<ChargeBearer>? = null
         private var counterpartyId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
@@ -1303,6 +1324,7 @@ private constructor(
             accountingCategoryId = paymentOrder.accountingCategoryId
             accountingLedgerClassId = paymentOrder.accountingLedgerClassId
             amount = paymentOrder.amount
+            batchId = paymentOrder.batchId
             chargeBearer = paymentOrder.chargeBearer
             counterpartyId = paymentOrder.counterpartyId
             createdAt = paymentOrder.createdAt
@@ -1443,6 +1465,23 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+        /**
+         * The ID of the batch in which the payment order is included. Only populated after the
+         * payment order begins processing.
+         */
+        fun batchId(batchId: String?) = batchId(JsonField.ofNullable(batchId))
+
+        /** Alias for calling [Builder.batchId] with `batchId.orElse(null)`. */
+        fun batchId(batchId: Optional<String>) = batchId(batchId.getOrNull())
+
+        /**
+         * Sets [Builder.batchId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.batchId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun batchId(batchId: JsonField<String>) = apply { this.batchId = batchId }
 
         /**
          * The party that will pay the fees for the payment order. See
@@ -2363,6 +2402,7 @@ private constructor(
          * .accountingCategoryId()
          * .accountingLedgerClassId()
          * .amount()
+         * .batchId()
          * .chargeBearer()
          * .counterpartyId()
          * .createdAt()
@@ -2419,6 +2459,7 @@ private constructor(
                 checkRequired("accountingCategoryId", accountingCategoryId),
                 checkRequired("accountingLedgerClassId", accountingLedgerClassId),
                 checkRequired("amount", amount),
+                checkRequired("batchId", batchId),
                 checkRequired("chargeBearer", chargeBearer),
                 checkRequired("counterpartyId", counterpartyId),
                 checkRequired("createdAt", createdAt),
@@ -2483,6 +2524,7 @@ private constructor(
         accountingCategoryId()
         accountingLedgerClassId()
         amount()
+        batchId()
         chargeBearer().ifPresent { it.validate() }
         counterpartyId()
         createdAt()
@@ -2550,6 +2592,7 @@ private constructor(
             (if (accountingCategoryId.asKnown().isPresent) 1 else 0) +
             (if (accountingLedgerClassId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (batchId.asKnown().isPresent) 1 else 0) +
             (chargeBearer.asKnown().getOrNull()?.validity() ?: 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
@@ -6500,6 +6543,7 @@ private constructor(
             accountingCategoryId == other.accountingCategoryId &&
             accountingLedgerClassId == other.accountingLedgerClassId &&
             amount == other.amount &&
+            batchId == other.batchId &&
             chargeBearer == other.chargeBearer &&
             counterpartyId == other.counterpartyId &&
             createdAt == other.createdAt &&
@@ -6555,6 +6599,7 @@ private constructor(
             accountingCategoryId,
             accountingLedgerClassId,
             amount,
+            batchId,
             chargeBearer,
             counterpartyId,
             createdAt,
@@ -6607,5 +6652,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentHold=$currentHold, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, reconciliationStatus=$reconciliationStatus, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
+        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, batchId=$batchId, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentHold=$currentHold, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, reconciliationStatus=$reconciliationStatus, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
 }
