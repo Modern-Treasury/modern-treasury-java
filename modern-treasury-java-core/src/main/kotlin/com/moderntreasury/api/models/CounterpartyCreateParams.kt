@@ -9790,6 +9790,10 @@ private constructor(
 
                     @JvmField val BUSINESS_OWNER = of("business_owner")
 
+                    @JvmField val BUSINESS_REVENUE = of("business_revenue")
+
+                    @JvmField val DEBT_FINANCING = of("debt_financing")
+
                     @JvmField val GENERAL_EMPLOYEE = of("general_employee")
 
                     @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
@@ -9798,7 +9802,11 @@ private constructor(
 
                     @JvmField val INHERITANCE_GIFT = of("inheritance_gift")
 
+                    @JvmField val INTERCOMPANY_LOAN = of("intercompany_loan")
+
                     @JvmField val INVESTMENT = of("investment")
+
+                    @JvmField val INVESTOR_FUNDING = of("investor_funding")
 
                     @JvmField val LEGAL_SETTLEMENT = of("legal_settlement")
 
@@ -9806,11 +9814,17 @@ private constructor(
 
                     @JvmField val REAL_ESTATE = of("real_estate")
 
+                    @JvmField val RETAINED_EARNINGS_OR_SAVINGS = of("retained_earnings_or_savings")
+
                     @JvmField val RETIRED = of("retired")
 
                     @JvmField val RETIREMENT = of("retirement")
 
                     @JvmField val SALARY = of("salary")
+
+                    @JvmField val SALE_OF_BUSINESS_ASSETS = of("sale_of_business_assets")
+
+                    @JvmField val SALE_OF_REAL_ESTATE = of("sale_of_real_estate")
 
                     @JvmField val SELF_EMPLOYED = of("self_employed")
 
@@ -9826,17 +9840,24 @@ private constructor(
                     ALIMONY,
                     ANNUITY,
                     BUSINESS_OWNER,
+                    BUSINESS_REVENUE,
+                    DEBT_FINANCING,
                     GENERAL_EMPLOYEE,
                     GOVERNMENT_BENEFITS,
                     HOMEMAKER,
                     INHERITANCE_GIFT,
+                    INTERCOMPANY_LOAN,
                     INVESTMENT,
+                    INVESTOR_FUNDING,
                     LEGAL_SETTLEMENT,
                     LOTTERY,
                     REAL_ESTATE,
+                    RETAINED_EARNINGS_OR_SAVINGS,
                     RETIRED,
                     RETIREMENT,
                     SALARY,
+                    SALE_OF_BUSINESS_ASSETS,
+                    SALE_OF_REAL_ESTATE,
                     SELF_EMPLOYED,
                     SENIOR_EXECUTIVE,
                     TRUST_INCOME,
@@ -9856,17 +9877,24 @@ private constructor(
                     ALIMONY,
                     ANNUITY,
                     BUSINESS_OWNER,
+                    BUSINESS_REVENUE,
+                    DEBT_FINANCING,
                     GENERAL_EMPLOYEE,
                     GOVERNMENT_BENEFITS,
                     HOMEMAKER,
                     INHERITANCE_GIFT,
+                    INTERCOMPANY_LOAN,
                     INVESTMENT,
+                    INVESTOR_FUNDING,
                     LEGAL_SETTLEMENT,
                     LOTTERY,
                     REAL_ESTATE,
+                    RETAINED_EARNINGS_OR_SAVINGS,
                     RETIRED,
                     RETIREMENT,
                     SALARY,
+                    SALE_OF_BUSINESS_ASSETS,
+                    SALE_OF_REAL_ESTATE,
                     SELF_EMPLOYED,
                     SENIOR_EXECUTIVE,
                     TRUST_INCOME,
@@ -9889,17 +9917,24 @@ private constructor(
                         ALIMONY -> Value.ALIMONY
                         ANNUITY -> Value.ANNUITY
                         BUSINESS_OWNER -> Value.BUSINESS_OWNER
+                        BUSINESS_REVENUE -> Value.BUSINESS_REVENUE
+                        DEBT_FINANCING -> Value.DEBT_FINANCING
                         GENERAL_EMPLOYEE -> Value.GENERAL_EMPLOYEE
                         GOVERNMENT_BENEFITS -> Value.GOVERNMENT_BENEFITS
                         HOMEMAKER -> Value.HOMEMAKER
                         INHERITANCE_GIFT -> Value.INHERITANCE_GIFT
+                        INTERCOMPANY_LOAN -> Value.INTERCOMPANY_LOAN
                         INVESTMENT -> Value.INVESTMENT
+                        INVESTOR_FUNDING -> Value.INVESTOR_FUNDING
                         LEGAL_SETTLEMENT -> Value.LEGAL_SETTLEMENT
                         LOTTERY -> Value.LOTTERY
                         REAL_ESTATE -> Value.REAL_ESTATE
+                        RETAINED_EARNINGS_OR_SAVINGS -> Value.RETAINED_EARNINGS_OR_SAVINGS
                         RETIRED -> Value.RETIRED
                         RETIREMENT -> Value.RETIREMENT
                         SALARY -> Value.SALARY
+                        SALE_OF_BUSINESS_ASSETS -> Value.SALE_OF_BUSINESS_ASSETS
+                        SALE_OF_REAL_ESTATE -> Value.SALE_OF_REAL_ESTATE
                         SELF_EMPLOYED -> Value.SELF_EMPLOYED
                         SENIOR_EXECUTIVE -> Value.SENIOR_EXECUTIVE
                         TRUST_INCOME -> Value.TRUST_INCOME
@@ -9920,17 +9955,24 @@ private constructor(
                         ALIMONY -> Known.ALIMONY
                         ANNUITY -> Known.ANNUITY
                         BUSINESS_OWNER -> Known.BUSINESS_OWNER
+                        BUSINESS_REVENUE -> Known.BUSINESS_REVENUE
+                        DEBT_FINANCING -> Known.DEBT_FINANCING
                         GENERAL_EMPLOYEE -> Known.GENERAL_EMPLOYEE
                         GOVERNMENT_BENEFITS -> Known.GOVERNMENT_BENEFITS
                         HOMEMAKER -> Known.HOMEMAKER
                         INHERITANCE_GIFT -> Known.INHERITANCE_GIFT
+                        INTERCOMPANY_LOAN -> Known.INTERCOMPANY_LOAN
                         INVESTMENT -> Known.INVESTMENT
+                        INVESTOR_FUNDING -> Known.INVESTOR_FUNDING
                         LEGAL_SETTLEMENT -> Known.LEGAL_SETTLEMENT
                         LOTTERY -> Known.LOTTERY
                         REAL_ESTATE -> Known.REAL_ESTATE
+                        RETAINED_EARNINGS_OR_SAVINGS -> Known.RETAINED_EARNINGS_OR_SAVINGS
                         RETIRED -> Known.RETIRED
                         RETIREMENT -> Known.RETIREMENT
                         SALARY -> Known.SALARY
+                        SALE_OF_BUSINESS_ASSETS -> Known.SALE_OF_BUSINESS_ASSETS
+                        SALE_OF_REAL_ESTATE -> Known.SALE_OF_REAL_ESTATE
                         SELF_EMPLOYED -> Known.SELF_EMPLOYED
                         SENIOR_EXECUTIVE -> Known.SENIOR_EXECUTIVE
                         TRUST_INCOME -> Known.TRUST_INCOME
