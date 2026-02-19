@@ -1,5 +1,56 @@
 # Changelog
 
+## 7.16.0 (2026-02-19)
+
+Full Changelog: [v7.15.1...v7.16.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.15.1...v7.16.0)
+
+### Features
+
+* **api:** api update ([f002c79](https://github.com/Modern-Treasury/modern-treasury-java/commit/f002c797f81db0456f20830d847a616e7227ac14))
+* **api:** api update ([0ebee2f](https://github.com/Modern-Treasury/modern-treasury-java/commit/0ebee2fdee13cc1901615869f5316200baa29ca3))
+* **api:** api update ([059766e](https://github.com/Modern-Treasury/modern-treasury-java/commit/059766e4bb2f1f5173050e3ae6ab60be32545386))
+* **api:** api update ([0e988d3](https://github.com/Modern-Treasury/modern-treasury-java/commit/0e988d3abb3f194c78a4bc3136537db1b325049a))
+* **api:** api update ([75c3488](https://github.com/Modern-Treasury/modern-treasury-java/commit/75c34880a3598ff9c1d70a01c6cb7b60942a4d14))
+* **api:** api update ([90660fe](https://github.com/Modern-Treasury/modern-treasury-java/commit/90660fedbfb03f5a991e7a470a76e2cdcffd06cd))
+* **api:** api update ([de3c957](https://github.com/Modern-Treasury/modern-treasury-java/commit/de3c957e75bc5bab282952b6e363fa7f3bcc8523))
+* **api:** api update ([90d7c73](https://github.com/Modern-Treasury/modern-treasury-java/commit/90d7c73431dbd1361d753d1933c050d82a7a8ff8))
+* **client:** add connection pooling option ([117b1d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/117b1d5c9197910898f8db5f2bbc1c78b7ea1e4c))
+* **client:** send `X-Stainless-Kotlin-Version` header ([2892b70](https://github.com/Modern-Treasury/modern-treasury-java/commit/2892b70eccf5ddca0c23ea56d45f8a75ae263af3))
+
+
+### Bug Fixes
+
+* **client:** disallow coercion from float to int ([732590c](https://github.com/Modern-Treasury/modern-treasury-java/commit/732590c941aaa40bd6881f8e2d073b8676e26433))
+* **client:** fully respect max retries ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* **client:** preserve time zone in lenient date-time parsing ([121d5c6](https://github.com/Modern-Treasury/modern-treasury-java/commit/121d5c6f42466017cf7a0a76793adcf1beab09da))
+* **client:** send retry count header for max retries 0 ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* date time deserialization leniency ([d97de31](https://github.com/Modern-Treasury/modern-treasury-java/commit/d97de31d7cf11c29ce6c8e7dc9ad475c4f2f6c61))
+* **docs:** fix mcp installation instructions for remote servers ([611eed4](https://github.com/Modern-Treasury/modern-treasury-java/commit/611eed44fe5aefa6f34f3877bbaf6d618d22c864))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([38dfbce](https://github.com/Modern-Treasury/modern-treasury-java/commit/38dfbcefd6d91762eae1d7dc91bfc64f4f11b1a0))
+* **ci:** upgrade `actions/setup-java` ([56fc0ac](https://github.com/Modern-Treasury/modern-treasury-java/commit/56fc0ac0d37400764c578cb70d63c17788f28280))
+* **client:** improve example values ([9235076](https://github.com/Modern-Treasury/modern-treasury-java/commit/9235076457a287b3e6ed6746d9d4ec15f4f18799))
+* **internal:** allow passing args to `./scripts/test` ([9cd6197](https://github.com/Modern-Treasury/modern-treasury-java/commit/9cd6197fcfd104bb4a139105620f3cc7065fd5df))
+* **internal:** clean up maven repo artifact script and add html documentation to repo root ([3c5ae6d](https://github.com/Modern-Treasury/modern-treasury-java/commit/3c5ae6d5e0c2ab0dba492faf7778253068dc3fbc))
+* **internal:** codegen related update ([d17a141](https://github.com/Modern-Treasury/modern-treasury-java/commit/d17a141a575ba4c2dfe6f3009e0b2539f8ff27f3))
+* **internal:** correct cache invalidation for `SKIP_MOCK_TESTS` ([1b09008](https://github.com/Modern-Treasury/modern-treasury-java/commit/1b090089c69c910d2ba40cb46b728e62985078de))
+* **internal:** depend on packages directly in example ([7437475](https://github.com/Modern-Treasury/modern-treasury-java/commit/74374754fa0114a61908280775d0f08112757b4a))
+* **internal:** improve maven repo docs ([5a6e3fb](https://github.com/Modern-Treasury/modern-treasury-java/commit/5a6e3fba0c4c9977132b8fafa656c43d6b44d1d5))
+* **internal:** make `OkHttp` constructor internal ([e75388c](https://github.com/Modern-Treasury/modern-treasury-java/commit/e75388c3e3494cdfbe45aa4962bfae3364d4b8c0))
+* **internal:** update `actions/checkout` version ([d17454d](https://github.com/Modern-Treasury/modern-treasury-java/commit/d17454de0303262f63b6a82f4b972fdb7d938580))
+* **internal:** update `TestServerExtension` comment ([314ef5a](https://github.com/Modern-Treasury/modern-treasury-java/commit/314ef5a499ae4d0cd727002cda625115b266e509))
+* **internal:** update maven repo doc to include authentication ([43d2f3a](https://github.com/Modern-Treasury/modern-treasury-java/commit/43d2f3ab1cc718fb402776cde26fbcb61b56c7f3))
+* **internal:** upgrade AssertJ ([9984da5](https://github.com/Modern-Treasury/modern-treasury-java/commit/9984da52ae74a9b1629489d385def66853738e59))
+* test on Jackson 2.14.0 to avoid encountering FasterXML/jackson-databind[#3240](https://github.com/Modern-Treasury/modern-treasury-java/issues/3240) in tests ([d97de31](https://github.com/Modern-Treasury/modern-treasury-java/commit/d97de31d7cf11c29ce6c8e7dc9ad475c4f2f6c61))
+
+
+### Documentation
+
+* add comment for arbitrary value fields ([571f58c](https://github.com/Modern-Treasury/modern-treasury-java/commit/571f58c847371e19b4b62a85a92fce5b9d8bcbec))
+
 ## 7.15.1 (2026-01-14)
 
 Full Changelog: [v7.15.0...v7.15.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.15.0...v7.15.1)
