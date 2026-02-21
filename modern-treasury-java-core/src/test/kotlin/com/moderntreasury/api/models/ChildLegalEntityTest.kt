@@ -94,6 +94,7 @@ internal class ChildLegalEntityTest {
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
+                .externalId("external_id")
                 .firstName("first_name")
                 .addIdentification(
                     ChildLegalEntity.Identification.builder()
@@ -256,6 +257,7 @@ internal class ChildLegalEntityTest {
                                 .addDoingBusinessAsName("string")
                                 .email("email")
                                 .expectedActivityVolume(0L)
+                                .externalId("external_id")
                                 .firstName("first_name")
                                 .addIdentification(
                                     ChildLegalEntity.Identification.builder()
@@ -619,6 +621,7 @@ internal class ChildLegalEntityTest {
         assertThat(childLegalEntity.doingBusinessAsNames()).containsExactly("string")
         assertThat(childLegalEntity.email()).contains("email")
         assertThat(childLegalEntity.expectedActivityVolume()).contains(0L)
+        assertThat(childLegalEntity.externalId()).contains("external_id")
         assertThat(childLegalEntity.firstName()).contains("first_name")
         assertThat(childLegalEntity.identifications())
             .containsExactly(
@@ -774,6 +777,7 @@ internal class ChildLegalEntityTest {
                             .addDoingBusinessAsName("string")
                             .email("email")
                             .expectedActivityVolume(0L)
+                            .externalId("external_id")
                             .firstName("first_name")
                             .addIdentification(
                                 ChildLegalEntity.Identification.builder()
@@ -1127,6 +1131,7 @@ internal class ChildLegalEntityTest {
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
+                .externalId("external_id")
                 .firstName("first_name")
                 .addIdentification(
                     ChildLegalEntity.Identification.builder()
@@ -1289,6 +1294,7 @@ internal class ChildLegalEntityTest {
                                 .addDoingBusinessAsName("string")
                                 .email("email")
                                 .expectedActivityVolume(0L)
+                                .externalId("external_id")
                                 .firstName("first_name")
                                 .addIdentification(
                                     ChildLegalEntity.Identification.builder()
