@@ -90,6 +90,14 @@ private constructor(
     fun counterpartyId(): Optional<String> = body.counterpartyId()
 
     /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = body.externalId()
+
+    /**
      * The LegalEntity associated to this account.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -171,6 +179,13 @@ private constructor(
      * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _counterpartyId(): JsonField<String> = body._counterpartyId()
+
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _externalId(): JsonField<String> = body._externalId()
 
     /**
      * Returns the raw JSON value of [legalEntityId].
@@ -362,6 +377,21 @@ private constructor(
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             body.counterpartyId(counterpartyId)
         }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
 
         /** The LegalEntity associated to this account. */
         fun legalEntityId(legalEntityId: String) = apply { body.legalEntityId(legalEntityId) }
@@ -582,6 +612,7 @@ private constructor(
         private val accountCapabilities: JsonField<List<AccountCapability>>,
         private val accountType: JsonField<AccountType>,
         private val counterpartyId: JsonField<String>,
+        private val externalId: JsonField<String>,
         private val legalEntityId: JsonField<String>,
         private val parentAccountId: JsonField<String>,
         private val partyAddress: JsonField<PartyAddress>,
@@ -610,6 +641,9 @@ private constructor(
             @JsonProperty("counterparty_id")
             @ExcludeMissing
             counterpartyId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("legal_entity_id")
             @ExcludeMissing
             legalEntityId: JsonField<String> = JsonMissing.of(),
@@ -630,6 +664,7 @@ private constructor(
             accountCapabilities,
             accountType,
             counterpartyId,
+            externalId,
             legalEntityId,
             parentAccountId,
             partyAddress,
@@ -694,6 +729,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
         /**
          * The LegalEntity associated to this account.
@@ -790,6 +833,15 @@ private constructor(
         fun _counterpartyId(): JsonField<String> = counterpartyId
 
         /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
+        /**
          * Returns the raw JSON value of [legalEntityId].
          *
          * Unlike [legalEntityId], this method doesn't throw if the JSON field has an unexpected
@@ -868,6 +920,7 @@ private constructor(
             private var accountCapabilities: JsonField<MutableList<AccountCapability>>? = null
             private var accountType: JsonField<AccountType> = JsonMissing.of()
             private var counterpartyId: JsonField<String> = JsonMissing.of()
+            private var externalId: JsonField<String> = JsonMissing.of()
             private var legalEntityId: JsonField<String> = JsonMissing.of()
             private var parentAccountId: JsonField<String> = JsonMissing.of()
             private var partyAddress: JsonField<PartyAddress> = JsonMissing.of()
@@ -884,6 +937,7 @@ private constructor(
                     internalAccountCreateRequest.accountCapabilities.map { it.toMutableList() }
                 accountType = internalAccountCreateRequest.accountType
                 counterpartyId = internalAccountCreateRequest.counterpartyId
+                externalId = internalAccountCreateRequest.externalId
                 legalEntityId = internalAccountCreateRequest.legalEntityId
                 parentAccountId = internalAccountCreateRequest.parentAccountId
                 partyAddress = internalAccountCreateRequest.partyAddress
@@ -1005,6 +1059,21 @@ private constructor(
                 this.counterpartyId = counterpartyId
             }
 
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
             /** The LegalEntity associated to this account. */
             fun legalEntityId(legalEntityId: String) = legalEntityId(JsonField.of(legalEntityId))
 
@@ -1109,6 +1178,7 @@ private constructor(
                     (accountCapabilities ?: JsonMissing.of()).map { it.toImmutable() },
                     accountType,
                     counterpartyId,
+                    externalId,
                     legalEntityId,
                     parentAccountId,
                     partyAddress,
@@ -1131,6 +1201,7 @@ private constructor(
             accountCapabilities().ifPresent { it.forEach { it.validate() } }
             accountType().ifPresent { it.validate() }
             counterpartyId()
+            externalId()
             legalEntityId()
             parentAccountId()
             partyAddress().ifPresent { it.validate() }
@@ -1161,6 +1232,7 @@ private constructor(
                 (accountCapabilities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (accountType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (if (externalId.asKnown().isPresent) 1 else 0) +
                 (if (legalEntityId.asKnown().isPresent) 1 else 0) +
                 (if (parentAccountId.asKnown().isPresent) 1 else 0) +
                 (partyAddress.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1179,6 +1251,7 @@ private constructor(
                 accountCapabilities == other.accountCapabilities &&
                 accountType == other.accountType &&
                 counterpartyId == other.counterpartyId &&
+                externalId == other.externalId &&
                 legalEntityId == other.legalEntityId &&
                 parentAccountId == other.parentAccountId &&
                 partyAddress == other.partyAddress &&
@@ -1195,6 +1268,7 @@ private constructor(
                 accountCapabilities,
                 accountType,
                 counterpartyId,
+                externalId,
                 legalEntityId,
                 parentAccountId,
                 partyAddress,
@@ -1206,7 +1280,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, partyName=$partyName, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, legalEntityId=$legalEntityId, parentAccountId=$parentAccountId, partyAddress=$partyAddress, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+            "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, partyName=$partyName, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, externalId=$externalId, legalEntityId=$legalEntityId, parentAccountId=$parentAccountId, partyAddress=$partyAddress, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
     /** Either "USD" or "CAD". Internal accounts created at Increase only supports "USD". */

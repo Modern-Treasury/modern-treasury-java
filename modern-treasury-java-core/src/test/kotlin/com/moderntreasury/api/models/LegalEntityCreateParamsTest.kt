@@ -50,6 +50,7 @@ internal class LegalEntityCreateParamsTest {
             .addDoingBusinessAsName("string")
             .email("email")
             .expectedActivityVolume(0L)
+            .externalId("external_id")
             .firstName("first_name")
             .addIdentification(
                 IdentificationCreateRequest.builder()
@@ -118,6 +119,7 @@ internal class LegalEntityCreateParamsTest {
                             .addDoingBusinessAsName("string")
                             .email("email")
                             .expectedActivityVolume(0L)
+                            .externalId("external_id")
                             .firstName("first_name")
                             .addIdentification(
                                 IdentificationCreateRequest.builder()
@@ -358,6 +360,7 @@ internal class LegalEntityCreateParamsTest {
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
+                .externalId("external_id")
                 .firstName("first_name")
                 .addIdentification(
                     IdentificationCreateRequest.builder()
@@ -430,6 +433,7 @@ internal class LegalEntityCreateParamsTest {
                                 .addDoingBusinessAsName("string")
                                 .email("email")
                                 .expectedActivityVolume(0L)
+                                .externalId("external_id")
                                 .firstName("first_name")
                                 .addIdentification(
                                     IdentificationCreateRequest.builder()
@@ -680,6 +684,7 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.doingBusinessAsNames().getOrNull()).containsExactly("string")
         assertThat(body.email()).contains("email")
         assertThat(body.expectedActivityVolume()).contains(0L)
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.firstName()).contains("first_name")
         assertThat(body.identifications().getOrNull())
             .containsExactly(
@@ -751,6 +756,7 @@ internal class LegalEntityCreateParamsTest {
                             .addDoingBusinessAsName("string")
                             .email("email")
                             .expectedActivityVolume(0L)
+                            .externalId("external_id")
                             .firstName("first_name")
                             .addIdentification(
                                 IdentificationCreateRequest.builder()

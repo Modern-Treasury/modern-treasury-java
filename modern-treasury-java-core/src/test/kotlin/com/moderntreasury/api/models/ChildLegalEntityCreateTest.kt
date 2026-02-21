@@ -52,6 +52,7 @@ internal class ChildLegalEntityCreateTest {
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
+                .externalId("external_id")
                 .firstName("first_name")
                 .addIdentification(
                     IdentificationCreateRequest.builder()
@@ -207,6 +208,7 @@ internal class ChildLegalEntityCreateTest {
             .containsExactly("string")
         assertThat(childLegalEntityCreate.email()).contains("email")
         assertThat(childLegalEntityCreate.expectedActivityVolume()).contains(0L)
+        assertThat(childLegalEntityCreate.externalId()).contains("external_id")
         assertThat(childLegalEntityCreate.firstName()).contains("first_name")
         assertThat(childLegalEntityCreate.identifications().getOrNull())
             .containsExactly(
@@ -372,6 +374,7 @@ internal class ChildLegalEntityCreateTest {
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
+                .externalId("external_id")
                 .firstName("first_name")
                 .addIdentification(
                     IdentificationCreateRequest.builder()

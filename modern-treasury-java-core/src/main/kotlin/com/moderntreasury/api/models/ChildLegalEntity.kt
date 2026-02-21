@@ -41,6 +41,7 @@ private constructor(
     private val doingBusinessAsNames: JsonField<List<String>>,
     private val email: JsonField<String>,
     private val expectedActivityVolume: JsonField<Long>,
+    private val externalId: JsonField<String>,
     private val firstName: JsonField<String>,
     private val identifications: JsonField<List<Identification>>,
     private val industryClassifications: JsonField<List<LegalEntityIndustryClassification>>,
@@ -118,6 +119,9 @@ private constructor(
         @JsonProperty("expected_activity_volume")
         @ExcludeMissing
         expectedActivityVolume: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        externalId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("first_name") @ExcludeMissing firstName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("identifications")
         @ExcludeMissing
@@ -202,6 +206,7 @@ private constructor(
         doingBusinessAsNames,
         email,
         expectedActivityVolume,
+        externalId,
         firstName,
         identifications,
         industryClassifications,
@@ -357,6 +362,14 @@ private constructor(
      */
     fun expectedActivityVolume(): Optional<Long> =
         expectedActivityVolume.getOptional("expected_activity_volume")
+
+    /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
     /**
      * An individual's first name.
@@ -719,6 +732,13 @@ private constructor(
     fun _expectedActivityVolume(): JsonField<Long> = expectedActivityVolume
 
     /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("external_id") @ExcludeMissing fun _externalId(): JsonField<String> = externalId
+
+    /**
      * Returns the raw JSON value of [firstName].
      *
      * Unlike [firstName], this method doesn't throw if the JSON field has an unexpected type.
@@ -995,6 +1015,7 @@ private constructor(
          * .doingBusinessAsNames()
          * .email()
          * .expectedActivityVolume()
+         * .externalId()
          * .firstName()
          * .identifications()
          * .industryClassifications()
@@ -1047,6 +1068,7 @@ private constructor(
         private var doingBusinessAsNames: JsonField<MutableList<String>>? = null
         private var email: JsonField<String>? = null
         private var expectedActivityVolume: JsonField<Long>? = null
+        private var externalId: JsonField<String>? = null
         private var firstName: JsonField<String>? = null
         private var identifications: JsonField<MutableList<Identification>>? = null
         private var industryClassifications:
@@ -1097,6 +1119,7 @@ private constructor(
             doingBusinessAsNames = childLegalEntity.doingBusinessAsNames.map { it.toMutableList() }
             email = childLegalEntity.email
             expectedActivityVolume = childLegalEntity.expectedActivityVolume
+            externalId = childLegalEntity.externalId
             firstName = childLegalEntity.firstName
             identifications = childLegalEntity.identifications.map { it.toMutableList() }
             industryClassifications =
@@ -1430,6 +1453,21 @@ private constructor(
         fun expectedActivityVolume(expectedActivityVolume: JsonField<Long>) = apply {
             this.expectedActivityVolume = expectedActivityVolume
         }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /** An individual's first name. */
         fun firstName(firstName: String?) = firstName(JsonField.ofNullable(firstName))
@@ -2027,6 +2065,7 @@ private constructor(
          * .doingBusinessAsNames()
          * .email()
          * .expectedActivityVolume()
+         * .externalId()
          * .firstName()
          * .identifications()
          * .industryClassifications()
@@ -2079,6 +2118,7 @@ private constructor(
                 },
                 checkRequired("email", email),
                 checkRequired("expectedActivityVolume", expectedActivityVolume),
+                checkRequired("externalId", externalId),
                 checkRequired("firstName", firstName),
                 checkRequired("identifications", identifications).map { it.toImmutable() },
                 checkRequired("industryClassifications", industryClassifications).map {
@@ -2141,6 +2181,7 @@ private constructor(
         doingBusinessAsNames()
         email()
         expectedActivityVolume()
+        externalId()
         firstName()
         identifications().forEach { it.validate() }
         industryClassifications().forEach { it.validate() }
@@ -2202,6 +2243,7 @@ private constructor(
             (doingBusinessAsNames.asKnown().getOrNull()?.size ?: 0) +
             (if (email.asKnown().isPresent) 1 else 0) +
             (if (expectedActivityVolume.asKnown().isPresent) 1 else 0) +
+            (if (externalId.asKnown().isPresent) 1 else 0) +
             (if (firstName.asKnown().isPresent) 1 else 0) +
             (identifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (industryClassifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -8266,6 +8308,7 @@ private constructor(
             doingBusinessAsNames == other.doingBusinessAsNames &&
             email == other.email &&
             expectedActivityVolume == other.expectedActivityVolume &&
+            externalId == other.externalId &&
             firstName == other.firstName &&
             identifications == other.identifications &&
             industryClassifications == other.industryClassifications &&
@@ -8315,6 +8358,7 @@ private constructor(
             doingBusinessAsNames,
             email,
             expectedActivityVolume,
+            externalId,
             firstName,
             identifications,
             industryClassifications,
@@ -8350,5 +8394,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }

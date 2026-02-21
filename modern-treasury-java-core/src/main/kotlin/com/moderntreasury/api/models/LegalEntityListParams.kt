@@ -17,6 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 class LegalEntityListParams
 private constructor(
     private val afterCursor: String?,
+    private val externalId: String?,
     private val legalEntityType: LegalEntityType?,
     private val metadata: Metadata?,
     private val perPage: Long?,
@@ -27,6 +28,9 @@ private constructor(
 ) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
+
+    /** An optional user-defined 180 character unique identifier. */
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     fun legalEntityType(): Optional<LegalEntityType> = Optional.ofNullable(legalEntityType)
 
@@ -62,6 +66,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var afterCursor: String? = null
+        private var externalId: String? = null
         private var legalEntityType: LegalEntityType? = null
         private var metadata: Metadata? = null
         private var perPage: Long? = null
@@ -73,6 +78,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(legalEntityListParams: LegalEntityListParams) = apply {
             afterCursor = legalEntityListParams.afterCursor
+            externalId = legalEntityListParams.externalId
             legalEntityType = legalEntityListParams.legalEntityType
             metadata = legalEntityListParams.metadata
             perPage = legalEntityListParams.perPage
@@ -86,6 +92,12 @@ private constructor(
 
         /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         fun legalEntityType(legalEntityType: LegalEntityType?) = apply {
             this.legalEntityType = legalEntityType
@@ -232,6 +244,7 @@ private constructor(
         fun build(): LegalEntityListParams =
             LegalEntityListParams(
                 afterCursor,
+                externalId,
                 legalEntityType,
                 metadata,
                 perPage,
@@ -248,6 +261,7 @@ private constructor(
         QueryParams.builder()
             .apply {
                 afterCursor?.let { put("after_cursor", it) }
+                externalId?.let { put("external_id", it) }
                 legalEntityType?.let { put("legal_entity_type", it.toString()) }
                 metadata?.let {
                     it._additionalProperties().keys().forEach { key ->
@@ -639,6 +653,7 @@ private constructor(
 
         return other is LegalEntityListParams &&
             afterCursor == other.afterCursor &&
+            externalId == other.externalId &&
             legalEntityType == other.legalEntityType &&
             metadata == other.metadata &&
             perPage == other.perPage &&
@@ -651,6 +666,7 @@ private constructor(
     override fun hashCode(): Int =
         Objects.hash(
             afterCursor,
+            externalId,
             legalEntityType,
             metadata,
             perPage,
@@ -661,5 +677,5 @@ private constructor(
         )
 
     override fun toString() =
-        "LegalEntityListParams{afterCursor=$afterCursor, legalEntityType=$legalEntityType, metadata=$metadata, perPage=$perPage, showDeleted=$showDeleted, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "LegalEntityListParams{afterCursor=$afterCursor, externalId=$externalId, legalEntityType=$legalEntityType, metadata=$metadata, perPage=$perPage, showDeleted=$showDeleted, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
