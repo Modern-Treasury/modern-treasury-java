@@ -14,6 +14,7 @@ internal class InternalAccountUpdateParamsTest {
             .id("id")
             .contraLedgerAccountId("contra_ledger_account_id")
             .counterpartyId("counterparty_id")
+            .externalId("external_id")
             .ledgerAccountId("ledger_account_id")
             .metadata(
                 InternalAccountUpdateParams.Metadata.builder()
@@ -41,6 +42,7 @@ internal class InternalAccountUpdateParamsTest {
                 .id("id")
                 .contraLedgerAccountId("contra_ledger_account_id")
                 .counterpartyId("counterparty_id")
+                .externalId("external_id")
                 .ledgerAccountId("ledger_account_id")
                 .metadata(
                     InternalAccountUpdateParams.Metadata.builder()
@@ -55,6 +57,7 @@ internal class InternalAccountUpdateParamsTest {
 
         assertThat(body.contraLedgerAccountId()).contains("contra_ledger_account_id")
         assertThat(body.counterpartyId()).contains("counterparty_id")
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.ledgerAccountId()).contains("ledger_account_id")
         assertThat(body.metadata())
             .contains(
