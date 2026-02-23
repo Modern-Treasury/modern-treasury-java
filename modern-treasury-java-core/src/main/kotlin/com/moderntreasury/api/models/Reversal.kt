@@ -26,6 +26,7 @@ class Reversal
 private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
+    private val internalAccountId: JsonField<String>,
     private val ledgerTransactionId: JsonField<String>,
     private val liveMode: JsonField<Boolean>,
     private val metadata: JsonField<Metadata>,
@@ -45,6 +46,9 @@ private constructor(
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("internal_account_id")
+        @ExcludeMissing
+        internalAccountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("ledger_transaction_id")
         @ExcludeMissing
         ledgerTransactionId: JsonField<String> = JsonMissing.of(),
@@ -68,6 +72,7 @@ private constructor(
     ) : this(
         id,
         createdAt,
+        internalAccountId,
         ledgerTransactionId,
         liveMode,
         metadata,
@@ -92,6 +97,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * The ID of the relevant Internal Account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun internalAccountId(): Optional<String> = internalAccountId.getOptional("internal_account_id")
 
     /**
      * The ID of the ledger transaction linked to the reversal.
@@ -185,6 +198,16 @@ private constructor(
     @JsonProperty("created_at")
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
+
+    /**
+     * Returns the raw JSON value of [internalAccountId].
+     *
+     * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("internal_account_id")
+    @ExcludeMissing
+    fun _internalAccountId(): JsonField<String> = internalAccountId
 
     /**
      * Returns the raw JSON value of [ledgerTransactionId].
@@ -289,6 +312,7 @@ private constructor(
          * ```java
          * .id()
          * .createdAt()
+         * .internalAccountId()
          * .ledgerTransactionId()
          * .liveMode()
          * .metadata()
@@ -309,6 +333,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
+        private var internalAccountId: JsonField<String>? = null
         private var ledgerTransactionId: JsonField<String>? = null
         private var liveMode: JsonField<Boolean>? = null
         private var metadata: JsonField<Metadata>? = null
@@ -325,6 +350,7 @@ private constructor(
         internal fun from(reversal: Reversal) = apply {
             id = reversal.id
             createdAt = reversal.createdAt
+            internalAccountId = reversal.internalAccountId
             ledgerTransactionId = reversal.ledgerTransactionId
             liveMode = reversal.liveMode
             metadata = reversal.metadata
@@ -358,6 +384,25 @@ private constructor(
          * supported value.
          */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /** The ID of the relevant Internal Account. */
+        fun internalAccountId(internalAccountId: String?) =
+            internalAccountId(JsonField.ofNullable(internalAccountId))
+
+        /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
+        fun internalAccountId(internalAccountId: Optional<String>) =
+            internalAccountId(internalAccountId.getOrNull())
+
+        /**
+         * Sets [Builder.internalAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.internalAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun internalAccountId(internalAccountId: JsonField<String>) = apply {
+            this.internalAccountId = internalAccountId
+        }
 
         /** The ID of the ledger transaction linked to the reversal. */
         fun ledgerTransactionId(ledgerTransactionId: String?) =
@@ -540,6 +585,7 @@ private constructor(
          * ```java
          * .id()
          * .createdAt()
+         * .internalAccountId()
          * .ledgerTransactionId()
          * .liveMode()
          * .metadata()
@@ -558,6 +604,7 @@ private constructor(
             Reversal(
                 checkRequired("id", id),
                 checkRequired("createdAt", createdAt),
+                checkRequired("internalAccountId", internalAccountId),
                 checkRequired("ledgerTransactionId", ledgerTransactionId),
                 checkRequired("liveMode", liveMode),
                 checkRequired("metadata", metadata),
@@ -581,6 +628,7 @@ private constructor(
 
         id()
         createdAt()
+        internalAccountId()
         ledgerTransactionId()
         liveMode()
         metadata().validate()
@@ -611,6 +659,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
+            (if (internalAccountId.asKnown().isPresent) 1 else 0) +
             (if (ledgerTransactionId.asKnown().isPresent) 1 else 0) +
             (if (liveMode.asKnown().isPresent) 1 else 0) +
             (metadata.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1170,6 +1219,7 @@ private constructor(
         return other is Reversal &&
             id == other.id &&
             createdAt == other.createdAt &&
+            internalAccountId == other.internalAccountId &&
             ledgerTransactionId == other.ledgerTransactionId &&
             liveMode == other.liveMode &&
             metadata == other.metadata &&
@@ -1187,6 +1237,7 @@ private constructor(
         Objects.hash(
             id,
             createdAt,
+            internalAccountId,
             ledgerTransactionId,
             liveMode,
             metadata,
@@ -1204,5 +1255,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Reversal{id=$id, createdAt=$createdAt, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, paymentOrderId=$paymentOrderId, reason=$reason, reconciliationStatus=$reconciliationStatus, status=$status, transactionIds=$transactionIds, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "Reversal{id=$id, createdAt=$createdAt, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, paymentOrderId=$paymentOrderId, reason=$reason, reconciliationStatus=$reconciliationStatus, status=$status, transactionIds=$transactionIds, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
