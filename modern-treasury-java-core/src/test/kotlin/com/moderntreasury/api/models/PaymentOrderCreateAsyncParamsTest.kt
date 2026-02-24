@@ -31,6 +31,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
             .description("description")
             .effectiveDate(LocalDate.parse("2019-12-27"))
             .expiresAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .externalId("external_id")
             .fallbackType(PaymentOrderCreateAsyncParams.FallbackType.ACH)
             .foreignExchangeContract("foreign_exchange_contract")
             .foreignExchangeIndicator(
@@ -230,6 +231,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
                 .description("description")
                 .effectiveDate(LocalDate.parse("2019-12-27"))
                 .expiresAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .externalId("external_id")
                 .fallbackType(PaymentOrderCreateAsyncParams.FallbackType.ACH)
                 .foreignExchangeContract("foreign_exchange_contract")
                 .foreignExchangeIndicator(
@@ -435,6 +437,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
         assertThat(body.description()).contains("description")
         assertThat(body.effectiveDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.expiresAt()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.fallbackType()).contains(PaymentOrderCreateAsyncParams.FallbackType.ACH)
         assertThat(body.foreignExchangeContract()).contains("foreign_exchange_contract")
         assertThat(body.foreignExchangeIndicator())
