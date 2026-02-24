@@ -67,6 +67,7 @@ internal class PaymentOrderServiceAsyncTest {
                     )
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .expiresAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .externalId("external_id")
                     .fallbackType(PaymentOrderCreateParams.FallbackType.ACH)
                     .foreignExchangeContract("foreign_exchange_contract")
                     .foreignExchangeIndicator(
@@ -309,6 +310,7 @@ internal class PaymentOrderServiceAsyncTest {
                     .direction(PaymentOrderUpdateParams.Direction.CREDIT)
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .expiresAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .externalId("external_id")
                     .fallbackType(PaymentOrderUpdateParams.FallbackType.ACH)
                     .foreignExchangeContract("foreign_exchange_contract")
                     .foreignExchangeIndicator(
@@ -497,6 +499,7 @@ internal class PaymentOrderServiceAsyncTest {
                     .description("description")
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .expiresAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .externalId("external_id")
                     .fallbackType(PaymentOrderCreateAsyncParams.FallbackType.ACH)
                     .foreignExchangeContract("foreign_exchange_contract")
                     .foreignExchangeIndicator(

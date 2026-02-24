@@ -98,6 +98,7 @@ internal class LedgerAccountCategoryServiceAsyncTest {
                 LedgerAccountCategoryUpdateParams.builder()
                     .id("id")
                     .description("description")
+                    .externalId("external_id")
                     .metadata(
                         LedgerAccountCategoryUpdateParams.Metadata.builder()
                             .putAdditionalProperty("key", JsonValue.from("value"))

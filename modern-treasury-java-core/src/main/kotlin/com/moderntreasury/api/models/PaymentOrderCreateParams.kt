@@ -154,6 +154,14 @@ private constructor(
     fun expiresAt(): Optional<OffsetDateTime> = body.expiresAt()
 
     /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = body.externalId()
+
+    /**
      * A payment type to fallback to if the original type is not valid for the receiving account.
      * Currently, this only supports falling back from RTP to ACH (type=rtp and fallback_type=ach)
      *
@@ -477,6 +485,13 @@ private constructor(
      * Unlike [expiresAt], this method doesn't throw if the multipart field has an unexpected type.
      */
     fun _expiresAt(): MultipartField<OffsetDateTime> = body._expiresAt()
+
+    /**
+     * Returns the raw multipart value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the multipart field has an unexpected type.
+     */
+    fun _externalId(): MultipartField<String> = body._externalId()
 
     /**
      * Returns the raw multipart value of [fallbackType].
@@ -971,6 +986,21 @@ private constructor(
         fun expiresAt(expiresAt: MultipartField<OffsetDateTime>) = apply {
             body.expiresAt(expiresAt)
         }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary multipart value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: MultipartField<String>) = apply { body.externalId(externalId) }
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
@@ -1657,6 +1687,7 @@ private constructor(
                 "documents" to _documents(),
                 "effective_date" to _effectiveDate(),
                 "expires_at" to _expiresAt(),
+                "external_id" to _externalId(),
                 "fallback_type" to _fallbackType(),
                 "foreign_exchange_contract" to _foreignExchangeContract(),
                 "foreign_exchange_indicator" to _foreignExchangeIndicator(),
@@ -1703,6 +1734,7 @@ private constructor(
         private val documents: MultipartField<List<DocumentCreateRequest>>,
         private val effectiveDate: MultipartField<LocalDate>,
         private val expiresAt: MultipartField<OffsetDateTime>,
+        private val externalId: MultipartField<String>,
         private val fallbackType: MultipartField<FallbackType>,
         private val foreignExchangeContract: MultipartField<String>,
         private val foreignExchangeIndicator: MultipartField<ForeignExchangeIndicator>,
@@ -1851,6 +1883,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun expiresAt(): Optional<OffsetDateTime> = expiresAt.value.getOptional("expires_at")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.value.getOptional("external_id")
 
         /**
          * A payment type to fallback to if the original type is not valid for the receiving
@@ -2227,6 +2267,16 @@ private constructor(
         fun _expiresAt(): MultipartField<OffsetDateTime> = expiresAt
 
         /**
+         * Returns the raw multipart value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): MultipartField<String> = externalId
+
+        /**
          * Returns the raw multipart value of [fallbackType].
          *
          * Unlike [fallbackType], this method doesn't throw if the multipart field has an unexpected
@@ -2513,6 +2563,7 @@ private constructor(
             private var documents: MultipartField<MutableList<DocumentCreateRequest>>? = null
             private var effectiveDate: MultipartField<LocalDate> = MultipartField.of(null)
             private var expiresAt: MultipartField<OffsetDateTime> = MultipartField.of(null)
+            private var externalId: MultipartField<String> = MultipartField.of(null)
             private var fallbackType: MultipartField<FallbackType> = MultipartField.of(null)
             private var foreignExchangeContract: MultipartField<String> = MultipartField.of(null)
             private var foreignExchangeIndicator: MultipartField<ForeignExchangeIndicator> =
@@ -2561,6 +2612,7 @@ private constructor(
                 documents = paymentOrderCreateRequest.documents.map { it.toMutableList() }
                 effectiveDate = paymentOrderCreateRequest.effectiveDate
                 expiresAt = paymentOrderCreateRequest.expiresAt
+                externalId = paymentOrderCreateRequest.externalId
                 fallbackType = paymentOrderCreateRequest.fallbackType
                 foreignExchangeContract = paymentOrderCreateRequest.foreignExchangeContract
                 foreignExchangeIndicator = paymentOrderCreateRequest.foreignExchangeIndicator
@@ -2852,6 +2904,23 @@ private constructor(
              */
             fun expiresAt(expiresAt: MultipartField<OffsetDateTime>) = apply {
                 this.expiresAt = expiresAt
+            }
+
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(MultipartField.of(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: MultipartField<String>) = apply {
+                this.externalId = externalId
             }
 
             /**
@@ -3438,6 +3507,7 @@ private constructor(
                     (documents ?: MultipartField.of(null)).map { it.toImmutable() },
                     effectiveDate,
                     expiresAt,
+                    externalId,
                     fallbackType,
                     foreignExchangeContract,
                     foreignExchangeIndicator,
@@ -3486,6 +3556,7 @@ private constructor(
             documents().ifPresent { it.forEach { it.validate() } }
             effectiveDate()
             expiresAt()
+            externalId()
             fallbackType().ifPresent { it.validate() }
             foreignExchangeContract()
             foreignExchangeIndicator().ifPresent { it.validate() }
@@ -3540,6 +3611,7 @@ private constructor(
                 documents == other.documents &&
                 effectiveDate == other.effectiveDate &&
                 expiresAt == other.expiresAt &&
+                externalId == other.externalId &&
                 fallbackType == other.fallbackType &&
                 foreignExchangeContract == other.foreignExchangeContract &&
                 foreignExchangeIndicator == other.foreignExchangeIndicator &&
@@ -3582,6 +3654,7 @@ private constructor(
                 documents,
                 effectiveDate,
                 expiresAt,
+                externalId,
                 fallbackType,
                 foreignExchangeContract,
                 foreignExchangeIndicator,
@@ -3613,7 +3686,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -13,6 +13,7 @@ internal class LedgerAccountCategoryUpdateParamsTest {
         LedgerAccountCategoryUpdateParams.builder()
             .id("id")
             .description("description")
+            .externalId("external_id")
             .metadata(
                 LedgerAccountCategoryUpdateParams.Metadata.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -39,6 +40,7 @@ internal class LedgerAccountCategoryUpdateParamsTest {
             LedgerAccountCategoryUpdateParams.builder()
                 .id("id")
                 .description("description")
+                .externalId("external_id")
                 .metadata(
                     LedgerAccountCategoryUpdateParams.Metadata.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -52,6 +54,7 @@ internal class LedgerAccountCategoryUpdateParamsTest {
         val body = params._body()
 
         assertThat(body.description()).contains("description")
+        assertThat(body.externalId()).contains("external_id")
         assertThat(body.metadata())
             .contains(
                 LedgerAccountCategoryUpdateParams.Metadata.builder()
