@@ -40,6 +40,14 @@ private constructor(
     fun email(): Optional<String> = body.email()
 
     /**
+     * An optional user-defined 180 character unique identifier.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun externalId(): Optional<String> = body.externalId()
+
+    /**
      * The id of the legal entity.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -87,6 +95,13 @@ private constructor(
      * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _email(): JsonField<String> = body._email()
+
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _externalId(): JsonField<String> = body._externalId()
 
     /**
      * Returns the raw JSON value of [legalEntityId].
@@ -170,10 +185,10 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [email]
+         * - [externalId]
          * - [legalEntityId]
          * - [metadata]
          * - [name]
-         * - [sendRemittanceAdvice]
          * - etc.
          */
         fun body(body: CounterpartyUpdateRequest) = apply { this.body = body.toBuilder() }
@@ -188,6 +203,21 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun email(email: JsonField<String>) = apply { body.email(email) }
+
+        /** An optional user-defined 180 character unique identifier. */
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
 
         /** The id of the legal entity. */
         fun legalEntityId(legalEntityId: String?) = apply { body.legalEntityId(legalEntityId) }
@@ -415,6 +445,7 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val email: JsonField<String>,
+        private val externalId: JsonField<String>,
         private val legalEntityId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val name: JsonField<String>,
@@ -426,6 +457,9 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("email") @ExcludeMissing email: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("legal_entity_id")
             @ExcludeMissing
             legalEntityId: JsonField<String> = JsonMissing.of(),
@@ -441,6 +475,7 @@ private constructor(
             taxpayerIdentifier: JsonField<String> = JsonMissing.of(),
         ) : this(
             email,
+            externalId,
             legalEntityId,
             metadata,
             name,
@@ -456,6 +491,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun email(): Optional<String> = email.getOptional("email")
+
+        /**
+         * An optional user-defined 180 character unique identifier.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun externalId(): Optional<String> = externalId.getOptional("external_id")
 
         /**
          * The id of the legal entity.
@@ -507,6 +550,15 @@ private constructor(
          * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
+
+        /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
 
         /**
          * Returns the raw JSON value of [legalEntityId].
@@ -577,6 +629,7 @@ private constructor(
         class Builder internal constructor() {
 
             private var email: JsonField<String> = JsonMissing.of()
+            private var externalId: JsonField<String> = JsonMissing.of()
             private var legalEntityId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
@@ -587,6 +640,7 @@ private constructor(
             @JvmSynthetic
             internal fun from(counterpartyUpdateRequest: CounterpartyUpdateRequest) = apply {
                 email = counterpartyUpdateRequest.email
+                externalId = counterpartyUpdateRequest.externalId
                 legalEntityId = counterpartyUpdateRequest.legalEntityId
                 metadata = counterpartyUpdateRequest.metadata
                 name = counterpartyUpdateRequest.name
@@ -606,6 +660,21 @@ private constructor(
              * supported value.
              */
             fun email(email: JsonField<String>) = apply { this.email = email }
+
+            /** An optional user-defined 180 character unique identifier. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+            fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
             /** The id of the legal entity. */
             fun legalEntityId(legalEntityId: String?) =
@@ -713,6 +782,7 @@ private constructor(
             fun build(): CounterpartyUpdateRequest =
                 CounterpartyUpdateRequest(
                     email,
+                    externalId,
                     legalEntityId,
                     metadata,
                     name,
@@ -730,6 +800,7 @@ private constructor(
             }
 
             email()
+            externalId()
             legalEntityId()
             metadata().ifPresent { it.validate() }
             name()
@@ -755,6 +826,7 @@ private constructor(
         @JvmSynthetic
         internal fun validity(): Int =
             (if (email.asKnown().isPresent) 1 else 0) +
+                (if (externalId.asKnown().isPresent) 1 else 0) +
                 (if (legalEntityId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
@@ -768,6 +840,7 @@ private constructor(
 
             return other is CounterpartyUpdateRequest &&
                 email == other.email &&
+                externalId == other.externalId &&
                 legalEntityId == other.legalEntityId &&
                 metadata == other.metadata &&
                 name == other.name &&
@@ -779,6 +852,7 @@ private constructor(
         private val hashCode: Int by lazy {
             Objects.hash(
                 email,
+                externalId,
                 legalEntityId,
                 metadata,
                 name,
@@ -791,7 +865,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterpartyUpdateRequest{email=$email, legalEntityId=$legalEntityId, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
+            "CounterpartyUpdateRequest{email=$email, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, name=$name, sendRemittanceAdvice=$sendRemittanceAdvice, taxpayerIdentifier=$taxpayerIdentifier, additionalProperties=$additionalProperties}"
     }
 
     /**
