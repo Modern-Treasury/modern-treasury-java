@@ -355,6 +355,8 @@ private constructor(
 
             @JvmField val BR_CPF = of("br_cpf")
 
+            @JvmField val CA_SIN = of("ca_sin")
+
             @JvmField val CL_RUN = of("cl_run")
 
             @JvmField val CL_RUT = of("cl_rut")
@@ -400,6 +402,7 @@ private constructor(
             AR_CUIT,
             BR_CNPJ,
             BR_CPF,
+            CA_SIN,
             CL_RUN,
             CL_RUT,
             CO_CEDULAS,
@@ -434,6 +437,7 @@ private constructor(
             AR_CUIT,
             BR_CNPJ,
             BR_CPF,
+            CA_SIN,
             CL_RUN,
             CL_RUT,
             CO_CEDULAS,
@@ -469,6 +473,7 @@ private constructor(
                 AR_CUIT -> Value.AR_CUIT
                 BR_CNPJ -> Value.BR_CNPJ
                 BR_CPF -> Value.BR_CPF
+                CA_SIN -> Value.CA_SIN
                 CL_RUN -> Value.CL_RUN
                 CL_RUT -> Value.CL_RUT
                 CO_CEDULAS -> Value.CO_CEDULAS
@@ -505,6 +510,7 @@ private constructor(
                 AR_CUIT -> Known.AR_CUIT
                 BR_CNPJ -> Known.BR_CNPJ
                 BR_CPF -> Known.BR_CPF
+                CA_SIN -> Known.CA_SIN
                 CL_RUN -> Known.CL_RUN
                 CL_RUT -> Known.CL_RUT
                 CO_CEDULAS -> Known.CO_CEDULAS
