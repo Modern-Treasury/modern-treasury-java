@@ -1,5 +1,32 @@
 # Changelog
 
+## 7.18.0 (2026-03-05)
+
+Full Changelog: [v7.17.0...v7.18.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.17.0...v7.18.0)
+
+### Features
+
+* **api:** api update ([f705697](https://github.com/Modern-Treasury/modern-treasury-java/commit/f705697a1e7faa67c214945a74cd4db7e0f103b5))
+* **api:** api update ([6e442c7](https://github.com/Modern-Treasury/modern-treasury-java/commit/6e442c769e4d8b4549110c15d4691d3981f752c4))
+* **api:** api update ([5f9df2e](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f9df2e6a09bd4a4ed8afb5682d890ccf20dc744))
+* **api:** api update ([72cd033](https://github.com/Modern-Treasury/modern-treasury-java/commit/72cd0334bf7845163a7642cda7883171d323f2da))
+* **api:** api update ([bef57a2](https://github.com/Modern-Treasury/modern-treasury-java/commit/bef57a292a51960d4d2ebe2a47806a0afb088553))
+* **api:** api update ([c2d39e2](https://github.com/Modern-Treasury/modern-treasury-java/commit/c2d39e2b00662b3e899d4e400c90b1195037dbd8))
+
+
+### Bug Fixes
+
+* fix request delays for retrying to be more respectful of high requested delays ([e2fe1a0](https://github.com/Modern-Treasury/modern-treasury-java/commit/e2fe1a0aca58f1a9429263a7cb1a17a3f207caa2))
+
+
+### Chores
+
+* **api:** remove an obsolete reviewer ([5f8ff8c](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f8ff8cae9bacd9dfa9ea0840933d45f89e07ee4))
+* drop apache dependency ([671ad82](https://github.com/Modern-Treasury/modern-treasury-java/commit/671ad82e91503385d71d24dbedbd1086f987ed24))
+* **internal:** bump palantir-java-format ([c7739bf](https://github.com/Modern-Treasury/modern-treasury-java/commit/c7739bf61ef1229e270fc7819a81b88bd63d6a7e))
+* **internal:** expand imports ([8c7d2b2](https://github.com/Modern-Treasury/modern-treasury-java/commit/8c7d2b245b36b637fcdf98508d65b9d1334e1d6f))
+* **test:** do not count install time for mock server timeout ([54b7531](https://github.com/Modern-Treasury/modern-treasury-java/commit/54b7531f24836c347357b5ef893fb1519e16c9a0))
+
 ## 7.17.0 (2026-02-23)
 
 Full Changelog: [v7.16.0...v7.17.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.16.0...v7.17.0)
