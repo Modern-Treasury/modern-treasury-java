@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.19.0 (2026-03-07)
+
+Full Changelog: [v7.18.0...v7.19.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.18.0...v7.19.0)
+
+### Features
+
+* **api:** api update ([d6d0d6b](https://github.com/Modern-Treasury/modern-treasury-java/commit/d6d0d6b8dcfa441d29385c6f9766b3209a591cef))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([832e3e0](https://github.com/Modern-Treasury/modern-treasury-java/commit/832e3e0e64598ea85fc7223f02c69df890e8a65c))
+* update placeholder string ([9902d4c](https://github.com/Modern-Treasury/modern-treasury-java/commit/9902d4c82c5121110554668f851c2ed2bf08952a))
+
 ## 7.18.0 (2026-03-05)
 
 Full Changelog: [v7.17.0...v7.18.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.17.0...v7.18.0)
