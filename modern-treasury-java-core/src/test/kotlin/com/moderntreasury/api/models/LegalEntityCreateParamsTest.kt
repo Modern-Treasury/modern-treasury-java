@@ -47,6 +47,15 @@ internal class LegalEntityCreateParamsTest {
             .countryOfIncorporation("country_of_incorporation")
             .dateFormed(LocalDate.parse("2019-12-27"))
             .dateOfBirth(LocalDate.parse("2019-12-27"))
+            .addDocument(
+                LegalEntityCreateParams.Document.builder()
+                    .documentType(
+                        LegalEntityCreateParams.Document.DocumentType.ARTICLES_OF_INCORPORATION
+                    )
+                    .fileData("file_data")
+                    .filename("filename")
+                    .build()
+            )
             .addDoingBusinessAsName("string")
             .email("email")
             .expectedActivityVolume(0L)
@@ -56,6 +65,16 @@ internal class LegalEntityCreateParamsTest {
                 IdentificationCreateRequest.builder()
                     .idNumber("id_number")
                     .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                    .addDocument(
+                        IdentificationCreateRequest.Document.builder()
+                            .documentType(
+                                IdentificationCreateRequest.Document.DocumentType
+                                    .ARTICLES_OF_INCORPORATION
+                            )
+                            .fileData("file_data")
+                            .filename("filename")
+                            .build()
+                    )
                     .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
                     .issuingRegion("issuing_region")
@@ -116,6 +135,16 @@ internal class LegalEntityCreateParamsTest {
                             .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
+                            .addDocument(
+                                ChildLegalEntityCreate.Document.builder()
+                                    .documentType(
+                                        ChildLegalEntityCreate.Document.DocumentType
+                                            .ARTICLES_OF_INCORPORATION
+                                    )
+                                    .fileData("file_data")
+                                    .filename("filename")
+                                    .build()
+                            )
                             .addDoingBusinessAsName("string")
                             .email("email")
                             .expectedActivityVolume(0L)
@@ -125,6 +154,16 @@ internal class LegalEntityCreateParamsTest {
                                 IdentificationCreateRequest.builder()
                                     .idNumber("id_number")
                                     .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                    .addDocument(
+                                        IdentificationCreateRequest.Document.builder()
+                                            .documentType(
+                                                IdentificationCreateRequest.Document.DocumentType
+                                                    .ARTICLES_OF_INCORPORATION
+                                            )
+                                            .fileData("file_data")
+                                            .filename("filename")
+                                            .build()
+                                    )
                                     .expirationDate(LocalDate.parse("2019-12-27"))
                                     .issuingCountry("issuing_country")
                                     .issuingRegion("issuing_region")
@@ -357,6 +396,15 @@ internal class LegalEntityCreateParamsTest {
                 .countryOfIncorporation("country_of_incorporation")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
+                .addDocument(
+                    LegalEntityCreateParams.Document.builder()
+                        .documentType(
+                            LegalEntityCreateParams.Document.DocumentType.ARTICLES_OF_INCORPORATION
+                        )
+                        .fileData("file_data")
+                        .filename("filename")
+                        .build()
+                )
                 .addDoingBusinessAsName("string")
                 .email("email")
                 .expectedActivityVolume(0L)
@@ -366,6 +414,16 @@ internal class LegalEntityCreateParamsTest {
                     IdentificationCreateRequest.builder()
                         .idNumber("id_number")
                         .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                        .addDocument(
+                            IdentificationCreateRequest.Document.builder()
+                                .documentType(
+                                    IdentificationCreateRequest.Document.DocumentType
+                                        .ARTICLES_OF_INCORPORATION
+                                )
+                                .fileData("file_data")
+                                .filename("filename")
+                                .build()
+                        )
                         .expirationDate(LocalDate.parse("2019-12-27"))
                         .issuingCountry("issuing_country")
                         .issuingRegion("issuing_region")
@@ -430,6 +488,16 @@ internal class LegalEntityCreateParamsTest {
                                 .countryOfIncorporation("country_of_incorporation")
                                 .dateFormed(LocalDate.parse("2019-12-27"))
                                 .dateOfBirth(LocalDate.parse("2019-12-27"))
+                                .addDocument(
+                                    ChildLegalEntityCreate.Document.builder()
+                                        .documentType(
+                                            ChildLegalEntityCreate.Document.DocumentType
+                                                .ARTICLES_OF_INCORPORATION
+                                        )
+                                        .fileData("file_data")
+                                        .filename("filename")
+                                        .build()
+                                )
                                 .addDoingBusinessAsName("string")
                                 .email("email")
                                 .expectedActivityVolume(0L)
@@ -439,6 +507,17 @@ internal class LegalEntityCreateParamsTest {
                                     IdentificationCreateRequest.builder()
                                         .idNumber("id_number")
                                         .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                        .addDocument(
+                                            IdentificationCreateRequest.Document.builder()
+                                                .documentType(
+                                                    IdentificationCreateRequest.Document
+                                                        .DocumentType
+                                                        .ARTICLES_OF_INCORPORATION
+                                                )
+                                                .fileData("file_data")
+                                                .filename("filename")
+                                                .build()
+                                        )
                                         .expirationDate(LocalDate.parse("2019-12-27"))
                                         .issuingCountry("issuing_country")
                                         .issuingRegion("issuing_region")
@@ -681,6 +760,16 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.countryOfIncorporation()).contains("country_of_incorporation")
         assertThat(body.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(body.documents().getOrNull())
+            .containsExactly(
+                LegalEntityCreateParams.Document.builder()
+                    .documentType(
+                        LegalEntityCreateParams.Document.DocumentType.ARTICLES_OF_INCORPORATION
+                    )
+                    .fileData("file_data")
+                    .filename("filename")
+                    .build()
+            )
         assertThat(body.doingBusinessAsNames().getOrNull()).containsExactly("string")
         assertThat(body.email()).contains("email")
         assertThat(body.expectedActivityVolume()).contains(0L)
@@ -691,6 +780,16 @@ internal class LegalEntityCreateParamsTest {
                 IdentificationCreateRequest.builder()
                     .idNumber("id_number")
                     .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                    .addDocument(
+                        IdentificationCreateRequest.Document.builder()
+                            .documentType(
+                                IdentificationCreateRequest.Document.DocumentType
+                                    .ARTICLES_OF_INCORPORATION
+                            )
+                            .fileData("file_data")
+                            .filename("filename")
+                            .build()
+                    )
                     .expirationDate(LocalDate.parse("2019-12-27"))
                     .issuingCountry("issuing_country")
                     .issuingRegion("issuing_region")
@@ -753,6 +852,16 @@ internal class LegalEntityCreateParamsTest {
                             .countryOfIncorporation("country_of_incorporation")
                             .dateFormed(LocalDate.parse("2019-12-27"))
                             .dateOfBirth(LocalDate.parse("2019-12-27"))
+                            .addDocument(
+                                ChildLegalEntityCreate.Document.builder()
+                                    .documentType(
+                                        ChildLegalEntityCreate.Document.DocumentType
+                                            .ARTICLES_OF_INCORPORATION
+                                    )
+                                    .fileData("file_data")
+                                    .filename("filename")
+                                    .build()
+                            )
                             .addDoingBusinessAsName("string")
                             .email("email")
                             .expectedActivityVolume(0L)
@@ -762,6 +871,16 @@ internal class LegalEntityCreateParamsTest {
                                 IdentificationCreateRequest.builder()
                                     .idNumber("id_number")
                                     .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                    .addDocument(
+                                        IdentificationCreateRequest.Document.builder()
+                                            .documentType(
+                                                IdentificationCreateRequest.Document.DocumentType
+                                                    .ARTICLES_OF_INCORPORATION
+                                            )
+                                            .fileData("file_data")
+                                            .filename("filename")
+                                            .build()
+                                    )
                                     .expirationDate(LocalDate.parse("2019-12-27"))
                                     .issuingCountry("issuing_country")
                                     .issuingRegion("issuing_region")

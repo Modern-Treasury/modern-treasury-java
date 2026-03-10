@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.moderntreasury.api.core.jsonMapper
 import java.time.LocalDate
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -16,6 +17,16 @@ internal class IdentificationCreateRequestTest {
             IdentificationCreateRequest.builder()
                 .idNumber("id_number")
                 .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                .addDocument(
+                    IdentificationCreateRequest.Document.builder()
+                        .documentType(
+                            IdentificationCreateRequest.Document.DocumentType
+                                .ARTICLES_OF_INCORPORATION
+                        )
+                        .fileData("file_data")
+                        .filename("filename")
+                        .build()
+                )
                 .expirationDate(LocalDate.parse("2019-12-27"))
                 .issuingCountry("issuing_country")
                 .issuingRegion("issuing_region")
@@ -24,6 +35,16 @@ internal class IdentificationCreateRequestTest {
         assertThat(identificationCreateRequest.idNumber()).isEqualTo("id_number")
         assertThat(identificationCreateRequest.idType())
             .isEqualTo(IdentificationCreateRequest.IdType.AR_CUIL)
+        assertThat(identificationCreateRequest.documents().getOrNull())
+            .containsExactly(
+                IdentificationCreateRequest.Document.builder()
+                    .documentType(
+                        IdentificationCreateRequest.Document.DocumentType.ARTICLES_OF_INCORPORATION
+                    )
+                    .fileData("file_data")
+                    .filename("filename")
+                    .build()
+            )
         assertThat(identificationCreateRequest.expirationDate())
             .contains(LocalDate.parse("2019-12-27"))
         assertThat(identificationCreateRequest.issuingCountry()).contains("issuing_country")
@@ -37,6 +58,16 @@ internal class IdentificationCreateRequestTest {
             IdentificationCreateRequest.builder()
                 .idNumber("id_number")
                 .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                .addDocument(
+                    IdentificationCreateRequest.Document.builder()
+                        .documentType(
+                            IdentificationCreateRequest.Document.DocumentType
+                                .ARTICLES_OF_INCORPORATION
+                        )
+                        .fileData("file_data")
+                        .filename("filename")
+                        .build()
+                )
                 .expirationDate(LocalDate.parse("2019-12-27"))
                 .issuingCountry("issuing_country")
                 .issuingRegion("issuing_region")
