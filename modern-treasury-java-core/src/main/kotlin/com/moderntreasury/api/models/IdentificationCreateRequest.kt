@@ -11,7 +11,9 @@ import com.moderntreasury.api.core.ExcludeMissing
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
+import com.moderntreasury.api.core.checkKnown
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
 import java.util.Collections
@@ -24,6 +26,7 @@ class IdentificationCreateRequest
 private constructor(
     private val idNumber: JsonField<String>,
     private val idType: JsonField<IdType>,
+    private val documents: JsonField<List<Document>>,
     private val expirationDate: JsonField<LocalDate>,
     private val issuingCountry: JsonField<String>,
     private val issuingRegion: JsonField<String>,
@@ -34,6 +37,9 @@ private constructor(
     private constructor(
         @JsonProperty("id_number") @ExcludeMissing idNumber: JsonField<String> = JsonMissing.of(),
         @JsonProperty("id_type") @ExcludeMissing idType: JsonField<IdType> = JsonMissing.of(),
+        @JsonProperty("documents")
+        @ExcludeMissing
+        documents: JsonField<List<Document>> = JsonMissing.of(),
         @JsonProperty("expiration_date")
         @ExcludeMissing
         expirationDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -43,7 +49,15 @@ private constructor(
         @JsonProperty("issuing_region")
         @ExcludeMissing
         issuingRegion: JsonField<String> = JsonMissing.of(),
-    ) : this(idNumber, idType, expirationDate, issuingCountry, issuingRegion, mutableMapOf())
+    ) : this(
+        idNumber,
+        idType,
+        documents,
+        expirationDate,
+        issuingCountry,
+        issuingRegion,
+        mutableMapOf(),
+    )
 
     /**
      * The ID number of identification document.
@@ -60,6 +74,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun idType(): IdType = idType.getRequired("id_type")
+
+    /**
+     * A list of documents to attach to the identification.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun documents(): Optional<List<Document>> = documents.getOptional("documents")
 
     /**
      * The date when the Identification is no longer considered valid by the issuing authority.
@@ -98,6 +120,15 @@ private constructor(
      * Unlike [idType], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id_type") @ExcludeMissing fun _idType(): JsonField<IdType> = idType
+
+    /**
+     * Returns the raw JSON value of [documents].
+     *
+     * Unlike [documents], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("documents")
+    @ExcludeMissing
+    fun _documents(): JsonField<List<Document>> = documents
 
     /**
      * Returns the raw JSON value of [expirationDate].
@@ -157,6 +188,7 @@ private constructor(
 
         private var idNumber: JsonField<String>? = null
         private var idType: JsonField<IdType>? = null
+        private var documents: JsonField<MutableList<Document>>? = null
         private var expirationDate: JsonField<LocalDate> = JsonMissing.of()
         private var issuingCountry: JsonField<String> = JsonMissing.of()
         private var issuingRegion: JsonField<String> = JsonMissing.of()
@@ -166,6 +198,7 @@ private constructor(
         internal fun from(identificationCreateRequest: IdentificationCreateRequest) = apply {
             idNumber = identificationCreateRequest.idNumber
             idType = identificationCreateRequest.idType
+            documents = identificationCreateRequest.documents.map { it.toMutableList() }
             expirationDate = identificationCreateRequest.expirationDate
             issuingCountry = identificationCreateRequest.issuingCountry
             issuingRegion = identificationCreateRequest.issuingRegion
@@ -193,6 +226,32 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun idType(idType: JsonField<IdType>) = apply { this.idType = idType }
+
+        /** A list of documents to attach to the identification. */
+        fun documents(documents: List<Document>) = documents(JsonField.of(documents))
+
+        /**
+         * Sets [Builder.documents] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.documents] with a well-typed `List<Document>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun documents(documents: JsonField<List<Document>>) = apply {
+            this.documents = documents.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [Document] to [documents].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addDocument(document: Document) = apply {
+            documents =
+                (documents ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("documents", it).add(document)
+                }
+        }
 
         /**
          * The date when the Identification is no longer considered valid by the issuing authority.
@@ -289,6 +348,7 @@ private constructor(
             IdentificationCreateRequest(
                 checkRequired("idNumber", idNumber),
                 checkRequired("idType", idType),
+                (documents ?: JsonMissing.of()).map { it.toImmutable() },
                 expirationDate,
                 issuingCountry,
                 issuingRegion,
@@ -305,6 +365,7 @@ private constructor(
 
         idNumber()
         idType().validate()
+        documents().ifPresent { it.forEach { it.validate() } }
         expirationDate()
         issuingCountry()
         issuingRegion()
@@ -328,6 +389,7 @@ private constructor(
     internal fun validity(): Int =
         (if (idNumber.asKnown().isPresent) 1 else 0) +
             (idType.asKnown().getOrNull()?.validity() ?: 0) +
+            (documents.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (expirationDate.asKnown().isPresent) 1 else 0) +
             (if (issuingCountry.asKnown().isPresent) 1 else 0) +
             (if (issuingRegion.asKnown().isPresent) 1 else 0)
@@ -586,6 +648,406 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    class Document
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val documentType: JsonField<DocumentType>,
+        private val fileData: JsonField<String>,
+        private val filename: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("document_type")
+            @ExcludeMissing
+            documentType: JsonField<DocumentType> = JsonMissing.of(),
+            @JsonProperty("file_data")
+            @ExcludeMissing
+            fileData: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("filename") @ExcludeMissing filename: JsonField<String> = JsonMissing.of(),
+        ) : this(documentType, fileData, filename, mutableMapOf())
+
+        /**
+         * A category given to the document, can be `null`.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun documentType(): DocumentType = documentType.getRequired("document_type")
+
+        /**
+         * Base64-encoded file content for the document.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun fileData(): String = fileData.getRequired("file_data")
+
+        /**
+         * The original filename of the document.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun filename(): Optional<String> = filename.getOptional("filename")
+
+        /**
+         * Returns the raw JSON value of [documentType].
+         *
+         * Unlike [documentType], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("document_type")
+        @ExcludeMissing
+        fun _documentType(): JsonField<DocumentType> = documentType
+
+        /**
+         * Returns the raw JSON value of [fileData].
+         *
+         * Unlike [fileData], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("file_data") @ExcludeMissing fun _fileData(): JsonField<String> = fileData
+
+        /**
+         * Returns the raw JSON value of [filename].
+         *
+         * Unlike [filename], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("filename") @ExcludeMissing fun _filename(): JsonField<String> = filename
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Document].
+             *
+             * The following fields are required:
+             * ```java
+             * .documentType()
+             * .fileData()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Document]. */
+        class Builder internal constructor() {
+
+            private var documentType: JsonField<DocumentType>? = null
+            private var fileData: JsonField<String>? = null
+            private var filename: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(document: Document) = apply {
+                documentType = document.documentType
+                fileData = document.fileData
+                filename = document.filename
+                additionalProperties = document.additionalProperties.toMutableMap()
+            }
+
+            /** A category given to the document, can be `null`. */
+            fun documentType(documentType: DocumentType) = documentType(JsonField.of(documentType))
+
+            /**
+             * Sets [Builder.documentType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.documentType] with a well-typed [DocumentType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun documentType(documentType: JsonField<DocumentType>) = apply {
+                this.documentType = documentType
+            }
+
+            /** Base64-encoded file content for the document. */
+            fun fileData(fileData: String) = fileData(JsonField.of(fileData))
+
+            /**
+             * Sets [Builder.fileData] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fileData] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun fileData(fileData: JsonField<String>) = apply { this.fileData = fileData }
+
+            /** The original filename of the document. */
+            fun filename(filename: String) = filename(JsonField.of(filename))
+
+            /**
+             * Sets [Builder.filename] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filename] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun filename(filename: JsonField<String>) = apply { this.filename = filename }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Document].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .documentType()
+             * .fileData()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Document =
+                Document(
+                    checkRequired("documentType", documentType),
+                    checkRequired("fileData", fileData),
+                    filename,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Document = apply {
+            if (validated) {
+                return@apply
+            }
+
+            documentType().validate()
+            fileData()
+            filename()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (documentType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (fileData.asKnown().isPresent) 1 else 0) +
+                (if (filename.asKnown().isPresent) 1 else 0)
+
+        /** A category given to the document, can be `null`. */
+        class DocumentType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                @JvmField val ARTICLES_OF_INCORPORATION = of("articles_of_incorporation")
+
+                @JvmField val CERTIFICATE_OF_GOOD_STANDING = of("certificate_of_good_standing")
+
+                @JvmField val EIN_LETTER = of("ein_letter")
+
+                @JvmField val IDENTIFICATION_BACK = of("identification_back")
+
+                @JvmField val IDENTIFICATION_FRONT = of("identification_front")
+
+                @JvmField val PROOF_OF_ADDRESS = of("proof_of_address")
+
+                @JvmStatic fun of(value: String) = DocumentType(JsonField.of(value))
+            }
+
+            /** An enum containing [DocumentType]'s known values. */
+            enum class Known {
+                ARTICLES_OF_INCORPORATION,
+                CERTIFICATE_OF_GOOD_STANDING,
+                EIN_LETTER,
+                IDENTIFICATION_BACK,
+                IDENTIFICATION_FRONT,
+                PROOF_OF_ADDRESS,
+            }
+
+            /**
+             * An enum containing [DocumentType]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [DocumentType] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                ARTICLES_OF_INCORPORATION,
+                CERTIFICATE_OF_GOOD_STANDING,
+                EIN_LETTER,
+                IDENTIFICATION_BACK,
+                IDENTIFICATION_FRONT,
+                PROOF_OF_ADDRESS,
+                /**
+                 * An enum member indicating that [DocumentType] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    ARTICLES_OF_INCORPORATION -> Value.ARTICLES_OF_INCORPORATION
+                    CERTIFICATE_OF_GOOD_STANDING -> Value.CERTIFICATE_OF_GOOD_STANDING
+                    EIN_LETTER -> Value.EIN_LETTER
+                    IDENTIFICATION_BACK -> Value.IDENTIFICATION_BACK
+                    IDENTIFICATION_FRONT -> Value.IDENTIFICATION_FRONT
+                    PROOF_OF_ADDRESS -> Value.PROOF_OF_ADDRESS
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
+             *   known member.
+             */
+            fun known(): Known =
+                when (this) {
+                    ARTICLES_OF_INCORPORATION -> Known.ARTICLES_OF_INCORPORATION
+                    CERTIFICATE_OF_GOOD_STANDING -> Known.CERTIFICATE_OF_GOOD_STANDING
+                    EIN_LETTER -> Known.EIN_LETTER
+                    IDENTIFICATION_BACK -> Known.IDENTIFICATION_BACK
+                    IDENTIFICATION_FRONT -> Known.IDENTIFICATION_FRONT
+                    PROOF_OF_ADDRESS -> Known.PROOF_OF_ADDRESS
+                    else -> throw ModernTreasuryInvalidDataException("Unknown DocumentType: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
+             *   have the expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString().orElseThrow {
+                    ModernTreasuryInvalidDataException("Value is not a String")
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): DocumentType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is DocumentType && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Document &&
+                documentType == other.documentType &&
+                fileData == other.fileData &&
+                filename == other.filename &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(documentType, fileData, filename, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Document{documentType=$documentType, fileData=$fileData, filename=$filename, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -594,6 +1056,7 @@ private constructor(
         return other is IdentificationCreateRequest &&
             idNumber == other.idNumber &&
             idType == other.idType &&
+            documents == other.documents &&
             expirationDate == other.expirationDate &&
             issuingCountry == other.issuingCountry &&
             issuingRegion == other.issuingRegion &&
@@ -604,6 +1067,7 @@ private constructor(
         Objects.hash(
             idNumber,
             idType,
+            documents,
             expirationDate,
             issuingCountry,
             issuingRegion,
@@ -614,5 +1078,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "IdentificationCreateRequest{idNumber=$idNumber, idType=$idType, expirationDate=$expirationDate, issuingCountry=$issuingCountry, issuingRegion=$issuingRegion, additionalProperties=$additionalProperties}"
+        "IdentificationCreateRequest{idNumber=$idNumber, idType=$idType, documents=$documents, expirationDate=$expirationDate, issuingCountry=$issuingCountry, issuingRegion=$issuingRegion, additionalProperties=$additionalProperties}"
 }
