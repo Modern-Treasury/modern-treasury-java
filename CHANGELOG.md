@@ -1,5 +1,19 @@
 # Changelog
 
+## 7.21.0 (2026-03-12)
+
+Full Changelog: [v7.20.0...v7.21.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.20.0...v7.21.0)
+
+### Features
+
+* **api:** api update ([86c19d4](https://github.com/Modern-Treasury/modern-treasury-java/commit/86c19d424cb27d655f7e3be408c0d5fe4f397581))
+* **api:** api update ([b3c16eb](https://github.com/Modern-Treasury/modern-treasury-java/commit/b3c16ebae1dbb2ee43871dd987e7f529120bb4ae))
+
+
+### Bug Fixes
+
+* **client:** incorrect `Retry-After` parsing ([0fdae78](https://github.com/Modern-Treasury/modern-treasury-java/commit/0fdae7892f2fc2befd046de11833834a8e97ce74))
+
 ## 7.20.0 (2026-03-10)
 
 Full Changelog: [v7.19.0...v7.20.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.19.0...v7.20.0)
