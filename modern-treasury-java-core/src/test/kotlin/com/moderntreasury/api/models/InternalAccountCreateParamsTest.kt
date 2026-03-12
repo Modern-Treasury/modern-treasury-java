@@ -34,6 +34,11 @@ internal class InternalAccountCreateParamsTest {
             .counterpartyId("counterparty_id")
             .externalId("external_id")
             .legalEntityId("legal_entity_id")
+            .metadata(
+                InternalAccountCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .parentAccountId("parent_account_id")
             .partyAddress(
                 InternalAccountCreateParams.PartyAddress.builder()
@@ -80,6 +85,11 @@ internal class InternalAccountCreateParamsTest {
                 .counterpartyId("counterparty_id")
                 .externalId("external_id")
                 .legalEntityId("legal_entity_id")
+                .metadata(
+                    InternalAccountCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .parentAccountId("parent_account_id")
                 .partyAddress(
                     InternalAccountCreateParams.PartyAddress.builder()
@@ -124,6 +134,12 @@ internal class InternalAccountCreateParamsTest {
         assertThat(body.counterpartyId()).contains("counterparty_id")
         assertThat(body.externalId()).contains("external_id")
         assertThat(body.legalEntityId()).contains("legal_entity_id")
+        assertThat(body.metadata())
+            .contains(
+                InternalAccountCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.parentAccountId()).contains("parent_account_id")
         assertThat(body.partyAddress())
             .contains(
