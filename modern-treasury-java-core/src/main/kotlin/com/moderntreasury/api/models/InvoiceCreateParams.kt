@@ -136,6 +136,14 @@ private constructor(
     fun invoicerAddress(): Optional<InvoicerAddress> = body.invoicerAddress()
 
     /**
+     * The name of the issuer for the invoice. Defaults to the name of the Organization.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun invoicerName(): Optional<String> = body.invoicerName()
+
+    /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -328,6 +336,13 @@ private constructor(
      * Unlike [invoicerAddress], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _invoicerAddress(): JsonField<InvoicerAddress> = body._invoicerAddress()
+
+    /**
+     * Returns the raw JSON value of [invoicerName].
+     *
+     * Unlike [invoicerName], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _invoicerName(): JsonField<String> = body._invoicerName()
 
     /**
      * Returns the raw JSON value of [metadata].
@@ -709,6 +724,23 @@ private constructor(
          */
         fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
             body.invoicerAddress(invoicerAddress)
+        }
+
+        /** The name of the issuer for the invoice. Defaults to the name of the Organization. */
+        fun invoicerName(invoicerName: String?) = apply { body.invoicerName(invoicerName) }
+
+        /** Alias for calling [Builder.invoicerName] with `invoicerName.orElse(null)`. */
+        fun invoicerName(invoicerName: Optional<String>) = invoicerName(invoicerName.getOrNull())
+
+        /**
+         * Sets [Builder.invoicerName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.invoicerName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun invoicerName(invoicerName: JsonField<String>) = apply {
+            body.invoicerName(invoicerName)
         }
 
         /**
@@ -1118,6 +1150,7 @@ private constructor(
         private val fallbackPaymentMethod: JsonField<String>,
         private val invoiceLineItems: JsonField<List<InvoiceLineItemCreateRequest>>,
         private val invoicerAddress: JsonField<InvoicerAddress>,
+        private val invoicerName: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val notificationEmailAddresses: JsonField<List<String>>,
         private val notificationsEnabled: JsonField<Boolean>,
@@ -1170,6 +1203,9 @@ private constructor(
             @JsonProperty("invoicer_address")
             @ExcludeMissing
             invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of(),
+            @JsonProperty("invoicer_name")
+            @ExcludeMissing
+            invoicerName: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -1216,6 +1252,7 @@ private constructor(
             fallbackPaymentMethod,
             invoiceLineItems,
             invoicerAddress,
+            invoicerName,
             metadata,
             notificationEmailAddresses,
             notificationsEnabled,
@@ -1336,6 +1373,14 @@ private constructor(
          */
         fun invoicerAddress(): Optional<InvoicerAddress> =
             invoicerAddress.getOptional("invoicer_address")
+
+        /**
+         * The name of the issuer for the invoice. Defaults to the name of the Organization.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun invoicerName(): Optional<String> = invoicerName.getOptional("invoicer_name")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -1563,6 +1608,16 @@ private constructor(
         fun _invoicerAddress(): JsonField<InvoicerAddress> = invoicerAddress
 
         /**
+         * Returns the raw JSON value of [invoicerName].
+         *
+         * Unlike [invoicerName], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("invoicer_name")
+        @ExcludeMissing
+        fun _invoicerName(): JsonField<String> = invoicerName
+
+        /**
          * Returns the raw JSON value of [metadata].
          *
          * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
@@ -1713,6 +1768,7 @@ private constructor(
             private var invoiceLineItems: JsonField<MutableList<InvoiceLineItemCreateRequest>>? =
                 null
             private var invoicerAddress: JsonField<InvoicerAddress> = JsonMissing.of()
+            private var invoicerName: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var notificationEmailAddresses: JsonField<MutableList<String>>? = null
             private var notificationsEnabled: JsonField<Boolean> = JsonMissing.of()
@@ -1740,6 +1796,7 @@ private constructor(
                 fallbackPaymentMethod = invoiceCreateRequest.fallbackPaymentMethod
                 invoiceLineItems = invoiceCreateRequest.invoiceLineItems.map { it.toMutableList() }
                 invoicerAddress = invoiceCreateRequest.invoicerAddress
+                invoicerName = invoiceCreateRequest.invoicerName
                 metadata = invoiceCreateRequest.metadata
                 notificationEmailAddresses =
                     invoiceCreateRequest.notificationEmailAddresses.map { it.toMutableList() }
@@ -2007,6 +2064,25 @@ private constructor(
              */
             fun invoicerAddress(invoicerAddress: JsonField<InvoicerAddress>) = apply {
                 this.invoicerAddress = invoicerAddress
+            }
+
+            /** The name of the issuer for the invoice. Defaults to the name of the Organization. */
+            fun invoicerName(invoicerName: String?) =
+                invoicerName(JsonField.ofNullable(invoicerName))
+
+            /** Alias for calling [Builder.invoicerName] with `invoicerName.orElse(null)`. */
+            fun invoicerName(invoicerName: Optional<String>) =
+                invoicerName(invoicerName.getOrNull())
+
+            /**
+             * Sets [Builder.invoicerName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.invoicerName] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun invoicerName(invoicerName: JsonField<String>) = apply {
+                this.invoicerName = invoicerName
             }
 
             /**
@@ -2308,6 +2384,7 @@ private constructor(
                     fallbackPaymentMethod,
                     (invoiceLineItems ?: JsonMissing.of()).map { it.toImmutable() },
                     invoicerAddress,
+                    invoicerName,
                     metadata,
                     (notificationEmailAddresses ?: JsonMissing.of()).map { it.toImmutable() },
                     notificationsEnabled,
@@ -2342,6 +2419,7 @@ private constructor(
             fallbackPaymentMethod()
             invoiceLineItems().ifPresent { it.forEach { it.validate() } }
             invoicerAddress().ifPresent { it.validate() }
+            invoicerName()
             metadata().ifPresent { it.validate() }
             notificationEmailAddresses()
             notificationsEnabled()
@@ -2384,6 +2462,7 @@ private constructor(
                 (if (fallbackPaymentMethod.asKnown().isPresent) 1 else 0) +
                 (invoiceLineItems.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (invoicerAddress.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (invoicerName.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (notificationEmailAddresses.asKnown().getOrNull()?.size ?: 0) +
                 (if (notificationsEnabled.asKnown().isPresent) 1 else 0) +
@@ -2414,6 +2493,7 @@ private constructor(
                 fallbackPaymentMethod == other.fallbackPaymentMethod &&
                 invoiceLineItems == other.invoiceLineItems &&
                 invoicerAddress == other.invoicerAddress &&
+                invoicerName == other.invoicerName &&
                 metadata == other.metadata &&
                 notificationEmailAddresses == other.notificationEmailAddresses &&
                 notificationsEnabled == other.notificationsEnabled &&
@@ -2442,6 +2522,7 @@ private constructor(
                 fallbackPaymentMethod,
                 invoiceLineItems,
                 invoicerAddress,
+                invoicerName,
                 metadata,
                 notificationEmailAddresses,
                 notificationsEnabled,
@@ -2460,7 +2541,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InvoiceCreateRequest{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "InvoiceCreateRequest{counterpartyId=$counterpartyId, dueDate=$dueDate, originatingAccountId=$originatingAccountId, autoAdvance=$autoAdvance, contactDetails=$contactDetails, counterpartyBillingAddress=$counterpartyBillingAddress, counterpartyShippingAddress=$counterpartyShippingAddress, currency=$currency, description=$description, fallbackPaymentMethod=$fallbackPaymentMethod, invoiceLineItems=$invoiceLineItems, invoicerAddress=$invoicerAddress, invoicerName=$invoicerName, metadata=$metadata, notificationEmailAddresses=$notificationEmailAddresses, notificationsEnabled=$notificationsEnabled, paymentEffectiveDate=$paymentEffectiveDate, paymentMethod=$paymentMethod, paymentType=$paymentType, receivingAccountId=$receivingAccountId, recipientEmail=$recipientEmail, recipientName=$recipientName, remindAfterOverdueDays=$remindAfterOverdueDays, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
     /** The counterparty's billing address. */

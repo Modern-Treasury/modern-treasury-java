@@ -5565,6 +5565,8 @@ private constructor(
 
             @JvmField val CLOSED = of("closed")
 
+            @JvmField val DENIED = of("denied")
+
             @JvmField val PENDING = of("pending")
 
             @JvmField val SUSPENDED = of("suspended")
@@ -5576,6 +5578,7 @@ private constructor(
         enum class Known {
             ACTIVE,
             CLOSED,
+            DENIED,
             PENDING,
             SUSPENDED,
         }
@@ -5592,6 +5595,7 @@ private constructor(
         enum class Value {
             ACTIVE,
             CLOSED,
+            DENIED,
             PENDING,
             SUSPENDED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
@@ -5609,6 +5613,7 @@ private constructor(
             when (this) {
                 ACTIVE -> Value.ACTIVE
                 CLOSED -> Value.CLOSED
+                DENIED -> Value.DENIED
                 PENDING -> Value.PENDING
                 SUSPENDED -> Value.SUSPENDED
                 else -> Value._UNKNOWN
@@ -5627,6 +5632,7 @@ private constructor(
             when (this) {
                 ACTIVE -> Known.ACTIVE
                 CLOSED -> Known.CLOSED
+                DENIED -> Known.DENIED
                 PENDING -> Known.PENDING
                 SUSPENDED -> Known.SUSPENDED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
