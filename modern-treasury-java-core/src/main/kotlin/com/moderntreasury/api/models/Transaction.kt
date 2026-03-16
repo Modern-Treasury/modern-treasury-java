@@ -1778,8 +1778,6 @@ private constructor(
 
             @JvmField val GOLDMAN_SACHS = of("goldman_sachs")
 
-            @JvmField val HIFI = of("hifi")
-
             @JvmField val ISO20022 = of("iso20022")
 
             @JvmField val JPMC = of("jpmc")
@@ -1825,7 +1823,6 @@ private constructor(
             EVOLVE,
             FAKE_VENDOR,
             GOLDMAN_SACHS,
-            HIFI,
             ISO20022,
             JPMC,
             MODERN_TREASURY,
@@ -1865,7 +1862,6 @@ private constructor(
             EVOLVE,
             FAKE_VENDOR,
             GOLDMAN_SACHS,
-            HIFI,
             ISO20022,
             JPMC,
             MODERN_TREASURY,
@@ -1909,7 +1905,6 @@ private constructor(
                 EVOLVE -> Value.EVOLVE
                 FAKE_VENDOR -> Value.FAKE_VENDOR
                 GOLDMAN_SACHS -> Value.GOLDMAN_SACHS
-                HIFI -> Value.HIFI
                 ISO20022 -> Value.ISO20022
                 JPMC -> Value.JPMC
                 MODERN_TREASURY -> Value.MODERN_TREASURY
@@ -1951,7 +1946,6 @@ private constructor(
                 EVOLVE -> Known.EVOLVE
                 FAKE_VENDOR -> Known.FAKE_VENDOR
                 GOLDMAN_SACHS -> Known.GOLDMAN_SACHS
-                HIFI -> Known.HIFI
                 ISO20022 -> Known.ISO20022
                 JPMC -> Known.JPMC
                 MODERN_TREASURY -> Known.MODERN_TREASURY
