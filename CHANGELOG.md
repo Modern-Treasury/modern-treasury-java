@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.22.1 (2026-03-17)
+
+Full Changelog: [v7.22.0...v7.22.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.22.0...v7.22.1)
+
+### Bug Fixes
+
+* **client:** allow updating header/query affecting fields in `toBuilder()` ([cc5a777](https://github.com/Modern-Treasury/modern-treasury-java/commit/cc5a77705102f23c5c4c2b06c9faa77bf70448ac))
+
 ## 7.22.0 (2026-03-17)
 
 Full Changelog: [v7.21.0...v7.22.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.21.0...v7.22.0)
