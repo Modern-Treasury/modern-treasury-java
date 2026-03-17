@@ -1,5 +1,24 @@
 # Changelog
 
+## 7.22.0 (2026-03-17)
+
+Full Changelog: [v7.21.0...v7.22.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.21.0...v7.22.0)
+
+### Features
+
+* **api:** api update ([5a91a8f](https://github.com/Modern-Treasury/modern-treasury-java/commit/5a91a8f7124e624a0706e2c3c3ec503a82bc8511))
+* **api:** api update ([8158126](https://github.com/Modern-Treasury/modern-treasury-java/commit/8158126975ce8cebd5a17c41719636ec269f2c4d))
+* **api:** api update ([fe6a346](https://github.com/Modern-Treasury/modern-treasury-java/commit/fe6a3468027de9b00b56607bed422fd2d2b45cde))
+* **api:** api update ([8b8dab2](https://github.com/Modern-Treasury/modern-treasury-java/commit/8b8dab2235b67d935dea3906e56f96a75ea1d74d))
+* **api:** disable breaking change detection ([ff495ef](https://github.com/Modern-Treasury/modern-treasury-java/commit/ff495efe2ace836fc02a4278cd46f7f03ae3f01b))
+* **tests:** enable breaking change detection ([1264a67](https://github.com/Modern-Treasury/modern-treasury-java/commit/1264a6788629fbd04d319c4d228593b5ab6e54eb))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([d57a48d](https://github.com/Modern-Treasury/modern-treasury-java/commit/d57a48dafb64d4c953e845f91b8c6ca0450dcf56))
+* **internal:** update retry delay tests ([896f837](https://github.com/Modern-Treasury/modern-treasury-java/commit/896f8375efffc3186d80d2b457febdaba82b680f))
+
 ## 7.21.0 (2026-03-12)
 
 Full Changelog: [v7.20.0...v7.21.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.20.0...v7.21.0)
