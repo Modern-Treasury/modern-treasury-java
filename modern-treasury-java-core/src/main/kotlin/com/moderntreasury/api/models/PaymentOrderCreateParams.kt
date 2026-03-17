@@ -414,7 +414,7 @@ private constructor(
      * MyClass myObject = paymentOrderCreateParams.vendorAttributes().convert(MyClass.class);
      * ```
      */
-    fun _vendorAttributes(): JsonValue = body._vendorAttributes()
+    fun _vendorAttributes(): MultipartField<JsonValue> = body._vendorAttributes()
 
     /**
      * Returns the raw multipart value of [amount].
@@ -1626,7 +1626,7 @@ private constructor(
          * Additional vendor specific fields for this payment. Data must be represented as key-value
          * pairs.
          */
-        fun vendorAttributes(vendorAttributes: JsonValue) = apply {
+        fun vendorAttributes(vendorAttributes: MultipartField<JsonValue>) = apply {
             body.vendorAttributes(vendorAttributes)
         }
 
@@ -1863,7 +1863,7 @@ private constructor(
         private val ultimateOriginatingPartyName: MultipartField<String>,
         private val ultimateReceivingPartyIdentifier: MultipartField<String>,
         private val ultimateReceivingPartyName: MultipartField<String>,
-        private val vendorAttributes: JsonValue,
+        private val vendorAttributes: MultipartField<JsonValue>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2273,7 +2273,7 @@ private constructor(
          */
         @JsonProperty("vendor_attributes")
         @ExcludeMissing
-        fun _vendorAttributes(): JsonValue = vendorAttributes
+        fun _vendorAttributes(): MultipartField<JsonValue> = vendorAttributes
 
         /**
          * Returns the raw multipart value of [amount].
@@ -2757,7 +2757,7 @@ private constructor(
             private var ultimateReceivingPartyIdentifier: MultipartField<String> =
                 MultipartField.of(null)
             private var ultimateReceivingPartyName: MultipartField<String> = MultipartField.of(null)
-            private var vendorAttributes: JsonValue = JsonMissing.of()
+            private var vendorAttributes: MultipartField<JsonValue> = MultipartField.of(null)
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -3673,7 +3673,7 @@ private constructor(
              * Additional vendor specific fields for this payment. Data must be represented as
              * key-value pairs.
              */
-            fun vendorAttributes(vendorAttributes: JsonValue) = apply {
+            fun vendorAttributes(vendorAttributes: MultipartField<JsonValue>) = apply {
                 this.vendorAttributes = vendorAttributes
             }
 
