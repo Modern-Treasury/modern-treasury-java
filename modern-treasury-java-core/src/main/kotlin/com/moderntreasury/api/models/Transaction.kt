@@ -1762,6 +1762,8 @@ private constructor(
 
             @JvmField val CLEARTOUCH = of("cleartouch")
 
+            @JvmField val COINBASE_PRIME = of("coinbase_prime")
+
             @JvmField val COLUMN = of("column")
 
             @JvmField val CROSS_RIVER = of("cross_river")
@@ -1815,6 +1817,7 @@ private constructor(
             BNK_DEV,
             BRALE,
             CLEARTOUCH,
+            COINBASE_PRIME,
             COLUMN,
             CROSS_RIVER,
             CURRENCYCLOUD,
@@ -1854,6 +1857,7 @@ private constructor(
             BNK_DEV,
             BRALE,
             CLEARTOUCH,
+            COINBASE_PRIME,
             COLUMN,
             CROSS_RIVER,
             CURRENCYCLOUD,
@@ -1897,6 +1901,7 @@ private constructor(
                 BNK_DEV -> Value.BNK_DEV
                 BRALE -> Value.BRALE
                 CLEARTOUCH -> Value.CLEARTOUCH
+                COINBASE_PRIME -> Value.COINBASE_PRIME
                 COLUMN -> Value.COLUMN
                 CROSS_RIVER -> Value.CROSS_RIVER
                 CURRENCYCLOUD -> Value.CURRENCYCLOUD
@@ -1938,6 +1943,7 @@ private constructor(
                 BNK_DEV -> Known.BNK_DEV
                 BRALE -> Known.BRALE
                 CLEARTOUCH -> Known.CLEARTOUCH
+                COINBASE_PRIME -> Known.COINBASE_PRIME
                 COLUMN -> Known.COLUMN
                 CROSS_RIVER -> Known.CROSS_RIVER
                 CURRENCYCLOUD -> Known.CURRENCYCLOUD
