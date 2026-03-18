@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.23.0 (2026-03-18)
+
+Full Changelog: [v7.22.0...v7.23.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.22.0...v7.23.0)
+
+### Features
+
+* **api:** api update ([f4dca4f](https://github.com/Modern-Treasury/modern-treasury-java/commit/f4dca4f97d656bcf908dfc1aa45564f45df7bf0c))
+* **api:** Use MultipartField&lt;JsonValue&gt; for _vendorAttributes ([e50528f](https://github.com/Modern-Treasury/modern-treasury-java/commit/e50528fdb1432b034b45f40ec3ca7c179f4df274))
+* **tests:** fix lint errors and build errors ([665ff75](https://github.com/Modern-Treasury/modern-treasury-java/commit/665ff758312e83d3efeb289e50bd57880361ac37))
+* **tests:** updates tests with multipart ([1682f1f](https://github.com/Modern-Treasury/modern-treasury-java/commit/1682f1f0c924ed0da968ea1ecc802206214e5530))
+
+
+### Bug Fixes
+
+* **client:** allow updating header/query affecting fields in `toBuilder()` ([cc5a777](https://github.com/Modern-Treasury/modern-treasury-java/commit/cc5a77705102f23c5c4c2b06c9faa77bf70448ac))
+
 ## 7.22.0 (2026-03-17)
 
 Full Changelog: [v7.21.0...v7.22.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.21.0...v7.22.0)
