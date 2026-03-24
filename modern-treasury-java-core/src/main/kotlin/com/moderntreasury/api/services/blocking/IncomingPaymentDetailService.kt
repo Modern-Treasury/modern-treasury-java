@@ -6,7 +6,6 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
-import com.moderntreasury.api.models.AsyncResponse
 import com.moderntreasury.api.models.IncomingPaymentDetail
 import com.moderntreasury.api.models.IncomingPaymentDetailCreateAsyncParams
 import com.moderntreasury.api.models.IncomingPaymentDetailListPage
@@ -110,23 +109,24 @@ interface IncomingPaymentDetailService {
         list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
-    fun createAsync(): AsyncResponse = createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+    fun createAsync(): IncomingPaymentDetail =
+        createAsync(IncomingPaymentDetailCreateAsyncParams.none())
 
     /** @see createAsync */
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AsyncResponse
+    ): IncomingPaymentDetail
 
     /** @see createAsync */
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none()
-    ): AsyncResponse = createAsync(params, RequestOptions.none())
+    ): IncomingPaymentDetail = createAsync(params, RequestOptions.none())
 
     /** @see createAsync */
-    fun createAsync(requestOptions: RequestOptions): AsyncResponse =
+    fun createAsync(requestOptions: RequestOptions): IncomingPaymentDetail =
         createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 
     /**
@@ -267,7 +267,7 @@ interface IncomingPaymentDetailService {
          * [IncomingPaymentDetailService.createAsync].
          */
         @MustBeClosed
-        fun createAsync(): HttpResponseFor<AsyncResponse> =
+        fun createAsync(): HttpResponseFor<IncomingPaymentDetail> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none())
 
         /** @see createAsync */
@@ -276,18 +276,18 @@ interface IncomingPaymentDetailService {
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AsyncResponse>
+        ): HttpResponseFor<IncomingPaymentDetail>
 
         /** @see createAsync */
         @MustBeClosed
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none()
-        ): HttpResponseFor<AsyncResponse> = createAsync(params, RequestOptions.none())
+        ): HttpResponseFor<IncomingPaymentDetail> = createAsync(params, RequestOptions.none())
 
         /** @see createAsync */
         @MustBeClosed
-        fun createAsync(requestOptions: RequestOptions): HttpResponseFor<AsyncResponse> =
+        fun createAsync(requestOptions: RequestOptions): HttpResponseFor<IncomingPaymentDetail> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
     }
 }

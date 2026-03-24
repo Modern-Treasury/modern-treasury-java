@@ -16,7 +16,6 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepare
-import com.moderntreasury.api.models.AsyncResponse
 import com.moderntreasury.api.models.IncomingPaymentDetail
 import com.moderntreasury.api.models.IncomingPaymentDetailCreateAsyncParams
 import com.moderntreasury.api.models.IncomingPaymentDetailListPage
@@ -64,7 +63,7 @@ internal constructor(private val clientOptions: ClientOptions) : IncomingPayment
     override fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams,
         requestOptions: RequestOptions,
-    ): AsyncResponse =
+    ): IncomingPaymentDetail =
         // post /api/simulations/incoming_payment_details/create_async
         withRawResponse().createAsync(params, requestOptions).parse()
 
@@ -177,13 +176,13 @@ internal constructor(private val clientOptions: ClientOptions) : IncomingPayment
             }
         }
 
-        private val createAsyncHandler: Handler<AsyncResponse> =
-            jsonHandler<AsyncResponse>(clientOptions.jsonMapper)
+        private val createAsyncHandler: Handler<IncomingPaymentDetail> =
+            jsonHandler<IncomingPaymentDetail>(clientOptions.jsonMapper)
 
         override fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AsyncResponse> {
+        ): HttpResponseFor<IncomingPaymentDetail> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
