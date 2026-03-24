@@ -83,7 +83,7 @@ internal class IncomingPaymentDetailServiceAsyncTest {
                 .build()
         val incomingPaymentDetailServiceAsync = client.incomingPaymentDetails()
 
-        val asyncResponseFuture =
+        val incomingPaymentDetailFuture =
             incomingPaymentDetailServiceAsync.createAsync(
                 IncomingPaymentDetailCreateAsyncParams.builder()
                     .amount(0L)
@@ -98,7 +98,7 @@ internal class IncomingPaymentDetailServiceAsyncTest {
                     .build()
             )
 
-        val asyncResponse = asyncResponseFuture.get()
-        asyncResponse.validate()
+        val incomingPaymentDetail = incomingPaymentDetailFuture.get()
+        incomingPaymentDetail.validate()
     }
 }
