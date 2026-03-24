@@ -5,7 +5,6 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
-import com.moderntreasury.api.models.AsyncResponse
 import com.moderntreasury.api.models.IncomingPaymentDetail
 import com.moderntreasury.api.models.IncomingPaymentDetailCreateAsyncParams
 import com.moderntreasury.api.models.IncomingPaymentDetailListPageAsync
@@ -123,7 +122,7 @@ interface IncomingPaymentDetailServiceAsync {
         list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
-    fun createAsync(): CompletableFuture<AsyncResponse> =
+    fun createAsync(): CompletableFuture<IncomingPaymentDetail> =
         createAsync(IncomingPaymentDetailCreateAsyncParams.none())
 
     /** @see createAsync */
@@ -131,16 +130,16 @@ interface IncomingPaymentDetailServiceAsync {
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AsyncResponse>
+    ): CompletableFuture<IncomingPaymentDetail>
 
     /** @see createAsync */
     fun createAsync(
         params: IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams.none()
-    ): CompletableFuture<AsyncResponse> = createAsync(params, RequestOptions.none())
+    ): CompletableFuture<IncomingPaymentDetail> = createAsync(params, RequestOptions.none())
 
     /** @see createAsync */
-    fun createAsync(requestOptions: RequestOptions): CompletableFuture<AsyncResponse> =
+    fun createAsync(requestOptions: RequestOptions): CompletableFuture<IncomingPaymentDetail> =
         createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 
     /**
@@ -271,7 +270,7 @@ interface IncomingPaymentDetailServiceAsync {
          * /api/simulations/incoming_payment_details/create_async`, but is otherwise the same as
          * [IncomingPaymentDetailServiceAsync.createAsync].
          */
-        fun createAsync(): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+        fun createAsync(): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none())
 
         /** @see createAsync */
@@ -279,19 +278,19 @@ interface IncomingPaymentDetailServiceAsync {
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AsyncResponse>>
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>>
 
         /** @see createAsync */
         fun createAsync(
             params: IncomingPaymentDetailCreateAsyncParams =
                 IncomingPaymentDetailCreateAsyncParams.none()
-        ): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             createAsync(params, RequestOptions.none())
 
         /** @see createAsync */
         fun createAsync(
             requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<AsyncResponse>> =
+        ): CompletableFuture<HttpResponseFor<IncomingPaymentDetail>> =
             createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
     }
 }
