@@ -1,5 +1,32 @@
 # Changelog
 
+## 7.24.0 (2026-03-25)
+
+Full Changelog: [v7.23.0...v7.24.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.23.0...v7.24.0)
+
+### Features
+
+* **api:** api update ([5ea568b](https://github.com/Modern-Treasury/modern-treasury-java/commit/5ea568bac0aa46a13df0682f2b2788633a8d41d7))
+* **api:** api update ([9316fcc](https://github.com/Modern-Treasury/modern-treasury-java/commit/9316fcc5a1e01a2058e7142ed8ac51e77e7a2db7))
+* **api:** api update ([6ad985a](https://github.com/Modern-Treasury/modern-treasury-java/commit/6ad985ab1459ebefa0a8bdea57b7d5940fb334d7))
+* **api:** api update ([5db9058](https://github.com/Modern-Treasury/modern-treasury-java/commit/5db90589dc415fe3208910a076164e6143144405))
+* **api:** switch back to prism mock server ([b26b695](https://github.com/Modern-Treasury/modern-treasury-java/commit/b26b6953264baa0ab76ccacd3f4b0523cc6fe259))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([cf32530](https://github.com/Modern-Treasury/modern-treasury-java/commit/cf32530035513ad8c32d4f416f19cdee10506718))
+* **internal:** update gitignore ([10e8fab](https://github.com/Modern-Treasury/modern-treasury-java/commit/10e8fabca3384943b3ac3eb46a2a865a7225d226))
+* **tests:** bump steady to v0.19.4 ([08b087f](https://github.com/Modern-Treasury/modern-treasury-java/commit/08b087fa81a0113b742e398eef9bf6659b56e788))
+* **tests:** bump steady to v0.19.5 ([a0b5ddc](https://github.com/Modern-Treasury/modern-treasury-java/commit/a0b5ddc3e9ca4f6260592a3f10d6a54caad70320))
+* **tests:** bump steady to v0.19.6 ([7ef5088](https://github.com/Modern-Treasury/modern-treasury-java/commit/7ef5088a5a8fd1e4bc421d21ed313afbe96e994c))
+* **tests:** bump steady to v0.19.7 ([a3033f6](https://github.com/Modern-Treasury/modern-treasury-java/commit/a3033f6dedafd4134182a683614ab38e9d9a1526))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([d05d9c7](https://github.com/Modern-Treasury/modern-treasury-java/commit/d05d9c784ce81a1a4bbeb4891d6ada242696db32))
+
 ## 7.23.0 (2026-03-18)
 
 Full Changelog: [v7.22.0...v7.23.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.22.0...v7.23.0)
