@@ -828,6 +828,8 @@ private constructor(
 
                 @JvmField val SOLANA = of("solana")
 
+                @JvmField val STABLECOIN = of("stablecoin")
+
                 @JvmField val WIRE = of("wire")
 
                 @JvmField val ZENGIN = of("zengin")
@@ -870,6 +872,7 @@ private constructor(
                 SIGNET,
                 SKNBI,
                 SOLANA,
+                STABLECOIN,
                 WIRE,
                 ZENGIN,
             }
@@ -917,6 +920,7 @@ private constructor(
                 SIGNET,
                 SKNBI,
                 SOLANA,
+                STABLECOIN,
                 WIRE,
                 ZENGIN,
                 /**
@@ -968,6 +972,7 @@ private constructor(
                     SIGNET -> Value.SIGNET
                     SKNBI -> Value.SKNBI
                     SOLANA -> Value.SOLANA
+                    STABLECOIN -> Value.STABLECOIN
                     WIRE -> Value.WIRE
                     ZENGIN -> Value.ZENGIN
                     else -> Value._UNKNOWN
@@ -1017,6 +1022,7 @@ private constructor(
                     SIGNET -> Known.SIGNET
                     SKNBI -> Known.SKNBI
                     SOLANA -> Known.SOLANA
+                    STABLECOIN -> Known.STABLECOIN
                     WIRE -> Known.WIRE
                     ZENGIN -> Known.ZENGIN
                     else -> throw ModernTreasuryInvalidDataException("Unknown PaymentType: $value")

@@ -68,6 +68,7 @@ internal class RoutingNumberLookupRequestTest {
                         RoutingNumberLookupRequest.SupportedPaymentType.SIGNET,
                         RoutingNumberLookupRequest.SupportedPaymentType.SKNBI,
                         RoutingNumberLookupRequest.SupportedPaymentType.SOLANA,
+                        RoutingNumberLookupRequest.SupportedPaymentType.STABLECOIN,
                         RoutingNumberLookupRequest.SupportedPaymentType.WIRE,
                         RoutingNumberLookupRequest.SupportedPaymentType.ZENGIN,
                     )
@@ -130,6 +131,7 @@ internal class RoutingNumberLookupRequestTest {
                 RoutingNumberLookupRequest.SupportedPaymentType.SIGNET,
                 RoutingNumberLookupRequest.SupportedPaymentType.SKNBI,
                 RoutingNumberLookupRequest.SupportedPaymentType.SOLANA,
+                RoutingNumberLookupRequest.SupportedPaymentType.STABLECOIN,
                 RoutingNumberLookupRequest.SupportedPaymentType.WIRE,
                 RoutingNumberLookupRequest.SupportedPaymentType.ZENGIN,
             )
@@ -193,6 +195,7 @@ internal class RoutingNumberLookupRequestTest {
                         RoutingNumberLookupRequest.SupportedPaymentType.SIGNET,
                         RoutingNumberLookupRequest.SupportedPaymentType.SKNBI,
                         RoutingNumberLookupRequest.SupportedPaymentType.SOLANA,
+                        RoutingNumberLookupRequest.SupportedPaymentType.STABLECOIN,
                         RoutingNumberLookupRequest.SupportedPaymentType.WIRE,
                         RoutingNumberLookupRequest.SupportedPaymentType.ZENGIN,
                     )
