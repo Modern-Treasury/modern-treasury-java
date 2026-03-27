@@ -190,6 +190,7 @@ internal class LegalEntityTest {
                         .build()
                 )
                 .riskRating(LegalEntity.RiskRating.LOW)
+                .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .status(LegalEntity.Status.ACTIVE)
                 .suffix("suffix")
                 .thirdPartyVerification(
@@ -456,6 +457,9 @@ internal class LegalEntityTest {
                                         .build()
                                 )
                                 .riskRating(ChildLegalEntity.RiskRating.LOW)
+                                .serviceProviderLegalEntityId(
+                                    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
+                                )
                                 .status(ChildLegalEntity.Status.ACTIVE)
                                 .suffix("suffix")
                                 .thirdPartyVerification(
@@ -711,6 +715,8 @@ internal class LegalEntityTest {
                     .build()
             )
         assertThat(legalEntity.riskRating()).contains(LegalEntity.RiskRating.LOW)
+        assertThat(legalEntity.serviceProviderLegalEntityId())
+            .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(legalEntity.status()).contains(LegalEntity.Status.ACTIVE)
         assertThat(legalEntity.suffix()).contains("suffix")
         assertThat(legalEntity.thirdPartyVerification())
@@ -963,6 +969,7 @@ internal class LegalEntityTest {
                                     .build()
                             )
                             .riskRating(ChildLegalEntity.RiskRating.LOW)
+                            .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .status(ChildLegalEntity.Status.ACTIVE)
                             .suffix("suffix")
                             .thirdPartyVerification(
@@ -1212,6 +1219,7 @@ internal class LegalEntityTest {
                         .build()
                 )
                 .riskRating(LegalEntity.RiskRating.LOW)
+                .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .status(LegalEntity.Status.ACTIVE)
                 .suffix("suffix")
                 .thirdPartyVerification(
@@ -1478,6 +1486,9 @@ internal class LegalEntityTest {
                                         .build()
                                 )
                                 .riskRating(ChildLegalEntity.RiskRating.LOW)
+                                .serviceProviderLegalEntityId(
+                                    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
+                                )
                                 .status(ChildLegalEntity.Status.ACTIVE)
                                 .suffix("suffix")
                                 .thirdPartyVerification(

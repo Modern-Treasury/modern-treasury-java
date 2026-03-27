@@ -63,6 +63,7 @@ private constructor(
     private val primarySocialMediaSites: JsonField<List<String>>,
     private val regulators: JsonField<List<LegalEntityRegulator>>,
     private val riskRating: JsonField<RiskRating>,
+    private val serviceProviderLegalEntityId: JsonField<String>,
     private val status: JsonField<Status>,
     private val suffix: JsonField<String>,
     private val thirdPartyVerification: JsonField<ThirdPartyVerification>,
@@ -174,6 +175,9 @@ private constructor(
         @JsonProperty("risk_rating")
         @ExcludeMissing
         riskRating: JsonField<RiskRating> = JsonMissing.of(),
+        @JsonProperty("service_provider_legal_entity_id")
+        @ExcludeMissing
+        serviceProviderLegalEntityId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("suffix") @ExcludeMissing suffix: JsonField<String> = JsonMissing.of(),
         @JsonProperty("third_party_verification")
@@ -228,6 +232,7 @@ private constructor(
         primarySocialMediaSites,
         regulators,
         riskRating,
+        serviceProviderLegalEntityId,
         status,
         suffix,
         thirdPartyVerification,
@@ -540,6 +545,15 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun riskRating(): Optional<RiskRating> = riskRating.getOptional("risk_rating")
+
+    /**
+     * The UUID of the parent legal entity in the service provider tree.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun serviceProviderLegalEntityId(): Optional<String> =
+        serviceProviderLegalEntityId.getOptional("service_provider_legal_entity_id")
 
     /**
      * The activation status of the legal entity. One of pending, active, suspended, or denied.
@@ -921,6 +935,16 @@ private constructor(
     fun _riskRating(): JsonField<RiskRating> = riskRating
 
     /**
+     * Returns the raw JSON value of [serviceProviderLegalEntityId].
+     *
+     * Unlike [serviceProviderLegalEntityId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("service_provider_legal_entity_id")
+    @ExcludeMissing
+    fun _serviceProviderLegalEntityId(): JsonField<String> = serviceProviderLegalEntityId
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -1037,6 +1061,7 @@ private constructor(
          * .primarySocialMediaSites()
          * .regulators()
          * .riskRating()
+         * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
          * .thirdPartyVerification()
@@ -1092,6 +1117,7 @@ private constructor(
         private var primarySocialMediaSites: JsonField<MutableList<String>>? = null
         private var regulators: JsonField<MutableList<LegalEntityRegulator>>? = null
         private var riskRating: JsonField<RiskRating>? = null
+        private var serviceProviderLegalEntityId: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var suffix: JsonField<String>? = null
         private var thirdPartyVerification: JsonField<ThirdPartyVerification>? = null
@@ -1145,6 +1171,7 @@ private constructor(
                 childLegalEntity.primarySocialMediaSites.map { it.toMutableList() }
             regulators = childLegalEntity.regulators.map { it.toMutableList() }
             riskRating = childLegalEntity.riskRating
+            serviceProviderLegalEntityId = childLegalEntity.serviceProviderLegalEntityId
             status = childLegalEntity.status
             suffix = childLegalEntity.suffix
             thirdPartyVerification = childLegalEntity.thirdPartyVerification
@@ -1905,6 +1932,28 @@ private constructor(
          */
         fun riskRating(riskRating: JsonField<RiskRating>) = apply { this.riskRating = riskRating }
 
+        /** The UUID of the parent legal entity in the service provider tree. */
+        fun serviceProviderLegalEntityId(serviceProviderLegalEntityId: String?) =
+            serviceProviderLegalEntityId(JsonField.ofNullable(serviceProviderLegalEntityId))
+
+        /**
+         * Alias for calling [Builder.serviceProviderLegalEntityId] with
+         * `serviceProviderLegalEntityId.orElse(null)`.
+         */
+        fun serviceProviderLegalEntityId(serviceProviderLegalEntityId: Optional<String>) =
+            serviceProviderLegalEntityId(serviceProviderLegalEntityId.getOrNull())
+
+        /**
+         * Sets [Builder.serviceProviderLegalEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.serviceProviderLegalEntityId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun serviceProviderLegalEntityId(serviceProviderLegalEntityId: JsonField<String>) = apply {
+            this.serviceProviderLegalEntityId = serviceProviderLegalEntityId
+        }
+
         /**
          * The activation status of the legal entity. One of pending, active, suspended, or denied.
          */
@@ -2087,6 +2136,7 @@ private constructor(
          * .primarySocialMediaSites()
          * .regulators()
          * .riskRating()
+         * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
          * .thirdPartyVerification()
@@ -2148,6 +2198,7 @@ private constructor(
                 },
                 checkRequired("regulators", regulators).map { it.toImmutable() },
                 checkRequired("riskRating", riskRating),
+                checkRequired("serviceProviderLegalEntityId", serviceProviderLegalEntityId),
                 checkRequired("status", status),
                 checkRequired("suffix", suffix),
                 checkRequired("thirdPartyVerification", thirdPartyVerification),
@@ -2203,6 +2254,7 @@ private constructor(
         primarySocialMediaSites()
         regulators().ifPresent { it.forEach { it.validate() } }
         riskRating().ifPresent { it.validate() }
+        serviceProviderLegalEntityId()
         status().ifPresent { it.validate() }
         suffix()
         thirdPartyVerification().ifPresent { it.validate() }
@@ -2265,6 +2317,7 @@ private constructor(
             (primarySocialMediaSites.asKnown().getOrNull()?.size ?: 0) +
             (regulators.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (riskRating.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (serviceProviderLegalEntityId.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (if (suffix.asKnown().isPresent) 1 else 0) +
             (thirdPartyVerification.asKnown().getOrNull()?.validity() ?: 0) +
@@ -8336,6 +8389,7 @@ private constructor(
             primarySocialMediaSites == other.primarySocialMediaSites &&
             regulators == other.regulators &&
             riskRating == other.riskRating &&
+            serviceProviderLegalEntityId == other.serviceProviderLegalEntityId &&
             status == other.status &&
             suffix == other.suffix &&
             thirdPartyVerification == other.thirdPartyVerification &&
@@ -8386,6 +8440,7 @@ private constructor(
             primarySocialMediaSites,
             regulators,
             riskRating,
+            serviceProviderLegalEntityId,
             status,
             suffix,
             thirdPartyVerification,
@@ -8400,5 +8455,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }
