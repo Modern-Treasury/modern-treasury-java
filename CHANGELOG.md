@@ -1,5 +1,21 @@
 # Changelog
 
+## 7.25.0 (2026-04-04)
+
+Full Changelog: [v7.24.0...v7.25.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.24.0...v7.25.0)
+
+### Features
+
+* **api:** add third_party_verification model ([5f544ba](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f544ba6ec698760185d0a42e7895dc8fccd345e))
+* **api:** api update ([75f4308](https://github.com/Modern-Treasury/modern-treasury-java/commit/75f4308cbd94079aff851575cd1b387dbd0b697f))
+* **api:** api update ([d99607b](https://github.com/Modern-Treasury/modern-treasury-java/commit/d99607b6737a1051baac7eb5ad0c9e8990537651))
+* **api:** api update ([e34b9db](https://github.com/Modern-Treasury/modern-treasury-java/commit/e34b9db5b9bf4a997a5349d3ad42f35057865135))
+* **api:** api update ([0d53889](https://github.com/Modern-Treasury/modern-treasury-java/commit/0d53889bf76177f63ce2b36dd12ed0461ed4320d))
+* **api:** api update ([a12dc74](https://github.com/Modern-Treasury/modern-treasury-java/commit/a12dc74e3ded17b50e4519b68964b95acde29091))
+* **api:** api update ([5995f88](https://github.com/Modern-Treasury/modern-treasury-java/commit/5995f8824bf4b8503b83253a3ffb78864a6e7381))
+* **api:** api update ([f359318](https://github.com/Modern-Treasury/modern-treasury-java/commit/f359318b223fc705bcab08f3fe8fed0f00962744))
+* **api:** api update ([82514da](https://github.com/Modern-Treasury/modern-treasury-java/commit/82514da6e533ae09180937f96ab0ee324f9d4851))
+
 ## 7.24.0 (2026-03-25)
 
 Full Changelog: [v7.23.0...v7.24.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.23.0...v7.24.0)
