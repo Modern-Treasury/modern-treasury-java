@@ -19,6 +19,7 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
             .description("description")
             .direction(IncomingPaymentDetailCreateAsyncParams.Direction.CREDIT)
             .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .subtype("subtype")
             .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
             .virtualAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .build()
@@ -35,6 +36,7 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
                 .description("description")
                 .direction(IncomingPaymentDetailCreateAsyncParams.Direction.CREDIT)
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .subtype("subtype")
                 .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
                 .virtualAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
@@ -49,6 +51,7 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
         assertThat(body.direction())
             .contains(IncomingPaymentDetailCreateAsyncParams.Direction.CREDIT)
         assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.subtype()).contains("subtype")
         assertThat(body.type()).contains(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
         assertThat(body.virtualAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
