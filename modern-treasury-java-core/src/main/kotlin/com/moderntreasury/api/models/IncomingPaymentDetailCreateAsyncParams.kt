@@ -88,6 +88,15 @@ private constructor(
     fun internalAccountId(): Optional<String> = body.internalAccountId()
 
     /**
+     * An additional layer of classification for the type of incoming payment detail, e.g.
+     * `ethereum` for a `stablecoin` type.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun subtype(): Optional<String> = body.subtype()
+
+    /**
      * One of `ach`, `wire`, `check`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -145,6 +154,13 @@ private constructor(
      * type.
      */
     fun _internalAccountId(): JsonField<String> = body._internalAccountId()
+
+    /**
+     * Returns the raw JSON value of [subtype].
+     *
+     * Unlike [subtype], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _subtype(): JsonField<String> = body._subtype()
 
     /**
      * Returns the raw JSON value of [type].
@@ -303,6 +319,23 @@ private constructor(
         fun internalAccountId(internalAccountId: JsonField<String>) = apply {
             body.internalAccountId(internalAccountId)
         }
+
+        /**
+         * An additional layer of classification for the type of incoming payment detail, e.g.
+         * `ethereum` for a `stablecoin` type.
+         */
+        fun subtype(subtype: String?) = apply { body.subtype(subtype) }
+
+        /** Alias for calling [Builder.subtype] with `subtype.orElse(null)`. */
+        fun subtype(subtype: Optional<String>) = subtype(subtype.getOrNull())
+
+        /**
+         * Sets [Builder.subtype] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.subtype] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun subtype(subtype: JsonField<String>) = apply { body.subtype(subtype) }
 
         /** One of `ach`, `wire`, `check`. */
         fun type(type: Type) = apply { body.type(type) }
@@ -481,6 +514,7 @@ private constructor(
         private val description: JsonField<String>,
         private val direction: JsonField<Direction>,
         private val internalAccountId: JsonField<String>,
+        private val subtype: JsonField<String>,
         private val type: JsonField<Type>,
         private val virtualAccountId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -505,6 +539,7 @@ private constructor(
             @JsonProperty("internal_account_id")
             @ExcludeMissing
             internalAccountId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("subtype") @ExcludeMissing subtype: JsonField<String> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("virtual_account_id")
             @ExcludeMissing
@@ -517,6 +552,7 @@ private constructor(
             description,
             direction,
             internalAccountId,
+            subtype,
             type,
             virtualAccountId,
             mutableMapOf(),
@@ -581,6 +617,15 @@ private constructor(
          */
         fun internalAccountId(): Optional<String> =
             internalAccountId.getOptional("internal_account_id")
+
+        /**
+         * An additional layer of classification for the type of incoming payment detail, e.g.
+         * `ethereum` for a `stablecoin` type.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun subtype(): Optional<String> = subtype.getOptional("subtype")
 
         /**
          * One of `ach`, `wire`, `check`.
@@ -649,6 +694,13 @@ private constructor(
         fun _internalAccountId(): JsonField<String> = internalAccountId
 
         /**
+         * Returns the raw JSON value of [subtype].
+         *
+         * Unlike [subtype], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("subtype") @ExcludeMissing fun _subtype(): JsonField<String> = subtype
+
+        /**
          * Returns the raw JSON value of [type].
          *
          * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -696,6 +748,7 @@ private constructor(
             private var description: JsonField<String> = JsonMissing.of()
             private var direction: JsonField<Direction> = JsonMissing.of()
             private var internalAccountId: JsonField<String> = JsonMissing.of()
+            private var subtype: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
             private var virtualAccountId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -711,6 +764,7 @@ private constructor(
                 description = incomingPaymentDetailCreateRequest.description
                 direction = incomingPaymentDetailCreateRequest.direction
                 internalAccountId = incomingPaymentDetailCreateRequest.internalAccountId
+                subtype = incomingPaymentDetailCreateRequest.subtype
                 type = incomingPaymentDetailCreateRequest.type
                 virtualAccountId = incomingPaymentDetailCreateRequest.virtualAccountId
                 additionalProperties =
@@ -811,6 +865,24 @@ private constructor(
                 this.internalAccountId = internalAccountId
             }
 
+            /**
+             * An additional layer of classification for the type of incoming payment detail, e.g.
+             * `ethereum` for a `stablecoin` type.
+             */
+            fun subtype(subtype: String?) = subtype(JsonField.ofNullable(subtype))
+
+            /** Alias for calling [Builder.subtype] with `subtype.orElse(null)`. */
+            fun subtype(subtype: Optional<String>) = subtype(subtype.getOrNull())
+
+            /**
+             * Sets [Builder.subtype] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.subtype] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun subtype(subtype: JsonField<String>) = apply { this.subtype = subtype }
+
             /** One of `ach`, `wire`, `check`. */
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -879,6 +951,7 @@ private constructor(
                     description,
                     direction,
                     internalAccountId,
+                    subtype,
                     type,
                     virtualAccountId,
                     additionalProperties.toMutableMap(),
@@ -898,6 +971,7 @@ private constructor(
             description()
             direction().ifPresent { it.validate() }
             internalAccountId()
+            subtype()
             type().ifPresent { it.validate() }
             virtualAccountId()
             validated = true
@@ -925,6 +999,7 @@ private constructor(
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (direction.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (internalAccountId.asKnown().isPresent) 1 else 0) +
+                (if (subtype.asKnown().isPresent) 1 else 0) +
                 (type.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (virtualAccountId.asKnown().isPresent) 1 else 0)
 
@@ -941,6 +1016,7 @@ private constructor(
                 description == other.description &&
                 direction == other.direction &&
                 internalAccountId == other.internalAccountId &&
+                subtype == other.subtype &&
                 type == other.type &&
                 virtualAccountId == other.virtualAccountId &&
                 additionalProperties == other.additionalProperties
@@ -955,6 +1031,7 @@ private constructor(
                 description,
                 direction,
                 internalAccountId,
+                subtype,
                 type,
                 virtualAccountId,
                 additionalProperties,
@@ -964,7 +1041,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, subtype=$subtype, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
     /** One of `credit`, `debit`. */

@@ -24,6 +24,7 @@ private constructor(
     private val metadata: Metadata?,
     private val perPage: Long?,
     private val status: Status?,
+    private val subtype: String?,
     private val type: Type?,
     private val virtualAccountId: String?,
     private val additionalHeaders: Headers,
@@ -61,6 +62,12 @@ private constructor(
      */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /**
+     * An additional layer of classification for the type of incoming payment detail. For example, a
+     * `type` of `stablecoin` may have a `subtype` of `ethereum` or `solana`.
+     */
+    fun subtype(): Optional<String> = Optional.ofNullable(subtype)
+
     /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
@@ -96,6 +103,7 @@ private constructor(
         private var metadata: Metadata? = null
         private var perPage: Long? = null
         private var status: Status? = null
+        private var subtype: String? = null
         private var type: Type? = null
         private var virtualAccountId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -111,6 +119,7 @@ private constructor(
                 metadata = incomingPaymentDetailListParams.metadata
                 perPage = incomingPaymentDetailListParams.perPage
                 status = incomingPaymentDetailListParams.status
+                subtype = incomingPaymentDetailListParams.subtype
                 type = incomingPaymentDetailListParams.type
                 virtualAccountId = incomingPaymentDetailListParams.virtualAccountId
                 additionalHeaders = incomingPaymentDetailListParams.additionalHeaders.toBuilder()
@@ -177,6 +186,15 @@ private constructor(
 
         /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
+
+        /**
+         * An additional layer of classification for the type of incoming payment detail. For
+         * example, a `type` of `stablecoin` may have a `subtype` of `ethereum` or `solana`.
+         */
+        fun subtype(subtype: String?) = apply { this.subtype = subtype }
+
+        /** Alias for calling [Builder.subtype] with `subtype.orElse(null)`. */
+        fun subtype(subtype: Optional<String>) = subtype(subtype.getOrNull())
 
         /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
         fun type(type: Type?) = apply { this.type = type }
@@ -307,6 +325,7 @@ private constructor(
                 metadata,
                 perPage,
                 status,
+                subtype,
                 type,
                 virtualAccountId,
                 additionalHeaders.build(),
@@ -332,6 +351,7 @@ private constructor(
                 }
                 perPage?.let { put("per_page", it.toString()) }
                 status?.let { put("status", it.toString()) }
+                subtype?.let { put("subtype", it) }
                 type?.let { put("type", it.toString()) }
                 virtualAccountId?.let { put("virtual_account_id", it) }
                 putAll(additionalQueryParams)
@@ -811,6 +831,7 @@ private constructor(
             metadata == other.metadata &&
             perPage == other.perPage &&
             status == other.status &&
+            subtype == other.subtype &&
             type == other.type &&
             virtualAccountId == other.virtualAccountId &&
             additionalHeaders == other.additionalHeaders &&
@@ -826,6 +847,7 @@ private constructor(
             metadata,
             perPage,
             status,
+            subtype,
             type,
             virtualAccountId,
             additionalHeaders,
@@ -833,5 +855,5 @@ private constructor(
         )
 
     override fun toString() =
-        "IncomingPaymentDetailListParams{afterCursor=$afterCursor, asOfDateEnd=$asOfDateEnd, asOfDateStart=$asOfDateStart, direction=$direction, metadata=$metadata, perPage=$perPage, status=$status, type=$type, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "IncomingPaymentDetailListParams{afterCursor=$afterCursor, asOfDateEnd=$asOfDateEnd, asOfDateStart=$asOfDateStart, direction=$direction, metadata=$metadata, perPage=$perPage, status=$status, subtype=$subtype, type=$type, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

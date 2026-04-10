@@ -42,6 +42,7 @@ private constructor(
     private val originatingRoutingNumberType: JsonField<OriginatingRoutingNumberType>,
     private val reconciliationStatus: JsonField<ReconciliationStatus>,
     private val status: JsonField<Status>,
+    private val subtype: JsonField<String>,
     private val transactionId: JsonField<String>,
     private val transactionLineItemId: JsonField<String>,
     private val type: JsonField<Type>,
@@ -98,6 +99,7 @@ private constructor(
         @ExcludeMissing
         reconciliationStatus: JsonField<ReconciliationStatus> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("subtype") @ExcludeMissing subtype: JsonField<String> = JsonMissing.of(),
         @JsonProperty("transaction_id")
         @ExcludeMissing
         transactionId: JsonField<String> = JsonMissing.of(),
@@ -152,6 +154,7 @@ private constructor(
         originatingRoutingNumberType,
         reconciliationStatus,
         status,
+        subtype,
         transactionId,
         transactionLineItemId,
         type,
@@ -313,6 +316,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun status(): Status = status.getRequired("status")
+
+    /**
+     * An additional layer of classification for the type of incoming payment detail. For example, a
+     * `type` of `stablecoin` may have a `subtype` of `ethereum` or `solana`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun subtype(): Optional<String> = subtype.getOptional("subtype")
 
     /**
      * The ID of the reconciled Transaction or `null`.
@@ -579,6 +591,13 @@ private constructor(
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     /**
+     * Returns the raw JSON value of [subtype].
+     *
+     * Unlike [subtype], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("subtype") @ExcludeMissing fun _subtype(): JsonField<String> = subtype
+
+    /**
      * Returns the raw JSON value of [transactionId].
      *
      * Unlike [transactionId], this method doesn't throw if the JSON field has an unexpected type.
@@ -736,6 +755,7 @@ private constructor(
          * .originatingRoutingNumberType()
          * .reconciliationStatus()
          * .status()
+         * .subtype()
          * .transactionId()
          * .transactionLineItemId()
          * .type()
@@ -769,6 +789,7 @@ private constructor(
         private var originatingRoutingNumberType: JsonField<OriginatingRoutingNumberType>? = null
         private var reconciliationStatus: JsonField<ReconciliationStatus>? = null
         private var status: JsonField<Status>? = null
+        private var subtype: JsonField<String>? = null
         private var transactionId: JsonField<String>? = null
         private var transactionLineItemId: JsonField<String>? = null
         private var type: JsonField<Type>? = null
@@ -804,6 +825,7 @@ private constructor(
             originatingRoutingNumberType = incomingPaymentDetail.originatingRoutingNumberType
             reconciliationStatus = incomingPaymentDetail.reconciliationStatus
             status = incomingPaymentDetail.status
+            subtype = incomingPaymentDetail.subtype
             transactionId = incomingPaymentDetail.transactionId
             transactionLineItemId = incomingPaymentDetail.transactionLineItemId
             type = incomingPaymentDetail.type
@@ -1099,6 +1121,23 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
+
+        /**
+         * An additional layer of classification for the type of incoming payment detail. For
+         * example, a `type` of `stablecoin` may have a `subtype` of `ethereum` or `solana`.
+         */
+        fun subtype(subtype: String?) = subtype(JsonField.ofNullable(subtype))
+
+        /** Alias for calling [Builder.subtype] with `subtype.orElse(null)`. */
+        fun subtype(subtype: Optional<String>) = subtype(subtype.getOrNull())
+
+        /**
+         * Sets [Builder.subtype] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.subtype] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun subtype(subtype: JsonField<String>) = apply { this.subtype = subtype }
 
         /** The ID of the reconciled Transaction or `null`. */
         fun transactionId(transactionId: String?) =
@@ -1405,6 +1444,7 @@ private constructor(
          * .originatingRoutingNumberType()
          * .reconciliationStatus()
          * .status()
+         * .subtype()
          * .transactionId()
          * .transactionLineItemId()
          * .type()
@@ -1436,6 +1476,7 @@ private constructor(
                 checkRequired("originatingRoutingNumberType", originatingRoutingNumberType),
                 checkRequired("reconciliationStatus", reconciliationStatus),
                 checkRequired("status", status),
+                checkRequired("subtype", subtype),
                 checkRequired("transactionId", transactionId),
                 checkRequired("transactionLineItemId", transactionLineItemId),
                 checkRequired("type", type),
@@ -1478,6 +1519,7 @@ private constructor(
         originatingRoutingNumberType().ifPresent { it.validate() }
         reconciliationStatus().validate()
         status().validate()
+        subtype()
         transactionId()
         transactionLineItemId()
         type().validate()
@@ -1527,6 +1569,7 @@ private constructor(
             (originatingRoutingNumberType.asKnown().getOrNull()?.validity() ?: 0) +
             (reconciliationStatus.asKnown().getOrNull()?.validity() ?: 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (subtype.asKnown().isPresent) 1 else 0) +
             (if (transactionId.asKnown().isPresent) 1 else 0) +
             (if (transactionLineItemId.asKnown().isPresent) 1 else 0) +
             (type.asKnown().getOrNull()?.validity() ?: 0) +
@@ -2741,6 +2784,7 @@ private constructor(
             originatingRoutingNumberType == other.originatingRoutingNumberType &&
             reconciliationStatus == other.reconciliationStatus &&
             status == other.status &&
+            subtype == other.subtype &&
             transactionId == other.transactionId &&
             transactionLineItemId == other.transactionLineItemId &&
             type == other.type &&
@@ -2777,6 +2821,7 @@ private constructor(
             originatingRoutingNumberType,
             reconciliationStatus,
             status,
+            subtype,
             transactionId,
             transactionLineItemId,
             type,
@@ -2797,5 +2842,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "IncomingPaymentDetail{id=$id, amount=$amount, asOfDate=$asOfDate, createdAt=$createdAt, currency=$currency, data=$data, direction=$direction, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, originatingAccountNumberSafe=$originatingAccountNumberSafe, originatingAccountNumberType=$originatingAccountNumberType, originatingRoutingNumber=$originatingRoutingNumber, originatingRoutingNumberType=$originatingRoutingNumberType, reconciliationStatus=$reconciliationStatus, status=$status, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, vendorId=$vendorId, virtualAccount=$virtualAccount, virtualAccountId=$virtualAccountId, originatingAccountNumber=$originatingAccountNumber, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingPartyVendorIdentifier=$originatingPartyVendorIdentifier, receivingAccountNumber=$receivingAccountNumber, receivingAccountNumberSafe=$receivingAccountNumberSafe, additionalProperties=$additionalProperties}"
+        "IncomingPaymentDetail{id=$id, amount=$amount, asOfDate=$asOfDate, createdAt=$createdAt, currency=$currency, data=$data, direction=$direction, internalAccountId=$internalAccountId, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, originatingAccountNumberSafe=$originatingAccountNumberSafe, originatingAccountNumberType=$originatingAccountNumberType, originatingRoutingNumber=$originatingRoutingNumber, originatingRoutingNumberType=$originatingRoutingNumberType, reconciliationStatus=$reconciliationStatus, status=$status, subtype=$subtype, transactionId=$transactionId, transactionLineItemId=$transactionLineItemId, type=$type, updatedAt=$updatedAt, vendorId=$vendorId, virtualAccount=$virtualAccount, virtualAccountId=$virtualAccountId, originatingAccountNumber=$originatingAccountNumber, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingPartyVendorIdentifier=$originatingPartyVendorIdentifier, receivingAccountNumber=$receivingAccountNumber, receivingAccountNumberSafe=$receivingAccountNumberSafe, additionalProperties=$additionalProperties}"
 }
