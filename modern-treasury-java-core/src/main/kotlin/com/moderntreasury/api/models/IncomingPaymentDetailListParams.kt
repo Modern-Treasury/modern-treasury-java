@@ -641,6 +641,8 @@ private constructor(
 
             @JvmField val SOLANA = of("solana")
 
+            @JvmField val STABLECOIN = of("stablecoin")
+
             @JvmField val WIRE = of("wire")
 
             @JvmField val ZENGIN = of("zengin")
@@ -666,6 +668,7 @@ private constructor(
             SEPA,
             SIGNET,
             SOLANA,
+            STABLECOIN,
             WIRE,
             ZENGIN,
         }
@@ -696,6 +699,7 @@ private constructor(
             SEPA,
             SIGNET,
             SOLANA,
+            STABLECOIN,
             WIRE,
             ZENGIN,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
@@ -727,6 +731,7 @@ private constructor(
                 SEPA -> Value.SEPA
                 SIGNET -> Value.SIGNET
                 SOLANA -> Value.SOLANA
+                STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
                 else -> Value._UNKNOWN
@@ -759,6 +764,7 @@ private constructor(
                 SEPA -> Known.SEPA
                 SIGNET -> Known.SIGNET
                 SOLANA -> Known.SOLANA
+                STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
