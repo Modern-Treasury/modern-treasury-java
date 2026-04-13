@@ -535,8 +535,6 @@ private constructor(
 
             @JvmField val BOFA_TRANSACTION_ID = of("bofa_transaction_id")
 
-            @JvmField val BRALE_TRANSFER_ID = of("brale_transfer_id")
-
             @JvmField val CHECK_NUMBER = of("check_number")
 
             @JvmField val CHIPS_UID = of("chips_uid")
@@ -718,7 +716,6 @@ private constructor(
             BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
             BOFA_END_TO_END_ID,
             BOFA_TRANSACTION_ID,
-            BRALE_TRANSFER_ID,
             CHECK_NUMBER,
             CHIPS_UID,
             CITIBANK_REFERENCE_NUMBER,
@@ -819,7 +816,6 @@ private constructor(
             BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
             BOFA_END_TO_END_ID,
             BOFA_TRANSACTION_ID,
-            BRALE_TRANSFER_ID,
             CHECK_NUMBER,
             CHIPS_UID,
             CITIBANK_REFERENCE_NUMBER,
@@ -925,7 +921,6 @@ private constructor(
                     Value.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                 BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
                 BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
-                BRALE_TRANSFER_ID -> Value.BRALE_TRANSFER_ID
                 CHECK_NUMBER -> Value.CHECK_NUMBER
                 CHIPS_UID -> Value.CHIPS_UID
                 CITIBANK_REFERENCE_NUMBER -> Value.CITIBANK_REFERENCE_NUMBER
@@ -1032,7 +1027,6 @@ private constructor(
                     Known.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                 BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
                 BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
-                BRALE_TRANSFER_ID -> Known.BRALE_TRANSFER_ID
                 CHECK_NUMBER -> Known.CHECK_NUMBER
                 CHIPS_UID -> Known.CHIPS_UID
                 CITIBANK_REFERENCE_NUMBER -> Known.CITIBANK_REFERENCE_NUMBER
