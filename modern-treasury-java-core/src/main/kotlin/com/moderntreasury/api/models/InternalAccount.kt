@@ -1691,8 +1691,6 @@ private constructor(
 
                 @JvmField val BACS = of("bacs")
 
-                @JvmField val BASE = of("base")
-
                 @JvmField val BOOK = of("book")
 
                 @JvmField val CARD = of("card")
@@ -1706,8 +1704,6 @@ private constructor(
                 @JvmField val DK_NETS = of("dk_nets")
 
                 @JvmField val EFT = of("eft")
-
-                @JvmField val ETHEREUM = of("ethereum")
 
                 @JvmField val GB_FPS = of("gb_fps")
 
@@ -1726,8 +1722,6 @@ private constructor(
                 @JvmField val NZ_BECS = of("nz_becs")
 
                 @JvmField val PL_ELIXIR = of("pl_elixir")
-
-                @JvmField val POLYGON = of("polygon")
 
                 @JvmField val PROVXCHANGE = of("provxchange")
 
@@ -1749,8 +1743,6 @@ private constructor(
 
                 @JvmField val SKNBI = of("sknbi")
 
-                @JvmField val SOLANA = of("solana")
-
                 @JvmField val STABLECOIN = of("stablecoin")
 
                 @JvmField val WIRE = of("wire")
@@ -1765,7 +1757,6 @@ private constructor(
                 ACH,
                 AU_BECS,
                 BACS,
-                BASE,
                 BOOK,
                 CARD,
                 CHATS,
@@ -1773,7 +1764,6 @@ private constructor(
                 CROSS_BORDER,
                 DK_NETS,
                 EFT,
-                ETHEREUM,
                 GB_FPS,
                 HU_ICS,
                 INTERAC,
@@ -1783,7 +1773,6 @@ private constructor(
                 NICS,
                 NZ_BECS,
                 PL_ELIXIR,
-                POLYGON,
                 PROVXCHANGE,
                 RO_SENT,
                 RTP,
@@ -1794,7 +1783,6 @@ private constructor(
                 SIC,
                 SIGNET,
                 SKNBI,
-                SOLANA,
                 STABLECOIN,
                 WIRE,
                 ZENGIN,
@@ -1813,7 +1801,6 @@ private constructor(
                 ACH,
                 AU_BECS,
                 BACS,
-                BASE,
                 BOOK,
                 CARD,
                 CHATS,
@@ -1821,7 +1808,6 @@ private constructor(
                 CROSS_BORDER,
                 DK_NETS,
                 EFT,
-                ETHEREUM,
                 GB_FPS,
                 HU_ICS,
                 INTERAC,
@@ -1831,7 +1817,6 @@ private constructor(
                 NICS,
                 NZ_BECS,
                 PL_ELIXIR,
-                POLYGON,
                 PROVXCHANGE,
                 RO_SENT,
                 RTP,
@@ -1842,7 +1827,6 @@ private constructor(
                 SIC,
                 SIGNET,
                 SKNBI,
-                SOLANA,
                 STABLECOIN,
                 WIRE,
                 ZENGIN,
@@ -1865,7 +1849,6 @@ private constructor(
                     ACH -> Value.ACH
                     AU_BECS -> Value.AU_BECS
                     BACS -> Value.BACS
-                    BASE -> Value.BASE
                     BOOK -> Value.BOOK
                     CARD -> Value.CARD
                     CHATS -> Value.CHATS
@@ -1873,7 +1856,6 @@ private constructor(
                     CROSS_BORDER -> Value.CROSS_BORDER
                     DK_NETS -> Value.DK_NETS
                     EFT -> Value.EFT
-                    ETHEREUM -> Value.ETHEREUM
                     GB_FPS -> Value.GB_FPS
                     HU_ICS -> Value.HU_ICS
                     INTERAC -> Value.INTERAC
@@ -1883,7 +1865,6 @@ private constructor(
                     NICS -> Value.NICS
                     NZ_BECS -> Value.NZ_BECS
                     PL_ELIXIR -> Value.PL_ELIXIR
-                    POLYGON -> Value.POLYGON
                     PROVXCHANGE -> Value.PROVXCHANGE
                     RO_SENT -> Value.RO_SENT
                     RTP -> Value.RTP
@@ -1894,7 +1875,6 @@ private constructor(
                     SIC -> Value.SIC
                     SIGNET -> Value.SIGNET
                     SKNBI -> Value.SKNBI
-                    SOLANA -> Value.SOLANA
                     STABLECOIN -> Value.STABLECOIN
                     WIRE -> Value.WIRE
                     ZENGIN -> Value.ZENGIN
@@ -1915,7 +1895,6 @@ private constructor(
                     ACH -> Known.ACH
                     AU_BECS -> Known.AU_BECS
                     BACS -> Known.BACS
-                    BASE -> Known.BASE
                     BOOK -> Known.BOOK
                     CARD -> Known.CARD
                     CHATS -> Known.CHATS
@@ -1923,7 +1902,6 @@ private constructor(
                     CROSS_BORDER -> Known.CROSS_BORDER
                     DK_NETS -> Known.DK_NETS
                     EFT -> Known.EFT
-                    ETHEREUM -> Known.ETHEREUM
                     GB_FPS -> Known.GB_FPS
                     HU_ICS -> Known.HU_ICS
                     INTERAC -> Known.INTERAC
@@ -1933,7 +1911,6 @@ private constructor(
                     NICS -> Known.NICS
                     NZ_BECS -> Known.NZ_BECS
                     PL_ELIXIR -> Known.PL_ELIXIR
-                    POLYGON -> Known.POLYGON
                     PROVXCHANGE -> Known.PROVXCHANGE
                     RO_SENT -> Known.RO_SENT
                     RTP -> Known.RTP
@@ -1944,7 +1921,6 @@ private constructor(
                     SIC -> Known.SIC
                     SIGNET -> Known.SIGNET
                     SKNBI -> Known.SKNBI
-                    SOLANA -> Known.SOLANA
                     STABLECOIN -> Known.STABLECOIN
                     WIRE -> Known.WIRE
                     ZENGIN -> Known.ZENGIN
