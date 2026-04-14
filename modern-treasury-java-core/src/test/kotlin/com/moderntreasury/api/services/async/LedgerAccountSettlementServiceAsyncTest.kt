@@ -86,6 +86,7 @@ internal class LedgerAccountSettlementServiceAsyncTest {
                             .putAdditionalProperty("modern", JsonValue.from("treasury"))
                             .build()
                     )
+                    .skipSettlementLedgerTransaction(true)
                     .status(LedgerAccountSettlementUpdateParams.Status.POSTED)
                     .build()
             )
