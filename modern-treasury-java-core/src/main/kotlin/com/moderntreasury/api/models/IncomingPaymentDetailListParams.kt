@@ -615,15 +615,11 @@ private constructor(
 
             @JvmField val BACS = of("bacs")
 
-            @JvmField val BASE = of("base")
-
             @JvmField val BOOK = of("book")
 
             @JvmField val CHECK = of("check")
 
             @JvmField val EFT = of("eft")
-
-            @JvmField val ETHEREUM = of("ethereum")
 
             @JvmField val INTERAC = of("interac")
 
@@ -631,15 +627,11 @@ private constructor(
 
             @JvmField val NZ_BECS = of("nz_becs")
 
-            @JvmField val POLYGON = of("polygon")
-
             @JvmField val RTP = of("rtp")
 
             @JvmField val SEPA = of("sepa")
 
             @JvmField val SIGNET = of("signet")
-
-            @JvmField val SOLANA = of("solana")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -655,19 +647,15 @@ private constructor(
             ACH,
             AU_BECS,
             BACS,
-            BASE,
             BOOK,
             CHECK,
             EFT,
-            ETHEREUM,
             INTERAC,
             NEFT,
             NZ_BECS,
-            POLYGON,
             RTP,
             SEPA,
             SIGNET,
-            SOLANA,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -686,19 +674,15 @@ private constructor(
             ACH,
             AU_BECS,
             BACS,
-            BASE,
             BOOK,
             CHECK,
             EFT,
-            ETHEREUM,
             INTERAC,
             NEFT,
             NZ_BECS,
-            POLYGON,
             RTP,
             SEPA,
             SIGNET,
-            SOLANA,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -718,19 +702,15 @@ private constructor(
                 ACH -> Value.ACH
                 AU_BECS -> Value.AU_BECS
                 BACS -> Value.BACS
-                BASE -> Value.BASE
                 BOOK -> Value.BOOK
                 CHECK -> Value.CHECK
                 EFT -> Value.EFT
-                ETHEREUM -> Value.ETHEREUM
                 INTERAC -> Value.INTERAC
                 NEFT -> Value.NEFT
                 NZ_BECS -> Value.NZ_BECS
-                POLYGON -> Value.POLYGON
                 RTP -> Value.RTP
                 SEPA -> Value.SEPA
                 SIGNET -> Value.SIGNET
-                SOLANA -> Value.SOLANA
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -751,19 +731,15 @@ private constructor(
                 ACH -> Known.ACH
                 AU_BECS -> Known.AU_BECS
                 BACS -> Known.BACS
-                BASE -> Known.BASE
                 BOOK -> Known.BOOK
                 CHECK -> Known.CHECK
                 EFT -> Known.EFT
-                ETHEREUM -> Known.ETHEREUM
                 INTERAC -> Known.INTERAC
                 NEFT -> Known.NEFT
                 NZ_BECS -> Known.NZ_BECS
-                POLYGON -> Known.POLYGON
                 RTP -> Known.RTP
                 SEPA -> Known.SEPA
                 SIGNET -> Known.SIGNET
-                SOLANA -> Known.SOLANA
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
