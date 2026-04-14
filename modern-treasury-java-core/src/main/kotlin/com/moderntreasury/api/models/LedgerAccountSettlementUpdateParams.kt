@@ -49,6 +49,16 @@ private constructor(
     fun metadata(): Optional<Metadata> = body.metadata()
 
     /**
+     * It is set to `false` by default. It should be set to `true` when migrating existing
+     * settlements.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun skipSettlementLedgerTransaction(): Optional<Boolean> =
+        body.skipSettlementLedgerTransaction()
+
+    /**
      * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
      * transaction, use `archived`.
      *
@@ -70,6 +80,15 @@ private constructor(
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /**
+     * Returns the raw JSON value of [skipSettlementLedgerTransaction].
+     *
+     * Unlike [skipSettlementLedgerTransaction], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    fun _skipSettlementLedgerTransaction(): JsonField<Boolean> =
+        body._skipSettlementLedgerTransaction()
 
     /**
      * Returns the raw JSON value of [status].
@@ -131,6 +150,7 @@ private constructor(
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [description]
          * - [metadata]
+         * - [skipSettlementLedgerTransaction]
          * - [status]
          */
         fun body(body: LedgerAccountSettlementUpdateRequest) = apply {
@@ -165,6 +185,41 @@ private constructor(
          * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        /**
+         * It is set to `false` by default. It should be set to `true` when migrating existing
+         * settlements.
+         */
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean?) = apply {
+            body.skipSettlementLedgerTransaction(skipSettlementLedgerTransaction)
+        }
+
+        /**
+         * Alias for [Builder.skipSettlementLedgerTransaction].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) =
+            skipSettlementLedgerTransaction(skipSettlementLedgerTransaction as Boolean?)
+
+        /**
+         * Alias for calling [Builder.skipSettlementLedgerTransaction] with
+         * `skipSettlementLedgerTransaction.orElse(null)`.
+         */
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Optional<Boolean>) =
+            skipSettlementLedgerTransaction(skipSettlementLedgerTransaction.getOrNull())
+
+        /**
+         * Sets [Builder.skipSettlementLedgerTransaction] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.skipSettlementLedgerTransaction] with a well-typed
+         * [Boolean] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: JsonField<Boolean>) =
+            apply {
+                body.skipSettlementLedgerTransaction(skipSettlementLedgerTransaction)
+            }
 
         /**
          * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
@@ -328,6 +383,7 @@ private constructor(
     private constructor(
         private val description: JsonField<String>,
         private val metadata: JsonField<Metadata>,
+        private val skipSettlementLedgerTransaction: JsonField<Boolean>,
         private val status: JsonField<Status>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -340,8 +396,11 @@ private constructor(
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("skip_settlement_ledger_transaction")
+            @ExcludeMissing
+            skipSettlementLedgerTransaction: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
-        ) : this(description, metadata, status, mutableMapOf())
+        ) : this(description, metadata, skipSettlementLedgerTransaction, status, mutableMapOf())
 
         /**
          * The description of the ledger account settlement.
@@ -358,6 +417,16 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
+
+        /**
+         * It is set to `false` by default. It should be set to `true` when migrating existing
+         * settlements.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun skipSettlementLedgerTransaction(): Optional<Boolean> =
+            skipSettlementLedgerTransaction.getOptional("skip_settlement_ledger_transaction")
 
         /**
          * To post a pending ledger account settlement, use `posted`. To archive a pending ledger
@@ -383,6 +452,16 @@ private constructor(
          * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /**
+         * Returns the raw JSON value of [skipSettlementLedgerTransaction].
+         *
+         * Unlike [skipSettlementLedgerTransaction], this method doesn't throw if the JSON field has
+         * an unexpected type.
+         */
+        @JsonProperty("skip_settlement_ledger_transaction")
+        @ExcludeMissing
+        fun _skipSettlementLedgerTransaction(): JsonField<Boolean> = skipSettlementLedgerTransaction
 
         /**
          * Returns the raw JSON value of [status].
@@ -417,6 +496,7 @@ private constructor(
 
             private var description: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var skipSettlementLedgerTransaction: JsonField<Boolean> = JsonMissing.of()
             private var status: JsonField<Status> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -426,6 +506,8 @@ private constructor(
             ) = apply {
                 description = ledgerAccountSettlementUpdateRequest.description
                 metadata = ledgerAccountSettlementUpdateRequest.metadata
+                skipSettlementLedgerTransaction =
+                    ledgerAccountSettlementUpdateRequest.skipSettlementLedgerTransaction
                 status = ledgerAccountSettlementUpdateRequest.status
                 additionalProperties =
                     ledgerAccountSettlementUpdateRequest.additionalProperties.toMutableMap()
@@ -462,6 +544,42 @@ private constructor(
              * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /**
+             * It is set to `false` by default. It should be set to `true` when migrating existing
+             * settlements.
+             */
+            fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean?) =
+                skipSettlementLedgerTransaction(
+                    JsonField.ofNullable(skipSettlementLedgerTransaction)
+                )
+
+            /**
+             * Alias for [Builder.skipSettlementLedgerTransaction].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun skipSettlementLedgerTransaction(skipSettlementLedgerTransaction: Boolean) =
+                skipSettlementLedgerTransaction(skipSettlementLedgerTransaction as Boolean?)
+
+            /**
+             * Alias for calling [Builder.skipSettlementLedgerTransaction] with
+             * `skipSettlementLedgerTransaction.orElse(null)`.
+             */
+            fun skipSettlementLedgerTransaction(
+                skipSettlementLedgerTransaction: Optional<Boolean>
+            ) = skipSettlementLedgerTransaction(skipSettlementLedgerTransaction.getOrNull())
+
+            /**
+             * Sets [Builder.skipSettlementLedgerTransaction] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.skipSettlementLedgerTransaction] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun skipSettlementLedgerTransaction(
+                skipSettlementLedgerTransaction: JsonField<Boolean>
+            ) = apply { this.skipSettlementLedgerTransaction = skipSettlementLedgerTransaction }
 
             /**
              * To post a pending ledger account settlement, use `posted`. To archive a pending
@@ -506,6 +624,7 @@ private constructor(
                 LedgerAccountSettlementUpdateRequest(
                     description,
                     metadata,
+                    skipSettlementLedgerTransaction,
                     status,
                     additionalProperties.toMutableMap(),
                 )
@@ -520,6 +639,7 @@ private constructor(
 
             description()
             metadata().ifPresent { it.validate() }
+            skipSettlementLedgerTransaction()
             status().ifPresent { it.validate() }
             validated = true
         }
@@ -542,6 +662,7 @@ private constructor(
         internal fun validity(): Int =
             (if (description.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (skipSettlementLedgerTransaction.asKnown().isPresent) 1 else 0) +
                 (status.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
@@ -552,18 +673,25 @@ private constructor(
             return other is LedgerAccountSettlementUpdateRequest &&
                 description == other.description &&
                 metadata == other.metadata &&
+                skipSettlementLedgerTransaction == other.skipSettlementLedgerTransaction &&
                 status == other.status &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(description, metadata, status, additionalProperties)
+            Objects.hash(
+                description,
+                metadata,
+                skipSettlementLedgerTransaction,
+                status,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerAccountSettlementUpdateRequest{description=$description, metadata=$metadata, status=$status, additionalProperties=$additionalProperties}"
+            "LedgerAccountSettlementUpdateRequest{description=$description, metadata=$metadata, skipSettlementLedgerTransaction=$skipSettlementLedgerTransaction, status=$status, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
