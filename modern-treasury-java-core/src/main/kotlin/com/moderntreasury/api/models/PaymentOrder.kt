@@ -5317,6 +5317,9 @@ private constructor(
 
                 @JvmField val BOFA_END_TO_END_ID = of("bofa_end_to_end_id")
 
+                @JvmField
+                val BOFA_NEFT_CLEARING_REFERENCE_NUMBER = of("bofa_neft_clearing_reference_number")
+
                 @JvmField val BOFA_TRANSACTION_ID = of("bofa_transaction_id")
 
                 @JvmField val CHECK_NUMBER = of("check_number")
@@ -5508,6 +5511,7 @@ private constructor(
                 BNK_DEV_TRANSFER_ID,
                 BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
                 BOFA_END_TO_END_ID,
+                BOFA_NEFT_CLEARING_REFERENCE_NUMBER,
                 BOFA_TRANSACTION_ID,
                 CHECK_NUMBER,
                 CHIPS_UID,
@@ -5612,6 +5616,7 @@ private constructor(
                 BNK_DEV_TRANSFER_ID,
                 BNY_MELLON_TRANSACTION_REFERENCE_NUMBER,
                 BOFA_END_TO_END_ID,
+                BOFA_NEFT_CLEARING_REFERENCE_NUMBER,
                 BOFA_TRANSACTION_ID,
                 CHECK_NUMBER,
                 CHIPS_UID,
@@ -5719,6 +5724,7 @@ private constructor(
                     BNY_MELLON_TRANSACTION_REFERENCE_NUMBER ->
                         Value.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                     BOFA_END_TO_END_ID -> Value.BOFA_END_TO_END_ID
+                    BOFA_NEFT_CLEARING_REFERENCE_NUMBER -> Value.BOFA_NEFT_CLEARING_REFERENCE_NUMBER
                     BOFA_TRANSACTION_ID -> Value.BOFA_TRANSACTION_ID
                     CHECK_NUMBER -> Value.CHECK_NUMBER
                     CHIPS_UID -> Value.CHIPS_UID
@@ -5827,6 +5833,7 @@ private constructor(
                     BNY_MELLON_TRANSACTION_REFERENCE_NUMBER ->
                         Known.BNY_MELLON_TRANSACTION_REFERENCE_NUMBER
                     BOFA_END_TO_END_ID -> Known.BOFA_END_TO_END_ID
+                    BOFA_NEFT_CLEARING_REFERENCE_NUMBER -> Known.BOFA_NEFT_CLEARING_REFERENCE_NUMBER
                     BOFA_TRANSACTION_ID -> Known.BOFA_TRANSACTION_ID
                     CHECK_NUMBER -> Known.CHECK_NUMBER
                     CHIPS_UID -> Known.CHIPS_UID
