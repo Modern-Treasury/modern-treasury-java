@@ -2514,6 +2514,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+     *   expected type.
+     */
     fun validate(): PaymentOrder = apply {
         if (validated) {
             return@apply
@@ -2800,6 +2808,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Accounting = apply {
             if (validated) {
                 return@apply
@@ -2951,6 +2968,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): ChargeBearer = apply {
             if (validated) {
                 return@apply
@@ -3527,6 +3553,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Hold = apply {
             if (validated) {
                 return@apply
@@ -3662,6 +3697,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
             fun validate(): Object = apply {
                 if (validated) {
                     return@apply
@@ -3792,6 +3837,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
             fun validate(): Status = apply {
                 if (validated) {
                     return@apply
@@ -3918,6 +3973,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
             fun validate(): TargetType = apply {
                 if (validated) {
                     return@apply
@@ -4018,6 +4083,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
             fun validate(): Metadata = apply {
                 if (validated) {
                     return@apply
@@ -4200,6 +4275,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Direction = apply {
             if (validated) {
                 return@apply
@@ -4342,6 +4426,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): ForeignExchangeIndicator = apply {
             if (validated) {
                 return@apply
@@ -4439,6 +4532,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply
@@ -4574,6 +4676,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Priority = apply {
             if (validated) {
                 return@apply
@@ -4708,6 +4819,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): ReceivingAccountType = apply {
             if (validated) {
                 return@apply
@@ -4849,6 +4969,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): ReconciliationStatus = apply {
             if (validated) {
                 return@apply
@@ -5239,6 +5368,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): PaymentReference = apply {
             if (validated) {
                 return@apply
@@ -5939,6 +6077,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
             fun validate(): ReferenceNumberType = apply {
                 if (validated) {
                     return@apply
@@ -6168,6 +6316,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply
@@ -6233,6 +6390,35 @@ private constructor(
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
+        /**
+         * Maps this instance's current variant to a value of type [T] using the given [visitor].
+         *
+         * Note that this method is _not_ forwards compatible with new variants from the API, unless
+         * [visitor] overrides [Visitor.unknown]. To handle variants not known to this version of
+         * the SDK gracefully, consider overriding [Visitor.unknown]:
+         * ```java
+         * import com.moderntreasury.api.core.JsonValue;
+         * import java.util.Optional;
+         *
+         * Optional<String> result = ultimateOriginatingAccount.accept(new UltimateOriginatingAccount.Visitor<Optional<String>>() {
+         *     @Override
+         *     public Optional<String> visitVirtual(VirtualAccount virtual) {
+         *         return Optional.of(virtual.toString());
+         *     }
+         *
+         *     // ...
+         *
+         *     @Override
+         *     public Optional<String> unknown(JsonValue json) {
+         *         // Or inspect the `json`.
+         *         return Optional.empty();
+         *     }
+         * });
+         * ```
+         *
+         * @throws ModernTreasuryInvalidDataException if [Visitor.unknown] is not overridden in
+         *   [visitor] and the current variant is unknown.
+         */
         fun <T> accept(visitor: Visitor<T>): T =
             when {
                 virtual != null -> visitor.visitVirtual(virtual)
@@ -6242,6 +6428,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): UltimateOriginatingAccount = apply {
             if (validated) {
                 return@apply
@@ -6494,6 +6689,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
         fun validate(): UltimateOriginatingAccountType = apply {
             if (validated) {
                 return@apply
