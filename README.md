@@ -419,8 +419,6 @@ while (true) {
 
 ## Logging
 
-The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
 Enable logging by setting the `MODERN_TREASURY_LOG` environment variable to `info`:
 
 ```sh
@@ -431,6 +429,19 @@ Or to `debug` for more verbose logging:
 
 ```sh
 export MODERN_TREASURY_LOG=debug
+```
+
+Or configure the client manually using the `logLevel` method:
+
+```java
+import com.moderntreasury.api.client.ModernTreasuryClient;
+import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClient;
+import com.moderntreasury.api.core.LogLevel;
+
+ModernTreasuryClient client = ModernTreasuryOkHttpClient.builder()
+    .fromEnv()
+    .logLevel(LogLevel.INFO)
+    .build();
 ```
 
 ## ProGuard and R8
