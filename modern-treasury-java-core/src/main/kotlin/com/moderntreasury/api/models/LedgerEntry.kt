@@ -25,6 +25,7 @@ class LedgerEntry
 private constructor(
     private val id: JsonField<String>,
     private val amount: JsonField<Long>,
+    private val amountString: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val direction: JsonField<TransactionDirection>,
     private val discardedAt: JsonField<OffsetDateTime>,
@@ -47,6 +48,9 @@ private constructor(
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("amount_string")
+        @ExcludeMissing
+        amountString: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -87,6 +91,7 @@ private constructor(
     ) : this(
         id,
         amount,
+        amountString,
         createdAt,
         direction,
         discardedAt,
@@ -119,6 +124,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun amount(): Long = amount.getRequired("amount")
+
+    /**
+     * The amount of the ledger entry as a string, preserving full precision for values that may
+     * exceed safe integer limits in some languages.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun amountString(): String = amountString.getRequired("amount_string")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -260,6 +274,15 @@ private constructor(
      * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+    /**
+     * Returns the raw JSON value of [amountString].
+     *
+     * Unlike [amountString], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("amount_string")
+    @ExcludeMissing
+    fun _amountString(): JsonField<String> = amountString
 
     /**
      * Returns the raw JSON value of [createdAt].
@@ -415,6 +438,7 @@ private constructor(
          * ```java
          * .id()
          * .amount()
+         * .amountString()
          * .createdAt()
          * .direction()
          * .discardedAt()
@@ -440,6 +464,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var amount: JsonField<Long>? = null
+        private var amountString: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var direction: JsonField<TransactionDirection>? = null
         private var discardedAt: JsonField<OffsetDateTime>? = null
@@ -461,6 +486,7 @@ private constructor(
         internal fun from(ledgerEntry: LedgerEntry) = apply {
             id = ledgerEntry.id
             amount = ledgerEntry.amount
+            amountString = ledgerEntry.amountString
             createdAt = ledgerEntry.createdAt
             direction = ledgerEntry.direction
             discardedAt = ledgerEntry.discardedAt
@@ -502,6 +528,23 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+        /**
+         * The amount of the ledger entry as a string, preserving full precision for values that may
+         * exceed safe integer limits in some languages.
+         */
+        fun amountString(amountString: String) = amountString(JsonField.of(amountString))
+
+        /**
+         * Sets [Builder.amountString] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountString] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun amountString(amountString: JsonField<String>) = apply {
+            this.amountString = amountString
+        }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -784,6 +827,7 @@ private constructor(
          * ```java
          * .id()
          * .amount()
+         * .amountString()
          * .createdAt()
          * .direction()
          * .discardedAt()
@@ -807,6 +851,7 @@ private constructor(
             LedgerEntry(
                 checkRequired("id", id),
                 checkRequired("amount", amount),
+                checkRequired("amountString", amountString),
                 checkRequired("createdAt", createdAt),
                 checkRequired("direction", direction),
                 checkRequired("discardedAt", discardedAt),
@@ -843,6 +888,7 @@ private constructor(
 
         id()
         amount()
+        amountString()
         createdAt()
         direction().validate()
         discardedAt()
@@ -878,6 +924,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (amountString.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (direction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (discardedAt.asKnown().isPresent) 1 else 0) +
@@ -1157,6 +1204,7 @@ private constructor(
         return other is LedgerEntry &&
             id == other.id &&
             amount == other.amount &&
+            amountString == other.amountString &&
             createdAt == other.createdAt &&
             direction == other.direction &&
             discardedAt == other.discardedAt &&
@@ -1179,6 +1227,7 @@ private constructor(
         Objects.hash(
             id,
             amount,
+            amountString,
             createdAt,
             direction,
             discardedAt,
@@ -1201,5 +1250,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, effectiveAt=$effectiveAt, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "LedgerEntry{id=$id, amount=$amount, amountString=$amountString, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, effectiveAt=$effectiveAt, ledgerAccountCurrency=$ledgerAccountCurrency, ledgerAccountCurrencyExponent=$ledgerAccountCurrencyExponent, ledgerAccountId=$ledgerAccountId, ledgerAccountLockVersion=$ledgerAccountLockVersion, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, object_=$object_, resultingLedgerAccountBalances=$resultingLedgerAccountBalances, status=$status, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
