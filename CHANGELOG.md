@@ -1,5 +1,38 @@
 # Changelog
 
+## 7.28.0 (2026-05-08)
+
+Full Changelog: [v7.27.0...v7.28.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.27.0...v7.28.0)
+
+### Features
+
+* **api:** api update ([e53d4e9](https://github.com/Modern-Treasury/modern-treasury-java/commit/e53d4e9feb111e18bd1d4238021d91dfc965a170))
+* **api:** api update ([c7b65ad](https://github.com/Modern-Treasury/modern-treasury-java/commit/c7b65ad4a1f092ef4cb0e841e25fa0a8f4083aef))
+* **api:** api update ([e337efa](https://github.com/Modern-Treasury/modern-treasury-java/commit/e337efa5c173d688b0f5667ec8b644a5e641f30a))
+* **api:** api update ([84160a5](https://github.com/Modern-Treasury/modern-treasury-java/commit/84160a5a754875fbe703928de10305c3ccc73d65))
+* **api:** api update ([3454535](https://github.com/Modern-Treasury/modern-treasury-java/commit/345453570ed2cad9c84ce611b7fa71bf203c1475))
+* **api:** api update ([03d6982](https://github.com/Modern-Treasury/modern-treasury-java/commit/03d6982749a0956b144607fb9854e2d983c96024))
+* **client:** improve logging ([fb69af0](https://github.com/Modern-Treasury/modern-treasury-java/commit/fb69af02b9798e82e0f2eec20193e3e484c59626))
+* **client:** more robust error parsing ([c0ad192](https://github.com/Modern-Treasury/modern-treasury-java/commit/c0ad1928aaaa9dfb57c7001b3201ca558a5a55b4))
+* **client:** support proxy authentication ([0529812](https://github.com/Modern-Treasury/modern-treasury-java/commit/052981285ae55a75bbd747dbccb3598013cab1d3))
+* support setting headers via env ([54d8603](https://github.com/Modern-Treasury/modern-treasury-java/commit/54d86031b1cb4c0f2ec1c5d7d9a6079b0b941dff))
+
+
+### Performance Improvements
+
+* **client:** create one json mapper ([fda17c9](https://github.com/Modern-Treasury/modern-treasury-java/commit/fda17c9b18984339aa3eb999e0bc1a2688aecacd))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([33cd609](https://github.com/Modern-Treasury/modern-treasury-java/commit/33cd609bddf6fc3268f893059dc0751aba7fd2d6))
+* remove duplicated dokka setup ([d4c9607](https://github.com/Modern-Treasury/modern-treasury-java/commit/d4c9607d1c3ba4bdce4cf52072c09d71ce5d67c8))
+
+
+### Documentation
+
+* clarify forwards compat behavior ([6b6d075](https://github.com/Modern-Treasury/modern-treasury-java/commit/6b6d075c626c98caf32b1a90e70098599f16bcca))
+
 ## 7.27.0 (2026-04-21)
 
 Full Changelog: [v7.26.0...v7.27.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.26.0...v7.27.0)
