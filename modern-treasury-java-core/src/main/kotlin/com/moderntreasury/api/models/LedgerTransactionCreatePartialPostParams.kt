@@ -747,7 +747,12 @@ private constructor(
         private val amount: JsonField<Long>,
         private val direction: JsonField<Direction>,
         private val ledgerAccountId: JsonField<String>,
+        private val availableBalanceAmount: JsonField<AvailableBalanceAmount>,
+        private val lockVersion: JsonField<Long>,
         private val metadata: JsonField<Metadata>,
+        private val pendingBalanceAmount: JsonField<PendingBalanceAmount>,
+        private val postedBalanceAmount: JsonField<PostedBalanceAmount>,
+        private val showResultingLedgerAccountBalances: JsonField<Boolean>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -760,10 +765,36 @@ private constructor(
             @JsonProperty("ledger_account_id")
             @ExcludeMissing
             ledgerAccountId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("available_balance_amount")
+            @ExcludeMissing
+            availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of(),
+            @JsonProperty("lock_version")
+            @ExcludeMissing
+            lockVersion: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
-        ) : this(amount, direction, ledgerAccountId, metadata, mutableMapOf())
+            @JsonProperty("pending_balance_amount")
+            @ExcludeMissing
+            pendingBalanceAmount: JsonField<PendingBalanceAmount> = JsonMissing.of(),
+            @JsonProperty("posted_balance_amount")
+            @ExcludeMissing
+            postedBalanceAmount: JsonField<PostedBalanceAmount> = JsonMissing.of(),
+            @JsonProperty("show_resulting_ledger_account_balances")
+            @ExcludeMissing
+            showResultingLedgerAccountBalances: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(
+            amount,
+            direction,
+            ledgerAccountId,
+            availableBalanceAmount,
+            lockVersion,
+            metadata,
+            pendingBalanceAmount,
+            postedBalanceAmount,
+            showResultingLedgerAccountBalances,
+            mutableMapOf(),
+        )
 
         /**
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can
@@ -794,12 +825,65 @@ private constructor(
         fun ledgerAccountId(): String = ledgerAccountId.getRequired("ledger_account_id")
 
         /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * available balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun availableBalanceAmount(): Optional<AvailableBalanceAmount> =
+            availableBalanceAmount.getOptional("available_balance_amount")
+
+        /**
+         * Lock version of the ledger account. This can be passed when creating a ledger transaction
+         * to only succeed if no ledger transactions have posted since the given version. See our
+         * post about Designing the Ledgers API with Optimistic Locking for more details.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun lockVersion(): Optional<Long> = lockVersion.getOptional("lock_version")
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * pending balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun pendingBalanceAmount(): Optional<PendingBalanceAmount> =
+            pendingBalanceAmount.getOptional("pending_balance_amount")
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * posted balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun postedBalanceAmount(): Optional<PostedBalanceAmount> =
+            postedBalanceAmount.getOptional("posted_balance_amount")
+
+        /**
+         * If true, response will include the balance of the associated ledger account for the
+         * entry.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun showResultingLedgerAccountBalances(): Optional<Boolean> =
+            showResultingLedgerAccountBalances.getOptional("show_resulting_ledger_account_balances")
 
         /**
          * Returns the raw JSON value of [amount].
@@ -828,11 +912,61 @@ private constructor(
         fun _ledgerAccountId(): JsonField<String> = ledgerAccountId
 
         /**
+         * Returns the raw JSON value of [availableBalanceAmount].
+         *
+         * Unlike [availableBalanceAmount], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("available_balance_amount")
+        @ExcludeMissing
+        fun _availableBalanceAmount(): JsonField<AvailableBalanceAmount> = availableBalanceAmount
+
+        /**
+         * Returns the raw JSON value of [lockVersion].
+         *
+         * Unlike [lockVersion], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("lock_version")
+        @ExcludeMissing
+        fun _lockVersion(): JsonField<Long> = lockVersion
+
+        /**
          * Returns the raw JSON value of [metadata].
          *
          * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /**
+         * Returns the raw JSON value of [pendingBalanceAmount].
+         *
+         * Unlike [pendingBalanceAmount], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("pending_balance_amount")
+        @ExcludeMissing
+        fun _pendingBalanceAmount(): JsonField<PendingBalanceAmount> = pendingBalanceAmount
+
+        /**
+         * Returns the raw JSON value of [postedBalanceAmount].
+         *
+         * Unlike [postedBalanceAmount], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("posted_balance_amount")
+        @ExcludeMissing
+        fun _postedBalanceAmount(): JsonField<PostedBalanceAmount> = postedBalanceAmount
+
+        /**
+         * Returns the raw JSON value of [showResultingLedgerAccountBalances].
+         *
+         * Unlike [showResultingLedgerAccountBalances], this method doesn't throw if the JSON field
+         * has an unexpected type.
+         */
+        @JsonProperty("show_resulting_ledger_account_balances")
+        @ExcludeMissing
+        fun _showResultingLedgerAccountBalances(): JsonField<Boolean> =
+            showResultingLedgerAccountBalances
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -868,7 +1002,12 @@ private constructor(
             private var amount: JsonField<Long>? = null
             private var direction: JsonField<Direction>? = null
             private var ledgerAccountId: JsonField<String>? = null
+            private var availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of()
+            private var lockVersion: JsonField<Long> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var pendingBalanceAmount: JsonField<PendingBalanceAmount> = JsonMissing.of()
+            private var postedBalanceAmount: JsonField<PostedBalanceAmount> = JsonMissing.of()
+            private var showResultingLedgerAccountBalances: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -878,7 +1017,13 @@ private constructor(
                 amount = ledgerEntryPartialPostCreateRequest.amount
                 direction = ledgerEntryPartialPostCreateRequest.direction
                 ledgerAccountId = ledgerEntryPartialPostCreateRequest.ledgerAccountId
+                availableBalanceAmount = ledgerEntryPartialPostCreateRequest.availableBalanceAmount
+                lockVersion = ledgerEntryPartialPostCreateRequest.lockVersion
                 metadata = ledgerEntryPartialPostCreateRequest.metadata
+                pendingBalanceAmount = ledgerEntryPartialPostCreateRequest.pendingBalanceAmount
+                postedBalanceAmount = ledgerEntryPartialPostCreateRequest.postedBalanceAmount
+                showResultingLedgerAccountBalances =
+                    ledgerEntryPartialPostCreateRequest.showResultingLedgerAccountBalances
                 additionalProperties =
                     ledgerEntryPartialPostCreateRequest.additionalProperties.toMutableMap()
             }
@@ -931,6 +1076,60 @@ private constructor(
             }
 
             /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * available balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun availableBalanceAmount(availableBalanceAmount: AvailableBalanceAmount?) =
+                availableBalanceAmount(JsonField.ofNullable(availableBalanceAmount))
+
+            /**
+             * Alias for calling [Builder.availableBalanceAmount] with
+             * `availableBalanceAmount.orElse(null)`.
+             */
+            fun availableBalanceAmount(availableBalanceAmount: Optional<AvailableBalanceAmount>) =
+                availableBalanceAmount(availableBalanceAmount.getOrNull())
+
+            /**
+             * Sets [Builder.availableBalanceAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.availableBalanceAmount] with a well-typed
+             * [AvailableBalanceAmount] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun availableBalanceAmount(availableBalanceAmount: JsonField<AvailableBalanceAmount>) =
+                apply {
+                    this.availableBalanceAmount = availableBalanceAmount
+                }
+
+            /**
+             * Lock version of the ledger account. This can be passed when creating a ledger
+             * transaction to only succeed if no ledger transactions have posted since the given
+             * version. See our post about Designing the Ledgers API with Optimistic Locking for
+             * more details.
+             */
+            fun lockVersion(lockVersion: Long?) = lockVersion(JsonField.ofNullable(lockVersion))
+
+            /**
+             * Alias for [Builder.lockVersion].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun lockVersion(lockVersion: Long) = lockVersion(lockVersion as Long?)
+
+            /** Alias for calling [Builder.lockVersion] with `lockVersion.orElse(null)`. */
+            fun lockVersion(lockVersion: Optional<Long>) = lockVersion(lockVersion.getOrNull())
+
+            /**
+             * Sets [Builder.lockVersion] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lockVersion] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun lockVersion(lockVersion: JsonField<Long>) = apply { this.lockVersion = lockVersion }
+
+            /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
              */
@@ -944,6 +1143,97 @@ private constructor(
              * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * pending balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun pendingBalanceAmount(pendingBalanceAmount: PendingBalanceAmount?) =
+                pendingBalanceAmount(JsonField.ofNullable(pendingBalanceAmount))
+
+            /**
+             * Alias for calling [Builder.pendingBalanceAmount] with
+             * `pendingBalanceAmount.orElse(null)`.
+             */
+            fun pendingBalanceAmount(pendingBalanceAmount: Optional<PendingBalanceAmount>) =
+                pendingBalanceAmount(pendingBalanceAmount.getOrNull())
+
+            /**
+             * Sets [Builder.pendingBalanceAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pendingBalanceAmount] with a well-typed
+             * [PendingBalanceAmount] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun pendingBalanceAmount(pendingBalanceAmount: JsonField<PendingBalanceAmount>) =
+                apply {
+                    this.pendingBalanceAmount = pendingBalanceAmount
+                }
+
+            /**
+             * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+             * posted balance. If any of these conditions would be false after the transaction is
+             * created, the entire call will fail with error code 422.
+             */
+            fun postedBalanceAmount(postedBalanceAmount: PostedBalanceAmount?) =
+                postedBalanceAmount(JsonField.ofNullable(postedBalanceAmount))
+
+            /**
+             * Alias for calling [Builder.postedBalanceAmount] with
+             * `postedBalanceAmount.orElse(null)`.
+             */
+            fun postedBalanceAmount(postedBalanceAmount: Optional<PostedBalanceAmount>) =
+                postedBalanceAmount(postedBalanceAmount.getOrNull())
+
+            /**
+             * Sets [Builder.postedBalanceAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.postedBalanceAmount] with a well-typed
+             * [PostedBalanceAmount] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun postedBalanceAmount(postedBalanceAmount: JsonField<PostedBalanceAmount>) = apply {
+                this.postedBalanceAmount = postedBalanceAmount
+            }
+
+            /**
+             * If true, response will include the balance of the associated ledger account for the
+             * entry.
+             */
+            fun showResultingLedgerAccountBalances(showResultingLedgerAccountBalances: Boolean?) =
+                showResultingLedgerAccountBalances(
+                    JsonField.ofNullable(showResultingLedgerAccountBalances)
+                )
+
+            /**
+             * Alias for [Builder.showResultingLedgerAccountBalances].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun showResultingLedgerAccountBalances(showResultingLedgerAccountBalances: Boolean) =
+                showResultingLedgerAccountBalances(showResultingLedgerAccountBalances as Boolean?)
+
+            /**
+             * Alias for calling [Builder.showResultingLedgerAccountBalances] with
+             * `showResultingLedgerAccountBalances.orElse(null)`.
+             */
+            fun showResultingLedgerAccountBalances(
+                showResultingLedgerAccountBalances: Optional<Boolean>
+            ) = showResultingLedgerAccountBalances(showResultingLedgerAccountBalances.getOrNull())
+
+            /**
+             * Sets [Builder.showResultingLedgerAccountBalances] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.showResultingLedgerAccountBalances] with a
+             * well-typed [Boolean] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun showResultingLedgerAccountBalances(
+                showResultingLedgerAccountBalances: JsonField<Boolean>
+            ) = apply {
+                this.showResultingLedgerAccountBalances = showResultingLedgerAccountBalances
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -983,7 +1273,12 @@ private constructor(
                     checkRequired("amount", amount),
                     checkRequired("direction", direction),
                     checkRequired("ledgerAccountId", ledgerAccountId),
+                    availableBalanceAmount,
+                    lockVersion,
                     metadata,
+                    pendingBalanceAmount,
+                    postedBalanceAmount,
+                    showResultingLedgerAccountBalances,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1007,7 +1302,12 @@ private constructor(
             amount()
             direction().validate()
             ledgerAccountId()
+            availableBalanceAmount().ifPresent { it.validate() }
+            lockVersion()
             metadata().ifPresent { it.validate() }
+            pendingBalanceAmount().ifPresent { it.validate() }
+            postedBalanceAmount().ifPresent { it.validate() }
+            showResultingLedgerAccountBalances()
             validated = true
         }
 
@@ -1030,7 +1330,12 @@ private constructor(
             (if (amount.asKnown().isPresent) 1 else 0) +
                 (direction.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
-                (metadata.asKnown().getOrNull()?.validity() ?: 0)
+                (availableBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (lockVersion.asKnown().isPresent) 1 else 0) +
+                (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (pendingBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
+                (postedBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (showResultingLedgerAccountBalances.asKnown().isPresent) 1 else 0)
 
         /**
          * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
@@ -1180,6 +1485,130 @@ private constructor(
         }
 
         /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * available balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         */
+        class AvailableBalanceAmount
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [AvailableBalanceAmount].
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [AvailableBalanceAmount]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(availableBalanceAmount: AvailableBalanceAmount) = apply {
+                    additionalProperties =
+                        availableBalanceAmount.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [AvailableBalanceAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): AvailableBalanceAmount =
+                    AvailableBalanceAmount(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
+            fun validate(): AvailableBalanceAmount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is AvailableBalanceAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "AvailableBalanceAmount{additionalProperties=$additionalProperties}"
+        }
+
+        /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
         class Metadata
@@ -1294,6 +1723,250 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * pending balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         */
+        class PendingBalanceAmount
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [PendingBalanceAmount].
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [PendingBalanceAmount]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(pendingBalanceAmount: PendingBalanceAmount) = apply {
+                    additionalProperties = pendingBalanceAmount.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [PendingBalanceAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): PendingBalanceAmount =
+                    PendingBalanceAmount(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
+            fun validate(): PendingBalanceAmount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is PendingBalanceAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "PendingBalanceAmount{additionalProperties=$additionalProperties}"
+        }
+
+        /**
+         * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
+         * posted balance. If any of these conditions would be false after the transaction is
+         * created, the entire call will fail with error code 422.
+         */
+        class PostedBalanceAmount
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [PostedBalanceAmount].
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [PostedBalanceAmount]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(postedBalanceAmount: PostedBalanceAmount) = apply {
+                    additionalProperties = postedBalanceAmount.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [PostedBalanceAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): PostedBalanceAmount =
+                    PostedBalanceAmount(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
+             *   match its expected type.
+             */
+            fun validate(): PostedBalanceAmount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: ModernTreasuryInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is PostedBalanceAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "PostedBalanceAmount{additionalProperties=$additionalProperties}"
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1303,18 +1976,34 @@ private constructor(
                 amount == other.amount &&
                 direction == other.direction &&
                 ledgerAccountId == other.ledgerAccountId &&
+                availableBalanceAmount == other.availableBalanceAmount &&
+                lockVersion == other.lockVersion &&
                 metadata == other.metadata &&
+                pendingBalanceAmount == other.pendingBalanceAmount &&
+                postedBalanceAmount == other.postedBalanceAmount &&
+                showResultingLedgerAccountBalances == other.showResultingLedgerAccountBalances &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(amount, direction, ledgerAccountId, metadata, additionalProperties)
+            Objects.hash(
+                amount,
+                direction,
+                ledgerAccountId,
+                availableBalanceAmount,
+                lockVersion,
+                metadata,
+                pendingBalanceAmount,
+                postedBalanceAmount,
+                showResultingLedgerAccountBalances,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LedgerEntryPartialPostCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "LedgerEntryPartialPostCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
