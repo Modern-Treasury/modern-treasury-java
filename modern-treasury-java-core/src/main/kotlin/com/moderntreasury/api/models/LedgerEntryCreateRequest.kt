@@ -22,9 +22,10 @@ import kotlin.jvm.optionals.getOrNull
 class LedgerEntryCreateRequest
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val amount: JsonField<Long>,
     private val direction: JsonField<TransactionDirection>,
     private val ledgerAccountId: JsonField<String>,
+    private val amount: JsonField<Long>,
+    private val amountString: JsonField<String>,
     private val availableBalanceAmount: JsonField<AvailableBalanceAmount>,
     private val effectiveAt: JsonField<OffsetDateTime>,
     private val lockVersion: JsonField<Long>,
@@ -37,13 +38,16 @@ private constructor(
 
     @JsonCreator
     private constructor(
-        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("direction")
         @ExcludeMissing
         direction: JsonField<TransactionDirection> = JsonMissing.of(),
         @JsonProperty("ledger_account_id")
         @ExcludeMissing
         ledgerAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("amount_string")
+        @ExcludeMissing
+        amountString: JsonField<String> = JsonMissing.of(),
         @JsonProperty("available_balance_amount")
         @ExcludeMissing
         availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of(),
@@ -64,9 +68,10 @@ private constructor(
         @ExcludeMissing
         showResultingLedgerAccountBalances: JsonField<Boolean> = JsonMissing.of(),
     ) : this(
-        amount,
         direction,
         ledgerAccountId,
+        amount,
+        amountString,
         availableBalanceAmount,
         effectiveAt,
         lockVersion,
@@ -76,15 +81,6 @@ private constructor(
         showResultingLedgerAccountBalances,
         mutableMapOf(),
     )
-
-    /**
-     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can be
-     * any integer up to 36 digits.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun amount(): Long = amount.getRequired("amount")
 
     /**
      * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
@@ -103,6 +99,24 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun ledgerAccountId(): String = ledgerAccountId.getRequired("ledger_account_id")
+
+    /**
+     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can be
+     * any integer up to 36 digits.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun amount(): Optional<Long> = amount.getOptional("amount")
+
+    /**
+     * The amount of the ledger entry as a string, preserving full precision for values that may
+     * exceed safe integer limits in some languages.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun amountString(): Optional<String> = amountString.getOptional("amount_string")
 
     /**
      * Use `gt` (>), `gte` (>=), `lt` (<), `lte` (<=), or `eq` (=) to lock on the account’s
@@ -174,13 +188,6 @@ private constructor(
         showResultingLedgerAccountBalances.getOptional("show_resulting_ledger_account_balances")
 
     /**
-     * Returns the raw JSON value of [amount].
-     *
-     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
-
-    /**
      * Returns the raw JSON value of [direction].
      *
      * Unlike [direction], this method doesn't throw if the JSON field has an unexpected type.
@@ -197,6 +204,22 @@ private constructor(
     @JsonProperty("ledger_account_id")
     @ExcludeMissing
     fun _ledgerAccountId(): JsonField<String> = ledgerAccountId
+
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+    /**
+     * Returns the raw JSON value of [amountString].
+     *
+     * Unlike [amountString], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("amount_string")
+    @ExcludeMissing
+    fun _amountString(): JsonField<String> = amountString
 
     /**
      * Returns the raw JSON value of [availableBalanceAmount].
@@ -281,7 +304,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .amount()
          * .direction()
          * .ledgerAccountId()
          * ```
@@ -292,9 +314,10 @@ private constructor(
     /** A builder for [LedgerEntryCreateRequest]. */
     class Builder internal constructor() {
 
-        private var amount: JsonField<Long>? = null
         private var direction: JsonField<TransactionDirection>? = null
         private var ledgerAccountId: JsonField<String>? = null
+        private var amount: JsonField<Long> = JsonMissing.of()
+        private var amountString: JsonField<String> = JsonMissing.of()
         private var availableBalanceAmount: JsonField<AvailableBalanceAmount> = JsonMissing.of()
         private var effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lockVersion: JsonField<Long> = JsonMissing.of()
@@ -306,9 +329,10 @@ private constructor(
 
         @JvmSynthetic
         internal fun from(ledgerEntryCreateRequest: LedgerEntryCreateRequest) = apply {
-            amount = ledgerEntryCreateRequest.amount
             direction = ledgerEntryCreateRequest.direction
             ledgerAccountId = ledgerEntryCreateRequest.ledgerAccountId
+            amount = ledgerEntryCreateRequest.amount
+            amountString = ledgerEntryCreateRequest.amountString
             availableBalanceAmount = ledgerEntryCreateRequest.availableBalanceAmount
             effectiveAt = ledgerEntryCreateRequest.effectiveAt
             lockVersion = ledgerEntryCreateRequest.lockVersion
@@ -319,20 +343,6 @@ private constructor(
                 ledgerEntryCreateRequest.showResultingLedgerAccountBalances
             additionalProperties = ledgerEntryCreateRequest.additionalProperties.toMutableMap()
         }
-
-        /**
-         * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can
-         * be any integer up to 36 digits.
-         */
-        fun amount(amount: Long) = amount(JsonField.of(amount))
-
-        /**
-         * Sets [Builder.amount] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /**
          * One of `credit`, `debit`. Describes the direction money is flowing in the transaction. A
@@ -366,6 +376,37 @@ private constructor(
          */
         fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
             this.ledgerAccountId = ledgerAccountId
+        }
+
+        /**
+         * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. Can
+         * be any integer up to 36 digits.
+         */
+        fun amount(amount: Long) = amount(JsonField.of(amount))
+
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+        /**
+         * The amount of the ledger entry as a string, preserving full precision for values that may
+         * exceed safe integer limits in some languages.
+         */
+        fun amountString(amountString: String) = amountString(JsonField.of(amountString))
+
+        /**
+         * Sets [Builder.amountString] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountString] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun amountString(amountString: JsonField<String>) = apply {
+            this.amountString = amountString
         }
 
         /**
@@ -565,7 +606,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .amount()
          * .direction()
          * .ledgerAccountId()
          * ```
@@ -574,9 +614,10 @@ private constructor(
          */
         fun build(): LedgerEntryCreateRequest =
             LedgerEntryCreateRequest(
-                checkRequired("amount", amount),
                 checkRequired("direction", direction),
                 checkRequired("ledgerAccountId", ledgerAccountId),
+                amount,
+                amountString,
                 availableBalanceAmount,
                 effectiveAt,
                 lockVersion,
@@ -603,9 +644,10 @@ private constructor(
             return@apply
         }
 
-        amount()
         direction().validate()
         ledgerAccountId()
+        amount()
+        amountString()
         availableBalanceAmount().ifPresent { it.validate() }
         effectiveAt()
         lockVersion()
@@ -631,9 +673,10 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (amount.asKnown().isPresent) 1 else 0) +
-            (direction.asKnown().getOrNull()?.validity() ?: 0) +
+        (direction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
+            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (amountString.asKnown().isPresent) 1 else 0) +
             (availableBalanceAmount.asKnown().getOrNull()?.validity() ?: 0) +
             (if (effectiveAt.asKnown().isPresent) 1 else 0) +
             (if (lockVersion.asKnown().isPresent) 1 else 0) +
@@ -1105,9 +1148,10 @@ private constructor(
         }
 
         return other is LedgerEntryCreateRequest &&
-            amount == other.amount &&
             direction == other.direction &&
             ledgerAccountId == other.ledgerAccountId &&
+            amount == other.amount &&
+            amountString == other.amountString &&
             availableBalanceAmount == other.availableBalanceAmount &&
             effectiveAt == other.effectiveAt &&
             lockVersion == other.lockVersion &&
@@ -1120,9 +1164,10 @@ private constructor(
 
     private val hashCode: Int by lazy {
         Objects.hash(
-            amount,
             direction,
             ledgerAccountId,
+            amount,
+            amountString,
             availableBalanceAmount,
             effectiveAt,
             lockVersion,
@@ -1137,5 +1182,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LedgerEntryCreateRequest{amount=$amount, direction=$direction, ledgerAccountId=$ledgerAccountId, availableBalanceAmount=$availableBalanceAmount, effectiveAt=$effectiveAt, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
+        "LedgerEntryCreateRequest{direction=$direction, ledgerAccountId=$ledgerAccountId, amount=$amount, amountString=$amountString, availableBalanceAmount=$availableBalanceAmount, effectiveAt=$effectiveAt, lockVersion=$lockVersion, metadata=$metadata, pendingBalanceAmount=$pendingBalanceAmount, postedBalanceAmount=$postedBalanceAmount, showResultingLedgerAccountBalances=$showResultingLedgerAccountBalances, additionalProperties=$additionalProperties}"
 }
