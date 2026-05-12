@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.29.0 (2026-05-12)
+
+Full Changelog: [v7.28.0...v7.29.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.28.0...v7.29.0)
+
+### Features
+
+* **api:** api update ([d590680](https://github.com/Modern-Treasury/modern-treasury-java/commit/d590680fe9015461efee4becf84c5a68cf3a726b))
+
 ## 7.28.0 (2026-05-08)
 
 Full Changelog: [v7.27.0...v7.28.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.27.0...v7.28.0)
