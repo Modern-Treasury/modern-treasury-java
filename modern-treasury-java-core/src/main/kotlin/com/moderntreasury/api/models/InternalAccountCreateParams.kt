@@ -41,8 +41,7 @@ private constructor(
     fun connectionId(): String = body.connectionId()
 
     /**
-     * The currency of the internal account. Supports "USD" and "CAD" for fiat, and "USDC", "USDG",
-     * and "PYUSD" for stablecoin accounts.
+     * The currency of the internal account. Supports fiat and stablecoin currencies.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -301,10 +300,7 @@ private constructor(
             body.connectionId(connectionId)
         }
 
-        /**
-         * The currency of the internal account. Supports "USD" and "CAD" for fiat, and "USDC",
-         * "USDG", and "PYUSD" for stablecoin accounts.
-         */
+        /** The currency of the internal account. Supports fiat and stablecoin currencies. */
         fun currency(currency: Currency) = apply { body.currency(currency) }
 
         /**
@@ -719,8 +715,7 @@ private constructor(
         fun connectionId(): String = connectionId.getRequired("connection_id")
 
         /**
-         * The currency of the internal account. Supports "USD" and "CAD" for fiat, and "USDC",
-         * "USDG", and "PYUSD" for stablecoin accounts.
+         * The currency of the internal account. Supports fiat and stablecoin currencies.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1016,10 +1011,7 @@ private constructor(
                 this.connectionId = connectionId
             }
 
-            /**
-             * The currency of the internal account. Supports "USD" and "CAD" for fiat, and "USDC",
-             * "USDG", and "PYUSD" for stablecoin accounts.
-             */
+            /** The currency of the internal account. Supports fiat and stablecoin currencies. */
             fun currency(currency: Currency) = currency(JsonField.of(currency))
 
             /**
@@ -1371,10 +1363,7 @@ private constructor(
             "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, partyName=$partyName, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, parentAccountId=$parentAccountId, partyAddress=$partyAddress, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
-    /**
-     * The currency of the internal account. Supports "USD" and "CAD" for fiat, and "USDC", "USDG",
-     * and "PYUSD" for stablecoin accounts.
-     */
+    /** The currency of the internal account. Supports fiat and stablecoin currencies. */
     class Currency @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1397,6 +1386,8 @@ private constructor(
 
             @JvmField val USDG = of("USDG")
 
+            @JvmField val USDT = of("USDT")
+
             @JvmField val PYUSD = of("PYUSD")
 
             @JvmStatic fun of(value: String) = Currency(JsonField.of(value))
@@ -1408,6 +1399,7 @@ private constructor(
             CAD,
             USDC,
             USDG,
+            USDT,
             PYUSD,
         }
 
@@ -1425,6 +1417,7 @@ private constructor(
             CAD,
             USDC,
             USDG,
+            USDT,
             PYUSD,
             /** An enum member indicating that [Currency] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -1443,6 +1436,7 @@ private constructor(
                 CAD -> Value.CAD
                 USDC -> Value.USDC
                 USDG -> Value.USDG
+                USDT -> Value.USDT
                 PYUSD -> Value.PYUSD
                 else -> Value._UNKNOWN
             }
@@ -1462,6 +1456,7 @@ private constructor(
                 CAD -> Known.CAD
                 USDC -> Known.USDC
                 USDG -> Known.USDG
+                USDT -> Known.USDT
                 PYUSD -> Known.PYUSD
                 else -> throw ModernTreasuryInvalidDataException("Unknown Currency: $value")
             }
