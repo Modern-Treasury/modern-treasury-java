@@ -3884,6 +3884,8 @@ private constructor(
 
                 @JvmField val DRIVERS_LICENSE = of("drivers_license")
 
+                @JvmField val ES_NIF = of("es_nif")
+
                 @JvmField val HN_ID = of("hn_id")
 
                 @JvmField val HN_RTN = of("hn_rtn")
@@ -3935,6 +3937,7 @@ private constructor(
                 CO_CEDULAS,
                 CO_NIT,
                 DRIVERS_LICENSE,
+                ES_NIF,
                 HN_ID,
                 HN_RTN,
                 IE_PPS,
@@ -3975,6 +3978,7 @@ private constructor(
                 CO_CEDULAS,
                 CO_NIT,
                 DRIVERS_LICENSE,
+                ES_NIF,
                 HN_ID,
                 HN_RTN,
                 IE_PPS,
@@ -4018,6 +4022,7 @@ private constructor(
                     CO_CEDULAS -> Value.CO_CEDULAS
                     CO_NIT -> Value.CO_NIT
                     DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
+                    ES_NIF -> Value.ES_NIF
                     HN_ID -> Value.HN_ID
                     HN_RTN -> Value.HN_RTN
                     IE_PPS -> Value.IE_PPS
@@ -4060,6 +4065,7 @@ private constructor(
                     CO_CEDULAS -> Known.CO_CEDULAS
                     CO_NIT -> Known.CO_NIT
                     DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
+                    ES_NIF -> Known.ES_NIF
                     HN_ID -> Known.HN_ID
                     HN_RTN -> Known.HN_RTN
                     IE_PPS -> Known.IE_PPS
