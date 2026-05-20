@@ -2416,6 +2416,7 @@ private constructor(
         private val locality: JsonField<String>,
         private val object_: JsonField<String>,
         private val postalCode: JsonField<String>,
+        private val primary: JsonField<Boolean>,
         private val region: JsonField<String>,
         private val updatedAt: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -2446,6 +2447,7 @@ private constructor(
             @JsonProperty("postal_code")
             @ExcludeMissing
             postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("primary") @ExcludeMissing primary: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
             @JsonProperty("updated_at")
             @ExcludeMissing
@@ -2462,6 +2464,7 @@ private constructor(
             locality,
             object_,
             postalCode,
+            primary,
             region,
             updatedAt,
             mutableMapOf(),
@@ -2543,6 +2546,14 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
+
+        /**
+         * Whether this address is the primary address for the legal entity.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun primary(): Optional<Boolean> = primary.getOptional("primary")
 
         /**
          * Region or State.
@@ -2645,6 +2656,13 @@ private constructor(
         fun _postalCode(): JsonField<String> = postalCode
 
         /**
+         * Returns the raw JSON value of [primary].
+         *
+         * Unlike [primary], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("primary") @ExcludeMissing fun _primary(): JsonField<Boolean> = primary
+
+        /**
          * Returns the raw JSON value of [region].
          *
          * Unlike [region], this method doesn't throw if the JSON field has an unexpected type.
@@ -2690,6 +2708,7 @@ private constructor(
              * .locality()
              * .object_()
              * .postalCode()
+             * .primary()
              * .region()
              * .updatedAt()
              * ```
@@ -2711,6 +2730,7 @@ private constructor(
             private var locality: JsonField<String>? = null
             private var object_: JsonField<String>? = null
             private var postalCode: JsonField<String>? = null
+            private var primary: JsonField<Boolean>? = null
             private var region: JsonField<String>? = null
             private var updatedAt: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2728,6 +2748,7 @@ private constructor(
                 locality = legalEntityAddress.locality
                 object_ = legalEntityAddress.object_
                 postalCode = legalEntityAddress.postalCode
+                primary = legalEntityAddress.primary
                 region = legalEntityAddress.region
                 updatedAt = legalEntityAddress.updatedAt
                 additionalProperties = legalEntityAddress.additionalProperties.toMutableMap()
@@ -2901,6 +2922,28 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
+            /** Whether this address is the primary address for the legal entity. */
+            fun primary(primary: Boolean?) = primary(JsonField.ofNullable(primary))
+
+            /**
+             * Alias for [Builder.primary].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun primary(primary: Boolean) = primary(primary as Boolean?)
+
+            /** Alias for calling [Builder.primary] with `primary.orElse(null)`. */
+            fun primary(primary: Optional<Boolean>) = primary(primary.getOrNull())
+
+            /**
+             * Sets [Builder.primary] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.primary] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun primary(primary: JsonField<Boolean>) = apply { this.primary = primary }
+
             /** Region or State. */
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
@@ -2966,6 +3009,7 @@ private constructor(
              * .locality()
              * .object_()
              * .postalCode()
+             * .primary()
              * .region()
              * .updatedAt()
              * ```
@@ -2985,6 +3029,7 @@ private constructor(
                     checkRequired("locality", locality),
                     checkRequired("object_", object_),
                     checkRequired("postalCode", postalCode),
+                    checkRequired("primary", primary),
                     checkRequired("region", region),
                     checkRequired("updatedAt", updatedAt),
                     additionalProperties.toMutableMap(),
@@ -3018,6 +3063,7 @@ private constructor(
             locality()
             object_()
             postalCode()
+            primary()
             region()
             updatedAt()
             validated = true
@@ -3050,6 +3096,7 @@ private constructor(
                 (if (locality.asKnown().isPresent) 1 else 0) +
                 (if (object_.asKnown().isPresent) 1 else 0) +
                 (if (postalCode.asKnown().isPresent) 1 else 0) +
+                (if (primary.asKnown().isPresent) 1 else 0) +
                 (if (region.asKnown().isPresent) 1 else 0) +
                 (if (updatedAt.asKnown().isPresent) 1 else 0)
 
@@ -3235,6 +3282,7 @@ private constructor(
                 locality == other.locality &&
                 object_ == other.object_ &&
                 postalCode == other.postalCode &&
+                primary == other.primary &&
                 region == other.region &&
                 updatedAt == other.updatedAt &&
                 additionalProperties == other.additionalProperties
@@ -3253,6 +3301,7 @@ private constructor(
                 locality,
                 object_,
                 postalCode,
+                primary,
                 region,
                 updatedAt,
                 additionalProperties,
@@ -3262,7 +3311,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityAddress{id=$id, addressTypes=$addressTypes, country=$country, createdAt=$createdAt, discardedAt=$discardedAt, line1=$line1, line2=$line2, liveMode=$liveMode, locality=$locality, object_=$object_, postalCode=$postalCode, region=$region, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+            "LegalEntityAddress{id=$id, addressTypes=$addressTypes, country=$country, createdAt=$createdAt, discardedAt=$discardedAt, line1=$line1, line2=$line2, liveMode=$liveMode, locality=$locality, object_=$object_, postalCode=$postalCode, primary=$primary, region=$region, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
     class Identification
