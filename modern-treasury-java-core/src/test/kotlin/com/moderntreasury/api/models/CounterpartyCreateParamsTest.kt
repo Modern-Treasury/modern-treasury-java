@@ -114,6 +114,7 @@ internal class CounterpartyCreateParamsTest {
                             .region("region")
                             .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
+                            .primary(true)
                             .build()
                     )
                     .bankSettings(
@@ -208,6 +209,7 @@ internal class CounterpartyCreateParamsTest {
                                                 LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                             )
                                             .line2("line2")
+                                            .primary(true)
                                             .build()
                                     )
                                     .bankSettings(
@@ -629,6 +631,7 @@ internal class CounterpartyCreateParamsTest {
                                     LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                 )
                                 .line2("line2")
+                                .primary(true)
                                 .build()
                         )
                         .bankSettings(
@@ -724,6 +727,7 @@ internal class CounterpartyCreateParamsTest {
                                                         .BUSINESS
                                                 )
                                                 .line2("line2")
+                                                .primary(true)
                                                 .build()
                                         )
                                         .bankSettings(
@@ -1151,6 +1155,7 @@ internal class CounterpartyCreateParamsTest {
                             .region("region")
                             .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
+                            .primary(true)
                             .build()
                     )
                     .bankSettings(
@@ -1245,6 +1250,7 @@ internal class CounterpartyCreateParamsTest {
                                                 LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                             )
                                             .line2("line2")
+                                            .primary(true)
                                             .build()
                                     )
                                     .bankSettings(
