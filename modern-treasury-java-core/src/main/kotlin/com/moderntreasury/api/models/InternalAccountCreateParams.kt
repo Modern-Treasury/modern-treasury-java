@@ -90,6 +90,17 @@ private constructor(
     fun counterpartyId(): Optional<String> = body.counterpartyId()
 
     /**
+     * Whether this account can receive ACH debits. Only applicable to accounts created under a
+     * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
+     * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or your
+     * customer success manager to enable this capability for your connection.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun debitable(): Optional<Boolean> = body.debitable()
+
+    /**
      * An optional user-defined 180 character unique identifier.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -187,6 +198,13 @@ private constructor(
      * Unlike [counterpartyId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _counterpartyId(): JsonField<String> = body._counterpartyId()
+
+    /**
+     * Returns the raw JSON value of [debitable].
+     *
+     * Unlike [debitable], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _debitable(): JsonField<Boolean> = body._debitable()
 
     /**
      * Returns the raw JSON value of [externalId].
@@ -392,6 +410,33 @@ private constructor(
         fun counterpartyId(counterpartyId: JsonField<String>) = apply {
             body.counterpartyId(counterpartyId)
         }
+
+        /**
+         * Whether this account can receive ACH debits. Only applicable to accounts created under a
+         * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
+         * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or
+         * your customer success manager to enable this capability for your connection.
+         */
+        fun debitable(debitable: Boolean?) = apply { body.debitable(debitable) }
+
+        /**
+         * Alias for [Builder.debitable].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun debitable(debitable: Boolean) = debitable(debitable as Boolean?)
+
+        /** Alias for calling [Builder.debitable] with `debitable.orElse(null)`. */
+        fun debitable(debitable: Optional<Boolean>) = debitable(debitable.getOrNull())
+
+        /**
+         * Sets [Builder.debitable] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.debitable] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun debitable(debitable: JsonField<Boolean>) = apply { body.debitable(debitable) }
 
         /** An optional user-defined 180 character unique identifier. */
         fun externalId(externalId: String?) = apply { body.externalId(externalId) }
@@ -641,6 +686,7 @@ private constructor(
         private val accountCapabilities: JsonField<List<AccountCapability>>,
         private val accountType: JsonField<AccountType>,
         private val counterpartyId: JsonField<String>,
+        private val debitable: JsonField<Boolean>,
         private val externalId: JsonField<String>,
         private val legalEntityId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
@@ -671,6 +717,9 @@ private constructor(
             @JsonProperty("counterparty_id")
             @ExcludeMissing
             counterpartyId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("debitable")
+            @ExcludeMissing
+            debitable: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("external_id")
             @ExcludeMissing
             externalId: JsonField<String> = JsonMissing.of(),
@@ -697,6 +746,7 @@ private constructor(
             accountCapabilities,
             accountType,
             counterpartyId,
+            debitable,
             externalId,
             legalEntityId,
             metadata,
@@ -763,6 +813,17 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun counterpartyId(): Optional<String> = counterpartyId.getOptional("counterparty_id")
+
+        /**
+         * Whether this account can receive ACH debits. Only applicable to accounts created under a
+         * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
+         * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or
+         * your customer success manager to enable this capability for your connection.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun debitable(): Optional<Boolean> = debitable.getOptional("debitable")
 
         /**
          * An optional user-defined 180 character unique identifier.
@@ -875,6 +936,13 @@ private constructor(
         fun _counterpartyId(): JsonField<String> = counterpartyId
 
         /**
+         * Returns the raw JSON value of [debitable].
+         *
+         * Unlike [debitable], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("debitable") @ExcludeMissing fun _debitable(): JsonField<Boolean> = debitable
+
+        /**
          * Returns the raw JSON value of [externalId].
          *
          * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
@@ -969,6 +1037,7 @@ private constructor(
             private var accountCapabilities: JsonField<MutableList<AccountCapability>>? = null
             private var accountType: JsonField<AccountType> = JsonMissing.of()
             private var counterpartyId: JsonField<String> = JsonMissing.of()
+            private var debitable: JsonField<Boolean> = JsonMissing.of()
             private var externalId: JsonField<String> = JsonMissing.of()
             private var legalEntityId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -987,6 +1056,7 @@ private constructor(
                     internalAccountCreateRequest.accountCapabilities.map { it.toMutableList() }
                 accountType = internalAccountCreateRequest.accountType
                 counterpartyId = internalAccountCreateRequest.counterpartyId
+                debitable = internalAccountCreateRequest.debitable
                 externalId = internalAccountCreateRequest.externalId
                 legalEntityId = internalAccountCreateRequest.legalEntityId
                 metadata = internalAccountCreateRequest.metadata
@@ -1109,6 +1179,34 @@ private constructor(
             fun counterpartyId(counterpartyId: JsonField<String>) = apply {
                 this.counterpartyId = counterpartyId
             }
+
+            /**
+             * Whether this account can receive ACH debits. Only applicable to accounts created
+             * under a Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts.
+             * Defaults to `false`. Configurable on create only. Please reach out to
+             * support@moderntreasury.com or your customer success manager to enable this capability
+             * for your connection.
+             */
+            fun debitable(debitable: Boolean?) = debitable(JsonField.ofNullable(debitable))
+
+            /**
+             * Alias for [Builder.debitable].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun debitable(debitable: Boolean) = debitable(debitable as Boolean?)
+
+            /** Alias for calling [Builder.debitable] with `debitable.orElse(null)`. */
+            fun debitable(debitable: Optional<Boolean>) = debitable(debitable.getOrNull())
+
+            /**
+             * Sets [Builder.debitable] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.debitable] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun debitable(debitable: JsonField<Boolean>) = apply { this.debitable = debitable }
 
             /** An optional user-defined 180 character unique identifier. */
             fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
@@ -1244,6 +1342,7 @@ private constructor(
                     (accountCapabilities ?: JsonMissing.of()).map { it.toImmutable() },
                     accountType,
                     counterpartyId,
+                    debitable,
                     externalId,
                     legalEntityId,
                     metadata,
@@ -1277,6 +1376,7 @@ private constructor(
             accountCapabilities().ifPresent { it.forEach { it.validate() } }
             accountType().ifPresent { it.validate() }
             counterpartyId()
+            debitable()
             externalId()
             legalEntityId()
             metadata().ifPresent { it.validate() }
@@ -1309,6 +1409,7 @@ private constructor(
                 (accountCapabilities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (accountType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (counterpartyId.asKnown().isPresent) 1 else 0) +
+                (if (debitable.asKnown().isPresent) 1 else 0) +
                 (if (externalId.asKnown().isPresent) 1 else 0) +
                 (if (legalEntityId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1329,6 +1430,7 @@ private constructor(
                 accountCapabilities == other.accountCapabilities &&
                 accountType == other.accountType &&
                 counterpartyId == other.counterpartyId &&
+                debitable == other.debitable &&
                 externalId == other.externalId &&
                 legalEntityId == other.legalEntityId &&
                 metadata == other.metadata &&
@@ -1347,6 +1449,7 @@ private constructor(
                 accountCapabilities,
                 accountType,
                 counterpartyId,
+                debitable,
                 externalId,
                 legalEntityId,
                 metadata,
@@ -1360,7 +1463,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, partyName=$partyName, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, parentAccountId=$parentAccountId, partyAddress=$partyAddress, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+            "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, partyName=$partyName, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, debitable=$debitable, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, parentAccountId=$parentAccountId, partyAddress=$partyAddress, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
     /** The currency of the internal account. Supports fiat and stablecoin currencies. */
