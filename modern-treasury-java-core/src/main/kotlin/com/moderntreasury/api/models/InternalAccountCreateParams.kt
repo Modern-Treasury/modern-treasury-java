@@ -92,8 +92,8 @@ private constructor(
     /**
      * Whether this account can receive ACH debits. Only applicable to accounts created under a
      * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
-     * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or your
-     * customer success manager to enable this capability for your connection.
+     * `false`. Configurable only on creation. Please reach out to your customer success manager to
+     * enable this capability for your connection.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -414,8 +414,8 @@ private constructor(
         /**
          * Whether this account can receive ACH debits. Only applicable to accounts created under a
          * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
-         * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or
-         * your customer success manager to enable this capability for your connection.
+         * `false`. Configurable only on creation. Please reach out to your customer success manager
+         * to enable this capability for your connection.
          */
         fun debitable(debitable: Boolean?) = apply { body.debitable(debitable) }
 
@@ -817,8 +817,8 @@ private constructor(
         /**
          * Whether this account can receive ACH debits. Only applicable to accounts created under a
          * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
-         * `false`. Configurable on create only. Please reach out to support@moderntreasury.com or
-         * your customer success manager to enable this capability for your connection.
+         * `false`. Configurable only on creation. Please reach out to your customer success manager
+         * to enable this capability for your connection.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -1183,9 +1183,8 @@ private constructor(
             /**
              * Whether this account can receive ACH debits. Only applicable to accounts created
              * under a Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts.
-             * Defaults to `false`. Configurable on create only. Please reach out to
-             * support@moderntreasury.com or your customer success manager to enable this capability
-             * for your connection.
+             * Defaults to `false`. Configurable only on creation. Please reach out to your customer
+             * success manager to enable this capability for your connection.
              */
             fun debitable(debitable: Boolean?) = debitable(JsonField.ofNullable(debitable))
 
