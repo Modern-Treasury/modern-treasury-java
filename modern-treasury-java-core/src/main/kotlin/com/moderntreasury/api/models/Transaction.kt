@@ -269,8 +269,8 @@ private constructor(
     fun reconciled(): Boolean = reconciled.getRequired("reconciled")
 
     /**
-     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, `book`,
-     * or `sen`.
+     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+     * `book`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -295,7 +295,7 @@ private constructor(
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
      * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
-     * `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or others.
+     * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -893,8 +893,8 @@ private constructor(
         fun reconciled(reconciled: JsonField<Boolean>) = apply { this.reconciled = reconciled }
 
         /**
-         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-         * `book`, or `sen`.
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+         * `book`.
          */
         fun type(type: Type) = type(JsonField.of(type))
 
@@ -938,8 +938,7 @@ private constructor(
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
          * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
-         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
-         * others.
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
          */
         fun vendorCodeType(vendorCodeType: VendorCodeType?) =
             vendorCodeType(JsonField.ofNullable(vendorCodeType))
@@ -1422,8 +1421,8 @@ private constructor(
     }
 
     /**
-     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, `book`,
-     * or `sen`.
+     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+     * `book`.
      */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1461,10 +1460,6 @@ private constructor(
 
             @JvmField val GB_FPS = of("gb_fps")
 
-            @JvmField val HU_ICS = of("hu_ics")
-
-            @JvmField val INTERAC = of("interac")
-
             @JvmField val MASAV = of("masav")
 
             @JvmField val MX_CCEN = of("mx_ccen")
@@ -1477,25 +1472,15 @@ private constructor(
 
             @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = of("provxchange")
-
-            @JvmField val RO_SENT = of("ro_sent")
-
             @JvmField val RTP = of("rtp")
 
             @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-            @JvmField val SEN = of("sen")
 
             @JvmField val SEPA = of("sepa")
 
             @JvmField val SG_GIRO = of("sg_giro")
 
             @JvmField val SIC = of("sic")
-
-            @JvmField val SIGNET = of("signet")
-
-            @JvmField val SKNBI = of("sknbi")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -1521,24 +1506,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1566,24 +1544,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1612,24 +1583,17 @@ private constructor(
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 GB_FPS -> Value.GB_FPS
-                HU_ICS -> Value.HU_ICS
-                INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 MX_CCEN -> Value.MX_CCEN
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
                 NZ_BECS -> Value.NZ_BECS
                 PL_ELIXIR -> Value.PL_ELIXIR
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RO_SENT -> Value.RO_SENT
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
-                SEN -> Value.SEN
                 SEPA -> Value.SEPA
                 SG_GIRO -> Value.SG_GIRO
                 SIC -> Value.SIC
-                SIGNET -> Value.SIGNET
-                SKNBI -> Value.SKNBI
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -1659,24 +1623,17 @@ private constructor(
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 GB_FPS -> Known.GB_FPS
-                HU_ICS -> Known.HU_ICS
-                INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 MX_CCEN -> Known.MX_CCEN
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
                 NZ_BECS -> Known.NZ_BECS
                 PL_ELIXIR -> Known.PL_ELIXIR
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RO_SENT -> Known.RO_SENT
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
-                SEN -> Known.SEN
                 SEPA -> Known.SEPA
                 SG_GIRO -> Known.SG_GIRO
                 SIC -> Known.SIC
-                SIGNET -> Known.SIGNET
-                SKNBI -> Known.SKNBI
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
@@ -1750,7 +1707,7 @@ private constructor(
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
      * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
-     * `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or others.
+     * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
      */
     class VendorCodeType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -1809,8 +1766,6 @@ private constructor(
 
             @JvmField val PNC = of("pnc")
 
-            @JvmField val SIGNET = of("signet")
-
             @JvmField val SILVERGATE = of("silvergate")
 
             @JvmField val SWIFT = of("swift")
@@ -1847,7 +1802,6 @@ private constructor(
             PAXOS,
             PAYPAL,
             PNC,
-            SIGNET,
             SILVERGATE,
             SWIFT,
             US_BANK,
@@ -1886,7 +1840,6 @@ private constructor(
             PAXOS,
             PAYPAL,
             PNC,
-            SIGNET,
             SILVERGATE,
             SWIFT,
             US_BANK,
@@ -1929,7 +1882,6 @@ private constructor(
                 PAXOS -> Value.PAXOS
                 PAYPAL -> Value.PAYPAL
                 PNC -> Value.PNC
-                SIGNET -> Value.SIGNET
                 SILVERGATE -> Value.SILVERGATE
                 SWIFT -> Value.SWIFT
                 US_BANK -> Value.US_BANK
@@ -1970,7 +1922,6 @@ private constructor(
                 PAXOS -> Known.PAXOS
                 PAYPAL -> Known.PAYPAL
                 PNC -> Known.PNC
-                SIGNET -> Known.SIGNET
                 SILVERGATE -> Known.SILVERGATE
                 SWIFT -> Known.SWIFT
                 US_BANK -> Known.US_BANK
