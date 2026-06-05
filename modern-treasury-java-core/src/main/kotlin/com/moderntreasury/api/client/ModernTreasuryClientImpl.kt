@@ -93,6 +93,8 @@ import com.moderntreasury.api.services.blocking.ValidationService
 import com.moderntreasury.api.services.blocking.ValidationServiceImpl
 import com.moderntreasury.api.services.blocking.VirtualAccountService
 import com.moderntreasury.api.services.blocking.VirtualAccountServiceImpl
+import com.moderntreasury.api.services.blocking.WebhookService
+import com.moderntreasury.api.services.blocking.WebhookServiceImpl
 import java.util.function.Consumer
 
 class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : ModernTreasuryClient {
@@ -210,6 +212,8 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
         ValidationServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptions) }
+
     private val virtualAccounts: VirtualAccountService by lazy {
         VirtualAccountServiceImpl(clientOptionsWithUserAgent)
     }
@@ -315,6 +319,8 @@ class ModernTreasuryClientImpl(private val clientOptions: ClientOptions) : Moder
     override fun transactions(): TransactionService = transactions
 
     override fun validations(): ValidationService = validations
+
+    override fun webhooks(): WebhookService = webhooks
 
     override fun virtualAccounts(): VirtualAccountService = virtualAccounts
 

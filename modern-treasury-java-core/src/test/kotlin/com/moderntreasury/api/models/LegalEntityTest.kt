@@ -31,13 +31,12 @@ internal class LegalEntityTest {
                         .locality("locality")
                         .object_("object")
                         .postalCode("postal_code")
-                        .primary(true)
                         .region("region")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .bankSettings(
-                    BankSettings.builder()
+                    LegalEntity.LegalEntityBankSetting.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .backupWithholdingPercentage(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -223,7 +222,7 @@ internal class LegalEntityTest {
                 .tickerSymbol("ticker_symbol")
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .wealthAndEmploymentDetails(
-                    WealthAndEmploymentDetails.builder()
+                    LegalEntity.LegalEntityWealthEmploymentDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .annualIncome(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -231,17 +230,28 @@ internal class LegalEntityTest {
                         .employerCountry("employer_country")
                         .employerName("employer_name")
                         .employerState("employer_state")
-                        .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
+                        .employmentStatus(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus.EMPLOYED
+                        )
                         .incomeCountry("income_country")
-                        .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
+                        .incomeSource(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource
+                                .FAMILY_SUPPORT
+                        )
                         .incomeState("income_state")
-                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                        .industry(LegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING)
                         .liveMode(true)
                         .object_("object")
-                        .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
-                        .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
+                        .occupation(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING
+                        )
+                        .sourceOfFunds(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
+                        )
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
+                        .wealthSource(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.WealthSource.BUSINESS_SALE
+                        )
                         .build()
                 )
                 .website("website")
@@ -268,13 +278,12 @@ internal class LegalEntityTest {
                                         .locality("locality")
                                         .object_("object")
                                         .postalCode("postal_code")
-                                        .primary(true)
                                         .region("region")
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
                                 .bankSettings(
-                                    BankSettings.builder()
+                                    ChildLegalEntity.LegalEntityBankSetting.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .backupWithholdingPercentage(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -506,7 +515,7 @@ internal class LegalEntityTest {
                                 .tickerSymbol("ticker_symbol")
                                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .wealthAndEmploymentDetails(
-                                    WealthAndEmploymentDetails.builder()
+                                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .annualIncome(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -517,25 +526,39 @@ internal class LegalEntityTest {
                                         .employerName("employer_name")
                                         .employerState("employer_state")
                                         .employmentStatus(
-                                            WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .EmploymentStatus
+                                                .EMPLOYED
                                         )
                                         .incomeCountry("income_country")
                                         .incomeSource(
-                                            WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .IncomeSource
+                                                .FAMILY_SUPPORT
                                         )
                                         .incomeState("income_state")
-                                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                                        .industry(
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .Industry
+                                                .ACCOUNTING
+                                        )
                                         .liveMode(true)
                                         .object_("object")
                                         .occupation(
-                                            WealthAndEmploymentDetails.Occupation.CONSULTING
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .Occupation
+                                                .CONSULTING
                                         )
                                         .sourceOfFunds(
-                                            WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .SourceOfFunds
+                                                .ALIMONY
                                         )
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .wealthSource(
-                                            WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .WealthSource
+                                                .BUSINESS_SALE
                                         )
                                         .build()
                                 )
@@ -572,14 +595,13 @@ internal class LegalEntityTest {
                     .locality("locality")
                     .object_("object")
                     .postalCode("postal_code")
-                    .primary(true)
                     .region("region")
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
         assertThat(legalEntity.bankSettings())
             .contains(
-                BankSettings.builder()
+                LegalEntity.LegalEntityBankSetting.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .backupWithholdingPercentage(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -768,7 +790,7 @@ internal class LegalEntityTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(legalEntity.wealthAndEmploymentDetails())
             .contains(
-                WealthAndEmploymentDetails.builder()
+                LegalEntity.LegalEntityWealthEmploymentDetail.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .annualIncome(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -776,17 +798,25 @@ internal class LegalEntityTest {
                     .employerCountry("employer_country")
                     .employerName("employer_name")
                     .employerState("employer_state")
-                    .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
+                    .employmentStatus(
+                        LegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus.EMPLOYED
+                    )
                     .incomeCountry("income_country")
-                    .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
+                    .incomeSource(
+                        LegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource.FAMILY_SUPPORT
+                    )
                     .incomeState("income_state")
-                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                    .industry(LegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING)
                     .liveMode(true)
                     .object_("object")
-                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
-                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
+                    .occupation(LegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING)
+                    .sourceOfFunds(
+                        LegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
+                    )
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
+                    .wealthSource(
+                        LegalEntity.LegalEntityWealthEmploymentDetail.WealthSource.BUSINESS_SALE
+                    )
                     .build()
             )
         assertThat(legalEntity.website()).contains("website")
@@ -812,13 +842,12 @@ internal class LegalEntityTest {
                                     .locality("locality")
                                     .object_("object")
                                     .postalCode("postal_code")
-                                    .primary(true)
                                     .region("region")
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
                             .bankSettings(
-                                BankSettings.builder()
+                                ChildLegalEntity.LegalEntityBankSetting.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .backupWithholdingPercentage(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1035,7 +1064,7 @@ internal class LegalEntityTest {
                             .tickerSymbol("ticker_symbol")
                             .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .wealthAndEmploymentDetails(
-                                WealthAndEmploymentDetails.builder()
+                                ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .annualIncome(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1044,21 +1073,38 @@ internal class LegalEntityTest {
                                     .employerName("employer_name")
                                     .employerState("employer_state")
                                     .employmentStatus(
-                                        WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                            .EmploymentStatus
+                                            .EMPLOYED
                                     )
                                     .incomeCountry("income_country")
                                     .incomeSource(
-                                        WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                            .IncomeSource
+                                            .FAMILY_SUPPORT
                                     )
                                     .incomeState("income_state")
-                                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                                    .industry(
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.Industry
+                                            .ACCOUNTING
+                                    )
                                     .liveMode(true)
                                     .object_("object")
-                                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
-                                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
+                                    .occupation(
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                            .Occupation
+                                            .CONSULTING
+                                    )
+                                    .sourceOfFunds(
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                            .SourceOfFunds
+                                            .ALIMONY
+                                    )
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .wealthSource(
-                                        WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
+                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                            .WealthSource
+                                            .BUSINESS_SALE
                                     )
                                     .build()
                             )
@@ -1097,13 +1143,12 @@ internal class LegalEntityTest {
                         .locality("locality")
                         .object_("object")
                         .postalCode("postal_code")
-                        .primary(true)
                         .region("region")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .bankSettings(
-                    BankSettings.builder()
+                    LegalEntity.LegalEntityBankSetting.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .backupWithholdingPercentage(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1289,7 +1334,7 @@ internal class LegalEntityTest {
                 .tickerSymbol("ticker_symbol")
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .wealthAndEmploymentDetails(
-                    WealthAndEmploymentDetails.builder()
+                    LegalEntity.LegalEntityWealthEmploymentDetail.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .annualIncome(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1297,17 +1342,28 @@ internal class LegalEntityTest {
                         .employerCountry("employer_country")
                         .employerName("employer_name")
                         .employerState("employer_state")
-                        .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
+                        .employmentStatus(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus.EMPLOYED
+                        )
                         .incomeCountry("income_country")
-                        .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
+                        .incomeSource(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource
+                                .FAMILY_SUPPORT
+                        )
                         .incomeState("income_state")
-                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                        .industry(LegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING)
                         .liveMode(true)
                         .object_("object")
-                        .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
-                        .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
+                        .occupation(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING
+                        )
+                        .sourceOfFunds(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
+                        )
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
+                        .wealthSource(
+                            LegalEntity.LegalEntityWealthEmploymentDetail.WealthSource.BUSINESS_SALE
+                        )
                         .build()
                 )
                 .website("website")
@@ -1334,13 +1390,12 @@ internal class LegalEntityTest {
                                         .locality("locality")
                                         .object_("object")
                                         .postalCode("postal_code")
-                                        .primary(true)
                                         .region("region")
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
                                 .bankSettings(
-                                    BankSettings.builder()
+                                    ChildLegalEntity.LegalEntityBankSetting.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .backupWithholdingPercentage(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1572,7 +1627,7 @@ internal class LegalEntityTest {
                                 .tickerSymbol("ticker_symbol")
                                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .wealthAndEmploymentDetails(
-                                    WealthAndEmploymentDetails.builder()
+                                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .annualIncome(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1583,25 +1638,39 @@ internal class LegalEntityTest {
                                         .employerName("employer_name")
                                         .employerState("employer_state")
                                         .employmentStatus(
-                                            WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .EmploymentStatus
+                                                .EMPLOYED
                                         )
                                         .incomeCountry("income_country")
                                         .incomeSource(
-                                            WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .IncomeSource
+                                                .FAMILY_SUPPORT
                                         )
                                         .incomeState("income_state")
-                                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
+                                        .industry(
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .Industry
+                                                .ACCOUNTING
+                                        )
                                         .liveMode(true)
                                         .object_("object")
                                         .occupation(
-                                            WealthAndEmploymentDetails.Occupation.CONSULTING
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .Occupation
+                                                .CONSULTING
                                         )
                                         .sourceOfFunds(
-                                            WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .SourceOfFunds
+                                                .ALIMONY
                                         )
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .wealthSource(
-                                            WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
+                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
+                                                .WealthSource
+                                                .BUSINESS_SALE
                                         )
                                         .build()
                                 )

@@ -93,6 +93,8 @@ import com.moderntreasury.api.services.async.ValidationServiceAsync
 import com.moderntreasury.api.services.async.ValidationServiceAsyncImpl
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsync
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsyncImpl
+import com.moderntreasury.api.services.async.WebhookServiceAsync
+import com.moderntreasury.api.services.async.WebhookServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -218,6 +220,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         ValidationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
+
     private val virtualAccounts: VirtualAccountServiceAsync by lazy {
         VirtualAccountServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -327,6 +331,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
     override fun transactions(): TransactionServiceAsync = transactions
 
     override fun validations(): ValidationServiceAsync = validations
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun virtualAccounts(): VirtualAccountServiceAsync = virtualAccounts
 

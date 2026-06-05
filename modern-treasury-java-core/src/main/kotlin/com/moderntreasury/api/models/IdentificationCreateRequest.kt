@@ -421,29 +421,11 @@ private constructor(
 
             @JvmField val AR_CUIT = of("ar_cuit")
 
-            @JvmField val AT_ATIN = of("at_atin")
-
-            @JvmField val AT_VAT = of("at_vat")
-
-            @JvmField val AU_ABN = of("au_abn")
-
-            @JvmField val AU_TFN = of("au_tfn")
-
-            @JvmField val BE_ENT = of("be_ent")
-
-            @JvmField val BE_NRN = of("be_nrn")
-
             @JvmField val BR_CNPJ = of("br_cnpj")
 
             @JvmField val BR_CPF = of("br_cpf")
 
-            @JvmField val CA_BN = of("ca_bn")
-
             @JvmField val CA_SIN = of("ca_sin")
-
-            @JvmField val CH_AHV = of("ch_ahv")
-
-            @JvmField val CH_UID = of("ch_uid")
 
             @JvmField val CL_RUN = of("cl_run")
 
@@ -453,75 +435,15 @@ private constructor(
 
             @JvmField val CO_NIT = of("co_nit")
 
-            @JvmField val CY_TIN = of("cy_tin")
-
-            @JvmField val CZ_ICO = of("cz_ico")
-
-            @JvmField val CZ_RC = of("cz_rc")
-
-            @JvmField val DE_STID = of("de_stid")
-
-            @JvmField val DE_STNR = of("de_stnr")
-
-            @JvmField val DE_VAT = of("de_vat")
-
-            @JvmField val DK_CPR = of("dk_cpr")
-
-            @JvmField val DK_CVR = of("dk_cvr")
-
             @JvmField val DRIVERS_LICENSE = of("drivers_license")
-
-            @JvmField val EE_IK = of("ee_ik")
-
-            @JvmField val EE_RK = of("ee_rk")
-
-            @JvmField val ES_NIE = of("es_nie")
-
-            @JvmField val ES_NIF = of("es_nif")
-
-            @JvmField val FI_HETU = of("fi_hetu")
-
-            @JvmField val FI_YTJ = of("fi_ytj")
-
-            @JvmField val FR_NIF = of("fr_nif")
-
-            @JvmField val FR_SIREN = of("fr_siren")
-
-            @JvmField val FR_VAT = of("fr_vat")
-
-            @JvmField val GB_NINO = of("gb_nino")
-
-            @JvmField val GB_UTR = of("gb_utr")
-
-            @JvmField val GB_VAT = of("gb_vat")
-
-            @JvmField val GR_VAT = of("gr_vat")
 
             @JvmField val HN_ID = of("hn_id")
 
             @JvmField val HN_RTN = of("hn_rtn")
 
-            @JvmField val HR_OIB = of("hr_oib")
-
-            @JvmField val HU_ADJ = of("hu_adj")
-
-            @JvmField val HU_ANUM = of("hu_anum")
-
             @JvmField val IE_PPS = of("ie_pps")
 
-            @JvmField val IE_TRN = of("ie_trn")
-
             @JvmField val IN_LEI = of("in_lei")
-
-            @JvmField val IS_KNT = of("is_knt")
-
-            @JvmField val IT_CF = of("it_cf")
-
-            @JvmField val IT_PIVA = of("it_piva")
-
-            @JvmField val JP_HB = of("jp_hb")
-
-            @JvmField val JP_MN = of("jp_mn")
 
             @JvmField val KR_BRN = of("kr_brn")
 
@@ -529,77 +451,17 @@ private constructor(
 
             @JvmField val KR_RRN = of("kr_rrn")
 
-            @JvmField val LI_PEID = of("li_peid")
-
-            @JvmField val LT_AK = of("lt_ak")
-
-            @JvmField val LT_JAK = of("lt_jak")
-
-            @JvmField val LU_MTC = of("lu_mtc")
-
-            @JvmField val LU_VAT = of("lu_vat")
-
-            @JvmField val LV_PK = of("lv_pk")
-
-            @JvmField val LV_RN = of("lv_rn")
-
-            @JvmField val MT_TIN = of("mt_tin")
-
-            @JvmField val MT_VAT = of("mt_vat")
-
             @JvmField val MX_CURP = of("mx_curp")
 
             @JvmField val MX_INE = of("mx_ine")
 
             @JvmField val MX_RFC = of("mx_rfc")
 
-            @JvmField val NL_BSN = of("nl_bsn")
-
-            @JvmField val NL_BTW = of("nl_btw")
-
-            @JvmField val NL_RSIN = of("nl_rsin")
-
-            @JvmField val NO_FDN = of("no_fdn")
-
-            @JvmField val NO_MVA = of("no_mva")
-
-            @JvmField val NO_ORGNR = of("no_orgnr")
-
-            @JvmField val NZ_IRD = of("nz_ird")
-
             @JvmField val PASSPORT = of("passport")
-
-            @JvmField val PL_NIP = of("pl_nip")
-
-            @JvmField val PL_PESEL = of("pl_pesel")
-
-            @JvmField val PT_NIF = of("pt_nif")
-
-            @JvmField val RO_CNP = of("ro_cnp")
-
-            @JvmField val RO_CUI = of("ro_cui")
 
             @JvmField val SA_TIN = of("sa_tin")
 
             @JvmField val SA_VAT = of("sa_vat")
-
-            @JvmField val SE_ORGNR = of("se_orgnr")
-
-            @JvmField val SE_PNMR = of("se_pnmr")
-
-            @JvmField val SG_FIN = of("sg_fin")
-
-            @JvmField val SG_NRIC = of("sg_nric")
-
-            @JvmField val SG_UEN = of("sg_uen")
-
-            @JvmField val SI_DAV = of("si_dav")
-
-            @JvmField val SI_TIN = of("si_tin")
-
-            @JvmField val SK_ICO = of("sk_ico")
-
-            @JvmField val SK_RC = of("sk_rc")
 
             @JvmField val US_EIN = of("us_ein")
 
@@ -618,96 +480,27 @@ private constructor(
         enum class Known {
             AR_CUIL,
             AR_CUIT,
-            AT_ATIN,
-            AT_VAT,
-            AU_ABN,
-            AU_TFN,
-            BE_ENT,
-            BE_NRN,
             BR_CNPJ,
             BR_CPF,
-            CA_BN,
             CA_SIN,
-            CH_AHV,
-            CH_UID,
             CL_RUN,
             CL_RUT,
             CO_CEDULAS,
             CO_NIT,
-            CY_TIN,
-            CZ_ICO,
-            CZ_RC,
-            DE_STID,
-            DE_STNR,
-            DE_VAT,
-            DK_CPR,
-            DK_CVR,
             DRIVERS_LICENSE,
-            EE_IK,
-            EE_RK,
-            ES_NIE,
-            ES_NIF,
-            FI_HETU,
-            FI_YTJ,
-            FR_NIF,
-            FR_SIREN,
-            FR_VAT,
-            GB_NINO,
-            GB_UTR,
-            GB_VAT,
-            GR_VAT,
             HN_ID,
             HN_RTN,
-            HR_OIB,
-            HU_ADJ,
-            HU_ANUM,
             IE_PPS,
-            IE_TRN,
             IN_LEI,
-            IS_KNT,
-            IT_CF,
-            IT_PIVA,
-            JP_HB,
-            JP_MN,
             KR_BRN,
             KR_CRN,
             KR_RRN,
-            LI_PEID,
-            LT_AK,
-            LT_JAK,
-            LU_MTC,
-            LU_VAT,
-            LV_PK,
-            LV_RN,
-            MT_TIN,
-            MT_VAT,
             MX_CURP,
             MX_INE,
             MX_RFC,
-            NL_BSN,
-            NL_BTW,
-            NL_RSIN,
-            NO_FDN,
-            NO_MVA,
-            NO_ORGNR,
-            NZ_IRD,
             PASSPORT,
-            PL_NIP,
-            PL_PESEL,
-            PT_NIF,
-            RO_CNP,
-            RO_CUI,
             SA_TIN,
             SA_VAT,
-            SE_ORGNR,
-            SE_PNMR,
-            SG_FIN,
-            SG_NRIC,
-            SG_UEN,
-            SI_DAV,
-            SI_TIN,
-            SK_ICO,
-            SK_RC,
             US_EIN,
             US_ITIN,
             US_SSN,
@@ -727,96 +520,27 @@ private constructor(
         enum class Value {
             AR_CUIL,
             AR_CUIT,
-            AT_ATIN,
-            AT_VAT,
-            AU_ABN,
-            AU_TFN,
-            BE_ENT,
-            BE_NRN,
             BR_CNPJ,
             BR_CPF,
-            CA_BN,
             CA_SIN,
-            CH_AHV,
-            CH_UID,
             CL_RUN,
             CL_RUT,
             CO_CEDULAS,
             CO_NIT,
-            CY_TIN,
-            CZ_ICO,
-            CZ_RC,
-            DE_STID,
-            DE_STNR,
-            DE_VAT,
-            DK_CPR,
-            DK_CVR,
             DRIVERS_LICENSE,
-            EE_IK,
-            EE_RK,
-            ES_NIE,
-            ES_NIF,
-            FI_HETU,
-            FI_YTJ,
-            FR_NIF,
-            FR_SIREN,
-            FR_VAT,
-            GB_NINO,
-            GB_UTR,
-            GB_VAT,
-            GR_VAT,
             HN_ID,
             HN_RTN,
-            HR_OIB,
-            HU_ADJ,
-            HU_ANUM,
             IE_PPS,
-            IE_TRN,
             IN_LEI,
-            IS_KNT,
-            IT_CF,
-            IT_PIVA,
-            JP_HB,
-            JP_MN,
             KR_BRN,
             KR_CRN,
             KR_RRN,
-            LI_PEID,
-            LT_AK,
-            LT_JAK,
-            LU_MTC,
-            LU_VAT,
-            LV_PK,
-            LV_RN,
-            MT_TIN,
-            MT_VAT,
             MX_CURP,
             MX_INE,
             MX_RFC,
-            NL_BSN,
-            NL_BTW,
-            NL_RSIN,
-            NO_FDN,
-            NO_MVA,
-            NO_ORGNR,
-            NZ_IRD,
             PASSPORT,
-            PL_NIP,
-            PL_PESEL,
-            PT_NIF,
-            RO_CNP,
-            RO_CUI,
             SA_TIN,
             SA_VAT,
-            SE_ORGNR,
-            SE_PNMR,
-            SG_FIN,
-            SG_NRIC,
-            SG_UEN,
-            SI_DAV,
-            SI_TIN,
-            SK_ICO,
-            SK_RC,
             US_EIN,
             US_ITIN,
             US_SSN,
@@ -837,96 +561,27 @@ private constructor(
             when (this) {
                 AR_CUIL -> Value.AR_CUIL
                 AR_CUIT -> Value.AR_CUIT
-                AT_ATIN -> Value.AT_ATIN
-                AT_VAT -> Value.AT_VAT
-                AU_ABN -> Value.AU_ABN
-                AU_TFN -> Value.AU_TFN
-                BE_ENT -> Value.BE_ENT
-                BE_NRN -> Value.BE_NRN
                 BR_CNPJ -> Value.BR_CNPJ
                 BR_CPF -> Value.BR_CPF
-                CA_BN -> Value.CA_BN
                 CA_SIN -> Value.CA_SIN
-                CH_AHV -> Value.CH_AHV
-                CH_UID -> Value.CH_UID
                 CL_RUN -> Value.CL_RUN
                 CL_RUT -> Value.CL_RUT
                 CO_CEDULAS -> Value.CO_CEDULAS
                 CO_NIT -> Value.CO_NIT
-                CY_TIN -> Value.CY_TIN
-                CZ_ICO -> Value.CZ_ICO
-                CZ_RC -> Value.CZ_RC
-                DE_STID -> Value.DE_STID
-                DE_STNR -> Value.DE_STNR
-                DE_VAT -> Value.DE_VAT
-                DK_CPR -> Value.DK_CPR
-                DK_CVR -> Value.DK_CVR
                 DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
-                EE_IK -> Value.EE_IK
-                EE_RK -> Value.EE_RK
-                ES_NIE -> Value.ES_NIE
-                ES_NIF -> Value.ES_NIF
-                FI_HETU -> Value.FI_HETU
-                FI_YTJ -> Value.FI_YTJ
-                FR_NIF -> Value.FR_NIF
-                FR_SIREN -> Value.FR_SIREN
-                FR_VAT -> Value.FR_VAT
-                GB_NINO -> Value.GB_NINO
-                GB_UTR -> Value.GB_UTR
-                GB_VAT -> Value.GB_VAT
-                GR_VAT -> Value.GR_VAT
                 HN_ID -> Value.HN_ID
                 HN_RTN -> Value.HN_RTN
-                HR_OIB -> Value.HR_OIB
-                HU_ADJ -> Value.HU_ADJ
-                HU_ANUM -> Value.HU_ANUM
                 IE_PPS -> Value.IE_PPS
-                IE_TRN -> Value.IE_TRN
                 IN_LEI -> Value.IN_LEI
-                IS_KNT -> Value.IS_KNT
-                IT_CF -> Value.IT_CF
-                IT_PIVA -> Value.IT_PIVA
-                JP_HB -> Value.JP_HB
-                JP_MN -> Value.JP_MN
                 KR_BRN -> Value.KR_BRN
                 KR_CRN -> Value.KR_CRN
                 KR_RRN -> Value.KR_RRN
-                LI_PEID -> Value.LI_PEID
-                LT_AK -> Value.LT_AK
-                LT_JAK -> Value.LT_JAK
-                LU_MTC -> Value.LU_MTC
-                LU_VAT -> Value.LU_VAT
-                LV_PK -> Value.LV_PK
-                LV_RN -> Value.LV_RN
-                MT_TIN -> Value.MT_TIN
-                MT_VAT -> Value.MT_VAT
                 MX_CURP -> Value.MX_CURP
                 MX_INE -> Value.MX_INE
                 MX_RFC -> Value.MX_RFC
-                NL_BSN -> Value.NL_BSN
-                NL_BTW -> Value.NL_BTW
-                NL_RSIN -> Value.NL_RSIN
-                NO_FDN -> Value.NO_FDN
-                NO_MVA -> Value.NO_MVA
-                NO_ORGNR -> Value.NO_ORGNR
-                NZ_IRD -> Value.NZ_IRD
                 PASSPORT -> Value.PASSPORT
-                PL_NIP -> Value.PL_NIP
-                PL_PESEL -> Value.PL_PESEL
-                PT_NIF -> Value.PT_NIF
-                RO_CNP -> Value.RO_CNP
-                RO_CUI -> Value.RO_CUI
                 SA_TIN -> Value.SA_TIN
                 SA_VAT -> Value.SA_VAT
-                SE_ORGNR -> Value.SE_ORGNR
-                SE_PNMR -> Value.SE_PNMR
-                SG_FIN -> Value.SG_FIN
-                SG_NRIC -> Value.SG_NRIC
-                SG_UEN -> Value.SG_UEN
-                SI_DAV -> Value.SI_DAV
-                SI_TIN -> Value.SI_TIN
-                SK_ICO -> Value.SK_ICO
-                SK_RC -> Value.SK_RC
                 US_EIN -> Value.US_EIN
                 US_ITIN -> Value.US_ITIN
                 US_SSN -> Value.US_SSN
@@ -948,96 +603,27 @@ private constructor(
             when (this) {
                 AR_CUIL -> Known.AR_CUIL
                 AR_CUIT -> Known.AR_CUIT
-                AT_ATIN -> Known.AT_ATIN
-                AT_VAT -> Known.AT_VAT
-                AU_ABN -> Known.AU_ABN
-                AU_TFN -> Known.AU_TFN
-                BE_ENT -> Known.BE_ENT
-                BE_NRN -> Known.BE_NRN
                 BR_CNPJ -> Known.BR_CNPJ
                 BR_CPF -> Known.BR_CPF
-                CA_BN -> Known.CA_BN
                 CA_SIN -> Known.CA_SIN
-                CH_AHV -> Known.CH_AHV
-                CH_UID -> Known.CH_UID
                 CL_RUN -> Known.CL_RUN
                 CL_RUT -> Known.CL_RUT
                 CO_CEDULAS -> Known.CO_CEDULAS
                 CO_NIT -> Known.CO_NIT
-                CY_TIN -> Known.CY_TIN
-                CZ_ICO -> Known.CZ_ICO
-                CZ_RC -> Known.CZ_RC
-                DE_STID -> Known.DE_STID
-                DE_STNR -> Known.DE_STNR
-                DE_VAT -> Known.DE_VAT
-                DK_CPR -> Known.DK_CPR
-                DK_CVR -> Known.DK_CVR
                 DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
-                EE_IK -> Known.EE_IK
-                EE_RK -> Known.EE_RK
-                ES_NIE -> Known.ES_NIE
-                ES_NIF -> Known.ES_NIF
-                FI_HETU -> Known.FI_HETU
-                FI_YTJ -> Known.FI_YTJ
-                FR_NIF -> Known.FR_NIF
-                FR_SIREN -> Known.FR_SIREN
-                FR_VAT -> Known.FR_VAT
-                GB_NINO -> Known.GB_NINO
-                GB_UTR -> Known.GB_UTR
-                GB_VAT -> Known.GB_VAT
-                GR_VAT -> Known.GR_VAT
                 HN_ID -> Known.HN_ID
                 HN_RTN -> Known.HN_RTN
-                HR_OIB -> Known.HR_OIB
-                HU_ADJ -> Known.HU_ADJ
-                HU_ANUM -> Known.HU_ANUM
                 IE_PPS -> Known.IE_PPS
-                IE_TRN -> Known.IE_TRN
                 IN_LEI -> Known.IN_LEI
-                IS_KNT -> Known.IS_KNT
-                IT_CF -> Known.IT_CF
-                IT_PIVA -> Known.IT_PIVA
-                JP_HB -> Known.JP_HB
-                JP_MN -> Known.JP_MN
                 KR_BRN -> Known.KR_BRN
                 KR_CRN -> Known.KR_CRN
                 KR_RRN -> Known.KR_RRN
-                LI_PEID -> Known.LI_PEID
-                LT_AK -> Known.LT_AK
-                LT_JAK -> Known.LT_JAK
-                LU_MTC -> Known.LU_MTC
-                LU_VAT -> Known.LU_VAT
-                LV_PK -> Known.LV_PK
-                LV_RN -> Known.LV_RN
-                MT_TIN -> Known.MT_TIN
-                MT_VAT -> Known.MT_VAT
                 MX_CURP -> Known.MX_CURP
                 MX_INE -> Known.MX_INE
                 MX_RFC -> Known.MX_RFC
-                NL_BSN -> Known.NL_BSN
-                NL_BTW -> Known.NL_BTW
-                NL_RSIN -> Known.NL_RSIN
-                NO_FDN -> Known.NO_FDN
-                NO_MVA -> Known.NO_MVA
-                NO_ORGNR -> Known.NO_ORGNR
-                NZ_IRD -> Known.NZ_IRD
                 PASSPORT -> Known.PASSPORT
-                PL_NIP -> Known.PL_NIP
-                PL_PESEL -> Known.PL_PESEL
-                PT_NIF -> Known.PT_NIF
-                RO_CNP -> Known.RO_CNP
-                RO_CUI -> Known.RO_CUI
                 SA_TIN -> Known.SA_TIN
                 SA_VAT -> Known.SA_VAT
-                SE_ORGNR -> Known.SE_ORGNR
-                SE_PNMR -> Known.SE_PNMR
-                SG_FIN -> Known.SG_FIN
-                SG_NRIC -> Known.SG_NRIC
-                SG_UEN -> Known.SG_UEN
-                SI_DAV -> Known.SI_DAV
-                SI_TIN -> Known.SI_TIN
-                SK_ICO -> Known.SK_ICO
-                SK_RC -> Known.SK_RC
                 US_EIN -> Known.US_EIN
                 US_ITIN -> Known.US_ITIN
                 US_SSN -> Known.US_SSN
