@@ -27,7 +27,6 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.18.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
-    implementation("com.google.guava:guava:33.0.0-jre")
 
     testImplementation(kotlin("test"))
     testImplementation(project(":modern-treasury-java-client-okhttp"))
