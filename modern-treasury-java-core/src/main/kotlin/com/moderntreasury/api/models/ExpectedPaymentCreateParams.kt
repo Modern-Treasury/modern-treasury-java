@@ -235,8 +235,7 @@ private constructor(
     fun statementDescriptor(): Optional<String> = body.statementDescriptor()
 
     /**
-     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet,
-     * wire.
+     * One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -952,10 +951,7 @@ private constructor(
             body.statementDescriptor(statementDescriptor)
         }
 
-        /**
-         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
-         * signet, wire.
-         */
+        /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire. */
         fun type(type: ExpectedPaymentType?) = apply { body.type(type) }
 
         /** Alias for calling [Builder.type] with `type.orElse(null)`. */
@@ -1452,8 +1448,7 @@ private constructor(
             statementDescriptor.getOptional("statement_descriptor")
 
         /**
-         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
-         * signet, wire.
+         * One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2267,10 +2262,7 @@ private constructor(
                 this.statementDescriptor = statementDescriptor
             }
 
-            /**
-             * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
-             * signet, wire.
-             */
+            /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire. */
             fun type(type: ExpectedPaymentType?) = type(JsonField.ofNullable(type))
 
             /** Alias for calling [Builder.type] with `type.orElse(null)`. */
