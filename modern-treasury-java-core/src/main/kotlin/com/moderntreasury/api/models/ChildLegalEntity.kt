@@ -4058,6 +4058,8 @@ private constructor(
 
                 @JvmField val MX_RFC = of("mx_rfc")
 
+                @JvmField val NATIONAL_ID = of("national_id")
+
                 @JvmField val NL_BSN = of("nl_bsn")
 
                 @JvmField val NL_BTW = of("nl_btw")
@@ -4189,6 +4191,7 @@ private constructor(
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
+                NATIONAL_ID,
                 NL_BSN,
                 NL_BTW,
                 NL_RSIN,
@@ -4298,6 +4301,7 @@ private constructor(
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
+                NATIONAL_ID,
                 NL_BSN,
                 NL_BTW,
                 NL_RSIN,
@@ -4410,6 +4414,7 @@ private constructor(
                     MX_CURP -> Value.MX_CURP
                     MX_INE -> Value.MX_INE
                     MX_RFC -> Value.MX_RFC
+                    NATIONAL_ID -> Value.NATIONAL_ID
                     NL_BSN -> Value.NL_BSN
                     NL_BTW -> Value.NL_BTW
                     NL_RSIN -> Value.NL_RSIN
@@ -4521,6 +4526,7 @@ private constructor(
                     MX_CURP -> Known.MX_CURP
                     MX_INE -> Known.MX_INE
                     MX_RFC -> Known.MX_RFC
+                    NATIONAL_ID -> Known.NATIONAL_ID
                     NL_BSN -> Known.NL_BSN
                     NL_BTW -> Known.NL_BTW
                     NL_RSIN -> Known.NL_RSIN
