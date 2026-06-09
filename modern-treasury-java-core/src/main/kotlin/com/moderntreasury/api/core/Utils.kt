@@ -2,7 +2,6 @@
 
 package com.moderntreasury.api.core
 
-import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.util.Collections
 import java.util.SortedMap
@@ -97,11 +96,6 @@ internal fun Any?.contentToString(): String {
     }
     return string
 }
-
-@JvmSynthetic
-internal fun Headers.getRequiredHeader(name: String): String =
-    values(name).firstOrNull()
-        ?: throw ModernTreasuryInvalidDataException("Could not find $name header")
 
 internal interface Enum
 
