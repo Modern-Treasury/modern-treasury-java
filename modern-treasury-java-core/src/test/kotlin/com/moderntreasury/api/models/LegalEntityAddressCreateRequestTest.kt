@@ -21,7 +21,6 @@ internal class LegalEntityAddressCreateRequestTest {
                 .region("region")
                 .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                 .line2("line2")
-                .primary(true)
                 .build()
 
         assertThat(legalEntityAddressCreateRequest.country()).contains("country")
@@ -32,7 +31,6 @@ internal class LegalEntityAddressCreateRequestTest {
         assertThat(legalEntityAddressCreateRequest.addressTypes().getOrNull())
             .containsExactly(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
         assertThat(legalEntityAddressCreateRequest.line2()).contains("line2")
-        assertThat(legalEntityAddressCreateRequest.primary()).contains(true)
     }
 
     @Test
@@ -47,7 +45,6 @@ internal class LegalEntityAddressCreateRequestTest {
                 .region("region")
                 .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                 .line2("line2")
-                .primary(true)
                 .build()
 
         val roundtrippedLegalEntityAddressCreateRequest =

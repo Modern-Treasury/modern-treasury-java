@@ -24,7 +24,6 @@ internal class LegalEntityUpdateParamsTest {
                     .region("region")
                     .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
-                    .primary(true)
                     .build()
             )
             .bankSettings(
@@ -185,7 +184,6 @@ internal class LegalEntityUpdateParamsTest {
                         .region("region")
                         .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                         .line2("line2")
-                        .primary(true)
                         .build()
                 )
                 .bankSettings(
@@ -342,7 +340,6 @@ internal class LegalEntityUpdateParamsTest {
                     .region("region")
                     .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
-                    .primary(true)
                     .build()
             )
         assertThat(body.bankSettings())

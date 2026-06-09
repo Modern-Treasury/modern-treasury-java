@@ -351,9 +351,13 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
 
         @JvmField val USD = of("USD")
 
+        @JvmField val USDB = of("USDB")
+
         @JvmField val USDC = of("USDC")
 
         @JvmField val USDG = of("USDG")
+
+        @JvmField val USDP = of("USDP")
 
         @JvmField val USDT = of("USDT")
 
@@ -591,8 +595,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         UAH,
         UGX,
         USD,
+        USDB,
         USDC,
         USDG,
+        USDP,
         USDT,
         UYU,
         UZS,
@@ -803,8 +809,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
         UAH,
         UGX,
         USD,
+        USDB,
         USDC,
         USDG,
+        USDP,
         USDT,
         UYU,
         UZS,
@@ -1016,8 +1024,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             UAH -> Value.UAH
             UGX -> Value.UGX
             USD -> Value.USD
+            USDB -> Value.USDB
             USDC -> Value.USDC
             USDG -> Value.USDG
+            USDP -> Value.USDP
             USDT -> Value.USDT
             UYU -> Value.UYU
             UZS -> Value.UZS
@@ -1230,8 +1240,10 @@ class Currency @JsonCreator private constructor(private val value: JsonField<Str
             UAH -> Known.UAH
             UGX -> Known.UGX
             USD -> Known.USD
+            USDB -> Known.USDB
             USDC -> Known.USDC
             USDG -> Known.USDG
+            USDP -> Known.USDP
             USDT -> Known.USDT
             UYU -> Known.UYU
             UZS -> Known.UZS
