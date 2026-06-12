@@ -16,7 +16,6 @@ internal class InternalAccountCreateParamsTest {
             .connectionId("connection_id")
             .currency(InternalAccountCreateParams.Currency.USD)
             .name("name")
-            .partyName("party_name")
             .addAccountCapability(
                 InternalAccountCreateParams.AccountCapability.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -51,6 +50,7 @@ internal class InternalAccountCreateParamsTest {
                     .line2("line2")
                     .build()
             )
+            .partyName("party_name")
             .vendorAttributes(
                 InternalAccountCreateParams.VendorAttributes.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -68,7 +68,6 @@ internal class InternalAccountCreateParamsTest {
                 .connectionId("connection_id")
                 .currency(InternalAccountCreateParams.Currency.USD)
                 .name("name")
-                .partyName("party_name")
                 .addAccountCapability(
                     InternalAccountCreateParams.AccountCapability.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -103,6 +102,7 @@ internal class InternalAccountCreateParamsTest {
                         .line2("line2")
                         .build()
                 )
+                .partyName("party_name")
                 .vendorAttributes(
                     InternalAccountCreateParams.VendorAttributes.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -117,7 +117,6 @@ internal class InternalAccountCreateParamsTest {
         assertThat(body.connectionId()).isEqualTo("connection_id")
         assertThat(body.currency()).isEqualTo(InternalAccountCreateParams.Currency.USD)
         assertThat(body.name()).isEqualTo("name")
-        assertThat(body.partyName()).isEqualTo("party_name")
         assertThat(body.accountCapabilities().getOrNull())
             .containsExactly(
                 InternalAccountCreateParams.AccountCapability.builder()
@@ -155,6 +154,7 @@ internal class InternalAccountCreateParamsTest {
                     .line2("line2")
                     .build()
             )
+        assertThat(body.partyName()).contains("party_name")
         assertThat(body.vendorAttributes())
             .contains(
                 InternalAccountCreateParams.VendorAttributes.builder()
@@ -172,7 +172,6 @@ internal class InternalAccountCreateParamsTest {
                 .connectionId("connection_id")
                 .currency(InternalAccountCreateParams.Currency.USD)
                 .name("name")
-                .partyName("party_name")
                 .build()
 
         val body = params._body()
@@ -180,6 +179,5 @@ internal class InternalAccountCreateParamsTest {
         assertThat(body.connectionId()).isEqualTo("connection_id")
         assertThat(body.currency()).isEqualTo(InternalAccountCreateParams.Currency.USD)
         assertThat(body.name()).isEqualTo("name")
-        assertThat(body.partyName()).isEqualTo("party_name")
     }
 }
