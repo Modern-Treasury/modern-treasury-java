@@ -32,6 +32,7 @@ internal class InternalAccountCreateParamsTest {
             )
             .accountType(InternalAccountCreateParams.AccountType.CHECKING)
             .counterpartyId("counterparty_id")
+            .debitable(true)
             .externalId("external_id")
             .legalEntityId("legal_entity_id")
             .metadata(
@@ -83,6 +84,7 @@ internal class InternalAccountCreateParamsTest {
                 )
                 .accountType(InternalAccountCreateParams.AccountType.CHECKING)
                 .counterpartyId("counterparty_id")
+                .debitable(true)
                 .externalId("external_id")
                 .legalEntityId("legal_entity_id")
                 .metadata(
@@ -132,6 +134,7 @@ internal class InternalAccountCreateParamsTest {
             )
         assertThat(body.accountType()).contains(InternalAccountCreateParams.AccountType.CHECKING)
         assertThat(body.counterpartyId()).contains("counterparty_id")
+        assertThat(body.debitable()).contains(true)
         assertThat(body.externalId()).contains("external_id")
         assertThat(body.legalEntityId()).contains("legal_entity_id")
         assertThat(body.metadata())
