@@ -30,6 +30,7 @@ private constructor(
     private val region: JsonField<String>,
     private val addressTypes: JsonField<List<AddressType>>,
     private val line2: JsonField<String>,
+    private val primary: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -46,7 +47,18 @@ private constructor(
         @ExcludeMissing
         addressTypes: JsonField<List<AddressType>> = JsonMissing.of(),
         @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
-    ) : this(country, line1, locality, postalCode, region, addressTypes, line2, mutableMapOf())
+        @JsonProperty("primary") @ExcludeMissing primary: JsonField<Boolean> = JsonMissing.of(),
+    ) : this(
+        country,
+        line1,
+        locality,
+        postalCode,
+        region,
+        addressTypes,
+        line2,
+        primary,
+        mutableMapOf(),
+    )
 
     /**
      * Country code conforms to [ISO 3166-1 alpha-2]
@@ -101,6 +113,14 @@ private constructor(
     fun line2(): Optional<String> = line2.getOptional("line2")
 
     /**
+     * Whether this address is the primary address for the legal entity.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun primary(): Optional<Boolean> = primary.getOptional("primary")
+
+    /**
      * Returns the raw JSON value of [country].
      *
      * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
@@ -151,6 +171,13 @@ private constructor(
      */
     @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
 
+    /**
+     * Returns the raw JSON value of [primary].
+     *
+     * Unlike [primary], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("primary") @ExcludeMissing fun _primary(): JsonField<Boolean> = primary
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -191,6 +218,7 @@ private constructor(
         private var region: JsonField<String>? = null
         private var addressTypes: JsonField<MutableList<AddressType>>? = null
         private var line2: JsonField<String> = JsonMissing.of()
+        private var primary: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -204,6 +232,7 @@ private constructor(
                 addressTypes =
                     legalEntityAddressCreateRequest.addressTypes.map { it.toMutableList() }
                 line2 = legalEntityAddressCreateRequest.line2
+                primary = legalEntityAddressCreateRequest.primary
                 additionalProperties =
                     legalEntityAddressCreateRequest.additionalProperties.toMutableMap()
             }
@@ -317,6 +346,27 @@ private constructor(
          */
         fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
+        /** Whether this address is the primary address for the legal entity. */
+        fun primary(primary: Boolean?) = primary(JsonField.ofNullable(primary))
+
+        /**
+         * Alias for [Builder.primary].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun primary(primary: Boolean) = primary(primary as Boolean?)
+
+        /** Alias for calling [Builder.primary] with `primary.orElse(null)`. */
+        fun primary(primary: Optional<Boolean>) = primary(primary.getOrNull())
+
+        /**
+         * Sets [Builder.primary] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.primary] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun primary(primary: JsonField<Boolean>) = apply { this.primary = primary }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -361,6 +411,7 @@ private constructor(
                 checkRequired("region", region),
                 (addressTypes ?: JsonMissing.of()).map { it.toImmutable() },
                 line2,
+                primary,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -387,6 +438,7 @@ private constructor(
         region()
         addressTypes().ifPresent { it.forEach { it.validate() } }
         line2()
+        primary()
         validated = true
     }
 
@@ -411,7 +463,8 @@ private constructor(
             (if (postalCode.asKnown().isPresent) 1 else 0) +
             (if (region.asKnown().isPresent) 1 else 0) +
             (addressTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            (if (line2.asKnown().isPresent) 1 else 0)
+            (if (line2.asKnown().isPresent) 1 else 0) +
+            (if (primary.asKnown().isPresent) 1 else 0)
 
     class AddressType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -589,6 +642,7 @@ private constructor(
             region == other.region &&
             addressTypes == other.addressTypes &&
             line2 == other.line2 &&
+            primary == other.primary &&
             additionalProperties == other.additionalProperties
     }
 
@@ -601,6 +655,7 @@ private constructor(
             region,
             addressTypes,
             line2,
+            primary,
             additionalProperties,
         )
     }
@@ -608,5 +663,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LegalEntityAddressCreateRequest{country=$country, line1=$line1, locality=$locality, postalCode=$postalCode, region=$region, addressTypes=$addressTypes, line2=$line2, additionalProperties=$additionalProperties}"
+        "LegalEntityAddressCreateRequest{country=$country, line1=$line1, locality=$locality, postalCode=$postalCode, region=$region, addressTypes=$addressTypes, line2=$line2, primary=$primary, additionalProperties=$additionalProperties}"
 }

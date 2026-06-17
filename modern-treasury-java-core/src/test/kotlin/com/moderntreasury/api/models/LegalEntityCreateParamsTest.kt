@@ -24,10 +24,11 @@ internal class LegalEntityCreateParamsTest {
                     .region("region")
                     .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
+                    .primary(true)
                     .build()
             )
             .bankSettings(
-                LegalEntityCreateParams.LegalEntityBankSetting.builder()
+                BankSettings.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .backupWithholdingPercentage(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -113,10 +114,11 @@ internal class LegalEntityCreateParamsTest {
                                         LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                     )
                                     .line2("line2")
+                                    .primary(true)
                                     .build()
                             )
                             .bankSettings(
-                                ChildLegalEntityCreate.LegalEntityBankSetting.builder()
+                                BankSettings.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .backupWithholdingPercentage(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -251,7 +253,7 @@ internal class LegalEntityCreateParamsTest {
                             )
                             .tickerSymbol("ticker_symbol")
                             .wealthAndEmploymentDetails(
-                                ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail.builder()
+                                WealthAndEmploymentDetails.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .annualIncome(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -260,39 +262,21 @@ internal class LegalEntityCreateParamsTest {
                                     .employerName("employer_name")
                                     .employerState("employer_state")
                                     .employmentStatus(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .EmploymentStatus
-                                            .EMPLOYED
+                                        WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                     )
                                     .incomeCountry("income_country")
                                     .incomeSource(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .IncomeSource
-                                            .FAMILY_SUPPORT
+                                        WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                     )
                                     .incomeState("income_state")
-                                    .industry(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .Industry
-                                            .ACCOUNTING
-                                    )
+                                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                     .liveMode(true)
                                     .object_("object")
-                                    .occupation(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .Occupation
-                                            .CONSULTING
-                                    )
-                                    .sourceOfFunds(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .SourceOfFunds
-                                            .ALIMONY
-                                    )
+                                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .wealthSource(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .WealthSource
-                                            .BUSINESS_SALE
+                                        WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                     )
                                     .build()
                             )
@@ -356,7 +340,7 @@ internal class LegalEntityCreateParamsTest {
             )
             .tickerSymbol("ticker_symbol")
             .wealthAndEmploymentDetails(
-                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
+                WealthAndEmploymentDetails.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .annualIncome(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -364,35 +348,17 @@ internal class LegalEntityCreateParamsTest {
                     .employerCountry("employer_country")
                     .employerName("employer_name")
                     .employerState("employer_state")
-                    .employmentStatus(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.EmploymentStatus
-                            .EMPLOYED
-                    )
+                    .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                     .incomeCountry("income_country")
-                    .incomeSource(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.IncomeSource
-                            .FAMILY_SUPPORT
-                    )
+                    .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                     .incomeState("income_state")
-                    .industry(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Industry
-                            .ACCOUNTING
-                    )
+                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                     .liveMode(true)
                     .object_("object")
-                    .occupation(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Occupation
-                            .CONSULTING
-                    )
-                    .sourceOfFunds(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.SourceOfFunds
-                            .ALIMONY
-                    )
+                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .wealthSource(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.WealthSource
-                            .BUSINESS_SALE
-                    )
+                    .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                     .build()
             )
             .website("website")
@@ -413,10 +379,11 @@ internal class LegalEntityCreateParamsTest {
                         .region("region")
                         .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                         .line2("line2")
+                        .primary(true)
                         .build()
                 )
                 .bankSettings(
-                    LegalEntityCreateParams.LegalEntityBankSetting.builder()
+                    BankSettings.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .backupWithholdingPercentage(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -504,10 +471,11 @@ internal class LegalEntityCreateParamsTest {
                                             LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                         )
                                         .line2("line2")
+                                        .primary(true)
                                         .build()
                                 )
                                 .bankSettings(
-                                    ChildLegalEntityCreate.LegalEntityBankSetting.builder()
+                                    BankSettings.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .backupWithholdingPercentage(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -650,8 +618,7 @@ internal class LegalEntityCreateParamsTest {
                                 )
                                 .tickerSymbol("ticker_symbol")
                                 .wealthAndEmploymentDetails(
-                                    ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                        .builder()
+                                    WealthAndEmploymentDetails.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .annualIncome(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -662,39 +629,25 @@ internal class LegalEntityCreateParamsTest {
                                         .employerName("employer_name")
                                         .employerState("employer_state")
                                         .employmentStatus(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .EmploymentStatus
-                                                .EMPLOYED
+                                            WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                         )
                                         .incomeCountry("income_country")
                                         .incomeSource(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .IncomeSource
-                                                .FAMILY_SUPPORT
+                                            WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                         )
                                         .incomeState("income_state")
-                                        .industry(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .Industry
-                                                .ACCOUNTING
-                                        )
+                                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                         .liveMode(true)
                                         .object_("object")
                                         .occupation(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .Occupation
-                                                .CONSULTING
+                                            WealthAndEmploymentDetails.Occupation.CONSULTING
                                         )
                                         .sourceOfFunds(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .SourceOfFunds
-                                                .ALIMONY
+                                            WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
                                         )
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .wealthSource(
-                                            ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                                .WealthSource
-                                                .BUSINESS_SALE
+                                            WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                         )
                                         .build()
                                 )
@@ -764,7 +717,7 @@ internal class LegalEntityCreateParamsTest {
                 )
                 .tickerSymbol("ticker_symbol")
                 .wealthAndEmploymentDetails(
-                    LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
+                    WealthAndEmploymentDetails.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .annualIncome(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -772,36 +725,17 @@ internal class LegalEntityCreateParamsTest {
                         .employerCountry("employer_country")
                         .employerName("employer_name")
                         .employerState("employer_state")
-                        .employmentStatus(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail
-                                .EmploymentStatus
-                                .EMPLOYED
-                        )
+                        .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                         .incomeCountry("income_country")
-                        .incomeSource(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.IncomeSource
-                                .FAMILY_SUPPORT
-                        )
+                        .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                         .incomeState("income_state")
-                        .industry(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Industry
-                                .ACCOUNTING
-                        )
+                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                         .liveMode(true)
                         .object_("object")
-                        .occupation(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Occupation
-                                .CONSULTING
-                        )
-                        .sourceOfFunds(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.SourceOfFunds
-                                .ALIMONY
-                        )
+                        .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                        .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .wealthSource(
-                            LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.WealthSource
-                                .BUSINESS_SALE
-                        )
+                        .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                         .build()
                 )
                 .website("website")
@@ -821,11 +755,12 @@ internal class LegalEntityCreateParamsTest {
                     .region("region")
                     .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                     .line2("line2")
+                    .primary(true)
                     .build()
             )
         assertThat(body.bankSettings())
             .contains(
-                LegalEntityCreateParams.LegalEntityBankSetting.builder()
+                BankSettings.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .backupWithholdingPercentage(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -915,10 +850,11 @@ internal class LegalEntityCreateParamsTest {
                                         LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                     )
                                     .line2("line2")
+                                    .primary(true)
                                     .build()
                             )
                             .bankSettings(
-                                ChildLegalEntityCreate.LegalEntityBankSetting.builder()
+                                BankSettings.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .backupWithholdingPercentage(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1053,7 +989,7 @@ internal class LegalEntityCreateParamsTest {
                             )
                             .tickerSymbol("ticker_symbol")
                             .wealthAndEmploymentDetails(
-                                ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail.builder()
+                                WealthAndEmploymentDetails.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .annualIncome(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1062,39 +998,21 @@ internal class LegalEntityCreateParamsTest {
                                     .employerName("employer_name")
                                     .employerState("employer_state")
                                     .employmentStatus(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .EmploymentStatus
-                                            .EMPLOYED
+                                        WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                     )
                                     .incomeCountry("income_country")
                                     .incomeSource(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .IncomeSource
-                                            .FAMILY_SUPPORT
+                                        WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                     )
                                     .incomeState("income_state")
-                                    .industry(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .Industry
-                                            .ACCOUNTING
-                                    )
+                                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                     .liveMode(true)
                                     .object_("object")
-                                    .occupation(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .Occupation
-                                            .CONSULTING
-                                    )
-                                    .sourceOfFunds(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .SourceOfFunds
-                                            .ALIMONY
-                                    )
+                                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .wealthSource(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .WealthSource
-                                            .BUSINESS_SALE
+                                        WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                     )
                                     .build()
                             )
@@ -1166,7 +1084,7 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.tickerSymbol()).contains("ticker_symbol")
         assertThat(body.wealthAndEmploymentDetails())
             .contains(
-                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
+                WealthAndEmploymentDetails.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .annualIncome(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1174,35 +1092,17 @@ internal class LegalEntityCreateParamsTest {
                     .employerCountry("employer_country")
                     .employerName("employer_name")
                     .employerState("employer_state")
-                    .employmentStatus(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.EmploymentStatus
-                            .EMPLOYED
-                    )
+                    .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                     .incomeCountry("income_country")
-                    .incomeSource(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.IncomeSource
-                            .FAMILY_SUPPORT
-                    )
+                    .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                     .incomeState("income_state")
-                    .industry(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Industry
-                            .ACCOUNTING
-                    )
+                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                     .liveMode(true)
                     .object_("object")
-                    .occupation(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Occupation
-                            .CONSULTING
-                    )
-                    .sourceOfFunds(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.SourceOfFunds
-                            .ALIMONY
-                    )
+                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .wealthSource(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.WealthSource
-                            .BUSINESS_SALE
-                    )
+                    .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                     .build()
             )
         assertThat(body.website()).contains("website")
