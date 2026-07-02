@@ -238,13 +238,11 @@ private constructor(
             body.addResource(ledgerAccountCreateRequest)
         }
 
-        /**
-         * Alias for calling [addResource] with
-         * `Resource.ofTransactionCreateRequest(transactionCreateRequest)`.
-         */
-        fun addResource(transactionCreateRequest: Resource.TransactionCreateRequest) = apply {
-            body.addResource(transactionCreateRequest)
-        }
+        /** Alias for calling [addResource] with `Resource.ofJsonValue(jsonValue)`. */
+        fun addResource(jsonValue: JsonValue) = apply { body.addResource(jsonValue) }
+
+        /** Alias for calling [addResource] with `Resource.ofJsonValue(jsonValue)`. */
+        fun addResource(jsonValue: JsonValue) = apply { body.addResource(jsonValue) }
 
         /** Alias for calling [addResource] with `Resource.ofId(id)`. */
         fun addResource(id: Resource.Id) = apply { body.addResource(id) }
@@ -680,12 +678,11 @@ private constructor(
             fun addResource(ledgerAccountCreateRequest: LedgerAccountCreateRequest) =
                 addResource(Resource.ofLedgerAccountCreateRequest(ledgerAccountCreateRequest))
 
-            /**
-             * Alias for calling [addResource] with
-             * `Resource.ofTransactionCreateRequest(transactionCreateRequest)`.
-             */
-            fun addResource(transactionCreateRequest: Resource.TransactionCreateRequest) =
-                addResource(Resource.ofTransactionCreateRequest(transactionCreateRequest))
+            /** Alias for calling [addResource] with `Resource.ofJsonValue(jsonValue)`. */
+            fun addResource(jsonValue: JsonValue) = addResource(Resource.ofJsonValue(jsonValue))
+
+            /** Alias for calling [addResource] with `Resource.ofJsonValue(jsonValue)`. */
+            fun addResource(jsonValue: JsonValue) = addResource(Resource.ofJsonValue(jsonValue))
 
             /** Alias for calling [addResource] with `Resource.ofId(id)`. */
             fun addResource(id: Resource.Id) = addResource(Resource.ofId(id))
@@ -1197,7 +1194,8 @@ private constructor(
         private val expectedPaymentCreateRequest: ExpectedPaymentCreateRequest? = null,
         private val ledgerTransactionCreateRequest: LedgerTransactionCreateRequest? = null,
         private val ledgerAccountCreateRequest: LedgerAccountCreateRequest? = null,
-        private val transactionCreateRequest: TransactionCreateRequest? = null,
+        private val jsonValue: JsonValue? = null,
+        private val jsonValue: JsonValue? = null,
         private val id: Id? = null,
         private val paymentOrderUpdateRequestWithId: PaymentOrderUpdateRequestWithId? = null,
         private val expectedPaymentUpdateRequestWithId: ExpectedPaymentUpdateRequestWithId? = null,
@@ -1220,8 +1218,9 @@ private constructor(
         fun ledgerAccountCreateRequest(): Optional<LedgerAccountCreateRequest> =
             Optional.ofNullable(ledgerAccountCreateRequest)
 
-        fun transactionCreateRequest(): Optional<TransactionCreateRequest> =
-            Optional.ofNullable(transactionCreateRequest)
+        fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
+
+        fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
 
         fun id(): Optional<Id> = Optional.ofNullable(id)
 
@@ -1248,7 +1247,9 @@ private constructor(
 
         fun isLedgerAccountCreateRequest(): Boolean = ledgerAccountCreateRequest != null
 
-        fun isTransactionCreateRequest(): Boolean = transactionCreateRequest != null
+        fun isJsonValue(): Boolean = jsonValue != null
+
+        fun isJsonValue(): Boolean = jsonValue != null
 
         fun isId(): Boolean = id != null
 
@@ -1276,8 +1277,9 @@ private constructor(
         fun asLedgerAccountCreateRequest(): LedgerAccountCreateRequest =
             ledgerAccountCreateRequest.getOrThrow("ledgerAccountCreateRequest")
 
-        fun asTransactionCreateRequest(): TransactionCreateRequest =
-            transactionCreateRequest.getOrThrow("transactionCreateRequest")
+        fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
+
+        fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
 
         fun asId(): Id = id.getOrThrow("id")
 
@@ -1337,8 +1339,8 @@ private constructor(
                     visitor.visitLedgerTransactionCreateRequest(ledgerTransactionCreateRequest)
                 ledgerAccountCreateRequest != null ->
                     visitor.visitLedgerAccountCreateRequest(ledgerAccountCreateRequest)
-                transactionCreateRequest != null ->
-                    visitor.visitTransactionCreateRequest(transactionCreateRequest)
+                jsonValue != null -> visitor.visitJsonValue(jsonValue)
+                jsonValue != null -> visitor.visitJsonValue(jsonValue)
                 id != null -> visitor.visitId(id)
                 paymentOrderUpdateRequestWithId != null ->
                     visitor.visitPaymentOrderUpdateRequestWithId(paymentOrderUpdateRequestWithId)
@@ -1399,11 +1401,9 @@ private constructor(
                         ledgerAccountCreateRequest.validate()
                     }
 
-                    override fun visitTransactionCreateRequest(
-                        transactionCreateRequest: TransactionCreateRequest
-                    ) {
-                        transactionCreateRequest.validate()
-                    }
+                    override fun visitJsonValue(jsonValue: JsonValue) {}
+
+                    override fun visitJsonValue(jsonValue: JsonValue) {}
 
                     override fun visitId(id: Id) {
                         id.validate()
@@ -1477,9 +1477,9 @@ private constructor(
                         ledgerAccountCreateRequest: LedgerAccountCreateRequest
                     ) = ledgerAccountCreateRequest.validity()
 
-                    override fun visitTransactionCreateRequest(
-                        transactionCreateRequest: TransactionCreateRequest
-                    ) = transactionCreateRequest.validity()
+                    override fun visitJsonValue(jsonValue: JsonValue) = 1
+
+                    override fun visitJsonValue(jsonValue: JsonValue) = 1
 
                     override fun visitId(id: Id) = id.validity()
 
@@ -1517,7 +1517,8 @@ private constructor(
                 expectedPaymentCreateRequest == other.expectedPaymentCreateRequest &&
                 ledgerTransactionCreateRequest == other.ledgerTransactionCreateRequest &&
                 ledgerAccountCreateRequest == other.ledgerAccountCreateRequest &&
-                transactionCreateRequest == other.transactionCreateRequest &&
+                jsonValue == other.jsonValue &&
+                jsonValue == other.jsonValue &&
                 id == other.id &&
                 paymentOrderUpdateRequestWithId == other.paymentOrderUpdateRequestWithId &&
                 expectedPaymentUpdateRequestWithId == other.expectedPaymentUpdateRequestWithId &&
@@ -1533,7 +1534,8 @@ private constructor(
                 expectedPaymentCreateRequest,
                 ledgerTransactionCreateRequest,
                 ledgerAccountCreateRequest,
-                transactionCreateRequest,
+                jsonValue,
+                jsonValue,
                 id,
                 paymentOrderUpdateRequestWithId,
                 expectedPaymentUpdateRequestWithId,
@@ -1552,8 +1554,8 @@ private constructor(
                     "Resource{ledgerTransactionCreateRequest=$ledgerTransactionCreateRequest}"
                 ledgerAccountCreateRequest != null ->
                     "Resource{ledgerAccountCreateRequest=$ledgerAccountCreateRequest}"
-                transactionCreateRequest != null ->
-                    "Resource{transactionCreateRequest=$transactionCreateRequest}"
+                jsonValue != null -> "Resource{jsonValue=$jsonValue}"
+                jsonValue != null -> "Resource{jsonValue=$jsonValue}"
                 id != null -> "Resource{id=$id}"
                 paymentOrderUpdateRequestWithId != null ->
                     "Resource{paymentOrderUpdateRequestWithId=$paymentOrderUpdateRequestWithId}"
@@ -1591,9 +1593,9 @@ private constructor(
                 ledgerAccountCreateRequest: LedgerAccountCreateRequest
             ) = Resource(ledgerAccountCreateRequest = ledgerAccountCreateRequest)
 
-            @JvmStatic
-            fun ofTransactionCreateRequest(transactionCreateRequest: TransactionCreateRequest) =
-                Resource(transactionCreateRequest = transactionCreateRequest)
+            @JvmStatic fun ofJsonValue(jsonValue: JsonValue) = Resource(jsonValue = jsonValue)
+
+            @JvmStatic fun ofJsonValue(jsonValue: JsonValue) = Resource(jsonValue = jsonValue)
 
             @JvmStatic fun ofId(id: Id) = Resource(id = id)
 
@@ -1647,7 +1649,9 @@ private constructor(
                 ledgerAccountCreateRequest: LedgerAccountCreateRequest
             ): T
 
-            fun visitTransactionCreateRequest(transactionCreateRequest: TransactionCreateRequest): T
+            fun visitJsonValue(jsonValue: JsonValue): T
+
+            fun visitJsonValue(jsonValue: JsonValue): T
 
             fun visitId(id: Id): T
 
@@ -1705,9 +1709,6 @@ private constructor(
                                 },
                             tryDeserialize(node, jacksonTypeRef<LedgerAccountCreateRequest>())
                                 ?.let { Resource(ledgerAccountCreateRequest = it, _json = json) },
-                            tryDeserialize(node, jacksonTypeRef<TransactionCreateRequest>())?.let {
-                                Resource(transactionCreateRequest = it, _json = json)
-                            },
                             tryDeserialize(node, jacksonTypeRef<Id>())?.let {
                                 Resource(id = it, _json = json)
                             },
@@ -1740,13 +1741,19 @@ private constructor(
                                 ?.let {
                                     Resource(ledgerAccountUpdateRequestWithId = it, _json = json)
                                 },
+                            tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                Resource(jsonValue = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                Resource(jsonValue = it, _json = json)
+                            },
                         )
                         .filterNotNull()
                         .allMaxBy { it.validity() }
                         .toList()
                 return when (bestMatches.size) {
                     // This can happen if what we're deserializing is completely incompatible with
-                    // all the possible variants (e.g. deserializing from boolean).
+                    // all the possible variants.
                     0 -> Resource(_json = json)
                     1 -> bestMatches.single()
                     // If there's more than one match with the highest validity, then use the first
@@ -1773,8 +1780,8 @@ private constructor(
                         generator.writeObject(value.ledgerTransactionCreateRequest)
                     value.ledgerAccountCreateRequest != null ->
                         generator.writeObject(value.ledgerAccountCreateRequest)
-                    value.transactionCreateRequest != null ->
-                        generator.writeObject(value.transactionCreateRequest)
+                    value.jsonValue != null -> generator.writeObject(value.jsonValue)
+                    value.jsonValue != null -> generator.writeObject(value.jsonValue)
                     value.id != null -> generator.writeObject(value.id)
                     value.paymentOrderUpdateRequestWithId != null ->
                         generator.writeObject(value.paymentOrderUpdateRequestWithId)
@@ -10935,1093 +10942,6 @@ private constructor(
 
             override fun toString() =
                 "ExpectedPaymentCreateRequest{amountLowerBound=$amountLowerBound, amountReconciled=$amountReconciled, amountReconciledDirection=$amountReconciledDirection, amountUnreconciled=$amountUnreconciled, amountUnreconciledDirection=$amountUnreconciledDirection, amountUpperBound=$amountUpperBound, counterpartyId=$counterpartyId, currency=$currency, dateLowerBound=$dateLowerBound, dateUpperBound=$dateUpperBound, description=$description, direction=$direction, externalId=$externalId, internalAccountId=$internalAccountId, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, reconciliationFilters=$reconciliationFilters, reconciliationGroups=$reconciliationGroups, reconciliationRuleVariables=$reconciliationRuleVariables, remittanceInformation=$remittanceInformation, statementDescriptor=$statementDescriptor, type=$type, additionalProperties=$additionalProperties}"
-        }
-
-        class TransactionCreateRequest
-        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-        private constructor(
-            private val amount: JsonField<Long>,
-            private val asOfDate: JsonField<LocalDate>,
-            private val direction: JsonField<String>,
-            private val internalAccountId: JsonField<String>,
-            private val vendorCode: JsonField<String>,
-            private val vendorCodeType: JsonField<String>,
-            private val metadata: JsonField<Metadata>,
-            private val posted: JsonField<Boolean>,
-            private val type: JsonField<Type>,
-            private val vendorCustomerId: JsonField<String>,
-            private val vendorDescription: JsonField<String>,
-            private val additionalProperties: MutableMap<String, JsonValue>,
-        ) {
-
-            @JsonCreator
-            private constructor(
-                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("as_of_date")
-                @ExcludeMissing
-                asOfDate: JsonField<LocalDate> = JsonMissing.of(),
-                @JsonProperty("direction")
-                @ExcludeMissing
-                direction: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("internal_account_id")
-                @ExcludeMissing
-                internalAccountId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("vendor_code")
-                @ExcludeMissing
-                vendorCode: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("vendor_code_type")
-                @ExcludeMissing
-                vendorCodeType: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("metadata")
-                @ExcludeMissing
-                metadata: JsonField<Metadata> = JsonMissing.of(),
-                @JsonProperty("posted")
-                @ExcludeMissing
-                posted: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-                @JsonProperty("vendor_customer_id")
-                @ExcludeMissing
-                vendorCustomerId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("vendor_description")
-                @ExcludeMissing
-                vendorDescription: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                amount,
-                asOfDate,
-                direction,
-                internalAccountId,
-                vendorCode,
-                vendorCodeType,
-                metadata,
-                posted,
-                type,
-                vendorCustomerId,
-                vendorDescription,
-                mutableMapOf(),
-            )
-
-            /**
-             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun amount(): Long = amount.getRequired("amount")
-
-            /**
-             * The date on which the transaction occurred.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun asOfDate(): Optional<LocalDate> = asOfDate.getOptional("as_of_date")
-
-            /**
-             * Either `credit` or `debit`.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun direction(): String = direction.getRequired("direction")
-
-            /**
-             * The ID of the relevant Internal Account.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun internalAccountId(): String = internalAccountId.getRequired("internal_account_id")
-
-            /**
-             * When applicable, the bank-given code that determines the transaction's category. For
-             * most banks this is the BAI2/BTRS transaction code.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun vendorCode(): Optional<String> = vendorCode.getOptional("vendor_code")
-
-            /**
-             * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
-             * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
-             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`,
-             * `us_bank`, or others.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
-
-            /**
-             * This field will be `true` if the transaction has posted to the account.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun posted(): Optional<Boolean> = posted.getOptional("posted")
-
-            /**
-             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-             * or `book`.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun type(): Optional<Type> = type.getOptional("type")
-
-            /**
-             * An identifier given to this transaction by the bank, often `null`.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun vendorCustomerId(): Optional<String> =
-                vendorCustomerId.getOptional("vendor_customer_id")
-
-            /**
-             * The transaction detail text that often appears in on your bank statement and in your
-             * banking portal.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun vendorDescription(): Optional<String> =
-                vendorDescription.getOptional("vendor_description")
-
-            /**
-             * Returns the raw JSON value of [amount].
-             *
-             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-             */
-            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
-
-            /**
-             * Returns the raw JSON value of [asOfDate].
-             *
-             * Unlike [asOfDate], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("as_of_date")
-            @ExcludeMissing
-            fun _asOfDate(): JsonField<LocalDate> = asOfDate
-
-            /**
-             * Returns the raw JSON value of [direction].
-             *
-             * Unlike [direction], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("direction")
-            @ExcludeMissing
-            fun _direction(): JsonField<String> = direction
-
-            /**
-             * Returns the raw JSON value of [internalAccountId].
-             *
-             * Unlike [internalAccountId], this method doesn't throw if the JSON field has an
-             * unexpected type.
-             */
-            @JsonProperty("internal_account_id")
-            @ExcludeMissing
-            fun _internalAccountId(): JsonField<String> = internalAccountId
-
-            /**
-             * Returns the raw JSON value of [vendorCode].
-             *
-             * Unlike [vendorCode], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("vendor_code")
-            @ExcludeMissing
-            fun _vendorCode(): JsonField<String> = vendorCode
-
-            /**
-             * Returns the raw JSON value of [vendorCodeType].
-             *
-             * Unlike [vendorCodeType], this method doesn't throw if the JSON field has an
-             * unexpected type.
-             */
-            @JsonProperty("vendor_code_type")
-            @ExcludeMissing
-            fun _vendorCodeType(): JsonField<String> = vendorCodeType
-
-            /**
-             * Returns the raw JSON value of [metadata].
-             *
-             * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("metadata")
-            @ExcludeMissing
-            fun _metadata(): JsonField<Metadata> = metadata
-
-            /**
-             * Returns the raw JSON value of [posted].
-             *
-             * Unlike [posted], this method doesn't throw if the JSON field has an unexpected type.
-             */
-            @JsonProperty("posted") @ExcludeMissing fun _posted(): JsonField<Boolean> = posted
-
-            /**
-             * Returns the raw JSON value of [type].
-             *
-             * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-             */
-            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
-
-            /**
-             * Returns the raw JSON value of [vendorCustomerId].
-             *
-             * Unlike [vendorCustomerId], this method doesn't throw if the JSON field has an
-             * unexpected type.
-             */
-            @JsonProperty("vendor_customer_id")
-            @ExcludeMissing
-            fun _vendorCustomerId(): JsonField<String> = vendorCustomerId
-
-            /**
-             * Returns the raw JSON value of [vendorDescription].
-             *
-             * Unlike [vendorDescription], this method doesn't throw if the JSON field has an
-             * unexpected type.
-             */
-            @JsonProperty("vendor_description")
-            @ExcludeMissing
-            fun _vendorDescription(): JsonField<String> = vendorDescription
-
-            @JsonAnySetter
-            private fun putAdditionalProperty(key: String, value: JsonValue) {
-                additionalProperties.put(key, value)
-            }
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> =
-                Collections.unmodifiableMap(additionalProperties)
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [TransactionCreateRequest].
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .amount()
-                 * .asOfDate()
-                 * .direction()
-                 * .internalAccountId()
-                 * .vendorCode()
-                 * .vendorCodeType()
-                 * ```
-                 */
-                @JvmStatic fun builder() = Builder()
-            }
-
-            /** A builder for [TransactionCreateRequest]. */
-            class Builder internal constructor() {
-
-                private var amount: JsonField<Long>? = null
-                private var asOfDate: JsonField<LocalDate>? = null
-                private var direction: JsonField<String>? = null
-                private var internalAccountId: JsonField<String>? = null
-                private var vendorCode: JsonField<String>? = null
-                private var vendorCodeType: JsonField<String>? = null
-                private var metadata: JsonField<Metadata> = JsonMissing.of()
-                private var posted: JsonField<Boolean> = JsonMissing.of()
-                private var type: JsonField<Type> = JsonMissing.of()
-                private var vendorCustomerId: JsonField<String> = JsonMissing.of()
-                private var vendorDescription: JsonField<String> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                @JvmSynthetic
-                internal fun from(transactionCreateRequest: TransactionCreateRequest) = apply {
-                    amount = transactionCreateRequest.amount
-                    asOfDate = transactionCreateRequest.asOfDate
-                    direction = transactionCreateRequest.direction
-                    internalAccountId = transactionCreateRequest.internalAccountId
-                    vendorCode = transactionCreateRequest.vendorCode
-                    vendorCodeType = transactionCreateRequest.vendorCodeType
-                    metadata = transactionCreateRequest.metadata
-                    posted = transactionCreateRequest.posted
-                    type = transactionCreateRequest.type
-                    vendorCustomerId = transactionCreateRequest.vendorCustomerId
-                    vendorDescription = transactionCreateRequest.vendorDescription
-                    additionalProperties =
-                        transactionCreateRequest.additionalProperties.toMutableMap()
-                }
-
-                /**
-                 * Value in specified currency's smallest unit. e.g. $10 would be represented
-                 * as 1000.
-                 */
-                fun amount(amount: Long) = amount(JsonField.of(amount))
-
-                /**
-                 * Sets [Builder.amount] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.amount] with a well-typed [Long] value instead.
-                 * This method is primarily for setting the field to an undocumented or not yet
-                 * supported value.
-                 */
-                fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
-
-                /** The date on which the transaction occurred. */
-                fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
-
-                /** Alias for calling [Builder.asOfDate] with `asOfDate.orElse(null)`. */
-                fun asOfDate(asOfDate: Optional<LocalDate>) = asOfDate(asOfDate.getOrNull())
-
-                /**
-                 * Sets [Builder.asOfDate] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.asOfDate] with a well-typed [LocalDate] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun asOfDate(asOfDate: JsonField<LocalDate>) = apply { this.asOfDate = asOfDate }
-
-                /** Either `credit` or `debit`. */
-                fun direction(direction: String) = direction(JsonField.of(direction))
-
-                /**
-                 * Sets [Builder.direction] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.direction] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun direction(direction: JsonField<String>) = apply { this.direction = direction }
-
-                /** The ID of the relevant Internal Account. */
-                fun internalAccountId(internalAccountId: String) =
-                    internalAccountId(JsonField.of(internalAccountId))
-
-                /**
-                 * Sets [Builder.internalAccountId] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.internalAccountId] with a well-typed [String]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun internalAccountId(internalAccountId: JsonField<String>) = apply {
-                    this.internalAccountId = internalAccountId
-                }
-
-                /**
-                 * When applicable, the bank-given code that determines the transaction's category.
-                 * For most banks this is the BAI2/BTRS transaction code.
-                 */
-                fun vendorCode(vendorCode: String?) = vendorCode(JsonField.ofNullable(vendorCode))
-
-                /** Alias for calling [Builder.vendorCode] with `vendorCode.orElse(null)`. */
-                fun vendorCode(vendorCode: Optional<String>) = vendorCode(vendorCode.getOrNull())
-
-                /**
-                 * Sets [Builder.vendorCode] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.vendorCode] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun vendorCode(vendorCode: JsonField<String>) = apply {
-                    this.vendorCode = vendorCode
-                }
-
-                /**
-                 * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
-                 * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
-                 * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`,
-                 * `us_bank`, or others.
-                 */
-                fun vendorCodeType(vendorCodeType: String?) =
-                    vendorCodeType(JsonField.ofNullable(vendorCodeType))
-
-                /**
-                 * Alias for calling [Builder.vendorCodeType] with `vendorCodeType.orElse(null)`.
-                 */
-                fun vendorCodeType(vendorCodeType: Optional<String>) =
-                    vendorCodeType(vendorCodeType.getOrNull())
-
-                /**
-                 * Sets [Builder.vendorCodeType] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.vendorCodeType] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
-                    this.vendorCodeType = vendorCodeType
-                }
-
-                /**
-                 * Additional data represented as key-value pairs. Both the key and value must be
-                 * strings.
-                 */
-                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
-
-                /**
-                 * Sets [Builder.metadata] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.metadata] with a well-typed [Metadata] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
-
-                /** This field will be `true` if the transaction has posted to the account. */
-                fun posted(posted: Boolean) = posted(JsonField.of(posted))
-
-                /**
-                 * Sets [Builder.posted] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.posted] with a well-typed [Boolean] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun posted(posted: JsonField<Boolean>) = apply { this.posted = posted }
-
-                /**
-                 * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`,
-                 * `rtp`, or `book`.
-                 */
-                fun type(type: Type?) = type(JsonField.ofNullable(type))
-
-                /** Alias for calling [Builder.type] with `type.orElse(null)`. */
-                fun type(type: Optional<Type>) = type(type.getOrNull())
-
-                /**
-                 * Sets [Builder.type] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.type] with a well-typed [Type] value instead.
-                 * This method is primarily for setting the field to an undocumented or not yet
-                 * supported value.
-                 */
-                fun type(type: JsonField<Type>) = apply { this.type = type }
-
-                /** An identifier given to this transaction by the bank, often `null`. */
-                fun vendorCustomerId(vendorCustomerId: String?) =
-                    vendorCustomerId(JsonField.ofNullable(vendorCustomerId))
-
-                /**
-                 * Alias for calling [Builder.vendorCustomerId] with
-                 * `vendorCustomerId.orElse(null)`.
-                 */
-                fun vendorCustomerId(vendorCustomerId: Optional<String>) =
-                    vendorCustomerId(vendorCustomerId.getOrNull())
-
-                /**
-                 * Sets [Builder.vendorCustomerId] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.vendorCustomerId] with a well-typed [String]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun vendorCustomerId(vendorCustomerId: JsonField<String>) = apply {
-                    this.vendorCustomerId = vendorCustomerId
-                }
-
-                /**
-                 * The transaction detail text that often appears in on your bank statement and in
-                 * your banking portal.
-                 */
-                fun vendorDescription(vendorDescription: String?) =
-                    vendorDescription(JsonField.ofNullable(vendorDescription))
-
-                /**
-                 * Alias for calling [Builder.vendorDescription] with
-                 * `vendorDescription.orElse(null)`.
-                 */
-                fun vendorDescription(vendorDescription: Optional<String>) =
-                    vendorDescription(vendorDescription.getOrNull())
-
-                /**
-                 * Sets [Builder.vendorDescription] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.vendorDescription] with a well-typed [String]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun vendorDescription(vendorDescription: JsonField<String>) = apply {
-                    this.vendorDescription = vendorDescription
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                /**
-                 * Returns an immutable instance of [TransactionCreateRequest].
-                 *
-                 * Further updates to this [Builder] will not mutate the returned instance.
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .amount()
-                 * .asOfDate()
-                 * .direction()
-                 * .internalAccountId()
-                 * .vendorCode()
-                 * .vendorCodeType()
-                 * ```
-                 *
-                 * @throws IllegalStateException if any required field is unset.
-                 */
-                fun build(): TransactionCreateRequest =
-                    TransactionCreateRequest(
-                        checkRequired("amount", amount),
-                        checkRequired("asOfDate", asOfDate),
-                        checkRequired("direction", direction),
-                        checkRequired("internalAccountId", internalAccountId),
-                        checkRequired("vendorCode", vendorCode),
-                        checkRequired("vendorCodeType", vendorCodeType),
-                        metadata,
-                        posted,
-                        type,
-                        vendorCustomerId,
-                        vendorDescription,
-                        additionalProperties.toMutableMap(),
-                    )
-            }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): TransactionCreateRequest = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                asOfDate()
-                direction()
-                internalAccountId()
-                vendorCode()
-                vendorCodeType()
-                metadata().ifPresent { it.validate() }
-                posted()
-                type().ifPresent { it.validate() }
-                vendorCustomerId()
-                vendorDescription()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic
-            internal fun validity(): Int =
-                (if (amount.asKnown().isPresent) 1 else 0) +
-                    (if (asOfDate.asKnown().isPresent) 1 else 0) +
-                    (if (direction.asKnown().isPresent) 1 else 0) +
-                    (if (internalAccountId.asKnown().isPresent) 1 else 0) +
-                    (if (vendorCode.asKnown().isPresent) 1 else 0) +
-                    (if (vendorCodeType.asKnown().isPresent) 1 else 0) +
-                    (metadata.asKnown().getOrNull()?.validity() ?: 0) +
-                    (if (posted.asKnown().isPresent) 1 else 0) +
-                    (type.asKnown().getOrNull()?.validity() ?: 0) +
-                    (if (vendorCustomerId.asKnown().isPresent) 1 else 0) +
-                    (if (vendorDescription.asKnown().isPresent) 1 else 0)
-
-            /**
-             * Additional data represented as key-value pairs. Both the key and value must be
-             * strings.
-             */
-            class Metadata
-            @JsonCreator
-            private constructor(
-                @com.fasterxml.jackson.annotation.JsonValue
-                private val additionalProperties: Map<String, JsonValue>
-            ) {
-
-                @JsonAnyGetter
-                @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                fun toBuilder() = Builder().from(this)
-
-                companion object {
-
-                    /** Returns a mutable builder for constructing an instance of [Metadata]. */
-                    @JvmStatic fun builder() = Builder()
-                }
-
-                /** A builder for [Metadata]. */
-                class Builder internal constructor() {
-
-                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                    @JvmSynthetic
-                    internal fun from(metadata: Metadata) = apply {
-                        additionalProperties = metadata.additionalProperties.toMutableMap()
-                    }
-
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
-
-                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        additionalProperties.put(key, value)
-                    }
-
-                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.putAll(additionalProperties)
-                        }
-
-                    fun removeAdditionalProperty(key: String) = apply {
-                        additionalProperties.remove(key)
-                    }
-
-                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
-
-                    /**
-                     * Returns an immutable instance of [Metadata].
-                     *
-                     * Further updates to this [Builder] will not mutate the returned instance.
-                     */
-                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
-                }
-
-                private var validated: Boolean = false
-
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws ModernTreasuryInvalidDataException if any value type in this object
-                 *   doesn't match its expected type.
-                 */
-                fun validate(): Metadata = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: ModernTreasuryInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic
-                internal fun validity(): Int =
-                    additionalProperties.count { (_, value) ->
-                        !value.isNull() && !value.isMissing()
-                    }
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is Metadata && additionalProperties == other.additionalProperties
-                }
-
-                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-
-                override fun hashCode(): Int = hashCode
-
-                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
-            }
-
-            /**
-             * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-             * or `book`.
-             */
-            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    @JvmField val ACH = of("ach")
-
-                    @JvmField val AU_BECS = of("au_becs")
-
-                    @JvmField val BACS = of("bacs")
-
-                    @JvmField val BOOK = of("book")
-
-                    @JvmField val CARD = of("card")
-
-                    @JvmField val CHATS = of("chats")
-
-                    @JvmField val CHECK = of("check")
-
-                    @JvmField val CROSS_BORDER = of("cross_border")
-
-                    @JvmField val DK_NETS = of("dk_nets")
-
-                    @JvmField val EFT = of("eft")
-
-                    @JvmField val GB_FPS = of("gb_fps")
-
-                    @JvmField val MASAV = of("masav")
-
-                    @JvmField val MX_CCEN = of("mx_ccen")
-
-                    @JvmField val NEFT = of("neft")
-
-                    @JvmField val NICS = of("nics")
-
-                    @JvmField val NZ_BECS = of("nz_becs")
-
-                    @JvmField val PL_ELIXIR = of("pl_elixir")
-
-                    @JvmField val RTP = of("rtp")
-
-                    @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-                    @JvmField val SEPA = of("sepa")
-
-                    @JvmField val SG_GIRO = of("sg_giro")
-
-                    @JvmField val SIC = of("sic")
-
-                    @JvmField val STABLECOIN = of("stablecoin")
-
-                    @JvmField val WIRE = of("wire")
-
-                    @JvmField val ZENGIN = of("zengin")
-
-                    @JvmField val OTHER = of("other")
-
-                    @JvmStatic fun of(value: String) = Type(JsonField.of(value))
-                }
-
-                /** An enum containing [Type]'s known values. */
-                enum class Known {
-                    ACH,
-                    AU_BECS,
-                    BACS,
-                    BOOK,
-                    CARD,
-                    CHATS,
-                    CHECK,
-                    CROSS_BORDER,
-                    DK_NETS,
-                    EFT,
-                    GB_FPS,
-                    MASAV,
-                    MX_CCEN,
-                    NEFT,
-                    NICS,
-                    NZ_BECS,
-                    PL_ELIXIR,
-                    RTP,
-                    SE_BANKGIROT,
-                    SEPA,
-                    SG_GIRO,
-                    SIC,
-                    STABLECOIN,
-                    WIRE,
-                    ZENGIN,
-                    OTHER,
-                }
-
-                /**
-                 * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [Type] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    ACH,
-                    AU_BECS,
-                    BACS,
-                    BOOK,
-                    CARD,
-                    CHATS,
-                    CHECK,
-                    CROSS_BORDER,
-                    DK_NETS,
-                    EFT,
-                    GB_FPS,
-                    MASAV,
-                    MX_CCEN,
-                    NEFT,
-                    NICS,
-                    NZ_BECS,
-                    PL_ELIXIR,
-                    RTP,
-                    SE_BANKGIROT,
-                    SEPA,
-                    SG_GIRO,
-                    SIC,
-                    STABLECOIN,
-                    WIRE,
-                    ZENGIN,
-                    OTHER,
-                    /**
-                     * An enum member indicating that [Type] was instantiated with an unknown value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        ACH -> Value.ACH
-                        AU_BECS -> Value.AU_BECS
-                        BACS -> Value.BACS
-                        BOOK -> Value.BOOK
-                        CARD -> Value.CARD
-                        CHATS -> Value.CHATS
-                        CHECK -> Value.CHECK
-                        CROSS_BORDER -> Value.CROSS_BORDER
-                        DK_NETS -> Value.DK_NETS
-                        EFT -> Value.EFT
-                        GB_FPS -> Value.GB_FPS
-                        MASAV -> Value.MASAV
-                        MX_CCEN -> Value.MX_CCEN
-                        NEFT -> Value.NEFT
-                        NICS -> Value.NICS
-                        NZ_BECS -> Value.NZ_BECS
-                        PL_ELIXIR -> Value.PL_ELIXIR
-                        RTP -> Value.RTP
-                        SE_BANKGIROT -> Value.SE_BANKGIROT
-                        SEPA -> Value.SEPA
-                        SG_GIRO -> Value.SG_GIRO
-                        SIC -> Value.SIC
-                        STABLECOIN -> Value.STABLECOIN
-                        WIRE -> Value.WIRE
-                        ZENGIN -> Value.ZENGIN
-                        OTHER -> Value.OTHER
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws ModernTreasuryInvalidDataException if this class instance's value is a
-                 *   not a known member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        ACH -> Known.ACH
-                        AU_BECS -> Known.AU_BECS
-                        BACS -> Known.BACS
-                        BOOK -> Known.BOOK
-                        CARD -> Known.CARD
-                        CHATS -> Known.CHATS
-                        CHECK -> Known.CHECK
-                        CROSS_BORDER -> Known.CROSS_BORDER
-                        DK_NETS -> Known.DK_NETS
-                        EFT -> Known.EFT
-                        GB_FPS -> Known.GB_FPS
-                        MASAV -> Known.MASAV
-                        MX_CCEN -> Known.MX_CCEN
-                        NEFT -> Known.NEFT
-                        NICS -> Known.NICS
-                        NZ_BECS -> Known.NZ_BECS
-                        PL_ELIXIR -> Known.PL_ELIXIR
-                        RTP -> Known.RTP
-                        SE_BANKGIROT -> Known.SE_BANKGIROT
-                        SEPA -> Known.SEPA
-                        SG_GIRO -> Known.SG_GIRO
-                        SIC -> Known.SIC
-                        STABLECOIN -> Known.STABLECOIN
-                        WIRE -> Known.WIRE
-                        ZENGIN -> Known.ZENGIN
-                        OTHER -> Known.OTHER
-                        else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws ModernTreasuryInvalidDataException if this class instance's value does
-                 *   not have the expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString().orElseThrow {
-                        ModernTreasuryInvalidDataException("Value is not a String")
-                    }
-
-                private var validated: Boolean = false
-
-                /**
-                 * Validates that the types of all values in this object match their expected types
-                 * recursively.
-                 *
-                 * This method is _not_ forwards compatible with new types from the API for existing
-                 * fields.
-                 *
-                 * @throws ModernTreasuryInvalidDataException if any value type in this object
-                 *   doesn't match its expected type.
-                 */
-                fun validate(): Type = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: ModernTreasuryInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is Type && value == other.value
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is TransactionCreateRequest &&
-                    amount == other.amount &&
-                    asOfDate == other.asOfDate &&
-                    direction == other.direction &&
-                    internalAccountId == other.internalAccountId &&
-                    vendorCode == other.vendorCode &&
-                    vendorCodeType == other.vendorCodeType &&
-                    metadata == other.metadata &&
-                    posted == other.posted &&
-                    type == other.type &&
-                    vendorCustomerId == other.vendorCustomerId &&
-                    vendorDescription == other.vendorDescription &&
-                    additionalProperties == other.additionalProperties
-            }
-
-            private val hashCode: Int by lazy {
-                Objects.hash(
-                    amount,
-                    asOfDate,
-                    direction,
-                    internalAccountId,
-                    vendorCode,
-                    vendorCodeType,
-                    metadata,
-                    posted,
-                    type,
-                    vendorCustomerId,
-                    vendorDescription,
-                    additionalProperties,
-                )
-            }
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorCustomerId=$vendorCustomerId, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
         }
 
         class Id
