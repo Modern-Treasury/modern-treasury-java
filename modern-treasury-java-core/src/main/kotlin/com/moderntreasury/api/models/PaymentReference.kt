@@ -679,6 +679,11 @@ private constructor(
 
             @JvmField val SWIFT_UETR = of("swift_uetr")
 
+            @JvmField val TURNKEY_ACTIVITY_ID = of("turnkey_activity_id")
+
+            @JvmField
+            val TURNKEY_SEND_TRANSACTION_STATUS_ID = of("turnkey_send_transaction_status_id")
+
             @JvmField
             val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER = of("umb_product_partner_account_number")
 
@@ -788,6 +793,8 @@ private constructor(
             SVB_PAYMENT_ID,
             SWIFT_MIR,
             SWIFT_UETR,
+            TURNKEY_ACTIVITY_ID,
+            TURNKEY_SEND_TRANSACTION_STATUS_ID,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
@@ -887,6 +894,8 @@ private constructor(
             SVB_PAYMENT_ID,
             SWIFT_MIR,
             SWIFT_UETR,
+            TURNKEY_ACTIVITY_ID,
+            TURNKEY_SEND_TRANSACTION_STATUS_ID,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
@@ -992,6 +1001,8 @@ private constructor(
                 SVB_PAYMENT_ID -> Value.SVB_PAYMENT_ID
                 SWIFT_MIR -> Value.SWIFT_MIR
                 SWIFT_UETR -> Value.SWIFT_UETR
+                TURNKEY_ACTIVITY_ID -> Value.TURNKEY_ACTIVITY_ID
+                TURNKEY_SEND_TRANSACTION_STATUS_ID -> Value.TURNKEY_SEND_TRANSACTION_STATUS_ID
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Value.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
                     Value.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
@@ -1097,6 +1108,8 @@ private constructor(
                 SVB_PAYMENT_ID -> Known.SVB_PAYMENT_ID
                 SWIFT_MIR -> Known.SWIFT_MIR
                 SWIFT_UETR -> Known.SWIFT_UETR
+                TURNKEY_ACTIVITY_ID -> Known.TURNKEY_ACTIVITY_ID
+                TURNKEY_SEND_TRANSACTION_STATUS_ID -> Known.TURNKEY_SEND_TRANSACTION_STATUS_ID
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Known.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
                     Known.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
