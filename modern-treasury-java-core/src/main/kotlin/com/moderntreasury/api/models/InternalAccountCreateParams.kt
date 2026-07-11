@@ -33,14 +33,6 @@ private constructor(
 ) : Params {
 
     /**
-     * The identifier of the financial institution the account belongs to.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun connectionId(): String = body.connectionId()
-
-    /**
      * The currency of the internal account. Supports fiat and stablecoin currencies.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -72,6 +64,15 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountType(): Optional<AccountType> = body.accountType()
+
+    /**
+     * The identifier of the financial institution the account belongs to. If not provided, defaults
+     * to the default connection, or the sole connection if only one exists.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun connectionId(): Optional<String> = body.connectionId()
 
     /**
      * The Counterparty associated to this account.
@@ -150,13 +151,6 @@ private constructor(
     fun vendorAttributes(): Optional<VendorAttributes> = body.vendorAttributes()
 
     /**
-     * Returns the raw JSON value of [connectionId].
-     *
-     * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _connectionId(): JsonField<String> = body._connectionId()
-
-    /**
      * Returns the raw JSON value of [currency].
      *
      * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
@@ -184,6 +178,13 @@ private constructor(
      * Unlike [accountType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _accountType(): JsonField<AccountType> = body._accountType()
+
+    /**
+     * Returns the raw JSON value of [connectionId].
+     *
+     * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _connectionId(): JsonField<String> = body._connectionId()
 
     /**
      * Returns the raw JSON value of [counterpartyId].
@@ -266,7 +267,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .connectionId()
          * .currency()
          * .name()
          * ```
@@ -294,28 +294,14 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
-         * - [connectionId]
          * - [currency]
          * - [name]
          * - [accountCapabilities]
          * - [accountType]
+         * - [connectionId]
          * - etc.
          */
         fun body(body: InternalAccountCreateRequest) = apply { this.body = body.toBuilder() }
-
-        /** The identifier of the financial institution the account belongs to. */
-        fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
-
-        /**
-         * Sets [Builder.connectionId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.connectionId] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun connectionId(connectionId: JsonField<String>) = apply {
-            body.connectionId(connectionId)
-        }
 
         /** The currency of the internal account. Supports fiat and stablecoin currencies. */
         fun currency(currency: Currency) = apply { body.currency(currency) }
@@ -382,6 +368,23 @@ private constructor(
          */
         fun accountType(accountType: JsonField<AccountType>) = apply {
             body.accountType(accountType)
+        }
+
+        /**
+         * The identifier of the financial institution the account belongs to. If not provided,
+         * defaults to the default connection, or the sole connection if only one exists.
+         */
+        fun connectionId(connectionId: String) = apply { body.connectionId(connectionId) }
+
+        /**
+         * Sets [Builder.connectionId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.connectionId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun connectionId(connectionId: JsonField<String>) = apply {
+            body.connectionId(connectionId)
         }
 
         /** The Counterparty associated to this account. */
@@ -656,7 +659,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .connectionId()
          * .currency()
          * .name()
          * ```
@@ -680,11 +682,11 @@ private constructor(
     class InternalAccountCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val connectionId: JsonField<String>,
         private val currency: JsonField<Currency>,
         private val name: JsonField<String>,
         private val accountCapabilities: JsonField<List<AccountCapability>>,
         private val accountType: JsonField<AccountType>,
+        private val connectionId: JsonField<String>,
         private val counterpartyId: JsonField<String>,
         private val debitable: JsonField<Boolean>,
         private val externalId: JsonField<String>,
@@ -699,9 +701,6 @@ private constructor(
 
         @JsonCreator
         private constructor(
-            @JsonProperty("connection_id")
-            @ExcludeMissing
-            connectionId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("currency")
             @ExcludeMissing
             currency: JsonField<Currency> = JsonMissing.of(),
@@ -712,6 +711,9 @@ private constructor(
             @JsonProperty("account_type")
             @ExcludeMissing
             accountType: JsonField<AccountType> = JsonMissing.of(),
+            @JsonProperty("connection_id")
+            @ExcludeMissing
+            connectionId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("counterparty_id")
             @ExcludeMissing
             counterpartyId: JsonField<String> = JsonMissing.of(),
@@ -740,11 +742,11 @@ private constructor(
             @ExcludeMissing
             vendorAttributes: JsonField<VendorAttributes> = JsonMissing.of(),
         ) : this(
-            connectionId,
             currency,
             name,
             accountCapabilities,
             accountType,
+            connectionId,
             counterpartyId,
             debitable,
             externalId,
@@ -756,14 +758,6 @@ private constructor(
             vendorAttributes,
             mutableMapOf(),
         )
-
-        /**
-         * The identifier of the financial institution the account belongs to.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun connectionId(): String = connectionId.getRequired("connection_id")
 
         /**
          * The currency of the internal account. Supports fiat and stablecoin currencies.
@@ -798,6 +792,15 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun accountType(): Optional<AccountType> = accountType.getOptional("account_type")
+
+        /**
+         * The identifier of the financial institution the account belongs to. If not provided,
+         * defaults to the default connection, or the sole connection if only one exists.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun connectionId(): Optional<String> = connectionId.getOptional("connection_id")
 
         /**
          * The Counterparty associated to this account.
@@ -877,16 +880,6 @@ private constructor(
             vendorAttributes.getOptional("vendor_attributes")
 
         /**
-         * Returns the raw JSON value of [connectionId].
-         *
-         * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("connection_id")
-        @ExcludeMissing
-        fun _connectionId(): JsonField<String> = connectionId
-
-        /**
          * Returns the raw JSON value of [currency].
          *
          * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
@@ -918,6 +911,16 @@ private constructor(
         @JsonProperty("account_type")
         @ExcludeMissing
         fun _accountType(): JsonField<AccountType> = accountType
+
+        /**
+         * Returns the raw JSON value of [connectionId].
+         *
+         * Unlike [connectionId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("connection_id")
+        @ExcludeMissing
+        fun _connectionId(): JsonField<String> = connectionId
 
         /**
          * Returns the raw JSON value of [counterpartyId].
@@ -1019,7 +1022,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .connectionId()
              * .currency()
              * .name()
              * ```
@@ -1030,11 +1032,11 @@ private constructor(
         /** A builder for [InternalAccountCreateRequest]. */
         class Builder internal constructor() {
 
-            private var connectionId: JsonField<String>? = null
             private var currency: JsonField<Currency>? = null
             private var name: JsonField<String>? = null
             private var accountCapabilities: JsonField<MutableList<AccountCapability>>? = null
             private var accountType: JsonField<AccountType> = JsonMissing.of()
+            private var connectionId: JsonField<String> = JsonMissing.of()
             private var counterpartyId: JsonField<String> = JsonMissing.of()
             private var debitable: JsonField<Boolean> = JsonMissing.of()
             private var externalId: JsonField<String> = JsonMissing.of()
@@ -1048,12 +1050,12 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(internalAccountCreateRequest: InternalAccountCreateRequest) = apply {
-                connectionId = internalAccountCreateRequest.connectionId
                 currency = internalAccountCreateRequest.currency
                 name = internalAccountCreateRequest.name
                 accountCapabilities =
                     internalAccountCreateRequest.accountCapabilities.map { it.toMutableList() }
                 accountType = internalAccountCreateRequest.accountType
+                connectionId = internalAccountCreateRequest.connectionId
                 counterpartyId = internalAccountCreateRequest.counterpartyId
                 debitable = internalAccountCreateRequest.debitable
                 externalId = internalAccountCreateRequest.externalId
@@ -1065,20 +1067,6 @@ private constructor(
                 vendorAttributes = internalAccountCreateRequest.vendorAttributes
                 additionalProperties =
                     internalAccountCreateRequest.additionalProperties.toMutableMap()
-            }
-
-            /** The identifier of the financial institution the account belongs to. */
-            fun connectionId(connectionId: String) = connectionId(JsonField.of(connectionId))
-
-            /**
-             * Sets [Builder.connectionId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.connectionId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun connectionId(connectionId: JsonField<String>) = apply {
-                this.connectionId = connectionId
             }
 
             /** The currency of the internal account. Supports fiat and stablecoin currencies. */
@@ -1151,6 +1139,23 @@ private constructor(
              */
             fun accountType(accountType: JsonField<AccountType>) = apply {
                 this.accountType = accountType
+            }
+
+            /**
+             * The identifier of the financial institution the account belongs to. If not provided,
+             * defaults to the default connection, or the sole connection if only one exists.
+             */
+            fun connectionId(connectionId: String) = connectionId(JsonField.of(connectionId))
+
+            /**
+             * Sets [Builder.connectionId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.connectionId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun connectionId(connectionId: JsonField<String>) = apply {
+                this.connectionId = connectionId
             }
 
             /** The Counterparty associated to this account. */
@@ -1327,7 +1332,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .connectionId()
              * .currency()
              * .name()
              * ```
@@ -1336,11 +1340,11 @@ private constructor(
              */
             fun build(): InternalAccountCreateRequest =
                 InternalAccountCreateRequest(
-                    checkRequired("connectionId", connectionId),
                     checkRequired("currency", currency),
                     checkRequired("name", name),
                     (accountCapabilities ?: JsonMissing.of()).map { it.toImmutable() },
                     accountType,
+                    connectionId,
                     counterpartyId,
                     debitable,
                     externalId,
@@ -1370,11 +1374,11 @@ private constructor(
                 return@apply
             }
 
-            connectionId()
             currency().validate()
             name()
             accountCapabilities().ifPresent { it.forEach { it.validate() } }
             accountType().ifPresent { it.validate() }
+            connectionId()
             counterpartyId()
             debitable()
             externalId()
@@ -1403,11 +1407,11 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (connectionId.asKnown().isPresent) 1 else 0) +
-                (currency.asKnown().getOrNull()?.validity() ?: 0) +
+            (currency.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
                 (accountCapabilities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (accountType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (connectionId.asKnown().isPresent) 1 else 0) +
                 (if (counterpartyId.asKnown().isPresent) 1 else 0) +
                 (if (debitable.asKnown().isPresent) 1 else 0) +
                 (if (externalId.asKnown().isPresent) 1 else 0) +
@@ -1424,11 +1428,11 @@ private constructor(
             }
 
             return other is InternalAccountCreateRequest &&
-                connectionId == other.connectionId &&
                 currency == other.currency &&
                 name == other.name &&
                 accountCapabilities == other.accountCapabilities &&
                 accountType == other.accountType &&
+                connectionId == other.connectionId &&
                 counterpartyId == other.counterpartyId &&
                 debitable == other.debitable &&
                 externalId == other.externalId &&
@@ -1443,11 +1447,11 @@ private constructor(
 
         private val hashCode: Int by lazy {
             Objects.hash(
-                connectionId,
                 currency,
                 name,
                 accountCapabilities,
                 accountType,
+                connectionId,
                 counterpartyId,
                 debitable,
                 externalId,
@@ -1464,7 +1468,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InternalAccountCreateRequest{connectionId=$connectionId, currency=$currency, name=$name, accountCapabilities=$accountCapabilities, accountType=$accountType, counterpartyId=$counterpartyId, debitable=$debitable, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+            "InternalAccountCreateRequest{currency=$currency, name=$name, accountCapabilities=$accountCapabilities, accountType=$accountType, connectionId=$connectionId, counterpartyId=$counterpartyId, debitable=$debitable, externalId=$externalId, legalEntityId=$legalEntityId, metadata=$metadata, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
     /** The currency of the internal account. Supports fiat and stablecoin currencies. */
