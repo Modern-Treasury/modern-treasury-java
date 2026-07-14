@@ -8,7 +8,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":modern-treasury-java"))
+    implementation(project(":modern-treasury-java-core"))
+    implementation(project(":modern-treasury-java-client-okhttp"))
 }
 
 tasks.withType<JavaCompile>().configureEach {
