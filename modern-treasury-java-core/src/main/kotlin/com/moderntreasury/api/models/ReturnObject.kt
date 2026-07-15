@@ -4231,7 +4231,17 @@ private constructor(
 
             @JvmField val MANUAL = of("manual")
 
+            @JvmField val NEFT = of("neft")
+
+            @JvmField val NZ_BECS = of("nz_becs")
+
+            @JvmField val RTP = of("rtp")
+
             @JvmField val SEPA = of("sepa")
+
+            @JvmField val SIGNET = of("signet")
+
+            @JvmField val STABLECOIN = of("stablecoin")
 
             @JvmField val WIRE = of("wire")
 
@@ -4253,7 +4263,12 @@ private constructor(
             GB_FPS,
             INTERAC,
             MANUAL,
+            NEFT,
+            NZ_BECS,
+            RTP,
             SEPA,
+            SIGNET,
+            STABLECOIN,
             WIRE,
             ZENGIN,
         }
@@ -4279,7 +4294,12 @@ private constructor(
             GB_FPS,
             INTERAC,
             MANUAL,
+            NEFT,
+            NZ_BECS,
+            RTP,
             SEPA,
+            SIGNET,
+            STABLECOIN,
             WIRE,
             ZENGIN,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
@@ -4306,7 +4326,12 @@ private constructor(
                 GB_FPS -> Value.GB_FPS
                 INTERAC -> Value.INTERAC
                 MANUAL -> Value.MANUAL
+                NEFT -> Value.NEFT
+                NZ_BECS -> Value.NZ_BECS
+                RTP -> Value.RTP
                 SEPA -> Value.SEPA
+                SIGNET -> Value.SIGNET
+                STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
                 else -> Value._UNKNOWN
@@ -4334,7 +4359,12 @@ private constructor(
                 GB_FPS -> Known.GB_FPS
                 INTERAC -> Known.INTERAC
                 MANUAL -> Known.MANUAL
+                NEFT -> Known.NEFT
+                NZ_BECS -> Known.NZ_BECS
+                RTP -> Known.RTP
                 SEPA -> Known.SEPA
+                SIGNET -> Known.SIGNET
+                STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
                 else -> throw ModernTreasuryInvalidDataException("Unknown Type: $value")
