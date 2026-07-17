@@ -61,8 +61,9 @@ private constructor(
     fun originatingAccountId(): String = body.originatingAccountId()
 
     /**
-     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `book`, `rtp`, `sepa`, `bacs`,
-     * `au_becs`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `zengin`.
+     * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`, `bacs`,
+     * `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `signet`,
+     * `provexchange`, `zengin`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -806,8 +807,9 @@ private constructor(
         }
 
         /**
-         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          */
         fun type(type: PaymentOrderType) = apply { body.type(type) }
 
@@ -1951,8 +1953,9 @@ private constructor(
             originatingAccountId.getRequired("originating_account_id")
 
         /**
-         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `book`, `rtp`, `sepa`, `bacs`,
-         * `au_becs`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `zengin`.
+         * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+         * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+         * `signet`, `provexchange`, `zengin`.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2867,8 +2870,9 @@ private constructor(
             }
 
             /**
-             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `book`, `rtp`, `sepa`, `bacs`,
-             * `au_becs`, `neft`, `nics`, `nz_national_clearing_code`, `sic`, `zengin`.
+             * One of `ach`, `se_bankgirot`, `eft`, `wire`, `check`, `sen`, `book`, `rtp`, `sepa`,
+             * `bacs`, `au_becs`, `interac`, `neft`, `nics`, `nz_national_clearing_code`, `sic`,
+             * `signet`, `provexchange`, `zengin`.
              */
             fun type(type: PaymentOrderType) = type(JsonField.of(type))
 
@@ -7095,6 +7099,10 @@ private constructor(
 
                     @JvmField val HK_INTERBANK_CLEARING_CODE = of("hk_interbank_clearing_code")
 
+                    @JvmField val HU_INTERBANK_CLEARING_CODE = of("hu_interbank_clearing_code")
+
+                    @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
+
                     @JvmField val IL_BANK_CODE = of("il_bank_code")
 
                     @JvmField val IN_IFSC = of("in_ifsc")
@@ -7131,6 +7139,8 @@ private constructor(
                     DK_INTERBANK_CLEARING_CODE,
                     GB_SORT_CODE,
                     HK_INTERBANK_CLEARING_CODE,
+                    HU_INTERBANK_CLEARING_CODE,
+                    ID_SKNBI_CODE,
                     IL_BANK_CODE,
                     IN_IFSC,
                     JP_ZENGIN_CODE,
@@ -7165,6 +7175,8 @@ private constructor(
                     DK_INTERBANK_CLEARING_CODE,
                     GB_SORT_CODE,
                     HK_INTERBANK_CLEARING_CODE,
+                    HU_INTERBANK_CLEARING_CODE,
+                    ID_SKNBI_CODE,
                     IL_BANK_CODE,
                     IN_IFSC,
                     JP_ZENGIN_CODE,
@@ -7201,6 +7213,8 @@ private constructor(
                         DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                         GB_SORT_CODE -> Value.GB_SORT_CODE
                         HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                        HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
+                        ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
                         IL_BANK_CODE -> Value.IL_BANK_CODE
                         IN_IFSC -> Value.IN_IFSC
                         JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
@@ -7235,6 +7249,8 @@ private constructor(
                         DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                         GB_SORT_CODE -> Known.GB_SORT_CODE
                         HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                        HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
+                        ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
                         IL_BANK_CODE -> Known.IL_BANK_CODE
                         IN_IFSC -> Known.IN_IFSC
                         JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
@@ -7354,6 +7370,10 @@ private constructor(
 
                     @JvmField val GB_FPS = of("gb_fps")
 
+                    @JvmField val HU_ICS = of("hu_ics")
+
+                    @JvmField val INTERAC = of("interac")
+
                     @JvmField val MASAV = of("masav")
 
                     @JvmField val MX_CCEN = of("mx_ccen")
@@ -7366,15 +7386,25 @@ private constructor(
 
                     @JvmField val PL_ELIXIR = of("pl_elixir")
 
+                    @JvmField val PROVXCHANGE = of("provxchange")
+
+                    @JvmField val RO_SENT = of("ro_sent")
+
                     @JvmField val RTP = of("rtp")
 
                     @JvmField val SE_BANKGIROT = of("se_bankgirot")
+
+                    @JvmField val SEN = of("sen")
 
                     @JvmField val SEPA = of("sepa")
 
                     @JvmField val SG_GIRO = of("sg_giro")
 
                     @JvmField val SIC = of("sic")
+
+                    @JvmField val SIGNET = of("signet")
+
+                    @JvmField val SKNBI = of("sknbi")
 
                     @JvmField val STABLECOIN = of("stablecoin")
 
@@ -7398,17 +7428,24 @@ private constructor(
                     DK_NETS,
                     EFT,
                     GB_FPS,
+                    HU_ICS,
+                    INTERAC,
                     MASAV,
                     MX_CCEN,
                     NEFT,
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
                     RTP,
                     SE_BANKGIROT,
+                    SEN,
                     SEPA,
                     SG_GIRO,
                     SIC,
+                    SIGNET,
+                    SKNBI,
                     STABLECOIN,
                     WIRE,
                     ZENGIN,
@@ -7435,17 +7472,24 @@ private constructor(
                     DK_NETS,
                     EFT,
                     GB_FPS,
+                    HU_ICS,
+                    INTERAC,
                     MASAV,
                     MX_CCEN,
                     NEFT,
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
                     RTP,
                     SE_BANKGIROT,
+                    SEN,
                     SEPA,
                     SG_GIRO,
                     SIC,
+                    SIGNET,
+                    SKNBI,
                     STABLECOIN,
                     WIRE,
                     ZENGIN,
@@ -7476,17 +7520,24 @@ private constructor(
                         DK_NETS -> Value.DK_NETS
                         EFT -> Value.EFT
                         GB_FPS -> Value.GB_FPS
+                        HU_ICS -> Value.HU_ICS
+                        INTERAC -> Value.INTERAC
                         MASAV -> Value.MASAV
                         MX_CCEN -> Value.MX_CCEN
                         NEFT -> Value.NEFT
                         NICS -> Value.NICS
                         NZ_BECS -> Value.NZ_BECS
                         PL_ELIXIR -> Value.PL_ELIXIR
+                        PROVXCHANGE -> Value.PROVXCHANGE
+                        RO_SENT -> Value.RO_SENT
                         RTP -> Value.RTP
                         SE_BANKGIROT -> Value.SE_BANKGIROT
+                        SEN -> Value.SEN
                         SEPA -> Value.SEPA
                         SG_GIRO -> Value.SG_GIRO
                         SIC -> Value.SIC
+                        SIGNET -> Value.SIGNET
+                        SKNBI -> Value.SKNBI
                         STABLECOIN -> Value.STABLECOIN
                         WIRE -> Value.WIRE
                         ZENGIN -> Value.ZENGIN
@@ -7515,17 +7566,24 @@ private constructor(
                         DK_NETS -> Known.DK_NETS
                         EFT -> Known.EFT
                         GB_FPS -> Known.GB_FPS
+                        HU_ICS -> Known.HU_ICS
+                        INTERAC -> Known.INTERAC
                         MASAV -> Known.MASAV
                         MX_CCEN -> Known.MX_CCEN
                         NEFT -> Known.NEFT
                         NICS -> Known.NICS
                         NZ_BECS -> Known.NZ_BECS
                         PL_ELIXIR -> Known.PL_ELIXIR
+                        PROVXCHANGE -> Known.PROVXCHANGE
+                        RO_SENT -> Known.RO_SENT
                         RTP -> Known.RTP
                         SE_BANKGIROT -> Known.SE_BANKGIROT
+                        SEN -> Known.SEN
                         SEPA -> Known.SEPA
                         SG_GIRO -> Known.SG_GIRO
                         SIC -> Known.SIC
+                        SIGNET -> Known.SIGNET
+                        SKNBI -> Known.SKNBI
                         STABLECOIN -> Known.STABLECOIN
                         WIRE -> Known.WIRE
                         ZENGIN -> Known.ZENGIN

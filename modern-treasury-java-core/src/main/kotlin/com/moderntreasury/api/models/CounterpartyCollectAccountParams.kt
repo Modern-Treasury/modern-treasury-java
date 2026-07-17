@@ -797,7 +797,11 @@ private constructor(
 
             @JvmField val HK_INTERBANK_CLEARING_CODE = of("hkInterbankClearingCode")
 
+            @JvmField val HU_INTERBANK_CLEARING_CODE = of("huInterbankClearingCode")
+
             @JvmField val DK_INTERBANK_CLEARING_CODE = of("dkInterbankClearingCode")
+
+            @JvmField val ID_SKNBI_CODE = of("idSknbiCode")
 
             @JvmField val ZA_NATIONAL_CLEARING_CODE = of("zaNationalClearingCode")
 
@@ -831,7 +835,9 @@ private constructor(
             SE_BANKGIRO_CLEARING_CODE,
             NZ_NATIONAL_CLEARING_CODE,
             HK_INTERBANK_CLEARING_CODE,
+            HU_INTERBANK_CLEARING_CODE,
             DK_INTERBANK_CLEARING_CODE,
+            ID_SKNBI_CODE,
             ZA_NATIONAL_CLEARING_CODE,
         }
 
@@ -870,7 +876,9 @@ private constructor(
             SE_BANKGIRO_CLEARING_CODE,
             NZ_NATIONAL_CLEARING_CODE,
             HK_INTERBANK_CLEARING_CODE,
+            HU_INTERBANK_CLEARING_CODE,
             DK_INTERBANK_CLEARING_CODE,
+            ID_SKNBI_CODE,
             ZA_NATIONAL_CLEARING_CODE,
             /** An enum member indicating that [Field] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -910,7 +918,9 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                 NZ_NATIONAL_CLEARING_CODE -> Value.NZ_NATIONAL_CLEARING_CODE
                 HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
                 DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
+                ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
                 ZA_NATIONAL_CLEARING_CODE -> Value.ZA_NATIONAL_CLEARING_CODE
                 else -> Value._UNKNOWN
             }
@@ -951,7 +961,9 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                 NZ_NATIONAL_CLEARING_CODE -> Known.NZ_NATIONAL_CLEARING_CODE
                 HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
                 DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
+                ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
                 ZA_NATIONAL_CLEARING_CODE -> Known.ZA_NATIONAL_CLEARING_CODE
                 else -> throw ModernTreasuryInvalidDataException("Unknown Field: $value")
             }
