@@ -66,7 +66,6 @@ private constructor(
     private val serviceProviderLegalEntityId: JsonField<String>,
     private val status: JsonField<Status>,
     private val suffix: JsonField<String>,
-    private val termsOfUse: JsonField<TermsOfUse>,
     private val thirdPartyVerification: JsonField<ThirdPartyVerification>,
     private val thirdPartyVerifications: JsonField<List<ThirdPartyVerification>>,
     private val tickerSymbol: JsonField<String>,
@@ -182,9 +181,6 @@ private constructor(
         serviceProviderLegalEntityId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("suffix") @ExcludeMissing suffix: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("terms_of_use")
-        @ExcludeMissing
-        termsOfUse: JsonField<TermsOfUse> = JsonMissing.of(),
         @JsonProperty("third_party_verification")
         @ExcludeMissing
         thirdPartyVerification: JsonField<ThirdPartyVerification> = JsonMissing.of(),
@@ -243,7 +239,6 @@ private constructor(
         serviceProviderLegalEntityId,
         status,
         suffix,
-        termsOfUse,
         thirdPartyVerification,
         thirdPartyVerifications,
         tickerSymbol,
@@ -580,14 +575,6 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun suffix(): Optional<String> = suffix.getOptional("suffix")
-
-    /**
-     * Acceptance of terms of use by the legal entity.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun termsOfUse(): Optional<TermsOfUse> = termsOfUse.getOptional("terms_of_use")
 
     /**
      * Deprecated. Use `third_party_verifications` instead.
@@ -987,15 +974,6 @@ private constructor(
     @JsonProperty("suffix") @ExcludeMissing fun _suffix(): JsonField<String> = suffix
 
     /**
-     * Returns the raw JSON value of [termsOfUse].
-     *
-     * Unlike [termsOfUse], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("terms_of_use")
-    @ExcludeMissing
-    fun _termsOfUse(): JsonField<TermsOfUse> = termsOfUse
-
-    /**
      * Returns the raw JSON value of [thirdPartyVerification].
      *
      * Unlike [thirdPartyVerification], this method doesn't throw if the JSON field has an
@@ -1113,7 +1091,6 @@ private constructor(
          * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
-         * .termsOfUse()
          * .thirdPartyVerification()
          * .thirdPartyVerifications()
          * .tickerSymbol()
@@ -1171,7 +1148,6 @@ private constructor(
         private var serviceProviderLegalEntityId: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var suffix: JsonField<String>? = null
-        private var termsOfUse: JsonField<TermsOfUse>? = null
         private var thirdPartyVerification: JsonField<ThirdPartyVerification>? = null
         private var thirdPartyVerifications: JsonField<MutableList<ThirdPartyVerification>>? = null
         private var tickerSymbol: JsonField<String>? = null
@@ -1227,7 +1203,6 @@ private constructor(
             serviceProviderLegalEntityId = childLegalEntity.serviceProviderLegalEntityId
             status = childLegalEntity.status
             suffix = childLegalEntity.suffix
-            termsOfUse = childLegalEntity.termsOfUse
             thirdPartyVerification = childLegalEntity.thirdPartyVerification
             thirdPartyVerifications =
                 childLegalEntity.thirdPartyVerifications.map { it.toMutableList() }
@@ -2040,21 +2015,6 @@ private constructor(
          */
         fun suffix(suffix: JsonField<String>) = apply { this.suffix = suffix }
 
-        /** Acceptance of terms of use by the legal entity. */
-        fun termsOfUse(termsOfUse: TermsOfUse?) = termsOfUse(JsonField.ofNullable(termsOfUse))
-
-        /** Alias for calling [Builder.termsOfUse] with `termsOfUse.orElse(null)`. */
-        fun termsOfUse(termsOfUse: Optional<TermsOfUse>) = termsOfUse(termsOfUse.getOrNull())
-
-        /**
-         * Sets [Builder.termsOfUse] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.termsOfUse] with a well-typed [TermsOfUse] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun termsOfUse(termsOfUse: JsonField<TermsOfUse>) = apply { this.termsOfUse = termsOfUse }
-
         /** Deprecated. Use `third_party_verifications` instead. */
         @Deprecated("deprecated")
         fun thirdPartyVerification(thirdPartyVerification: ThirdPartyVerification?) =
@@ -2241,7 +2201,6 @@ private constructor(
          * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
-         * .termsOfUse()
          * .thirdPartyVerification()
          * .thirdPartyVerifications()
          * .tickerSymbol()
@@ -2305,7 +2264,6 @@ private constructor(
                 checkRequired("serviceProviderLegalEntityId", serviceProviderLegalEntityId),
                 checkRequired("status", status),
                 checkRequired("suffix", suffix),
-                checkRequired("termsOfUse", termsOfUse),
                 checkRequired("thirdPartyVerification", thirdPartyVerification),
                 checkRequired("thirdPartyVerifications", thirdPartyVerifications).map {
                     it.toImmutable()
@@ -2373,7 +2331,6 @@ private constructor(
         serviceProviderLegalEntityId()
         status().ifPresent { it.validate() }
         suffix()
-        termsOfUse().ifPresent { it.validate() }
         thirdPartyVerification().ifPresent { it.validate() }
         thirdPartyVerifications().forEach { it.validate() }
         tickerSymbol()
@@ -2438,7 +2395,6 @@ private constructor(
             (if (serviceProviderLegalEntityId.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (if (suffix.asKnown().isPresent) 1 else 0) +
-            (termsOfUse.asKnown().getOrNull()?.validity() ?: 0) +
             (thirdPartyVerification.asKnown().getOrNull()?.validity() ?: 0) +
             (thirdPartyVerifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (tickerSymbol.asKnown().isPresent) 1 else 0) +
@@ -2592,8 +2548,7 @@ private constructor(
         fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
         /**
-         * Whether this address is the primary address for the legal entity. Optional; when omitted
-         * it is inferred from the address types.
+         * Whether this address is the primary address for the legal entity.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2967,10 +2922,7 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            /**
-             * Whether this address is the primary address for the legal entity. Optional; when
-             * omitted it is inferred from the address types.
-             */
+            /** Whether this address is the primary address for the legal entity. */
             fun primary(primary: Boolean?) = primary(JsonField.ofNullable(primary))
 
             /**
@@ -3165,8 +3117,6 @@ private constructor(
 
                 @JvmField val BUSINESS = of("business")
 
-                @JvmField val BUSINESS_PHYSICAL = of("business_physical")
-
                 @JvmField val BUSINESS_REGISTERED = of("business_registered")
 
                 @JvmField val MAILING = of("mailing")
@@ -3183,7 +3133,6 @@ private constructor(
             /** An enum containing [AddressType]'s known values. */
             enum class Known {
                 BUSINESS,
-                BUSINESS_PHYSICAL,
                 BUSINESS_REGISTERED,
                 MAILING,
                 OTHER,
@@ -3202,7 +3151,6 @@ private constructor(
              */
             enum class Value {
                 BUSINESS,
-                BUSINESS_PHYSICAL,
                 BUSINESS_REGISTERED,
                 MAILING,
                 OTHER,
@@ -3225,7 +3173,6 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     BUSINESS -> Value.BUSINESS
-                    BUSINESS_PHYSICAL -> Value.BUSINESS_PHYSICAL
                     BUSINESS_REGISTERED -> Value.BUSINESS_REGISTERED
                     MAILING -> Value.MAILING
                     OTHER -> Value.OTHER
@@ -3246,7 +3193,6 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     BUSINESS -> Known.BUSINESS
-                    BUSINESS_PHYSICAL -> Known.BUSINESS_PHYSICAL
                     BUSINESS_REGISTERED -> Known.BUSINESS_REGISTERED
                     MAILING -> Known.MAILING
                     OTHER -> Known.OTHER
@@ -4054,8 +4000,6 @@ private constructor(
 
                 @JvmField val GB_VAT = of("gb_vat")
 
-                @JvmField val GENERIC_INTERNATIONAL = of("generic_international")
-
                 @JvmField val GR_VAT = of("gr_vat")
 
                 @JvmField val HN_ID = of("hn_id")
@@ -4113,8 +4057,6 @@ private constructor(
                 @JvmField val MX_INE = of("mx_ine")
 
                 @JvmField val MX_RFC = of("mx_rfc")
-
-                @JvmField val NATIONAL_ID = of("national_id")
 
                 @JvmField val NL_BSN = of("nl_bsn")
 
@@ -4218,7 +4160,6 @@ private constructor(
                 GB_NINO,
                 GB_UTR,
                 GB_VAT,
-                GENERIC_INTERNATIONAL,
                 GR_VAT,
                 HN_ID,
                 HN_RTN,
@@ -4248,7 +4189,6 @@ private constructor(
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
-                NATIONAL_ID,
                 NL_BSN,
                 NL_BTW,
                 NL_RSIN,
@@ -4329,7 +4269,6 @@ private constructor(
                 GB_NINO,
                 GB_UTR,
                 GB_VAT,
-                GENERIC_INTERNATIONAL,
                 GR_VAT,
                 HN_ID,
                 HN_RTN,
@@ -4359,7 +4298,6 @@ private constructor(
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
-                NATIONAL_ID,
                 NL_BSN,
                 NL_BTW,
                 NL_RSIN,
@@ -4443,7 +4381,6 @@ private constructor(
                     GB_NINO -> Value.GB_NINO
                     GB_UTR -> Value.GB_UTR
                     GB_VAT -> Value.GB_VAT
-                    GENERIC_INTERNATIONAL -> Value.GENERIC_INTERNATIONAL
                     GR_VAT -> Value.GR_VAT
                     HN_ID -> Value.HN_ID
                     HN_RTN -> Value.HN_RTN
@@ -4473,7 +4410,6 @@ private constructor(
                     MX_CURP -> Value.MX_CURP
                     MX_INE -> Value.MX_INE
                     MX_RFC -> Value.MX_RFC
-                    NATIONAL_ID -> Value.NATIONAL_ID
                     NL_BSN -> Value.NL_BSN
                     NL_BTW -> Value.NL_BTW
                     NL_RSIN -> Value.NL_RSIN
@@ -4556,7 +4492,6 @@ private constructor(
                     GB_NINO -> Known.GB_NINO
                     GB_UTR -> Known.GB_UTR
                     GB_VAT -> Known.GB_VAT
-                    GENERIC_INTERNATIONAL -> Known.GENERIC_INTERNATIONAL
                     GR_VAT -> Known.GR_VAT
                     HN_ID -> Known.HN_ID
                     HN_RTN -> Known.HN_RTN
@@ -4586,7 +4521,6 @@ private constructor(
                     MX_CURP -> Known.MX_CURP
                     MX_INE -> Known.MX_INE
                     MX_RFC -> Known.MX_RFC
-                    NATIONAL_ID -> Known.NATIONAL_ID
                     NL_BSN -> Known.NL_BSN
                     NL_BTW -> Known.NL_BTW
                     NL_RSIN -> Known.NL_RSIN
@@ -4746,6 +4680,8 @@ private constructor(
 
             @JvmField val INDIVIDUAL = of("individual")
 
+            @JvmField val JOINT = of("joint")
+
             @JvmStatic fun of(value: String) = LegalEntityType(JsonField.of(value))
         }
 
@@ -4753,6 +4689,7 @@ private constructor(
         enum class Known {
             BUSINESS,
             INDIVIDUAL,
+            JOINT,
         }
 
         /**
@@ -4767,6 +4704,7 @@ private constructor(
         enum class Value {
             BUSINESS,
             INDIVIDUAL,
+            JOINT,
             /**
              * An enum member indicating that [LegalEntityType] was instantiated with an unknown
              * value.
@@ -4785,6 +4723,7 @@ private constructor(
             when (this) {
                 BUSINESS -> Value.BUSINESS
                 INDIVIDUAL -> Value.INDIVIDUAL
+                JOINT -> Value.JOINT
                 else -> Value._UNKNOWN
             }
 
@@ -4801,6 +4740,7 @@ private constructor(
             when (this) {
                 BUSINESS -> Known.BUSINESS
                 INDIVIDUAL -> Known.INDIVIDUAL
+                JOINT -> Known.JOINT
                 else -> throw ModernTreasuryInvalidDataException("Unknown LegalEntityType: $value")
             }
 
@@ -5854,208 +5794,6 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Acceptance of terms of use by the legal entity. */
-    class TermsOfUse
-    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-    private constructor(
-        private val acceptedAt: JsonField<OffsetDateTime>,
-        private val ipAddress: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("accepted_at")
-            @ExcludeMissing
-            acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("ip_address")
-            @ExcludeMissing
-            ipAddress: JsonField<String> = JsonMissing.of(),
-        ) : this(acceptedAt, ipAddress, mutableMapOf())
-
-        /**
-         * The ISO 8601 timestamp indicating when the terms of use were accepted.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun acceptedAt(): Optional<OffsetDateTime> = acceptedAt.getOptional("accepted_at")
-
-        /**
-         * The IP address from which the terms of use were accepted. Supports both IPv4 and IPv6
-         * formats.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun ipAddress(): Optional<String> = ipAddress.getOptional("ip_address")
-
-        /**
-         * Returns the raw JSON value of [acceptedAt].
-         *
-         * Unlike [acceptedAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("accepted_at")
-        @ExcludeMissing
-        fun _acceptedAt(): JsonField<OffsetDateTime> = acceptedAt
-
-        /**
-         * Returns the raw JSON value of [ipAddress].
-         *
-         * Unlike [ipAddress], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("ip_address") @ExcludeMissing fun _ipAddress(): JsonField<String> = ipAddress
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [TermsOfUse]. */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [TermsOfUse]. */
-        class Builder internal constructor() {
-
-            private var acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var ipAddress: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(termsOfUse: TermsOfUse) = apply {
-                acceptedAt = termsOfUse.acceptedAt
-                ipAddress = termsOfUse.ipAddress
-                additionalProperties = termsOfUse.additionalProperties.toMutableMap()
-            }
-
-            /** The ISO 8601 timestamp indicating when the terms of use were accepted. */
-            fun acceptedAt(acceptedAt: OffsetDateTime) = acceptedAt(JsonField.of(acceptedAt))
-
-            /**
-             * Sets [Builder.acceptedAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.acceptedAt] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun acceptedAt(acceptedAt: JsonField<OffsetDateTime>) = apply {
-                this.acceptedAt = acceptedAt
-            }
-
-            /**
-             * The IP address from which the terms of use were accepted. Supports both IPv4 and IPv6
-             * formats.
-             */
-            fun ipAddress(ipAddress: String) = ipAddress(JsonField.of(ipAddress))
-
-            /**
-             * Sets [Builder.ipAddress] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.ipAddress] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun ipAddress(ipAddress: JsonField<String>) = apply { this.ipAddress = ipAddress }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [TermsOfUse].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): TermsOfUse =
-                TermsOfUse(acceptedAt, ipAddress, additionalProperties.toMutableMap())
-        }
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
-         */
-        fun validate(): TermsOfUse = apply {
-            if (validated) {
-                return@apply
-            }
-
-            acceptedAt()
-            ipAddress()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: ModernTreasuryInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            (if (acceptedAt.asKnown().isPresent) 1 else 0) +
-                (if (ipAddress.asKnown().isPresent) 1 else 0)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is TermsOfUse &&
-                acceptedAt == other.acceptedAt &&
-                ipAddress == other.ipAddress &&
-                additionalProperties == other.additionalProperties
-        }
-
-        private val hashCode: Int by lazy {
-            Objects.hash(acceptedAt, ipAddress, additionalProperties)
-        }
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "TermsOfUse{acceptedAt=$acceptedAt, ipAddress=$ipAddress, additionalProperties=$additionalProperties}"
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -6103,7 +5841,6 @@ private constructor(
             serviceProviderLegalEntityId == other.serviceProviderLegalEntityId &&
             status == other.status &&
             suffix == other.suffix &&
-            termsOfUse == other.termsOfUse &&
             thirdPartyVerification == other.thirdPartyVerification &&
             thirdPartyVerifications == other.thirdPartyVerifications &&
             tickerSymbol == other.tickerSymbol &&
@@ -6156,7 +5893,6 @@ private constructor(
             serviceProviderLegalEntityId,
             status,
             suffix,
-            termsOfUse,
             thirdPartyVerification,
             thirdPartyVerifications,
             tickerSymbol,
@@ -6170,5 +5906,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, status=$status, suffix=$suffix, termsOfUse=$termsOfUse, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+        "ChildLegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
 }

@@ -431,7 +431,8 @@ private constructor(
         transactionLineItemId.getOptional("transaction_line_item_id")
 
     /**
-     * One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire.
+     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet,
+     * wire.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -1396,7 +1397,10 @@ private constructor(
             this.transactionLineItemId = transactionLineItemId
         }
 
-        /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire. */
+        /**
+         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa,
+         * signet, wire.
+         */
         fun type(type: ExpectedPaymentType?) = type(JsonField.ofNullable(type))
 
         /** Alias for calling [Builder.type] with `type.orElse(null)`. */
