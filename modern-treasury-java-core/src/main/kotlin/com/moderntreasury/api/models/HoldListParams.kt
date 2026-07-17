@@ -36,13 +36,13 @@ private constructor(
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
-    /** Only return holds for a specific status. */
+    /** Translation missing: en.openapi.descriptions.payment_order.query_params.status */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
-    /** Only return holds for a specific target ID. */
+    /** Translation missing: en.openapi.descriptions.payment_order.query_params.target_id */
     fun targetId(): Optional<String> = Optional.ofNullable(targetId)
 
-    /** Only return holds for a specific target type. */
+    /** Translation missing: en.openapi.descriptions.payment_order.query_params.target_type */
     fun targetType(): Optional<TargetType> = Optional.ofNullable(targetType)
 
     /** Additional headers to send with the request. */
@@ -111,19 +111,19 @@ private constructor(
         /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
-        /** Only return holds for a specific status. */
+        /** Translation missing: en.openapi.descriptions.payment_order.query_params.status */
         fun status(status: Status?) = apply { this.status = status }
 
         /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
-        /** Only return holds for a specific target ID. */
+        /** Translation missing: en.openapi.descriptions.payment_order.query_params.target_id */
         fun targetId(targetId: String?) = apply { this.targetId = targetId }
 
         /** Alias for calling [Builder.targetId] with `targetId.orElse(null)`. */
         fun targetId(targetId: Optional<String>) = targetId(targetId.getOrNull())
 
-        /** Only return holds for a specific target type. */
+        /** Translation missing: en.openapi.descriptions.payment_order.query_params.target_type */
         fun targetType(targetType: TargetType?) = apply { this.targetType = targetType }
 
         /** Alias for calling [Builder.targetType] with `targetType.orElse(null)`. */
@@ -365,7 +365,7 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
-    /** Only return holds for a specific status. */
+    /** Translation missing: en.openapi.descriptions.payment_order.query_params.status */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -502,7 +502,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Only return holds for a specific target type. */
+    /** Translation missing: en.openapi.descriptions.payment_order.query_params.target_type */
     class TargetType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

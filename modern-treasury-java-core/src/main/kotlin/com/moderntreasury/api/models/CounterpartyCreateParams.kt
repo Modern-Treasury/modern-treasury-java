@@ -19,7 +19,6 @@ import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 import java.time.LocalDate
-import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
@@ -3268,6 +3267,10 @@ private constructor(
 
                     @JvmField val HK_INTERBANK_CLEARING_CODE = of("hk_interbank_clearing_code")
 
+                    @JvmField val HU_INTERBANK_CLEARING_CODE = of("hu_interbank_clearing_code")
+
+                    @JvmField val ID_SKNBI_CODE = of("id_sknbi_code")
+
                     @JvmField val IL_BANK_CODE = of("il_bank_code")
 
                     @JvmField val IN_IFSC = of("in_ifsc")
@@ -3304,6 +3307,8 @@ private constructor(
                     DK_INTERBANK_CLEARING_CODE,
                     GB_SORT_CODE,
                     HK_INTERBANK_CLEARING_CODE,
+                    HU_INTERBANK_CLEARING_CODE,
+                    ID_SKNBI_CODE,
                     IL_BANK_CODE,
                     IN_IFSC,
                     JP_ZENGIN_CODE,
@@ -3338,6 +3343,8 @@ private constructor(
                     DK_INTERBANK_CLEARING_CODE,
                     GB_SORT_CODE,
                     HK_INTERBANK_CLEARING_CODE,
+                    HU_INTERBANK_CLEARING_CODE,
+                    ID_SKNBI_CODE,
                     IL_BANK_CODE,
                     IN_IFSC,
                     JP_ZENGIN_CODE,
@@ -3374,6 +3381,8 @@ private constructor(
                         DK_INTERBANK_CLEARING_CODE -> Value.DK_INTERBANK_CLEARING_CODE
                         GB_SORT_CODE -> Value.GB_SORT_CODE
                         HK_INTERBANK_CLEARING_CODE -> Value.HK_INTERBANK_CLEARING_CODE
+                        HU_INTERBANK_CLEARING_CODE -> Value.HU_INTERBANK_CLEARING_CODE
+                        ID_SKNBI_CODE -> Value.ID_SKNBI_CODE
                         IL_BANK_CODE -> Value.IL_BANK_CODE
                         IN_IFSC -> Value.IN_IFSC
                         JP_ZENGIN_CODE -> Value.JP_ZENGIN_CODE
@@ -3408,6 +3417,8 @@ private constructor(
                         DK_INTERBANK_CLEARING_CODE -> Known.DK_INTERBANK_CLEARING_CODE
                         GB_SORT_CODE -> Known.GB_SORT_CODE
                         HK_INTERBANK_CLEARING_CODE -> Known.HK_INTERBANK_CLEARING_CODE
+                        HU_INTERBANK_CLEARING_CODE -> Known.HU_INTERBANK_CLEARING_CODE
+                        ID_SKNBI_CODE -> Known.ID_SKNBI_CODE
                         IL_BANK_CODE -> Known.IL_BANK_CODE
                         IN_IFSC -> Known.IN_IFSC
                         JP_ZENGIN_CODE -> Known.JP_ZENGIN_CODE
@@ -3527,6 +3538,10 @@ private constructor(
 
                     @JvmField val GB_FPS = of("gb_fps")
 
+                    @JvmField val HU_ICS = of("hu_ics")
+
+                    @JvmField val INTERAC = of("interac")
+
                     @JvmField val MASAV = of("masav")
 
                     @JvmField val MX_CCEN = of("mx_ccen")
@@ -3539,15 +3554,25 @@ private constructor(
 
                     @JvmField val PL_ELIXIR = of("pl_elixir")
 
+                    @JvmField val PROVXCHANGE = of("provxchange")
+
+                    @JvmField val RO_SENT = of("ro_sent")
+
                     @JvmField val RTP = of("rtp")
 
                     @JvmField val SE_BANKGIROT = of("se_bankgirot")
+
+                    @JvmField val SEN = of("sen")
 
                     @JvmField val SEPA = of("sepa")
 
                     @JvmField val SG_GIRO = of("sg_giro")
 
                     @JvmField val SIC = of("sic")
+
+                    @JvmField val SIGNET = of("signet")
+
+                    @JvmField val SKNBI = of("sknbi")
 
                     @JvmField val STABLECOIN = of("stablecoin")
 
@@ -3571,17 +3596,24 @@ private constructor(
                     DK_NETS,
                     EFT,
                     GB_FPS,
+                    HU_ICS,
+                    INTERAC,
                     MASAV,
                     MX_CCEN,
                     NEFT,
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
                     RTP,
                     SE_BANKGIROT,
+                    SEN,
                     SEPA,
                     SG_GIRO,
                     SIC,
+                    SIGNET,
+                    SKNBI,
                     STABLECOIN,
                     WIRE,
                     ZENGIN,
@@ -3608,17 +3640,24 @@ private constructor(
                     DK_NETS,
                     EFT,
                     GB_FPS,
+                    HU_ICS,
+                    INTERAC,
                     MASAV,
                     MX_CCEN,
                     NEFT,
                     NICS,
                     NZ_BECS,
                     PL_ELIXIR,
+                    PROVXCHANGE,
+                    RO_SENT,
                     RTP,
                     SE_BANKGIROT,
+                    SEN,
                     SEPA,
                     SG_GIRO,
                     SIC,
+                    SIGNET,
+                    SKNBI,
                     STABLECOIN,
                     WIRE,
                     ZENGIN,
@@ -3649,17 +3688,24 @@ private constructor(
                         DK_NETS -> Value.DK_NETS
                         EFT -> Value.EFT
                         GB_FPS -> Value.GB_FPS
+                        HU_ICS -> Value.HU_ICS
+                        INTERAC -> Value.INTERAC
                         MASAV -> Value.MASAV
                         MX_CCEN -> Value.MX_CCEN
                         NEFT -> Value.NEFT
                         NICS -> Value.NICS
                         NZ_BECS -> Value.NZ_BECS
                         PL_ELIXIR -> Value.PL_ELIXIR
+                        PROVXCHANGE -> Value.PROVXCHANGE
+                        RO_SENT -> Value.RO_SENT
                         RTP -> Value.RTP
                         SE_BANKGIROT -> Value.SE_BANKGIROT
+                        SEN -> Value.SEN
                         SEPA -> Value.SEPA
                         SG_GIRO -> Value.SG_GIRO
                         SIC -> Value.SIC
+                        SIGNET -> Value.SIGNET
+                        SKNBI -> Value.SKNBI
                         STABLECOIN -> Value.STABLECOIN
                         WIRE -> Value.WIRE
                         ZENGIN -> Value.ZENGIN
@@ -3688,17 +3734,24 @@ private constructor(
                         DK_NETS -> Known.DK_NETS
                         EFT -> Known.EFT
                         GB_FPS -> Known.GB_FPS
+                        HU_ICS -> Known.HU_ICS
+                        INTERAC -> Known.INTERAC
                         MASAV -> Known.MASAV
                         MX_CCEN -> Known.MX_CCEN
                         NEFT -> Known.NEFT
                         NICS -> Known.NICS
                         NZ_BECS -> Known.NZ_BECS
                         PL_ELIXIR -> Known.PL_ELIXIR
+                        PROVXCHANGE -> Known.PROVXCHANGE
+                        RO_SENT -> Known.RO_SENT
                         RTP -> Known.RTP
                         SE_BANKGIROT -> Known.SE_BANKGIROT
+                        SEN -> Known.SEN
                         SEPA -> Known.SEPA
                         SG_GIRO -> Known.SG_GIRO
                         SIC -> Known.SIC
+                        SIGNET -> Known.SIGNET
+                        SKNBI -> Known.SKNBI
                         STABLECOIN -> Known.STABLECOIN
                         WIRE -> Known.WIRE
                         ZENGIN -> Known.ZENGIN
@@ -4020,7 +4073,6 @@ private constructor(
         private val riskRating: JsonField<RiskRating>,
         private val serviceProviderLegalEntityId: JsonField<String>,
         private val suffix: JsonField<String>,
-        private val termsOfUse: JsonField<TermsOfUse>,
         private val thirdPartyVerification: JsonField<ThirdPartyVerification>,
         private val thirdPartyVerifications: JsonField<List<ThirdPartyVerification>>,
         private val tickerSymbol: JsonField<String>,
@@ -4135,9 +4187,6 @@ private constructor(
             @ExcludeMissing
             serviceProviderLegalEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("suffix") @ExcludeMissing suffix: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("terms_of_use")
-            @ExcludeMissing
-            termsOfUse: JsonField<TermsOfUse> = JsonMissing.of(),
             @JsonProperty("third_party_verification")
             @ExcludeMissing
             thirdPartyVerification: JsonField<ThirdPartyVerification> = JsonMissing.of(),
@@ -4188,7 +4237,6 @@ private constructor(
             riskRating,
             serviceProviderLegalEntityId,
             suffix,
-            termsOfUse,
             thirdPartyVerification,
             thirdPartyVerifications,
             tickerSymbol,
@@ -4501,14 +4549,6 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun suffix(): Optional<String> = suffix.getOptional("suffix")
-
-        /**
-         * Acceptance of terms of use by the legal entity.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun termsOfUse(): Optional<TermsOfUse> = termsOfUse.getOptional("terms_of_use")
 
         /**
          * Deprecated. Use `third_party_verifications` instead.
@@ -4878,15 +4918,6 @@ private constructor(
         @JsonProperty("suffix") @ExcludeMissing fun _suffix(): JsonField<String> = suffix
 
         /**
-         * Returns the raw JSON value of [termsOfUse].
-         *
-         * Unlike [termsOfUse], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("terms_of_use")
-        @ExcludeMissing
-        fun _termsOfUse(): JsonField<TermsOfUse> = termsOfUse
-
-        /**
          * Returns the raw JSON value of [thirdPartyVerification].
          *
          * Unlike [thirdPartyVerification], this method doesn't throw if the JSON field has an
@@ -5004,7 +5035,6 @@ private constructor(
             private var riskRating: JsonField<RiskRating> = JsonMissing.of()
             private var serviceProviderLegalEntityId: JsonField<String> = JsonMissing.of()
             private var suffix: JsonField<String> = JsonMissing.of()
-            private var termsOfUse: JsonField<TermsOfUse> = JsonMissing.of()
             private var thirdPartyVerification: JsonField<ThirdPartyVerification> = JsonMissing.of()
             private var thirdPartyVerifications: JsonField<MutableList<ThirdPartyVerification>>? =
                 null
@@ -5058,7 +5088,6 @@ private constructor(
                 riskRating = legalEntityCreateRequest.riskRating
                 serviceProviderLegalEntityId = legalEntityCreateRequest.serviceProviderLegalEntityId
                 suffix = legalEntityCreateRequest.suffix
-                termsOfUse = legalEntityCreateRequest.termsOfUse
                 thirdPartyVerification = legalEntityCreateRequest.thirdPartyVerification
                 thirdPartyVerifications =
                     legalEntityCreateRequest.thirdPartyVerifications.map { it.toMutableList() }
@@ -5843,23 +5872,6 @@ private constructor(
              */
             fun suffix(suffix: JsonField<String>) = apply { this.suffix = suffix }
 
-            /** Acceptance of terms of use by the legal entity. */
-            fun termsOfUse(termsOfUse: TermsOfUse?) = termsOfUse(JsonField.ofNullable(termsOfUse))
-
-            /** Alias for calling [Builder.termsOfUse] with `termsOfUse.orElse(null)`. */
-            fun termsOfUse(termsOfUse: Optional<TermsOfUse>) = termsOfUse(termsOfUse.getOrNull())
-
-            /**
-             * Sets [Builder.termsOfUse] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.termsOfUse] with a well-typed [TermsOfUse] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun termsOfUse(termsOfUse: JsonField<TermsOfUse>) = apply {
-                this.termsOfUse = termsOfUse
-            }
-
             /** Deprecated. Use `third_party_verifications` instead. */
             @Deprecated("deprecated")
             fun thirdPartyVerification(thirdPartyVerification: ThirdPartyVerification?) =
@@ -6041,7 +6053,6 @@ private constructor(
                     riskRating,
                     serviceProviderLegalEntityId,
                     suffix,
-                    termsOfUse,
                     thirdPartyVerification,
                     (thirdPartyVerifications ?: JsonMissing.of()).map { it.toImmutable() },
                     tickerSymbol,
@@ -6102,7 +6113,6 @@ private constructor(
             riskRating().ifPresent { it.validate() }
             serviceProviderLegalEntityId()
             suffix()
-            termsOfUse().ifPresent { it.validate() }
             thirdPartyVerification().ifPresent { it.validate() }
             thirdPartyVerifications().ifPresent { it.forEach { it.validate() } }
             tickerSymbol()
@@ -6164,7 +6174,6 @@ private constructor(
                 (riskRating.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (serviceProviderLegalEntityId.asKnown().isPresent) 1 else 0) +
                 (if (suffix.asKnown().isPresent) 1 else 0) +
-                (termsOfUse.asKnown().getOrNull()?.validity() ?: 0) +
                 (thirdPartyVerification.asKnown().getOrNull()?.validity() ?: 0) +
                 (thirdPartyVerifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
                     ?: 0) +
@@ -7619,216 +7628,6 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        /** Acceptance of terms of use by the legal entity. */
-        class TermsOfUse
-        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-        private constructor(
-            private val acceptedAt: JsonField<OffsetDateTime>,
-            private val ipAddress: JsonField<String>,
-            private val additionalProperties: MutableMap<String, JsonValue>,
-        ) {
-
-            @JsonCreator
-            private constructor(
-                @JsonProperty("accepted_at")
-                @ExcludeMissing
-                acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-                @JsonProperty("ip_address")
-                @ExcludeMissing
-                ipAddress: JsonField<String> = JsonMissing.of(),
-            ) : this(acceptedAt, ipAddress, mutableMapOf())
-
-            /**
-             * The ISO 8601 timestamp indicating when the terms of use were accepted.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun acceptedAt(): Optional<OffsetDateTime> = acceptedAt.getOptional("accepted_at")
-
-            /**
-             * The IP address from which the terms of use were accepted. Supports both IPv4 and IPv6
-             * formats.
-             *
-             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
-             *   (e.g. if the server responded with an unexpected value).
-             */
-            fun ipAddress(): Optional<String> = ipAddress.getOptional("ip_address")
-
-            /**
-             * Returns the raw JSON value of [acceptedAt].
-             *
-             * Unlike [acceptedAt], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("accepted_at")
-            @ExcludeMissing
-            fun _acceptedAt(): JsonField<OffsetDateTime> = acceptedAt
-
-            /**
-             * Returns the raw JSON value of [ipAddress].
-             *
-             * Unlike [ipAddress], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("ip_address")
-            @ExcludeMissing
-            fun _ipAddress(): JsonField<String> = ipAddress
-
-            @JsonAnySetter
-            private fun putAdditionalProperty(key: String, value: JsonValue) {
-                additionalProperties.put(key, value)
-            }
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> =
-                Collections.unmodifiableMap(additionalProperties)
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /** Returns a mutable builder for constructing an instance of [TermsOfUse]. */
-                @JvmStatic fun builder() = Builder()
-            }
-
-            /** A builder for [TermsOfUse]. */
-            class Builder internal constructor() {
-
-                private var acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-                private var ipAddress: JsonField<String> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                @JvmSynthetic
-                internal fun from(termsOfUse: TermsOfUse) = apply {
-                    acceptedAt = termsOfUse.acceptedAt
-                    ipAddress = termsOfUse.ipAddress
-                    additionalProperties = termsOfUse.additionalProperties.toMutableMap()
-                }
-
-                /** The ISO 8601 timestamp indicating when the terms of use were accepted. */
-                fun acceptedAt(acceptedAt: OffsetDateTime) = acceptedAt(JsonField.of(acceptedAt))
-
-                /**
-                 * Sets [Builder.acceptedAt] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.acceptedAt] with a well-typed [OffsetDateTime]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun acceptedAt(acceptedAt: JsonField<OffsetDateTime>) = apply {
-                    this.acceptedAt = acceptedAt
-                }
-
-                /**
-                 * The IP address from which the terms of use were accepted. Supports both IPv4 and
-                 * IPv6 formats.
-                 */
-                fun ipAddress(ipAddress: String) = ipAddress(JsonField.of(ipAddress))
-
-                /**
-                 * Sets [Builder.ipAddress] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.ipAddress] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun ipAddress(ipAddress: JsonField<String>) = apply { this.ipAddress = ipAddress }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                /**
-                 * Returns an immutable instance of [TermsOfUse].
-                 *
-                 * Further updates to this [Builder] will not mutate the returned instance.
-                 */
-                fun build(): TermsOfUse =
-                    TermsOfUse(acceptedAt, ipAddress, additionalProperties.toMutableMap())
-            }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): TermsOfUse = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                acceptedAt()
-                ipAddress()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic
-            internal fun validity(): Int =
-                (if (acceptedAt.asKnown().isPresent) 1 else 0) +
-                    (if (ipAddress.asKnown().isPresent) 1 else 0)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is TermsOfUse &&
-                    acceptedAt == other.acceptedAt &&
-                    ipAddress == other.ipAddress &&
-                    additionalProperties == other.additionalProperties
-            }
-
-            private val hashCode: Int by lazy {
-                Objects.hash(acceptedAt, ipAddress, additionalProperties)
-            }
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "TermsOfUse{acceptedAt=$acceptedAt, ipAddress=$ipAddress, additionalProperties=$additionalProperties}"
-        }
-
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -7871,7 +7670,6 @@ private constructor(
                 riskRating == other.riskRating &&
                 serviceProviderLegalEntityId == other.serviceProviderLegalEntityId &&
                 suffix == other.suffix &&
-                termsOfUse == other.termsOfUse &&
                 thirdPartyVerification == other.thirdPartyVerification &&
                 thirdPartyVerifications == other.thirdPartyVerifications &&
                 tickerSymbol == other.tickerSymbol &&
@@ -7918,7 +7716,6 @@ private constructor(
                 riskRating,
                 serviceProviderLegalEntityId,
                 suffix,
-                termsOfUse,
                 thirdPartyVerification,
                 thirdPartyVerifications,
                 tickerSymbol,
@@ -7931,7 +7728,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityCreateRequest{legalEntityType=$legalEntityType, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, connectionId=$connectionId, countryOfIncorporation=$countryOfIncorporation, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalStructure=$legalStructure, listedExchange=$listedExchange, metadata=$metadata, middleName=$middleName, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, suffix=$suffix, termsOfUse=$termsOfUse, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+            "LegalEntityCreateRequest{legalEntityType=$legalEntityType, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, connectionId=$connectionId, countryOfIncorporation=$countryOfIncorporation, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityAssociations=$legalEntityAssociations, legalStructure=$legalStructure, listedExchange=$listedExchange, metadata=$metadata, middleName=$middleName, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */

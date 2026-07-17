@@ -12,7 +12,6 @@ import com.moderntreasury.api.models.LegalEntityListPage
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
 import com.moderntreasury.api.models.LegalEntityUpdateParams
-import com.moderntreasury.api.models.LegalEntityUpdateStatusParams
 import java.util.function.Consumer
 
 interface LegalEntityService {
@@ -113,27 +112,6 @@ interface LegalEntityService {
     /** @see list */
     fun list(requestOptions: RequestOptions): LegalEntityListPage =
         list(LegalEntityListParams.none(), requestOptions)
-
-    /** Update Legal Entity Status (sandbox only) */
-    fun updateStatus(id: String, params: LegalEntityUpdateStatusParams): LegalEntity =
-        updateStatus(id, params, RequestOptions.none())
-
-    /** @see updateStatus */
-    fun updateStatus(
-        id: String,
-        params: LegalEntityUpdateStatusParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity = updateStatus(params.toBuilder().id(id).build(), requestOptions)
-
-    /** @see updateStatus */
-    fun updateStatus(params: LegalEntityUpdateStatusParams): LegalEntity =
-        updateStatus(params, RequestOptions.none())
-
-    /** @see updateStatus */
-    fun updateStatus(
-        params: LegalEntityUpdateStatusParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity
 
     /**
      * A view of [LegalEntityService] that provides access to raw HTTP responses for each method.
@@ -269,37 +247,5 @@ interface LegalEntityService {
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LegalEntityListPage> =
             list(LegalEntityListParams.none(), requestOptions)
-
-        /**
-         * Returns a raw HTTP response for `patch
-         * /api/simulations/legal_entities/{id}/update_status`, but is otherwise the same as
-         * [LegalEntityService.updateStatus].
-         */
-        @MustBeClosed
-        fun updateStatus(
-            id: String,
-            params: LegalEntityUpdateStatusParams,
-        ): HttpResponseFor<LegalEntity> = updateStatus(id, params, RequestOptions.none())
-
-        /** @see updateStatus */
-        @MustBeClosed
-        fun updateStatus(
-            id: String,
-            params: LegalEntityUpdateStatusParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity> =
-            updateStatus(params.toBuilder().id(id).build(), requestOptions)
-
-        /** @see updateStatus */
-        @MustBeClosed
-        fun updateStatus(params: LegalEntityUpdateStatusParams): HttpResponseFor<LegalEntity> =
-            updateStatus(params, RequestOptions.none())
-
-        /** @see updateStatus */
-        @MustBeClosed
-        fun updateStatus(
-            params: LegalEntityUpdateStatusParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity>
     }
 }

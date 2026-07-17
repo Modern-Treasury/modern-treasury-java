@@ -68,7 +68,7 @@ private constructor(
      */
     fun subtype(): Optional<String> = Optional.ofNullable(subtype)
 
-    /** One of: `ach`, `book`, `check`, `eft`, `rtp`, `sepa`, or `wire`. */
+    /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
     /** If the incoming payment detail is in a virtual account, the ID of the Virtual Account. */
@@ -196,7 +196,7 @@ private constructor(
         /** Alias for calling [Builder.subtype] with `subtype.orElse(null)`. */
         fun subtype(subtype: Optional<String>) = subtype(subtype.getOrNull())
 
-        /** One of: `ach`, `book`, `check`, `eft`, `rtp`, `sepa`, or `wire`. */
+        /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
         fun type(type: Type?) = apply { this.type = type }
 
         /** Alias for calling [Builder.type] with `type.orElse(null)`. */
@@ -603,7 +603,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** One of: `ach`, `book`, `check`, `eft`, `rtp`, `sepa`, or `wire`. */
+    /** One of: `ach`, `book`, `check`, `eft`, `interac`, `rtp`, `sepa`, `signet`, or `wire`. */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -630,6 +630,8 @@ private constructor(
 
             @JvmField val EFT = of("eft")
 
+            @JvmField val INTERAC = of("interac")
+
             @JvmField val NEFT = of("neft")
 
             @JvmField val NZ_BECS = of("nz_becs")
@@ -637,6 +639,8 @@ private constructor(
             @JvmField val RTP = of("rtp")
 
             @JvmField val SEPA = of("sepa")
+
+            @JvmField val SIGNET = of("signet")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -655,10 +659,12 @@ private constructor(
             BOOK,
             CHECK,
             EFT,
+            INTERAC,
             NEFT,
             NZ_BECS,
             RTP,
             SEPA,
+            SIGNET,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -680,10 +686,12 @@ private constructor(
             BOOK,
             CHECK,
             EFT,
+            INTERAC,
             NEFT,
             NZ_BECS,
             RTP,
             SEPA,
+            SIGNET,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -706,10 +714,12 @@ private constructor(
                 BOOK -> Value.BOOK
                 CHECK -> Value.CHECK
                 EFT -> Value.EFT
+                INTERAC -> Value.INTERAC
                 NEFT -> Value.NEFT
                 NZ_BECS -> Value.NZ_BECS
                 RTP -> Value.RTP
                 SEPA -> Value.SEPA
+                SIGNET -> Value.SIGNET
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -733,10 +743,12 @@ private constructor(
                 BOOK -> Known.BOOK
                 CHECK -> Known.CHECK
                 EFT -> Known.EFT
+                INTERAC -> Known.INTERAC
                 NEFT -> Known.NEFT
                 NZ_BECS -> Known.NZ_BECS
                 RTP -> Known.RTP
                 SEPA -> Known.SEPA
+                SIGNET -> Known.SIGNET
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
