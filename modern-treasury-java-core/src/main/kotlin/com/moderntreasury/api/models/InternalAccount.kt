@@ -33,6 +33,7 @@ private constructor(
     private val counterpartyId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<Currency>,
+    private val debitable: JsonField<Boolean>,
     private val externalId: JsonField<String>,
     private val ledgerAccountId: JsonField<String>,
     private val legalEntityId: JsonField<String>,
@@ -76,6 +77,7 @@ private constructor(
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<Currency> = JsonMissing.of(),
+        @JsonProperty("debitable") @ExcludeMissing debitable: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("external_id")
         @ExcludeMissing
         externalId: JsonField<String> = JsonMissing.of(),
@@ -117,6 +119,7 @@ private constructor(
         counterpartyId,
         createdAt,
         currency,
+        debitable,
         externalId,
         ledgerAccountId,
         legalEntityId,
@@ -206,6 +209,17 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun currency(): Currency = currency.getRequired("currency")
+
+    /**
+     * Whether this account can receive ACH debits. Only applicable to accounts created under a
+     * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
+     * `false`. Configurable only on creation. Please reach out to your customer success manager to
+     * enable this capability for your connection.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun debitable(): Optional<Boolean> = debitable.getOptional("debitable")
 
     /**
      * An optional user-defined 180 character unique identifier.
@@ -405,6 +419,13 @@ private constructor(
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<Currency> = currency
 
     /**
+     * Returns the raw JSON value of [debitable].
+     *
+     * Unlike [debitable], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("debitable") @ExcludeMissing fun _debitable(): JsonField<Boolean> = debitable
+
+    /**
      * Returns the raw JSON value of [externalId].
      *
      * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
@@ -549,6 +570,7 @@ private constructor(
          * .counterpartyId()
          * .createdAt()
          * .currency()
+         * .debitable()
          * .externalId()
          * .ledgerAccountId()
          * .legalEntityId()
@@ -581,6 +603,7 @@ private constructor(
         private var counterpartyId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<Currency>? = null
+        private var debitable: JsonField<Boolean>? = null
         private var externalId: JsonField<String>? = null
         private var ledgerAccountId: JsonField<String>? = null
         private var legalEntityId: JsonField<String>? = null
@@ -609,6 +632,7 @@ private constructor(
             counterpartyId = internalAccount.counterpartyId
             createdAt = internalAccount.createdAt
             currency = internalAccount.currency
+            debitable = internalAccount.debitable
             externalId = internalAccount.externalId
             ledgerAccountId = internalAccount.ledgerAccountId
             legalEntityId = internalAccount.legalEntityId
@@ -789,6 +813,33 @@ private constructor(
          * value.
          */
         fun currency(currency: JsonField<Currency>) = apply { this.currency = currency }
+
+        /**
+         * Whether this account can receive ACH debits. Only applicable to accounts created under a
+         * Modern Treasury PSP connection, or `null` for Bring Your Own Bank accounts. Defaults to
+         * `false`. Configurable only on creation. Please reach out to your customer success manager
+         * to enable this capability for your connection.
+         */
+        fun debitable(debitable: Boolean?) = debitable(JsonField.ofNullable(debitable))
+
+        /**
+         * Alias for [Builder.debitable].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun debitable(debitable: Boolean) = debitable(debitable as Boolean?)
+
+        /** Alias for calling [Builder.debitable] with `debitable.orElse(null)`. */
+        fun debitable(debitable: Optional<Boolean>) = debitable(debitable.getOrNull())
+
+        /**
+         * Sets [Builder.debitable] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.debitable] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun debitable(debitable: JsonField<Boolean>) = apply { this.debitable = debitable }
 
         /** An optional user-defined 180 character unique identifier. */
         fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
@@ -1063,6 +1114,7 @@ private constructor(
          * .counterpartyId()
          * .createdAt()
          * .currency()
+         * .debitable()
          * .externalId()
          * .ledgerAccountId()
          * .legalEntityId()
@@ -1093,6 +1145,7 @@ private constructor(
                 checkRequired("counterpartyId", counterpartyId),
                 checkRequired("createdAt", createdAt),
                 checkRequired("currency", currency),
+                checkRequired("debitable", debitable),
                 checkRequired("externalId", externalId),
                 checkRequired("ledgerAccountId", ledgerAccountId),
                 checkRequired("legalEntityId", legalEntityId),
@@ -1136,6 +1189,7 @@ private constructor(
         counterpartyId()
         createdAt()
         currency().validate()
+        debitable()
         externalId()
         ledgerAccountId()
         legalEntityId()
@@ -1178,6 +1232,7 @@ private constructor(
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
             (currency.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (debitable.asKnown().isPresent) 1 else 0) +
             (if (externalId.asKnown().isPresent) 1 else 0) +
             (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
             (if (legalEntityId.asKnown().isPresent) 1 else 0) +
@@ -1724,10 +1779,6 @@ private constructor(
 
                 @JvmField val GB_FPS = of("gb_fps")
 
-                @JvmField val HU_ICS = of("hu_ics")
-
-                @JvmField val INTERAC = of("interac")
-
                 @JvmField val MASAV = of("masav")
 
                 @JvmField val MX_CCEN = of("mx_ccen")
@@ -1740,25 +1791,15 @@ private constructor(
 
                 @JvmField val PL_ELIXIR = of("pl_elixir")
 
-                @JvmField val PROVXCHANGE = of("provxchange")
-
-                @JvmField val RO_SENT = of("ro_sent")
-
                 @JvmField val RTP = of("rtp")
 
                 @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-                @JvmField val SEN = of("sen")
 
                 @JvmField val SEPA = of("sepa")
 
                 @JvmField val SG_GIRO = of("sg_giro")
 
                 @JvmField val SIC = of("sic")
-
-                @JvmField val SIGNET = of("signet")
-
-                @JvmField val SKNBI = of("sknbi")
 
                 @JvmField val STABLECOIN = of("stablecoin")
 
@@ -1782,24 +1823,17 @@ private constructor(
                 DK_NETS,
                 EFT,
                 GB_FPS,
-                HU_ICS,
-                INTERAC,
                 MASAV,
                 MX_CCEN,
                 NEFT,
                 NICS,
                 NZ_BECS,
                 PL_ELIXIR,
-                PROVXCHANGE,
-                RO_SENT,
                 RTP,
                 SE_BANKGIROT,
-                SEN,
                 SEPA,
                 SG_GIRO,
                 SIC,
-                SIGNET,
-                SKNBI,
                 STABLECOIN,
                 WIRE,
                 ZENGIN,
@@ -1826,24 +1860,17 @@ private constructor(
                 DK_NETS,
                 EFT,
                 GB_FPS,
-                HU_ICS,
-                INTERAC,
                 MASAV,
                 MX_CCEN,
                 NEFT,
                 NICS,
                 NZ_BECS,
                 PL_ELIXIR,
-                PROVXCHANGE,
-                RO_SENT,
                 RTP,
                 SE_BANKGIROT,
-                SEN,
                 SEPA,
                 SG_GIRO,
                 SIC,
-                SIGNET,
-                SKNBI,
                 STABLECOIN,
                 WIRE,
                 ZENGIN,
@@ -1874,24 +1901,17 @@ private constructor(
                     DK_NETS -> Value.DK_NETS
                     EFT -> Value.EFT
                     GB_FPS -> Value.GB_FPS
-                    HU_ICS -> Value.HU_ICS
-                    INTERAC -> Value.INTERAC
                     MASAV -> Value.MASAV
                     MX_CCEN -> Value.MX_CCEN
                     NEFT -> Value.NEFT
                     NICS -> Value.NICS
                     NZ_BECS -> Value.NZ_BECS
                     PL_ELIXIR -> Value.PL_ELIXIR
-                    PROVXCHANGE -> Value.PROVXCHANGE
-                    RO_SENT -> Value.RO_SENT
                     RTP -> Value.RTP
                     SE_BANKGIROT -> Value.SE_BANKGIROT
-                    SEN -> Value.SEN
                     SEPA -> Value.SEPA
                     SG_GIRO -> Value.SG_GIRO
                     SIC -> Value.SIC
-                    SIGNET -> Value.SIGNET
-                    SKNBI -> Value.SKNBI
                     STABLECOIN -> Value.STABLECOIN
                     WIRE -> Value.WIRE
                     ZENGIN -> Value.ZENGIN
@@ -1920,24 +1940,17 @@ private constructor(
                     DK_NETS -> Known.DK_NETS
                     EFT -> Known.EFT
                     GB_FPS -> Known.GB_FPS
-                    HU_ICS -> Known.HU_ICS
-                    INTERAC -> Known.INTERAC
                     MASAV -> Known.MASAV
                     MX_CCEN -> Known.MX_CCEN
                     NEFT -> Known.NEFT
                     NICS -> Known.NICS
                     NZ_BECS -> Known.NZ_BECS
                     PL_ELIXIR -> Known.PL_ELIXIR
-                    PROVXCHANGE -> Known.PROVXCHANGE
-                    RO_SENT -> Known.RO_SENT
                     RTP -> Known.RTP
                     SE_BANKGIROT -> Known.SE_BANKGIROT
-                    SEN -> Known.SEN
                     SEPA -> Known.SEPA
                     SG_GIRO -> Known.SG_GIRO
                     SIC -> Known.SIC
-                    SIGNET -> Known.SIGNET
-                    SKNBI -> Known.SKNBI
                     STABLECOIN -> Known.STABLECOIN
                     WIRE -> Known.WIRE
                     ZENGIN -> Known.ZENGIN
@@ -2671,6 +2684,7 @@ private constructor(
             counterpartyId == other.counterpartyId &&
             createdAt == other.createdAt &&
             currency == other.currency &&
+            debitable == other.debitable &&
             externalId == other.externalId &&
             ledgerAccountId == other.ledgerAccountId &&
             legalEntityId == other.legalEntityId &&
@@ -2700,6 +2714,7 @@ private constructor(
             counterpartyId,
             createdAt,
             currency,
+            debitable,
             externalId,
             ledgerAccountId,
             legalEntityId,
@@ -2722,5 +2737,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, debitable=$debitable, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }

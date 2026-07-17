@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/7.29.0)
-[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.29.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.29.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/7.30.0)
+[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.30.0/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.0)
 
 <!-- x-release-please-end -->
 
@@ -22,7 +22,7 @@ Use the Modern Treasury MCP Server to enable AI assistants to interact with this
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.29.0).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.0).
 
 <!-- x-release-please-end -->
 
@@ -33,7 +33,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://doc
 ### Gradle
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:7.29.0")
+implementation("com.moderntreasury:modern-treasury-java:7.30.0")
 ```
 
 ### Maven
@@ -42,7 +42,7 @@ implementation("com.moderntreasury:modern-treasury-java:7.29.0")
 <dependency>
   <groupId>com.moderntreasury</groupId>
   <artifactId>modern-treasury-java</artifactId>
-  <version>7.29.0</version>
+  <version>7.30.0</version>
 </dependency>
 ```
 
@@ -208,7 +208,7 @@ import java.nio.file.Paths;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(Paths.get("my/file.txt"))
     .build();
 Document document = client.documents().create(params);
@@ -223,7 +223,7 @@ import java.net.URL;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(new URL("https://example.com/my/file.txt").openStream())
     .build();
 Document document = client.documents().create(params);
@@ -237,7 +237,7 @@ import com.moderntreasury.api.models.DocumentCreateParams;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file("content".getBytes())
     .build();
 Document document = client.documents().create(params);
@@ -254,7 +254,7 @@ import java.net.URL;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(MultipartField.<InputStream>builder()
         .value(new URL("https://example.com/my/file.txt").openStream())
         .filename("my/file.txt")

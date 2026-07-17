@@ -31,12 +31,13 @@ internal class ChildLegalEntityTest {
                         .locality("locality")
                         .object_("object")
                         .postalCode("postal_code")
+                        .primary(true)
                         .region("region")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .bankSettings(
-                    ChildLegalEntity.LegalEntityBankSetting.builder()
+                    BankSettings.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .backupWithholdingPercentage(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -63,18 +64,6 @@ internal class ChildLegalEntityTest {
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .addDocumentDetail(
-                            Document.DocumentDetail.builder()
-                                .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .documentIdentifier("document_identifier")
-                                .documentIdentifierType("document_identifier_type")
-                                .liveMode(true)
-                                .object_("object")
-                                .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .build()
-                        )
                         .documentType("document_type")
                         .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .documentableType(Document.DocumentableType.CONNECTION)
@@ -106,20 +95,6 @@ internal class ChildLegalEntityTest {
                                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .addDocumentDetail(
-                                    Document.DocumentDetail.builder()
-                                        .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .discardedAt(
-                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
-                                        .documentIdentifier("document_identifier")
-                                        .documentIdentifierType("document_identifier_type")
-                                        .liveMode(true)
-                                        .object_("object")
-                                        .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .build()
-                                )
                                 .documentType("document_type")
                                 .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .documentableType(Document.DocumentableType.CONNECTION)
@@ -184,12 +159,13 @@ internal class ChildLegalEntityTest {
                                         .locality("locality")
                                         .object_("object")
                                         .postalCode("postal_code")
+                                        .primary(true)
                                         .region("region")
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
                                 .bankSettings(
-                                    ChildLegalEntity.LegalEntityBankSetting.builder()
+                                    BankSettings.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .backupWithholdingPercentage(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -219,24 +195,6 @@ internal class ChildLegalEntityTest {
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .discardedAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
-                                        .addDocumentDetail(
-                                            Document.DocumentDetail.builder()
-                                                .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                                .createdAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .discardedAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .documentIdentifier("document_identifier")
-                                                .documentIdentifierType("document_identifier_type")
-                                                .liveMode(true)
-                                                .object_("object")
-                                                .updatedAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .build()
                                         )
                                         .documentType("document_type")
                                         .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -274,32 +232,6 @@ internal class ChildLegalEntityTest {
                                                 )
                                                 .discardedAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .addDocumentDetail(
-                                                    Document.DocumentDetail.builder()
-                                                        .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                                        .createdAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .discardedAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .documentIdentifier("document_identifier")
-                                                        .documentIdentifierType(
-                                                            "document_identifier_type"
-                                                        )
-                                                        .liveMode(true)
-                                                        .object_("object")
-                                                        .updatedAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .build()
                                                 )
                                                 .documentType("document_type")
                                                 .documentableId(
@@ -388,6 +320,14 @@ internal class ChildLegalEntityTest {
                                 )
                                 .status(ChildLegalEntity.Status.ACTIVE)
                                 .suffix("suffix")
+                                .termsOfUse(
+                                    ChildLegalEntity.TermsOfUse.builder()
+                                        .acceptedAt(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                        .ipAddress("ip_address")
+                                        .build()
+                                )
                                 .thirdPartyVerification(
                                     ThirdPartyVerification.builder()
                                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -421,7 +361,7 @@ internal class ChildLegalEntityTest {
                                 .tickerSymbol("ticker_symbol")
                                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .wealthAndEmploymentDetails(
-                                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                                    WealthAndEmploymentDetails.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .annualIncome(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -432,39 +372,25 @@ internal class ChildLegalEntityTest {
                                         .employerName("employer_name")
                                         .employerState("employer_state")
                                         .employmentStatus(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .EmploymentStatus
-                                                .EMPLOYED
+                                            WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                         )
                                         .incomeCountry("income_country")
                                         .incomeSource(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .IncomeSource
-                                                .FAMILY_SUPPORT
+                                            WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                         )
                                         .incomeState("income_state")
-                                        .industry(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .Industry
-                                                .ACCOUNTING
-                                        )
+                                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                         .liveMode(true)
                                         .object_("object")
                                         .occupation(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .Occupation
-                                                .CONSULTING
+                                            WealthAndEmploymentDetails.Occupation.CONSULTING
                                         )
                                         .sourceOfFunds(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .SourceOfFunds
-                                                .ALIMONY
+                                            WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
                                         )
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .wealthSource(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .WealthSource
-                                                .BUSINESS_SALE
+                                            WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                         )
                                         .build()
                                 )
@@ -516,6 +442,12 @@ internal class ChildLegalEntityTest {
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .status(ChildLegalEntity.Status.ACTIVE)
                 .suffix("suffix")
+                .termsOfUse(
+                    ChildLegalEntity.TermsOfUse.builder()
+                        .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .ipAddress("ip_address")
+                        .build()
+                )
                 .thirdPartyVerification(
                     ThirdPartyVerification.builder()
                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -545,7 +477,7 @@ internal class ChildLegalEntityTest {
                 .tickerSymbol("ticker_symbol")
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .wealthAndEmploymentDetails(
-                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                    WealthAndEmploymentDetails.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .annualIncome(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -553,32 +485,17 @@ internal class ChildLegalEntityTest {
                         .employerCountry("employer_country")
                         .employerName("employer_name")
                         .employerState("employer_state")
-                        .employmentStatus(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus
-                                .EMPLOYED
-                        )
+                        .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                         .incomeCountry("income_country")
-                        .incomeSource(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource
-                                .FAMILY_SUPPORT
-                        )
+                        .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                         .incomeState("income_state")
-                        .industry(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING
-                        )
+                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                         .liveMode(true)
                         .object_("object")
-                        .occupation(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING
-                        )
-                        .sourceOfFunds(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
-                        )
+                        .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                        .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .wealthSource(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.WealthSource
-                                .BUSINESS_SALE
-                        )
+                        .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                         .build()
                 )
                 .website("website")
@@ -599,13 +516,14 @@ internal class ChildLegalEntityTest {
                     .locality("locality")
                     .object_("object")
                     .postalCode("postal_code")
+                    .primary(true)
                     .region("region")
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
         assertThat(childLegalEntity.bankSettings())
             .contains(
-                ChildLegalEntity.LegalEntityBankSetting.builder()
+                BankSettings.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .backupWithholdingPercentage(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -636,18 +554,6 @@ internal class ChildLegalEntityTest {
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .addDocumentDetail(
-                        Document.DocumentDetail.builder()
-                            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                            .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .documentIdentifier("document_identifier")
-                            .documentIdentifierType("document_identifier_type")
-                            .liveMode(true)
-                            .object_("object")
-                            .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
                     .documentType("document_type")
                     .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .documentableType(Document.DocumentableType.CONNECTION)
@@ -680,18 +586,6 @@ internal class ChildLegalEntityTest {
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .addDocumentDetail(
-                                Document.DocumentDetail.builder()
-                                    .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .documentIdentifier("document_identifier")
-                                    .documentIdentifierType("document_identifier_type")
-                                    .liveMode(true)
-                                    .object_("object")
-                                    .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .build()
-                            )
                             .documentType("document_type")
                             .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .documentableType(Document.DocumentableType.CONNECTION)
@@ -754,12 +648,13 @@ internal class ChildLegalEntityTest {
                                     .locality("locality")
                                     .object_("object")
                                     .postalCode("postal_code")
+                                    .primary(true)
                                     .region("region")
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .build()
                             )
                             .bankSettings(
-                                ChildLegalEntity.LegalEntityBankSetting.builder()
+                                BankSettings.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .backupWithholdingPercentage(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -786,24 +681,6 @@ internal class ChildLegalEntityTest {
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .addDocumentDetail(
-                                        Document.DocumentDetail.builder()
-                                            .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                            .createdAt(
-                                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                            )
-                                            .discardedAt(
-                                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                            )
-                                            .documentIdentifier("document_identifier")
-                                            .documentIdentifierType("document_identifier_type")
-                                            .liveMode(true)
-                                            .object_("object")
-                                            .updatedAt(
-                                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                            )
-                                            .build()
-                                    )
                                     .documentType("document_type")
                                     .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .documentableType(Document.DocumentableType.CONNECTION)
@@ -838,32 +715,6 @@ internal class ChildLegalEntityTest {
                                             )
                                             .discardedAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                            )
-                                            .addDocumentDetail(
-                                                Document.DocumentDetail.builder()
-                                                    .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                                    .createdAt(
-                                                        OffsetDateTime.parse(
-                                                            "2019-12-27T18:11:19.117Z"
-                                                        )
-                                                    )
-                                                    .discardedAt(
-                                                        OffsetDateTime.parse(
-                                                            "2019-12-27T18:11:19.117Z"
-                                                        )
-                                                    )
-                                                    .documentIdentifier("document_identifier")
-                                                    .documentIdentifierType(
-                                                        "document_identifier_type"
-                                                    )
-                                                    .liveMode(true)
-                                                    .object_("object")
-                                                    .updatedAt(
-                                                        OffsetDateTime.parse(
-                                                            "2019-12-27T18:11:19.117Z"
-                                                        )
-                                                    )
-                                                    .build()
                                             )
                                             .documentType("document_type")
                                             .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -943,6 +794,12 @@ internal class ChildLegalEntityTest {
                             .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .status(ChildLegalEntity.Status.ACTIVE)
                             .suffix("suffix")
+                            .termsOfUse(
+                                ChildLegalEntity.TermsOfUse.builder()
+                                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .ipAddress("ip_address")
+                                    .build()
+                            )
                             .thirdPartyVerification(
                                 ThirdPartyVerification.builder()
                                     .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -976,7 +833,7 @@ internal class ChildLegalEntityTest {
                             .tickerSymbol("ticker_symbol")
                             .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .wealthAndEmploymentDetails(
-                                ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                                WealthAndEmploymentDetails.builder()
                                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                     .annualIncome(0L)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -985,38 +842,21 @@ internal class ChildLegalEntityTest {
                                     .employerName("employer_name")
                                     .employerState("employer_state")
                                     .employmentStatus(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                            .EmploymentStatus
-                                            .EMPLOYED
+                                        WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                     )
                                     .incomeCountry("income_country")
                                     .incomeSource(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                            .IncomeSource
-                                            .FAMILY_SUPPORT
+                                        WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                     )
                                     .incomeState("income_state")
-                                    .industry(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.Industry
-                                            .ACCOUNTING
-                                    )
+                                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                     .liveMode(true)
                                     .object_("object")
-                                    .occupation(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                            .Occupation
-                                            .CONSULTING
-                                    )
-                                    .sourceOfFunds(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                            .SourceOfFunds
-                                            .ALIMONY
-                                    )
+                                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .wealthSource(
-                                        ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                            .WealthSource
-                                            .BUSINESS_SALE
+                                        WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                     )
                                     .build()
                             )
@@ -1072,6 +912,13 @@ internal class ChildLegalEntityTest {
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(childLegalEntity.status()).contains(ChildLegalEntity.Status.ACTIVE)
         assertThat(childLegalEntity.suffix()).contains("suffix")
+        assertThat(childLegalEntity.termsOfUse())
+            .contains(
+                ChildLegalEntity.TermsOfUse.builder()
+                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .ipAddress("ip_address")
+                    .build()
+            )
         assertThat(childLegalEntity.thirdPartyVerification())
             .contains(
                 ThirdPartyVerification.builder()
@@ -1101,7 +948,7 @@ internal class ChildLegalEntityTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(childLegalEntity.wealthAndEmploymentDetails())
             .contains(
-                ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                WealthAndEmploymentDetails.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .annualIncome(0L)
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1109,31 +956,17 @@ internal class ChildLegalEntityTest {
                     .employerCountry("employer_country")
                     .employerName("employer_name")
                     .employerState("employer_state")
-                    .employmentStatus(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus.EMPLOYED
-                    )
+                    .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                     .incomeCountry("income_country")
-                    .incomeSource(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource
-                            .FAMILY_SUPPORT
-                    )
+                    .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                     .incomeState("income_state")
-                    .industry(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING
-                    )
+                    .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                     .liveMode(true)
                     .object_("object")
-                    .occupation(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING
-                    )
-                    .sourceOfFunds(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
-                    )
+                    .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                    .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                     .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .wealthSource(
-                        ChildLegalEntity.LegalEntityWealthEmploymentDetail.WealthSource
-                            .BUSINESS_SALE
-                    )
+                    .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                     .build()
             )
         assertThat(childLegalEntity.website()).contains("website")
@@ -1158,12 +991,13 @@ internal class ChildLegalEntityTest {
                         .locality("locality")
                         .object_("object")
                         .postalCode("postal_code")
+                        .primary(true)
                         .region("region")
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .bankSettings(
-                    ChildLegalEntity.LegalEntityBankSetting.builder()
+                    BankSettings.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .backupWithholdingPercentage(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1190,18 +1024,6 @@ internal class ChildLegalEntityTest {
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .addDocumentDetail(
-                            Document.DocumentDetail.builder()
-                                .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .documentIdentifier("document_identifier")
-                                .documentIdentifierType("document_identifier_type")
-                                .liveMode(true)
-                                .object_("object")
-                                .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .build()
-                        )
                         .documentType("document_type")
                         .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .documentableType(Document.DocumentableType.CONNECTION)
@@ -1233,20 +1055,6 @@ internal class ChildLegalEntityTest {
                                 .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .discardedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .addDocumentDetail(
-                                    Document.DocumentDetail.builder()
-                                        .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .discardedAt(
-                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
-                                        .documentIdentifier("document_identifier")
-                                        .documentIdentifierType("document_identifier_type")
-                                        .liveMode(true)
-                                        .object_("object")
-                                        .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .build()
-                                )
                                 .documentType("document_type")
                                 .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .documentableType(Document.DocumentableType.CONNECTION)
@@ -1311,12 +1119,13 @@ internal class ChildLegalEntityTest {
                                         .locality("locality")
                                         .object_("object")
                                         .postalCode("postal_code")
+                                        .primary(true)
                                         .region("region")
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .build()
                                 )
                                 .bankSettings(
-                                    ChildLegalEntity.LegalEntityBankSetting.builder()
+                                    BankSettings.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .backupWithholdingPercentage(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1346,24 +1155,6 @@ internal class ChildLegalEntityTest {
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .discardedAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
-                                        .addDocumentDetail(
-                                            Document.DocumentDetail.builder()
-                                                .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                                .createdAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .discardedAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .documentIdentifier("document_identifier")
-                                                .documentIdentifierType("document_identifier_type")
-                                                .liveMode(true)
-                                                .object_("object")
-                                                .updatedAt(
-                                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .build()
                                         )
                                         .documentType("document_type")
                                         .documentableId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -1401,32 +1192,6 @@ internal class ChildLegalEntityTest {
                                                 )
                                                 .discardedAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                                )
-                                                .addDocumentDetail(
-                                                    Document.DocumentDetail.builder()
-                                                        .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                                                        .createdAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .discardedAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .documentIdentifier("document_identifier")
-                                                        .documentIdentifierType(
-                                                            "document_identifier_type"
-                                                        )
-                                                        .liveMode(true)
-                                                        .object_("object")
-                                                        .updatedAt(
-                                                            OffsetDateTime.parse(
-                                                                "2019-12-27T18:11:19.117Z"
-                                                            )
-                                                        )
-                                                        .build()
                                                 )
                                                 .documentType("document_type")
                                                 .documentableId(
@@ -1515,6 +1280,14 @@ internal class ChildLegalEntityTest {
                                 )
                                 .status(ChildLegalEntity.Status.ACTIVE)
                                 .suffix("suffix")
+                                .termsOfUse(
+                                    ChildLegalEntity.TermsOfUse.builder()
+                                        .acceptedAt(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                        .ipAddress("ip_address")
+                                        .build()
+                                )
                                 .thirdPartyVerification(
                                     ThirdPartyVerification.builder()
                                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -1548,7 +1321,7 @@ internal class ChildLegalEntityTest {
                                 .tickerSymbol("ticker_symbol")
                                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .wealthAndEmploymentDetails(
-                                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                                    WealthAndEmploymentDetails.builder()
                                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                         .annualIncome(0L)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1559,39 +1332,25 @@ internal class ChildLegalEntityTest {
                                         .employerName("employer_name")
                                         .employerState("employer_state")
                                         .employmentStatus(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .EmploymentStatus
-                                                .EMPLOYED
+                                            WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                         )
                                         .incomeCountry("income_country")
                                         .incomeSource(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .IncomeSource
-                                                .FAMILY_SUPPORT
+                                            WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT
                                         )
                                         .incomeState("income_state")
-                                        .industry(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .Industry
-                                                .ACCOUNTING
-                                        )
+                                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                                         .liveMode(true)
                                         .object_("object")
                                         .occupation(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .Occupation
-                                                .CONSULTING
+                                            WealthAndEmploymentDetails.Occupation.CONSULTING
                                         )
                                         .sourceOfFunds(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .SourceOfFunds
-                                                .ALIMONY
+                                            WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
                                         )
                                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .wealthSource(
-                                            ChildLegalEntity.LegalEntityWealthEmploymentDetail
-                                                .WealthSource
-                                                .BUSINESS_SALE
+                                            WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE
                                         )
                                         .build()
                                 )
@@ -1643,6 +1402,12 @@ internal class ChildLegalEntityTest {
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .status(ChildLegalEntity.Status.ACTIVE)
                 .suffix("suffix")
+                .termsOfUse(
+                    ChildLegalEntity.TermsOfUse.builder()
+                        .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .ipAddress("ip_address")
+                        .build()
+                )
                 .thirdPartyVerification(
                     ThirdPartyVerification.builder()
                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -1672,7 +1437,7 @@ internal class ChildLegalEntityTest {
                 .tickerSymbol("ticker_symbol")
                 .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .wealthAndEmploymentDetails(
-                    ChildLegalEntity.LegalEntityWealthEmploymentDetail.builder()
+                    WealthAndEmploymentDetails.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .annualIncome(0L)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1680,32 +1445,17 @@ internal class ChildLegalEntityTest {
                         .employerCountry("employer_country")
                         .employerName("employer_name")
                         .employerState("employer_state")
-                        .employmentStatus(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.EmploymentStatus
-                                .EMPLOYED
-                        )
+                        .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                         .incomeCountry("income_country")
-                        .incomeSource(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.IncomeSource
-                                .FAMILY_SUPPORT
-                        )
+                        .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                         .incomeState("income_state")
-                        .industry(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.Industry.ACCOUNTING
-                        )
+                        .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                         .liveMode(true)
                         .object_("object")
-                        .occupation(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.Occupation.CONSULTING
-                        )
-                        .sourceOfFunds(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.SourceOfFunds.ALIMONY
-                        )
+                        .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                        .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                         .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .wealthSource(
-                            ChildLegalEntity.LegalEntityWealthEmploymentDetail.WealthSource
-                                .BUSINESS_SALE
-                        )
+                        .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                         .build()
                 )
                 .website("website")

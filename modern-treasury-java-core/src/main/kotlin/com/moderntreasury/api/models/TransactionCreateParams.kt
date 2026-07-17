@@ -32,14 +32,6 @@ private constructor(
 ) : Params {
 
     /**
-     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun amount(): Long = body.amount()
-
-    /**
      * The date on which the transaction occurred.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -75,12 +67,29 @@ private constructor(
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
      * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
-     * `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or others.
+     * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
     fun vendorCodeType(): Optional<String> = body.vendorCodeType()
+
+    /**
+     * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun amount(): Optional<Long> = body.amount()
+
+    /**
+     * The transaction amount as a string, preserving full precision for values that may exceed safe
+     * integer limits in some languages.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun amountString(): Optional<String> = body.amountString()
 
     /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -99,8 +108,8 @@ private constructor(
     fun posted(): Optional<Boolean> = body.posted()
 
     /**
-     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, `book`,
-     * or `sen`.
+     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+     * `book`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -123,13 +132,6 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun vendorDescription(): Optional<String> = body.vendorDescription()
-
-    /**
-     * Returns the raw JSON value of [amount].
-     *
-     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _amount(): JsonField<Long> = body._amount()
 
     /**
      * Returns the raw JSON value of [asOfDate].
@@ -166,6 +168,20 @@ private constructor(
      * Unlike [vendorCodeType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _vendorCodeType(): JsonField<String> = body._vendorCodeType()
+
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _amount(): JsonField<Long> = body._amount()
+
+    /**
+     * Returns the raw JSON value of [amountString].
+     *
+     * Unlike [amountString], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _amountString(): JsonField<String> = body._amountString()
 
     /**
      * Returns the raw JSON value of [metadata].
@@ -221,7 +237,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .amount()
          * .asOfDate()
          * .direction()
          * .internalAccountId()
@@ -251,25 +266,14 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
-         * - [amount]
          * - [asOfDate]
          * - [direction]
          * - [internalAccountId]
          * - [vendorCode]
+         * - [vendorCodeType]
          * - etc.
          */
         fun body(body: TransactionCreateRequest) = apply { this.body = body.toBuilder() }
-
-        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
-        fun amount(amount: Long) = apply { body.amount(amount) }
-
-        /**
-         * Sets [Builder.amount] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
 
         /** The date on which the transaction occurred. */
         fun asOfDate(asOfDate: LocalDate?) = apply { body.asOfDate(asOfDate) }
@@ -335,8 +339,7 @@ private constructor(
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
          * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
-         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
-         * others.
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
          */
         fun vendorCodeType(vendorCodeType: String?) = apply { body.vendorCodeType(vendorCodeType) }
 
@@ -353,6 +356,34 @@ private constructor(
          */
         fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
             body.vendorCodeType(vendorCodeType)
+        }
+
+        /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
+        fun amount(amount: Long) = apply { body.amount(amount) }
+
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
+
+        /**
+         * The transaction amount as a string, preserving full precision for values that may exceed
+         * safe integer limits in some languages.
+         */
+        fun amountString(amountString: String) = apply { body.amountString(amountString) }
+
+        /**
+         * Sets [Builder.amountString] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountString] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun amountString(amountString: JsonField<String>) = apply {
+            body.amountString(amountString)
         }
 
         /**
@@ -381,8 +412,8 @@ private constructor(
         fun posted(posted: JsonField<Boolean>) = apply { body.posted(posted) }
 
         /**
-         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-         * `book`, or `sen`.
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+         * `book`.
          */
         fun type(type: Type?) = apply { body.type(type) }
 
@@ -564,7 +595,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .amount()
          * .asOfDate()
          * .direction()
          * .internalAccountId()
@@ -591,12 +621,13 @@ private constructor(
     class TransactionCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val amount: JsonField<Long>,
         private val asOfDate: JsonField<LocalDate>,
         private val direction: JsonField<String>,
         private val internalAccountId: JsonField<String>,
         private val vendorCode: JsonField<String>,
         private val vendorCodeType: JsonField<String>,
+        private val amount: JsonField<Long>,
+        private val amountString: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val posted: JsonField<Boolean>,
         private val type: JsonField<Type>,
@@ -607,7 +638,6 @@ private constructor(
 
         @JsonCreator
         private constructor(
-            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("as_of_date")
             @ExcludeMissing
             asOfDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -623,6 +653,10 @@ private constructor(
             @JsonProperty("vendor_code_type")
             @ExcludeMissing
             vendorCodeType: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("amount_string")
+            @ExcludeMissing
+            amountString: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -635,12 +669,13 @@ private constructor(
             @ExcludeMissing
             vendorDescription: JsonField<String> = JsonMissing.of(),
         ) : this(
-            amount,
             asOfDate,
             direction,
             internalAccountId,
             vendorCode,
             vendorCodeType,
+            amount,
+            amountString,
             metadata,
             posted,
             type,
@@ -648,14 +683,6 @@ private constructor(
             vendorDescription,
             mutableMapOf(),
         )
-
-        /**
-         * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun amount(): Long = amount.getRequired("amount")
 
         /**
          * The date on which the transaction occurred.
@@ -693,13 +720,29 @@ private constructor(
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
          * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
-         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, `us_bank`, or
-         * others.
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
+
+        /**
+         * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun amount(): Optional<Long> = amount.getOptional("amount")
+
+        /**
+         * The transaction amount as a string, preserving full precision for values that may exceed
+         * safe integer limits in some languages.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun amountString(): Optional<String> = amountString.getOptional("amount_string")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -718,8 +761,8 @@ private constructor(
         fun posted(): Optional<Boolean> = posted.getOptional("posted")
 
         /**
-         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-         * `book`, or `sen`.
+         * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+         * `book`.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -744,13 +787,6 @@ private constructor(
          */
         fun vendorDescription(): Optional<String> =
             vendorDescription.getOptional("vendor_description")
-
-        /**
-         * Returns the raw JSON value of [amount].
-         *
-         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
 
         /**
          * Returns the raw JSON value of [asOfDate].
@@ -794,6 +830,23 @@ private constructor(
         @JsonProperty("vendor_code_type")
         @ExcludeMissing
         fun _vendorCodeType(): JsonField<String> = vendorCodeType
+
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+        /**
+         * Returns the raw JSON value of [amountString].
+         *
+         * Unlike [amountString], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("amount_string")
+        @ExcludeMissing
+        fun _amountString(): JsonField<String> = amountString
 
         /**
          * Returns the raw JSON value of [metadata].
@@ -855,7 +908,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .amount()
              * .asOfDate()
              * .direction()
              * .internalAccountId()
@@ -869,12 +921,13 @@ private constructor(
         /** A builder for [TransactionCreateRequest]. */
         class Builder internal constructor() {
 
-            private var amount: JsonField<Long>? = null
             private var asOfDate: JsonField<LocalDate>? = null
             private var direction: JsonField<String>? = null
             private var internalAccountId: JsonField<String>? = null
             private var vendorCode: JsonField<String>? = null
             private var vendorCodeType: JsonField<String>? = null
+            private var amount: JsonField<Long> = JsonMissing.of()
+            private var amountString: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var posted: JsonField<Boolean> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
@@ -884,12 +937,13 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(transactionCreateRequest: TransactionCreateRequest) = apply {
-                amount = transactionCreateRequest.amount
                 asOfDate = transactionCreateRequest.asOfDate
                 direction = transactionCreateRequest.direction
                 internalAccountId = transactionCreateRequest.internalAccountId
                 vendorCode = transactionCreateRequest.vendorCode
                 vendorCodeType = transactionCreateRequest.vendorCodeType
+                amount = transactionCreateRequest.amount
+                amountString = transactionCreateRequest.amountString
                 metadata = transactionCreateRequest.metadata
                 posted = transactionCreateRequest.posted
                 type = transactionCreateRequest.type
@@ -897,20 +951,6 @@ private constructor(
                 vendorDescription = transactionCreateRequest.vendorDescription
                 additionalProperties = transactionCreateRequest.additionalProperties.toMutableMap()
             }
-
-            /**
-             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
-             */
-            fun amount(amount: Long) = amount(JsonField.of(amount))
-
-            /**
-             * Sets [Builder.amount] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /** The date on which the transaction occurred. */
             fun asOfDate(asOfDate: LocalDate?) = asOfDate(JsonField.ofNullable(asOfDate))
@@ -975,7 +1015,7 @@ private constructor(
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
              * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
-             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`,
              * `us_bank`, or others.
              */
             fun vendorCodeType(vendorCodeType: String?) =
@@ -994,6 +1034,37 @@ private constructor(
              */
             fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
                 this.vendorCodeType = vendorCodeType
+            }
+
+            /**
+             * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
+             */
+            fun amount(amount: Long) = amount(JsonField.of(amount))
+
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+            /**
+             * The transaction amount as a string, preserving full precision for values that may
+             * exceed safe integer limits in some languages.
+             */
+            fun amountString(amountString: String) = amountString(JsonField.of(amountString))
+
+            /**
+             * Sets [Builder.amountString] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amountString] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun amountString(amountString: JsonField<String>) = apply {
+                this.amountString = amountString
             }
 
             /**
@@ -1025,7 +1096,7 @@ private constructor(
 
             /**
              * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`,
-             * `book`, or `sen`.
+             * or `book`.
              */
             fun type(type: Type?) = type(JsonField.ofNullable(type))
 
@@ -1112,7 +1183,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .amount()
              * .asOfDate()
              * .direction()
              * .internalAccountId()
@@ -1124,12 +1194,13 @@ private constructor(
              */
             fun build(): TransactionCreateRequest =
                 TransactionCreateRequest(
-                    checkRequired("amount", amount),
                     checkRequired("asOfDate", asOfDate),
                     checkRequired("direction", direction),
                     checkRequired("internalAccountId", internalAccountId),
                     checkRequired("vendorCode", vendorCode),
                     checkRequired("vendorCodeType", vendorCodeType),
+                    amount,
+                    amountString,
                     metadata,
                     posted,
                     type,
@@ -1155,12 +1226,13 @@ private constructor(
                 return@apply
             }
 
-            amount()
             asOfDate()
             direction()
             internalAccountId()
             vendorCode()
             vendorCodeType()
+            amount()
+            amountString()
             metadata().ifPresent { it.validate() }
             posted()
             type().ifPresent { it.validate() }
@@ -1185,12 +1257,13 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (amount.asKnown().isPresent) 1 else 0) +
-                (if (asOfDate.asKnown().isPresent) 1 else 0) +
+            (if (asOfDate.asKnown().isPresent) 1 else 0) +
                 (if (direction.asKnown().isPresent) 1 else 0) +
                 (if (internalAccountId.asKnown().isPresent) 1 else 0) +
                 (if (vendorCode.asKnown().isPresent) 1 else 0) +
                 (if (vendorCodeType.asKnown().isPresent) 1 else 0) +
+                (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (amountString.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (posted.asKnown().isPresent) 1 else 0) +
                 (type.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1203,12 +1276,13 @@ private constructor(
             }
 
             return other is TransactionCreateRequest &&
-                amount == other.amount &&
                 asOfDate == other.asOfDate &&
                 direction == other.direction &&
                 internalAccountId == other.internalAccountId &&
                 vendorCode == other.vendorCode &&
                 vendorCodeType == other.vendorCodeType &&
+                amount == other.amount &&
+                amountString == other.amountString &&
                 metadata == other.metadata &&
                 posted == other.posted &&
                 type == other.type &&
@@ -1219,12 +1293,13 @@ private constructor(
 
         private val hashCode: Int by lazy {
             Objects.hash(
-                amount,
                 asOfDate,
                 direction,
                 internalAccountId,
                 vendorCode,
                 vendorCodeType,
+                amount,
+                amountString,
                 metadata,
                 posted,
                 type,
@@ -1237,7 +1312,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransactionCreateRequest{amount=$amount, asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, metadata=$metadata, posted=$posted, type=$type, vendorCustomerId=$vendorCustomerId, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
+            "TransactionCreateRequest{asOfDate=$asOfDate, direction=$direction, internalAccountId=$internalAccountId, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, amount=$amount, amountString=$amountString, metadata=$metadata, posted=$posted, type=$type, vendorCustomerId=$vendorCustomerId, vendorDescription=$vendorDescription, additionalProperties=$additionalProperties}"
     }
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
@@ -1350,8 +1425,8 @@ private constructor(
     }
 
     /**
-     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, `book`,
-     * or `sen`.
+     * The type of the transaction. Examples could be `card, `ach`, `wire`, `check`, `rtp`, or
+     * `book`.
      */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1389,10 +1464,6 @@ private constructor(
 
             @JvmField val GB_FPS = of("gb_fps")
 
-            @JvmField val HU_ICS = of("hu_ics")
-
-            @JvmField val INTERAC = of("interac")
-
             @JvmField val MASAV = of("masav")
 
             @JvmField val MX_CCEN = of("mx_ccen")
@@ -1405,25 +1476,15 @@ private constructor(
 
             @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = of("provxchange")
-
-            @JvmField val RO_SENT = of("ro_sent")
-
             @JvmField val RTP = of("rtp")
 
             @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-            @JvmField val SEN = of("sen")
 
             @JvmField val SEPA = of("sepa")
 
             @JvmField val SG_GIRO = of("sg_giro")
 
             @JvmField val SIC = of("sic")
-
-            @JvmField val SIGNET = of("signet")
-
-            @JvmField val SKNBI = of("sknbi")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -1449,24 +1510,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1494,24 +1548,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1540,24 +1587,17 @@ private constructor(
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 GB_FPS -> Value.GB_FPS
-                HU_ICS -> Value.HU_ICS
-                INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 MX_CCEN -> Value.MX_CCEN
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
                 NZ_BECS -> Value.NZ_BECS
                 PL_ELIXIR -> Value.PL_ELIXIR
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RO_SENT -> Value.RO_SENT
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
-                SEN -> Value.SEN
                 SEPA -> Value.SEPA
                 SG_GIRO -> Value.SG_GIRO
                 SIC -> Value.SIC
-                SIGNET -> Value.SIGNET
-                SKNBI -> Value.SKNBI
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -1587,24 +1627,17 @@ private constructor(
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 GB_FPS -> Known.GB_FPS
-                HU_ICS -> Known.HU_ICS
-                INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 MX_CCEN -> Known.MX_CCEN
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
                 NZ_BECS -> Known.NZ_BECS
                 PL_ELIXIR -> Known.PL_ELIXIR
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RO_SENT -> Known.RO_SENT
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
-                SEN -> Known.SEN
                 SEPA -> Known.SEPA
                 SG_GIRO -> Known.SG_GIRO
                 SIC -> Known.SIC
-                SIGNET -> Known.SIGNET
-                SKNBI -> Known.SKNBI
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN

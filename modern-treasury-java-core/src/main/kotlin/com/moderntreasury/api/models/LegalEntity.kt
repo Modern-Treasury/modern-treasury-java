@@ -27,7 +27,7 @@ class LegalEntity
 private constructor(
     private val id: JsonField<String>,
     private val addresses: JsonField<List<LegalEntityAddress>>,
-    private val bankSettings: JsonField<LegalEntityBankSetting>,
+    private val bankSettings: JsonField<BankSettings>,
     private val businessDescription: JsonField<String>,
     private val businessName: JsonField<String>,
     private val citizenshipCountry: JsonField<String>,
@@ -65,11 +65,12 @@ private constructor(
     private val serviceProviderLegalEntityId: JsonField<String>,
     private val status: JsonField<Status>,
     private val suffix: JsonField<String>,
+    private val termsOfUse: JsonField<TermsOfUse>,
     private val thirdPartyVerification: JsonField<ThirdPartyVerification>,
     private val thirdPartyVerifications: JsonField<List<ThirdPartyVerification>>,
     private val tickerSymbol: JsonField<String>,
     private val updatedAt: JsonField<OffsetDateTime>,
-    private val wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail>,
+    private val wealthAndEmploymentDetails: JsonField<WealthAndEmploymentDetails>,
     private val website: JsonField<String>,
     private val legalEntityAssociations: JsonField<List<LegalEntityAssociation>>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -83,7 +84,7 @@ private constructor(
         addresses: JsonField<List<LegalEntityAddress>> = JsonMissing.of(),
         @JsonProperty("bank_settings")
         @ExcludeMissing
-        bankSettings: JsonField<LegalEntityBankSetting> = JsonMissing.of(),
+        bankSettings: JsonField<BankSettings> = JsonMissing.of(),
         @JsonProperty("business_description")
         @ExcludeMissing
         businessDescription: JsonField<String> = JsonMissing.of(),
@@ -178,6 +179,9 @@ private constructor(
         serviceProviderLegalEntityId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("suffix") @ExcludeMissing suffix: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("terms_of_use")
+        @ExcludeMissing
+        termsOfUse: JsonField<TermsOfUse> = JsonMissing.of(),
         @JsonProperty("third_party_verification")
         @ExcludeMissing
         thirdPartyVerification: JsonField<ThirdPartyVerification> = JsonMissing.of(),
@@ -192,7 +196,7 @@ private constructor(
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("wealth_and_employment_details")
         @ExcludeMissing
-        wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail> = JsonMissing.of(),
+        wealthAndEmploymentDetails: JsonField<WealthAndEmploymentDetails> = JsonMissing.of(),
         @JsonProperty("website") @ExcludeMissing website: JsonField<String> = JsonMissing.of(),
         @JsonProperty("legal_entity_associations")
         @ExcludeMissing
@@ -238,6 +242,7 @@ private constructor(
         serviceProviderLegalEntityId,
         status,
         suffix,
+        termsOfUse,
         thirdPartyVerification,
         thirdPartyVerifications,
         tickerSymbol,
@@ -266,7 +271,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun bankSettings(): Optional<LegalEntityBankSetting> = bankSettings.getOptional("bank_settings")
+    fun bankSettings(): Optional<BankSettings> = bankSettings.getOptional("bank_settings")
 
     /**
      * A description of the business.
@@ -568,6 +573,14 @@ private constructor(
     fun suffix(): Optional<String> = suffix.getOptional("suffix")
 
     /**
+     * Acceptance of terms of use by the legal entity.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun termsOfUse(): Optional<TermsOfUse> = termsOfUse.getOptional("terms_of_use")
+
+    /**
      * Deprecated. Use `third_party_verifications` instead.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -604,7 +617,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun wealthAndEmploymentDetails(): Optional<LegalEntityWealthEmploymentDetail> =
+    fun wealthAndEmploymentDetails(): Optional<WealthAndEmploymentDetails> =
         wealthAndEmploymentDetails.getOptional("wealth_and_employment_details")
 
     /**
@@ -647,7 +660,7 @@ private constructor(
      */
     @JsonProperty("bank_settings")
     @ExcludeMissing
-    fun _bankSettings(): JsonField<LegalEntityBankSetting> = bankSettings
+    fun _bankSettings(): JsonField<BankSettings> = bankSettings
 
     /**
      * Returns the raw JSON value of [businessDescription].
@@ -963,6 +976,15 @@ private constructor(
     @JsonProperty("suffix") @ExcludeMissing fun _suffix(): JsonField<String> = suffix
 
     /**
+     * Returns the raw JSON value of [termsOfUse].
+     *
+     * Unlike [termsOfUse], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("terms_of_use")
+    @ExcludeMissing
+    fun _termsOfUse(): JsonField<TermsOfUse> = termsOfUse
+
+    /**
      * Returns the raw JSON value of [thirdPartyVerification].
      *
      * Unlike [thirdPartyVerification], this method doesn't throw if the JSON field has an
@@ -1010,7 +1032,7 @@ private constructor(
      */
     @JsonProperty("wealth_and_employment_details")
     @ExcludeMissing
-    fun _wealthAndEmploymentDetails(): JsonField<LegalEntityWealthEmploymentDetail> =
+    fun _wealthAndEmploymentDetails(): JsonField<WealthAndEmploymentDetails> =
         wealthAndEmploymentDetails
 
     /**
@@ -1090,6 +1112,7 @@ private constructor(
          * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
+         * .termsOfUse()
          * .thirdPartyVerification()
          * .thirdPartyVerifications()
          * .tickerSymbol()
@@ -1106,7 +1129,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var addresses: JsonField<MutableList<LegalEntityAddress>>? = null
-        private var bankSettings: JsonField<LegalEntityBankSetting>? = null
+        private var bankSettings: JsonField<BankSettings>? = null
         private var businessDescription: JsonField<String>? = null
         private var businessName: JsonField<String>? = null
         private var citizenshipCountry: JsonField<String>? = null
@@ -1146,11 +1169,12 @@ private constructor(
         private var serviceProviderLegalEntityId: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var suffix: JsonField<String>? = null
+        private var termsOfUse: JsonField<TermsOfUse>? = null
         private var thirdPartyVerification: JsonField<ThirdPartyVerification>? = null
         private var thirdPartyVerifications: JsonField<MutableList<ThirdPartyVerification>>? = null
         private var tickerSymbol: JsonField<String>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
-        private var wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail>? = null
+        private var wealthAndEmploymentDetails: JsonField<WealthAndEmploymentDetails>? = null
         private var website: JsonField<String>? = null
         private var legalEntityAssociations: JsonField<MutableList<LegalEntityAssociation>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1197,6 +1221,7 @@ private constructor(
             serviceProviderLegalEntityId = legalEntity.serviceProviderLegalEntityId
             status = legalEntity.status
             suffix = legalEntity.suffix
+            termsOfUse = legalEntity.termsOfUse
             thirdPartyVerification = legalEntity.thirdPartyVerification
             thirdPartyVerifications = legalEntity.thirdPartyVerifications.map { it.toMutableList() }
             tickerSymbol = legalEntity.tickerSymbol
@@ -1243,21 +1268,21 @@ private constructor(
                 }
         }
 
-        fun bankSettings(bankSettings: LegalEntityBankSetting?) =
+        fun bankSettings(bankSettings: BankSettings?) =
             bankSettings(JsonField.ofNullable(bankSettings))
 
         /** Alias for calling [Builder.bankSettings] with `bankSettings.orElse(null)`. */
-        fun bankSettings(bankSettings: Optional<LegalEntityBankSetting>) =
+        fun bankSettings(bankSettings: Optional<BankSettings>) =
             bankSettings(bankSettings.getOrNull())
 
         /**
          * Sets [Builder.bankSettings] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.bankSettings] with a well-typed [LegalEntityBankSetting]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.bankSettings] with a well-typed [BankSettings] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun bankSettings(bankSettings: JsonField<LegalEntityBankSetting>) = apply {
+        fun bankSettings(bankSettings: JsonField<BankSettings>) = apply {
             this.bankSettings = bankSettings
         }
 
@@ -1972,6 +1997,21 @@ private constructor(
          */
         fun suffix(suffix: JsonField<String>) = apply { this.suffix = suffix }
 
+        /** Acceptance of terms of use by the legal entity. */
+        fun termsOfUse(termsOfUse: TermsOfUse?) = termsOfUse(JsonField.ofNullable(termsOfUse))
+
+        /** Alias for calling [Builder.termsOfUse] with `termsOfUse.orElse(null)`. */
+        fun termsOfUse(termsOfUse: Optional<TermsOfUse>) = termsOfUse(termsOfUse.getOrNull())
+
+        /**
+         * Sets [Builder.termsOfUse] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.termsOfUse] with a well-typed [TermsOfUse] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun termsOfUse(termsOfUse: JsonField<TermsOfUse>) = apply { this.termsOfUse = termsOfUse }
+
         /** Deprecated. Use `third_party_verifications` instead. */
         @Deprecated("deprecated")
         fun thirdPartyVerification(thirdPartyVerification: ThirdPartyVerification?) =
@@ -2055,27 +2095,26 @@ private constructor(
          */
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
-        fun wealthAndEmploymentDetails(
-            wealthAndEmploymentDetails: LegalEntityWealthEmploymentDetail?
-        ) = wealthAndEmploymentDetails(JsonField.ofNullable(wealthAndEmploymentDetails))
+        fun wealthAndEmploymentDetails(wealthAndEmploymentDetails: WealthAndEmploymentDetails?) =
+            wealthAndEmploymentDetails(JsonField.ofNullable(wealthAndEmploymentDetails))
 
         /**
          * Alias for calling [Builder.wealthAndEmploymentDetails] with
          * `wealthAndEmploymentDetails.orElse(null)`.
          */
         fun wealthAndEmploymentDetails(
-            wealthAndEmploymentDetails: Optional<LegalEntityWealthEmploymentDetail>
+            wealthAndEmploymentDetails: Optional<WealthAndEmploymentDetails>
         ) = wealthAndEmploymentDetails(wealthAndEmploymentDetails.getOrNull())
 
         /**
          * Sets [Builder.wealthAndEmploymentDetails] to an arbitrary JSON value.
          *
          * You should usually call [Builder.wealthAndEmploymentDetails] with a well-typed
-         * [LegalEntityWealthEmploymentDetail] value instead. This method is primarily for setting
-         * the field to an undocumented or not yet supported value.
+         * [WealthAndEmploymentDetails] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
          */
         fun wealthAndEmploymentDetails(
-            wealthAndEmploymentDetails: JsonField<LegalEntityWealthEmploymentDetail>
+            wealthAndEmploymentDetails: JsonField<WealthAndEmploymentDetails>
         ) = apply { this.wealthAndEmploymentDetails = wealthAndEmploymentDetails }
 
         /** The entity's primary website URL. */
@@ -2195,6 +2234,7 @@ private constructor(
          * .serviceProviderLegalEntityId()
          * .status()
          * .suffix()
+         * .termsOfUse()
          * .thirdPartyVerification()
          * .thirdPartyVerifications()
          * .tickerSymbol()
@@ -2255,6 +2295,7 @@ private constructor(
                 checkRequired("serviceProviderLegalEntityId", serviceProviderLegalEntityId),
                 checkRequired("status", status),
                 checkRequired("suffix", suffix),
+                checkRequired("termsOfUse", termsOfUse),
                 checkRequired("thirdPartyVerification", thirdPartyVerification),
                 checkRequired("thirdPartyVerifications", thirdPartyVerifications).map {
                     it.toImmutable()
@@ -2322,6 +2363,7 @@ private constructor(
         serviceProviderLegalEntityId()
         status().ifPresent { it.validate() }
         suffix()
+        termsOfUse().ifPresent { it.validate() }
         thirdPartyVerification().ifPresent { it.validate() }
         thirdPartyVerifications().forEach { it.validate() }
         tickerSymbol()
@@ -2386,6 +2428,7 @@ private constructor(
             (if (serviceProviderLegalEntityId.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (if (suffix.asKnown().isPresent) 1 else 0) +
+            (termsOfUse.asKnown().getOrNull()?.validity() ?: 0) +
             (thirdPartyVerification.asKnown().getOrNull()?.validity() ?: 0) +
             (thirdPartyVerifications.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (tickerSymbol.asKnown().isPresent) 1 else 0) +
@@ -2408,6 +2451,7 @@ private constructor(
         private val locality: JsonField<String>,
         private val object_: JsonField<String>,
         private val postalCode: JsonField<String>,
+        private val primary: JsonField<Boolean>,
         private val region: JsonField<String>,
         private val updatedAt: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -2438,6 +2482,7 @@ private constructor(
             @JsonProperty("postal_code")
             @ExcludeMissing
             postalCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("primary") @ExcludeMissing primary: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
             @JsonProperty("updated_at")
             @ExcludeMissing
@@ -2454,6 +2499,7 @@ private constructor(
             locality,
             object_,
             postalCode,
+            primary,
             region,
             updatedAt,
             mutableMapOf(),
@@ -2535,6 +2581,15 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
+
+        /**
+         * Whether this address is the primary address for the legal entity. Optional; when omitted
+         * it is inferred from the address types.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun primary(): Optional<Boolean> = primary.getOptional("primary")
 
         /**
          * Region or State.
@@ -2637,6 +2692,13 @@ private constructor(
         fun _postalCode(): JsonField<String> = postalCode
 
         /**
+         * Returns the raw JSON value of [primary].
+         *
+         * Unlike [primary], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("primary") @ExcludeMissing fun _primary(): JsonField<Boolean> = primary
+
+        /**
          * Returns the raw JSON value of [region].
          *
          * Unlike [region], this method doesn't throw if the JSON field has an unexpected type.
@@ -2682,6 +2744,7 @@ private constructor(
              * .locality()
              * .object_()
              * .postalCode()
+             * .primary()
              * .region()
              * .updatedAt()
              * ```
@@ -2703,6 +2766,7 @@ private constructor(
             private var locality: JsonField<String>? = null
             private var object_: JsonField<String>? = null
             private var postalCode: JsonField<String>? = null
+            private var primary: JsonField<Boolean>? = null
             private var region: JsonField<String>? = null
             private var updatedAt: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2720,6 +2784,7 @@ private constructor(
                 locality = legalEntityAddress.locality
                 object_ = legalEntityAddress.object_
                 postalCode = legalEntityAddress.postalCode
+                primary = legalEntityAddress.primary
                 region = legalEntityAddress.region
                 updatedAt = legalEntityAddress.updatedAt
                 additionalProperties = legalEntityAddress.additionalProperties.toMutableMap()
@@ -2893,6 +2958,31 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
+            /**
+             * Whether this address is the primary address for the legal entity. Optional; when
+             * omitted it is inferred from the address types.
+             */
+            fun primary(primary: Boolean?) = primary(JsonField.ofNullable(primary))
+
+            /**
+             * Alias for [Builder.primary].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun primary(primary: Boolean) = primary(primary as Boolean?)
+
+            /** Alias for calling [Builder.primary] with `primary.orElse(null)`. */
+            fun primary(primary: Optional<Boolean>) = primary(primary.getOrNull())
+
+            /**
+             * Sets [Builder.primary] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.primary] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun primary(primary: JsonField<Boolean>) = apply { this.primary = primary }
+
             /** Region or State. */
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
@@ -2958,6 +3048,7 @@ private constructor(
              * .locality()
              * .object_()
              * .postalCode()
+             * .primary()
              * .region()
              * .updatedAt()
              * ```
@@ -2977,6 +3068,7 @@ private constructor(
                     checkRequired("locality", locality),
                     checkRequired("object_", object_),
                     checkRequired("postalCode", postalCode),
+                    checkRequired("primary", primary),
                     checkRequired("region", region),
                     checkRequired("updatedAt", updatedAt),
                     additionalProperties.toMutableMap(),
@@ -3010,6 +3102,7 @@ private constructor(
             locality()
             object_()
             postalCode()
+            primary()
             region()
             updatedAt()
             validated = true
@@ -3042,6 +3135,7 @@ private constructor(
                 (if (locality.asKnown().isPresent) 1 else 0) +
                 (if (object_.asKnown().isPresent) 1 else 0) +
                 (if (postalCode.asKnown().isPresent) 1 else 0) +
+                (if (primary.asKnown().isPresent) 1 else 0) +
                 (if (region.asKnown().isPresent) 1 else 0) +
                 (if (updatedAt.asKnown().isPresent) 1 else 0)
 
@@ -3062,6 +3156,8 @@ private constructor(
 
                 @JvmField val BUSINESS = of("business")
 
+                @JvmField val BUSINESS_PHYSICAL = of("business_physical")
+
                 @JvmField val BUSINESS_REGISTERED = of("business_registered")
 
                 @JvmField val MAILING = of("mailing")
@@ -3078,6 +3174,7 @@ private constructor(
             /** An enum containing [AddressType]'s known values. */
             enum class Known {
                 BUSINESS,
+                BUSINESS_PHYSICAL,
                 BUSINESS_REGISTERED,
                 MAILING,
                 OTHER,
@@ -3096,6 +3193,7 @@ private constructor(
              */
             enum class Value {
                 BUSINESS,
+                BUSINESS_PHYSICAL,
                 BUSINESS_REGISTERED,
                 MAILING,
                 OTHER,
@@ -3118,6 +3216,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     BUSINESS -> Value.BUSINESS
+                    BUSINESS_PHYSICAL -> Value.BUSINESS_PHYSICAL
                     BUSINESS_REGISTERED -> Value.BUSINESS_REGISTERED
                     MAILING -> Value.MAILING
                     OTHER -> Value.OTHER
@@ -3138,6 +3237,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     BUSINESS -> Known.BUSINESS
+                    BUSINESS_PHYSICAL -> Known.BUSINESS_PHYSICAL
                     BUSINESS_REGISTERED -> Known.BUSINESS_REGISTERED
                     MAILING -> Known.MAILING
                     OTHER -> Known.OTHER
@@ -3227,6 +3327,7 @@ private constructor(
                 locality == other.locality &&
                 object_ == other.object_ &&
                 postalCode == other.postalCode &&
+                primary == other.primary &&
                 region == other.region &&
                 updatedAt == other.updatedAt &&
                 additionalProperties == other.additionalProperties
@@ -3245,6 +3346,7 @@ private constructor(
                 locality,
                 object_,
                 postalCode,
+                primary,
                 region,
                 updatedAt,
                 additionalProperties,
@@ -3254,645 +3356,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityAddress{id=$id, addressTypes=$addressTypes, country=$country, createdAt=$createdAt, discardedAt=$discardedAt, line1=$line1, line2=$line2, liveMode=$liveMode, locality=$locality, object_=$object_, postalCode=$postalCode, region=$region, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
-    }
-
-    class LegalEntityBankSetting
-    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-    private constructor(
-        private val id: JsonField<String>,
-        private val backupWithholdingPercentage: JsonField<Long>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val discardedAt: JsonField<OffsetDateTime>,
-        private val enableBackupWithholding: JsonField<Boolean>,
-        private val liveMode: JsonField<Boolean>,
-        private val object_: JsonField<String>,
-        private val privacyOptOut: JsonField<Boolean>,
-        private val regulationO: JsonField<Boolean>,
-        private val updatedAt: JsonField<OffsetDateTime>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("backup_withholding_percentage")
-            @ExcludeMissing
-            backupWithholdingPercentage: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("created_at")
-            @ExcludeMissing
-            createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("discarded_at")
-            @ExcludeMissing
-            discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("enable_backup_withholding")
-            @ExcludeMissing
-            enableBackupWithholding: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("live_mode")
-            @ExcludeMissing
-            liveMode: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("privacy_opt_out")
-            @ExcludeMissing
-            privacyOptOut: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("regulation_o")
-            @ExcludeMissing
-            regulationO: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("updated_at")
-            @ExcludeMissing
-            updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        ) : this(
-            id,
-            backupWithholdingPercentage,
-            createdAt,
-            discardedAt,
-            enableBackupWithholding,
-            liveMode,
-            object_,
-            privacyOptOut,
-            regulationO,
-            updatedAt,
-            mutableMapOf(),
-        )
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun id(): String = id.getRequired("id")
-
-        /**
-         * The percentage of backup withholding to apply to the legal entity.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun backupWithholdingPercentage(): Optional<Long> =
-            backupWithholdingPercentage.getOptional("backup_withholding_percentage")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
-
-        /**
-         * Whether backup withholding is enabled. See more here -
-         * https://www.irs.gov/businesses/small-businesses-self-employed/backup-withholding.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun enableBackupWithholding(): Optional<Boolean> =
-            enableBackupWithholding.getOptional("enable_backup_withholding")
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun liveMode(): Boolean = liveMode.getRequired("live_mode")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun object_(): String = object_.getRequired("object")
-
-        /**
-         * Cross River Bank specific setting to opt out of privacy policy.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun privacyOptOut(): Optional<Boolean> = privacyOptOut.getOptional("privacy_opt_out")
-
-        /**
-         * It covers, among other types of insider loans, extensions of credit by a member bank to
-         * an executive officer, director, or principal shareholder of the member bank; a bank
-         * holding company of which the member bank is a subsidiary; and any other subsidiary of
-         * that bank holding company.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun regulationO(): Optional<Boolean> = regulationO.getOptional("regulation_o")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
-
-        /**
-         * Returns the raw JSON value of [id].
-         *
-         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [backupWithholdingPercentage].
-         *
-         * Unlike [backupWithholdingPercentage], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("backup_withholding_percentage")
-        @ExcludeMissing
-        fun _backupWithholdingPercentage(): JsonField<Long> = backupWithholdingPercentage
-
-        /**
-         * Returns the raw JSON value of [createdAt].
-         *
-         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("created_at")
-        @ExcludeMissing
-        fun _createdAt(): JsonField<OffsetDateTime> = createdAt
-
-        /**
-         * Returns the raw JSON value of [discardedAt].
-         *
-         * Unlike [discardedAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("discarded_at")
-        @ExcludeMissing
-        fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
-
-        /**
-         * Returns the raw JSON value of [enableBackupWithholding].
-         *
-         * Unlike [enableBackupWithholding], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("enable_backup_withholding")
-        @ExcludeMissing
-        fun _enableBackupWithholding(): JsonField<Boolean> = enableBackupWithholding
-
-        /**
-         * Returns the raw JSON value of [liveMode].
-         *
-         * Unlike [liveMode], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("live_mode") @ExcludeMissing fun _liveMode(): JsonField<Boolean> = liveMode
-
-        /**
-         * Returns the raw JSON value of [object_].
-         *
-         * Unlike [object_], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
-
-        /**
-         * Returns the raw JSON value of [privacyOptOut].
-         *
-         * Unlike [privacyOptOut], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("privacy_opt_out")
-        @ExcludeMissing
-        fun _privacyOptOut(): JsonField<Boolean> = privacyOptOut
-
-        /**
-         * Returns the raw JSON value of [regulationO].
-         *
-         * Unlike [regulationO], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("regulation_o")
-        @ExcludeMissing
-        fun _regulationO(): JsonField<Boolean> = regulationO
-
-        /**
-         * Returns the raw JSON value of [updatedAt].
-         *
-         * Unlike [updatedAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("updated_at")
-        @ExcludeMissing
-        fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [LegalEntityBankSetting].
-             *
-             * The following fields are required:
-             * ```java
-             * .id()
-             * .backupWithholdingPercentage()
-             * .createdAt()
-             * .discardedAt()
-             * .enableBackupWithholding()
-             * .liveMode()
-             * .object_()
-             * .privacyOptOut()
-             * .regulationO()
-             * .updatedAt()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [LegalEntityBankSetting]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var backupWithholdingPercentage: JsonField<Long>? = null
-            private var createdAt: JsonField<OffsetDateTime>? = null
-            private var discardedAt: JsonField<OffsetDateTime>? = null
-            private var enableBackupWithholding: JsonField<Boolean>? = null
-            private var liveMode: JsonField<Boolean>? = null
-            private var object_: JsonField<String>? = null
-            private var privacyOptOut: JsonField<Boolean>? = null
-            private var regulationO: JsonField<Boolean>? = null
-            private var updatedAt: JsonField<OffsetDateTime>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(legalEntityBankSetting: LegalEntityBankSetting) = apply {
-                id = legalEntityBankSetting.id
-                backupWithholdingPercentage = legalEntityBankSetting.backupWithholdingPercentage
-                createdAt = legalEntityBankSetting.createdAt
-                discardedAt = legalEntityBankSetting.discardedAt
-                enableBackupWithholding = legalEntityBankSetting.enableBackupWithholding
-                liveMode = legalEntityBankSetting.liveMode
-                object_ = legalEntityBankSetting.object_
-                privacyOptOut = legalEntityBankSetting.privacyOptOut
-                regulationO = legalEntityBankSetting.regulationO
-                updatedAt = legalEntityBankSetting.updatedAt
-                additionalProperties = legalEntityBankSetting.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String) = id(JsonField.of(id))
-
-            /**
-             * Sets [Builder.id] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.id] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /** The percentage of backup withholding to apply to the legal entity. */
-            fun backupWithholdingPercentage(backupWithholdingPercentage: Long?) =
-                backupWithholdingPercentage(JsonField.ofNullable(backupWithholdingPercentage))
-
-            /**
-             * Alias for [Builder.backupWithholdingPercentage].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun backupWithholdingPercentage(backupWithholdingPercentage: Long) =
-                backupWithholdingPercentage(backupWithholdingPercentage as Long?)
-
-            /**
-             * Alias for calling [Builder.backupWithholdingPercentage] with
-             * `backupWithholdingPercentage.orElse(null)`.
-             */
-            fun backupWithholdingPercentage(backupWithholdingPercentage: Optional<Long>) =
-                backupWithholdingPercentage(backupWithholdingPercentage.getOrNull())
-
-            /**
-             * Sets [Builder.backupWithholdingPercentage] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.backupWithholdingPercentage] with a well-typed
-             * [Long] value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
-             */
-            fun backupWithholdingPercentage(backupWithholdingPercentage: JsonField<Long>) = apply {
-                this.backupWithholdingPercentage = backupWithholdingPercentage
-            }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            /**
-             * Sets [Builder.createdAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun discardedAt(discardedAt: OffsetDateTime?) =
-                discardedAt(JsonField.ofNullable(discardedAt))
-
-            /** Alias for calling [Builder.discardedAt] with `discardedAt.orElse(null)`. */
-            fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.getOrNull())
-
-            /**
-             * Sets [Builder.discardedAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.discardedAt] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
-                this.discardedAt = discardedAt
-            }
-
-            /**
-             * Whether backup withholding is enabled. See more here -
-             * https://www.irs.gov/businesses/small-businesses-self-employed/backup-withholding.
-             */
-            fun enableBackupWithholding(enableBackupWithholding: Boolean?) =
-                enableBackupWithholding(JsonField.ofNullable(enableBackupWithholding))
-
-            /**
-             * Alias for [Builder.enableBackupWithholding].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun enableBackupWithholding(enableBackupWithholding: Boolean) =
-                enableBackupWithholding(enableBackupWithholding as Boolean?)
-
-            /**
-             * Alias for calling [Builder.enableBackupWithholding] with
-             * `enableBackupWithholding.orElse(null)`.
-             */
-            fun enableBackupWithholding(enableBackupWithholding: Optional<Boolean>) =
-                enableBackupWithholding(enableBackupWithholding.getOrNull())
-
-            /**
-             * Sets [Builder.enableBackupWithholding] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.enableBackupWithholding] with a well-typed [Boolean]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun enableBackupWithholding(enableBackupWithholding: JsonField<Boolean>) = apply {
-                this.enableBackupWithholding = enableBackupWithholding
-            }
-
-            /**
-             * This field will be true if this object exists in the live environment or false if it
-             * exists in the test environment.
-             */
-            fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
-
-            /**
-             * Sets [Builder.liveMode] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.liveMode] with a well-typed [Boolean] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
-
-            fun object_(object_: String) = object_(JsonField.of(object_))
-
-            /**
-             * Sets [Builder.object_] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.object_] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
-
-            /** Cross River Bank specific setting to opt out of privacy policy. */
-            fun privacyOptOut(privacyOptOut: Boolean?) =
-                privacyOptOut(JsonField.ofNullable(privacyOptOut))
-
-            /**
-             * Alias for [Builder.privacyOptOut].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun privacyOptOut(privacyOptOut: Boolean) = privacyOptOut(privacyOptOut as Boolean?)
-
-            /** Alias for calling [Builder.privacyOptOut] with `privacyOptOut.orElse(null)`. */
-            fun privacyOptOut(privacyOptOut: Optional<Boolean>) =
-                privacyOptOut(privacyOptOut.getOrNull())
-
-            /**
-             * Sets [Builder.privacyOptOut] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.privacyOptOut] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun privacyOptOut(privacyOptOut: JsonField<Boolean>) = apply {
-                this.privacyOptOut = privacyOptOut
-            }
-
-            /**
-             * It covers, among other types of insider loans, extensions of credit by a member bank
-             * to an executive officer, director, or principal shareholder of the member bank; a
-             * bank holding company of which the member bank is a subsidiary; and any other
-             * subsidiary of that bank holding company.
-             */
-            fun regulationO(regulationO: Boolean?) = regulationO(JsonField.ofNullable(regulationO))
-
-            /**
-             * Alias for [Builder.regulationO].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun regulationO(regulationO: Boolean) = regulationO(regulationO as Boolean?)
-
-            /** Alias for calling [Builder.regulationO] with `regulationO.orElse(null)`. */
-            fun regulationO(regulationO: Optional<Boolean>) = regulationO(regulationO.getOrNull())
-
-            /**
-             * Sets [Builder.regulationO] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.regulationO] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun regulationO(regulationO: JsonField<Boolean>) = apply {
-                this.regulationO = regulationO
-            }
-
-            fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
-
-            /**
-             * Sets [Builder.updatedAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.updatedAt] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
-                this.updatedAt = updatedAt
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [LegalEntityBankSetting].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .id()
-             * .backupWithholdingPercentage()
-             * .createdAt()
-             * .discardedAt()
-             * .enableBackupWithholding()
-             * .liveMode()
-             * .object_()
-             * .privacyOptOut()
-             * .regulationO()
-             * .updatedAt()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): LegalEntityBankSetting =
-                LegalEntityBankSetting(
-                    checkRequired("id", id),
-                    checkRequired("backupWithholdingPercentage", backupWithholdingPercentage),
-                    checkRequired("createdAt", createdAt),
-                    checkRequired("discardedAt", discardedAt),
-                    checkRequired("enableBackupWithholding", enableBackupWithholding),
-                    checkRequired("liveMode", liveMode),
-                    checkRequired("object_", object_),
-                    checkRequired("privacyOptOut", privacyOptOut),
-                    checkRequired("regulationO", regulationO),
-                    checkRequired("updatedAt", updatedAt),
-                    additionalProperties.toMutableMap(),
-                )
-        }
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
-         */
-        fun validate(): LegalEntityBankSetting = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            backupWithholdingPercentage()
-            createdAt()
-            discardedAt()
-            enableBackupWithholding()
-            liveMode()
-            object_()
-            privacyOptOut()
-            regulationO()
-            updatedAt()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: ModernTreasuryInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            (if (id.asKnown().isPresent) 1 else 0) +
-                (if (backupWithholdingPercentage.asKnown().isPresent) 1 else 0) +
-                (if (createdAt.asKnown().isPresent) 1 else 0) +
-                (if (discardedAt.asKnown().isPresent) 1 else 0) +
-                (if (enableBackupWithholding.asKnown().isPresent) 1 else 0) +
-                (if (liveMode.asKnown().isPresent) 1 else 0) +
-                (if (object_.asKnown().isPresent) 1 else 0) +
-                (if (privacyOptOut.asKnown().isPresent) 1 else 0) +
-                (if (regulationO.asKnown().isPresent) 1 else 0) +
-                (if (updatedAt.asKnown().isPresent) 1 else 0)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is LegalEntityBankSetting &&
-                id == other.id &&
-                backupWithholdingPercentage == other.backupWithholdingPercentage &&
-                createdAt == other.createdAt &&
-                discardedAt == other.discardedAt &&
-                enableBackupWithholding == other.enableBackupWithholding &&
-                liveMode == other.liveMode &&
-                object_ == other.object_ &&
-                privacyOptOut == other.privacyOptOut &&
-                regulationO == other.regulationO &&
-                updatedAt == other.updatedAt &&
-                additionalProperties == other.additionalProperties
-        }
-
-        private val hashCode: Int by lazy {
-            Objects.hash(
-                id,
-                backupWithholdingPercentage,
-                createdAt,
-                discardedAt,
-                enableBackupWithholding,
-                liveMode,
-                object_,
-                privacyOptOut,
-                regulationO,
-                updatedAt,
-                additionalProperties,
-            )
-        }
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "LegalEntityBankSetting{id=$id, backupWithholdingPercentage=$backupWithholdingPercentage, createdAt=$createdAt, discardedAt=$discardedAt, enableBackupWithholding=$enableBackupWithholding, liveMode=$liveMode, object_=$object_, privacyOptOut=$privacyOptOut, regulationO=$regulationO, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+            "LegalEntityAddress{id=$id, addressTypes=$addressTypes, country=$country, createdAt=$createdAt, discardedAt=$discardedAt, line1=$line1, line2=$line2, liveMode=$liveMode, locality=$locality, object_=$object_, postalCode=$postalCode, primary=$primary, region=$region, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
     }
 
     class Identification
@@ -4507,11 +3971,29 @@ private constructor(
 
                 @JvmField val AR_CUIT = of("ar_cuit")
 
+                @JvmField val AT_ATIN = of("at_atin")
+
+                @JvmField val AT_VAT = of("at_vat")
+
+                @JvmField val AU_ABN = of("au_abn")
+
+                @JvmField val AU_TFN = of("au_tfn")
+
+                @JvmField val BE_ENT = of("be_ent")
+
+                @JvmField val BE_NRN = of("be_nrn")
+
                 @JvmField val BR_CNPJ = of("br_cnpj")
 
                 @JvmField val BR_CPF = of("br_cpf")
 
+                @JvmField val CA_BN = of("ca_bn")
+
                 @JvmField val CA_SIN = of("ca_sin")
+
+                @JvmField val CH_AHV = of("ch_ahv")
+
+                @JvmField val CH_UID = of("ch_uid")
 
                 @JvmField val CL_RUN = of("cl_run")
 
@@ -4521,15 +4003,77 @@ private constructor(
 
                 @JvmField val CO_NIT = of("co_nit")
 
+                @JvmField val CY_TIN = of("cy_tin")
+
+                @JvmField val CZ_ICO = of("cz_ico")
+
+                @JvmField val CZ_RC = of("cz_rc")
+
+                @JvmField val DE_STID = of("de_stid")
+
+                @JvmField val DE_STNR = of("de_stnr")
+
+                @JvmField val DE_VAT = of("de_vat")
+
+                @JvmField val DK_CPR = of("dk_cpr")
+
+                @JvmField val DK_CVR = of("dk_cvr")
+
                 @JvmField val DRIVERS_LICENSE = of("drivers_license")
+
+                @JvmField val EE_IK = of("ee_ik")
+
+                @JvmField val EE_RK = of("ee_rk")
+
+                @JvmField val ES_NIE = of("es_nie")
+
+                @JvmField val ES_NIF = of("es_nif")
+
+                @JvmField val FI_HETU = of("fi_hetu")
+
+                @JvmField val FI_YTJ = of("fi_ytj")
+
+                @JvmField val FR_NIF = of("fr_nif")
+
+                @JvmField val FR_SIREN = of("fr_siren")
+
+                @JvmField val FR_VAT = of("fr_vat")
+
+                @JvmField val GB_NINO = of("gb_nino")
+
+                @JvmField val GB_UTR = of("gb_utr")
+
+                @JvmField val GB_VAT = of("gb_vat")
+
+                @JvmField val GENERIC_INTERNATIONAL = of("generic_international")
+
+                @JvmField val GR_VAT = of("gr_vat")
 
                 @JvmField val HN_ID = of("hn_id")
 
                 @JvmField val HN_RTN = of("hn_rtn")
 
+                @JvmField val HR_OIB = of("hr_oib")
+
+                @JvmField val HU_ADJ = of("hu_adj")
+
+                @JvmField val HU_ANUM = of("hu_anum")
+
                 @JvmField val IE_PPS = of("ie_pps")
 
+                @JvmField val IE_TRN = of("ie_trn")
+
                 @JvmField val IN_LEI = of("in_lei")
+
+                @JvmField val IS_KNT = of("is_knt")
+
+                @JvmField val IT_CF = of("it_cf")
+
+                @JvmField val IT_PIVA = of("it_piva")
+
+                @JvmField val JP_HB = of("jp_hb")
+
+                @JvmField val JP_MN = of("jp_mn")
 
                 @JvmField val KR_BRN = of("kr_brn")
 
@@ -4537,17 +4081,79 @@ private constructor(
 
                 @JvmField val KR_RRN = of("kr_rrn")
 
+                @JvmField val LI_PEID = of("li_peid")
+
+                @JvmField val LT_AK = of("lt_ak")
+
+                @JvmField val LT_JAK = of("lt_jak")
+
+                @JvmField val LU_MTC = of("lu_mtc")
+
+                @JvmField val LU_VAT = of("lu_vat")
+
+                @JvmField val LV_PK = of("lv_pk")
+
+                @JvmField val LV_RN = of("lv_rn")
+
+                @JvmField val MT_TIN = of("mt_tin")
+
+                @JvmField val MT_VAT = of("mt_vat")
+
                 @JvmField val MX_CURP = of("mx_curp")
 
                 @JvmField val MX_INE = of("mx_ine")
 
                 @JvmField val MX_RFC = of("mx_rfc")
 
+                @JvmField val NATIONAL_ID = of("national_id")
+
+                @JvmField val NL_BSN = of("nl_bsn")
+
+                @JvmField val NL_BTW = of("nl_btw")
+
+                @JvmField val NL_RSIN = of("nl_rsin")
+
+                @JvmField val NO_FDN = of("no_fdn")
+
+                @JvmField val NO_MVA = of("no_mva")
+
+                @JvmField val NO_ORGNR = of("no_orgnr")
+
+                @JvmField val NZ_IRD = of("nz_ird")
+
                 @JvmField val PASSPORT = of("passport")
+
+                @JvmField val PL_NIP = of("pl_nip")
+
+                @JvmField val PL_PESEL = of("pl_pesel")
+
+                @JvmField val PT_NIF = of("pt_nif")
+
+                @JvmField val RO_CNP = of("ro_cnp")
+
+                @JvmField val RO_CUI = of("ro_cui")
 
                 @JvmField val SA_TIN = of("sa_tin")
 
                 @JvmField val SA_VAT = of("sa_vat")
+
+                @JvmField val SE_ORGNR = of("se_orgnr")
+
+                @JvmField val SE_PNMR = of("se_pnmr")
+
+                @JvmField val SG_FIN = of("sg_fin")
+
+                @JvmField val SG_NRIC = of("sg_nric")
+
+                @JvmField val SG_UEN = of("sg_uen")
+
+                @JvmField val SI_DAV = of("si_dav")
+
+                @JvmField val SI_TIN = of("si_tin")
+
+                @JvmField val SK_ICO = of("sk_ico")
+
+                @JvmField val SK_RC = of("sk_rc")
 
                 @JvmField val US_EIN = of("us_ein")
 
@@ -4566,27 +4172,98 @@ private constructor(
             enum class Known {
                 AR_CUIL,
                 AR_CUIT,
+                AT_ATIN,
+                AT_VAT,
+                AU_ABN,
+                AU_TFN,
+                BE_ENT,
+                BE_NRN,
                 BR_CNPJ,
                 BR_CPF,
+                CA_BN,
                 CA_SIN,
+                CH_AHV,
+                CH_UID,
                 CL_RUN,
                 CL_RUT,
                 CO_CEDULAS,
                 CO_NIT,
+                CY_TIN,
+                CZ_ICO,
+                CZ_RC,
+                DE_STID,
+                DE_STNR,
+                DE_VAT,
+                DK_CPR,
+                DK_CVR,
                 DRIVERS_LICENSE,
+                EE_IK,
+                EE_RK,
+                ES_NIE,
+                ES_NIF,
+                FI_HETU,
+                FI_YTJ,
+                FR_NIF,
+                FR_SIREN,
+                FR_VAT,
+                GB_NINO,
+                GB_UTR,
+                GB_VAT,
+                GENERIC_INTERNATIONAL,
+                GR_VAT,
                 HN_ID,
                 HN_RTN,
+                HR_OIB,
+                HU_ADJ,
+                HU_ANUM,
                 IE_PPS,
+                IE_TRN,
                 IN_LEI,
+                IS_KNT,
+                IT_CF,
+                IT_PIVA,
+                JP_HB,
+                JP_MN,
                 KR_BRN,
                 KR_CRN,
                 KR_RRN,
+                LI_PEID,
+                LT_AK,
+                LT_JAK,
+                LU_MTC,
+                LU_VAT,
+                LV_PK,
+                LV_RN,
+                MT_TIN,
+                MT_VAT,
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
+                NATIONAL_ID,
+                NL_BSN,
+                NL_BTW,
+                NL_RSIN,
+                NO_FDN,
+                NO_MVA,
+                NO_ORGNR,
+                NZ_IRD,
                 PASSPORT,
+                PL_NIP,
+                PL_PESEL,
+                PT_NIF,
+                RO_CNP,
+                RO_CUI,
                 SA_TIN,
                 SA_VAT,
+                SE_ORGNR,
+                SE_PNMR,
+                SG_FIN,
+                SG_NRIC,
+                SG_UEN,
+                SI_DAV,
+                SI_TIN,
+                SK_ICO,
+                SK_RC,
                 US_EIN,
                 US_ITIN,
                 US_SSN,
@@ -4606,27 +4283,98 @@ private constructor(
             enum class Value {
                 AR_CUIL,
                 AR_CUIT,
+                AT_ATIN,
+                AT_VAT,
+                AU_ABN,
+                AU_TFN,
+                BE_ENT,
+                BE_NRN,
                 BR_CNPJ,
                 BR_CPF,
+                CA_BN,
                 CA_SIN,
+                CH_AHV,
+                CH_UID,
                 CL_RUN,
                 CL_RUT,
                 CO_CEDULAS,
                 CO_NIT,
+                CY_TIN,
+                CZ_ICO,
+                CZ_RC,
+                DE_STID,
+                DE_STNR,
+                DE_VAT,
+                DK_CPR,
+                DK_CVR,
                 DRIVERS_LICENSE,
+                EE_IK,
+                EE_RK,
+                ES_NIE,
+                ES_NIF,
+                FI_HETU,
+                FI_YTJ,
+                FR_NIF,
+                FR_SIREN,
+                FR_VAT,
+                GB_NINO,
+                GB_UTR,
+                GB_VAT,
+                GENERIC_INTERNATIONAL,
+                GR_VAT,
                 HN_ID,
                 HN_RTN,
+                HR_OIB,
+                HU_ADJ,
+                HU_ANUM,
                 IE_PPS,
+                IE_TRN,
                 IN_LEI,
+                IS_KNT,
+                IT_CF,
+                IT_PIVA,
+                JP_HB,
+                JP_MN,
                 KR_BRN,
                 KR_CRN,
                 KR_RRN,
+                LI_PEID,
+                LT_AK,
+                LT_JAK,
+                LU_MTC,
+                LU_VAT,
+                LV_PK,
+                LV_RN,
+                MT_TIN,
+                MT_VAT,
                 MX_CURP,
                 MX_INE,
                 MX_RFC,
+                NATIONAL_ID,
+                NL_BSN,
+                NL_BTW,
+                NL_RSIN,
+                NO_FDN,
+                NO_MVA,
+                NO_ORGNR,
+                NZ_IRD,
                 PASSPORT,
+                PL_NIP,
+                PL_PESEL,
+                PT_NIF,
+                RO_CNP,
+                RO_CUI,
                 SA_TIN,
                 SA_VAT,
+                SE_ORGNR,
+                SE_PNMR,
+                SG_FIN,
+                SG_NRIC,
+                SG_UEN,
+                SI_DAV,
+                SI_TIN,
+                SK_ICO,
+                SK_RC,
                 US_EIN,
                 US_ITIN,
                 US_SSN,
@@ -4649,27 +4397,98 @@ private constructor(
                 when (this) {
                     AR_CUIL -> Value.AR_CUIL
                     AR_CUIT -> Value.AR_CUIT
+                    AT_ATIN -> Value.AT_ATIN
+                    AT_VAT -> Value.AT_VAT
+                    AU_ABN -> Value.AU_ABN
+                    AU_TFN -> Value.AU_TFN
+                    BE_ENT -> Value.BE_ENT
+                    BE_NRN -> Value.BE_NRN
                     BR_CNPJ -> Value.BR_CNPJ
                     BR_CPF -> Value.BR_CPF
+                    CA_BN -> Value.CA_BN
                     CA_SIN -> Value.CA_SIN
+                    CH_AHV -> Value.CH_AHV
+                    CH_UID -> Value.CH_UID
                     CL_RUN -> Value.CL_RUN
                     CL_RUT -> Value.CL_RUT
                     CO_CEDULAS -> Value.CO_CEDULAS
                     CO_NIT -> Value.CO_NIT
+                    CY_TIN -> Value.CY_TIN
+                    CZ_ICO -> Value.CZ_ICO
+                    CZ_RC -> Value.CZ_RC
+                    DE_STID -> Value.DE_STID
+                    DE_STNR -> Value.DE_STNR
+                    DE_VAT -> Value.DE_VAT
+                    DK_CPR -> Value.DK_CPR
+                    DK_CVR -> Value.DK_CVR
                     DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
+                    EE_IK -> Value.EE_IK
+                    EE_RK -> Value.EE_RK
+                    ES_NIE -> Value.ES_NIE
+                    ES_NIF -> Value.ES_NIF
+                    FI_HETU -> Value.FI_HETU
+                    FI_YTJ -> Value.FI_YTJ
+                    FR_NIF -> Value.FR_NIF
+                    FR_SIREN -> Value.FR_SIREN
+                    FR_VAT -> Value.FR_VAT
+                    GB_NINO -> Value.GB_NINO
+                    GB_UTR -> Value.GB_UTR
+                    GB_VAT -> Value.GB_VAT
+                    GENERIC_INTERNATIONAL -> Value.GENERIC_INTERNATIONAL
+                    GR_VAT -> Value.GR_VAT
                     HN_ID -> Value.HN_ID
                     HN_RTN -> Value.HN_RTN
+                    HR_OIB -> Value.HR_OIB
+                    HU_ADJ -> Value.HU_ADJ
+                    HU_ANUM -> Value.HU_ANUM
                     IE_PPS -> Value.IE_PPS
+                    IE_TRN -> Value.IE_TRN
                     IN_LEI -> Value.IN_LEI
+                    IS_KNT -> Value.IS_KNT
+                    IT_CF -> Value.IT_CF
+                    IT_PIVA -> Value.IT_PIVA
+                    JP_HB -> Value.JP_HB
+                    JP_MN -> Value.JP_MN
                     KR_BRN -> Value.KR_BRN
                     KR_CRN -> Value.KR_CRN
                     KR_RRN -> Value.KR_RRN
+                    LI_PEID -> Value.LI_PEID
+                    LT_AK -> Value.LT_AK
+                    LT_JAK -> Value.LT_JAK
+                    LU_MTC -> Value.LU_MTC
+                    LU_VAT -> Value.LU_VAT
+                    LV_PK -> Value.LV_PK
+                    LV_RN -> Value.LV_RN
+                    MT_TIN -> Value.MT_TIN
+                    MT_VAT -> Value.MT_VAT
                     MX_CURP -> Value.MX_CURP
                     MX_INE -> Value.MX_INE
                     MX_RFC -> Value.MX_RFC
+                    NATIONAL_ID -> Value.NATIONAL_ID
+                    NL_BSN -> Value.NL_BSN
+                    NL_BTW -> Value.NL_BTW
+                    NL_RSIN -> Value.NL_RSIN
+                    NO_FDN -> Value.NO_FDN
+                    NO_MVA -> Value.NO_MVA
+                    NO_ORGNR -> Value.NO_ORGNR
+                    NZ_IRD -> Value.NZ_IRD
                     PASSPORT -> Value.PASSPORT
+                    PL_NIP -> Value.PL_NIP
+                    PL_PESEL -> Value.PL_PESEL
+                    PT_NIF -> Value.PT_NIF
+                    RO_CNP -> Value.RO_CNP
+                    RO_CUI -> Value.RO_CUI
                     SA_TIN -> Value.SA_TIN
                     SA_VAT -> Value.SA_VAT
+                    SE_ORGNR -> Value.SE_ORGNR
+                    SE_PNMR -> Value.SE_PNMR
+                    SG_FIN -> Value.SG_FIN
+                    SG_NRIC -> Value.SG_NRIC
+                    SG_UEN -> Value.SG_UEN
+                    SI_DAV -> Value.SI_DAV
+                    SI_TIN -> Value.SI_TIN
+                    SK_ICO -> Value.SK_ICO
+                    SK_RC -> Value.SK_RC
                     US_EIN -> Value.US_EIN
                     US_ITIN -> Value.US_ITIN
                     US_SSN -> Value.US_SSN
@@ -4691,27 +4510,98 @@ private constructor(
                 when (this) {
                     AR_CUIL -> Known.AR_CUIL
                     AR_CUIT -> Known.AR_CUIT
+                    AT_ATIN -> Known.AT_ATIN
+                    AT_VAT -> Known.AT_VAT
+                    AU_ABN -> Known.AU_ABN
+                    AU_TFN -> Known.AU_TFN
+                    BE_ENT -> Known.BE_ENT
+                    BE_NRN -> Known.BE_NRN
                     BR_CNPJ -> Known.BR_CNPJ
                     BR_CPF -> Known.BR_CPF
+                    CA_BN -> Known.CA_BN
                     CA_SIN -> Known.CA_SIN
+                    CH_AHV -> Known.CH_AHV
+                    CH_UID -> Known.CH_UID
                     CL_RUN -> Known.CL_RUN
                     CL_RUT -> Known.CL_RUT
                     CO_CEDULAS -> Known.CO_CEDULAS
                     CO_NIT -> Known.CO_NIT
+                    CY_TIN -> Known.CY_TIN
+                    CZ_ICO -> Known.CZ_ICO
+                    CZ_RC -> Known.CZ_RC
+                    DE_STID -> Known.DE_STID
+                    DE_STNR -> Known.DE_STNR
+                    DE_VAT -> Known.DE_VAT
+                    DK_CPR -> Known.DK_CPR
+                    DK_CVR -> Known.DK_CVR
                     DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
+                    EE_IK -> Known.EE_IK
+                    EE_RK -> Known.EE_RK
+                    ES_NIE -> Known.ES_NIE
+                    ES_NIF -> Known.ES_NIF
+                    FI_HETU -> Known.FI_HETU
+                    FI_YTJ -> Known.FI_YTJ
+                    FR_NIF -> Known.FR_NIF
+                    FR_SIREN -> Known.FR_SIREN
+                    FR_VAT -> Known.FR_VAT
+                    GB_NINO -> Known.GB_NINO
+                    GB_UTR -> Known.GB_UTR
+                    GB_VAT -> Known.GB_VAT
+                    GENERIC_INTERNATIONAL -> Known.GENERIC_INTERNATIONAL
+                    GR_VAT -> Known.GR_VAT
                     HN_ID -> Known.HN_ID
                     HN_RTN -> Known.HN_RTN
+                    HR_OIB -> Known.HR_OIB
+                    HU_ADJ -> Known.HU_ADJ
+                    HU_ANUM -> Known.HU_ANUM
                     IE_PPS -> Known.IE_PPS
+                    IE_TRN -> Known.IE_TRN
                     IN_LEI -> Known.IN_LEI
+                    IS_KNT -> Known.IS_KNT
+                    IT_CF -> Known.IT_CF
+                    IT_PIVA -> Known.IT_PIVA
+                    JP_HB -> Known.JP_HB
+                    JP_MN -> Known.JP_MN
                     KR_BRN -> Known.KR_BRN
                     KR_CRN -> Known.KR_CRN
                     KR_RRN -> Known.KR_RRN
+                    LI_PEID -> Known.LI_PEID
+                    LT_AK -> Known.LT_AK
+                    LT_JAK -> Known.LT_JAK
+                    LU_MTC -> Known.LU_MTC
+                    LU_VAT -> Known.LU_VAT
+                    LV_PK -> Known.LV_PK
+                    LV_RN -> Known.LV_RN
+                    MT_TIN -> Known.MT_TIN
+                    MT_VAT -> Known.MT_VAT
                     MX_CURP -> Known.MX_CURP
                     MX_INE -> Known.MX_INE
                     MX_RFC -> Known.MX_RFC
+                    NATIONAL_ID -> Known.NATIONAL_ID
+                    NL_BSN -> Known.NL_BSN
+                    NL_BTW -> Known.NL_BTW
+                    NL_RSIN -> Known.NL_RSIN
+                    NO_FDN -> Known.NO_FDN
+                    NO_MVA -> Known.NO_MVA
+                    NO_ORGNR -> Known.NO_ORGNR
+                    NZ_IRD -> Known.NZ_IRD
                     PASSPORT -> Known.PASSPORT
+                    PL_NIP -> Known.PL_NIP
+                    PL_PESEL -> Known.PL_PESEL
+                    PT_NIF -> Known.PT_NIF
+                    RO_CNP -> Known.RO_CNP
+                    RO_CUI -> Known.RO_CUI
                     SA_TIN -> Known.SA_TIN
                     SA_VAT -> Known.SA_VAT
+                    SE_ORGNR -> Known.SE_ORGNR
+                    SE_PNMR -> Known.SE_PNMR
+                    SG_FIN -> Known.SG_FIN
+                    SG_NRIC -> Known.SG_NRIC
+                    SG_UEN -> Known.SG_UEN
+                    SI_DAV -> Known.SI_DAV
+                    SI_TIN -> Known.SI_TIN
+                    SK_ICO -> Known.SK_ICO
+                    SK_RC -> Known.SK_RC
                     US_EIN -> Known.US_EIN
                     US_ITIN -> Known.US_ITIN
                     US_SSN -> Known.US_SSN
@@ -4847,8 +4737,6 @@ private constructor(
 
             @JvmField val INDIVIDUAL = of("individual")
 
-            @JvmField val JOINT = of("joint")
-
             @JvmStatic fun of(value: String) = LegalEntityType(JsonField.of(value))
         }
 
@@ -4856,7 +4744,6 @@ private constructor(
         enum class Known {
             BUSINESS,
             INDIVIDUAL,
-            JOINT,
         }
 
         /**
@@ -4871,7 +4758,6 @@ private constructor(
         enum class Value {
             BUSINESS,
             INDIVIDUAL,
-            JOINT,
             /**
              * An enum member indicating that [LegalEntityType] was instantiated with an unknown
              * value.
@@ -4890,7 +4776,6 @@ private constructor(
             when (this) {
                 BUSINESS -> Value.BUSINESS
                 INDIVIDUAL -> Value.INDIVIDUAL
-                JOINT -> Value.JOINT
                 else -> Value._UNKNOWN
             }
 
@@ -4907,7 +4792,6 @@ private constructor(
             when (this) {
                 BUSINESS -> Known.BUSINESS
                 INDIVIDUAL -> Known.INDIVIDUAL
-                JOINT -> Known.JOINT
                 else -> throw ModernTreasuryInvalidDataException("Unknown LegalEntityType: $value")
             }
 
@@ -5961,402 +5845,57 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class LegalEntityWealthEmploymentDetail
+    /** Acceptance of terms of use by the legal entity. */
+    class TermsOfUse
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val id: JsonField<String>,
-        private val annualIncome: JsonField<Long>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val discardedAt: JsonField<OffsetDateTime>,
-        private val employerCountry: JsonField<String>,
-        private val employerName: JsonField<String>,
-        private val employerState: JsonField<String>,
-        private val employmentStatus: JsonField<EmploymentStatus>,
-        private val incomeCountry: JsonField<String>,
-        private val incomeSource: JsonField<IncomeSource>,
-        private val incomeState: JsonField<String>,
-        private val industry: JsonField<Industry>,
-        private val liveMode: JsonField<Boolean>,
-        private val object_: JsonField<String>,
-        private val occupation: JsonField<Occupation>,
-        private val sourceOfFunds: JsonField<SourceOfFunds>,
-        private val updatedAt: JsonField<OffsetDateTime>,
-        private val wealthSource: JsonField<WealthSource>,
+        private val acceptedAt: JsonField<OffsetDateTime>,
+        private val ipAddress: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("annual_income")
+            @JsonProperty("accepted_at")
             @ExcludeMissing
-            annualIncome: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("created_at")
+            acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("ip_address")
             @ExcludeMissing
-            createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("discarded_at")
-            @ExcludeMissing
-            discardedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("employer_country")
-            @ExcludeMissing
-            employerCountry: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("employer_name")
-            @ExcludeMissing
-            employerName: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("employer_state")
-            @ExcludeMissing
-            employerState: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("employment_status")
-            @ExcludeMissing
-            employmentStatus: JsonField<EmploymentStatus> = JsonMissing.of(),
-            @JsonProperty("income_country")
-            @ExcludeMissing
-            incomeCountry: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("income_source")
-            @ExcludeMissing
-            incomeSource: JsonField<IncomeSource> = JsonMissing.of(),
-            @JsonProperty("income_state")
-            @ExcludeMissing
-            incomeState: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("industry")
-            @ExcludeMissing
-            industry: JsonField<Industry> = JsonMissing.of(),
-            @JsonProperty("live_mode")
-            @ExcludeMissing
-            liveMode: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("occupation")
-            @ExcludeMissing
-            occupation: JsonField<Occupation> = JsonMissing.of(),
-            @JsonProperty("source_of_funds")
-            @ExcludeMissing
-            sourceOfFunds: JsonField<SourceOfFunds> = JsonMissing.of(),
-            @JsonProperty("updated_at")
-            @ExcludeMissing
-            updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("wealth_source")
-            @ExcludeMissing
-            wealthSource: JsonField<WealthSource> = JsonMissing.of(),
-        ) : this(
-            id,
-            annualIncome,
-            createdAt,
-            discardedAt,
-            employerCountry,
-            employerName,
-            employerState,
-            employmentStatus,
-            incomeCountry,
-            incomeSource,
-            incomeState,
-            industry,
-            liveMode,
-            object_,
-            occupation,
-            sourceOfFunds,
-            updatedAt,
-            wealthSource,
-            mutableMapOf(),
-        )
+            ipAddress: JsonField<String> = JsonMissing.of(),
+        ) : this(acceptedAt, ipAddress, mutableMapOf())
 
         /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun id(): String = id.getRequired("id")
-
-        /**
-         * The annual income of the individual in USD.
+         * The ISO 8601 timestamp indicating when the terms of use were accepted.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun annualIncome(): Optional<Long> = annualIncome.getOptional("annual_income")
+        fun acceptedAt(): Optional<OffsetDateTime> = acceptedAt.getOptional("accepted_at")
 
         /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun discardedAt(): Optional<OffsetDateTime> = discardedAt.getOptional("discarded_at")
-
-        /**
-         * The country in which the employer is located.
+         * The IP address from which the terms of use were accepted. Supports both IPv4 and IPv6
+         * formats.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun employerCountry(): Optional<String> = employerCountry.getOptional("employer_country")
+        fun ipAddress(): Optional<String> = ipAddress.getOptional("ip_address")
 
         /**
-         * The name of the employer.
+         * Returns the raw JSON value of [acceptedAt].
          *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
+         * Unlike [acceptedAt], this method doesn't throw if the JSON field has an unexpected type.
          */
-        fun employerName(): Optional<String> = employerName.getOptional("employer_name")
-
-        /**
-         * The state in which the employer is located.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun employerState(): Optional<String> = employerState.getOptional("employer_state")
-
-        /**
-         * The employment status of the individual.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun employmentStatus(): Optional<EmploymentStatus> =
-            employmentStatus.getOptional("employment_status")
-
-        /**
-         * The country in which the individual's income is earned.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun incomeCountry(): Optional<String> = incomeCountry.getOptional("income_country")
-
-        /**
-         * The source of the individual's income.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun incomeSource(): Optional<IncomeSource> = incomeSource.getOptional("income_source")
-
-        /**
-         * The state in which the individual's income is earned.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun incomeState(): Optional<String> = incomeState.getOptional("income_state")
-
-        /**
-         * The industry of the individual.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun industry(): Optional<Industry> = industry.getOptional("industry")
-
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun liveMode(): Boolean = liveMode.getRequired("live_mode")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun object_(): String = object_.getRequired("object")
-
-        /**
-         * The occupation of the individual.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun occupation(): Optional<Occupation> = occupation.getOptional("occupation")
-
-        /**
-         * The source of the individual's funds.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun sourceOfFunds(): Optional<SourceOfFunds> = sourceOfFunds.getOptional("source_of_funds")
-
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
-
-        /**
-         * The source of the individual's wealth.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun wealthSource(): Optional<WealthSource> = wealthSource.getOptional("wealth_source")
-
-        /**
-         * Returns the raw JSON value of [id].
-         *
-         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [annualIncome].
-         *
-         * Unlike [annualIncome], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("annual_income")
+        @JsonProperty("accepted_at")
         @ExcludeMissing
-        fun _annualIncome(): JsonField<Long> = annualIncome
+        fun _acceptedAt(): JsonField<OffsetDateTime> = acceptedAt
 
         /**
-         * Returns the raw JSON value of [createdAt].
+         * Returns the raw JSON value of [ipAddress].
          *
-         * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+         * Unlike [ipAddress], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("created_at")
-        @ExcludeMissing
-        fun _createdAt(): JsonField<OffsetDateTime> = createdAt
-
-        /**
-         * Returns the raw JSON value of [discardedAt].
-         *
-         * Unlike [discardedAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("discarded_at")
-        @ExcludeMissing
-        fun _discardedAt(): JsonField<OffsetDateTime> = discardedAt
-
-        /**
-         * Returns the raw JSON value of [employerCountry].
-         *
-         * Unlike [employerCountry], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("employer_country")
-        @ExcludeMissing
-        fun _employerCountry(): JsonField<String> = employerCountry
-
-        /**
-         * Returns the raw JSON value of [employerName].
-         *
-         * Unlike [employerName], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("employer_name")
-        @ExcludeMissing
-        fun _employerName(): JsonField<String> = employerName
-
-        /**
-         * Returns the raw JSON value of [employerState].
-         *
-         * Unlike [employerState], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("employer_state")
-        @ExcludeMissing
-        fun _employerState(): JsonField<String> = employerState
-
-        /**
-         * Returns the raw JSON value of [employmentStatus].
-         *
-         * Unlike [employmentStatus], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("employment_status")
-        @ExcludeMissing
-        fun _employmentStatus(): JsonField<EmploymentStatus> = employmentStatus
-
-        /**
-         * Returns the raw JSON value of [incomeCountry].
-         *
-         * Unlike [incomeCountry], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("income_country")
-        @ExcludeMissing
-        fun _incomeCountry(): JsonField<String> = incomeCountry
-
-        /**
-         * Returns the raw JSON value of [incomeSource].
-         *
-         * Unlike [incomeSource], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("income_source")
-        @ExcludeMissing
-        fun _incomeSource(): JsonField<IncomeSource> = incomeSource
-
-        /**
-         * Returns the raw JSON value of [incomeState].
-         *
-         * Unlike [incomeState], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("income_state")
-        @ExcludeMissing
-        fun _incomeState(): JsonField<String> = incomeState
-
-        /**
-         * Returns the raw JSON value of [industry].
-         *
-         * Unlike [industry], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("industry") @ExcludeMissing fun _industry(): JsonField<Industry> = industry
-
-        /**
-         * Returns the raw JSON value of [liveMode].
-         *
-         * Unlike [liveMode], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("live_mode") @ExcludeMissing fun _liveMode(): JsonField<Boolean> = liveMode
-
-        /**
-         * Returns the raw JSON value of [object_].
-         *
-         * Unlike [object_], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
-
-        /**
-         * Returns the raw JSON value of [occupation].
-         *
-         * Unlike [occupation], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("occupation")
-        @ExcludeMissing
-        fun _occupation(): JsonField<Occupation> = occupation
-
-        /**
-         * Returns the raw JSON value of [sourceOfFunds].
-         *
-         * Unlike [sourceOfFunds], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("source_of_funds")
-        @ExcludeMissing
-        fun _sourceOfFunds(): JsonField<SourceOfFunds> = sourceOfFunds
-
-        /**
-         * Returns the raw JSON value of [updatedAt].
-         *
-         * Unlike [updatedAt], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("updated_at")
-        @ExcludeMissing
-        fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
-
-        /**
-         * Returns the raw JSON value of [wealthSource].
-         *
-         * Unlike [wealthSource], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("wealth_source")
-        @ExcludeMissing
-        fun _wealthSource(): JsonField<WealthSource> = wealthSource
+        @JsonProperty("ip_address") @ExcludeMissing fun _ipAddress(): JsonField<String> = ipAddress
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -6372,391 +5911,52 @@ private constructor(
 
         companion object {
 
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [LegalEntityWealthEmploymentDetail].
-             *
-             * The following fields are required:
-             * ```java
-             * .id()
-             * .annualIncome()
-             * .createdAt()
-             * .discardedAt()
-             * .employerCountry()
-             * .employerName()
-             * .employerState()
-             * .employmentStatus()
-             * .incomeCountry()
-             * .incomeSource()
-             * .incomeState()
-             * .industry()
-             * .liveMode()
-             * .object_()
-             * .occupation()
-             * .sourceOfFunds()
-             * .updatedAt()
-             * .wealthSource()
-             * ```
-             */
+            /** Returns a mutable builder for constructing an instance of [TermsOfUse]. */
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [LegalEntityWealthEmploymentDetail]. */
+        /** A builder for [TermsOfUse]. */
         class Builder internal constructor() {
 
-            private var id: JsonField<String>? = null
-            private var annualIncome: JsonField<Long>? = null
-            private var createdAt: JsonField<OffsetDateTime>? = null
-            private var discardedAt: JsonField<OffsetDateTime>? = null
-            private var employerCountry: JsonField<String>? = null
-            private var employerName: JsonField<String>? = null
-            private var employerState: JsonField<String>? = null
-            private var employmentStatus: JsonField<EmploymentStatus>? = null
-            private var incomeCountry: JsonField<String>? = null
-            private var incomeSource: JsonField<IncomeSource>? = null
-            private var incomeState: JsonField<String>? = null
-            private var industry: JsonField<Industry>? = null
-            private var liveMode: JsonField<Boolean>? = null
-            private var object_: JsonField<String>? = null
-            private var occupation: JsonField<Occupation>? = null
-            private var sourceOfFunds: JsonField<SourceOfFunds>? = null
-            private var updatedAt: JsonField<OffsetDateTime>? = null
-            private var wealthSource: JsonField<WealthSource>? = null
+            private var acceptedAt: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var ipAddress: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(
-                legalEntityWealthEmploymentDetail: LegalEntityWealthEmploymentDetail
-            ) = apply {
-                id = legalEntityWealthEmploymentDetail.id
-                annualIncome = legalEntityWealthEmploymentDetail.annualIncome
-                createdAt = legalEntityWealthEmploymentDetail.createdAt
-                discardedAt = legalEntityWealthEmploymentDetail.discardedAt
-                employerCountry = legalEntityWealthEmploymentDetail.employerCountry
-                employerName = legalEntityWealthEmploymentDetail.employerName
-                employerState = legalEntityWealthEmploymentDetail.employerState
-                employmentStatus = legalEntityWealthEmploymentDetail.employmentStatus
-                incomeCountry = legalEntityWealthEmploymentDetail.incomeCountry
-                incomeSource = legalEntityWealthEmploymentDetail.incomeSource
-                incomeState = legalEntityWealthEmploymentDetail.incomeState
-                industry = legalEntityWealthEmploymentDetail.industry
-                liveMode = legalEntityWealthEmploymentDetail.liveMode
-                object_ = legalEntityWealthEmploymentDetail.object_
-                occupation = legalEntityWealthEmploymentDetail.occupation
-                sourceOfFunds = legalEntityWealthEmploymentDetail.sourceOfFunds
-                updatedAt = legalEntityWealthEmploymentDetail.updatedAt
-                wealthSource = legalEntityWealthEmploymentDetail.wealthSource
-                additionalProperties =
-                    legalEntityWealthEmploymentDetail.additionalProperties.toMutableMap()
+            internal fun from(termsOfUse: TermsOfUse) = apply {
+                acceptedAt = termsOfUse.acceptedAt
+                ipAddress = termsOfUse.ipAddress
+                additionalProperties = termsOfUse.additionalProperties.toMutableMap()
             }
 
-            fun id(id: String) = id(JsonField.of(id))
+            /** The ISO 8601 timestamp indicating when the terms of use were accepted. */
+            fun acceptedAt(acceptedAt: OffsetDateTime) = acceptedAt(JsonField.of(acceptedAt))
 
             /**
-             * Sets [Builder.id] to an arbitrary JSON value.
+             * Sets [Builder.acceptedAt] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.id] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /** The annual income of the individual in USD. */
-            fun annualIncome(annualIncome: Long?) = annualIncome(JsonField.ofNullable(annualIncome))
-
-            /**
-             * Alias for [Builder.annualIncome].
-             *
-             * This unboxed primitive overload exists for backwards compatibility.
-             */
-            fun annualIncome(annualIncome: Long) = annualIncome(annualIncome as Long?)
-
-            /** Alias for calling [Builder.annualIncome] with `annualIncome.orElse(null)`. */
-            fun annualIncome(annualIncome: Optional<Long>) = annualIncome(annualIncome.getOrNull())
-
-            /**
-             * Sets [Builder.annualIncome] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.annualIncome] with a well-typed [Long] value
+             * You should usually call [Builder.acceptedAt] with a well-typed [OffsetDateTime] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun annualIncome(annualIncome: JsonField<Long>) = apply {
-                this.annualIncome = annualIncome
+            fun acceptedAt(acceptedAt: JsonField<OffsetDateTime>) = apply {
+                this.acceptedAt = acceptedAt
             }
 
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+            /**
+             * The IP address from which the terms of use were accepted. Supports both IPv4 and IPv6
+             * formats.
+             */
+            fun ipAddress(ipAddress: String) = ipAddress(JsonField.of(ipAddress))
 
             /**
-             * Sets [Builder.createdAt] to an arbitrary JSON value.
+             * Sets [Builder.ipAddress] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun discardedAt(discardedAt: OffsetDateTime?) =
-                discardedAt(JsonField.ofNullable(discardedAt))
-
-            /** Alias for calling [Builder.discardedAt] with `discardedAt.orElse(null)`. */
-            fun discardedAt(discardedAt: Optional<OffsetDateTime>) =
-                discardedAt(discardedAt.getOrNull())
-
-            /**
-             * Sets [Builder.discardedAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.discardedAt] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun discardedAt(discardedAt: JsonField<OffsetDateTime>) = apply {
-                this.discardedAt = discardedAt
-            }
-
-            /** The country in which the employer is located. */
-            fun employerCountry(employerCountry: String?) =
-                employerCountry(JsonField.ofNullable(employerCountry))
-
-            /** Alias for calling [Builder.employerCountry] with `employerCountry.orElse(null)`. */
-            fun employerCountry(employerCountry: Optional<String>) =
-                employerCountry(employerCountry.getOrNull())
-
-            /**
-             * Sets [Builder.employerCountry] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.employerCountry] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun employerCountry(employerCountry: JsonField<String>) = apply {
-                this.employerCountry = employerCountry
-            }
-
-            /** The name of the employer. */
-            fun employerName(employerName: String?) =
-                employerName(JsonField.ofNullable(employerName))
-
-            /** Alias for calling [Builder.employerName] with `employerName.orElse(null)`. */
-            fun employerName(employerName: Optional<String>) =
-                employerName(employerName.getOrNull())
-
-            /**
-             * Sets [Builder.employerName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.employerName] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun employerName(employerName: JsonField<String>) = apply {
-                this.employerName = employerName
-            }
-
-            /** The state in which the employer is located. */
-            fun employerState(employerState: String?) =
-                employerState(JsonField.ofNullable(employerState))
-
-            /** Alias for calling [Builder.employerState] with `employerState.orElse(null)`. */
-            fun employerState(employerState: Optional<String>) =
-                employerState(employerState.getOrNull())
-
-            /**
-             * Sets [Builder.employerState] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.employerState] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun employerState(employerState: JsonField<String>) = apply {
-                this.employerState = employerState
-            }
-
-            /** The employment status of the individual. */
-            fun employmentStatus(employmentStatus: EmploymentStatus?) =
-                employmentStatus(JsonField.ofNullable(employmentStatus))
-
-            /**
-             * Alias for calling [Builder.employmentStatus] with `employmentStatus.orElse(null)`.
-             */
-            fun employmentStatus(employmentStatus: Optional<EmploymentStatus>) =
-                employmentStatus(employmentStatus.getOrNull())
-
-            /**
-             * Sets [Builder.employmentStatus] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.employmentStatus] with a well-typed
-             * [EmploymentStatus] value instead. This method is primarily for setting the field to
-             * an undocumented or not yet supported value.
-             */
-            fun employmentStatus(employmentStatus: JsonField<EmploymentStatus>) = apply {
-                this.employmentStatus = employmentStatus
-            }
-
-            /** The country in which the individual's income is earned. */
-            fun incomeCountry(incomeCountry: String?) =
-                incomeCountry(JsonField.ofNullable(incomeCountry))
-
-            /** Alias for calling [Builder.incomeCountry] with `incomeCountry.orElse(null)`. */
-            fun incomeCountry(incomeCountry: Optional<String>) =
-                incomeCountry(incomeCountry.getOrNull())
-
-            /**
-             * Sets [Builder.incomeCountry] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.incomeCountry] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun incomeCountry(incomeCountry: JsonField<String>) = apply {
-                this.incomeCountry = incomeCountry
-            }
-
-            /** The source of the individual's income. */
-            fun incomeSource(incomeSource: IncomeSource?) =
-                incomeSource(JsonField.ofNullable(incomeSource))
-
-            /** Alias for calling [Builder.incomeSource] with `incomeSource.orElse(null)`. */
-            fun incomeSource(incomeSource: Optional<IncomeSource>) =
-                incomeSource(incomeSource.getOrNull())
-
-            /**
-             * Sets [Builder.incomeSource] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.incomeSource] with a well-typed [IncomeSource] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun incomeSource(incomeSource: JsonField<IncomeSource>) = apply {
-                this.incomeSource = incomeSource
-            }
-
-            /** The state in which the individual's income is earned. */
-            fun incomeState(incomeState: String?) = incomeState(JsonField.ofNullable(incomeState))
-
-            /** Alias for calling [Builder.incomeState] with `incomeState.orElse(null)`. */
-            fun incomeState(incomeState: Optional<String>) = incomeState(incomeState.getOrNull())
-
-            /**
-             * Sets [Builder.incomeState] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.incomeState] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun incomeState(incomeState: JsonField<String>) = apply {
-                this.incomeState = incomeState
-            }
-
-            /** The industry of the individual. */
-            fun industry(industry: Industry?) = industry(JsonField.ofNullable(industry))
-
-            /** Alias for calling [Builder.industry] with `industry.orElse(null)`. */
-            fun industry(industry: Optional<Industry>) = industry(industry.getOrNull())
-
-            /**
-             * Sets [Builder.industry] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.industry] with a well-typed [Industry] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun industry(industry: JsonField<Industry>) = apply { this.industry = industry }
-
-            /**
-             * This field will be true if this object exists in the live environment or false if it
-             * exists in the test environment.
-             */
-            fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
-
-            /**
-             * Sets [Builder.liveMode] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.liveMode] with a well-typed [Boolean] value instead.
+             * You should usually call [Builder.ipAddress] with a well-typed [String] value instead.
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
-
-            fun object_(object_: String) = object_(JsonField.of(object_))
-
-            /**
-             * Sets [Builder.object_] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.object_] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
-
-            /** The occupation of the individual. */
-            fun occupation(occupation: Occupation?) = occupation(JsonField.ofNullable(occupation))
-
-            /** Alias for calling [Builder.occupation] with `occupation.orElse(null)`. */
-            fun occupation(occupation: Optional<Occupation>) = occupation(occupation.getOrNull())
-
-            /**
-             * Sets [Builder.occupation] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.occupation] with a well-typed [Occupation] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun occupation(occupation: JsonField<Occupation>) = apply {
-                this.occupation = occupation
-            }
-
-            /** The source of the individual's funds. */
-            fun sourceOfFunds(sourceOfFunds: SourceOfFunds?) =
-                sourceOfFunds(JsonField.ofNullable(sourceOfFunds))
-
-            /** Alias for calling [Builder.sourceOfFunds] with `sourceOfFunds.orElse(null)`. */
-            fun sourceOfFunds(sourceOfFunds: Optional<SourceOfFunds>) =
-                sourceOfFunds(sourceOfFunds.getOrNull())
-
-            /**
-             * Sets [Builder.sourceOfFunds] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.sourceOfFunds] with a well-typed [SourceOfFunds]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun sourceOfFunds(sourceOfFunds: JsonField<SourceOfFunds>) = apply {
-                this.sourceOfFunds = sourceOfFunds
-            }
-
-            fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
-
-            /**
-             * Sets [Builder.updatedAt] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.updatedAt] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
-                this.updatedAt = updatedAt
-            }
-
-            /** The source of the individual's wealth. */
-            fun wealthSource(wealthSource: WealthSource?) =
-                wealthSource(JsonField.ofNullable(wealthSource))
-
-            /** Alias for calling [Builder.wealthSource] with `wealthSource.orElse(null)`. */
-            fun wealthSource(wealthSource: Optional<WealthSource>) =
-                wealthSource(wealthSource.getOrNull())
-
-            /**
-             * Sets [Builder.wealthSource] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.wealthSource] with a well-typed [WealthSource] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun wealthSource(wealthSource: JsonField<WealthSource>) = apply {
-                this.wealthSource = wealthSource
-            }
+            fun ipAddress(ipAddress: JsonField<String>) = apply { this.ipAddress = ipAddress }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -6778,56 +5978,12 @@ private constructor(
             }
 
             /**
-             * Returns an immutable instance of [LegalEntityWealthEmploymentDetail].
+             * Returns an immutable instance of [TermsOfUse].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .id()
-             * .annualIncome()
-             * .createdAt()
-             * .discardedAt()
-             * .employerCountry()
-             * .employerName()
-             * .employerState()
-             * .employmentStatus()
-             * .incomeCountry()
-             * .incomeSource()
-             * .incomeState()
-             * .industry()
-             * .liveMode()
-             * .object_()
-             * .occupation()
-             * .sourceOfFunds()
-             * .updatedAt()
-             * .wealthSource()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): LegalEntityWealthEmploymentDetail =
-                LegalEntityWealthEmploymentDetail(
-                    checkRequired("id", id),
-                    checkRequired("annualIncome", annualIncome),
-                    checkRequired("createdAt", createdAt),
-                    checkRequired("discardedAt", discardedAt),
-                    checkRequired("employerCountry", employerCountry),
-                    checkRequired("employerName", employerName),
-                    checkRequired("employerState", employerState),
-                    checkRequired("employmentStatus", employmentStatus),
-                    checkRequired("incomeCountry", incomeCountry),
-                    checkRequired("incomeSource", incomeSource),
-                    checkRequired("incomeState", incomeState),
-                    checkRequired("industry", industry),
-                    checkRequired("liveMode", liveMode),
-                    checkRequired("object_", object_),
-                    checkRequired("occupation", occupation),
-                    checkRequired("sourceOfFunds", sourceOfFunds),
-                    checkRequired("updatedAt", updatedAt),
-                    checkRequired("wealthSource", wealthSource),
-                    additionalProperties.toMutableMap(),
-                )
+            fun build(): TermsOfUse =
+                TermsOfUse(acceptedAt, ipAddress, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -6841,29 +5997,13 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
          *   its expected type.
          */
-        fun validate(): LegalEntityWealthEmploymentDetail = apply {
+        fun validate(): TermsOfUse = apply {
             if (validated) {
                 return@apply
             }
 
-            id()
-            annualIncome()
-            createdAt()
-            discardedAt()
-            employerCountry()
-            employerName()
-            employerState()
-            employmentStatus().ifPresent { it.validate() }
-            incomeCountry()
-            incomeSource().ifPresent { it.validate() }
-            incomeState()
-            industry().ifPresent { it.validate() }
-            liveMode()
-            object_()
-            occupation().ifPresent { it.validate() }
-            sourceOfFunds().ifPresent { it.validate() }
-            updatedAt()
-            wealthSource().ifPresent { it.validate() }
+            acceptedAt()
+            ipAddress()
             validated = true
         }
 
@@ -6883,1415 +6023,28 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (id.asKnown().isPresent) 1 else 0) +
-                (if (annualIncome.asKnown().isPresent) 1 else 0) +
-                (if (createdAt.asKnown().isPresent) 1 else 0) +
-                (if (discardedAt.asKnown().isPresent) 1 else 0) +
-                (if (employerCountry.asKnown().isPresent) 1 else 0) +
-                (if (employerName.asKnown().isPresent) 1 else 0) +
-                (if (employerState.asKnown().isPresent) 1 else 0) +
-                (employmentStatus.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (incomeCountry.asKnown().isPresent) 1 else 0) +
-                (incomeSource.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (incomeState.asKnown().isPresent) 1 else 0) +
-                (industry.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (liveMode.asKnown().isPresent) 1 else 0) +
-                (if (object_.asKnown().isPresent) 1 else 0) +
-                (occupation.asKnown().getOrNull()?.validity() ?: 0) +
-                (sourceOfFunds.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (updatedAt.asKnown().isPresent) 1 else 0) +
-                (wealthSource.asKnown().getOrNull()?.validity() ?: 0)
-
-        /** The employment status of the individual. */
-        class EmploymentStatus
-        @JsonCreator
-        private constructor(private val value: JsonField<String>) : Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val EMPLOYED = of("employed")
-
-                @JvmField val RETIRED = of("retired")
-
-                @JvmField val SELF_EMPLOYED = of("self_employed")
-
-                @JvmField val STUDENT = of("student")
-
-                @JvmField val UNEMPLOYED = of("unemployed")
-
-                @JvmStatic fun of(value: String) = EmploymentStatus(JsonField.of(value))
-            }
-
-            /** An enum containing [EmploymentStatus]'s known values. */
-            enum class Known {
-                EMPLOYED,
-                RETIRED,
-                SELF_EMPLOYED,
-                STUDENT,
-                UNEMPLOYED,
-            }
-
-            /**
-             * An enum containing [EmploymentStatus]'s known values, as well as an [_UNKNOWN]
-             * member.
-             *
-             * An instance of [EmploymentStatus] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                EMPLOYED,
-                RETIRED,
-                SELF_EMPLOYED,
-                STUDENT,
-                UNEMPLOYED,
-                /**
-                 * An enum member indicating that [EmploymentStatus] was instantiated with an
-                 * unknown value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    EMPLOYED -> Value.EMPLOYED
-                    RETIRED -> Value.RETIRED
-                    SELF_EMPLOYED -> Value.SELF_EMPLOYED
-                    STUDENT -> Value.STUDENT
-                    UNEMPLOYED -> Value.UNEMPLOYED
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    EMPLOYED -> Known.EMPLOYED
-                    RETIRED -> Known.RETIRED
-                    SELF_EMPLOYED -> Known.SELF_EMPLOYED
-                    STUDENT -> Known.STUDENT
-                    UNEMPLOYED -> Known.UNEMPLOYED
-                    else ->
-                        throw ModernTreasuryInvalidDataException("Unknown EmploymentStatus: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): EmploymentStatus = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is EmploymentStatus && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        /** The source of the individual's income. */
-        class IncomeSource @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val FAMILY_SUPPORT = of("family_support")
-
-                @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
-
-                @JvmField val INHERITANCE = of("inheritance")
-
-                @JvmField val INVESTMENTS = of("investments")
-
-                @JvmField val RENTAL_INCOME = of("rental_income")
-
-                @JvmField val RETIREMENT = of("retirement")
-
-                @JvmField val SALARY = of("salary")
-
-                @JvmField val SELF_EMPLOYED = of("self_employed")
-
-                @JvmStatic fun of(value: String) = IncomeSource(JsonField.of(value))
-            }
-
-            /** An enum containing [IncomeSource]'s known values. */
-            enum class Known {
-                FAMILY_SUPPORT,
-                GOVERNMENT_BENEFITS,
-                INHERITANCE,
-                INVESTMENTS,
-                RENTAL_INCOME,
-                RETIREMENT,
-                SALARY,
-                SELF_EMPLOYED,
-            }
-
-            /**
-             * An enum containing [IncomeSource]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [IncomeSource] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                FAMILY_SUPPORT,
-                GOVERNMENT_BENEFITS,
-                INHERITANCE,
-                INVESTMENTS,
-                RENTAL_INCOME,
-                RETIREMENT,
-                SALARY,
-                SELF_EMPLOYED,
-                /**
-                 * An enum member indicating that [IncomeSource] was instantiated with an unknown
-                 * value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    FAMILY_SUPPORT -> Value.FAMILY_SUPPORT
-                    GOVERNMENT_BENEFITS -> Value.GOVERNMENT_BENEFITS
-                    INHERITANCE -> Value.INHERITANCE
-                    INVESTMENTS -> Value.INVESTMENTS
-                    RENTAL_INCOME -> Value.RENTAL_INCOME
-                    RETIREMENT -> Value.RETIREMENT
-                    SALARY -> Value.SALARY
-                    SELF_EMPLOYED -> Value.SELF_EMPLOYED
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    FAMILY_SUPPORT -> Known.FAMILY_SUPPORT
-                    GOVERNMENT_BENEFITS -> Known.GOVERNMENT_BENEFITS
-                    INHERITANCE -> Known.INHERITANCE
-                    INVESTMENTS -> Known.INVESTMENTS
-                    RENTAL_INCOME -> Known.RENTAL_INCOME
-                    RETIREMENT -> Known.RETIREMENT
-                    SALARY -> Known.SALARY
-                    SELF_EMPLOYED -> Known.SELF_EMPLOYED
-                    else -> throw ModernTreasuryInvalidDataException("Unknown IncomeSource: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): IncomeSource = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is IncomeSource && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        /** The industry of the individual. */
-        class Industry @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val ACCOUNTING = of("accounting")
-
-                @JvmField val AGRICULTURE = of("agriculture")
-
-                @JvmField val AUTOMOTIVE = of("automotive")
-
-                @JvmField val CHEMICAL_MANUFACTURING = of("chemical_manufacturing")
-
-                @JvmField val CONSTRUCTION = of("construction")
-
-                @JvmField val EDUCATIONAL_MEDICAL = of("educational_medical")
-
-                @JvmField val FOOD_SERVICE = of("food_service")
-
-                @JvmField val FINANCE = of("finance")
-
-                @JvmField val GASOLINE = of("gasoline")
-
-                @JvmField val HEALTH_STORES = of("health_stores")
-
-                @JvmField val LAUNDRY = of("laundry")
-
-                @JvmField val MAINTENANCE = of("maintenance")
-
-                @JvmField val MANUFACTURING = of("manufacturing")
-
-                @JvmField val MERCHANT_WHOLESALE = of("merchant_wholesale")
-
-                @JvmField val MINING = of("mining")
-
-                @JvmField val PERFORMING_ARTS = of("performing_arts")
-
-                @JvmField val PROFESSIONAL_NON_LEGAL = of("professional_non_legal")
-
-                @JvmField val PUBLIC_ADMINISTRATION = of("public_administration")
-
-                @JvmField val PUBLISHING = of("publishing")
-
-                @JvmField val REAL_ESTATE = of("real_estate")
-
-                @JvmField val RECREATION_GAMBLING = of("recreation_gambling")
-
-                @JvmField val RELIGIOUS_CHARITY = of("religious_charity")
-
-                @JvmField val RENTAL_SERVICES = of("rental_services")
-
-                @JvmField val RETAIL_CLOTHING = of("retail_clothing")
-
-                @JvmField val RETAIL_ELECTRONICS = of("retail_electronics")
-
-                @JvmField val RETAIL_FOOD = of("retail_food")
-
-                @JvmField val RETAIL_FURNISHING = of("retail_furnishing")
-
-                @JvmField val RETAIL_HOME = of("retail_home")
-
-                @JvmField val RETAIL_NON_STORE = of("retail_non_store")
-
-                @JvmField val RETAIL_SPORTING = of("retail_sporting")
-
-                @JvmField val TRANSPORTATION = of("transportation")
-
-                @JvmField val TRAVEL = of("travel")
-
-                @JvmField val UTILITIES = of("utilities")
-
-                @JvmStatic fun of(value: String) = Industry(JsonField.of(value))
-            }
-
-            /** An enum containing [Industry]'s known values. */
-            enum class Known {
-                ACCOUNTING,
-                AGRICULTURE,
-                AUTOMOTIVE,
-                CHEMICAL_MANUFACTURING,
-                CONSTRUCTION,
-                EDUCATIONAL_MEDICAL,
-                FOOD_SERVICE,
-                FINANCE,
-                GASOLINE,
-                HEALTH_STORES,
-                LAUNDRY,
-                MAINTENANCE,
-                MANUFACTURING,
-                MERCHANT_WHOLESALE,
-                MINING,
-                PERFORMING_ARTS,
-                PROFESSIONAL_NON_LEGAL,
-                PUBLIC_ADMINISTRATION,
-                PUBLISHING,
-                REAL_ESTATE,
-                RECREATION_GAMBLING,
-                RELIGIOUS_CHARITY,
-                RENTAL_SERVICES,
-                RETAIL_CLOTHING,
-                RETAIL_ELECTRONICS,
-                RETAIL_FOOD,
-                RETAIL_FURNISHING,
-                RETAIL_HOME,
-                RETAIL_NON_STORE,
-                RETAIL_SPORTING,
-                TRANSPORTATION,
-                TRAVEL,
-                UTILITIES,
-            }
-
-            /**
-             * An enum containing [Industry]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [Industry] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                ACCOUNTING,
-                AGRICULTURE,
-                AUTOMOTIVE,
-                CHEMICAL_MANUFACTURING,
-                CONSTRUCTION,
-                EDUCATIONAL_MEDICAL,
-                FOOD_SERVICE,
-                FINANCE,
-                GASOLINE,
-                HEALTH_STORES,
-                LAUNDRY,
-                MAINTENANCE,
-                MANUFACTURING,
-                MERCHANT_WHOLESALE,
-                MINING,
-                PERFORMING_ARTS,
-                PROFESSIONAL_NON_LEGAL,
-                PUBLIC_ADMINISTRATION,
-                PUBLISHING,
-                REAL_ESTATE,
-                RECREATION_GAMBLING,
-                RELIGIOUS_CHARITY,
-                RENTAL_SERVICES,
-                RETAIL_CLOTHING,
-                RETAIL_ELECTRONICS,
-                RETAIL_FOOD,
-                RETAIL_FURNISHING,
-                RETAIL_HOME,
-                RETAIL_NON_STORE,
-                RETAIL_SPORTING,
-                TRANSPORTATION,
-                TRAVEL,
-                UTILITIES,
-                /**
-                 * An enum member indicating that [Industry] was instantiated with an unknown value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    ACCOUNTING -> Value.ACCOUNTING
-                    AGRICULTURE -> Value.AGRICULTURE
-                    AUTOMOTIVE -> Value.AUTOMOTIVE
-                    CHEMICAL_MANUFACTURING -> Value.CHEMICAL_MANUFACTURING
-                    CONSTRUCTION -> Value.CONSTRUCTION
-                    EDUCATIONAL_MEDICAL -> Value.EDUCATIONAL_MEDICAL
-                    FOOD_SERVICE -> Value.FOOD_SERVICE
-                    FINANCE -> Value.FINANCE
-                    GASOLINE -> Value.GASOLINE
-                    HEALTH_STORES -> Value.HEALTH_STORES
-                    LAUNDRY -> Value.LAUNDRY
-                    MAINTENANCE -> Value.MAINTENANCE
-                    MANUFACTURING -> Value.MANUFACTURING
-                    MERCHANT_WHOLESALE -> Value.MERCHANT_WHOLESALE
-                    MINING -> Value.MINING
-                    PERFORMING_ARTS -> Value.PERFORMING_ARTS
-                    PROFESSIONAL_NON_LEGAL -> Value.PROFESSIONAL_NON_LEGAL
-                    PUBLIC_ADMINISTRATION -> Value.PUBLIC_ADMINISTRATION
-                    PUBLISHING -> Value.PUBLISHING
-                    REAL_ESTATE -> Value.REAL_ESTATE
-                    RECREATION_GAMBLING -> Value.RECREATION_GAMBLING
-                    RELIGIOUS_CHARITY -> Value.RELIGIOUS_CHARITY
-                    RENTAL_SERVICES -> Value.RENTAL_SERVICES
-                    RETAIL_CLOTHING -> Value.RETAIL_CLOTHING
-                    RETAIL_ELECTRONICS -> Value.RETAIL_ELECTRONICS
-                    RETAIL_FOOD -> Value.RETAIL_FOOD
-                    RETAIL_FURNISHING -> Value.RETAIL_FURNISHING
-                    RETAIL_HOME -> Value.RETAIL_HOME
-                    RETAIL_NON_STORE -> Value.RETAIL_NON_STORE
-                    RETAIL_SPORTING -> Value.RETAIL_SPORTING
-                    TRANSPORTATION -> Value.TRANSPORTATION
-                    TRAVEL -> Value.TRAVEL
-                    UTILITIES -> Value.UTILITIES
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    ACCOUNTING -> Known.ACCOUNTING
-                    AGRICULTURE -> Known.AGRICULTURE
-                    AUTOMOTIVE -> Known.AUTOMOTIVE
-                    CHEMICAL_MANUFACTURING -> Known.CHEMICAL_MANUFACTURING
-                    CONSTRUCTION -> Known.CONSTRUCTION
-                    EDUCATIONAL_MEDICAL -> Known.EDUCATIONAL_MEDICAL
-                    FOOD_SERVICE -> Known.FOOD_SERVICE
-                    FINANCE -> Known.FINANCE
-                    GASOLINE -> Known.GASOLINE
-                    HEALTH_STORES -> Known.HEALTH_STORES
-                    LAUNDRY -> Known.LAUNDRY
-                    MAINTENANCE -> Known.MAINTENANCE
-                    MANUFACTURING -> Known.MANUFACTURING
-                    MERCHANT_WHOLESALE -> Known.MERCHANT_WHOLESALE
-                    MINING -> Known.MINING
-                    PERFORMING_ARTS -> Known.PERFORMING_ARTS
-                    PROFESSIONAL_NON_LEGAL -> Known.PROFESSIONAL_NON_LEGAL
-                    PUBLIC_ADMINISTRATION -> Known.PUBLIC_ADMINISTRATION
-                    PUBLISHING -> Known.PUBLISHING
-                    REAL_ESTATE -> Known.REAL_ESTATE
-                    RECREATION_GAMBLING -> Known.RECREATION_GAMBLING
-                    RELIGIOUS_CHARITY -> Known.RELIGIOUS_CHARITY
-                    RENTAL_SERVICES -> Known.RENTAL_SERVICES
-                    RETAIL_CLOTHING -> Known.RETAIL_CLOTHING
-                    RETAIL_ELECTRONICS -> Known.RETAIL_ELECTRONICS
-                    RETAIL_FOOD -> Known.RETAIL_FOOD
-                    RETAIL_FURNISHING -> Known.RETAIL_FURNISHING
-                    RETAIL_HOME -> Known.RETAIL_HOME
-                    RETAIL_NON_STORE -> Known.RETAIL_NON_STORE
-                    RETAIL_SPORTING -> Known.RETAIL_SPORTING
-                    TRANSPORTATION -> Known.TRANSPORTATION
-                    TRAVEL -> Known.TRAVEL
-                    UTILITIES -> Known.UTILITIES
-                    else -> throw ModernTreasuryInvalidDataException("Unknown Industry: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): Industry = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Industry && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        /** The occupation of the individual. */
-        class Occupation @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val CONSULTING = of("consulting")
-
-                @JvmField val EXECUTIVE = of("executive")
-
-                @JvmField val FINANCE_ACCOUNTING = of("finance_accounting")
-
-                @JvmField val FOOD_SERVICES = of("food_services")
-
-                @JvmField val GOVERNMENT = of("government")
-
-                @JvmField val HEALTHCARE = of("healthcare")
-
-                @JvmField val LEGAL_SERVICES = of("legal_services")
-
-                @JvmField val MANUFACTURING = of("manufacturing")
-
-                @JvmField val OTHER = of("other")
-
-                @JvmField val SALES = of("sales")
-
-                @JvmField val SCIENCE_ENGINEERING = of("science_engineering")
-
-                @JvmField val TECHNOLOGY = of("technology")
-
-                @JvmStatic fun of(value: String) = Occupation(JsonField.of(value))
-            }
-
-            /** An enum containing [Occupation]'s known values. */
-            enum class Known {
-                CONSULTING,
-                EXECUTIVE,
-                FINANCE_ACCOUNTING,
-                FOOD_SERVICES,
-                GOVERNMENT,
-                HEALTHCARE,
-                LEGAL_SERVICES,
-                MANUFACTURING,
-                OTHER,
-                SALES,
-                SCIENCE_ENGINEERING,
-                TECHNOLOGY,
-            }
-
-            /**
-             * An enum containing [Occupation]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [Occupation] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                CONSULTING,
-                EXECUTIVE,
-                FINANCE_ACCOUNTING,
-                FOOD_SERVICES,
-                GOVERNMENT,
-                HEALTHCARE,
-                LEGAL_SERVICES,
-                MANUFACTURING,
-                OTHER,
-                SALES,
-                SCIENCE_ENGINEERING,
-                TECHNOLOGY,
-                /**
-                 * An enum member indicating that [Occupation] was instantiated with an unknown
-                 * value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    CONSULTING -> Value.CONSULTING
-                    EXECUTIVE -> Value.EXECUTIVE
-                    FINANCE_ACCOUNTING -> Value.FINANCE_ACCOUNTING
-                    FOOD_SERVICES -> Value.FOOD_SERVICES
-                    GOVERNMENT -> Value.GOVERNMENT
-                    HEALTHCARE -> Value.HEALTHCARE
-                    LEGAL_SERVICES -> Value.LEGAL_SERVICES
-                    MANUFACTURING -> Value.MANUFACTURING
-                    OTHER -> Value.OTHER
-                    SALES -> Value.SALES
-                    SCIENCE_ENGINEERING -> Value.SCIENCE_ENGINEERING
-                    TECHNOLOGY -> Value.TECHNOLOGY
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    CONSULTING -> Known.CONSULTING
-                    EXECUTIVE -> Known.EXECUTIVE
-                    FINANCE_ACCOUNTING -> Known.FINANCE_ACCOUNTING
-                    FOOD_SERVICES -> Known.FOOD_SERVICES
-                    GOVERNMENT -> Known.GOVERNMENT
-                    HEALTHCARE -> Known.HEALTHCARE
-                    LEGAL_SERVICES -> Known.LEGAL_SERVICES
-                    MANUFACTURING -> Known.MANUFACTURING
-                    OTHER -> Known.OTHER
-                    SALES -> Known.SALES
-                    SCIENCE_ENGINEERING -> Known.SCIENCE_ENGINEERING
-                    TECHNOLOGY -> Known.TECHNOLOGY
-                    else -> throw ModernTreasuryInvalidDataException("Unknown Occupation: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): Occupation = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Occupation && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        /** The source of the individual's funds. */
-        class SourceOfFunds @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val ALIMONY = of("alimony")
-
-                @JvmField val ANNUITY = of("annuity")
-
-                @JvmField val BUSINESS_OWNER = of("business_owner")
-
-                @JvmField val BUSINESS_REVENUE = of("business_revenue")
-
-                @JvmField val DEBT_FINANCING = of("debt_financing")
-
-                @JvmField val GENERAL_EMPLOYEE = of("general_employee")
-
-                @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
-
-                @JvmField val HOMEMAKER = of("homemaker")
-
-                @JvmField val INHERITANCE_GIFT = of("inheritance_gift")
-
-                @JvmField val INTERCOMPANY_LOAN = of("intercompany_loan")
-
-                @JvmField val INVESTMENT = of("investment")
-
-                @JvmField val INVESTOR_FUNDING = of("investor_funding")
-
-                @JvmField val LEGAL_SETTLEMENT = of("legal_settlement")
-
-                @JvmField val LOTTERY = of("lottery")
-
-                @JvmField val REAL_ESTATE = of("real_estate")
-
-                @JvmField val RETAINED_EARNINGS_OR_SAVINGS = of("retained_earnings_or_savings")
-
-                @JvmField val RETIRED = of("retired")
-
-                @JvmField val RETIREMENT = of("retirement")
-
-                @JvmField val SALARY = of("salary")
-
-                @JvmField val SALE_OF_BUSINESS_ASSETS = of("sale_of_business_assets")
-
-                @JvmField val SALE_OF_REAL_ESTATE = of("sale_of_real_estate")
-
-                @JvmField val SELF_EMPLOYED = of("self_employed")
-
-                @JvmField val SENIOR_EXECUTIVE = of("senior_executive")
-
-                @JvmField val TRUST_INCOME = of("trust_income")
-
-                @JvmStatic fun of(value: String) = SourceOfFunds(JsonField.of(value))
-            }
-
-            /** An enum containing [SourceOfFunds]'s known values. */
-            enum class Known {
-                ALIMONY,
-                ANNUITY,
-                BUSINESS_OWNER,
-                BUSINESS_REVENUE,
-                DEBT_FINANCING,
-                GENERAL_EMPLOYEE,
-                GOVERNMENT_BENEFITS,
-                HOMEMAKER,
-                INHERITANCE_GIFT,
-                INTERCOMPANY_LOAN,
-                INVESTMENT,
-                INVESTOR_FUNDING,
-                LEGAL_SETTLEMENT,
-                LOTTERY,
-                REAL_ESTATE,
-                RETAINED_EARNINGS_OR_SAVINGS,
-                RETIRED,
-                RETIREMENT,
-                SALARY,
-                SALE_OF_BUSINESS_ASSETS,
-                SALE_OF_REAL_ESTATE,
-                SELF_EMPLOYED,
-                SENIOR_EXECUTIVE,
-                TRUST_INCOME,
-            }
-
-            /**
-             * An enum containing [SourceOfFunds]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [SourceOfFunds] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                ALIMONY,
-                ANNUITY,
-                BUSINESS_OWNER,
-                BUSINESS_REVENUE,
-                DEBT_FINANCING,
-                GENERAL_EMPLOYEE,
-                GOVERNMENT_BENEFITS,
-                HOMEMAKER,
-                INHERITANCE_GIFT,
-                INTERCOMPANY_LOAN,
-                INVESTMENT,
-                INVESTOR_FUNDING,
-                LEGAL_SETTLEMENT,
-                LOTTERY,
-                REAL_ESTATE,
-                RETAINED_EARNINGS_OR_SAVINGS,
-                RETIRED,
-                RETIREMENT,
-                SALARY,
-                SALE_OF_BUSINESS_ASSETS,
-                SALE_OF_REAL_ESTATE,
-                SELF_EMPLOYED,
-                SENIOR_EXECUTIVE,
-                TRUST_INCOME,
-                /**
-                 * An enum member indicating that [SourceOfFunds] was instantiated with an unknown
-                 * value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    ALIMONY -> Value.ALIMONY
-                    ANNUITY -> Value.ANNUITY
-                    BUSINESS_OWNER -> Value.BUSINESS_OWNER
-                    BUSINESS_REVENUE -> Value.BUSINESS_REVENUE
-                    DEBT_FINANCING -> Value.DEBT_FINANCING
-                    GENERAL_EMPLOYEE -> Value.GENERAL_EMPLOYEE
-                    GOVERNMENT_BENEFITS -> Value.GOVERNMENT_BENEFITS
-                    HOMEMAKER -> Value.HOMEMAKER
-                    INHERITANCE_GIFT -> Value.INHERITANCE_GIFT
-                    INTERCOMPANY_LOAN -> Value.INTERCOMPANY_LOAN
-                    INVESTMENT -> Value.INVESTMENT
-                    INVESTOR_FUNDING -> Value.INVESTOR_FUNDING
-                    LEGAL_SETTLEMENT -> Value.LEGAL_SETTLEMENT
-                    LOTTERY -> Value.LOTTERY
-                    REAL_ESTATE -> Value.REAL_ESTATE
-                    RETAINED_EARNINGS_OR_SAVINGS -> Value.RETAINED_EARNINGS_OR_SAVINGS
-                    RETIRED -> Value.RETIRED
-                    RETIREMENT -> Value.RETIREMENT
-                    SALARY -> Value.SALARY
-                    SALE_OF_BUSINESS_ASSETS -> Value.SALE_OF_BUSINESS_ASSETS
-                    SALE_OF_REAL_ESTATE -> Value.SALE_OF_REAL_ESTATE
-                    SELF_EMPLOYED -> Value.SELF_EMPLOYED
-                    SENIOR_EXECUTIVE -> Value.SENIOR_EXECUTIVE
-                    TRUST_INCOME -> Value.TRUST_INCOME
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    ALIMONY -> Known.ALIMONY
-                    ANNUITY -> Known.ANNUITY
-                    BUSINESS_OWNER -> Known.BUSINESS_OWNER
-                    BUSINESS_REVENUE -> Known.BUSINESS_REVENUE
-                    DEBT_FINANCING -> Known.DEBT_FINANCING
-                    GENERAL_EMPLOYEE -> Known.GENERAL_EMPLOYEE
-                    GOVERNMENT_BENEFITS -> Known.GOVERNMENT_BENEFITS
-                    HOMEMAKER -> Known.HOMEMAKER
-                    INHERITANCE_GIFT -> Known.INHERITANCE_GIFT
-                    INTERCOMPANY_LOAN -> Known.INTERCOMPANY_LOAN
-                    INVESTMENT -> Known.INVESTMENT
-                    INVESTOR_FUNDING -> Known.INVESTOR_FUNDING
-                    LEGAL_SETTLEMENT -> Known.LEGAL_SETTLEMENT
-                    LOTTERY -> Known.LOTTERY
-                    REAL_ESTATE -> Known.REAL_ESTATE
-                    RETAINED_EARNINGS_OR_SAVINGS -> Known.RETAINED_EARNINGS_OR_SAVINGS
-                    RETIRED -> Known.RETIRED
-                    RETIREMENT -> Known.RETIREMENT
-                    SALARY -> Known.SALARY
-                    SALE_OF_BUSINESS_ASSETS -> Known.SALE_OF_BUSINESS_ASSETS
-                    SALE_OF_REAL_ESTATE -> Known.SALE_OF_REAL_ESTATE
-                    SELF_EMPLOYED -> Known.SELF_EMPLOYED
-                    SENIOR_EXECUTIVE -> Known.SENIOR_EXECUTIVE
-                    TRUST_INCOME -> Known.TRUST_INCOME
-                    else ->
-                        throw ModernTreasuryInvalidDataException("Unknown SourceOfFunds: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): SourceOfFunds = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is SourceOfFunds && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        /** The source of the individual's wealth. */
-        class WealthSource @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                @JvmField val BUSINESS_SALE = of("business_sale")
-
-                @JvmField val FAMILY_SUPPORT = of("family_support")
-
-                @JvmField val GOVERNMENT_BENEFITS = of("government_benefits")
-
-                @JvmField val INHERITANCE = of("inheritance")
-
-                @JvmField val INVESTMENTS = of("investments")
-
-                @JvmField val OTHER = of("other")
-
-                @JvmField val RENTAL_INCOME = of("rental_income")
-
-                @JvmField val RETIREMENT = of("retirement")
-
-                @JvmField val SALARY = of("salary")
-
-                @JvmField val SELF_EMPLOYED = of("self_employed")
-
-                @JvmStatic fun of(value: String) = WealthSource(JsonField.of(value))
-            }
-
-            /** An enum containing [WealthSource]'s known values. */
-            enum class Known {
-                BUSINESS_SALE,
-                FAMILY_SUPPORT,
-                GOVERNMENT_BENEFITS,
-                INHERITANCE,
-                INVESTMENTS,
-                OTHER,
-                RENTAL_INCOME,
-                RETIREMENT,
-                SALARY,
-                SELF_EMPLOYED,
-            }
-
-            /**
-             * An enum containing [WealthSource]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [WealthSource] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                BUSINESS_SALE,
-                FAMILY_SUPPORT,
-                GOVERNMENT_BENEFITS,
-                INHERITANCE,
-                INVESTMENTS,
-                OTHER,
-                RENTAL_INCOME,
-                RETIREMENT,
-                SALARY,
-                SELF_EMPLOYED,
-                /**
-                 * An enum member indicating that [WealthSource] was instantiated with an unknown
-                 * value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    BUSINESS_SALE -> Value.BUSINESS_SALE
-                    FAMILY_SUPPORT -> Value.FAMILY_SUPPORT
-                    GOVERNMENT_BENEFITS -> Value.GOVERNMENT_BENEFITS
-                    INHERITANCE -> Value.INHERITANCE
-                    INVESTMENTS -> Value.INVESTMENTS
-                    OTHER -> Value.OTHER
-                    RENTAL_INCOME -> Value.RENTAL_INCOME
-                    RETIREMENT -> Value.RETIREMENT
-                    SALARY -> Value.SALARY
-                    SELF_EMPLOYED -> Value.SELF_EMPLOYED
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-             *   known member.
-             */
-            fun known(): Known =
-                when (this) {
-                    BUSINESS_SALE -> Known.BUSINESS_SALE
-                    FAMILY_SUPPORT -> Known.FAMILY_SUPPORT
-                    GOVERNMENT_BENEFITS -> Known.GOVERNMENT_BENEFITS
-                    INHERITANCE -> Known.INHERITANCE
-                    INVESTMENTS -> Known.INVESTMENTS
-                    OTHER -> Known.OTHER
-                    RENTAL_INCOME -> Known.RENTAL_INCOME
-                    RETIREMENT -> Known.RETIREMENT
-                    SALARY -> Known.SALARY
-                    SELF_EMPLOYED -> Known.SELF_EMPLOYED
-                    else -> throw ModernTreasuryInvalidDataException("Unknown WealthSource: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws ModernTreasuryInvalidDataException if this class instance's value does not
-             *   have the expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString().orElseThrow {
-                    ModernTreasuryInvalidDataException("Value is not a String")
-                }
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't
-             *   match its expected type.
-             */
-            fun validate(): WealthSource = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: ModernTreasuryInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is WealthSource && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
+            (if (acceptedAt.asKnown().isPresent) 1 else 0) +
+                (if (ipAddress.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return other is LegalEntityWealthEmploymentDetail &&
-                id == other.id &&
-                annualIncome == other.annualIncome &&
-                createdAt == other.createdAt &&
-                discardedAt == other.discardedAt &&
-                employerCountry == other.employerCountry &&
-                employerName == other.employerName &&
-                employerState == other.employerState &&
-                employmentStatus == other.employmentStatus &&
-                incomeCountry == other.incomeCountry &&
-                incomeSource == other.incomeSource &&
-                incomeState == other.incomeState &&
-                industry == other.industry &&
-                liveMode == other.liveMode &&
-                object_ == other.object_ &&
-                occupation == other.occupation &&
-                sourceOfFunds == other.sourceOfFunds &&
-                updatedAt == other.updatedAt &&
-                wealthSource == other.wealthSource &&
+            return other is TermsOfUse &&
+                acceptedAt == other.acceptedAt &&
+                ipAddress == other.ipAddress &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(
-                id,
-                annualIncome,
-                createdAt,
-                discardedAt,
-                employerCountry,
-                employerName,
-                employerState,
-                employmentStatus,
-                incomeCountry,
-                incomeSource,
-                incomeState,
-                industry,
-                liveMode,
-                object_,
-                occupation,
-                sourceOfFunds,
-                updatedAt,
-                wealthSource,
-                additionalProperties,
-            )
+            Objects.hash(acceptedAt, ipAddress, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityWealthEmploymentDetail{id=$id, annualIncome=$annualIncome, createdAt=$createdAt, discardedAt=$discardedAt, employerCountry=$employerCountry, employerName=$employerName, employerState=$employerState, employmentStatus=$employmentStatus, incomeCountry=$incomeCountry, incomeSource=$incomeSource, incomeState=$incomeState, industry=$industry, liveMode=$liveMode, object_=$object_, occupation=$occupation, sourceOfFunds=$sourceOfFunds, updatedAt=$updatedAt, wealthSource=$wealthSource, additionalProperties=$additionalProperties}"
+            "TermsOfUse{acceptedAt=$acceptedAt, ipAddress=$ipAddress, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -8340,6 +6093,7 @@ private constructor(
             serviceProviderLegalEntityId == other.serviceProviderLegalEntityId &&
             status == other.status &&
             suffix == other.suffix &&
+            termsOfUse == other.termsOfUse &&
             thirdPartyVerification == other.thirdPartyVerification &&
             thirdPartyVerifications == other.thirdPartyVerifications &&
             tickerSymbol == other.tickerSymbol &&
@@ -8392,6 +6146,7 @@ private constructor(
             serviceProviderLegalEntityId,
             status,
             suffix,
+            termsOfUse,
             thirdPartyVerification,
             thirdPartyVerifications,
             tickerSymbol,
@@ -8406,5 +6161,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, status=$status, suffix=$suffix, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, legalEntityAssociations=$legalEntityAssociations, additionalProperties=$additionalProperties}"
+        "LegalEntity{id=$id, addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, complianceDetails=$complianceDetails, countryOfIncorporation=$countryOfIncorporation, createdAt=$createdAt, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, discardedAt=$discardedAt, documents=$documents, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalEntityType=$legalEntityType, legalStructure=$legalStructure, listedExchange=$listedExchange, liveMode=$liveMode, metadata=$metadata, middleName=$middleName, object_=$object_, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, status=$status, suffix=$suffix, termsOfUse=$termsOfUse, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, updatedAt=$updatedAt, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, legalEntityAssociations=$legalEntityAssociations, additionalProperties=$additionalProperties}"
 }

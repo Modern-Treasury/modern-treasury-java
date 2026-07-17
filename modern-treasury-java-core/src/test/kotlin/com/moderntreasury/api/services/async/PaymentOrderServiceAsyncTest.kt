@@ -21,12 +21,14 @@ import com.moderntreasury.api.models.PaymentOrderUpdateParams
 import com.moderntreasury.api.models.TransactionDirection
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
 internal class PaymentOrderServiceAsyncTest {
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun create() {
         val client =
@@ -62,7 +64,7 @@ internal class PaymentOrderServiceAsyncTest {
                             .documentableId("documentable_id")
                             .documentableType(
                                 PaymentOrderCreateParams.DocumentCreateRequest.DocumentableType
-                                    .CONNECTIONS
+                                    .CONNECTION
                             )
                             .build()
                     )
@@ -278,6 +280,7 @@ internal class PaymentOrderServiceAsyncTest {
         paymentOrder.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun retrieve() {
         val client =
@@ -294,6 +297,7 @@ internal class PaymentOrderServiceAsyncTest {
         paymentOrder.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun update() {
         val client =
@@ -467,6 +471,7 @@ internal class PaymentOrderServiceAsyncTest {
         paymentOrder.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun list() {
         val client =

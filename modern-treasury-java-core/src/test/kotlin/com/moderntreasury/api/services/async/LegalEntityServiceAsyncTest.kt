@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
+import com.moderntreasury.api.models.BankSettings
 import com.moderntreasury.api.models.ChildLegalEntityCreate
 import com.moderntreasury.api.models.IdentificationCreateRequest
 import com.moderntreasury.api.models.LegalEntityAddressCreateRequest
@@ -12,7 +13,9 @@ import com.moderntreasury.api.models.LegalEntityAssociationInlineCreate
 import com.moderntreasury.api.models.LegalEntityCreateParams
 import com.moderntreasury.api.models.LegalEntityIndustryClassification
 import com.moderntreasury.api.models.LegalEntityUpdateParams
+import com.moderntreasury.api.models.LegalEntityUpdateStatusParams
 import com.moderntreasury.api.models.ThirdPartyVerification
+import com.moderntreasury.api.models.WealthAndEmploymentDetails
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
@@ -23,6 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @Disabled("Prism doesn't generate valid recursive LegalEntityAssociation structures")
 internal class LegalEntityServiceAsyncTest {
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun create() {
         val client =
@@ -46,10 +50,11 @@ internal class LegalEntityServiceAsyncTest {
                             .region("region")
                             .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
+                            .primary(true)
                             .build()
                     )
                     .bankSettings(
-                        LegalEntityCreateParams.LegalEntityBankSetting.builder()
+                        BankSettings.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .backupWithholdingPercentage(0L)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -139,10 +144,11 @@ internal class LegalEntityServiceAsyncTest {
                                                 LegalEntityAddressCreateRequest.AddressType.BUSINESS
                                             )
                                             .line2("line2")
+                                            .primary(true)
                                             .build()
                                     )
                                     .bankSettings(
-                                        ChildLegalEntityCreate.LegalEntityBankSetting.builder()
+                                        BankSettings.builder()
                                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                             .backupWithholdingPercentage(0L)
                                             .createdAt(
@@ -268,6 +274,14 @@ internal class LegalEntityServiceAsyncTest {
                                         "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
                                     )
                                     .suffix("suffix")
+                                    .termsOfUse(
+                                        ChildLegalEntityCreate.TermsOfUse.builder()
+                                            .acceptedAt(
+                                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                            )
+                                            .ipAddress("ip_address")
+                                            .build()
+                                    )
                                     .thirdPartyVerification(
                                         ThirdPartyVerification.builder()
                                             .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -302,8 +316,7 @@ internal class LegalEntityServiceAsyncTest {
                                     )
                                     .tickerSymbol("ticker_symbol")
                                     .wealthAndEmploymentDetails(
-                                        ChildLegalEntityCreate.LegalEntityWealthEmploymentDetail
-                                            .builder()
+                                        WealthAndEmploymentDetails.builder()
                                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                             .annualIncome(0L)
                                             .createdAt(
@@ -316,46 +329,30 @@ internal class LegalEntityServiceAsyncTest {
                                             .employerName("employer_name")
                                             .employerState("employer_state")
                                             .employmentStatus(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .EmploymentStatus
-                                                    .EMPLOYED
+                                                WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED
                                             )
                                             .incomeCountry("income_country")
                                             .incomeSource(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .IncomeSource
+                                                WealthAndEmploymentDetails.IncomeSource
                                                     .FAMILY_SUPPORT
                                             )
                                             .incomeState("income_state")
                                             .industry(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .Industry
-                                                    .ACCOUNTING
+                                                WealthAndEmploymentDetails.Industry.ACCOUNTING
                                             )
                                             .liveMode(true)
                                             .object_("object")
                                             .occupation(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .Occupation
-                                                    .CONSULTING
+                                                WealthAndEmploymentDetails.Occupation.CONSULTING
                                             )
                                             .sourceOfFunds(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .SourceOfFunds
-                                                    .ALIMONY
+                                                WealthAndEmploymentDetails.SourceOfFunds.ALIMONY
                                             )
                                             .updatedAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                             )
                                             .wealthSource(
-                                                ChildLegalEntityCreate
-                                                    .LegalEntityWealthEmploymentDetail
-                                                    .WealthSource
+                                                WealthAndEmploymentDetails.WealthSource
                                                     .BUSINESS_SALE
                                             )
                                             .build()
@@ -398,6 +395,12 @@ internal class LegalEntityServiceAsyncTest {
                     .riskRating(LegalEntityCreateParams.RiskRating.LOW)
                     .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .suffix("suffix")
+                    .termsOfUse(
+                        LegalEntityCreateParams.TermsOfUse.builder()
+                            .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .ipAddress("ip_address")
+                            .build()
+                    )
                     .thirdPartyVerification(
                         ThirdPartyVerification.builder()
                             .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -426,7 +429,7 @@ internal class LegalEntityServiceAsyncTest {
                     )
                     .tickerSymbol("ticker_symbol")
                     .wealthAndEmploymentDetails(
-                        LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.builder()
+                        WealthAndEmploymentDetails.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .annualIncome(0L)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -434,39 +437,17 @@ internal class LegalEntityServiceAsyncTest {
                             .employerCountry("employer_country")
                             .employerName("employer_name")
                             .employerState("employer_state")
-                            .employmentStatus(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail
-                                    .EmploymentStatus
-                                    .EMPLOYED
-                            )
+                            .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                             .incomeCountry("income_country")
-                            .incomeSource(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail
-                                    .IncomeSource
-                                    .FAMILY_SUPPORT
-                            )
+                            .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                             .incomeState("income_state")
-                            .industry(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Industry
-                                    .ACCOUNTING
-                            )
+                            .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                             .liveMode(true)
                             .object_("object")
-                            .occupation(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail.Occupation
-                                    .CONSULTING
-                            )
-                            .sourceOfFunds(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail
-                                    .SourceOfFunds
-                                    .ALIMONY
-                            )
+                            .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                            .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                             .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .wealthSource(
-                                LegalEntityCreateParams.LegalEntityWealthEmploymentDetail
-                                    .WealthSource
-                                    .BUSINESS_SALE
-                            )
+                            .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                             .build()
                     )
                     .website("website")
@@ -477,6 +458,7 @@ internal class LegalEntityServiceAsyncTest {
         legalEntity.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun retrieve() {
         val client =
@@ -493,6 +475,7 @@ internal class LegalEntityServiceAsyncTest {
         legalEntity.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun update() {
         val client =
@@ -516,10 +499,11 @@ internal class LegalEntityServiceAsyncTest {
                             .region("region")
                             .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                             .line2("line2")
+                            .primary(true)
                             .build()
                     )
                     .bankSettings(
-                        LegalEntityUpdateParams.LegalEntityBankSetting.builder()
+                        BankSettings.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .backupWithholdingPercentage(0L)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -608,6 +592,12 @@ internal class LegalEntityServiceAsyncTest {
                     .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
                     .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .suffix("suffix")
+                    .termsOfUse(
+                        LegalEntityUpdateParams.TermsOfUse.builder()
+                            .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .ipAddress("ip_address")
+                            .build()
+                    )
                     .thirdPartyVerification(
                         ThirdPartyVerification.builder()
                             .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -636,7 +626,7 @@ internal class LegalEntityServiceAsyncTest {
                     )
                     .tickerSymbol("ticker_symbol")
                     .wealthAndEmploymentDetails(
-                        LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail.builder()
+                        WealthAndEmploymentDetails.builder()
                             .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .annualIncome(0L)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -644,39 +634,17 @@ internal class LegalEntityServiceAsyncTest {
                             .employerCountry("employer_country")
                             .employerName("employer_name")
                             .employerState("employer_state")
-                            .employmentStatus(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail
-                                    .EmploymentStatus
-                                    .EMPLOYED
-                            )
+                            .employmentStatus(WealthAndEmploymentDetails.EmploymentStatus.EMPLOYED)
                             .incomeCountry("income_country")
-                            .incomeSource(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail
-                                    .IncomeSource
-                                    .FAMILY_SUPPORT
-                            )
+                            .incomeSource(WealthAndEmploymentDetails.IncomeSource.FAMILY_SUPPORT)
                             .incomeState("income_state")
-                            .industry(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail.Industry
-                                    .ACCOUNTING
-                            )
+                            .industry(WealthAndEmploymentDetails.Industry.ACCOUNTING)
                             .liveMode(true)
                             .object_("object")
-                            .occupation(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail.Occupation
-                                    .CONSULTING
-                            )
-                            .sourceOfFunds(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail
-                                    .SourceOfFunds
-                                    .ALIMONY
-                            )
+                            .occupation(WealthAndEmploymentDetails.Occupation.CONSULTING)
+                            .sourceOfFunds(WealthAndEmploymentDetails.SourceOfFunds.ALIMONY)
                             .updatedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .wealthSource(
-                                LegalEntityUpdateParams.LegalEntityWealthEmploymentDetail
-                                    .WealthSource
-                                    .BUSINESS_SALE
-                            )
+                            .wealthSource(WealthAndEmploymentDetails.WealthSource.BUSINESS_SALE)
                             .build()
                     )
                     .website("website")
@@ -687,6 +655,7 @@ internal class LegalEntityServiceAsyncTest {
         legalEntity.validate()
     }
 
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun list() {
         val client =
@@ -701,5 +670,28 @@ internal class LegalEntityServiceAsyncTest {
 
         val page = pageFuture.get()
         page.items().forEach { it.validate() }
+    }
+
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
+    @Test
+    fun updateStatus() {
+        val client =
+            ModernTreasuryOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .organizationId("my-organization-ID")
+                .build()
+        val legalEntityServiceAsync = client.legalEntities()
+
+        val legalEntityFuture =
+            legalEntityServiceAsync.updateStatus(
+                LegalEntityUpdateStatusParams.builder()
+                    .id("id")
+                    .status(LegalEntityUpdateStatusParams.Status.ACTIVE)
+                    .build()
+            )
+
+        val legalEntity = legalEntityFuture.get()
+        legalEntity.validate()
     }
 }
