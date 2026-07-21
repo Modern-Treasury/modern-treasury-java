@@ -29,7 +29,7 @@ interface LegalEntityServiceAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityServiceAsync
 
-    /** create legal_entity */
+    /** Create a legal entity. All country fields use ISO 3166-1 alpha-2 (e.g. US). */
     fun create(params: LegalEntityCreateParams): CompletableFuture<LegalEntity> =
         create(params, RequestOptions.none())
 

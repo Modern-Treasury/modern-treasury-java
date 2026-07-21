@@ -2563,7 +2563,8 @@ private constructor(
         fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
         /**
-         * Locality or City.
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2594,7 +2595,8 @@ private constructor(
         fun primary(): Optional<Boolean> = primary.getOptional("primary")
 
         /**
-         * Region or State.
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2919,7 +2921,10 @@ private constructor(
              */
             fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
-            /** Locality or City. */
+            /**
+             * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+             * Francisco).
+             */
             fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
             /** Alias for calling [Builder.locality] with `locality.orElse(null)`. */
@@ -2985,7 +2990,10 @@ private constructor(
              */
             fun primary(primary: JsonField<Boolean>) = apply { this.primary = primary }
 
-            /** Region or State. */
+            /**
+             * Region or State. This field is free-form; for US states, we recommend a two-letter
+             * code (e.g. CA). Full state names are also accepted.
+             */
             fun region(region: String?) = region(JsonField.ofNullable(region))
 
             /** Alias for calling [Builder.region] with `region.orElse(null)`. */
@@ -5150,6 +5158,9 @@ private constructor(
         ) : this(phoneNumber, mutableMapOf())
 
         /**
+         * A phone number in E.164 format. This format is strictly validated: include a leading +
+         * and country code, followed by digits only (no spaces or dashes), e.g. +12025551234.
+         *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
@@ -5194,6 +5205,11 @@ private constructor(
                 additionalProperties = phoneNumber.additionalProperties.toMutableMap()
             }
 
+            /**
+             * A phone number in E.164 format. This format is strictly validated: include a
+             * leading + and country code, followed by digits only (no spaces or dashes), e.g.
+             * +12025551234.
+             */
             fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
 
             /**

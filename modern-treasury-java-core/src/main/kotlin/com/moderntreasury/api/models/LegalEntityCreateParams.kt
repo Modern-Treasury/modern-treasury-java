@@ -25,7 +25,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** create legal_entity */
+/** Create a legal entity. All country fields use ISO 3166-1 alpha-2 (e.g. US). */
 class LegalEntityCreateParams
 private constructor(
     private val body: LegalEntityCreateRequest,
@@ -4869,6 +4869,9 @@ private constructor(
         ) : this(phoneNumber, mutableMapOf())
 
         /**
+         * A phone number in E.164 format. This format is strictly validated: include a leading +
+         * and country code, followed by digits only (no spaces or dashes), e.g. +12025551234.
+         *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
@@ -4913,6 +4916,11 @@ private constructor(
                 additionalProperties = phoneNumber.additionalProperties.toMutableMap()
             }
 
+            /**
+             * A phone number in E.164 format. This format is strictly validated: include a
+             * leading + and country code, followed by digits only (no spaces or dashes), e.g.
+             * +12025551234.
+             */
             fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
 
             /**
