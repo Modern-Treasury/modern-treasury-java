@@ -48,7 +48,7 @@ internal class ChildLegalEntityCreateTest {
                 .citizenshipCountry("citizenship_country")
                 .complianceDetails(JsonValue.from(mapOf<String, Any>()))
                 .connectionId("connection_id")
-                .countryOfIncorporation("country_of_incorporation")
+                .countryOfIncorporation("US")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
                 .addDocument(
@@ -121,7 +121,8 @@ internal class ChildLegalEntityCreateTest {
                         .build()
                 )
                 .middleName("middle_name")
-                .addOperatingJurisdiction("string")
+                .addOperatingJurisdiction("US")
+                .addOperatingJurisdiction("CA")
                 .addPhoneNumber(
                     ChildLegalEntityCreate.PhoneNumber.builder().phoneNumber("phone_number").build()
                 )
@@ -139,6 +140,12 @@ internal class ChildLegalEntityCreateTest {
                 .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .suffix("suffix")
+                .termsOfUse(
+                    ChildLegalEntityCreate.TermsOfUse.builder()
+                        .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .ipAddress("ip_address")
+                        .build()
+                )
                 .thirdPartyVerification(
                     ThirdPartyVerification.builder()
                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -225,8 +232,7 @@ internal class ChildLegalEntityCreateTest {
         assertThat(childLegalEntityCreate._complianceDetails())
             .isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(childLegalEntityCreate.connectionId()).contains("connection_id")
-        assertThat(childLegalEntityCreate.countryOfIncorporation())
-            .contains("country_of_incorporation")
+        assertThat(childLegalEntityCreate.countryOfIncorporation()).contains("US")
         assertThat(childLegalEntityCreate.dateFormed()).contains(LocalDate.parse("2019-12-27"))
         assertThat(childLegalEntityCreate.dateOfBirth()).contains(LocalDate.parse("2019-12-27"))
         assertThat(childLegalEntityCreate.documents().getOrNull())
@@ -306,7 +312,7 @@ internal class ChildLegalEntityCreateTest {
             )
         assertThat(childLegalEntityCreate.middleName()).contains("middle_name")
         assertThat(childLegalEntityCreate.operatingJurisdictions().getOrNull())
-            .containsExactly("string")
+            .containsExactly("US", "CA")
         assertThat(childLegalEntityCreate.phoneNumbers().getOrNull())
             .containsExactly(
                 ChildLegalEntityCreate.PhoneNumber.builder().phoneNumber("phone_number").build()
@@ -329,6 +335,13 @@ internal class ChildLegalEntityCreateTest {
         assertThat(childLegalEntityCreate.serviceProviderLegalEntityId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(childLegalEntityCreate.suffix()).contains("suffix")
+        assertThat(childLegalEntityCreate.termsOfUse())
+            .contains(
+                ChildLegalEntityCreate.TermsOfUse.builder()
+                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .ipAddress("ip_address")
+                    .build()
+            )
         assertThat(childLegalEntityCreate.thirdPartyVerification())
             .contains(
                 ThirdPartyVerification.builder()
@@ -416,7 +429,7 @@ internal class ChildLegalEntityCreateTest {
                 .citizenshipCountry("citizenship_country")
                 .complianceDetails(JsonValue.from(mapOf<String, Any>()))
                 .connectionId("connection_id")
-                .countryOfIncorporation("country_of_incorporation")
+                .countryOfIncorporation("US")
                 .dateFormed(LocalDate.parse("2019-12-27"))
                 .dateOfBirth(LocalDate.parse("2019-12-27"))
                 .addDocument(
@@ -489,7 +502,8 @@ internal class ChildLegalEntityCreateTest {
                         .build()
                 )
                 .middleName("middle_name")
-                .addOperatingJurisdiction("string")
+                .addOperatingJurisdiction("US")
+                .addOperatingJurisdiction("CA")
                 .addPhoneNumber(
                     ChildLegalEntityCreate.PhoneNumber.builder().phoneNumber("phone_number").build()
                 )
@@ -507,6 +521,12 @@ internal class ChildLegalEntityCreateTest {
                 .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .suffix("suffix")
+                .termsOfUse(
+                    ChildLegalEntityCreate.TermsOfUse.builder()
+                        .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .ipAddress("ip_address")
+                        .build()
+                )
                 .thirdPartyVerification(
                     ThirdPartyVerification.builder()
                         .outcome(ThirdPartyVerification.Outcome.PASSED)
