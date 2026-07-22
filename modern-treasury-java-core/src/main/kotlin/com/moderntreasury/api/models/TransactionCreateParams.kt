@@ -618,6 +618,7 @@ private constructor(
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
+    /** At least one of "amount" or "amount_string" is required. */
     class TransactionCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
