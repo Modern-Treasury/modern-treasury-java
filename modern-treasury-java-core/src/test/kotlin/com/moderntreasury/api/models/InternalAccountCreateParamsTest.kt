@@ -13,10 +13,8 @@ internal class InternalAccountCreateParamsTest {
     @Test
     fun create() {
         InternalAccountCreateParams.builder()
-            .connectionId("connection_id")
             .currency(InternalAccountCreateParams.Currency.USD)
             .name("name")
-            .partyName("party_name")
             .addAccountCapability(
                 InternalAccountCreateParams.AccountCapability.builder()
                     .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -31,6 +29,7 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
             .accountType(InternalAccountCreateParams.AccountType.CHECKING)
+            .connectionId("connection_id")
             .counterpartyId("counterparty_id")
             .debitable(true)
             .externalId("external_id")
@@ -51,6 +50,10 @@ internal class InternalAccountCreateParamsTest {
                     .line2("line2")
                     .build()
             )
+            .partyName("party_name")
+            .addRequestedAccountNumberType(
+                InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
+            )
             .vendorAttributes(
                 InternalAccountCreateParams.VendorAttributes.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -65,10 +68,8 @@ internal class InternalAccountCreateParamsTest {
     fun body() {
         val params =
             InternalAccountCreateParams.builder()
-                .connectionId("connection_id")
                 .currency(InternalAccountCreateParams.Currency.USD)
                 .name("name")
-                .partyName("party_name")
                 .addAccountCapability(
                     InternalAccountCreateParams.AccountCapability.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -83,6 +84,7 @@ internal class InternalAccountCreateParamsTest {
                         .build()
                 )
                 .accountType(InternalAccountCreateParams.AccountType.CHECKING)
+                .connectionId("connection_id")
                 .counterpartyId("counterparty_id")
                 .debitable(true)
                 .externalId("external_id")
@@ -103,6 +105,10 @@ internal class InternalAccountCreateParamsTest {
                         .line2("line2")
                         .build()
                 )
+                .partyName("party_name")
+                .addRequestedAccountNumberType(
+                    InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
+                )
                 .vendorAttributes(
                     InternalAccountCreateParams.VendorAttributes.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -114,10 +120,8 @@ internal class InternalAccountCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.connectionId()).isEqualTo("connection_id")
         assertThat(body.currency()).isEqualTo(InternalAccountCreateParams.Currency.USD)
         assertThat(body.name()).isEqualTo("name")
-        assertThat(body.partyName()).isEqualTo("party_name")
         assertThat(body.accountCapabilities().getOrNull())
             .containsExactly(
                 InternalAccountCreateParams.AccountCapability.builder()
@@ -133,6 +137,7 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.accountType()).contains(InternalAccountCreateParams.AccountType.CHECKING)
+        assertThat(body.connectionId()).contains("connection_id")
         assertThat(body.counterpartyId()).contains("counterparty_id")
         assertThat(body.debitable()).contains(true)
         assertThat(body.externalId()).contains("external_id")
@@ -155,6 +160,11 @@ internal class InternalAccountCreateParamsTest {
                     .line2("line2")
                     .build()
             )
+        assertThat(body.partyName()).contains("party_name")
+        assertThat(body.requestedAccountNumberTypes().getOrNull())
+            .containsExactly(
+                InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
+            )
         assertThat(body.vendorAttributes())
             .contains(
                 InternalAccountCreateParams.VendorAttributes.builder()
@@ -169,17 +179,13 @@ internal class InternalAccountCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             InternalAccountCreateParams.builder()
-                .connectionId("connection_id")
                 .currency(InternalAccountCreateParams.Currency.USD)
                 .name("name")
-                .partyName("party_name")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.connectionId()).isEqualTo("connection_id")
         assertThat(body.currency()).isEqualTo(InternalAccountCreateParams.Currency.USD)
         assertThat(body.name()).isEqualTo("name")
-        assertThat(body.partyName()).isEqualTo("party_name")
     }
 }

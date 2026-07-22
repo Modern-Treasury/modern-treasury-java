@@ -352,7 +352,7 @@ private constructor(
     fun invoicerName(): Optional<String> = invoicerName.getOptional("invoicer_name")
 
     /**
-     * Translation missing: en.openapi.descriptions.invoice.schema.issued_at
+     * The time at which the invoice was issued.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -429,7 +429,7 @@ private constructor(
     fun originatingAccountId(): String = originatingAccountId.getRequired("originating_account_id")
 
     /**
-     * Translation missing: en.openapi.descriptions.invoice.schema.paid_at
+     * The time at which the invoice was paid.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -558,7 +558,7 @@ private constructor(
     fun virtualAccountId(): Optional<String> = virtualAccountId.getOptional("virtual_account_id")
 
     /**
-     * Translation missing: en.openapi.descriptions.invoice.schema.voided_at
+     * The time at which the invoice was voided.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -1351,7 +1351,7 @@ private constructor(
             this.invoicerName = invoicerName
         }
 
-        /** Translation missing: en.openapi.descriptions.invoice.schema.issued_at */
+        /** The time at which the invoice was issued. */
         fun issuedAt(issuedAt: OffsetDateTime?) = issuedAt(JsonField.ofNullable(issuedAt))
 
         /** Alias for calling [Builder.issuedAt] with `issuedAt.orElse(null)`. */
@@ -1517,7 +1517,7 @@ private constructor(
             this.originatingAccountId = originatingAccountId
         }
 
-        /** Translation missing: en.openapi.descriptions.invoice.schema.paid_at */
+        /** The time at which the invoice was paid. */
         fun paidAt(paidAt: OffsetDateTime?) = paidAt(JsonField.ofNullable(paidAt))
 
         /** Alias for calling [Builder.paidAt] with `paidAt.orElse(null)`. */
@@ -1823,7 +1823,7 @@ private constructor(
             this.virtualAccountId = virtualAccountId
         }
 
-        /** Translation missing: en.openapi.descriptions.invoice.schema.voided_at */
+        /** The time at which the invoice was voided. */
         fun voidedAt(voidedAt: OffsetDateTime?) = voidedAt(JsonField.ofNullable(voidedAt))
 
         /** Alias for calling [Builder.voidedAt] with `voidedAt.orElse(null)`. */
@@ -2120,7 +2120,8 @@ private constructor(
         fun line1(): String = line1.getRequired("line1")
 
         /**
-         * Locality or City.
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2136,7 +2137,8 @@ private constructor(
         fun postalCode(): String = postalCode.getRequired("postal_code")
 
         /**
-         * Region or State.
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2269,7 +2271,10 @@ private constructor(
              */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
-            /** Locality or City. */
+            /**
+             * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+             * Francisco).
+             */
             fun locality(locality: String) = locality(JsonField.of(locality))
 
             /**
@@ -2293,7 +2298,10 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            /** Region or State. */
+            /**
+             * Region or State. This field is free-form; for US states, we recommend a two-letter
+             * code (e.g. CA). Full state names are also accepted.
+             */
             fun region(region: String) = region(JsonField.of(region))
 
             /**
@@ -2478,7 +2486,8 @@ private constructor(
         fun line1(): String = line1.getRequired("line1")
 
         /**
-         * Locality or City.
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2494,7 +2503,8 @@ private constructor(
         fun postalCode(): String = postalCode.getRequired("postal_code")
 
         /**
-         * Region or State.
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2627,7 +2637,10 @@ private constructor(
              */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
-            /** Locality or City. */
+            /**
+             * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+             * Francisco).
+             */
             fun locality(locality: String) = locality(JsonField.of(locality))
 
             /**
@@ -2651,7 +2664,10 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            /** Region or State. */
+            /**
+             * Region or State. This field is free-form; for US states, we recommend a two-letter
+             * code (e.g. CA). Full state names are also accepted.
+             */
             fun region(region: String) = region(JsonField.of(region))
 
             /**
@@ -2836,7 +2852,8 @@ private constructor(
         fun line1(): String = line1.getRequired("line1")
 
         /**
-         * Locality or City.
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2852,7 +2869,8 @@ private constructor(
         fun postalCode(): String = postalCode.getRequired("postal_code")
 
         /**
-         * Region or State.
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -2983,7 +3001,10 @@ private constructor(
              */
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
-            /** Locality or City. */
+            /**
+             * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+             * Francisco).
+             */
             fun locality(locality: String) = locality(JsonField.of(locality))
 
             /**
@@ -3007,7 +3028,10 @@ private constructor(
              */
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            /** Region or State. */
+            /**
+             * Region or State. This field is free-form; for US states, we recommend a two-letter
+             * code (e.g. CA). Full state names are also accepted.
+             */
             fun region(region: String) = region(JsonField.of(region))
 
             /**
