@@ -221,6 +221,12 @@ internal class LegalEntityCreateParamsTest {
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .suffix("suffix")
+                            .termsOfUse(
+                                ChildLegalEntityCreate.TermsOfUse.builder()
+                                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .ipAddress("ip_address")
+                                    .build()
+                            )
                             .thirdPartyVerification(
                                 ThirdPartyVerification.builder()
                                     .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -316,6 +322,12 @@ internal class LegalEntityCreateParamsTest {
             .riskRating(LegalEntityCreateParams.RiskRating.LOW)
             .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .suffix("suffix")
+            .termsOfUse(
+                LegalEntityCreateParams.TermsOfUse.builder()
+                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .ipAddress("ip_address")
+                    .build()
+            )
             .thirdPartyVerification(
                 ThirdPartyVerification.builder()
                     .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -586,6 +598,14 @@ internal class LegalEntityCreateParamsTest {
                                     "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"
                                 )
                                 .suffix("suffix")
+                                .termsOfUse(
+                                    ChildLegalEntityCreate.TermsOfUse.builder()
+                                        .acceptedAt(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                        .ipAddress("ip_address")
+                                        .build()
+                                )
                                 .thirdPartyVerification(
                                     ThirdPartyVerification.builder()
                                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -689,6 +709,12 @@ internal class LegalEntityCreateParamsTest {
                 .riskRating(LegalEntityCreateParams.RiskRating.LOW)
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .suffix("suffix")
+                .termsOfUse(
+                    LegalEntityCreateParams.TermsOfUse.builder()
+                        .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .ipAddress("ip_address")
+                        .build()
+                )
                 .thirdPartyVerification(
                     ThirdPartyVerification.builder()
                         .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -957,6 +983,12 @@ internal class LegalEntityCreateParamsTest {
                             .riskRating(ChildLegalEntityCreate.RiskRating.LOW)
                             .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .suffix("suffix")
+                            .termsOfUse(
+                                ChildLegalEntityCreate.TermsOfUse.builder()
+                                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .ipAddress("ip_address")
+                                    .build()
+                            )
                             .thirdPartyVerification(
                                 ThirdPartyVerification.builder()
                                     .outcome(ThirdPartyVerification.Outcome.PASSED)
@@ -1057,6 +1089,13 @@ internal class LegalEntityCreateParamsTest {
         assertThat(body.serviceProviderLegalEntityId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.suffix()).contains("suffix")
+        assertThat(body.termsOfUse())
+            .contains(
+                LegalEntityCreateParams.TermsOfUse.builder()
+                    .acceptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .ipAddress("ip_address")
+                    .build()
+            )
         assertThat(body.thirdPartyVerification())
             .contains(
                 ThirdPartyVerification.builder()
