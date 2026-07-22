@@ -852,19 +852,20 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** At least one of "amount" or "amount_string" is required. */
     class BalanceCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val amount: JsonField<Long>,
         private val balanceType: JsonField<BalanceType>,
         private val vendorCode: JsonField<String>,
         private val vendorCodeType: JsonField<String>,
+        private val amount: JsonField<Long>,
+        private val amountString: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("balance_type")
             @ExcludeMissing
             balanceType: JsonField<BalanceType> = JsonMissing.of(),
@@ -874,15 +875,11 @@ private constructor(
             @JsonProperty("vendor_code_type")
             @ExcludeMissing
             vendorCodeType: JsonField<String> = JsonMissing.of(),
-        ) : this(amount, balanceType, vendorCode, vendorCodeType, mutableMapOf())
-
-        /**
-         * The balance amount.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun amount(): Long = amount.getRequired("amount")
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("amount_string")
+            @ExcludeMissing
+            amountString: JsonField<String> = JsonMissing.of(),
+        ) : this(balanceType, vendorCode, vendorCodeType, amount, amountString, mutableMapOf())
 
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
@@ -905,7 +902,7 @@ private constructor(
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
          * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
-         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`, or `us_bank`.
+         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, or `us_bank`.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -913,11 +910,21 @@ private constructor(
         fun vendorCodeType(): Optional<String> = vendorCodeType.getOptional("vendor_code_type")
 
         /**
-         * Returns the raw JSON value of [amount].
+         * The balance amount.
          *
-         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
          */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+        fun amount(): Optional<Long> = amount.getOptional("amount")
+
+        /**
+         * The amount of the balance as a string, preserving full precision for values that may
+         * exceed safe integer limits in some languages.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun amountString(): Optional<String> = amountString.getOptional("amount_string")
 
         /**
          * Returns the raw JSON value of [balanceType].
@@ -947,6 +954,23 @@ private constructor(
         @ExcludeMissing
         fun _vendorCodeType(): JsonField<String> = vendorCodeType
 
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+        /**
+         * Returns the raw JSON value of [amountString].
+         *
+         * Unlike [amountString], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("amount_string")
+        @ExcludeMissing
+        fun _amountString(): JsonField<String> = amountString
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -966,7 +990,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .amount()
              * .balanceType()
              * .vendorCode()
              * .vendorCodeType()
@@ -978,32 +1001,22 @@ private constructor(
         /** A builder for [BalanceCreateRequest]. */
         class Builder internal constructor() {
 
-            private var amount: JsonField<Long>? = null
             private var balanceType: JsonField<BalanceType>? = null
             private var vendorCode: JsonField<String>? = null
             private var vendorCodeType: JsonField<String>? = null
+            private var amount: JsonField<Long> = JsonMissing.of()
+            private var amountString: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(balanceCreateRequest: BalanceCreateRequest) = apply {
-                amount = balanceCreateRequest.amount
                 balanceType = balanceCreateRequest.balanceType
                 vendorCode = balanceCreateRequest.vendorCode
                 vendorCodeType = balanceCreateRequest.vendorCodeType
+                amount = balanceCreateRequest.amount
+                amountString = balanceCreateRequest.amountString
                 additionalProperties = balanceCreateRequest.additionalProperties.toMutableMap()
             }
-
-            /** The balance amount. */
-            fun amount(amount: Long) = amount(JsonField.of(amount))
-
-            /**
-             * Sets [Builder.amount] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /**
              * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
@@ -1038,8 +1051,8 @@ private constructor(
             /**
              * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`,
              * `bnk_dev`, `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`,
-             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `signet`, `silvergate`, `swift`,
-             * or `us_bank`.
+             * `evolve`, `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, or
+             * `us_bank`.
              */
             fun vendorCodeType(vendorCodeType: String?) =
                 vendorCodeType(JsonField.ofNullable(vendorCodeType))
@@ -1057,6 +1070,35 @@ private constructor(
              */
             fun vendorCodeType(vendorCodeType: JsonField<String>) = apply {
                 this.vendorCodeType = vendorCodeType
+            }
+
+            /** The balance amount. */
+            fun amount(amount: Long) = amount(JsonField.of(amount))
+
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+            /**
+             * The amount of the balance as a string, preserving full precision for values that may
+             * exceed safe integer limits in some languages.
+             */
+            fun amountString(amountString: String) = amountString(JsonField.of(amountString))
+
+            /**
+             * Sets [Builder.amountString] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amountString] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun amountString(amountString: JsonField<String>) = apply {
+                this.amountString = amountString
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1085,7 +1127,6 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .amount()
              * .balanceType()
              * .vendorCode()
              * .vendorCodeType()
@@ -1095,10 +1136,11 @@ private constructor(
              */
             fun build(): BalanceCreateRequest =
                 BalanceCreateRequest(
-                    checkRequired("amount", amount),
                     checkRequired("balanceType", balanceType),
                     checkRequired("vendorCode", vendorCode),
                     checkRequired("vendorCodeType", vendorCodeType),
+                    amount,
+                    amountString,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1119,10 +1161,11 @@ private constructor(
                 return@apply
             }
 
-            amount()
             balanceType().validate()
             vendorCode()
             vendorCodeType()
+            amount()
+            amountString()
             validated = true
         }
 
@@ -1142,10 +1185,11 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (amount.asKnown().isPresent) 1 else 0) +
-                (balanceType.asKnown().getOrNull()?.validity() ?: 0) +
+            (balanceType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (vendorCode.asKnown().isPresent) 1 else 0) +
-                (if (vendorCodeType.asKnown().isPresent) 1 else 0)
+                (if (vendorCodeType.asKnown().isPresent) 1 else 0) +
+                (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (amountString.asKnown().isPresent) 1 else 0)
 
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
@@ -1342,21 +1386,29 @@ private constructor(
             }
 
             return other is BalanceCreateRequest &&
-                amount == other.amount &&
                 balanceType == other.balanceType &&
                 vendorCode == other.vendorCode &&
                 vendorCodeType == other.vendorCodeType &&
+                amount == other.amount &&
+                amountString == other.amountString &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(amount, balanceType, vendorCode, vendorCodeType, additionalProperties)
+            Objects.hash(
+                balanceType,
+                vendorCode,
+                vendorCodeType,
+                amount,
+                amountString,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BalanceCreateRequest{amount=$amount, balanceType=$balanceType, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, additionalProperties=$additionalProperties}"
+            "BalanceCreateRequest{balanceType=$balanceType, vendorCode=$vendorCode, vendorCodeType=$vendorCodeType, amount=$amount, amountString=$amountString, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
