@@ -13,23 +13,19 @@ internal class ValidationServiceAsyncTest {
 
     @Test
     fun validateRoutingNumber() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val validationServiceAsync = client.validations()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val validationServiceAsync = client.validations()
 
-        val routingNumberLookupRequestFuture =
-            validationServiceAsync.validateRoutingNumber(
-                ValidationValidateRoutingNumberParams.builder()
-                    .routingNumber("routing_number")
-                    .routingNumberType(ValidationValidateRoutingNumberParams.RoutingNumberType.ABA)
-                    .build()
-            )
+      val routingNumberLookupRequestFuture = validationServiceAsync.validateRoutingNumber(ValidationValidateRoutingNumberParams.builder()
+          .routingNumber("routing_number")
+          .routingNumberType(ValidationValidateRoutingNumberParams.RoutingNumberType.ABA)
+          .build())
 
-        val routingNumberLookupRequest = routingNumberLookupRequestFuture.get()
-        routingNumberLookupRequest.validate()
+      val routingNumberLookupRequest = routingNumberLookupRequestFuture.get()
+      routingNumberLookupRequest.validate()
     }
 }

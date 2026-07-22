@@ -5,6 +5,8 @@ package com.moderntreasury.api.models
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.jsonMapper
+import com.moderntreasury.api.models.LedgerEntryCreateRequest
+import com.moderntreasury.api.models.TransactionDirection
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,118 +15,82 @@ internal class LedgerEntryCreateRequestTest {
 
     @Test
     fun create() {
-        val ledgerEntryCreateRequest =
-            LedgerEntryCreateRequest.builder()
-                .direction(TransactionDirection.CREDIT)
-                .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .amount(0L)
-                .amountString("amount_string")
-                .availableBalanceAmount(
-                    LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .lockVersion(0L)
-                .metadata(
-                    LedgerEntryCreateRequest.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                        .build()
-                )
-                .pendingBalanceAmount(
-                    LedgerEntryCreateRequest.PendingBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .postedBalanceAmount(
-                    LedgerEntryCreateRequest.PostedBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .showResultingLedgerAccountBalances(true)
-                .build()
+      val ledgerEntryCreateRequest = LedgerEntryCreateRequest.builder()
+          .direction(TransactionDirection.CREDIT)
+          .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .amount(0L)
+          .amountString("amount_string")
+          .availableBalanceAmount(LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .lockVersion(0L)
+          .metadata(LedgerEntryCreateRequest.Metadata.builder()
+              .putAdditionalProperty("key", JsonValue.from("value"))
+              .putAdditionalProperty("foo", JsonValue.from("bar"))
+              .putAdditionalProperty("modern", JsonValue.from("treasury"))
+              .build())
+          .pendingBalanceAmount(LedgerEntryCreateRequest.PendingBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .postedBalanceAmount(LedgerEntryCreateRequest.PostedBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .showResultingLedgerAccountBalances(true)
+          .build()
 
-        assertThat(ledgerEntryCreateRequest.direction()).isEqualTo(TransactionDirection.CREDIT)
-        assertThat(ledgerEntryCreateRequest.ledgerAccountId())
-            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(ledgerEntryCreateRequest.amount()).contains(0L)
-        assertThat(ledgerEntryCreateRequest.amountString()).contains("amount_string")
-        assertThat(ledgerEntryCreateRequest.availableBalanceAmount())
-            .contains(
-                LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
-                    .putAdditionalProperty("foo", JsonValue.from(0))
-                    .build()
-            )
-        assertThat(ledgerEntryCreateRequest.effectiveAt())
-            .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(ledgerEntryCreateRequest.lockVersion()).contains(0L)
-        assertThat(ledgerEntryCreateRequest.metadata())
-            .contains(
-                LedgerEntryCreateRequest.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                    .build()
-            )
-        assertThat(ledgerEntryCreateRequest.pendingBalanceAmount())
-            .contains(
-                LedgerEntryCreateRequest.PendingBalanceAmount.builder()
-                    .putAdditionalProperty("foo", JsonValue.from(0))
-                    .build()
-            )
-        assertThat(ledgerEntryCreateRequest.postedBalanceAmount())
-            .contains(
-                LedgerEntryCreateRequest.PostedBalanceAmount.builder()
-                    .putAdditionalProperty("foo", JsonValue.from(0))
-                    .build()
-            )
-        assertThat(ledgerEntryCreateRequest.showResultingLedgerAccountBalances()).contains(true)
+      assertThat(ledgerEntryCreateRequest.direction()).isEqualTo(TransactionDirection.CREDIT)
+      assertThat(ledgerEntryCreateRequest.ledgerAccountId()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+      assertThat(ledgerEntryCreateRequest.amount()).contains(0L)
+      assertThat(ledgerEntryCreateRequest.amountString()).contains("amount_string")
+      assertThat(ledgerEntryCreateRequest.availableBalanceAmount()).contains(LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
+          .putAdditionalProperty("foo", JsonValue.from(0))
+          .build())
+      assertThat(ledgerEntryCreateRequest.effectiveAt()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+      assertThat(ledgerEntryCreateRequest.lockVersion()).contains(0L)
+      assertThat(ledgerEntryCreateRequest.metadata()).contains(LedgerEntryCreateRequest.Metadata.builder()
+          .putAdditionalProperty("key", JsonValue.from("value"))
+          .putAdditionalProperty("foo", JsonValue.from("bar"))
+          .putAdditionalProperty("modern", JsonValue.from("treasury"))
+          .build())
+      assertThat(ledgerEntryCreateRequest.pendingBalanceAmount()).contains(LedgerEntryCreateRequest.PendingBalanceAmount.builder()
+          .putAdditionalProperty("foo", JsonValue.from(0))
+          .build())
+      assertThat(ledgerEntryCreateRequest.postedBalanceAmount()).contains(LedgerEntryCreateRequest.PostedBalanceAmount.builder()
+          .putAdditionalProperty("foo", JsonValue.from(0))
+          .build())
+      assertThat(ledgerEntryCreateRequest.showResultingLedgerAccountBalances()).contains(true)
     }
 
     @Test
     fun roundtrip() {
-        val jsonMapper = jsonMapper()
-        val ledgerEntryCreateRequest =
-            LedgerEntryCreateRequest.builder()
-                .direction(TransactionDirection.CREDIT)
-                .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .amount(0L)
-                .amountString("amount_string")
-                .availableBalanceAmount(
-                    LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .lockVersion(0L)
-                .metadata(
-                    LedgerEntryCreateRequest.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                        .build()
-                )
-                .pendingBalanceAmount(
-                    LedgerEntryCreateRequest.PendingBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .postedBalanceAmount(
-                    LedgerEntryCreateRequest.PostedBalanceAmount.builder()
-                        .putAdditionalProperty("foo", JsonValue.from(0))
-                        .build()
-                )
-                .showResultingLedgerAccountBalances(true)
-                .build()
+      val jsonMapper = jsonMapper()
+      val ledgerEntryCreateRequest = LedgerEntryCreateRequest.builder()
+          .direction(TransactionDirection.CREDIT)
+          .ledgerAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .amount(0L)
+          .amountString("amount_string")
+          .availableBalanceAmount(LedgerEntryCreateRequest.AvailableBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .lockVersion(0L)
+          .metadata(LedgerEntryCreateRequest.Metadata.builder()
+              .putAdditionalProperty("key", JsonValue.from("value"))
+              .putAdditionalProperty("foo", JsonValue.from("bar"))
+              .putAdditionalProperty("modern", JsonValue.from("treasury"))
+              .build())
+          .pendingBalanceAmount(LedgerEntryCreateRequest.PendingBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .postedBalanceAmount(LedgerEntryCreateRequest.PostedBalanceAmount.builder()
+              .putAdditionalProperty("foo", JsonValue.from(0))
+              .build())
+          .showResultingLedgerAccountBalances(true)
+          .build()
 
-        val roundtrippedLedgerEntryCreateRequest =
-            jsonMapper.readValue(
-                jsonMapper.writeValueAsString(ledgerEntryCreateRequest),
-                jacksonTypeRef<LedgerEntryCreateRequest>(),
-            )
+      val roundtrippedLedgerEntryCreateRequest = jsonMapper.readValue(jsonMapper.writeValueAsString(ledgerEntryCreateRequest), jacksonTypeRef<LedgerEntryCreateRequest>())
 
-        assertThat(roundtrippedLedgerEntryCreateRequest).isEqualTo(ledgerEntryCreateRequest)
+      assertThat(roundtrippedLedgerEntryCreateRequest).isEqualTo(ledgerEntryCreateRequest)
     }
 }

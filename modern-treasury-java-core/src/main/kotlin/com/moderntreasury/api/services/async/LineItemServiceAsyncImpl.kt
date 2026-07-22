@@ -17,184 +17,144 @@ import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.models.LineItem
+import com.moderntreasury.api.models.LineItemListPage
 import com.moderntreasury.api.models.LineItemListPageAsync
 import com.moderntreasury.api.models.LineItemListParams
 import com.moderntreasury.api.models.LineItemRetrieveParams
 import com.moderntreasury.api.models.LineItemUpdateParams
+import com.moderntreasury.api.services.async.LineItemServiceAsync
+import com.moderntreasury.api.services.async.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
-    LineItemServiceAsync {
+class LineItemServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: LineItemServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : LineItemServiceAsync {
+
+    private val withRawResponse: LineItemServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): LineItemServiceAsync.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemServiceAsync =
-        LineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemServiceAsync = LineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun retrieve(
-        params: LineItemRetrieveParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<LineItem> =
+    override fun retrieve(params: LineItemRetrieveParams, requestOptions: RequestOptions): CompletableFuture<LineItem> =
         // get /api/{itemizable_type}/{itemizable_id}/line_items/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    override fun update(
-        params: LineItemUpdateParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<LineItem> =
+    override fun update(params: LineItemUpdateParams, requestOptions: RequestOptions): CompletableFuture<LineItem> =
         // patch /api/{itemizable_type}/{itemizable_id}/line_items/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    override fun list(
-        params: LineItemListParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<LineItemListPageAsync> =
+    override fun list(params: LineItemListParams, requestOptions: RequestOptions): CompletableFuture<LineItemListPageAsync> =
         // get /api/{itemizable_type}/{itemizable_id}/line_items
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        LineItemServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : LineItemServiceAsync.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): LineItemServiceAsync.WithRawResponse =
-            LineItemServiceAsyncImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemServiceAsync.WithRawResponse = LineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val retrieveHandler: Handler<LineItem> = jsonHandler<LineItem>(clientOptions.jsonMapper)
+
+        override fun retrieve(params: LineItemRetrieveParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<LineItem>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "line_items", params._pathParam(2))
+            .build()
+            .prepareAsync(
+              clientOptions, params
             )
-
-        private val retrieveHandler: Handler<LineItem> =
-            jsonHandler<LineItem>(clientOptions.jsonMapper)
-
-        override fun retrieve(
-            params: LineItemRetrieveParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItem>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "line_items",
-                        params._pathParam(2),
-                    )
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { retrieveHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val updateHandler: Handler<LineItem> =
-            jsonHandler<LineItem>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<LineItem> = jsonHandler<LineItem>(clientOptions.jsonMapper)
 
-        override fun update(
-            params: LineItemUpdateParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItem>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.PATCH)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "line_items",
-                        params._pathParam(2),
-                    )
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { updateHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun update(params: LineItemUpdateParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<LineItem>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.PATCH)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "line_items", params._pathParam(2))
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  updateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val listHandler: Handler<List<LineItem>> =
-            jsonHandler<List<LineItem>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<LineItem>> = jsonHandler<List<LineItem>>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: LineItemListParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("itemizableId", params.itemizableId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "line_items",
-                    )
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { listHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.forEach { it.validate() }
-                                }
-                            }
-                            .let {
-                                LineItemListPageAsync.builder()
-                                    .service(LineItemServiceAsyncImpl(clientOptions))
-                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
-                                    .params(params)
-                                    .headers(response.headers())
-                                    .items(it)
-                                    .build()
-                            }
-                    }
-                }
+        override fun list(params: LineItemListParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<LineItemListPageAsync>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("itemizableId", params.itemizableId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "line_items")
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  LineItemListPageAsync.builder()
+                      .service(LineItemServiceAsyncImpl(clientOptions))
+                      .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          } }
         }
     }
 }

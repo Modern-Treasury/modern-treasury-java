@@ -14,14 +14,13 @@ import com.moderntreasury.api.models.TransactionListPage
 import com.moderntreasury.api.models.TransactionListParams
 import com.moderntreasury.api.models.TransactionRetrieveParams
 import com.moderntreasury.api.models.TransactionUpdateParams
+import com.moderntreasury.api.services.blocking.TransactionService
 import com.moderntreasury.api.services.blocking.transactions.LineItemService
 import java.util.function.Consumer
 
 interface TransactionService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -34,120 +33,150 @@ interface TransactionService {
     fun lineItems(): LineItemService
 
     /** create transaction */
-    fun create(params: TransactionCreateParams): Transaction = create(params, RequestOptions.none())
+    fun create(params: TransactionCreateParams): Transaction =
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: TransactionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction
+    fun create(params: TransactionCreateParams, requestOptions: RequestOptions = RequestOptions.none()): Transaction
 
     /** Get details on a single transaction. */
-    fun retrieve(id: String): Transaction = retrieve(id, TransactionRetrieveParams.none())
+    fun retrieve(id: String): Transaction =
+        retrieve(
+          id, TransactionRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: TransactionRetrieveParams = TransactionRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): Transaction =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
-    ): Transaction = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: TransactionRetrieveParams = TransactionRetrieveParams.none()): Transaction =
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: TransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction
+    fun retrieve(params: TransactionRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): Transaction
 
     /** @see retrieve */
     fun retrieve(params: TransactionRetrieveParams): Transaction =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): Transaction =
-        retrieve(id, TransactionRetrieveParams.none(), requestOptions)
+        retrieve(
+          id,
+          TransactionRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Update a single transaction. */
-    fun update(id: String): Transaction = update(id, TransactionUpdateParams.none())
+    fun update(id: String): Transaction =
+        update(
+          id, TransactionUpdateParams.none()
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: TransactionUpdateParams = TransactionUpdateParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction = update(params.toBuilder().id(id).build(), requestOptions)
+    fun update(id: String, params: TransactionUpdateParams = TransactionUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): Transaction =
+        update(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: TransactionUpdateParams = TransactionUpdateParams.none(),
-    ): Transaction = update(id, params, RequestOptions.none())
+    fun update(id: String, params: TransactionUpdateParams = TransactionUpdateParams.none()): Transaction =
+        update(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        params: TransactionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction
+    fun update(params: TransactionUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): Transaction
 
     /** @see update */
-    fun update(params: TransactionUpdateParams): Transaction = update(params, RequestOptions.none())
+    fun update(params: TransactionUpdateParams): Transaction =
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
     fun update(id: String, requestOptions: RequestOptions): Transaction =
-        update(id, TransactionUpdateParams.none(), requestOptions)
+        update(
+          id,
+          TransactionUpdateParams.none(),
+          requestOptions,
+        )
 
     /** Get a list of all transactions. */
     fun list(): TransactionListPage = list(TransactionListParams.none())
 
     /** @see list */
-    fun list(
-        params: TransactionListParams = TransactionListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): TransactionListPage
+    fun list(params: TransactionListParams = TransactionListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): TransactionListPage
 
     /** @see list */
     fun list(params: TransactionListParams = TransactionListParams.none()): TransactionListPage =
-        list(params, RequestOptions.none())
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): TransactionListPage =
-        list(TransactionListParams.none(), requestOptions)
+        list(
+          TransactionListParams.none(), requestOptions
+        )
 
     /** delete transaction */
-    fun delete(id: String) = delete(id, TransactionDeleteParams.none())
+    fun delete(id: String) =
+        delete(
+          id, TransactionDeleteParams.none()
+        )
 
     /** @see delete */
-    fun delete(
-        id: String,
-        params: TransactionDeleteParams = TransactionDeleteParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ) = delete(params.toBuilder().id(id).build(), requestOptions)
+    fun delete(id: String, params: TransactionDeleteParams = TransactionDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()) =
+        delete(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see delete */
     fun delete(id: String, params: TransactionDeleteParams = TransactionDeleteParams.none()) =
-        delete(id, params, RequestOptions.none())
+        delete(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        params: TransactionDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    )
+    fun delete(params: TransactionDeleteParams, requestOptions: RequestOptions = RequestOptions.none())
 
     /** @see delete */
-    fun delete(params: TransactionDeleteParams) = delete(params, RequestOptions.none())
+    fun delete(params: TransactionDeleteParams) =
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions) =
-        delete(id, TransactionDeleteParams.none(), requestOptions)
+        delete(
+          id,
+          TransactionDeleteParams.none(),
+          requestOptions,
+        )
 
-    /**
-     * A view of [TransactionService] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [TransactionService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -155,170 +184,176 @@ interface TransactionService {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): TransactionService.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionService.WithRawResponse
 
         fun lineItems(): LineItemService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /api/transactions`, but is otherwise the same as
-         * [TransactionService.create].
-         */
+        /** Returns a raw HTTP response for `post /api/transactions`, but is otherwise the             same as [TransactionService.create]. */
         @MustBeClosed
         fun create(params: TransactionCreateParams): HttpResponseFor<Transaction> =
-            create(params, RequestOptions.none())
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
         @MustBeClosed
-        fun create(
-            params: TransactionCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction>
+        fun create(params: TransactionCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Transaction>
 
-        /**
-         * Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the same
-         * as [TransactionService.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the             same as [TransactionService.retrieve]. */
         @MustBeClosed
         fun retrieve(id: String): HttpResponseFor<Transaction> =
-            retrieve(id, TransactionRetrieveParams.none())
+            retrieve(
+              id, TransactionRetrieveParams.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction> =
-            retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: TransactionRetrieveParams = TransactionRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Transaction> =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
-        ): HttpResponseFor<Transaction> = retrieve(id, params, RequestOptions.none())
+        fun retrieve(id: String, params: TransactionRetrieveParams = TransactionRetrieveParams.none()): HttpResponseFor<Transaction> =
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            params: TransactionRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction>
+        fun retrieve(params: TransactionRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Transaction>
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: TransactionRetrieveParams): HttpResponseFor<Transaction> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Transaction> =
-            retrieve(id, TransactionRetrieveParams.none(), requestOptions)
+            retrieve(
+              id,
+              TransactionRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `patch /api/transactions/{id}`, but is otherwise the same
-         * as [TransactionService.update].
-         */
+        /** Returns a raw HTTP response for `patch /api/transactions/{id}`, but is otherwise the             same as [TransactionService.update]. */
         @MustBeClosed
         fun update(id: String): HttpResponseFor<Transaction> =
-            update(id, TransactionUpdateParams.none())
+            update(
+              id, TransactionUpdateParams.none()
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: TransactionUpdateParams = TransactionUpdateParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction> = update(params.toBuilder().id(id).build(), requestOptions)
+        fun update(id: String, params: TransactionUpdateParams = TransactionUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Transaction> =
+            update(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: TransactionUpdateParams = TransactionUpdateParams.none(),
-        ): HttpResponseFor<Transaction> = update(id, params, RequestOptions.none())
+        fun update(id: String, params: TransactionUpdateParams = TransactionUpdateParams.none()): HttpResponseFor<Transaction> =
+            update(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            params: TransactionUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction>
+        fun update(params: TransactionUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<Transaction>
 
         /** @see update */
         @MustBeClosed
         fun update(params: TransactionUpdateParams): HttpResponseFor<Transaction> =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<Transaction> =
-            update(id, TransactionUpdateParams.none(), requestOptions)
+            update(
+              id,
+              TransactionUpdateParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /api/transactions`, but is otherwise the same as
-         * [TransactionService.list].
-         */
+        /** Returns a raw HTTP response for `get /api/transactions`, but is otherwise the             same as [TransactionService.list]. */
         @MustBeClosed
         fun list(): HttpResponseFor<TransactionListPage> = list(TransactionListParams.none())
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: TransactionListParams = TransactionListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TransactionListPage>
+        fun list(params: TransactionListParams = TransactionListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<TransactionListPage>
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: TransactionListParams = TransactionListParams.none()
-        ): HttpResponseFor<TransactionListPage> = list(params, RequestOptions.none())
+        fun list(params: TransactionListParams = TransactionListParams.none()): HttpResponseFor<TransactionListPage> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionListPage> =
-            list(TransactionListParams.none(), requestOptions)
+            list(
+              TransactionListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `delete /api/transactions/{id}`, but is otherwise the
-         * same as [TransactionService.delete].
-         */
+        /** Returns a raw HTTP response for `delete /api/transactions/{id}`, but is otherwise the             same as [TransactionService.delete]. */
         @MustBeClosed
-        fun delete(id: String): HttpResponse = delete(id, TransactionDeleteParams.none())
-
-        /** @see delete */
-        @MustBeClosed
-        fun delete(
-            id: String,
-            params: TransactionDeleteParams = TransactionDeleteParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+        fun delete(id: String): HttpResponse =
+            delete(
+              id, TransactionDeleteParams.none()
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            id: String,
-            params: TransactionDeleteParams = TransactionDeleteParams.none(),
-        ): HttpResponse = delete(id, params, RequestOptions.none())
+        fun delete(id: String, params: TransactionDeleteParams = TransactionDeleteParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponse =
+            delete(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            params: TransactionDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun delete(id: String, params: TransactionDeleteParams = TransactionDeleteParams.none()): HttpResponse =
+            delete(
+              id,
+              params,
+              RequestOptions.none(),
+            )
+
+        /** @see delete */
+        @MustBeClosed
+        fun delete(params: TransactionDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
 
         /** @see delete */
         @MustBeClosed
         fun delete(params: TransactionDeleteParams): HttpResponse =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponse =
-            delete(id, TransactionDeleteParams.none(), requestOptions)
+            delete(
+              id,
+              TransactionDeleteParams.none(),
+              requestOptions,
+            )
     }
 }

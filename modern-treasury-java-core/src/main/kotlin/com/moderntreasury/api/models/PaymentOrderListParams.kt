@@ -9,6 +9,8 @@ import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
+import com.moderntreasury.api.models.PaymentOrderListParams
+import com.moderntreasury.api.models.TransactionDirection
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -17,8 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all payment orders */
-class PaymentOrderListParams
-private constructor(
+class PaymentOrderListParams private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
     private val createdAtEnd: LocalDate?,
@@ -39,6 +40,7 @@ private constructor(
     private val type: Type?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
@@ -61,21 +63,14 @@ private constructor(
 
     fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun originatingAccountId(): Optional<String> = Optional.ofNullable(originatingAccountId)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
-    /**
-     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
-     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
-     * standard mail.
-     */
+    /** Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT transfer, respectively. For check payments, `high` can mean an overnight check rather than standard mail. */
     fun priority(): Optional<Priority> = Optional.ofNullable(priority)
 
     /** An inclusive upper bound for searching process_after */
@@ -104,10 +99,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): PaymentOrderListParams = builder().build()
+        @JvmStatic
+        fun none(): PaymentOrderListParams = builder().build()
 
         /** Returns a mutable builder for constructing an instance of [PaymentOrderListParams]. */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [PaymentOrderListParams]. */
@@ -135,106 +132,119 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(paymentOrderListParams: PaymentOrderListParams) = apply {
-            afterCursor = paymentOrderListParams.afterCursor
-            counterpartyId = paymentOrderListParams.counterpartyId
-            createdAtEnd = paymentOrderListParams.createdAtEnd
-            createdAtStart = paymentOrderListParams.createdAtStart
-            direction = paymentOrderListParams.direction
-            effectiveDateEnd = paymentOrderListParams.effectiveDateEnd
-            effectiveDateStart = paymentOrderListParams.effectiveDateStart
-            externalId = paymentOrderListParams.externalId
-            metadata = paymentOrderListParams.metadata
-            originatingAccountId = paymentOrderListParams.originatingAccountId
-            perPage = paymentOrderListParams.perPage
-            priority = paymentOrderListParams.priority
-            processAfterEnd = paymentOrderListParams.processAfterEnd
-            processAfterStart = paymentOrderListParams.processAfterStart
-            referenceNumber = paymentOrderListParams.referenceNumber
-            status = paymentOrderListParams.status
-            transactionId = paymentOrderListParams.transactionId
-            type = paymentOrderListParams.type
-            additionalHeaders = paymentOrderListParams.additionalHeaders.toBuilder()
-            additionalQueryParams = paymentOrderListParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(paymentOrderListParams: PaymentOrderListParams) =
+            apply {
+                afterCursor = paymentOrderListParams.afterCursor
+                counterpartyId = paymentOrderListParams.counterpartyId
+                createdAtEnd = paymentOrderListParams.createdAtEnd
+                createdAtStart = paymentOrderListParams.createdAtStart
+                direction = paymentOrderListParams.direction
+                effectiveDateEnd = paymentOrderListParams.effectiveDateEnd
+                effectiveDateStart = paymentOrderListParams.effectiveDateStart
+                externalId = paymentOrderListParams.externalId
+                metadata = paymentOrderListParams.metadata
+                originatingAccountId = paymentOrderListParams.originatingAccountId
+                perPage = paymentOrderListParams.perPage
+                priority = paymentOrderListParams.priority
+                processAfterEnd = paymentOrderListParams.processAfterEnd
+                processAfterStart = paymentOrderListParams.processAfterStart
+                referenceNumber = paymentOrderListParams.referenceNumber
+                status = paymentOrderListParams.status
+                transactionId = paymentOrderListParams.transactionId
+                type = paymentOrderListParams.type
+                additionalHeaders = paymentOrderListParams.additionalHeaders.toBuilder()
+                additionalQueryParams = paymentOrderListParams.additionalQueryParams.toBuilder()
+            }
 
-        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) =
+            apply {
+                this.afterCursor = afterCursor
+            }
 
         /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
-        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String?) =
+            apply {
+                this.counterpartyId = counterpartyId
+            }
 
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
-        fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.getOrNull())
+        fun counterpartyId(counterpartyId: Optional<String>) = counterpartyId(counterpartyId.getOrNull())
 
         /** An inclusive upper bound for searching created_at */
-        fun createdAtEnd(createdAtEnd: LocalDate?) = apply { this.createdAtEnd = createdAtEnd }
+        fun createdAtEnd(createdAtEnd: LocalDate?) =
+            apply {
+                this.createdAtEnd = createdAtEnd
+            }
 
         /** Alias for calling [Builder.createdAtEnd] with `createdAtEnd.orElse(null)`. */
         fun createdAtEnd(createdAtEnd: Optional<LocalDate>) = createdAtEnd(createdAtEnd.getOrNull())
 
         /** An inclusive lower bound for searching created_at */
-        fun createdAtStart(createdAtStart: LocalDate?) = apply {
-            this.createdAtStart = createdAtStart
-        }
+        fun createdAtStart(createdAtStart: LocalDate?) =
+            apply {
+                this.createdAtStart = createdAtStart
+            }
 
         /** Alias for calling [Builder.createdAtStart] with `createdAtStart.orElse(null)`. */
-        fun createdAtStart(createdAtStart: Optional<LocalDate>) =
-            createdAtStart(createdAtStart.getOrNull())
+        fun createdAtStart(createdAtStart: Optional<LocalDate>) = createdAtStart(createdAtStart.getOrNull())
 
-        fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection?) =
+            apply {
+                this.direction = direction
+            }
 
         /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
         /** An inclusive upper bound for searching effective_date */
-        fun effectiveDateEnd(effectiveDateEnd: LocalDate?) = apply {
-            this.effectiveDateEnd = effectiveDateEnd
-        }
+        fun effectiveDateEnd(effectiveDateEnd: LocalDate?) =
+            apply {
+                this.effectiveDateEnd = effectiveDateEnd
+            }
 
         /** Alias for calling [Builder.effectiveDateEnd] with `effectiveDateEnd.orElse(null)`. */
-        fun effectiveDateEnd(effectiveDateEnd: Optional<LocalDate>) =
-            effectiveDateEnd(effectiveDateEnd.getOrNull())
+        fun effectiveDateEnd(effectiveDateEnd: Optional<LocalDate>) = effectiveDateEnd(effectiveDateEnd.getOrNull())
 
         /** An inclusive lower bound for searching effective_date */
-        fun effectiveDateStart(effectiveDateStart: LocalDate?) = apply {
-            this.effectiveDateStart = effectiveDateStart
-        }
+        fun effectiveDateStart(effectiveDateStart: LocalDate?) =
+            apply {
+                this.effectiveDateStart = effectiveDateStart
+            }
 
-        /**
-         * Alias for calling [Builder.effectiveDateStart] with `effectiveDateStart.orElse(null)`.
-         */
-        fun effectiveDateStart(effectiveDateStart: Optional<LocalDate>) =
-            effectiveDateStart(effectiveDateStart.getOrNull())
+        /** Alias for calling [Builder.effectiveDateStart] with `effectiveDateStart.orElse(null)`. */
+        fun effectiveDateStart(effectiveDateStart: Optional<LocalDate>) = effectiveDateStart(effectiveDateStart.getOrNull())
 
-        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+        fun externalId(externalId: String?) =
+            apply {
+                this.externalId = externalId
+            }
 
         /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
         fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
-        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+        /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+        fun metadata(metadata: Metadata?) =
+            apply {
+                this.metadata = metadata
+            }
 
         /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
-        fun originatingAccountId(originatingAccountId: String?) = apply {
-            this.originatingAccountId = originatingAccountId
-        }
+        fun originatingAccountId(originatingAccountId: String?) =
+            apply {
+                this.originatingAccountId = originatingAccountId
+            }
 
-        /**
-         * Alias for calling [Builder.originatingAccountId] with
-         * `originatingAccountId.orElse(null)`.
-         */
-        fun originatingAccountId(originatingAccountId: Optional<String>) =
-            originatingAccountId(originatingAccountId.getOrNull())
+        /** Alias for calling [Builder.originatingAccountId] with `originatingAccountId.orElse(null)`. */
+        fun originatingAccountId(originatingAccountId: Optional<String>) = originatingAccountId(originatingAccountId.getOrNull())
 
-        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+        fun perPage(perPage: Long?) =
+            apply {
+                this.perPage = perPage
+            }
 
         /**
          * Alias for [Builder.perPage].
@@ -246,157 +256,190 @@ private constructor(
         /** Alias for calling [Builder.perPage] with `perPage.orElse(null)`. */
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
-        /**
-         * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or
-         * EFT transfer, respectively. For check payments, `high` can mean an overnight check rather
-         * than standard mail.
-         */
-        fun priority(priority: Priority?) = apply { this.priority = priority }
+        /** Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT transfer, respectively. For check payments, `high` can mean an overnight check rather than standard mail. */
+        fun priority(priority: Priority?) =
+            apply {
+                this.priority = priority
+            }
 
         /** Alias for calling [Builder.priority] with `priority.orElse(null)`. */
         fun priority(priority: Optional<Priority>) = priority(priority.getOrNull())
 
         /** An inclusive upper bound for searching process_after */
-        fun processAfterEnd(processAfterEnd: OffsetDateTime?) = apply {
-            this.processAfterEnd = processAfterEnd
-        }
+        fun processAfterEnd(processAfterEnd: OffsetDateTime?) =
+            apply {
+                this.processAfterEnd = processAfterEnd
+            }
 
         /** Alias for calling [Builder.processAfterEnd] with `processAfterEnd.orElse(null)`. */
-        fun processAfterEnd(processAfterEnd: Optional<OffsetDateTime>) =
-            processAfterEnd(processAfterEnd.getOrNull())
+        fun processAfterEnd(processAfterEnd: Optional<OffsetDateTime>) = processAfterEnd(processAfterEnd.getOrNull())
 
         /** An inclusive lower bound for searching process_after */
-        fun processAfterStart(processAfterStart: OffsetDateTime?) = apply {
-            this.processAfterStart = processAfterStart
-        }
+        fun processAfterStart(processAfterStart: OffsetDateTime?) =
+            apply {
+                this.processAfterStart = processAfterStart
+            }
 
         /** Alias for calling [Builder.processAfterStart] with `processAfterStart.orElse(null)`. */
-        fun processAfterStart(processAfterStart: Optional<OffsetDateTime>) =
-            processAfterStart(processAfterStart.getOrNull())
+        fun processAfterStart(processAfterStart: Optional<OffsetDateTime>) = processAfterStart(processAfterStart.getOrNull())
 
         /** Query for records with the provided reference number */
-        fun referenceNumber(referenceNumber: String?) = apply {
-            this.referenceNumber = referenceNumber
-        }
+        fun referenceNumber(referenceNumber: String?) =
+            apply {
+                this.referenceNumber = referenceNumber
+            }
 
         /** Alias for calling [Builder.referenceNumber] with `referenceNumber.orElse(null)`. */
-        fun referenceNumber(referenceNumber: Optional<String>) =
-            referenceNumber(referenceNumber.getOrNull())
+        fun referenceNumber(referenceNumber: Optional<String>) = referenceNumber(referenceNumber.getOrNull())
 
-        fun status(status: Status?) = apply { this.status = status }
+        fun status(status: Status?) =
+            apply {
+                this.status = status
+            }
 
         /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         /** The ID of a transaction that the payment order has been reconciled to. */
-        fun transactionId(transactionId: String?) = apply { this.transactionId = transactionId }
+        fun transactionId(transactionId: String?) =
+            apply {
+                this.transactionId = transactionId
+            }
 
         /** Alias for calling [Builder.transactionId] with `transactionId.orElse(null)`. */
-        fun transactionId(transactionId: Optional<String>) =
-            transactionId(transactionId.getOrNull())
+        fun transactionId(transactionId: Optional<String>) = transactionId(transactionId.getOrNull())
 
-        fun type(type: Type?) = apply { this.type = type }
+        fun type(type: Type?) =
+            apply {
+                this.type = type
+            }
 
         /** Alias for calling [Builder.type] with `type.orElse(null)`. */
         fun type(type: Optional<Type>) = type(type.getOrNull())
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [PaymentOrderListParams].
@@ -405,26 +448,26 @@ private constructor(
          */
         fun build(): PaymentOrderListParams =
             PaymentOrderListParams(
-                afterCursor,
-                counterpartyId,
-                createdAtEnd,
-                createdAtStart,
-                direction,
-                effectiveDateEnd,
-                effectiveDateStart,
-                externalId,
-                metadata,
-                originatingAccountId,
-                perPage,
-                priority,
-                processAfterEnd,
-                processAfterStart,
-                referenceNumber,
-                status,
-                transactionId,
-                type,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              afterCursor,
+              counterpartyId,
+              createdAtEnd,
+              createdAtStart,
+              direction,
+              effectiveDateEnd,
+              effectiveDateStart,
+              externalId,
+              metadata,
+              originatingAccountId,
+              perPage,
+              priority,
+              processAfterEnd,
+              processAfterStart,
+              referenceNumber,
+              status,
+              transactionId,
+              type,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -441,22 +484,16 @@ private constructor(
                 effectiveDateEnd?.let { put("effective_date_end", it.toString()) }
                 effectiveDateStart?.let { put("effective_date_start", it.toString()) }
                 externalId?.let { put("external_id", it) }
-                metadata?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("metadata[$key]", value)
-                        }
+                metadata?.let { it._additionalProperties().keys().forEach { key ->
+                    it._additionalProperties().values(key).forEach { value ->
+                        put("metadata[$key]", value)
                     }
-                }
+                } }
                 originatingAccountId?.let { put("originating_account_id", it) }
                 perPage?.let { put("per_page", it.toString()) }
                 priority?.let { put("priority", it.toString()) }
-                processAfterEnd?.let {
-                    put("process_after_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                processAfterStart?.let {
-                    put("process_after_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
+                processAfterEnd?.let { put("process_after_end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
+                processAfterStart?.let { put("process_after_start", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
                 referenceNumber?.let { put("reference_number", it) }
                 status?.let { put("status", it.toString()) }
                 transactionId?.let { put("transaction_id", it) }
@@ -465,11 +502,11 @@ private constructor(
             }
             .build()
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
-    class Metadata private constructor(private val additionalProperties: QueryParams) {
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+    class Metadata private constructor(
+        private val additionalProperties: QueryParams,
+
+    ) {
 
         /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
@@ -479,7 +516,8 @@ private constructor(
         companion object {
 
             /** Returns a mutable builder for constructing an instance of [Metadata]. */
-            @JvmStatic fun builder() = Builder()
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [Metadata]. */
@@ -488,58 +526,72 @@ private constructor(
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
             @JvmSynthetic
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties = metadata.additionalProperties.toBuilder()
-            }
+            internal fun from(metadata: Metadata) =
+                apply {
+                    additionalProperties = metadata.additionalProperties.toBuilder()
+                }
 
-            fun additionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: String) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: String) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.put(key, values)
-            }
+            fun putAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.put(key, values)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
                 apply {
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun replaceAdditionalProperties(key: String, value: String) = apply {
-                additionalProperties.replace(key, value)
-            }
+            fun replaceAdditionalProperties(key: String, value: String) =
+                apply {
+                    additionalProperties.replace(key, value)
+                }
 
-            fun replaceAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.replace(key, values)
-            }
+            fun replaceAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.replace(key, values)
+                }
 
-            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.replaceAll(additionalProperties)
-            }
+            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun replaceAllAdditionalProperties(
-                additionalProperties: Map<String, Iterable<String>>
-            ) = apply { this.additionalProperties.replaceAll(additionalProperties) }
+            fun replaceAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperties(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperties(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                additionalProperties.removeAll(keys)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    additionalProperties.removeAll(keys)
+                }
 
             /**
              * Returns an immutable instance of [Metadata].
@@ -550,11 +602,11 @@ private constructor(
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && additionalProperties == other.additionalProperties
+          return other is Metadata && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
@@ -564,22 +616,21 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
-    /**
-     * Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT
-     * transfer, respectively. For check payments, `high` can mean an overnight check rather than
-     * standard mail.
-     */
-    class Priority @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    /** Either `normal` or `high`. For ACH and EFT payments, `high` represents a same-day ACH or EFT transfer, respectively. For check payments, `high` can mean an overnight check rather than standard mail. */
+    class Priority @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't match any known
+         * member, and you want to know that value. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -600,9 +651,11 @@ private constructor(
          * An enum containing [Priority]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Priority] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+         *   an older version than the API, then the API may respond with new members that the SDK is unaware
+         *   of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -613,11 +666,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+         * class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want to throw
+         * for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -629,11 +682,10 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+         * for the unknown case.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -645,36 +697,33 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging and generally
+         * doesn't throw.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
+        fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Priority = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Priority =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            known()
-            validated = true
-        }
+                known()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -685,19 +734,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+        @JvmSynthetic
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Priority && value == other.value
+          return other is Priority && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -705,17 +754,20 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class Status @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't match any known
+         * member, and you want to know that value. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -769,9 +821,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+         *   an older version than the API, then the API may respond with new members that the SDK is unaware
+         *   of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -793,11 +847,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+         * class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want to throw
+         * for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -820,11 +874,10 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+         * for the unknown case.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -847,36 +900,33 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging and generally
+         * doesn't throw.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
+        fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Status = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Status =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            known()
-            validated = true
-        }
+                known()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -887,19 +937,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+        @JvmSynthetic
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Status && value == other.value
+          return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -907,17 +957,20 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class Type @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't match any known
+         * member, and you want to know that value. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -943,10 +996,6 @@ private constructor(
 
             @JvmField val GB_FPS = of("gb_fps")
 
-            @JvmField val HU_ICS = of("hu_ics")
-
-            @JvmField val INTERAC = of("interac")
-
             @JvmField val MASAV = of("masav")
 
             @JvmField val MX_CCEN = of("mx_ccen")
@@ -959,25 +1008,15 @@ private constructor(
 
             @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = of("provxchange")
-
-            @JvmField val RO_SENT = of("ro_sent")
-
             @JvmField val RTP = of("rtp")
 
             @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-            @JvmField val SEN = of("sen")
 
             @JvmField val SEPA = of("sepa")
 
             @JvmField val SG_GIRO = of("sg_giro")
 
             @JvmField val SIC = of("sic")
-
-            @JvmField val SIGNET = of("signet")
-
-            @JvmField val SKNBI = of("sknbi")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -1001,24 +1040,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1028,9 +1060,11 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+         *   an older version than the API, then the API may respond with new members that the SDK is unaware
+         *   of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1045,24 +1079,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -1071,11 +1098,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+         * class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want to throw
+         * for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -1090,24 +1117,17 @@ private constructor(
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 GB_FPS -> Value.GB_FPS
-                HU_ICS -> Value.HU_ICS
-                INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 MX_CCEN -> Value.MX_CCEN
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
                 NZ_BECS -> Value.NZ_BECS
                 PL_ELIXIR -> Value.PL_ELIXIR
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RO_SENT -> Value.RO_SENT
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
-                SEN -> Value.SEN
                 SEPA -> Value.SEPA
                 SG_GIRO -> Value.SG_GIRO
                 SIC -> Value.SIC
-                SIGNET -> Value.SIGNET
-                SKNBI -> Value.SKNBI
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -1117,11 +1137,10 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+         * for the unknown case.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -1136,24 +1155,17 @@ private constructor(
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 GB_FPS -> Known.GB_FPS
-                HU_ICS -> Known.HU_ICS
-                INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 MX_CCEN -> Known.MX_CCEN
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
                 NZ_BECS -> Known.NZ_BECS
                 PL_ELIXIR -> Known.PL_ELIXIR
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RO_SENT -> Known.RO_SENT
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
-                SEN -> Known.SEN
                 SEPA -> Known.SEPA
                 SG_GIRO -> Known.SG_GIRO
                 SIC -> Known.SIC
-                SIGNET -> Known.SIGNET
-                SKNBI -> Known.SKNBI
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
@@ -1163,36 +1175,33 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging and generally
+         * doesn't throw.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
+        fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Type = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Type =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            known()
-            validated = true
-        }
+                known()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -1203,19 +1212,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+        @JvmSynthetic
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Type && value == other.value
+          return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1224,57 +1233,14 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is PaymentOrderListParams &&
-            afterCursor == other.afterCursor &&
-            counterpartyId == other.counterpartyId &&
-            createdAtEnd == other.createdAtEnd &&
-            createdAtStart == other.createdAtStart &&
-            direction == other.direction &&
-            effectiveDateEnd == other.effectiveDateEnd &&
-            effectiveDateStart == other.effectiveDateStart &&
-            externalId == other.externalId &&
-            metadata == other.metadata &&
-            originatingAccountId == other.originatingAccountId &&
-            perPage == other.perPage &&
-            priority == other.priority &&
-            processAfterEnd == other.processAfterEnd &&
-            processAfterStart == other.processAfterStart &&
-            referenceNumber == other.referenceNumber &&
-            status == other.status &&
-            transactionId == other.transactionId &&
-            type == other.type &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is PaymentOrderListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtEnd == other.createdAtEnd && createdAtStart == other.createdAtStart && direction == other.direction && effectiveDateEnd == other.effectiveDateEnd && effectiveDateStart == other.effectiveDateStart && externalId == other.externalId && metadata == other.metadata && originatingAccountId == other.originatingAccountId && perPage == other.perPage && priority == other.priority && processAfterEnd == other.processAfterEnd && processAfterStart == other.processAfterStart && referenceNumber == other.referenceNumber && status == other.status && transactionId == other.transactionId && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(
-            afterCursor,
-            counterpartyId,
-            createdAtEnd,
-            createdAtStart,
-            direction,
-            effectiveDateEnd,
-            effectiveDateStart,
-            externalId,
-            metadata,
-            originatingAccountId,
-            perPage,
-            priority,
-            processAfterEnd,
-            processAfterStart,
-            referenceNumber,
-            status,
-            transactionId,
-            type,
-            additionalHeaders,
-            additionalQueryParams,
-        )
+    override fun hashCode(): Int = Objects.hash(afterCursor, counterpartyId, createdAtEnd, createdAtStart, direction, effectiveDateEnd, effectiveDateStart, externalId, metadata, originatingAccountId, perPage, priority, processAfterEnd, processAfterStart, referenceNumber, status, transactionId, type, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, externalId=$externalId, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, processAfterEnd=$processAfterEnd, processAfterStart=$processAfterStart, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "PaymentOrderListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtEnd=$createdAtEnd, createdAtStart=$createdAtStart, direction=$direction, effectiveDateEnd=$effectiveDateEnd, effectiveDateStart=$effectiveDateStart, externalId=$externalId, metadata=$metadata, originatingAccountId=$originatingAccountId, perPage=$perPage, priority=$priority, processAfterEnd=$processAfterEnd, processAfterStart=$processAfterStart, referenceNumber=$referenceNumber, status=$status, transactionId=$transactionId, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

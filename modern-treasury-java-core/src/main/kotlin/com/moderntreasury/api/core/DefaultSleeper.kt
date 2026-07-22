@@ -1,9 +1,9 @@
 package com.moderntreasury.api.core
 
 import java.time.Duration
+import java.util.concurrent.CompletableFuture
 import java.util.Timer
 import java.util.TimerTask
-import java.util.concurrent.CompletableFuture
 
 class DefaultSleeper : Sleeper {
 

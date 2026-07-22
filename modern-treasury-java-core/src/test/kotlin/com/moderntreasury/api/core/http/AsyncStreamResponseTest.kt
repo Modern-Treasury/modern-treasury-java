@@ -191,13 +191,11 @@ internal class AsyncStreamResponseTest {
     fun onCompleteFuture_whenHandlerOnCompleteWithoutThrowableThrows_onCompleteFutureCompleted() {
         val future = CompletableFuture<StreamResponse<String>>()
         val asyncStreamResponse = future.toAsync(executor)
-        asyncStreamResponse.subscribe(
-            object : AsyncStreamResponse.Handler<String> {
-                override fun onNext(value: String) {}
+        asyncStreamResponse.subscribe(object : AsyncStreamResponse.Handler<String> {
+            override fun onNext(value: String) {}
 
-                override fun onComplete(error: Optional<Throwable>) = throw ERROR
-            }
-        )
+            override fun onComplete(error: Optional<Throwable>) = throw ERROR
+        })
         future.complete(streamResponse)
 
         val onCompletableFuture = asyncStreamResponse.onCompleteFuture()
@@ -209,13 +207,11 @@ internal class AsyncStreamResponseTest {
     fun onCompleteFuture_whenHandlerOnCompleteWithThrowableThrows_onCompleteFutureCompletedExceptionally() {
         val future = CompletableFuture<StreamResponse<String>>()
         val asyncStreamResponse = future.toAsync(executor)
-        asyncStreamResponse.subscribe(
-            object : AsyncStreamResponse.Handler<String> {
-                override fun onNext(value: String) {}
+        asyncStreamResponse.subscribe(object : AsyncStreamResponse.Handler<String> {
+            override fun onNext(value: String) {}
 
-                override fun onComplete(error: Optional<Throwable>) = throw ERROR
-            }
-        )
+            override fun onComplete(error: Optional<Throwable>) = throw ERROR
+        })
         future.complete(erroringStreamResponse)
 
         val onCompletableFuture = asyncStreamResponse.onCompleteFuture()

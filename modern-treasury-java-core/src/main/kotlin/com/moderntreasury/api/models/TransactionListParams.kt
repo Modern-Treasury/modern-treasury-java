@@ -5,14 +5,14 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.models.TransactionListParams
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** Get a list of all transactions. */
-class TransactionListParams
-private constructor(
+class TransactionListParams private constructor(
     private val afterCursor: String?,
     private val asOfDateEnd: LocalDate?,
     private val asOfDateStart: LocalDate?,
@@ -29,20 +29,15 @@ private constructor(
     private val virtualAccountId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
-    /**
-     * Filters transactions with an `as_of_date` starting on or before the specified date
-     * (YYYY-MM-DD).
-     */
+    /** Filters transactions with an `as_of_date` starting on or before the specified date (YYYY-MM-DD). */
     fun asOfDateEnd(): Optional<LocalDate> = Optional.ofNullable(asOfDateEnd)
 
-    /**
-     * Filters transactions with an `as_of_date` starting on or after the specified date
-     * (YYYY-MM-DD).
-     */
+    /** Filters transactions with an `as_of_date` starting on or after the specified date (YYYY-MM-DD). */
     fun asOfDateStart(): Optional<LocalDate> = Optional.ofNullable(asOfDateStart)
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
@@ -55,10 +50,7 @@ private constructor(
     /** Specify `internal_account_id` if you wish to see transactions to/from a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun paymentType(): Optional<String> = Optional.ofNullable(paymentType)
@@ -70,10 +62,7 @@ private constructor(
 
     fun transactableType(): Optional<String> = Optional.ofNullable(transactableType)
 
-    /**
-     * Filters for transactions including the queried vendor id (an identifier given to transactions
-     * by the bank).
-     */
+    /** Filters for transactions including the queried vendor id (an identifier given to transactions by the bank). */
     fun vendorId(): Optional<String> = Optional.ofNullable(vendorId)
 
     fun virtualAccountId(): Optional<String> = Optional.ofNullable(virtualAccountId)
@@ -88,10 +77,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): TransactionListParams = builder().build()
+        @JvmStatic
+        fun none(): TransactionListParams = builder().build()
 
         /** Returns a mutable builder for constructing an instance of [TransactionListParams]. */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TransactionListParams]. */
@@ -115,92 +106,107 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(transactionListParams: TransactionListParams) = apply {
-            afterCursor = transactionListParams.afterCursor
-            asOfDateEnd = transactionListParams.asOfDateEnd
-            asOfDateStart = transactionListParams.asOfDateStart
-            counterpartyId = transactionListParams.counterpartyId
-            description = transactionListParams.description
-            direction = transactionListParams.direction
-            internalAccountId = transactionListParams.internalAccountId
-            metadata = transactionListParams.metadata
-            paymentType = transactionListParams.paymentType
-            perPage = transactionListParams.perPage
-            posted = transactionListParams.posted
-            transactableType = transactionListParams.transactableType
-            vendorId = transactionListParams.vendorId
-            virtualAccountId = transactionListParams.virtualAccountId
-            additionalHeaders = transactionListParams.additionalHeaders.toBuilder()
-            additionalQueryParams = transactionListParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(transactionListParams: TransactionListParams) =
+            apply {
+                afterCursor = transactionListParams.afterCursor
+                asOfDateEnd = transactionListParams.asOfDateEnd
+                asOfDateStart = transactionListParams.asOfDateStart
+                counterpartyId = transactionListParams.counterpartyId
+                description = transactionListParams.description
+                direction = transactionListParams.direction
+                internalAccountId = transactionListParams.internalAccountId
+                metadata = transactionListParams.metadata
+                paymentType = transactionListParams.paymentType
+                perPage = transactionListParams.perPage
+                posted = transactionListParams.posted
+                transactableType = transactionListParams.transactableType
+                vendorId = transactionListParams.vendorId
+                virtualAccountId = transactionListParams.virtualAccountId
+                additionalHeaders = transactionListParams.additionalHeaders.toBuilder()
+                additionalQueryParams = transactionListParams.additionalQueryParams.toBuilder()
+            }
 
-        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) =
+            apply {
+                this.afterCursor = afterCursor
+            }
 
         /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
-        /**
-         * Filters transactions with an `as_of_date` starting on or before the specified date
-         * (YYYY-MM-DD).
-         */
-        fun asOfDateEnd(asOfDateEnd: LocalDate?) = apply { this.asOfDateEnd = asOfDateEnd }
+        /** Filters transactions with an `as_of_date` starting on or before the specified date (YYYY-MM-DD). */
+        fun asOfDateEnd(asOfDateEnd: LocalDate?) =
+            apply {
+                this.asOfDateEnd = asOfDateEnd
+            }
 
         /** Alias for calling [Builder.asOfDateEnd] with `asOfDateEnd.orElse(null)`. */
         fun asOfDateEnd(asOfDateEnd: Optional<LocalDate>) = asOfDateEnd(asOfDateEnd.getOrNull())
 
-        /**
-         * Filters transactions with an `as_of_date` starting on or after the specified date
-         * (YYYY-MM-DD).
-         */
-        fun asOfDateStart(asOfDateStart: LocalDate?) = apply { this.asOfDateStart = asOfDateStart }
+        /** Filters transactions with an `as_of_date` starting on or after the specified date (YYYY-MM-DD). */
+        fun asOfDateStart(asOfDateStart: LocalDate?) =
+            apply {
+                this.asOfDateStart = asOfDateStart
+            }
 
         /** Alias for calling [Builder.asOfDateStart] with `asOfDateStart.orElse(null)`. */
-        fun asOfDateStart(asOfDateStart: Optional<LocalDate>) =
-            asOfDateStart(asOfDateStart.getOrNull())
+        fun asOfDateStart(asOfDateStart: Optional<LocalDate>) = asOfDateStart(asOfDateStart.getOrNull())
 
-        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String?) =
+            apply {
+                this.counterpartyId = counterpartyId
+            }
 
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
-        fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.getOrNull())
+        fun counterpartyId(counterpartyId: Optional<String>) = counterpartyId(counterpartyId.getOrNull())
 
         /** Filters for transactions including the queried string in the description. */
-        fun description(description: String?) = apply { this.description = description }
+        fun description(description: String?) =
+            apply {
+                this.description = description
+            }
 
         /** Alias for calling [Builder.description] with `description.orElse(null)`. */
         fun description(description: Optional<String>) = description(description.getOrNull())
 
-        fun direction(direction: String?) = apply { this.direction = direction }
+        fun direction(direction: String?) =
+            apply {
+                this.direction = direction
+            }
 
         /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<String>) = direction(direction.getOrNull())
 
-        /**
-         * Specify `internal_account_id` if you wish to see transactions to/from a specific account.
-         */
-        fun internalAccountId(internalAccountId: String?) = apply {
-            this.internalAccountId = internalAccountId
-        }
+        /** Specify `internal_account_id` if you wish to see transactions to/from a specific account. */
+        fun internalAccountId(internalAccountId: String?) =
+            apply {
+                this.internalAccountId = internalAccountId
+            }
 
         /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
-        fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.getOrNull())
+        fun internalAccountId(internalAccountId: Optional<String>) = internalAccountId(internalAccountId.getOrNull())
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
-        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+        /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+        fun metadata(metadata: Metadata?) =
+            apply {
+                this.metadata = metadata
+            }
 
         /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
-        fun paymentType(paymentType: String?) = apply { this.paymentType = paymentType }
+        fun paymentType(paymentType: String?) =
+            apply {
+                this.paymentType = paymentType
+            }
 
         /** Alias for calling [Builder.paymentType] with `paymentType.orElse(null)`. */
         fun paymentType(paymentType: Optional<String>) = paymentType(paymentType.getOrNull())
 
-        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+        fun perPage(perPage: Long?) =
+            apply {
+                this.perPage = perPage
+            }
 
         /**
          * Alias for [Builder.perPage].
@@ -213,7 +219,10 @@ private constructor(
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** Either `true` or `false`. */
-        fun posted(posted: Boolean?) = apply { this.posted = posted }
+        fun posted(posted: Boolean?) =
+            apply {
+                this.posted = posted
+            }
 
         /**
          * Alias for [Builder.posted].
@@ -225,128 +234,154 @@ private constructor(
         /** Alias for calling [Builder.posted] with `posted.orElse(null)`. */
         fun posted(posted: Optional<Boolean>) = posted(posted.getOrNull())
 
-        fun transactableType(transactableType: String?) = apply {
-            this.transactableType = transactableType
-        }
+        fun transactableType(transactableType: String?) =
+            apply {
+                this.transactableType = transactableType
+            }
 
         /** Alias for calling [Builder.transactableType] with `transactableType.orElse(null)`. */
-        fun transactableType(transactableType: Optional<String>) =
-            transactableType(transactableType.getOrNull())
+        fun transactableType(transactableType: Optional<String>) = transactableType(transactableType.getOrNull())
 
-        /**
-         * Filters for transactions including the queried vendor id (an identifier given to
-         * transactions by the bank).
-         */
-        fun vendorId(vendorId: String?) = apply { this.vendorId = vendorId }
+        /** Filters for transactions including the queried vendor id (an identifier given to transactions by the bank). */
+        fun vendorId(vendorId: String?) =
+            apply {
+                this.vendorId = vendorId
+            }
 
         /** Alias for calling [Builder.vendorId] with `vendorId.orElse(null)`. */
         fun vendorId(vendorId: Optional<String>) = vendorId(vendorId.getOrNull())
 
-        fun virtualAccountId(virtualAccountId: String?) = apply {
-            this.virtualAccountId = virtualAccountId
-        }
+        fun virtualAccountId(virtualAccountId: String?) =
+            apply {
+                this.virtualAccountId = virtualAccountId
+            }
 
         /** Alias for calling [Builder.virtualAccountId] with `virtualAccountId.orElse(null)`. */
-        fun virtualAccountId(virtualAccountId: Optional<String>) =
-            virtualAccountId(virtualAccountId.getOrNull())
+        fun virtualAccountId(virtualAccountId: Optional<String>) = virtualAccountId(virtualAccountId.getOrNull())
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [TransactionListParams].
@@ -355,22 +390,22 @@ private constructor(
          */
         fun build(): TransactionListParams =
             TransactionListParams(
-                afterCursor,
-                asOfDateEnd,
-                asOfDateStart,
-                counterpartyId,
-                description,
-                direction,
-                internalAccountId,
-                metadata,
-                paymentType,
-                perPage,
-                posted,
-                transactableType,
-                vendorId,
-                virtualAccountId,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              afterCursor,
+              asOfDateEnd,
+              asOfDateStart,
+              counterpartyId,
+              description,
+              direction,
+              internalAccountId,
+              metadata,
+              paymentType,
+              perPage,
+              posted,
+              transactableType,
+              vendorId,
+              virtualAccountId,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -386,13 +421,11 @@ private constructor(
                 description?.let { put("description", it) }
                 direction?.let { put("direction", it) }
                 internalAccountId?.let { put("internal_account_id", it) }
-                metadata?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("metadata[$key]", value)
-                        }
+                metadata?.let { it._additionalProperties().keys().forEach { key ->
+                    it._additionalProperties().values(key).forEach { value ->
+                        put("metadata[$key]", value)
                     }
-                }
+                } }
                 paymentType?.let { put("payment_type", it) }
                 perPage?.let { put("per_page", it.toString()) }
                 posted?.let { put("posted", it.toString()) }
@@ -403,11 +436,11 @@ private constructor(
             }
             .build()
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
-    class Metadata private constructor(private val additionalProperties: QueryParams) {
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+    class Metadata private constructor(
+        private val additionalProperties: QueryParams,
+
+    ) {
 
         /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
@@ -417,7 +450,8 @@ private constructor(
         companion object {
 
             /** Returns a mutable builder for constructing an instance of [Metadata]. */
-            @JvmStatic fun builder() = Builder()
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [Metadata]. */
@@ -426,58 +460,72 @@ private constructor(
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
             @JvmSynthetic
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties = metadata.additionalProperties.toBuilder()
-            }
+            internal fun from(metadata: Metadata) =
+                apply {
+                    additionalProperties = metadata.additionalProperties.toBuilder()
+                }
 
-            fun additionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: String) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: String) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.put(key, values)
-            }
+            fun putAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.put(key, values)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
                 apply {
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun replaceAdditionalProperties(key: String, value: String) = apply {
-                additionalProperties.replace(key, value)
-            }
+            fun replaceAdditionalProperties(key: String, value: String) =
+                apply {
+                    additionalProperties.replace(key, value)
+                }
 
-            fun replaceAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.replace(key, values)
-            }
+            fun replaceAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.replace(key, values)
+                }
 
-            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.replaceAll(additionalProperties)
-            }
+            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun replaceAllAdditionalProperties(
-                additionalProperties: Map<String, Iterable<String>>
-            ) = apply { this.additionalProperties.replaceAll(additionalProperties) }
+            fun replaceAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperties(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperties(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                additionalProperties.removeAll(keys)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    additionalProperties.removeAll(keys)
+                }
 
             /**
              * Returns an immutable instance of [Metadata].
@@ -488,11 +536,11 @@ private constructor(
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && additionalProperties == other.additionalProperties
+          return other is Metadata && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
@@ -503,49 +551,14 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TransactionListParams &&
-            afterCursor == other.afterCursor &&
-            asOfDateEnd == other.asOfDateEnd &&
-            asOfDateStart == other.asOfDateStart &&
-            counterpartyId == other.counterpartyId &&
-            description == other.description &&
-            direction == other.direction &&
-            internalAccountId == other.internalAccountId &&
-            metadata == other.metadata &&
-            paymentType == other.paymentType &&
-            perPage == other.perPage &&
-            posted == other.posted &&
-            transactableType == other.transactableType &&
-            vendorId == other.vendorId &&
-            virtualAccountId == other.virtualAccountId &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is TransactionListParams && afterCursor == other.afterCursor && asOfDateEnd == other.asOfDateEnd && asOfDateStart == other.asOfDateStart && counterpartyId == other.counterpartyId && description == other.description && direction == other.direction && internalAccountId == other.internalAccountId && metadata == other.metadata && paymentType == other.paymentType && perPage == other.perPage && posted == other.posted && transactableType == other.transactableType && vendorId == other.vendorId && virtualAccountId == other.virtualAccountId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(
-            afterCursor,
-            asOfDateEnd,
-            asOfDateStart,
-            counterpartyId,
-            description,
-            direction,
-            internalAccountId,
-            metadata,
-            paymentType,
-            perPage,
-            posted,
-            transactableType,
-            vendorId,
-            virtualAccountId,
-            additionalHeaders,
-            additionalQueryParams,
-        )
+    override fun hashCode(): Int = Objects.hash(afterCursor, asOfDateEnd, asOfDateStart, counterpartyId, description, direction, internalAccountId, metadata, paymentType, perPage, posted, transactableType, vendorId, virtualAccountId, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "TransactionListParams{afterCursor=$afterCursor, asOfDateEnd=$asOfDateEnd, asOfDateStart=$asOfDateStart, counterpartyId=$counterpartyId, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, paymentType=$paymentType, perPage=$perPage, posted=$posted, transactableType=$transactableType, vendorId=$vendorId, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "TransactionListParams{afterCursor=$afterCursor, asOfDateEnd=$asOfDateEnd, asOfDateStart=$asOfDateStart, counterpartyId=$counterpartyId, description=$description, direction=$direction, internalAccountId=$internalAccountId, metadata=$metadata, paymentType=$paymentType, perPage=$perPage, posted=$posted, transactableType=$transactableType, vendorId=$vendorId, virtualAccountId=$virtualAccountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

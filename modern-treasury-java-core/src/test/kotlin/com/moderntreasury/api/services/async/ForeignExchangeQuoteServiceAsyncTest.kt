@@ -6,6 +6,8 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.models.Currency
 import com.moderntreasury.api.models.ForeignExchangeQuoteCreateParams
+import com.moderntreasury.api.models.ForeignExchangeQuoteListParams
+import com.moderntreasury.api.models.ForeignExchangeQuoteRetrieveParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -15,59 +17,53 @@ internal class ForeignExchangeQuoteServiceAsyncTest {
 
     @Test
     fun create() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
 
-        val foreignExchangeQuoteFuture =
-            foreignExchangeQuoteServiceAsync.create(
-                ForeignExchangeQuoteCreateParams.builder()
-                    .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .targetCurrency(Currency.AED)
-                    .baseAmount(0L)
-                    .baseCurrency(Currency.AED)
-                    .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .targetAmount(0L)
-                    .build()
-            )
+      val foreignExchangeQuoteFuture = foreignExchangeQuoteServiceAsync.create(ForeignExchangeQuoteCreateParams.builder()
+          .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .targetCurrency(Currency.AED)
+          .baseAmount(0L)
+          .baseCurrency(Currency.AED)
+          .effectiveAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+          .targetAmount(0L)
+          .build())
 
-        val foreignExchangeQuote = foreignExchangeQuoteFuture.get()
-        foreignExchangeQuote.validate()
+      val foreignExchangeQuote = foreignExchangeQuoteFuture.get()
+      foreignExchangeQuote.validate()
     }
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
 
-        val foreignExchangeQuoteFuture = foreignExchangeQuoteServiceAsync.retrieve("id")
+      val foreignExchangeQuoteFuture = foreignExchangeQuoteServiceAsync.retrieve("id")
 
-        val foreignExchangeQuote = foreignExchangeQuoteFuture.get()
-        foreignExchangeQuote.validate()
+      val foreignExchangeQuote = foreignExchangeQuoteFuture.get()
+      foreignExchangeQuote.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val foreignExchangeQuoteServiceAsync = client.foreignExchangeQuotes()
 
-        val pageFuture = foreignExchangeQuoteServiceAsync.list()
+      val pageFuture = foreignExchangeQuoteServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 }

@@ -20,222 +20,172 @@ import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.models.AccountDetail
 import com.moderntreasury.api.models.AccountDetailCreateParams
 import com.moderntreasury.api.models.AccountDetailDeleteParams
+import com.moderntreasury.api.models.AccountDetailListPage
 import com.moderntreasury.api.models.AccountDetailListPageAsync
 import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
+import com.moderntreasury.api.services.async.AccountDetailServiceAsync
+import com.moderntreasury.api.services.async.AccountDetailServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class AccountDetailServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
-    AccountDetailServiceAsync {
+class AccountDetailServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: AccountDetailServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : AccountDetailServiceAsync {
+
+    private val withRawResponse: AccountDetailServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): AccountDetailServiceAsync.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync =
-        AccountDetailServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync = AccountDetailServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: AccountDetailCreateParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<AccountDetail> =
+    override fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions): CompletableFuture<AccountDetail> =
         // post /api/{accounts_type}/{account_id}/account_details
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    override fun retrieve(
-        params: AccountDetailRetrieveParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<AccountDetail> =
+    override fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions): CompletableFuture<AccountDetail> =
         // get /api/{accounts_type}/{account_id}/account_details/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    override fun list(
-        params: AccountDetailListParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<AccountDetailListPageAsync> =
+    override fun list(params: AccountDetailListParams, requestOptions: RequestOptions): CompletableFuture<AccountDetailListPageAsync> =
         // get /api/{accounts_type}/{account_id}/account_details
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    override fun delete(
-        params: AccountDetailDeleteParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Void?> =
+    override fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions): CompletableFuture<Void?> =
         // delete /api/{accounts_type}/{account_id}/account_details/{id}
         withRawResponse().delete(params, requestOptions).thenAccept {}
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        AccountDetailServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : AccountDetailServiceAsync.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): AccountDetailServiceAsync.WithRawResponse =
-            AccountDetailServiceAsyncImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync.WithRawResponse = AccountDetailServiceAsyncImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val createHandler: Handler<AccountDetail> = jsonHandler<AccountDetail>(clientOptions.jsonMapper)
+
+        override fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<AccountDetail>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("accountId", params.accountId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
             )
-
-        private val createHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
-
-        override fun create(
-            params: AccountDetailCreateParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("accountId", params.accountId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                    )
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { createHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val retrieveHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<AccountDetail> = jsonHandler<AccountDetail>(clientOptions.jsonMapper)
 
-        override fun retrieve(
-            params: AccountDetailRetrieveParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                        params._pathParam(2),
-                    )
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { retrieveHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<AccountDetail>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details", params._pathParam(2))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val listHandler: Handler<List<AccountDetail>> =
-            jsonHandler<List<AccountDetail>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<AccountDetail>> = jsonHandler<List<AccountDetail>>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: AccountDetailListParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("accountId", params.accountId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                    )
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { listHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.forEach { it.validate() }
-                                }
-                            }
-                            .let {
-                                AccountDetailListPageAsync.builder()
-                                    .service(AccountDetailServiceAsyncImpl(clientOptions))
-                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
-                                    .params(params)
-                                    .headers(response.headers())
-                                    .items(it)
-                                    .build()
-                            }
-                    }
-                }
+        override fun list(params: AccountDetailListParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("accountId", params.accountId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details")
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  AccountDetailListPageAsync.builder()
+                      .service(AccountDetailServiceAsyncImpl(clientOptions))
+                      .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          } }
         }
 
         private val deleteHandler: Handler<Void?> = emptyHandler()
 
-        override fun delete(
-            params: AccountDetailDeleteParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponse> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.DELETE)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                        params._pathParam(2),
-                    )
-                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response.use { deleteHandler.handle(it) }
-                    }
-                }
+        override fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions): CompletableFuture<HttpResponse> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.DELETE)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details", params._pathParam(2))
+            .apply { params._body().ifPresent{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  deleteHandler.handle(it)
+              }
+          } }
         }
     }
 }

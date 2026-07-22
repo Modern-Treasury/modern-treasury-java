@@ -8,13 +8,12 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.models.JournalEntryListParams
 import com.moderntreasury.api.models.JournalEntryRetrieveParams
+import com.moderntreasury.api.services.blocking.JournalEntryService
 import java.util.function.Consumer
 
 interface JournalEntryService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -25,43 +24,54 @@ interface JournalEntryService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): JournalEntryService
 
     /** Retrieve a specific journal entry */
-    fun retrieve(id: String) = retrieve(id, JournalEntryRetrieveParams.none())
+    fun retrieve(id: String) =
+        retrieve(
+          id, JournalEntryRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ) = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()) =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(),
-    ) = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none()) =
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: JournalEntryRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    )
+    fun retrieve(params: JournalEntryRetrieveParams, requestOptions: RequestOptions = RequestOptions.none())
 
     /** @see retrieve */
-    fun retrieve(params: JournalEntryRetrieveParams) = retrieve(params, RequestOptions.none())
+    fun retrieve(params: JournalEntryRetrieveParams) =
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions) =
-        retrieve(id, JournalEntryRetrieveParams.none(), requestOptions)
+        retrieve(
+          id,
+          JournalEntryRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Retrieve a list of journal entries */
-    fun list(params: JournalEntryListParams) = list(params, RequestOptions.none())
+    fun list(params: JournalEntryListParams) =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(params: JournalEntryListParams, requestOptions: RequestOptions = RequestOptions.none())
 
-    /**
-     * A view of [JournalEntryService] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [JournalEntryService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -69,61 +79,62 @@ interface JournalEntryService {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): JournalEntryService.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): JournalEntryService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /api/journal_entries/{id}`, but is otherwise the
-         * same as [JournalEntryService.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /api/journal_entries/{id}`, but is otherwise the             same as [JournalEntryService.retrieve]. */
         @MustBeClosed
-        fun retrieve(id: String): HttpResponse = retrieve(id, JournalEntryRetrieveParams.none())
+        fun retrieve(id: String): HttpResponse =
+            retrieve(
+              id, JournalEntryRetrieveParams.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponse =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none(),
-        ): HttpResponse = retrieve(id, params, RequestOptions.none())
+        fun retrieve(id: String, params: JournalEntryRetrieveParams = JournalEntryRetrieveParams.none()): HttpResponse =
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            params: JournalEntryRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun retrieve(params: JournalEntryRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: JournalEntryRetrieveParams): HttpResponse =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponse =
-            retrieve(id, JournalEntryRetrieveParams.none(), requestOptions)
+            retrieve(
+              id,
+              JournalEntryRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /api/journal_entries`, but is otherwise the same as
-         * [JournalEntryService.list].
-         */
+        /** Returns a raw HTTP response for `get /api/journal_entries`, but is otherwise the             same as [JournalEntryService.list]. */
         @MustBeClosed
-        fun list(params: JournalEntryListParams): HttpResponse = list(params, RequestOptions.none())
+        fun list(params: JournalEntryListParams): HttpResponse =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: JournalEntryListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun list(params: JournalEntryListParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
     }
 }

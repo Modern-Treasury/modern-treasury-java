@@ -2,6 +2,8 @@
 
 package com.moderntreasury.api.client
 
+import com.moderntreasury.api.client.ModernTreasuryClient
+import com.moderntreasury.api.client.ModernTreasuryClientAsync
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
@@ -49,32 +51,30 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 /**
- * A client for interacting with the Modern Treasury REST API asynchronously. You can also switch to
- * synchronous execution via the [sync] method.
+ * A client for interacting with the Modern Treasury REST API asynchronously.
+ * You can also switch to synchronous execution via the
+ * [sync] method.
  *
- * This client performs best when you create a single instance and reuse it for all interactions
- * with the REST API. This is because each client holds its own connection pool and thread pools.
- * Reusing connections and threads reduces latency and saves memory. The client also handles rate
- * limiting per client. This means that creating and using multiple instances at the same time will
- * not respect rate limits.
+ * This client performs best when you create a single instance and reuse it for all interactions with the
+ * REST API. This is because each client holds its own connection pool and thread pools. Reusing
+ * connections and threads reduces latency and saves memory. The client also handles rate limiting per
+ * client. This means that creating and using multiple instances at the same time will not respect rate
+ * limits.
  *
- * The threads and connections that are held will be released automatically if they remain idle. But
- * if you are writing an application that needs to aggressively release unused resources, then you
- * may call [close].
+ * The threads and connections that are held will be released automatically if they remain idle. But if you
+ * are writing an application that needs to aggressively release unused resources, then you may call
+ * [close].
  */
 interface ModernTreasuryClientAsync {
 
     /**
      * Returns a version of this client that uses synchronous execution.
      *
-     * The returned client shares its resources, like its connection pool and thread pools, with
-     * this client.
+     * The returned client shares its resources, like its connection pool and thread pools, with this client.
      */
     fun sync(): ModernTreasuryClient
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -160,42 +160,37 @@ interface ModernTreasuryClientAsync {
 
     fun holds(): HoldServiceAsync
 
-    /**
-     * A test endpoint often used to confirm credentials and headers are being passed in correctly.
-     */
+    /** A test endpoint often used to confirm credentials and headers are being passed in correctly. */
     fun ping(): CompletableFuture<PingResponse> = ping(ClientPingParams.none())
 
     /** @see ping */
-    fun ping(
-        params: ClientPingParams = ClientPingParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PingResponse>
+    fun ping(params: ClientPingParams = ClientPingParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<PingResponse>
 
     /** @see ping */
     fun ping(params: ClientPingParams = ClientPingParams.none()): CompletableFuture<PingResponse> =
-        ping(params, RequestOptions.none())
+        ping(
+          params, RequestOptions.none()
+        )
 
     /** @see ping */
     fun ping(requestOptions: RequestOptions): CompletableFuture<PingResponse> =
-        ping(ClientPingParams.none(), requestOptions)
+        ping(
+          ClientPingParams.none(), requestOptions
+        )
 
     /**
      * Closes this client, relinquishing any underlying resources.
      *
-     * This is purposefully not inherited from [AutoCloseable] because the client is long-lived and
-     * usually should not be synchronously closed via try-with-resources.
+     * This is purposefully not inherited from [AutoCloseable] because the client is long-lived and usually
+     * should not be synchronously closed via try-with-resources.
      *
-     * It's also usually not necessary to call this method at all. the default HTTP client
-     * automatically releases threads and connections if they remain idle, but if you are writing an
-     * application that needs to aggressively release unused resources, then you may call this
-     * method.
+     * It's also usually not necessary to call this method at all. the default HTTP client automatically
+     * releases threads and connections if they remain idle, but if you are writing an application that
+     * needs to aggressively release unused resources, then you may call this method.
      */
     fun close()
 
-    /**
-     * A view of [ModernTreasuryClientAsync] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [ModernTreasuryClientAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -203,9 +198,7 @@ interface ModernTreasuryClientAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): ModernTreasuryClientAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): ModernTreasuryClientAsync.WithRawResponse
 
         fun connections(): ConnectionServiceAsync.WithRawResponse
 
@@ -283,25 +276,22 @@ interface ModernTreasuryClientAsync {
 
         fun holds(): HoldServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
-         * [ModernTreasuryClientAsync.ping].
-         */
+        /** Returns a raw HTTP response for `get /api/ping`, but is otherwise the             same as [ModernTreasuryClientAsync.ping]. */
         fun ping(): CompletableFuture<HttpResponseFor<PingResponse>> = ping(ClientPingParams.none())
 
         /** @see ping */
-        fun ping(
-            params: ClientPingParams = ClientPingParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PingResponse>>
+        fun ping(params: ClientPingParams = ClientPingParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<PingResponse>>
 
         /** @see ping */
-        fun ping(
-            params: ClientPingParams = ClientPingParams.none()
-        ): CompletableFuture<HttpResponseFor<PingResponse>> = ping(params, RequestOptions.none())
+        fun ping(params: ClientPingParams = ClientPingParams.none()): CompletableFuture<HttpResponseFor<PingResponse>> =
+            ping(
+              params, RequestOptions.none()
+            )
 
         /** @see ping */
         fun ping(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<PingResponse>> =
-            ping(ClientPingParams.none(), requestOptions)
+            ping(
+              ClientPingParams.none(), requestOptions
+            )
     }
 }

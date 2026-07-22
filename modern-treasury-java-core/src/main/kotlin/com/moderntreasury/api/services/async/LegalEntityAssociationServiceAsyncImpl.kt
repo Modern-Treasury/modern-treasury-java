@@ -3,34 +3,26 @@
 package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.core.ClientOptions
+import com.moderntreasury.api.services.async.LegalEntityAssociationServiceAsync
+import com.moderntreasury.api.services.async.LegalEntityAssociationServiceAsyncImpl
 import java.util.function.Consumer
 
-class LegalEntityAssociationServiceAsyncImpl
-internal constructor(private val clientOptions: ClientOptions) :
-    LegalEntityAssociationServiceAsync {
+class LegalEntityAssociationServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: LegalEntityAssociationServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : LegalEntityAssociationServiceAsync {
 
-    override fun withRawResponse(): LegalEntityAssociationServiceAsync.WithRawResponse =
-        withRawResponse
+    private val withRawResponse: LegalEntityAssociationServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
-    override fun withOptions(
-        modifier: Consumer<ClientOptions.Builder>
-    ): LegalEntityAssociationServiceAsync =
-        LegalEntityAssociationServiceAsyncImpl(
-            clientOptions.toBuilder().apply(modifier::accept).build()
-        )
+    override fun withRawResponse(): LegalEntityAssociationServiceAsync.WithRawResponse = withRawResponse
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        LegalEntityAssociationServiceAsync.WithRawResponse {
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityAssociationServiceAsync = LegalEntityAssociationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): LegalEntityAssociationServiceAsync.WithRawResponse =
-            LegalEntityAssociationServiceAsyncImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
-            )
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
+
+    ) : LegalEntityAssociationServiceAsync.WithRawResponse {
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityAssociationServiceAsync.WithRawResponse = LegalEntityAssociationServiceAsyncImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
     }
 }

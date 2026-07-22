@@ -1,8 +1,8 @@
 package com.moderntreasury.api.core.http
 
-import com.moderntreasury.api.core.RequestOptions
 import java.lang.AutoCloseable
 import java.util.concurrent.CompletableFuture
+import com.moderntreasury.api.core.RequestOptions
 
 interface HttpClient : AutoCloseable {
 
@@ -11,7 +11,8 @@ interface HttpClient : AutoCloseable {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): HttpResponse
 
-    fun execute(request: HttpRequest): HttpResponse = execute(request, RequestOptions.none())
+    fun execute(request: HttpRequest): HttpResponse =
+        execute(request, RequestOptions.none())
 
     fun executeAsync(
         request: HttpRequest,

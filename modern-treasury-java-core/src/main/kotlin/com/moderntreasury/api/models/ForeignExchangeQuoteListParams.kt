@@ -5,6 +5,7 @@ package com.moderntreasury.api.models
 import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
+import com.moderntreasury.api.models.ForeignExchangeQuoteListParams
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -13,8 +14,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** list foreign_exchange_quotes */
-class ForeignExchangeQuoteListParams
-private constructor(
+class ForeignExchangeQuoteListParams private constructor(
     private val afterCursor: String?,
     private val baseCurrency: String?,
     private val effectiveAtEnd: LocalDate?,
@@ -26,6 +26,7 @@ private constructor(
     private val targetCurrency: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
@@ -45,10 +46,7 @@ private constructor(
     /** The ID for the `InternalAccount` this quote is associated with. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
@@ -66,13 +64,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): ForeignExchangeQuoteListParams = builder().build()
+        @JvmStatic
+        fun none(): ForeignExchangeQuoteListParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of
-         * [ForeignExchangeQuoteListParams].
-         */
-        @JvmStatic fun builder() = Builder()
+        /** Returns a mutable builder for constructing an instance of [ForeignExchangeQuoteListParams]. */
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [ForeignExchangeQuoteListParams]. */
@@ -91,74 +88,87 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(foreignExchangeQuoteListParams: ForeignExchangeQuoteListParams) = apply {
-            afterCursor = foreignExchangeQuoteListParams.afterCursor
-            baseCurrency = foreignExchangeQuoteListParams.baseCurrency
-            effectiveAtEnd = foreignExchangeQuoteListParams.effectiveAtEnd
-            effectiveAtStart = foreignExchangeQuoteListParams.effectiveAtStart
-            expiresAt = foreignExchangeQuoteListParams.expiresAt
-            internalAccountId = foreignExchangeQuoteListParams.internalAccountId
-            metadata = foreignExchangeQuoteListParams.metadata
-            perPage = foreignExchangeQuoteListParams.perPage
-            targetCurrency = foreignExchangeQuoteListParams.targetCurrency
-            additionalHeaders = foreignExchangeQuoteListParams.additionalHeaders.toBuilder()
-            additionalQueryParams = foreignExchangeQuoteListParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(foreignExchangeQuoteListParams: ForeignExchangeQuoteListParams) =
+            apply {
+                afterCursor = foreignExchangeQuoteListParams.afterCursor
+                baseCurrency = foreignExchangeQuoteListParams.baseCurrency
+                effectiveAtEnd = foreignExchangeQuoteListParams.effectiveAtEnd
+                effectiveAtStart = foreignExchangeQuoteListParams.effectiveAtStart
+                expiresAt = foreignExchangeQuoteListParams.expiresAt
+                internalAccountId = foreignExchangeQuoteListParams.internalAccountId
+                metadata = foreignExchangeQuoteListParams.metadata
+                perPage = foreignExchangeQuoteListParams.perPage
+                targetCurrency = foreignExchangeQuoteListParams.targetCurrency
+                additionalHeaders = foreignExchangeQuoteListParams.additionalHeaders.toBuilder()
+                additionalQueryParams = foreignExchangeQuoteListParams.additionalQueryParams.toBuilder()
+            }
 
-        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) =
+            apply {
+                this.afterCursor = afterCursor
+            }
 
         /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Currency to convert, often called the "sell" currency. */
-        fun baseCurrency(baseCurrency: String?) = apply { this.baseCurrency = baseCurrency }
+        fun baseCurrency(baseCurrency: String?) =
+            apply {
+                this.baseCurrency = baseCurrency
+            }
 
         /** Alias for calling [Builder.baseCurrency] with `baseCurrency.orElse(null)`. */
         fun baseCurrency(baseCurrency: Optional<String>) = baseCurrency(baseCurrency.getOrNull())
 
         /** An inclusive upper bound for searching effective_at */
-        fun effectiveAtEnd(effectiveAtEnd: LocalDate?) = apply {
-            this.effectiveAtEnd = effectiveAtEnd
-        }
+        fun effectiveAtEnd(effectiveAtEnd: LocalDate?) =
+            apply {
+                this.effectiveAtEnd = effectiveAtEnd
+            }
 
         /** Alias for calling [Builder.effectiveAtEnd] with `effectiveAtEnd.orElse(null)`. */
-        fun effectiveAtEnd(effectiveAtEnd: Optional<LocalDate>) =
-            effectiveAtEnd(effectiveAtEnd.getOrNull())
+        fun effectiveAtEnd(effectiveAtEnd: Optional<LocalDate>) = effectiveAtEnd(effectiveAtEnd.getOrNull())
 
         /** An inclusive lower bound for searching effective_at */
-        fun effectiveAtStart(effectiveAtStart: LocalDate?) = apply {
-            this.effectiveAtStart = effectiveAtStart
-        }
+        fun effectiveAtStart(effectiveAtStart: LocalDate?) =
+            apply {
+                this.effectiveAtStart = effectiveAtStart
+            }
 
         /** Alias for calling [Builder.effectiveAtStart] with `effectiveAtStart.orElse(null)`. */
-        fun effectiveAtStart(effectiveAtStart: Optional<LocalDate>) =
-            effectiveAtStart(effectiveAtStart.getOrNull())
+        fun effectiveAtStart(effectiveAtStart: Optional<LocalDate>) = effectiveAtStart(effectiveAtStart.getOrNull())
 
         /** The timestamp until which the quote must be booked by. */
-        fun expiresAt(expiresAt: OffsetDateTime?) = apply { this.expiresAt = expiresAt }
+        fun expiresAt(expiresAt: OffsetDateTime?) =
+            apply {
+                this.expiresAt = expiresAt
+            }
 
         /** Alias for calling [Builder.expiresAt] with `expiresAt.orElse(null)`. */
         fun expiresAt(expiresAt: Optional<OffsetDateTime>) = expiresAt(expiresAt.getOrNull())
 
         /** The ID for the `InternalAccount` this quote is associated with. */
-        fun internalAccountId(internalAccountId: String?) = apply {
-            this.internalAccountId = internalAccountId
-        }
+        fun internalAccountId(internalAccountId: String?) =
+            apply {
+                this.internalAccountId = internalAccountId
+            }
 
         /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
-        fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.getOrNull())
+        fun internalAccountId(internalAccountId: Optional<String>) = internalAccountId(internalAccountId.getOrNull())
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
-        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+        /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+        fun metadata(metadata: Metadata?) =
+            apply {
+                this.metadata = metadata
+            }
 
         /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
-        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+        fun perPage(perPage: Long?) =
+            apply {
+                this.perPage = perPage
+            }
 
         /**
          * Alias for [Builder.perPage].
@@ -171,109 +181,137 @@ private constructor(
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** Currency to convert the `base_currency` to, often called the "buy" currency. */
-        fun targetCurrency(targetCurrency: String?) = apply { this.targetCurrency = targetCurrency }
+        fun targetCurrency(targetCurrency: String?) =
+            apply {
+                this.targetCurrency = targetCurrency
+            }
 
         /** Alias for calling [Builder.targetCurrency] with `targetCurrency.orElse(null)`. */
-        fun targetCurrency(targetCurrency: Optional<String>) =
-            targetCurrency(targetCurrency.getOrNull())
+        fun targetCurrency(targetCurrency: Optional<String>) = targetCurrency(targetCurrency.getOrNull())
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [ForeignExchangeQuoteListParams].
@@ -282,17 +320,17 @@ private constructor(
          */
         fun build(): ForeignExchangeQuoteListParams =
             ForeignExchangeQuoteListParams(
-                afterCursor,
-                baseCurrency,
-                effectiveAtEnd,
-                effectiveAtStart,
-                expiresAt,
-                internalAccountId,
-                metadata,
-                perPage,
-                targetCurrency,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              afterCursor,
+              baseCurrency,
+              effectiveAtEnd,
+              effectiveAtStart,
+              expiresAt,
+              internalAccountId,
+              metadata,
+              perPage,
+              targetCurrency,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -305,28 +343,24 @@ private constructor(
                 baseCurrency?.let { put("base_currency", it) }
                 effectiveAtEnd?.let { put("effective_at_end", it.toString()) }
                 effectiveAtStart?.let { put("effective_at_start", it.toString()) }
-                expiresAt?.let {
-                    put("expires_at", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
+                expiresAt?.let { put("expires_at", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
                 internalAccountId?.let { put("internal_account_id", it) }
-                metadata?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("metadata[$key]", value)
-                        }
+                metadata?.let { it._additionalProperties().keys().forEach { key ->
+                    it._additionalProperties().values(key).forEach { value ->
+                        put("metadata[$key]", value)
                     }
-                }
+                } }
                 perPage?.let { put("per_page", it.toString()) }
                 targetCurrency?.let { put("target_currency", it) }
                 putAll(additionalQueryParams)
             }
             .build()
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
-    class Metadata private constructor(private val additionalProperties: QueryParams) {
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+    class Metadata private constructor(
+        private val additionalProperties: QueryParams,
+
+    ) {
 
         /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
@@ -336,7 +370,8 @@ private constructor(
         companion object {
 
             /** Returns a mutable builder for constructing an instance of [Metadata]. */
-            @JvmStatic fun builder() = Builder()
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [Metadata]. */
@@ -345,58 +380,72 @@ private constructor(
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
             @JvmSynthetic
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties = metadata.additionalProperties.toBuilder()
-            }
+            internal fun from(metadata: Metadata) =
+                apply {
+                    additionalProperties = metadata.additionalProperties.toBuilder()
+                }
 
-            fun additionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: String) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: String) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.put(key, values)
-            }
+            fun putAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.put(key, values)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
                 apply {
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun replaceAdditionalProperties(key: String, value: String) = apply {
-                additionalProperties.replace(key, value)
-            }
+            fun replaceAdditionalProperties(key: String, value: String) =
+                apply {
+                    additionalProperties.replace(key, value)
+                }
 
-            fun replaceAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.replace(key, values)
-            }
+            fun replaceAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.replace(key, values)
+                }
 
-            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.replaceAll(additionalProperties)
-            }
+            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun replaceAllAdditionalProperties(
-                additionalProperties: Map<String, Iterable<String>>
-            ) = apply { this.additionalProperties.replaceAll(additionalProperties) }
+            fun replaceAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperties(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperties(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                additionalProperties.removeAll(keys)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    additionalProperties.removeAll(keys)
+                }
 
             /**
              * Returns an immutable instance of [Metadata].
@@ -407,11 +456,11 @@ private constructor(
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && additionalProperties == other.additionalProperties
+          return other is Metadata && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
@@ -422,39 +471,14 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ForeignExchangeQuoteListParams &&
-            afterCursor == other.afterCursor &&
-            baseCurrency == other.baseCurrency &&
-            effectiveAtEnd == other.effectiveAtEnd &&
-            effectiveAtStart == other.effectiveAtStart &&
-            expiresAt == other.expiresAt &&
-            internalAccountId == other.internalAccountId &&
-            metadata == other.metadata &&
-            perPage == other.perPage &&
-            targetCurrency == other.targetCurrency &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is ForeignExchangeQuoteListParams && afterCursor == other.afterCursor && baseCurrency == other.baseCurrency && effectiveAtEnd == other.effectiveAtEnd && effectiveAtStart == other.effectiveAtStart && expiresAt == other.expiresAt && internalAccountId == other.internalAccountId && metadata == other.metadata && perPage == other.perPage && targetCurrency == other.targetCurrency && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(
-            afterCursor,
-            baseCurrency,
-            effectiveAtEnd,
-            effectiveAtStart,
-            expiresAt,
-            internalAccountId,
-            metadata,
-            perPage,
-            targetCurrency,
-            additionalHeaders,
-            additionalQueryParams,
-        )
+    override fun hashCode(): Int = Objects.hash(afterCursor, baseCurrency, effectiveAtEnd, effectiveAtStart, expiresAt, internalAccountId, metadata, perPage, targetCurrency, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "ForeignExchangeQuoteListParams{afterCursor=$afterCursor, baseCurrency=$baseCurrency, effectiveAtEnd=$effectiveAtEnd, effectiveAtStart=$effectiveAtStart, expiresAt=$expiresAt, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, targetCurrency=$targetCurrency, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "ForeignExchangeQuoteListParams{afterCursor=$afterCursor, baseCurrency=$baseCurrency, effectiveAtEnd=$effectiveAtEnd, effectiveAtStart=$effectiveAtStart, expiresAt=$expiresAt, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, targetCurrency=$targetCurrency, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

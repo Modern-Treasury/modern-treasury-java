@@ -2,12 +2,13 @@ package com.moderntreasury.api.client.okhttp
 
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.Timeout
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.HttpClient
-import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpRequestBody
 import com.moderntreasury.api.core.http.HttpResponse
+import com.moderntreasury.api.core.http.HttpMethod
 import com.moderntreasury.api.core.http.ProxyAuthenticator
 import com.moderntreasury.api.errors.ModernTreasuryIoException
 import java.io.IOException
@@ -28,21 +29,27 @@ import okhttp3.Callback
 import okhttp3.ConnectionPool
 import okhttp3.Dispatcher
 import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.Response
 import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.MediaType
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import okio.BufferedSink
 import okio.buffer
 import okio.sink
 
 class OkHttpClient
-internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClient) : HttpClient {
+internal constructor(
+    @JvmSynthetic
+    internal val okHttpClient: okhttp3.OkHttpClient
+) : HttpClient {
 
-    override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
+    override fun execute(
+        request: HttpRequest,
+        requestOptions: RequestOptions,
+    ): HttpResponse {
         val call = newCall(request, requestOptions)
 
         return try {
@@ -181,8 +188,7 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
                     .apply {
                         proxyAuthenticator?.let { auth ->
                             proxyAuthenticator { route, response ->
-                                auth
-                                    .authenticate(
+                                auth.authenticate(
                                         route?.proxy ?: Proxy.NO_PROXY,
                                         response.request.toHttpRequest(),
                                         response.toHttpResponse(),
@@ -197,13 +203,7 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
                         val maxIdleConnections = maxIdleConnections
                         val keepAliveDuration = keepAliveDuration
                         if (maxIdleConnections != null && keepAliveDuration != null) {
-                            connectionPool(
-                                ConnectionPool(
-                                    maxIdleConnections,
-                                    keepAliveDuration.toNanos(),
-                                    TimeUnit.NANOSECONDS,
-                                )
-                            )
+                            connectionPool(ConnectionPool(maxIdleConnections, keepAliveDuration.toNanos(), TimeUnit.NANOSECONDS))
                         } else {
                             check((maxIdleConnections != null) == (keepAliveDuration != null)) {
                                 "Both or none of `maxIdleConnections` and `keepAliveDuration` must be set, but only one was set"
@@ -227,7 +227,7 @@ internal constructor(@JvmSynthetic internal val okHttpClient: okhttp3.OkHttpClie
                         // We usually make all our requests to the same host so it makes sense to
                         // raise the per-host limit to the overall limit.
                         dispatcher.maxRequestsPerHost = dispatcher.maxRequests
-                    }
+                    },
             )
     }
 }
@@ -239,21 +239,27 @@ private fun HttpRequest.toRequest(client: okhttp3.OkHttpClient?): Request {
     }
 
     val builder = Request.Builder().url(toUrl()).method(method.name, body)
-    headers.names().forEach { name -> headers.values(name).forEach { builder.addHeader(name, it) } }
+    headers.names().forEach { name ->
+        headers.values(name).forEach { builder.addHeader(name, it) }
+    }
 
     if (client != null) {
         if (
-            !headers.names().contains("X-Stainless-Read-Timeout") && client.readTimeoutMillis != 0
+            !headers.names().contains("X-Stainless-Read-Timeout") &&
+            client.readTimeoutMillis != 0
         ) {
             builder.addHeader(
                 "X-Stainless-Read-Timeout",
-                Duration.ofMillis(client.readTimeoutMillis.toLong()).seconds.toString(),
+                Duration.ofMillis(client.readTimeoutMillis.toLong()).seconds.toString()
             )
         }
-        if (!headers.names().contains("X-Stainless-Timeout") && client.callTimeoutMillis != 0) {
+        if (
+            !headers.names().contains("X-Stainless-Timeout") &&
+            client.callTimeoutMillis != 0
+        ) {
             builder.addHeader(
                 "X-Stainless-Timeout",
-                Duration.ofMillis(client.callTimeoutMillis.toLong()).seconds.toString(),
+                Duration.ofMillis(client.callTimeoutMillis.toLong()).seconds.toString()
             )
         }
     }

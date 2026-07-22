@@ -6,6 +6,9 @@ import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.models.TransactionCreateParams
+import com.moderntreasury.api.models.TransactionDeleteParams
+import com.moderntreasury.api.models.TransactionListParams
+import com.moderntreasury.api.models.TransactionRetrieveParams
 import com.moderntreasury.api.models.TransactionUpdateParams
 import java.time.LocalDate
 import org.junit.jupiter.api.Test
@@ -16,111 +19,97 @@ internal class TransactionServiceAsyncTest {
 
     @Test
     fun create() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val transactionServiceAsync = client.transactions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val transactionServiceAsync = client.transactions()
 
-        val transactionFuture =
-            transactionServiceAsync.create(
-                TransactionCreateParams.builder()
-                    .amount(0L)
-                    .asOfDate(LocalDate.parse("2019-12-27"))
-                    .direction("direction")
-                    .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .vendorCode("vendor_code")
-                    .vendorCodeType("vendor_code_type")
-                    .metadata(
-                        TransactionCreateParams.Metadata.builder()
-                            .putAdditionalProperty("key", JsonValue.from("value"))
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
-                            .build()
-                    )
-                    .posted(true)
-                    .type(TransactionCreateParams.Type.ACH)
-                    .vendorCustomerId("vendor_customer_id")
-                    .vendorDescription("vendor_description")
-                    .build()
-            )
+      val transactionFuture = transactionServiceAsync.create(TransactionCreateParams.builder()
+          .asOfDate(LocalDate.parse("2019-12-27"))
+          .direction("direction")
+          .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .vendorCode("vendor_code")
+          .vendorCodeType("vendor_code_type")
+          .amount(0L)
+          .amountString("amount_string")
+          .metadata(TransactionCreateParams.Metadata.builder()
+              .putAdditionalProperty("key", JsonValue.from("value"))
+              .putAdditionalProperty("foo", JsonValue.from("bar"))
+              .putAdditionalProperty("modern", JsonValue.from("treasury"))
+              .build())
+          .posted(true)
+          .type(TransactionCreateParams.Type.ACH)
+          .vendorCustomerId("vendor_customer_id")
+          .vendorDescription("vendor_description")
+          .build())
 
-        val transaction = transactionFuture.get()
-        transaction.validate()
+      val transaction = transactionFuture.get()
+      transaction.validate()
     }
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val transactionServiceAsync = client.transactions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val transactionServiceAsync = client.transactions()
 
-        val transactionFuture = transactionServiceAsync.retrieve("id")
+      val transactionFuture = transactionServiceAsync.retrieve("id")
 
-        val transaction = transactionFuture.get()
-        transaction.validate()
+      val transaction = transactionFuture.get()
+      transaction.validate()
     }
 
     @Test
     fun update() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val transactionServiceAsync = client.transactions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val transactionServiceAsync = client.transactions()
 
-        val transactionFuture =
-            transactionServiceAsync.update(
-                TransactionUpdateParams.builder()
-                    .id("id")
-                    .metadata(
-                        TransactionUpdateParams.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .build()
-            )
+      val transactionFuture = transactionServiceAsync.update(TransactionUpdateParams.builder()
+          .id("id")
+          .metadata(TransactionUpdateParams.Metadata.builder()
+              .putAdditionalProperty("foo", JsonValue.from("string"))
+              .build())
+          .build())
 
-        val transaction = transactionFuture.get()
-        transaction.validate()
+      val transaction = transactionFuture.get()
+      transaction.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val transactionServiceAsync = client.transactions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val transactionServiceAsync = client.transactions()
 
-        val pageFuture = transactionServiceAsync.list()
+      val pageFuture = transactionServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 
     @Test
     fun delete() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val transactionServiceAsync = client.transactions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val transactionServiceAsync = client.transactions()
 
-        val future = transactionServiceAsync.delete("id")
+      val future = transactionServiceAsync.delete("id")
 
-        val response = future.get()
+      val response = future.get()
     }
 }

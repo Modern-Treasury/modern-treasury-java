@@ -9,12 +9,14 @@ import com.moderntreasury.api.core.jsonMapper
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class BadRequestException
-private constructor(private val headers: Headers, private val body: JsonValue, cause: Throwable?) :
-    ModernTreasuryServiceException(
-        "400: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
-        cause,
-    ) {
+class BadRequestException private constructor(
+    private val headers: Headers,
+    private val body: JsonValue,
+    cause: Throwable?,
+
+) : ModernTreasuryServiceException(
+  "400: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}", cause
+) {
 
     override fun statusCode(): Int = 400
 
@@ -30,12 +32,14 @@ private constructor(private val headers: Headers, private val body: JsonValue, c
          * Returns a mutable builder for constructing an instance of [BadRequestException].
          *
          * The following fields are required:
+         *
          * ```java
          * .headers()
          * .body()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [BadRequestException]. */
@@ -46,17 +50,27 @@ private constructor(private val headers: Headers, private val body: JsonValue, c
         private var cause: Throwable? = null
 
         @JvmSynthetic
-        internal fun from(badRequestException: BadRequestException) = apply {
-            headers = badRequestException.headers
-            body = badRequestException.body
-            cause = badRequestException.cause
-        }
+        internal fun from(badRequestException: BadRequestException) =
+            apply {
+                headers = badRequestException.headers
+                body = badRequestException.body
+                cause = badRequestException.cause
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
-        fun body(body: JsonValue) = apply { this.body = body }
+        fun body(body: JsonValue) =
+            apply {
+                this.body = body
+            }
 
-        fun cause(cause: Throwable?) = apply { this.cause = cause }
+        fun cause(cause: Throwable?) =
+            apply {
+                this.cause = cause
+            }
 
         /** Alias for calling [Builder.cause] with `cause.orElse(null)`. */
         fun cause(cause: Optional<Throwable>) = cause(cause.getOrNull())
@@ -67,6 +81,7 @@ private constructor(private val headers: Headers, private val body: JsonValue, c
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .headers()
          * .body()
@@ -76,9 +91,13 @@ private constructor(private val headers: Headers, private val body: JsonValue, c
          */
         fun build(): BadRequestException =
             BadRequestException(
-                checkRequired("headers", headers),
-                checkRequired("body", body),
-                cause,
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "body", body
+              ),
+              cause,
             )
     }
 }

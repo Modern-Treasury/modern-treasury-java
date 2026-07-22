@@ -9,6 +9,8 @@ import com.moderntreasury.api.core.Params
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
+import com.moderntreasury.api.models.ExpectedPaymentListParams
+import com.moderntreasury.api.models.TransactionDirection
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
@@ -16,8 +18,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** list expected_payments */
-class ExpectedPaymentListParams
-private constructor(
+class ExpectedPaymentListParams private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
     private val createdAtLowerBound: OffsetDateTime?,
@@ -33,6 +34,7 @@ private constructor(
     private val updatedAtUpperBound: OffsetDateTime?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
@@ -54,10 +56,7 @@ private constructor(
     /** Specify internal_account_id to see expected_payments for a specific account. */
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
     fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata)
 
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
@@ -65,10 +64,7 @@ private constructor(
     /** One of unreconciled, reconciled, or archived. */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
-    /**
-     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa, signet,
-     * wire
-     */
+    /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire */
     fun type(): Optional<Type> = Optional.ofNullable(type)
 
     /** Used to return expected payments updated after some datetime */
@@ -87,12 +83,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): ExpectedPaymentListParams = builder().build()
+        @JvmStatic
+        fun none(): ExpectedPaymentListParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of [ExpectedPaymentListParams].
-         */
-        @JvmStatic fun builder() = Builder()
+        /** Returns a mutable builder for constructing an instance of [ExpectedPaymentListParams]. */
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [ExpectedPaymentListParams]. */
@@ -115,88 +111,99 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(expectedPaymentListParams: ExpectedPaymentListParams) = apply {
-            afterCursor = expectedPaymentListParams.afterCursor
-            counterpartyId = expectedPaymentListParams.counterpartyId
-            createdAtLowerBound = expectedPaymentListParams.createdAtLowerBound
-            createdAtUpperBound = expectedPaymentListParams.createdAtUpperBound
-            direction = expectedPaymentListParams.direction
-            externalId = expectedPaymentListParams.externalId
-            internalAccountId = expectedPaymentListParams.internalAccountId
-            metadata = expectedPaymentListParams.metadata
-            perPage = expectedPaymentListParams.perPage
-            status = expectedPaymentListParams.status
-            type = expectedPaymentListParams.type
-            updatedAtLowerBound = expectedPaymentListParams.updatedAtLowerBound
-            updatedAtUpperBound = expectedPaymentListParams.updatedAtUpperBound
-            additionalHeaders = expectedPaymentListParams.additionalHeaders.toBuilder()
-            additionalQueryParams = expectedPaymentListParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(expectedPaymentListParams: ExpectedPaymentListParams) =
+            apply {
+                afterCursor = expectedPaymentListParams.afterCursor
+                counterpartyId = expectedPaymentListParams.counterpartyId
+                createdAtLowerBound = expectedPaymentListParams.createdAtLowerBound
+                createdAtUpperBound = expectedPaymentListParams.createdAtUpperBound
+                direction = expectedPaymentListParams.direction
+                externalId = expectedPaymentListParams.externalId
+                internalAccountId = expectedPaymentListParams.internalAccountId
+                metadata = expectedPaymentListParams.metadata
+                perPage = expectedPaymentListParams.perPage
+                status = expectedPaymentListParams.status
+                type = expectedPaymentListParams.type
+                updatedAtLowerBound = expectedPaymentListParams.updatedAtLowerBound
+                updatedAtUpperBound = expectedPaymentListParams.updatedAtUpperBound
+                additionalHeaders = expectedPaymentListParams.additionalHeaders.toBuilder()
+                additionalQueryParams = expectedPaymentListParams.additionalQueryParams.toBuilder()
+            }
 
-        fun afterCursor(afterCursor: String?) = apply { this.afterCursor = afterCursor }
+        fun afterCursor(afterCursor: String?) =
+            apply {
+                this.afterCursor = afterCursor
+            }
 
         /** Alias for calling [Builder.afterCursor] with `afterCursor.orElse(null)`. */
         fun afterCursor(afterCursor: Optional<String>) = afterCursor(afterCursor.getOrNull())
 
         /** Specify counterparty_id to see expected_payments for a specific account. */
-        fun counterpartyId(counterpartyId: String?) = apply { this.counterpartyId = counterpartyId }
+        fun counterpartyId(counterpartyId: String?) =
+            apply {
+                this.counterpartyId = counterpartyId
+            }
 
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
-        fun counterpartyId(counterpartyId: Optional<String>) =
-            counterpartyId(counterpartyId.getOrNull())
+        fun counterpartyId(counterpartyId: Optional<String>) = counterpartyId(counterpartyId.getOrNull())
 
         /** Used to return expected payments created after some datetime */
-        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) = apply {
-            this.createdAtLowerBound = createdAtLowerBound
-        }
+        fun createdAtLowerBound(createdAtLowerBound: OffsetDateTime?) =
+            apply {
+                this.createdAtLowerBound = createdAtLowerBound
+            }
 
-        /**
-         * Alias for calling [Builder.createdAtLowerBound] with `createdAtLowerBound.orElse(null)`.
-         */
-        fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) =
-            createdAtLowerBound(createdAtLowerBound.getOrNull())
+        /** Alias for calling [Builder.createdAtLowerBound] with `createdAtLowerBound.orElse(null)`. */
+        fun createdAtLowerBound(createdAtLowerBound: Optional<OffsetDateTime>) = createdAtLowerBound(createdAtLowerBound.getOrNull())
 
         /** Used to return expected payments created before some datetime */
-        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) = apply {
-            this.createdAtUpperBound = createdAtUpperBound
-        }
+        fun createdAtUpperBound(createdAtUpperBound: OffsetDateTime?) =
+            apply {
+                this.createdAtUpperBound = createdAtUpperBound
+            }
 
-        /**
-         * Alias for calling [Builder.createdAtUpperBound] with `createdAtUpperBound.orElse(null)`.
-         */
-        fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) =
-            createdAtUpperBound(createdAtUpperBound.getOrNull())
+        /** Alias for calling [Builder.createdAtUpperBound] with `createdAtUpperBound.orElse(null)`. */
+        fun createdAtUpperBound(createdAtUpperBound: Optional<OffsetDateTime>) = createdAtUpperBound(createdAtUpperBound.getOrNull())
 
         /** One of credit, debit */
-        fun direction(direction: TransactionDirection?) = apply { this.direction = direction }
+        fun direction(direction: TransactionDirection?) =
+            apply {
+                this.direction = direction
+            }
 
         /** Alias for calling [Builder.direction] with `direction.orElse(null)`. */
         fun direction(direction: Optional<TransactionDirection>) = direction(direction.getOrNull())
 
-        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+        fun externalId(externalId: String?) =
+            apply {
+                this.externalId = externalId
+            }
 
         /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
         fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /** Specify internal_account_id to see expected_payments for a specific account. */
-        fun internalAccountId(internalAccountId: String?) = apply {
-            this.internalAccountId = internalAccountId
-        }
+        fun internalAccountId(internalAccountId: String?) =
+            apply {
+                this.internalAccountId = internalAccountId
+            }
 
         /** Alias for calling [Builder.internalAccountId] with `internalAccountId.orElse(null)`. */
-        fun internalAccountId(internalAccountId: Optional<String>) =
-            internalAccountId(internalAccountId.getOrNull())
+        fun internalAccountId(internalAccountId: Optional<String>) = internalAccountId(internalAccountId.getOrNull())
 
-        /**
-         * For example, if you want to query for records with metadata key `Type` and value `Loan`,
-         * the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-         */
-        fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+        /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+        fun metadata(metadata: Metadata?) =
+            apply {
+                this.metadata = metadata
+            }
 
         /** Alias for calling [Builder.metadata] with `metadata.orElse(null)`. */
         fun metadata(metadata: Optional<Metadata>) = metadata(metadata.getOrNull())
 
-        fun perPage(perPage: Long?) = apply { this.perPage = perPage }
+        fun perPage(perPage: Long?) =
+            apply {
+                this.perPage = perPage
+            }
 
         /**
          * Alias for [Builder.perPage].
@@ -209,139 +216,164 @@ private constructor(
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /** One of unreconciled, reconciled, or archived. */
-        fun status(status: Status?) = apply { this.status = status }
+        fun status(status: Status?) =
+            apply {
+                this.status = status
+            }
 
         /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
-        /**
-         * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa,
-         * signet, wire
-         */
-        fun type(type: Type?) = apply { this.type = type }
+        /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire */
+        fun type(type: Type?) =
+            apply {
+                this.type = type
+            }
 
         /** Alias for calling [Builder.type] with `type.orElse(null)`. */
         fun type(type: Optional<Type>) = type(type.getOrNull())
 
         /** Used to return expected payments updated after some datetime */
-        fun updatedAtLowerBound(updatedAtLowerBound: OffsetDateTime?) = apply {
-            this.updatedAtLowerBound = updatedAtLowerBound
-        }
+        fun updatedAtLowerBound(updatedAtLowerBound: OffsetDateTime?) =
+            apply {
+                this.updatedAtLowerBound = updatedAtLowerBound
+            }
 
-        /**
-         * Alias for calling [Builder.updatedAtLowerBound] with `updatedAtLowerBound.orElse(null)`.
-         */
-        fun updatedAtLowerBound(updatedAtLowerBound: Optional<OffsetDateTime>) =
-            updatedAtLowerBound(updatedAtLowerBound.getOrNull())
+        /** Alias for calling [Builder.updatedAtLowerBound] with `updatedAtLowerBound.orElse(null)`. */
+        fun updatedAtLowerBound(updatedAtLowerBound: Optional<OffsetDateTime>) = updatedAtLowerBound(updatedAtLowerBound.getOrNull())
 
         /** Used to return expected payments updated before some datetime */
-        fun updatedAtUpperBound(updatedAtUpperBound: OffsetDateTime?) = apply {
-            this.updatedAtUpperBound = updatedAtUpperBound
-        }
+        fun updatedAtUpperBound(updatedAtUpperBound: OffsetDateTime?) =
+            apply {
+                this.updatedAtUpperBound = updatedAtUpperBound
+            }
 
-        /**
-         * Alias for calling [Builder.updatedAtUpperBound] with `updatedAtUpperBound.orElse(null)`.
-         */
-        fun updatedAtUpperBound(updatedAtUpperBound: Optional<OffsetDateTime>) =
-            updatedAtUpperBound(updatedAtUpperBound.getOrNull())
+        /** Alias for calling [Builder.updatedAtUpperBound] with `updatedAtUpperBound.orElse(null)`. */
+        fun updatedAtUpperBound(updatedAtUpperBound: Optional<OffsetDateTime>) = updatedAtUpperBound(updatedAtUpperBound.getOrNull())
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [ExpectedPaymentListParams].
@@ -350,21 +382,21 @@ private constructor(
          */
         fun build(): ExpectedPaymentListParams =
             ExpectedPaymentListParams(
-                afterCursor,
-                counterpartyId,
-                createdAtLowerBound,
-                createdAtUpperBound,
-                direction,
-                externalId,
-                internalAccountId,
-                metadata,
-                perPage,
-                status,
-                type,
-                updatedAtLowerBound,
-                updatedAtUpperBound,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              afterCursor,
+              counterpartyId,
+              createdAtLowerBound,
+              createdAtUpperBound,
+              direction,
+              externalId,
+              internalAccountId,
+              metadata,
+              perPage,
+              status,
+              type,
+              updatedAtLowerBound,
+              updatedAtUpperBound,
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -375,40 +407,30 @@ private constructor(
             .apply {
                 afterCursor?.let { put("after_cursor", it) }
                 counterpartyId?.let { put("counterparty_id", it) }
-                createdAtLowerBound?.let {
-                    put("created_at_lower_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                createdAtUpperBound?.let {
-                    put("created_at_upper_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
+                createdAtLowerBound?.let { put("created_at_lower_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
+                createdAtUpperBound?.let { put("created_at_upper_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
                 direction?.let { put("direction", it.toString()) }
                 externalId?.let { put("external_id", it) }
                 internalAccountId?.let { put("internal_account_id", it) }
-                metadata?.let {
-                    it._additionalProperties().keys().forEach { key ->
-                        it._additionalProperties().values(key).forEach { value ->
-                            put("metadata[$key]", value)
-                        }
+                metadata?.let { it._additionalProperties().keys().forEach { key ->
+                    it._additionalProperties().values(key).forEach { value ->
+                        put("metadata[$key]", value)
                     }
-                }
+                } }
                 perPage?.let { put("per_page", it.toString()) }
                 status?.let { put("status", it.toString()) }
                 type?.let { put("type", it.toString()) }
-                updatedAtLowerBound?.let {
-                    put("updated_at_lower_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
-                updatedAtUpperBound?.let {
-                    put("updated_at_upper_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-                }
+                updatedAtLowerBound?.let { put("updated_at_lower_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
+                updatedAtUpperBound?.let { put("updated_at_upper_bound", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
                 putAll(additionalQueryParams)
             }
             .build()
 
-    /**
-     * For example, if you want to query for records with metadata key `Type` and value `Loan`, the
-     * query would be `metadata%5BType%5D=Loan`. This encodes the query parameters.
-     */
-    class Metadata private constructor(private val additionalProperties: QueryParams) {
+    /** For example, if you want to query for records with metadata key `Type` and value `Loan`, the query would be `metadata%5BType%5D=Loan`. This encodes the query parameters. */
+    class Metadata private constructor(
+        private val additionalProperties: QueryParams,
+
+    ) {
 
         /** Query params to send with the request. */
         fun _additionalProperties(): QueryParams = additionalProperties
@@ -418,7 +440,8 @@ private constructor(
         companion object {
 
             /** Returns a mutable builder for constructing an instance of [Metadata]. */
-            @JvmStatic fun builder() = Builder()
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [Metadata]. */
@@ -427,58 +450,72 @@ private constructor(
             private var additionalProperties: QueryParams.Builder = QueryParams.builder()
 
             @JvmSynthetic
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties = metadata.additionalProperties.toBuilder()
-            }
+            internal fun from(metadata: Metadata) =
+                apply {
+                    additionalProperties = metadata.additionalProperties.toBuilder()
+                }
 
-            fun additionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: String) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: String) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.put(key, values)
-            }
+            fun putAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.put(key, values)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
                 apply {
                     this.additionalProperties.putAll(additionalProperties)
                 }
 
-            fun replaceAdditionalProperties(key: String, value: String) = apply {
-                additionalProperties.replace(key, value)
-            }
+            fun replaceAdditionalProperties(key: String, value: String) =
+                apply {
+                    additionalProperties.replace(key, value)
+                }
 
-            fun replaceAdditionalProperties(key: String, values: Iterable<String>) = apply {
-                additionalProperties.replace(key, values)
-            }
+            fun replaceAdditionalProperties(key: String, values: Iterable<String>) =
+                apply {
+                    additionalProperties.replace(key, values)
+                }
 
-            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) = apply {
-                this.additionalProperties.replaceAll(additionalProperties)
-            }
+            fun replaceAllAdditionalProperties(additionalProperties: QueryParams) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun replaceAllAdditionalProperties(
-                additionalProperties: Map<String, Iterable<String>>
-            ) = apply { this.additionalProperties.replaceAll(additionalProperties) }
+            fun replaceAllAdditionalProperties(additionalProperties: Map<String, Iterable<String>>) =
+                apply {
+                    this.additionalProperties.replaceAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperties(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperties(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                additionalProperties.removeAll(keys)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    additionalProperties.removeAll(keys)
+                }
 
             /**
              * Returns an immutable instance of [Metadata].
@@ -489,11 +526,11 @@ private constructor(
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && additionalProperties == other.additionalProperties
+          return other is Metadata && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
@@ -504,17 +541,20 @@ private constructor(
     }
 
     /** One of unreconciled, reconciled, or archived. */
-    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class Status @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't match any known
+         * member, and you want to know that value. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -541,9 +581,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+         *   an older version than the API, then the API may respond with new members that the SDK is unaware
+         *   of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -556,11 +598,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+         * class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want to throw
+         * for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -574,11 +616,10 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+         * for the unknown case.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -592,36 +633,33 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging and generally
+         * doesn't throw.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
+        fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Status = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Status =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            known()
-            validated = true
-        }
+                known()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -632,19 +670,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+        @JvmSynthetic
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Status && value == other.value
+          return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -652,21 +690,21 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /**
-     * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp,sen, sepa, signet,
-     * wire
-     */
-    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    /** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire */
+    class Type @JsonCreator private constructor(
+        private val value: JsonField<String>,
+
+    ) : Enum {
 
         /**
          * Returns this class instance's raw value.
          *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * This is usually only useful if this instance was deserialized from data that doesn't match any known
+         * member, and you want to know that value. For example, if the SDK is on an older version than the
+         * API, then the API may respond with new members that the SDK is unaware of.
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         companion object {
 
@@ -692,10 +730,6 @@ private constructor(
 
             @JvmField val GB_FPS = of("gb_fps")
 
-            @JvmField val HU_ICS = of("hu_ics")
-
-            @JvmField val INTERAC = of("interac")
-
             @JvmField val MASAV = of("masav")
 
             @JvmField val MX_CCEN = of("mx_ccen")
@@ -708,25 +742,15 @@ private constructor(
 
             @JvmField val PL_ELIXIR = of("pl_elixir")
 
-            @JvmField val PROVXCHANGE = of("provxchange")
-
-            @JvmField val RO_SENT = of("ro_sent")
-
             @JvmField val RTP = of("rtp")
 
             @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-            @JvmField val SEN = of("sen")
 
             @JvmField val SEPA = of("sepa")
 
             @JvmField val SG_GIRO = of("sg_giro")
 
             @JvmField val SIC = of("sic")
-
-            @JvmField val SIGNET = of("signet")
-
-            @JvmField val SKNBI = of("sknbi")
 
             @JvmField val STABLECOIN = of("stablecoin")
 
@@ -750,24 +774,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -777,9 +794,11 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
+         *
+         * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+         *   an older version than the API, then the API may respond with new members that the SDK is unaware
+         *   of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -794,24 +813,17 @@ private constructor(
             DK_NETS,
             EFT,
             GB_FPS,
-            HU_ICS,
-            INTERAC,
             MASAV,
             MX_CCEN,
             NEFT,
             NICS,
             NZ_BECS,
             PL_ELIXIR,
-            PROVXCHANGE,
-            RO_SENT,
             RTP,
             SE_BANKGIROT,
-            SEN,
             SEPA,
             SG_GIRO,
             SIC,
-            SIGNET,
-            SKNBI,
             STABLECOIN,
             WIRE,
             ZENGIN,
@@ -820,11 +832,11 @@ private constructor(
         }
 
         /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+         * class was instantiated with an unknown value.
          *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
+         * Use the [known] method instead if you're certain the value is always known or if you want to throw
+         * for the unknown case.
          */
         fun value(): Value =
             when (this) {
@@ -839,24 +851,17 @@ private constructor(
                 DK_NETS -> Value.DK_NETS
                 EFT -> Value.EFT
                 GB_FPS -> Value.GB_FPS
-                HU_ICS -> Value.HU_ICS
-                INTERAC -> Value.INTERAC
                 MASAV -> Value.MASAV
                 MX_CCEN -> Value.MX_CCEN
                 NEFT -> Value.NEFT
                 NICS -> Value.NICS
                 NZ_BECS -> Value.NZ_BECS
                 PL_ELIXIR -> Value.PL_ELIXIR
-                PROVXCHANGE -> Value.PROVXCHANGE
-                RO_SENT -> Value.RO_SENT
                 RTP -> Value.RTP
                 SE_BANKGIROT -> Value.SE_BANKGIROT
-                SEN -> Value.SEN
                 SEPA -> Value.SEPA
                 SG_GIRO -> Value.SG_GIRO
                 SIC -> Value.SIC
-                SIGNET -> Value.SIGNET
-                SKNBI -> Value.SKNBI
                 STABLECOIN -> Value.STABLECOIN
                 WIRE -> Value.WIRE
                 ZENGIN -> Value.ZENGIN
@@ -866,11 +871,10 @@ private constructor(
         /**
          * Returns an enum member corresponding to this class instance's value.
          *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
+         * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+         * for the unknown case.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
          */
         fun known(): Known =
             when (this) {
@@ -885,24 +889,17 @@ private constructor(
                 DK_NETS -> Known.DK_NETS
                 EFT -> Known.EFT
                 GB_FPS -> Known.GB_FPS
-                HU_ICS -> Known.HU_ICS
-                INTERAC -> Known.INTERAC
                 MASAV -> Known.MASAV
                 MX_CCEN -> Known.MX_CCEN
                 NEFT -> Known.NEFT
                 NICS -> Known.NICS
                 NZ_BECS -> Known.NZ_BECS
                 PL_ELIXIR -> Known.PL_ELIXIR
-                PROVXCHANGE -> Known.PROVXCHANGE
-                RO_SENT -> Known.RO_SENT
                 RTP -> Known.RTP
                 SE_BANKGIROT -> Known.SE_BANKGIROT
-                SEN -> Known.SEN
                 SEPA -> Known.SEPA
                 SG_GIRO -> Known.SG_GIRO
                 SIC -> Known.SIC
-                SIGNET -> Known.SIGNET
-                SKNBI -> Known.SKNBI
                 STABLECOIN -> Known.STABLECOIN
                 WIRE -> Known.WIRE
                 ZENGIN -> Known.ZENGIN
@@ -912,36 +909,33 @@ private constructor(
         /**
          * Returns this class instance's primitive wire representation.
          *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
+         * This differs from the [toString] method because that method is primarily for debugging and generally
+         * doesn't throw.
          *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
          */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
+        fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Type = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Type =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            known()
-            validated = true
-        }
+                known()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -952,19 +946,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+        @JvmSynthetic
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Type && value == other.value
+          return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -973,47 +967,14 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ExpectedPaymentListParams &&
-            afterCursor == other.afterCursor &&
-            counterpartyId == other.counterpartyId &&
-            createdAtLowerBound == other.createdAtLowerBound &&
-            createdAtUpperBound == other.createdAtUpperBound &&
-            direction == other.direction &&
-            externalId == other.externalId &&
-            internalAccountId == other.internalAccountId &&
-            metadata == other.metadata &&
-            perPage == other.perPage &&
-            status == other.status &&
-            type == other.type &&
-            updatedAtLowerBound == other.updatedAtLowerBound &&
-            updatedAtUpperBound == other.updatedAtUpperBound &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is ExpectedPaymentListParams && afterCursor == other.afterCursor && counterpartyId == other.counterpartyId && createdAtLowerBound == other.createdAtLowerBound && createdAtUpperBound == other.createdAtUpperBound && direction == other.direction && externalId == other.externalId && internalAccountId == other.internalAccountId && metadata == other.metadata && perPage == other.perPage && status == other.status && type == other.type && updatedAtLowerBound == other.updatedAtLowerBound && updatedAtUpperBound == other.updatedAtUpperBound && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(
-            afterCursor,
-            counterpartyId,
-            createdAtLowerBound,
-            createdAtUpperBound,
-            direction,
-            externalId,
-            internalAccountId,
-            metadata,
-            perPage,
-            status,
-            type,
-            updatedAtLowerBound,
-            updatedAtUpperBound,
-            additionalHeaders,
-            additionalQueryParams,
-        )
+    override fun hashCode(): Int = Objects.hash(afterCursor, counterpartyId, createdAtLowerBound, createdAtUpperBound, direction, externalId, internalAccountId, metadata, perPage, status, type, updatedAtLowerBound, updatedAtUpperBound, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "ExpectedPaymentListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, direction=$direction, externalId=$externalId, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, status=$status, type=$type, updatedAtLowerBound=$updatedAtLowerBound, updatedAtUpperBound=$updatedAtUpperBound, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "ExpectedPaymentListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, createdAtLowerBound=$createdAtLowerBound, createdAtUpperBound=$createdAtUpperBound, direction=$direction, externalId=$externalId, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, status=$status, type=$type, updatedAtLowerBound=$updatedAtLowerBound, updatedAtUpperBound=$updatedAtUpperBound, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -4,6 +4,8 @@ package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
+import com.moderntreasury.api.models.EventListParams
+import com.moderntreasury.api.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -12,33 +14,31 @@ internal class EventServiceAsyncTest {
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val eventServiceAsync = client.events()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val eventServiceAsync = client.events()
 
-        val eventFuture = eventServiceAsync.retrieve("id")
+      val eventFuture = eventServiceAsync.retrieve("id")
 
-        val event = eventFuture.get()
-        event.validate()
+      val event = eventFuture.get()
+      event.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val eventServiceAsync = client.events()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val eventServiceAsync = client.events()
 
-        val pageFuture = eventServiceAsync.list()
+      val pageFuture = eventServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 }

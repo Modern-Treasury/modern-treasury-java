@@ -13,15 +13,15 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.toImmutable
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
+import com.moderntreasury.api.models.ForeignExchangeQuote
+import com.moderntreasury.api.models.ForeignExchangeRate
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class ForeignExchangeQuote
-@JsonCreator(mode = JsonCreator.Mode.DISABLED)
-private constructor(
+class ForeignExchangeQuote @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val effectiveAt: JsonField<OffsetDateTime>,
@@ -35,141 +35,104 @@ private constructor(
     private val updatedAt: JsonField<OffsetDateTime>,
     private val vendorId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
+
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("created_at")
-        @ExcludeMissing
-        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("effective_at")
-        @ExcludeMissing
-        effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("expires_at")
-        @ExcludeMissing
-        expiresAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("foreign_exchange_indicator")
-        @ExcludeMissing
-        foreignExchangeIndicator: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("foreign_exchange_rate")
-        @ExcludeMissing
-        foreignExchangeRate: JsonField<ForeignExchangeRate> = JsonMissing.of(),
-        @JsonProperty("internal_account_id")
-        @ExcludeMissing
-        internalAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at") @ExcludeMissing createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("effective_at") @ExcludeMissing effectiveAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("expires_at") @ExcludeMissing expiresAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("foreign_exchange_indicator") @ExcludeMissing foreignExchangeIndicator: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("foreign_exchange_rate") @ExcludeMissing foreignExchangeRate: JsonField<ForeignExchangeRate> = JsonMissing.of(),
+        @JsonProperty("internal_account_id") @ExcludeMissing internalAccountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("live_mode") @ExcludeMissing liveMode: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("object") @ExcludeMissing object_: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("updated_at")
-        @ExcludeMissing
-        updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("vendor_id") @ExcludeMissing vendorId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("updated_at") @ExcludeMissing updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("vendor_id") @ExcludeMissing vendorId: JsonField<String> = JsonMissing.of()
     ) : this(
-        id,
-        createdAt,
-        effectiveAt,
-        expiresAt,
-        foreignExchangeIndicator,
-        foreignExchangeRate,
-        internalAccountId,
-        liveMode,
-        metadata,
-        object_,
-        updatedAt,
-        vendorId,
-        mutableMapOf(),
+      id,
+      createdAt,
+      effectiveAt,
+      expiresAt,
+      foreignExchangeIndicator,
+      foreignExchangeRate,
+      internalAccountId,
+      liveMode,
+      metadata,
+      object_,
+      updatedAt,
+      vendorId,
+      mutableMapOf(),
     )
 
-    /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
+    /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value). */
     fun id(): String = id.getRequired("id")
 
-    /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
+    /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value). */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
      * The timestamp until when the quoted rate is valid.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun effectiveAt(): OffsetDateTime = effectiveAt.getRequired("effective_at")
 
     /**
      * The timestamp until which the quote must be booked by.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun expiresAt(): OffsetDateTime = expiresAt.getRequired("expires_at")
 
     /**
-     * Either `fixed_to_variable` if the `base_amount` was specified, or `variable_to_fixed` if the
-     * `target_amount` was specified when requesting the quote.
+     * Either `fixed_to_variable` if the `base_amount` was specified, or `variable_to_fixed` if the `target_amount` was specified when requesting the quote.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun foreignExchangeIndicator(): String =
-        foreignExchangeIndicator.getRequired("foreign_exchange_indicator")
+    fun foreignExchangeIndicator(): String = foreignExchangeIndicator.getRequired("foreign_exchange_indicator")
 
     /**
      * The serialized rate information represented by this quote.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun foreignExchangeRate(): ForeignExchangeRate =
-        foreignExchangeRate.getRequired("foreign_exchange_rate")
+    fun foreignExchangeRate(): ForeignExchangeRate = foreignExchangeRate.getRequired("foreign_exchange_rate")
 
     /**
      * The ID for the `InternalAccount` this quote is associated with.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun internalAccountId(): String = internalAccountId.getRequired("internal_account_id")
 
     /**
-     * This field will be true if this object exists in the live environment or false if it exists
-     * in the test environment.
+     * This field will be true if this object exists in the live environment or false if it exists in the test environment.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
     /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
-    /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
+    /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value). */
     fun object_(): String = object_.getRequired("object")
 
-    /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
+    /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is unexpectedly missing or null (e.g. if the server responded with an unexpected value). */
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /**
      * This vendor assigned ID for this quote.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value).
      */
     fun vendorId(): Optional<String> = vendorId.getOptional("vendor_id")
 
@@ -178,7 +141,9 @@ private constructor(
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("id")
+    @ExcludeMissing
+    fun _id(): JsonField<String> = id
 
     /**
      * Returns the raw JSON value of [createdAt].
@@ -210,8 +175,7 @@ private constructor(
     /**
      * Returns the raw JSON value of [foreignExchangeIndicator].
      *
-     * Unlike [foreignExchangeIndicator], this method doesn't throw if the JSON field has an
-     * unexpected type.
+     * Unlike [foreignExchangeIndicator], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("foreign_exchange_indicator")
     @ExcludeMissing
@@ -220,8 +184,7 @@ private constructor(
     /**
      * Returns the raw JSON value of [foreignExchangeRate].
      *
-     * Unlike [foreignExchangeRate], this method doesn't throw if the JSON field has an unexpected
-     * type.
+     * Unlike [foreignExchangeRate], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("foreign_exchange_rate")
     @ExcludeMissing
@@ -230,8 +193,7 @@ private constructor(
     /**
      * Returns the raw JSON value of [internalAccountId].
      *
-     * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected
-     * type.
+     * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("internal_account_id")
     @ExcludeMissing
@@ -242,21 +204,27 @@ private constructor(
      *
      * Unlike [liveMode], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("live_mode") @ExcludeMissing fun _liveMode(): JsonField<Boolean> = liveMode
+    @JsonProperty("live_mode")
+    @ExcludeMissing
+    fun _liveMode(): JsonField<Boolean> = liveMode
 
     /**
      * Returns the raw JSON value of [metadata].
      *
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    fun _metadata(): JsonField<Metadata> = metadata
 
     /**
      * Returns the raw JSON value of [object_].
      *
      * Unlike [object_], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("object") @ExcludeMissing fun _object_(): JsonField<String> = object_
+    @JsonProperty("object")
+    @ExcludeMissing
+    fun _object_(): JsonField<String> = object_
 
     /**
      * Returns the raw JSON value of [updatedAt].
@@ -272,17 +240,18 @@ private constructor(
      *
      * Unlike [vendorId], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("vendor_id") @ExcludeMissing fun _vendorId(): JsonField<String> = vendorId
+    @JsonProperty("vendor_id")
+    @ExcludeMissing
+    fun _vendorId(): JsonField<String> = vendorId
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
-        additionalProperties.put(key, value)
+      additionalProperties.put(key, value)
     }
 
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalProperties)
+    fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -292,6 +261,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [ForeignExchangeQuote].
          *
          * The following fields are required:
+         *
          * ```java
          * .id()
          * .createdAt()
@@ -306,7 +276,8 @@ private constructor(
          * .updatedAt()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [ForeignExchangeQuote]. */
@@ -327,42 +298,48 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(foreignExchangeQuote: ForeignExchangeQuote) = apply {
-            id = foreignExchangeQuote.id
-            createdAt = foreignExchangeQuote.createdAt
-            effectiveAt = foreignExchangeQuote.effectiveAt
-            expiresAt = foreignExchangeQuote.expiresAt
-            foreignExchangeIndicator = foreignExchangeQuote.foreignExchangeIndicator
-            foreignExchangeRate = foreignExchangeQuote.foreignExchangeRate
-            internalAccountId = foreignExchangeQuote.internalAccountId
-            liveMode = foreignExchangeQuote.liveMode
-            metadata = foreignExchangeQuote.metadata
-            object_ = foreignExchangeQuote.object_
-            updatedAt = foreignExchangeQuote.updatedAt
-            vendorId = foreignExchangeQuote.vendorId
-            additionalProperties = foreignExchangeQuote.additionalProperties.toMutableMap()
-        }
+        internal fun from(foreignExchangeQuote: ForeignExchangeQuote) =
+            apply {
+                id = foreignExchangeQuote.id
+                createdAt = foreignExchangeQuote.createdAt
+                effectiveAt = foreignExchangeQuote.effectiveAt
+                expiresAt = foreignExchangeQuote.expiresAt
+                foreignExchangeIndicator = foreignExchangeQuote.foreignExchangeIndicator
+                foreignExchangeRate = foreignExchangeQuote.foreignExchangeRate
+                internalAccountId = foreignExchangeQuote.internalAccountId
+                liveMode = foreignExchangeQuote.liveMode
+                metadata = foreignExchangeQuote.metadata
+                object_ = foreignExchangeQuote.object_
+                updatedAt = foreignExchangeQuote.updatedAt
+                vendorId = foreignExchangeQuote.vendorId
+                additionalProperties = foreignExchangeQuote.additionalProperties.toMutableMap()
+            }
 
         fun id(id: String) = id(JsonField.of(id))
 
         /**
          * Sets [Builder.id] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.id] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) =
+            apply {
+                this.id = id
+            }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /**
          * Sets [Builder.createdAt] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.createdAt = createdAt
+            }
 
         /** The timestamp until when the quoted rate is valid. */
         fun effectiveAt(effectiveAt: OffsetDateTime) = effectiveAt(JsonField.of(effectiveAt))
@@ -370,13 +347,13 @@ private constructor(
         /**
          * Sets [Builder.effectiveAt] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.effectiveAt] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.effectiveAt] with a well-typed [OffsetDateTime] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun effectiveAt(effectiveAt: JsonField<OffsetDateTime>) = apply {
-            this.effectiveAt = effectiveAt
-        }
+        fun effectiveAt(effectiveAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.effectiveAt = effectiveAt
+            }
 
         /** The timestamp until which the quote must be booked by. */
         fun expiresAt(expiresAt: OffsetDateTime) = expiresAt(JsonField.of(expiresAt))
@@ -384,109 +361,109 @@ private constructor(
         /**
          * Sets [Builder.expiresAt] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.expiresAt] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.expiresAt] with a well-typed [OffsetDateTime] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun expiresAt(expiresAt: JsonField<OffsetDateTime>) = apply { this.expiresAt = expiresAt }
+        fun expiresAt(expiresAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.expiresAt = expiresAt
+            }
 
-        /**
-         * Either `fixed_to_variable` if the `base_amount` was specified, or `variable_to_fixed` if
-         * the `target_amount` was specified when requesting the quote.
-         */
-        fun foreignExchangeIndicator(foreignExchangeIndicator: String) =
-            foreignExchangeIndicator(JsonField.of(foreignExchangeIndicator))
+        /** Either `fixed_to_variable` if the `base_amount` was specified, or `variable_to_fixed` if the `target_amount` was specified when requesting the quote. */
+        fun foreignExchangeIndicator(foreignExchangeIndicator: String) = foreignExchangeIndicator(JsonField.of(foreignExchangeIndicator))
 
         /**
          * Sets [Builder.foreignExchangeIndicator] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.foreignExchangeIndicator] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.foreignExchangeIndicator] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun foreignExchangeIndicator(foreignExchangeIndicator: JsonField<String>) = apply {
-            this.foreignExchangeIndicator = foreignExchangeIndicator
-        }
+        fun foreignExchangeIndicator(foreignExchangeIndicator: JsonField<String>) =
+            apply {
+                this.foreignExchangeIndicator = foreignExchangeIndicator
+            }
 
         /** The serialized rate information represented by this quote. */
-        fun foreignExchangeRate(foreignExchangeRate: ForeignExchangeRate) =
-            foreignExchangeRate(JsonField.of(foreignExchangeRate))
+        fun foreignExchangeRate(foreignExchangeRate: ForeignExchangeRate) = foreignExchangeRate(JsonField.of(foreignExchangeRate))
 
         /**
          * Sets [Builder.foreignExchangeRate] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.foreignExchangeRate] with a well-typed
-         * [ForeignExchangeRate] value instead. This method is primarily for setting the field to an
-         * undocumented or not yet supported value.
+         * You should usually call [Builder.foreignExchangeRate] with a well-typed [ForeignExchangeRate] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun foreignExchangeRate(foreignExchangeRate: JsonField<ForeignExchangeRate>) = apply {
-            this.foreignExchangeRate = foreignExchangeRate
-        }
+        fun foreignExchangeRate(foreignExchangeRate: JsonField<ForeignExchangeRate>) =
+            apply {
+                this.foreignExchangeRate = foreignExchangeRate
+            }
 
         /** The ID for the `InternalAccount` this quote is associated with. */
-        fun internalAccountId(internalAccountId: String) =
-            internalAccountId(JsonField.of(internalAccountId))
+        fun internalAccountId(internalAccountId: String) = internalAccountId(JsonField.of(internalAccountId))
 
         /**
          * Sets [Builder.internalAccountId] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.internalAccountId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.internalAccountId] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun internalAccountId(internalAccountId: JsonField<String>) = apply {
-            this.internalAccountId = internalAccountId
-        }
+        fun internalAccountId(internalAccountId: JsonField<String>) =
+            apply {
+                this.internalAccountId = internalAccountId
+            }
 
-        /**
-         * This field will be true if this object exists in the live environment or false if it
-         * exists in the test environment.
-         */
+        /** This field will be true if this object exists in the live environment or false if it exists in the test environment. */
         fun liveMode(liveMode: Boolean) = liveMode(JsonField.of(liveMode))
 
         /**
          * Sets [Builder.liveMode] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.liveMode] with a well-typed [Boolean] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.liveMode] with a well-typed [Boolean] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
+        fun liveMode(liveMode: JsonField<Boolean>) =
+            apply {
+                this.liveMode = liveMode
+            }
 
-        /**
-         * Additional data represented as key-value pairs. Both the key and value must be strings.
-         */
+        /** Additional data represented as key-value pairs. Both the key and value must be strings. */
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
          * Sets [Builder.metadata] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+        fun metadata(metadata: JsonField<Metadata>) =
+            apply {
+                this.metadata = metadata
+            }
 
         fun object_(object_: String) = object_(JsonField.of(object_))
 
         /**
          * Sets [Builder.object_] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.object_] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.object_] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun object_(object_: JsonField<String>) = apply { this.object_ = object_ }
+        fun object_(object_: JsonField<String>) =
+            apply {
+                this.object_ = object_
+            }
 
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
         /**
          * Sets [Builder.updatedAt] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.updatedAt] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * You should usually call [Builder.updatedAt] with a well-typed [OffsetDateTime] value instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
+        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) =
+            apply {
+                this.updatedAt = updatedAt
+            }
 
         /** This vendor assigned ID for this quote. */
         fun vendorId(vendorId: String) = vendorId(JsonField.of(vendorId))
@@ -494,29 +471,39 @@ private constructor(
         /**
          * Sets [Builder.vendorId] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.vendorId] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.vendorId] with a well-typed [String] value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun vendorId(vendorId: JsonField<String>) = apply { this.vendorId = vendorId }
+        fun vendorId(vendorId: JsonField<String>) =
+            apply {
+                this.vendorId = vendorId
+            }
 
-        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
-        }
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
 
-        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
-        }
+        fun putAdditionalProperty(key: String, value: JsonValue) =
+            apply {
+                additionalProperties.put(key, value)
+            }
 
-        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-            this.additionalProperties.putAll(additionalProperties)
-        }
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) =
+            apply {
+                additionalProperties.remove(key)
+            }
 
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
-        }
+        fun removeAllAdditionalProperties(keys: Set<String>) =
+            apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
 
         /**
          * Returns an immutable instance of [ForeignExchangeQuote].
@@ -524,6 +511,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .id()
          * .createdAt()
@@ -542,19 +530,41 @@ private constructor(
          */
         fun build(): ForeignExchangeQuote =
             ForeignExchangeQuote(
-                checkRequired("id", id),
-                checkRequired("createdAt", createdAt),
-                checkRequired("effectiveAt", effectiveAt),
-                checkRequired("expiresAt", expiresAt),
-                checkRequired("foreignExchangeIndicator", foreignExchangeIndicator),
-                checkRequired("foreignExchangeRate", foreignExchangeRate),
-                checkRequired("internalAccountId", internalAccountId),
-                checkRequired("liveMode", liveMode),
-                checkRequired("metadata", metadata),
-                checkRequired("object_", object_),
-                checkRequired("updatedAt", updatedAt),
-                vendorId,
-                additionalProperties.toMutableMap(),
+              checkRequired(
+                "id", id
+              ),
+              checkRequired(
+                "createdAt", createdAt
+              ),
+              checkRequired(
+                "effectiveAt", effectiveAt
+              ),
+              checkRequired(
+                "expiresAt", expiresAt
+              ),
+              checkRequired(
+                "foreignExchangeIndicator", foreignExchangeIndicator
+              ),
+              checkRequired(
+                "foreignExchangeRate", foreignExchangeRate
+              ),
+              checkRequired(
+                "internalAccountId", internalAccountId
+              ),
+              checkRequired(
+                "liveMode", liveMode
+              ),
+              checkRequired(
+                "metadata", metadata
+              ),
+              checkRequired(
+                "object_", object_
+              ),
+              checkRequired(
+                "updatedAt", updatedAt
+              ),
+              vendorId,
+              additionalProperties.toMutableMap(),
             )
     }
 
@@ -568,25 +578,26 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
      *   expected type.
      */
-    fun validate(): ForeignExchangeQuote = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): ForeignExchangeQuote =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        id()
-        createdAt()
-        effectiveAt()
-        expiresAt()
-        foreignExchangeIndicator()
-        foreignExchangeRate().validate()
-        internalAccountId()
-        liveMode()
-        metadata().validate()
-        object_()
-        updatedAt()
-        vendorId()
-        validated = true
-    }
+            id()
+            createdAt()
+            effectiveAt()
+            expiresAt()
+            foreignExchangeIndicator()
+            foreignExchangeRate().validate()
+            internalAccountId()
+            liveMode()
+            metadata().validate()
+            object_()
+            updatedAt()
+            vendorId()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -602,26 +613,12 @@ private constructor(
      * Used for best match union deserialization.
      */
     @JvmSynthetic
-    internal fun validity(): Int =
-        (if (id.asKnown().isPresent) 1 else 0) +
-            (if (createdAt.asKnown().isPresent) 1 else 0) +
-            (if (effectiveAt.asKnown().isPresent) 1 else 0) +
-            (if (expiresAt.asKnown().isPresent) 1 else 0) +
-            (if (foreignExchangeIndicator.asKnown().isPresent) 1 else 0) +
-            (foreignExchangeRate.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (internalAccountId.asKnown().isPresent) 1 else 0) +
-            (if (liveMode.asKnown().isPresent) 1 else 0) +
-            (metadata.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (object_.asKnown().isPresent) 1 else 0) +
-            (if (updatedAt.asKnown().isPresent) 1 else 0) +
-            (if (vendorId.asKnown().isPresent) 1 else 0)
+    internal fun validity(): Int = (if (id.asKnown().isPresent) 1 else 0) + (if (createdAt.asKnown().isPresent) 1 else 0) + (if (effectiveAt.asKnown().isPresent) 1 else 0) + (if (expiresAt.asKnown().isPresent) 1 else 0) + (if (foreignExchangeIndicator.asKnown().isPresent) 1 else 0) + (foreignExchangeRate.asKnown().getOrNull()?.validity() ?: 0) + (if (internalAccountId.asKnown().isPresent) 1 else 0) + (if (liveMode.asKnown().isPresent) 1 else 0) + (metadata.asKnown().getOrNull()?.validity() ?: 0) + (if (object_.asKnown().isPresent) 1 else 0) + (if (updatedAt.asKnown().isPresent) 1 else 0) + (if (vendorId.asKnown().isPresent) 1 else 0)
 
     /** Additional data represented as key-value pairs. Both the key and value must be strings. */
-    class Metadata
-    @JsonCreator
-    private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+    class Metadata @JsonCreator private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         @JsonAnyGetter
@@ -633,7 +630,8 @@ private constructor(
         companion object {
 
             /** Returns a mutable builder for constructing an instance of [Metadata]. */
-            @JvmStatic fun builder() = Builder()
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [Metadata]. */
@@ -642,28 +640,36 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties = metadata.additionalProperties.toMutableMap()
-            }
+            internal fun from(metadata: Metadata) =
+                apply {
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             /**
              * Returns an immutable instance of [Metadata].
@@ -676,21 +682,21 @@ private constructor(
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): Metadata = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): Metadata =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            validated = true
-        }
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -701,21 +707,19 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
         @JvmSynthetic
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+        internal fun validity(): Int = additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && additionalProperties == other.additionalProperties
+          return other is Metadata && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
@@ -726,46 +730,16 @@ private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ForeignExchangeQuote &&
-            id == other.id &&
-            createdAt == other.createdAt &&
-            effectiveAt == other.effectiveAt &&
-            expiresAt == other.expiresAt &&
-            foreignExchangeIndicator == other.foreignExchangeIndicator &&
-            foreignExchangeRate == other.foreignExchangeRate &&
-            internalAccountId == other.internalAccountId &&
-            liveMode == other.liveMode &&
-            metadata == other.metadata &&
-            object_ == other.object_ &&
-            updatedAt == other.updatedAt &&
-            vendorId == other.vendorId &&
-            additionalProperties == other.additionalProperties
+      return other is ForeignExchangeQuote && id == other.id && createdAt == other.createdAt && effectiveAt == other.effectiveAt && expiresAt == other.expiresAt && foreignExchangeIndicator == other.foreignExchangeIndicator && foreignExchangeRate == other.foreignExchangeRate && internalAccountId == other.internalAccountId && liveMode == other.liveMode && metadata == other.metadata && object_ == other.object_ && updatedAt == other.updatedAt && vendorId == other.vendorId && additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy {
-        Objects.hash(
-            id,
-            createdAt,
-            effectiveAt,
-            expiresAt,
-            foreignExchangeIndicator,
-            foreignExchangeRate,
-            internalAccountId,
-            liveMode,
-            metadata,
-            object_,
-            updatedAt,
-            vendorId,
-            additionalProperties,
-        )
-    }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, effectiveAt, expiresAt, foreignExchangeIndicator, foreignExchangeRate, internalAccountId, liveMode, metadata, object_, updatedAt, vendorId, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
-    override fun toString() =
-        "ForeignExchangeQuote{id=$id, createdAt=$createdAt, effectiveAt=$effectiveAt, expiresAt=$expiresAt, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, internalAccountId=$internalAccountId, liveMode=$liveMode, metadata=$metadata, object_=$object_, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+    override fun toString() = "ForeignExchangeQuote{id=$id, createdAt=$createdAt, effectiveAt=$effectiveAt, expiresAt=$expiresAt, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, internalAccountId=$internalAccountId, liveMode=$liveMode, metadata=$metadata, object_=$object_, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }

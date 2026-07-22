@@ -7,20 +7,21 @@ import com.moderntreasury.api.core.Enum
 import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
 
-/**
- * One of: ach, au_becs, bacs, book, check, eft, interac, provxchange, rtp, sen, sepa, signet, wire.
- */
-class ExpectedPaymentType @JsonCreator private constructor(private val value: JsonField<String>) :
-    Enum {
+/** One of: ach, au_becs, bacs, book, check, eft, rtp, sepa, wire. */
+class ExpectedPaymentType @JsonCreator private constructor(
+    private val value: JsonField<String>,
+
+) : Enum {
 
     /**
      * Returns this class instance's raw value.
      *
-     * This is usually only useful if this instance was deserialized from data that doesn't match
-     * any known member, and you want to know that value. For example, if the SDK is on an older
-     * version than the API, then the API may respond with new members that the SDK is unaware of.
+     * This is usually only useful if this instance was deserialized from data that doesn't match any known
+     * member, and you want to know that value. For example, if the SDK is on an older version than the
+     * API, then the API may respond with new members that the SDK is unaware of.
      */
-    @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+    @com.fasterxml.jackson.annotation.JsonValue
+    fun _value(): JsonField<String> = value
 
     companion object {
 
@@ -46,10 +47,6 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
 
         @JvmField val GB_FPS = of("gb_fps")
 
-        @JvmField val HU_ICS = of("hu_ics")
-
-        @JvmField val INTERAC = of("interac")
-
         @JvmField val MASAV = of("masav")
 
         @JvmField val MX_CCEN = of("mx_ccen")
@@ -62,25 +59,15 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
 
         @JvmField val PL_ELIXIR = of("pl_elixir")
 
-        @JvmField val PROVXCHANGE = of("provxchange")
-
-        @JvmField val RO_SENT = of("ro_sent")
-
         @JvmField val RTP = of("rtp")
 
         @JvmField val SE_BANKGIROT = of("se_bankgirot")
-
-        @JvmField val SEN = of("sen")
 
         @JvmField val SEPA = of("sepa")
 
         @JvmField val SG_GIRO = of("sg_giro")
 
         @JvmField val SIC = of("sic")
-
-        @JvmField val SIGNET = of("signet")
-
-        @JvmField val SKNBI = of("sknbi")
 
         @JvmField val STABLECOIN = of("stablecoin")
 
@@ -104,24 +91,17 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
         DK_NETS,
         EFT,
         GB_FPS,
-        HU_ICS,
-        INTERAC,
         MASAV,
         MX_CCEN,
         NEFT,
         NICS,
         NZ_BECS,
         PL_ELIXIR,
-        PROVXCHANGE,
-        RO_SENT,
         RTP,
         SE_BANKGIROT,
-        SEN,
         SEPA,
         SG_GIRO,
         SIC,
-        SIGNET,
-        SKNBI,
         STABLECOIN,
         WIRE,
         ZENGIN,
@@ -131,9 +111,11 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
      * An enum containing [ExpectedPaymentType]'s known values, as well as an [_UNKNOWN] member.
      *
      * An instance of [ExpectedPaymentType] can contain an unknown value in a couple of cases:
-     * - It was deserialized from data that doesn't match any known member. For example, if the SDK
-     *   is on an older version than the API, then the API may respond with new members that the SDK
-     *   is unaware of.
+     *
+     * - It was deserialized from data that doesn't match any known member. For example, if the SDK is on
+     *   an older version than the API, then the API may respond with new members that the SDK is unaware
+     *   of.
+     *
      * - It was constructed with an arbitrary value using the [of] method.
      */
     enum class Value {
@@ -148,40 +130,30 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
         DK_NETS,
         EFT,
         GB_FPS,
-        HU_ICS,
-        INTERAC,
         MASAV,
         MX_CCEN,
         NEFT,
         NICS,
         NZ_BECS,
         PL_ELIXIR,
-        PROVXCHANGE,
-        RO_SENT,
         RTP,
         SE_BANKGIROT,
-        SEN,
         SEPA,
         SG_GIRO,
         SIC,
-        SIGNET,
-        SKNBI,
         STABLECOIN,
         WIRE,
         ZENGIN,
-        /**
-         * An enum member indicating that [ExpectedPaymentType] was instantiated with an unknown
-         * value.
-         */
+        /** An enum member indicating that [ExpectedPaymentType] was instantiated with an unknown value. */
         _UNKNOWN,
     }
 
     /**
-     * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if
-     * the class was instantiated with an unknown value.
+     * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if the
+     * class was instantiated with an unknown value.
      *
-     * Use the [known] method instead if you're certain the value is always known or if you want to
-     * throw for the unknown case.
+     * Use the [known] method instead if you're certain the value is always known or if you want to throw
+     * for the unknown case.
      */
     fun value(): Value =
         when (this) {
@@ -196,24 +168,17 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
             DK_NETS -> Value.DK_NETS
             EFT -> Value.EFT
             GB_FPS -> Value.GB_FPS
-            HU_ICS -> Value.HU_ICS
-            INTERAC -> Value.INTERAC
             MASAV -> Value.MASAV
             MX_CCEN -> Value.MX_CCEN
             NEFT -> Value.NEFT
             NICS -> Value.NICS
             NZ_BECS -> Value.NZ_BECS
             PL_ELIXIR -> Value.PL_ELIXIR
-            PROVXCHANGE -> Value.PROVXCHANGE
-            RO_SENT -> Value.RO_SENT
             RTP -> Value.RTP
             SE_BANKGIROT -> Value.SE_BANKGIROT
-            SEN -> Value.SEN
             SEPA -> Value.SEPA
             SG_GIRO -> Value.SG_GIRO
             SIC -> Value.SIC
-            SIGNET -> Value.SIGNET
-            SKNBI -> Value.SKNBI
             STABLECOIN -> Value.STABLECOIN
             WIRE -> Value.WIRE
             ZENGIN -> Value.ZENGIN
@@ -223,11 +188,10 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
     /**
      * Returns an enum member corresponding to this class instance's value.
      *
-     * Use the [value] method instead if you're uncertain the value is always known and don't want
-     * to throw for the unknown case.
+     * Use the [value] method instead if you're uncertain the value is always known and don't want to throw
+     * for the unknown case.
      *
-     * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known
-     *   member.
+     * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a known member.
      */
     fun known(): Known =
         when (this) {
@@ -242,24 +206,17 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
             DK_NETS -> Known.DK_NETS
             EFT -> Known.EFT
             GB_FPS -> Known.GB_FPS
-            HU_ICS -> Known.HU_ICS
-            INTERAC -> Known.INTERAC
             MASAV -> Known.MASAV
             MX_CCEN -> Known.MX_CCEN
             NEFT -> Known.NEFT
             NICS -> Known.NICS
             NZ_BECS -> Known.NZ_BECS
             PL_ELIXIR -> Known.PL_ELIXIR
-            PROVXCHANGE -> Known.PROVXCHANGE
-            RO_SENT -> Known.RO_SENT
             RTP -> Known.RTP
             SE_BANKGIROT -> Known.SE_BANKGIROT
-            SEN -> Known.SEN
             SEPA -> Known.SEPA
             SG_GIRO -> Known.SG_GIRO
             SIC -> Known.SIC
-            SIGNET -> Known.SIGNET
-            SKNBI -> Known.SKNBI
             STABLECOIN -> Known.STABLECOIN
             WIRE -> Known.WIRE
             ZENGIN -> Known.ZENGIN
@@ -269,16 +226,13 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
     /**
      * Returns this class instance's primitive wire representation.
      *
-     * This differs from the [toString] method because that method is primarily for debugging and
-     * generally doesn't throw.
+     * This differs from the [toString] method because that method is primarily for debugging and generally
+     * doesn't throw.
      *
-     * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the
-     *   expected primitive type.
+     * @throws ModernTreasuryInvalidDataException if this class instance's value does not have the expected
+     *   primitive type.
      */
-    fun asString(): String =
-        _value().asString().orElseThrow {
-            ModernTreasuryInvalidDataException("Value is not a String")
-        }
+    fun asString(): String = _value().asString().orElseThrow { ModernTreasuryInvalidDataException("Value is not a String") }
 
     private var validated: Boolean = false
 
@@ -290,14 +244,15 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
      * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
      *   expected type.
      */
-    fun validate(): ExpectedPaymentType = apply {
-        if (validated) {
-            return@apply
-        }
+    fun validate(): ExpectedPaymentType =
+        apply {
+            if (validated) {
+              return@apply
+            }
 
-        known()
-        validated = true
-    }
+            known()
+            validated = true
+        }
 
     fun isValid(): Boolean =
         try {
@@ -312,14 +267,15 @@ class ExpectedPaymentType @JsonCreator private constructor(private val value: Js
      *
      * Used for best match union deserialization.
      */
-    @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+    @JvmSynthetic
+    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ExpectedPaymentType && value == other.value
+      return other is ExpectedPaymentType && value == other.value
     }
 
     override fun hashCode() = value.hashCode()

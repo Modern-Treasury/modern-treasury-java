@@ -8,13 +8,12 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.models.LedgerAccountSettlementAccountEntryDeleteParams
 import com.moderntreasury.api.models.LedgerAccountSettlementAccountEntryUpdateParams
+import com.moderntreasury.api.services.blocking.ledgerAccountSettlements.AccountEntryService
 import java.util.function.Consumer
 
 interface AccountEntryService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -26,49 +25,55 @@ interface AccountEntryService {
 
     /** Add ledger entries to a draft ledger account settlement. */
     fun update(id: String, params: LedgerAccountSettlementAccountEntryUpdateParams) =
-        update(id, params, RequestOptions.none())
+        update(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: LedgerAccountSettlementAccountEntryUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ) = update(params.toBuilder().id(id).build(), requestOptions)
+    fun update(id: String, params: LedgerAccountSettlementAccountEntryUpdateParams, requestOptions: RequestOptions = RequestOptions.none()) =
+        update(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see update */
     fun update(params: LedgerAccountSettlementAccountEntryUpdateParams) =
-        update(params, RequestOptions.none())
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
-    fun update(
-        params: LedgerAccountSettlementAccountEntryUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    )
+    fun update(params: LedgerAccountSettlementAccountEntryUpdateParams, requestOptions: RequestOptions = RequestOptions.none())
 
     /** Remove ledger entries from a draft ledger account settlement. */
     fun delete(id: String, params: LedgerAccountSettlementAccountEntryDeleteParams) =
-        delete(id, params, RequestOptions.none())
+        delete(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        id: String,
-        params: LedgerAccountSettlementAccountEntryDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ) = delete(params.toBuilder().id(id).build(), requestOptions)
+    fun delete(id: String, params: LedgerAccountSettlementAccountEntryDeleteParams, requestOptions: RequestOptions = RequestOptions.none()) =
+        delete(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see delete */
     fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams) =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
-    fun delete(
-        params: LedgerAccountSettlementAccountEntryDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    )
+    fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams, requestOptions: RequestOptions = RequestOptions.none())
 
-    /**
-     * A view of [AccountEntryService] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [AccountEntryService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -76,70 +81,64 @@ interface AccountEntryService {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): AccountEntryService.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountEntryService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `patch
-         * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
-         * [AccountEntryService.update].
-         */
+        /** Returns a raw HTTP response for `patch /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the             same as [AccountEntryService.update]. */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: LedgerAccountSettlementAccountEntryUpdateParams,
-        ): HttpResponse = update(id, params, RequestOptions.none())
+        fun update(id: String, params: LedgerAccountSettlementAccountEntryUpdateParams): HttpResponse =
+            update(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: LedgerAccountSettlementAccountEntryUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse = update(params.toBuilder().id(id).build(), requestOptions)
+        fun update(id: String, params: LedgerAccountSettlementAccountEntryUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse =
+            update(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see update */
         @MustBeClosed
         fun update(params: LedgerAccountSettlementAccountEntryUpdateParams): HttpResponse =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            params: LedgerAccountSettlementAccountEntryUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun update(params: LedgerAccountSettlementAccountEntryUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
 
-        /**
-         * Returns a raw HTTP response for `delete
-         * /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the same as
-         * [AccountEntryService.delete].
-         */
+        /** Returns a raw HTTP response for `delete /api/ledger_account_settlements/{id}/ledger_entries`, but is otherwise the             same as [AccountEntryService.delete]. */
         @MustBeClosed
-        fun delete(
-            id: String,
-            params: LedgerAccountSettlementAccountEntryDeleteParams,
-        ): HttpResponse = delete(id, params, RequestOptions.none())
+        fun delete(id: String, params: LedgerAccountSettlementAccountEntryDeleteParams): HttpResponse =
+            delete(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            id: String,
-            params: LedgerAccountSettlementAccountEntryDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+        fun delete(id: String, params: LedgerAccountSettlementAccountEntryDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse =
+            delete(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
         @MustBeClosed
         fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams): HttpResponse =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
         @MustBeClosed
-        fun delete(
-            params: LedgerAccountSettlementAccountEntryDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse
+        fun delete(params: LedgerAccountSettlementAccountEntryDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponse
     }
 }

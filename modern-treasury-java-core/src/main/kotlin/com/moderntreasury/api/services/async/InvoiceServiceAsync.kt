@@ -13,15 +13,14 @@ import com.moderntreasury.api.models.InvoiceListPageAsync
 import com.moderntreasury.api.models.InvoiceListParams
 import com.moderntreasury.api.models.InvoiceRetrieveParams
 import com.moderntreasury.api.models.InvoiceUpdateParams
+import com.moderntreasury.api.services.async.InvoiceServiceAsync
 import com.moderntreasury.api.services.async.invoices.LineItemServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 interface InvoiceServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -35,120 +34,135 @@ interface InvoiceServiceAsync {
 
     /** create invoice */
     fun create(params: InvoiceCreateParams): CompletableFuture<Invoice> =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: InvoiceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invoice>
+    fun create(params: InvoiceCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Invoice>
 
     /** get invoice */
     fun retrieve(id: String): CompletableFuture<Invoice> =
-        retrieve(id, InvoiceRetrieveParams.none())
+        retrieve(
+          id, InvoiceRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invoice> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Invoice> =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
-    ): CompletableFuture<Invoice> = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: InvoiceRetrieveParams = InvoiceRetrieveParams.none()): CompletableFuture<Invoice> =
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: InvoiceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invoice>
+    fun retrieve(params: InvoiceRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Invoice>
 
     /** @see retrieve */
     fun retrieve(params: InvoiceRetrieveParams): CompletableFuture<Invoice> =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Invoice> =
-        retrieve(id, InvoiceRetrieveParams.none(), requestOptions)
+        retrieve(
+          id,
+          InvoiceRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** update invoice */
-    fun update(id: String): CompletableFuture<Invoice> = update(id, InvoiceUpdateParams.none())
+    fun update(id: String): CompletableFuture<Invoice> =
+        update(
+          id, InvoiceUpdateParams.none()
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invoice> = update(params.toBuilder().id(id).build(), requestOptions)
+    fun update(id: String, params: InvoiceUpdateParams = InvoiceUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Invoice> =
+        update(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
-    ): CompletableFuture<Invoice> = update(id, params, RequestOptions.none())
+    fun update(id: String, params: InvoiceUpdateParams = InvoiceUpdateParams.none()): CompletableFuture<Invoice> =
+        update(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        params: InvoiceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invoice>
+    fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Invoice>
 
     /** @see update */
     fun update(params: InvoiceUpdateParams): CompletableFuture<Invoice> =
-        update(params, RequestOptions.none())
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<Invoice> =
-        update(id, InvoiceUpdateParams.none(), requestOptions)
+        update(
+          id,
+          InvoiceUpdateParams.none(),
+          requestOptions,
+        )
 
     /** list invoices */
     fun list(): CompletableFuture<InvoiceListPageAsync> = list(InvoiceListParams.none())
 
     /** @see list */
-    fun list(
-        params: InvoiceListParams = InvoiceListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<InvoiceListPageAsync>
+    fun list(params: InvoiceListParams = InvoiceListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<InvoiceListPageAsync>
 
     /** @see list */
-    fun list(
-        params: InvoiceListParams = InvoiceListParams.none()
-    ): CompletableFuture<InvoiceListPageAsync> = list(params, RequestOptions.none())
+    fun list(params: InvoiceListParams = InvoiceListParams.none()): CompletableFuture<InvoiceListPageAsync> =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<InvoiceListPageAsync> =
-        list(InvoiceListParams.none(), requestOptions)
+        list(
+          InvoiceListParams.none(), requestOptions
+        )
 
     /** Add a payment order to an invoice. */
-    fun addPaymentOrder(
-        paymentOrderId: String,
-        params: InvoiceAddPaymentOrderParams,
-    ): CompletableFuture<Void?> = addPaymentOrder(paymentOrderId, params, RequestOptions.none())
+    fun addPaymentOrder(paymentOrderId: String, params: InvoiceAddPaymentOrderParams): CompletableFuture<Void?> =
+        addPaymentOrder(
+          paymentOrderId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see addPaymentOrder */
-    fun addPaymentOrder(
-        paymentOrderId: String,
-        params: InvoiceAddPaymentOrderParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?> =
-        addPaymentOrder(params.toBuilder().paymentOrderId(paymentOrderId).build(), requestOptions)
+    fun addPaymentOrder(paymentOrderId: String, params: InvoiceAddPaymentOrderParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?> =
+        addPaymentOrder(
+          params.toBuilder()
+              .paymentOrderId(paymentOrderId)
+              .build(), requestOptions
+        )
 
     /** @see addPaymentOrder */
     fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): CompletableFuture<Void?> =
-        addPaymentOrder(params, RequestOptions.none())
+        addPaymentOrder(
+          params, RequestOptions.none()
+        )
 
     /** @see addPaymentOrder */
-    fun addPaymentOrder(
-        params: InvoiceAddPaymentOrderParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?>
+    fun addPaymentOrder(params: InvoiceAddPaymentOrderParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?>
 
-    /**
-     * A view of [InvoiceServiceAsync] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [InvoiceServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -156,156 +170,138 @@ interface InvoiceServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): InvoiceServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvoiceServiceAsync.WithRawResponse
 
         fun lineItems(): LineItemServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /api/invoices`, but is otherwise the same as
-         * [InvoiceServiceAsync.create].
-         */
+        /** Returns a raw HTTP response for `post /api/invoices`, but is otherwise the             same as [InvoiceServiceAsync.create]. */
         fun create(params: InvoiceCreateParams): CompletableFuture<HttpResponseFor<Invoice>> =
-            create(params, RequestOptions.none())
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
-        fun create(
-            params: InvoiceCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>>
+        fun create(params: InvoiceCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Invoice>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/invoices/{id}`, but is otherwise the same as
-         * [InvoiceServiceAsync.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /api/invoices/{id}`, but is otherwise the             same as [InvoiceServiceAsync.retrieve]. */
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Invoice>> =
-            retrieve(id, InvoiceRetrieveParams.none())
+            retrieve(
+              id, InvoiceRetrieveParams.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            id: String,
-            params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>> =
-            retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Invoice>> =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            id: String,
-            params: InvoiceRetrieveParams = InvoiceRetrieveParams.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>> = retrieve(id, params, RequestOptions.none())
+        fun retrieve(id: String, params: InvoiceRetrieveParams = InvoiceRetrieveParams.none()): CompletableFuture<HttpResponseFor<Invoice>> =
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: InvoiceRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>>
+        fun retrieve(params: InvoiceRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Invoice>>
 
         /** @see retrieve */
         fun retrieve(params: InvoiceRetrieveParams): CompletableFuture<HttpResponseFor<Invoice>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            id: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Invoice>> =
-            retrieve(id, InvoiceRetrieveParams.none(), requestOptions)
+        fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Invoice>> =
+            retrieve(
+              id,
+              InvoiceRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the same as
-         * [InvoiceServiceAsync.update].
-         */
+        /** Returns a raw HTTP response for `patch /api/invoices/{id}`, but is otherwise the             same as [InvoiceServiceAsync.update]. */
         fun update(id: String): CompletableFuture<HttpResponseFor<Invoice>> =
-            update(id, InvoiceUpdateParams.none())
+            update(
+              id, InvoiceUpdateParams.none()
+            )
 
         /** @see update */
-        fun update(
-            id: String,
-            params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>> =
-            update(params.toBuilder().id(id).build(), requestOptions)
+        fun update(id: String, params: InvoiceUpdateParams = InvoiceUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Invoice>> =
+            update(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see update */
-        fun update(
-            id: String,
-            params: InvoiceUpdateParams = InvoiceUpdateParams.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>> = update(id, params, RequestOptions.none())
+        fun update(id: String, params: InvoiceUpdateParams = InvoiceUpdateParams.none()): CompletableFuture<HttpResponseFor<Invoice>> =
+            update(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
-        fun update(
-            params: InvoiceUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invoice>>
+        fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<Invoice>>
 
         /** @see update */
         fun update(params: InvoiceUpdateParams): CompletableFuture<HttpResponseFor<Invoice>> =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
-        fun update(
-            id: String,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Invoice>> =
-            update(id, InvoiceUpdateParams.none(), requestOptions)
+        fun update(id: String, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Invoice>> =
+            update(
+              id,
+              InvoiceUpdateParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /api/invoices`, but is otherwise the same as
-         * [InvoiceServiceAsync.list].
-         */
-        fun list(): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
-            list(InvoiceListParams.none())
+        /** Returns a raw HTTP response for `get /api/invoices`, but is otherwise the             same as [InvoiceServiceAsync.list]. */
+        fun list(): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> = list(InvoiceListParams.none())
 
         /** @see list */
-        fun list(
-            params: InvoiceListParams = InvoiceListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>>
+        fun list(params: InvoiceListParams = InvoiceListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>>
 
         /** @see list */
-        fun list(
-            params: InvoiceListParams = InvoiceListParams.none()
-        ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
-            list(params, RequestOptions.none())
+        fun list(params: InvoiceListParams = InvoiceListParams.none()): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
-        fun list(
-            requestOptions: RequestOptions
-        ): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
-            list(InvoiceListParams.none(), requestOptions)
+        fun list(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<InvoiceListPageAsync>> =
+            list(
+              InvoiceListParams.none(), requestOptions
+            )
 
-        /**
-         * Returns a raw HTTP response for `put
-         * /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the same as
-         * [InvoiceServiceAsync.addPaymentOrder].
-         */
-        fun addPaymentOrder(
-            paymentOrderId: String,
-            params: InvoiceAddPaymentOrderParams,
-        ): CompletableFuture<HttpResponse> =
-            addPaymentOrder(paymentOrderId, params, RequestOptions.none())
+        /** Returns a raw HTTP response for `put /api/invoices/{id}/payment_orders/{payment_order_id}`, but is otherwise the             same as [InvoiceServiceAsync.addPaymentOrder]. */
+        fun addPaymentOrder(paymentOrderId: String, params: InvoiceAddPaymentOrderParams): CompletableFuture<HttpResponse> =
+            addPaymentOrder(
+              paymentOrderId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see addPaymentOrder */
-        fun addPaymentOrder(
-            paymentOrderId: String,
-            params: InvoiceAddPaymentOrderParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse> =
+        fun addPaymentOrder(paymentOrderId: String, params: InvoiceAddPaymentOrderParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse> =
             addPaymentOrder(
-                params.toBuilder().paymentOrderId(paymentOrderId).build(),
-                requestOptions,
+              params.toBuilder()
+                  .paymentOrderId(paymentOrderId)
+                  .build(), requestOptions
             )
 
         /** @see addPaymentOrder */
         fun addPaymentOrder(params: InvoiceAddPaymentOrderParams): CompletableFuture<HttpResponse> =
-            addPaymentOrder(params, RequestOptions.none())
+            addPaymentOrder(
+              params, RequestOptions.none()
+            )
 
         /** @see addPaymentOrder */
-        fun addPaymentOrder(
-            params: InvoiceAddPaymentOrderParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse>
+        fun addPaymentOrder(params: InvoiceAddPaymentOrderParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse>
     }
 }

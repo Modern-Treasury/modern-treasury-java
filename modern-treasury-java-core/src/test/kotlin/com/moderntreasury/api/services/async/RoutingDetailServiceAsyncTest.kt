@@ -17,93 +17,77 @@ internal class RoutingDetailServiceAsyncTest {
 
     @Test
     fun create() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val routingDetailServiceAsync = client.routingDetails()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val routingDetailServiceAsync = client.routingDetails()
 
-        val routingDetailFuture =
-            routingDetailServiceAsync.create(
-                RoutingDetailCreateParams.builder()
-                    .accountsType(RoutingDetailCreateParams.AccountsType.EXTERNAL_ACCOUNTS)
-                    .accountId("account_id")
-                    .routingNumber("routing_number")
-                    .routingNumberType(RoutingDetailCreateParams.RoutingNumberType.ABA)
-                    .paymentType(RoutingDetailCreateParams.PaymentType.ACH)
-                    .build()
-            )
+      val routingDetailFuture = routingDetailServiceAsync.create(RoutingDetailCreateParams.builder()
+          .accountsType(RoutingDetailCreateParams.AccountsType.EXTERNAL_ACCOUNTS)
+          .accountId("account_id")
+          .routingNumber("routing_number")
+          .routingNumberType(RoutingDetailCreateParams.RoutingNumberType.ABA)
+          .paymentType(RoutingDetailCreateParams.PaymentType.ACH)
+          .build())
 
-        val routingDetail = routingDetailFuture.get()
-        routingDetail.validate()
+      val routingDetail = routingDetailFuture.get()
+      routingDetail.validate()
     }
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val routingDetailServiceAsync = client.routingDetails()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val routingDetailServiceAsync = client.routingDetails()
 
-        val routingDetailFuture =
-            routingDetailServiceAsync.retrieve(
-                RoutingDetailRetrieveParams.builder()
-                    .accountsType(AccountsType.EXTERNAL_ACCOUNTS)
-                    .accountId("account_id")
-                    .id("id")
-                    .build()
-            )
+      val routingDetailFuture = routingDetailServiceAsync.retrieve(RoutingDetailRetrieveParams.builder()
+          .accountsType(AccountsType.EXTERNAL_ACCOUNTS)
+          .accountId("account_id")
+          .id("id")
+          .build())
 
-        val routingDetail = routingDetailFuture.get()
-        routingDetail.validate()
+      val routingDetail = routingDetailFuture.get()
+      routingDetail.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val routingDetailServiceAsync = client.routingDetails()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val routingDetailServiceAsync = client.routingDetails()
 
-        val pageFuture =
-            routingDetailServiceAsync.list(
-                RoutingDetailListParams.builder()
-                    .accountsType(AccountsType.EXTERNAL_ACCOUNTS)
-                    .accountId("account_id")
-                    .build()
-            )
+      val pageFuture = routingDetailServiceAsync.list(RoutingDetailListParams.builder()
+          .accountsType(AccountsType.EXTERNAL_ACCOUNTS)
+          .accountId("account_id")
+          .build())
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 
     @Test
     fun delete() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val routingDetailServiceAsync = client.routingDetails()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val routingDetailServiceAsync = client.routingDetails()
 
-        val future =
-            routingDetailServiceAsync.delete(
-                RoutingDetailDeleteParams.builder()
-                    .accountsType(RoutingDetailDeleteParams.AccountsType.EXTERNAL_ACCOUNTS)
-                    .accountId("account_id")
-                    .id("id")
-                    .build()
-            )
+      val future = routingDetailServiceAsync.delete(RoutingDetailDeleteParams.builder()
+          .accountsType(RoutingDetailDeleteParams.AccountsType.EXTERNAL_ACCOUNTS)
+          .accountId("account_id")
+          .id("id")
+          .build())
 
-        val response = future.get()
+      val response = future.get()
     }
 }

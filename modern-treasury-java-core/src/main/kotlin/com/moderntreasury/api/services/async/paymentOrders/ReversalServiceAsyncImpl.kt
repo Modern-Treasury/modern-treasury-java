@@ -17,173 +17,144 @@ import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
 import com.moderntreasury.api.models.PaymentOrderReversalCreateParams
+import com.moderntreasury.api.models.PaymentOrderReversalListPage
 import com.moderntreasury.api.models.PaymentOrderReversalListPageAsync
 import com.moderntreasury.api.models.PaymentOrderReversalListParams
 import com.moderntreasury.api.models.PaymentOrderReversalRetrieveParams
 import com.moderntreasury.api.models.Reversal
+import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsync
+import com.moderntreasury.api.services.async.paymentOrders.ReversalServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class ReversalServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
-    ReversalServiceAsync {
+class ReversalServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: ReversalServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : ReversalServiceAsync {
+
+    private val withRawResponse: ReversalServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): ReversalServiceAsync.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReversalServiceAsync =
-        ReversalServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReversalServiceAsync = ReversalServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: PaymentOrderReversalCreateParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Reversal> =
+    override fun create(params: PaymentOrderReversalCreateParams, requestOptions: RequestOptions): CompletableFuture<Reversal> =
         // post /api/payment_orders/{payment_order_id}/reversals
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    override fun retrieve(
-        params: PaymentOrderReversalRetrieveParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Reversal> =
+    override fun retrieve(params: PaymentOrderReversalRetrieveParams, requestOptions: RequestOptions): CompletableFuture<Reversal> =
         // get /api/payment_orders/{payment_order_id}/reversals/{reversal_id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    override fun list(
-        params: PaymentOrderReversalListParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<PaymentOrderReversalListPageAsync> =
+    override fun list(params: PaymentOrderReversalListParams, requestOptions: RequestOptions): CompletableFuture<PaymentOrderReversalListPageAsync> =
         // get /api/payment_orders/{payment_order_id}/reversals
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        ReversalServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : ReversalServiceAsync.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): ReversalServiceAsync.WithRawResponse =
-            ReversalServiceAsyncImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ReversalServiceAsync.WithRawResponse = ReversalServiceAsyncImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val createHandler: Handler<Reversal> = jsonHandler<Reversal>(clientOptions.jsonMapper)
+
+        override fun create(params: PaymentOrderReversalCreateParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Reversal>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
             )
-
-        private val createHandler: Handler<Reversal> =
-            jsonHandler<Reversal>(clientOptions.jsonMapper)
-
-        override fun create(
-            params: PaymentOrderReversalCreateParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Reversal>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { createHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val retrieveHandler: Handler<Reversal> =
-            jsonHandler<Reversal>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Reversal> = jsonHandler<Reversal>(clientOptions.jsonMapper)
 
-        override fun retrieve(
-            params: PaymentOrderReversalRetrieveParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Reversal>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("reversalId", params.reversalId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        "payment_orders",
-                        params._pathParam(0),
-                        "reversals",
-                        params._pathParam(1),
-                    )
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { retrieveHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun retrieve(params: PaymentOrderReversalRetrieveParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Reversal>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("reversalId", params.reversalId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals", params._pathParam(1))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val listHandler: Handler<List<Reversal>> =
-            jsonHandler<List<Reversal>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<Reversal>> = jsonHandler<List<Reversal>>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: PaymentOrderReversalListParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { listHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.forEach { it.validate() }
-                                }
-                            }
-                            .let {
-                                PaymentOrderReversalListPageAsync.builder()
-                                    .service(ReversalServiceAsyncImpl(clientOptions))
-                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
-                                    .params(params)
-                                    .headers(response.headers())
-                                    .items(it)
-                                    .build()
-                            }
-                    }
-                }
+        override fun list(params: PaymentOrderReversalListParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<PaymentOrderReversalListPageAsync>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("paymentOrderId", params.paymentOrderId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "payment_orders", params._pathParam(0), "reversals")
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  PaymentOrderReversalListPageAsync.builder()
+                      .service(ReversalServiceAsyncImpl(clientOptions))
+                      .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          } }
         }
     }
 }

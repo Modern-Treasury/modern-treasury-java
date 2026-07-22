@@ -11,13 +11,12 @@ import com.moderntreasury.api.models.LineItemListPage
 import com.moderntreasury.api.models.LineItemListParams
 import com.moderntreasury.api.models.LineItemRetrieveParams
 import com.moderntreasury.api.models.LineItemUpdateParams
+import com.moderntreasury.api.services.blocking.LineItemService
 import java.util.function.Consumer
 
 interface LineItemService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -29,64 +28,78 @@ interface LineItemService {
 
     /** Get a single line item */
     fun retrieve(id: String, params: LineItemRetrieveParams): LineItem =
-        retrieve(id, params, RequestOptions.none())
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: LineItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItem = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: LineItemRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): LineItem =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(params: LineItemRetrieveParams): LineItem = retrieve(params, RequestOptions.none())
+    fun retrieve(params: LineItemRetrieveParams): LineItem =
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: LineItemRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItem
+    fun retrieve(params: LineItemRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): LineItem
 
     /** update line item */
     fun update(id: String, params: LineItemUpdateParams): LineItem =
-        update(id, params, RequestOptions.none())
+        update(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: LineItemUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItem = update(params.toBuilder().id(id).build(), requestOptions)
+    fun update(id: String, params: LineItemUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): LineItem =
+        update(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see update */
-    fun update(params: LineItemUpdateParams): LineItem = update(params, RequestOptions.none())
+    fun update(params: LineItemUpdateParams): LineItem =
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
-    fun update(
-        params: LineItemUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItem
+    fun update(params: LineItemUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): LineItem
 
     /** Get a list of line items */
     fun list(itemizableId: String, params: LineItemListParams): LineItemListPage =
-        list(itemizableId, params, RequestOptions.none())
+        list(
+          itemizableId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see list */
-    fun list(
-        itemizableId: String,
-        params: LineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItemListPage =
-        list(params.toBuilder().itemizableId(itemizableId).build(), requestOptions)
+    fun list(itemizableId: String, params: LineItemListParams, requestOptions: RequestOptions = RequestOptions.none()): LineItemListPage =
+        list(
+          params.toBuilder()
+              .itemizableId(itemizableId)
+              .build(), requestOptions
+        )
 
     /** @see list */
-    fun list(params: LineItemListParams): LineItemListPage = list(params, RequestOptions.none())
+    fun list(params: LineItemListParams): LineItemListPage =
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
-    fun list(
-        params: LineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItemListPage
+    fun list(params: LineItemListParams, requestOptions: RequestOptions = RequestOptions.none()): LineItemListPage
 
     /** A view of [LineItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -98,93 +111,91 @@ interface LineItemService {
          */
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get
-         * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
-         * [LineItemService.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the             same as [LineItemService.retrieve]. */
         @MustBeClosed
         fun retrieve(id: String, params: LineItemRetrieveParams): HttpResponseFor<LineItem> =
-            retrieve(id, params, RequestOptions.none())
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: LineItemRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItem> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: LineItemRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItem> =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: LineItemRetrieveParams): HttpResponseFor<LineItem> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            params: LineItemRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItem>
+        fun retrieve(params: LineItemRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItem>
 
-        /**
-         * Returns a raw HTTP response for `patch
-         * /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the same as
-         * [LineItemService.update].
-         */
+        /** Returns a raw HTTP response for `patch /api/{itemizable_type}/{itemizable_id}/line_items/{id}`, but is otherwise the             same as [LineItemService.update]. */
         @MustBeClosed
         fun update(id: String, params: LineItemUpdateParams): HttpResponseFor<LineItem> =
-            update(id, params, RequestOptions.none())
+            update(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: LineItemUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItem> = update(params.toBuilder().id(id).build(), requestOptions)
+        fun update(id: String, params: LineItemUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItem> =
+            update(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see update */
         @MustBeClosed
         fun update(params: LineItemUpdateParams): HttpResponseFor<LineItem> =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            params: LineItemUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItem>
+        fun update(params: LineItemUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItem>
 
-        /**
-         * Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items`,
-         * but is otherwise the same as [LineItemService.list].
-         */
+        /** Returns a raw HTTP response for `get /api/{itemizable_type}/{itemizable_id}/line_items`, but is otherwise the             same as [LineItemService.list]. */
         @MustBeClosed
-        fun list(
-            itemizableId: String,
-            params: LineItemListParams,
-        ): HttpResponseFor<LineItemListPage> = list(itemizableId, params, RequestOptions.none())
+        fun list(itemizableId: String, params: LineItemListParams): HttpResponseFor<LineItemListPage> =
+            list(
+              itemizableId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            itemizableId: String,
-            params: LineItemListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItemListPage> =
-            list(params.toBuilder().itemizableId(itemizableId).build(), requestOptions)
+        fun list(itemizableId: String, params: LineItemListParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItemListPage> =
+            list(
+              params.toBuilder()
+                  .itemizableId(itemizableId)
+                  .build(), requestOptions
+            )
 
         /** @see list */
         @MustBeClosed
         fun list(params: LineItemListParams): HttpResponseFor<LineItemListPage> =
-            list(params, RequestOptions.none())
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: LineItemListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItemListPage>
+        fun list(params: LineItemListParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LineItemListPage>
     }
 }

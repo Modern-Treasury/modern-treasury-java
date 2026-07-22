@@ -6,33 +6,33 @@ import com.moderntreasury.api.core.AutoPager
 import com.moderntreasury.api.core.Page
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
+import com.moderntreasury.api.models.HoldListParams
+import com.moderntreasury.api.models.HoldListResponse
 import com.moderntreasury.api.services.blocking.HoldService
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** @see HoldService.list */
-class HoldListPage
-private constructor(
+class HoldListPage private constructor(
     private val service: HoldService,
     private val params: HoldListParams,
     private val headers: Headers,
     private val items: List<HoldListResponse>,
+
 ) : Page<HoldListResponse> {
 
-    fun perPage(): Optional<String> =
-        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
+    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
-    fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
+    fun afterCursor(): Optional<String> = Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): HoldListParams {
-        val nextCursor =
-            afterCursor().getOrNull()
-                ?: throw IllegalStateException("Cannot construct next page params")
-        return params.toBuilder().afterCursor(nextCursor).build()
+      val nextCursor = afterCursor().getOrNull() ?: throw IllegalStateException("Cannot construct next page params")
+      return params.toBuilder()
+          .afterCursor(nextCursor)
+          .build()
     }
 
     override fun nextPage(): HoldListPage = service.list(nextPageParams())
@@ -53,6 +53,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [HoldListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -60,7 +61,8 @@ private constructor(
          * .items()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [HoldListPage]. */
@@ -72,22 +74,35 @@ private constructor(
         private var items: List<HoldListResponse>? = null
 
         @JvmSynthetic
-        internal fun from(holdListPage: HoldListPage) = apply {
-            service = holdListPage.service
-            params = holdListPage.params
-            headers = holdListPage.headers
-            items = holdListPage.items
-        }
+        internal fun from(holdListPage: HoldListPage) =
+            apply {
+                service = holdListPage.service
+                params = holdListPage.params
+                headers = holdListPage.headers
+                items = holdListPage.items
+            }
 
-        fun service(service: HoldService) = apply { this.service = service }
+        fun service(service: HoldService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: HoldListParams) = apply { this.params = params }
+        fun params(params: HoldListParams) =
+            apply {
+                this.params = params
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<HoldListResponse>) = apply { this.items = items }
+        fun items(items: List<HoldListResponse>) =
+            apply {
+                this.items = items
+            }
 
         /**
          * Returns an immutable instance of [HoldListPage].
@@ -95,6 +110,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -106,27 +122,30 @@ private constructor(
          */
         fun build(): HoldListPage =
             HoldListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("headers", headers),
-                checkRequired("items", items),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "items", items
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is HoldListPage &&
-            service == other.service &&
-            params == other.params &&
-            headers == other.headers &&
-            items == other.items
+      return other is HoldListPage && service == other.service && params == other.params && headers == other.headers && items == other.items
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, headers, items)
 
-    override fun toString() =
-        "HoldListPage{service=$service, params=$params, headers=$headers, items=$items}"
+    override fun toString() = "HoldListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

@@ -23,203 +23,171 @@ import com.moderntreasury.api.models.AccountDetailDeleteParams
 import com.moderntreasury.api.models.AccountDetailListPage
 import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
+import com.moderntreasury.api.services.blocking.AccountDetailService
+import com.moderntreasury.api.services.blocking.AccountDetailServiceImpl
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class AccountDetailServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    AccountDetailService {
+class AccountDetailServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: AccountDetailService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : AccountDetailService {
+
+    private val withRawResponse: AccountDetailService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): AccountDetailService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailService =
-        AccountDetailServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailService = AccountDetailServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: AccountDetailCreateParams,
-        requestOptions: RequestOptions,
-    ): AccountDetail =
+    override fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions): AccountDetail =
         // post /api/{accounts_type}/{account_id}/account_details
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(
-        params: AccountDetailRetrieveParams,
-        requestOptions: RequestOptions,
-    ): AccountDetail =
+    override fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions): AccountDetail =
         // get /api/{accounts_type}/{account_id}/account_details/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun list(
-        params: AccountDetailListParams,
-        requestOptions: RequestOptions,
-    ): AccountDetailListPage =
+    override fun list(params: AccountDetailListParams, requestOptions: RequestOptions): AccountDetailListPage =
         // get /api/{accounts_type}/{account_id}/account_details
         withRawResponse().list(params, requestOptions).parse()
 
     override fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions) {
-        // delete /api/{accounts_type}/{account_id}/account_details/{id}
-        withRawResponse().delete(params, requestOptions)
+      // delete /api/{accounts_type}/{account_id}/account_details/{id}
+      withRawResponse().delete(params, requestOptions)
     }
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        AccountDetailService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : AccountDetailService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): AccountDetailService.WithRawResponse =
-            AccountDetailServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailService.WithRawResponse = AccountDetailServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val createHandler: Handler<AccountDetail> = jsonHandler<AccountDetail>(clientOptions.jsonMapper)
+
+        override fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions): HttpResponseFor<AccountDetail> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("accountId", params.accountId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepare(
+              clientOptions, params
             )
-
-        private val createHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
-
-        override fun create(
-            params: AccountDetailCreateParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountDetail> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("accountId", params.accountId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                    )
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val retrieveHandler: Handler<AccountDetail> =
-            jsonHandler<AccountDetail>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<AccountDetail> = jsonHandler<AccountDetail>(clientOptions.jsonMapper)
 
-        override fun retrieve(
-            params: AccountDetailRetrieveParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountDetail> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                        params._pathParam(2),
-                    )
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
+        override fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions): HttpResponseFor<AccountDetail> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details", params._pathParam(2))
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          }
         }
 
-        private val listHandler: Handler<List<AccountDetail>> =
-            jsonHandler<List<AccountDetail>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<AccountDetail>> = jsonHandler<List<AccountDetail>>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: AccountDetailListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountDetailListPage> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("accountId", params.accountId().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                    )
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.forEach { it.validate() }
-                        }
-                    }
-                    .let {
-                        AccountDetailListPage.builder()
-                            .service(AccountDetailServiceImpl(clientOptions))
-                            .params(params)
-                            .headers(response.headers())
-                            .items(it)
-                            .build()
-                    }
-            }
+        override fun list(params: AccountDetailListParams, requestOptions: RequestOptions): HttpResponseFor<AccountDetailListPage> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("accountId", params.accountId().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details")
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  AccountDetailListPage.builder()
+                      .service(AccountDetailServiceImpl(clientOptions))
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          }
         }
 
         private val deleteHandler: Handler<Void?> = emptyHandler()
 
-        override fun delete(
-            params: AccountDetailDeleteParams,
-            requestOptions: RequestOptions,
-        ): HttpResponse {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.DELETE)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        params._pathParam(0),
-                        params._pathParam(1),
-                        "account_details",
-                        params._pathParam(2),
-                    )
-                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response.use { deleteHandler.handle(it) }
-            }
+        override fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions): HttpResponse {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.DELETE)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", params._pathParam(0), params._pathParam(1), "account_details", params._pathParam(2))
+            .apply { params._body().ifPresent{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepare(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  deleteHandler.handle(it)
+              }
+          }
         }
     }
 }

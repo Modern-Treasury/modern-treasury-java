@@ -5,6 +5,9 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.models.DocumentCreateParams
+import com.moderntreasury.api.models.DocumentListParams
+import com.moderntreasury.api.models.DocumentRetrieveParams
+import java.io.ByteArrayInputStream
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -15,57 +18,51 @@ internal class DocumentServiceAsyncTest {
     @Disabled("multipart/form-data not yet supported")
     @Test
     fun create() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val documentServiceAsync = client.documents()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val documentServiceAsync = client.documents()
 
-        val documentFuture =
-            documentServiceAsync.create(
-                DocumentCreateParams.builder()
-                    .file("Example data".byteInputStream())
-                    .documentType("document_type")
-                    .documentableId("documentable_id")
-                    .documentableType(DocumentCreateParams.DocumentableType.CONNECTIONS)
-                    .build()
-            )
+      val documentFuture = documentServiceAsync.create(DocumentCreateParams.builder()
+          .file("Example data".byteInputStream())
+          .documentType("document_type")
+          .documentableId("documentable_id")
+          .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
+          .build())
 
-        val document = documentFuture.get()
-        document.validate()
+      val document = documentFuture.get()
+      document.validate()
     }
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val documentServiceAsync = client.documents()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val documentServiceAsync = client.documents()
 
-        val documentFuture = documentServiceAsync.retrieve("id")
+      val documentFuture = documentServiceAsync.retrieve("id")
 
-        val document = documentFuture.get()
-        document.validate()
+      val document = documentFuture.get()
+      document.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val documentServiceAsync = client.documents()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val documentServiceAsync = client.documents()
 
-        val pageFuture = documentServiceAsync.list()
+      val pageFuture = documentServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 }

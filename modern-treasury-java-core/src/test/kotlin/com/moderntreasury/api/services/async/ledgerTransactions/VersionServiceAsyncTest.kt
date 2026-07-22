@@ -4,6 +4,7 @@ package com.moderntreasury.api.services.async.ledgerTransactions
 
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
+import com.moderntreasury.api.models.LedgerTransactionVersionListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -12,17 +13,16 @@ internal class VersionServiceAsyncTest {
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val versionServiceAsync = client.ledgerTransactions().versions()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val versionServiceAsync = client.ledgerTransactions().versions()
 
-        val pageFuture = versionServiceAsync.list()
+      val pageFuture = versionServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 }

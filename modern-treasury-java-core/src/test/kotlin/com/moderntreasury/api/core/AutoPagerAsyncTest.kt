@@ -136,7 +136,9 @@ internal class AutoPagerAsyncTest {
         }
         clearInvocations(executor, handler)
 
-        page.nextPageFuture.complete(PageAsyncImpl(listOf("chunk3", "chunk4"), hasNext = false))
+        page.nextPageFuture.complete(
+            PageAsyncImpl(listOf("chunk3", "chunk4"), hasNext = false)
+        )
 
         verify(executor, never()).execute(any())
         inOrder(handler) {

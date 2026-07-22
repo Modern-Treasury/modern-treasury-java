@@ -6,33 +6,33 @@ import com.moderntreasury.api.core.AutoPager
 import com.moderntreasury.api.core.Page
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
+import com.moderntreasury.api.models.AccountCollectionFlow
+import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.services.blocking.AccountCollectionFlowService
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** @see AccountCollectionFlowService.list */
-class AccountCollectionFlowListPage
-private constructor(
+class AccountCollectionFlowListPage private constructor(
     private val service: AccountCollectionFlowService,
     private val params: AccountCollectionFlowListParams,
     private val headers: Headers,
     private val items: List<AccountCollectionFlow>,
+
 ) : Page<AccountCollectionFlow> {
 
-    fun perPage(): Optional<String> =
-        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
+    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
-    fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
+    fun afterCursor(): Optional<String> = Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): AccountCollectionFlowListParams {
-        val nextCursor =
-            afterCursor().getOrNull()
-                ?: throw IllegalStateException("Cannot construct next page params")
-        return params.toBuilder().afterCursor(nextCursor).build()
+      val nextCursor = afterCursor().getOrNull() ?: throw IllegalStateException("Cannot construct next page params")
+      return params.toBuilder()
+          .afterCursor(nextCursor)
+          .build()
     }
 
     override fun nextPage(): AccountCollectionFlowListPage = service.list(nextPageParams())
@@ -50,10 +50,10 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [AccountCollectionFlowListPage].
+         * Returns a mutable builder for constructing an instance of [AccountCollectionFlowListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -61,7 +61,8 @@ private constructor(
          * .items()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [AccountCollectionFlowListPage]. */
@@ -73,22 +74,35 @@ private constructor(
         private var items: List<AccountCollectionFlow>? = null
 
         @JvmSynthetic
-        internal fun from(accountCollectionFlowListPage: AccountCollectionFlowListPage) = apply {
-            service = accountCollectionFlowListPage.service
-            params = accountCollectionFlowListPage.params
-            headers = accountCollectionFlowListPage.headers
-            items = accountCollectionFlowListPage.items
-        }
+        internal fun from(accountCollectionFlowListPage: AccountCollectionFlowListPage) =
+            apply {
+                service = accountCollectionFlowListPage.service
+                params = accountCollectionFlowListPage.params
+                headers = accountCollectionFlowListPage.headers
+                items = accountCollectionFlowListPage.items
+            }
 
-        fun service(service: AccountCollectionFlowService) = apply { this.service = service }
+        fun service(service: AccountCollectionFlowService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: AccountCollectionFlowListParams) = apply { this.params = params }
+        fun params(params: AccountCollectionFlowListParams) =
+            apply {
+                this.params = params
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<AccountCollectionFlow>) = apply { this.items = items }
+        fun items(items: List<AccountCollectionFlow>) =
+            apply {
+                this.items = items
+            }
 
         /**
          * Returns an immutable instance of [AccountCollectionFlowListPage].
@@ -96,6 +110,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -107,27 +122,30 @@ private constructor(
          */
         fun build(): AccountCollectionFlowListPage =
             AccountCollectionFlowListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("headers", headers),
-                checkRequired("items", items),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "items", items
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is AccountCollectionFlowListPage &&
-            service == other.service &&
-            params == other.params &&
-            headers == other.headers &&
-            items == other.items
+      return other is AccountCollectionFlowListPage && service == other.service && params == other.params && headers == other.headers && items == other.items
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, headers, items)
 
-    override fun toString() =
-        "AccountCollectionFlowListPage{service=$service, params=$params, headers=$headers, items=$items}"
+    override fun toString() = "AccountCollectionFlowListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

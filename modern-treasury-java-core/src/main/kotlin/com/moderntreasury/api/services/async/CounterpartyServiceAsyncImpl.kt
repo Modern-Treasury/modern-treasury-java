@@ -22,282 +22,237 @@ import com.moderntreasury.api.models.CounterpartyCollectAccountParams
 import com.moderntreasury.api.models.CounterpartyCollectAccountResponse
 import com.moderntreasury.api.models.CounterpartyCreateParams
 import com.moderntreasury.api.models.CounterpartyDeleteParams
+import com.moderntreasury.api.models.CounterpartyListPage
 import com.moderntreasury.api.models.CounterpartyListPageAsync
 import com.moderntreasury.api.models.CounterpartyListParams
 import com.moderntreasury.api.models.CounterpartyRetrieveParams
 import com.moderntreasury.api.models.CounterpartyUpdateParams
+import com.moderntreasury.api.services.async.CounterpartyServiceAsync
+import com.moderntreasury.api.services.async.CounterpartyServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class CounterpartyServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
-    CounterpartyServiceAsync {
+class CounterpartyServiceAsyncImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: CounterpartyServiceAsync.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : CounterpartyServiceAsync {
+
+    private val withRawResponse: CounterpartyServiceAsync.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): CounterpartyServiceAsync.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterpartyServiceAsync =
-        CounterpartyServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterpartyServiceAsync = CounterpartyServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: CounterpartyCreateParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Counterparty> =
+    override fun create(params: CounterpartyCreateParams, requestOptions: RequestOptions): CompletableFuture<Counterparty> =
         // post /api/counterparties
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    override fun retrieve(
-        params: CounterpartyRetrieveParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Counterparty> =
+    override fun retrieve(params: CounterpartyRetrieveParams, requestOptions: RequestOptions): CompletableFuture<Counterparty> =
         // get /api/counterparties/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    override fun update(
-        params: CounterpartyUpdateParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Counterparty> =
+    override fun update(params: CounterpartyUpdateParams, requestOptions: RequestOptions): CompletableFuture<Counterparty> =
         // patch /api/counterparties/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    override fun list(
-        params: CounterpartyListParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<CounterpartyListPageAsync> =
+    override fun list(params: CounterpartyListParams, requestOptions: RequestOptions): CompletableFuture<CounterpartyListPageAsync> =
         // get /api/counterparties
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    override fun delete(
-        params: CounterpartyDeleteParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<Void?> =
+    override fun delete(params: CounterpartyDeleteParams, requestOptions: RequestOptions): CompletableFuture<Void?> =
         // delete /api/counterparties/{id}
         withRawResponse().delete(params, requestOptions).thenAccept {}
 
-    override fun collectAccount(
-        params: CounterpartyCollectAccountParams,
-        requestOptions: RequestOptions,
-    ): CompletableFuture<CounterpartyCollectAccountResponse> =
+    override fun collectAccount(params: CounterpartyCollectAccountParams, requestOptions: RequestOptions): CompletableFuture<CounterpartyCollectAccountResponse> =
         // post /api/counterparties/{id}/collect_account
         withRawResponse().collectAccount(params, requestOptions).thenApply { it.parse() }
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        CounterpartyServiceAsync.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : CounterpartyServiceAsync.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): CounterpartyServiceAsync.WithRawResponse =
-            CounterpartyServiceAsyncImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterpartyServiceAsync.WithRawResponse = CounterpartyServiceAsyncImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val createHandler: Handler<Counterparty> = jsonHandler<Counterparty>(clientOptions.jsonMapper)
+
+        override fun create(params: CounterpartyCreateParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Counterparty>> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
             )
-
-        private val createHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper)
-
-        override fun create(
-            params: CounterpartyCreateParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Counterparty>> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "counterparties")
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { createHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  createHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val retrieveHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Counterparty> = jsonHandler<Counterparty>(clientOptions.jsonMapper)
 
-        override fun retrieve(
-            params: CounterpartyRetrieveParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Counterparty>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "counterparties", params._pathParam(0))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { retrieveHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun retrieve(params: CounterpartyRetrieveParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Counterparty>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties", params._pathParam(0))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  retrieveHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val updateHandler: Handler<Counterparty> =
-            jsonHandler<Counterparty>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Counterparty> = jsonHandler<Counterparty>(clientOptions.jsonMapper)
 
-        override fun update(
-            params: CounterpartyUpdateParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Counterparty>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.PATCH)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "counterparties", params._pathParam(0))
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { updateHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun update(params: CounterpartyUpdateParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<Counterparty>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.PATCH)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties", params._pathParam(0))
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  updateHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
 
-        private val listHandler: Handler<List<Counterparty>> =
-            jsonHandler<List<Counterparty>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<Counterparty>> = jsonHandler<List<Counterparty>>(clientOptions.jsonMapper)
 
-        override fun list(
-            params: CounterpartyListParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "counterparties")
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { listHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.forEach { it.validate() }
-                                }
-                            }
-                            .let {
-                                CounterpartyListPageAsync.builder()
-                                    .service(CounterpartyServiceAsyncImpl(clientOptions))
-                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
-                                    .params(params)
-                                    .headers(response.headers())
-                                    .items(it)
-                                    .build()
-                            }
-                    }
-                }
+        override fun list(params: CounterpartyListParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<CounterpartyListPageAsync>> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties")
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  CounterpartyListPageAsync.builder()
+                      .service(CounterpartyServiceAsyncImpl(clientOptions))
+                      .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          } }
         }
 
         private val deleteHandler: Handler<Void?> = emptyHandler()
 
-        override fun delete(
-            params: CounterpartyDeleteParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponse> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.DELETE)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "counterparties", params._pathParam(0))
-                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response.use { deleteHandler.handle(it) }
-                    }
-                }
+        override fun delete(params: CounterpartyDeleteParams, requestOptions: RequestOptions): CompletableFuture<HttpResponse> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.DELETE)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties", params._pathParam(0))
+            .apply { params._body().ifPresent{ body(json(clientOptions.jsonMapper, it)) } }
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  deleteHandler.handle(it)
+              }
+          } }
         }
 
-        private val collectAccountHandler: Handler<CounterpartyCollectAccountResponse> =
-            jsonHandler<CounterpartyCollectAccountResponse>(clientOptions.jsonMapper)
+        private val collectAccountHandler: Handler<CounterpartyCollectAccountResponse> = jsonHandler<CounterpartyCollectAccountResponse>(clientOptions.jsonMapper)
 
-        override fun collectAccount(
-            params: CounterpartyCollectAccountParams,
-            requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.POST)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments(
-                        "api",
-                        "counterparties",
-                        params._pathParam(0),
-                        "collect_account",
-                    )
-                    .body(json(clientOptions.jsonMapper, params._body()))
-                    .build()
-                    .prepareAsync(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            return request
-                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-                .thenApply { response ->
-                    errorHandler.handle(response).parseable {
-                        response
-                            .use { collectAccountHandler.handle(it) }
-                            .also {
-                                if (requestOptions.responseValidation!!) {
-                                    it.validate()
-                                }
-                            }
-                    }
-                }
+        override fun collectAccount(params: CounterpartyCollectAccountParams, requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<CounterpartyCollectAccountResponse>> {
+          // We check here instead of in the params builder because this can be specified positionally or in the params class.
+          checkRequired("id", params.id().getOrNull())
+          val request = HttpRequest.builder()
+            .method(HttpMethod.POST)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "counterparties", params._pathParam(0), "collect_account")
+            .body(json(clientOptions.jsonMapper, params._body()))
+            .build()
+            .prepareAsync(
+              clientOptions, params
+            )
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          return request.thenComposeAsync { clientOptions.httpClient.executeAsync(
+            it, requestOptions
+          ) }.thenApply { response -> errorHandler.handle(response).parseable {
+              response.use {
+                  collectAccountHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.validate()
+                  }
+              }
+          } }
         }
     }
 }

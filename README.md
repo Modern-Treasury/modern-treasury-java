@@ -208,7 +208,7 @@ import java.nio.file.Paths;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(Paths.get("my/file.txt"))
     .build();
 Document document = client.documents().create(params);
@@ -223,7 +223,7 @@ import java.net.URL;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(new URL("https://example.com/my/file.txt").openStream())
     .build();
 Document document = client.documents().create(params);
@@ -237,7 +237,7 @@ import com.moderntreasury.api.models.DocumentCreateParams;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file("content".getBytes())
     .build();
 Document document = client.documents().create(params);
@@ -254,7 +254,7 @@ import java.net.URL;
 
 DocumentCreateParams params = DocumentCreateParams.builder()
     .documentableId("24c6b7a3-02...")
-    .documentableType(DocumentCreateParams.DocumentableType.COUNTERPARTIES)
+    .documentableType(DocumentCreateParams.DocumentableType.CONNECTION)
     .file(MultipartField.<InputStream>builder()
         .value(new URL("https://example.com/my/file.txt").openStream())
         .filename("my/file.txt")

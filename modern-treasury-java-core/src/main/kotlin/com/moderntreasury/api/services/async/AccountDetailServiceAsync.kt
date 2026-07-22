@@ -12,14 +12,13 @@ import com.moderntreasury.api.models.AccountDetailDeleteParams
 import com.moderntreasury.api.models.AccountDetailListPageAsync
 import com.moderntreasury.api.models.AccountDetailListParams
 import com.moderntreasury.api.models.AccountDetailRetrieveParams
+import com.moderntreasury.api.services.async.AccountDetailServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 interface AccountDetailServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -30,103 +29,106 @@ interface AccountDetailServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync
 
     /** Create an account detail for an external account. */
-    fun create(
-        accountId: String,
-        params: AccountDetailCreateParams,
-    ): CompletableFuture<AccountDetail> = create(accountId, params, RequestOptions.none())
+    fun create(accountId: String, params: AccountDetailCreateParams): CompletableFuture<AccountDetail> =
+        create(
+          accountId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see create */
-    fun create(
-        accountId: String,
-        params: AccountDetailCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetail> =
-        create(params.toBuilder().accountId(accountId).build(), requestOptions)
+    fun create(accountId: String, params: AccountDetailCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetail> =
+        create(
+          params.toBuilder()
+              .accountId(accountId)
+              .build(), requestOptions
+        )
 
     /** @see create */
     fun create(params: AccountDetailCreateParams): CompletableFuture<AccountDetail> =
-        create(params, RequestOptions.none())
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: AccountDetailCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetail>
+    fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetail>
 
     /** Get a single account detail for a single internal or external account. */
-    fun retrieve(
-        id: String,
-        params: AccountDetailRetrieveParams,
-    ): CompletableFuture<AccountDetail> = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: AccountDetailRetrieveParams): CompletableFuture<AccountDetail> =
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: AccountDetailRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetail> =
-        retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: AccountDetailRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetail> =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
     fun retrieve(params: AccountDetailRetrieveParams): CompletableFuture<AccountDetail> =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: AccountDetailRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetail>
+    fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetail>
 
     /** Get a list of account details for a single internal or external account. */
-    fun list(
-        accountId: String,
-        params: AccountDetailListParams,
-    ): CompletableFuture<AccountDetailListPageAsync> =
-        list(accountId, params, RequestOptions.none())
+    fun list(accountId: String, params: AccountDetailListParams): CompletableFuture<AccountDetailListPageAsync> =
+        list(
+          accountId,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see list */
-    fun list(
-        accountId: String,
-        params: AccountDetailListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetailListPageAsync> =
-        list(params.toBuilder().accountId(accountId).build(), requestOptions)
+    fun list(accountId: String, params: AccountDetailListParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetailListPageAsync> =
+        list(
+          params.toBuilder()
+              .accountId(accountId)
+              .build(), requestOptions
+        )
 
     /** @see list */
     fun list(params: AccountDetailListParams): CompletableFuture<AccountDetailListPageAsync> =
-        list(params, RequestOptions.none())
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
-    fun list(
-        params: AccountDetailListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountDetailListPageAsync>
+    fun list(params: AccountDetailListParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<AccountDetailListPageAsync>
 
     /** Delete a single account detail for an external account. */
     fun delete(id: String, params: AccountDetailDeleteParams): CompletableFuture<Void?> =
-        delete(id, params, RequestOptions.none())
+        delete(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see delete */
-    fun delete(
-        id: String,
-        params: AccountDetailDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?> = delete(params.toBuilder().id(id).build(), requestOptions)
+    fun delete(id: String, params: AccountDetailDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?> =
+        delete(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see delete */
     fun delete(params: AccountDetailDeleteParams): CompletableFuture<Void?> =
-        delete(params, RequestOptions.none())
+        delete(
+          params, RequestOptions.none()
+        )
 
     /** @see delete */
-    fun delete(
-        params: AccountDetailDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Void?>
+    fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<Void?>
 
-    /**
-     * A view of [AccountDetailServiceAsync] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [AccountDetailServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -134,124 +136,106 @@ interface AccountDetailServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): AccountDetailServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountDetailServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/account_details`,
-         * but is otherwise the same as [AccountDetailServiceAsync.create].
-         */
-        fun create(
-            accountId: String,
-            params: AccountDetailCreateParams,
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> =
-            create(accountId, params, RequestOptions.none())
+        /** Returns a raw HTTP response for `post /api/{accounts_type}/{account_id}/account_details`, but is otherwise the             same as [AccountDetailServiceAsync.create]. */
+        fun create(accountId: String, params: AccountDetailCreateParams): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            create(
+              accountId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see create */
-        fun create(
-            accountId: String,
-            params: AccountDetailCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> =
-            create(params.toBuilder().accountId(accountId).build(), requestOptions)
+        fun create(accountId: String, params: AccountDetailCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            create(
+              params.toBuilder()
+                  .accountId(accountId)
+                  .build(), requestOptions
+            )
 
         /** @see create */
-        fun create(
-            params: AccountDetailCreateParams
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> = create(params, RequestOptions.none())
+        fun create(params: AccountDetailCreateParams): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
-        fun create(
-            params: AccountDetailCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetail>>
+        fun create(params: AccountDetailCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetail>>
 
-        /**
-         * Returns a raw HTTP response for `get
-         * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
-         * [AccountDetailServiceAsync.retrieve].
-         */
-        fun retrieve(
-            id: String,
-            params: AccountDetailRetrieveParams,
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> =
-            retrieve(id, params, RequestOptions.none())
+        /** Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the             same as [AccountDetailServiceAsync.retrieve]. */
+        fun retrieve(id: String, params: AccountDetailRetrieveParams): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            id: String,
-            params: AccountDetailRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> =
-            retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: AccountDetailRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: AccountDetailRetrieveParams
-        ): CompletableFuture<HttpResponseFor<AccountDetail>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(params: AccountDetailRetrieveParams): CompletableFuture<HttpResponseFor<AccountDetail>> =
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
-        fun retrieve(
-            params: AccountDetailRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetail>>
+        fun retrieve(params: AccountDetailRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetail>>
 
-        /**
-         * Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/account_details`,
-         * but is otherwise the same as [AccountDetailServiceAsync.list].
-         */
-        fun list(
-            accountId: String,
-            params: AccountDetailListParams,
-        ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
-            list(accountId, params, RequestOptions.none())
+        /** Returns a raw HTTP response for `get /api/{accounts_type}/{account_id}/account_details`, but is otherwise the             same as [AccountDetailServiceAsync.list]. */
+        fun list(accountId: String, params: AccountDetailListParams): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
+            list(
+              accountId,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see list */
-        fun list(
-            accountId: String,
-            params: AccountDetailListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
-            list(params.toBuilder().accountId(accountId).build(), requestOptions)
+        fun list(accountId: String, params: AccountDetailListParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
+            list(
+              params.toBuilder()
+                  .accountId(accountId)
+                  .build(), requestOptions
+            )
 
         /** @see list */
-        fun list(
-            params: AccountDetailListParams
-        ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
-            list(params, RequestOptions.none())
+        fun list(params: AccountDetailListParams): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
-        fun list(
-            params: AccountDetailListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>>
+        fun list(params: AccountDetailListParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<AccountDetailListPageAsync>>
 
-        /**
-         * Returns a raw HTTP response for `delete
-         * /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the same as
-         * [AccountDetailServiceAsync.delete].
-         */
+        /** Returns a raw HTTP response for `delete /api/{accounts_type}/{account_id}/account_details/{id}`, but is otherwise the             same as [AccountDetailServiceAsync.delete]. */
         fun delete(id: String, params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
-            delete(id, params, RequestOptions.none())
+            delete(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see delete */
-        fun delete(
-            id: String,
-            params: AccountDetailDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse> =
-            delete(params.toBuilder().id(id).build(), requestOptions)
+        fun delete(id: String, params: AccountDetailDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse> =
+            delete(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see delete */
         fun delete(params: AccountDetailDeleteParams): CompletableFuture<HttpResponse> =
-            delete(params, RequestOptions.none())
+            delete(
+              params, RequestOptions.none()
+            )
 
         /** @see delete */
-        fun delete(
-            params: AccountDetailDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponse>
+        fun delete(params: AccountDetailDeleteParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponse>
     }
 }

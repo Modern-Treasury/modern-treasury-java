@@ -12,13 +12,12 @@ import com.moderntreasury.api.models.LegalEntityListPage
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
 import com.moderntreasury.api.models.LegalEntityUpdateParams
+import com.moderntreasury.api.services.blocking.LegalEntityService
 import java.util.function.Consumer
 
 interface LegalEntityService {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -29,93 +28,111 @@ interface LegalEntityService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityService
 
     /** create legal_entity */
-    fun create(params: LegalEntityCreateParams): LegalEntity = create(params, RequestOptions.none())
+    fun create(params: LegalEntityCreateParams): LegalEntity =
+        create(
+          params, RequestOptions.none()
+        )
 
     /** @see create */
-    fun create(
-        params: LegalEntityCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity
+    fun create(params: LegalEntityCreateParams, requestOptions: RequestOptions = RequestOptions.none()): LegalEntity
 
     /** Get details on a single legal entity. */
-    fun retrieve(id: String): LegalEntity = retrieve(id, LegalEntityRetrieveParams.none())
+    fun retrieve(id: String): LegalEntity =
+        retrieve(
+          id, LegalEntityRetrieveParams.none()
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity = retrieve(params.toBuilder().id(id).build(), requestOptions)
+    fun retrieve(id: String, params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): LegalEntity =
+        retrieve(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        id: String,
-        params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
-    ): LegalEntity = retrieve(id, params, RequestOptions.none())
+    fun retrieve(id: String, params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none()): LegalEntity =
+        retrieve(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see retrieve */
-    fun retrieve(
-        params: LegalEntityRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity
+    fun retrieve(params: LegalEntityRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): LegalEntity
 
     /** @see retrieve */
     fun retrieve(params: LegalEntityRetrieveParams): LegalEntity =
-        retrieve(params, RequestOptions.none())
+        retrieve(
+          params, RequestOptions.none()
+        )
 
     /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): LegalEntity =
-        retrieve(id, LegalEntityRetrieveParams.none(), requestOptions)
+        retrieve(
+          id,
+          LegalEntityRetrieveParams.none(),
+          requestOptions,
+        )
 
     /** Update a legal entity. */
-    fun update(id: String): LegalEntity = update(id, LegalEntityUpdateParams.none())
+    fun update(id: String): LegalEntity =
+        update(
+          id, LegalEntityUpdateParams.none()
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity = update(params.toBuilder().id(id).build(), requestOptions)
+    fun update(id: String, params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): LegalEntity =
+        update(
+          params.toBuilder()
+              .id(id)
+              .build(), requestOptions
+        )
 
     /** @see update */
-    fun update(
-        id: String,
-        params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
-    ): LegalEntity = update(id, params, RequestOptions.none())
+    fun update(id: String, params: LegalEntityUpdateParams = LegalEntityUpdateParams.none()): LegalEntity =
+        update(
+          id,
+          params,
+          RequestOptions.none(),
+        )
 
     /** @see update */
-    fun update(
-        params: LegalEntityUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntity
+    fun update(params: LegalEntityUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): LegalEntity
 
     /** @see update */
-    fun update(params: LegalEntityUpdateParams): LegalEntity = update(params, RequestOptions.none())
+    fun update(params: LegalEntityUpdateParams): LegalEntity =
+        update(
+          params, RequestOptions.none()
+        )
 
     /** @see update */
     fun update(id: String, requestOptions: RequestOptions): LegalEntity =
-        update(id, LegalEntityUpdateParams.none(), requestOptions)
+        update(
+          id,
+          LegalEntityUpdateParams.none(),
+          requestOptions,
+        )
 
     /** Get a list of all legal entities. */
     fun list(): LegalEntityListPage = list(LegalEntityListParams.none())
 
     /** @see list */
-    fun list(
-        params: LegalEntityListParams = LegalEntityListParams.none(),
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): LegalEntityListPage
+    fun list(params: LegalEntityListParams = LegalEntityListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): LegalEntityListPage
 
     /** @see list */
     fun list(params: LegalEntityListParams = LegalEntityListParams.none()): LegalEntityListPage =
-        list(params, RequestOptions.none())
+        list(
+          params, RequestOptions.none()
+        )
 
     /** @see list */
     fun list(requestOptions: RequestOptions): LegalEntityListPage =
-        list(LegalEntityListParams.none(), requestOptions)
+        list(
+          LegalEntityListParams.none(), requestOptions
+        )
 
-    /**
-     * A view of [LegalEntityService] that provides access to raw HTTP responses for each method.
-     */
+    /** A view of [LegalEntityService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -123,129 +140,129 @@ interface LegalEntityService {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): LegalEntityService.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityService.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `post /api/legal_entities`, but is otherwise the same as
-         * [LegalEntityService.create].
-         */
+        /** Returns a raw HTTP response for `post /api/legal_entities`, but is otherwise the             same as [LegalEntityService.create]. */
         @MustBeClosed
         fun create(params: LegalEntityCreateParams): HttpResponseFor<LegalEntity> =
-            create(params, RequestOptions.none())
+            create(
+              params, RequestOptions.none()
+            )
 
         /** @see create */
         @MustBeClosed
-        fun create(
-            params: LegalEntityCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity>
+        fun create(params: LegalEntityCreateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntity>
 
-        /**
-         * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same
-         * as [LegalEntityService.retrieve].
-         */
+        /** Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the             same as [LegalEntityService.retrieve]. */
         @MustBeClosed
         fun retrieve(id: String): HttpResponseFor<LegalEntity> =
-            retrieve(id, LegalEntityRetrieveParams.none())
+            retrieve(
+              id, LegalEntityRetrieveParams.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity> =
-            retrieve(params.toBuilder().id(id).build(), requestOptions)
+        fun retrieve(id: String, params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntity> =
+            retrieve(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            id: String,
-            params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none(),
-        ): HttpResponseFor<LegalEntity> = retrieve(id, params, RequestOptions.none())
+        fun retrieve(id: String, params: LegalEntityRetrieveParams = LegalEntityRetrieveParams.none()): HttpResponseFor<LegalEntity> =
+            retrieve(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see retrieve */
         @MustBeClosed
-        fun retrieve(
-            params: LegalEntityRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity>
+        fun retrieve(params: LegalEntityRetrieveParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntity>
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: LegalEntityRetrieveParams): HttpResponseFor<LegalEntity> =
-            retrieve(params, RequestOptions.none())
+            retrieve(
+              params, RequestOptions.none()
+            )
 
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<LegalEntity> =
-            retrieve(id, LegalEntityRetrieveParams.none(), requestOptions)
+            retrieve(
+              id,
+              LegalEntityRetrieveParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `patch /api/legal_entities/{id}`, but is otherwise the
-         * same as [LegalEntityService.update].
-         */
+        /** Returns a raw HTTP response for `patch /api/legal_entities/{id}`, but is otherwise the             same as [LegalEntityService.update]. */
         @MustBeClosed
         fun update(id: String): HttpResponseFor<LegalEntity> =
-            update(id, LegalEntityUpdateParams.none())
+            update(
+              id, LegalEntityUpdateParams.none()
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity> = update(params.toBuilder().id(id).build(), requestOptions)
+        fun update(id: String, params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntity> =
+            update(
+              params.toBuilder()
+                  .id(id)
+                  .build(), requestOptions
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            id: String,
-            params: LegalEntityUpdateParams = LegalEntityUpdateParams.none(),
-        ): HttpResponseFor<LegalEntity> = update(id, params, RequestOptions.none())
+        fun update(id: String, params: LegalEntityUpdateParams = LegalEntityUpdateParams.none()): HttpResponseFor<LegalEntity> =
+            update(
+              id,
+              params,
+              RequestOptions.none(),
+            )
 
         /** @see update */
         @MustBeClosed
-        fun update(
-            params: LegalEntityUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntity>
+        fun update(params: LegalEntityUpdateParams, requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntity>
 
         /** @see update */
         @MustBeClosed
         fun update(params: LegalEntityUpdateParams): HttpResponseFor<LegalEntity> =
-            update(params, RequestOptions.none())
+            update(
+              params, RequestOptions.none()
+            )
 
         /** @see update */
         @MustBeClosed
         fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<LegalEntity> =
-            update(id, LegalEntityUpdateParams.none(), requestOptions)
+            update(
+              id,
+              LegalEntityUpdateParams.none(),
+              requestOptions,
+            )
 
-        /**
-         * Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the same as
-         * [LegalEntityService.list].
-         */
+        /** Returns a raw HTTP response for `get /api/legal_entities`, but is otherwise the             same as [LegalEntityService.list]. */
         @MustBeClosed
         fun list(): HttpResponseFor<LegalEntityListPage> = list(LegalEntityListParams.none())
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: LegalEntityListParams = LegalEntityListParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LegalEntityListPage>
+        fun list(params: LegalEntityListParams = LegalEntityListParams.none(), requestOptions: RequestOptions = RequestOptions.none()): HttpResponseFor<LegalEntityListPage>
 
         /** @see list */
         @MustBeClosed
-        fun list(
-            params: LegalEntityListParams = LegalEntityListParams.none()
-        ): HttpResponseFor<LegalEntityListPage> = list(params, RequestOptions.none())
+        fun list(params: LegalEntityListParams = LegalEntityListParams.none()): HttpResponseFor<LegalEntityListPage> =
+            list(
+              params, RequestOptions.none()
+            )
 
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<LegalEntityListPage> =
-            list(LegalEntityListParams.none(), requestOptions)
+            list(
+              LegalEntityListParams.none(), requestOptions
+            )
     }
 }

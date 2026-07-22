@@ -6,33 +6,33 @@ import com.moderntreasury.api.core.AutoPager
 import com.moderntreasury.api.core.Page
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
+import com.moderntreasury.api.models.TransactionLineItem
+import com.moderntreasury.api.models.TransactionLineItemListParams
 import com.moderntreasury.api.services.blocking.transactions.LineItemService
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** @see LineItemService.list */
-class TransactionLineItemListPage
-private constructor(
+class TransactionLineItemListPage private constructor(
     private val service: LineItemService,
     private val params: TransactionLineItemListParams,
     private val headers: Headers,
     private val items: List<TransactionLineItem>,
+
 ) : Page<TransactionLineItem> {
 
-    fun perPage(): Optional<String> =
-        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
+    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
-    fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
+    fun afterCursor(): Optional<String> = Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): TransactionLineItemListParams {
-        val nextCursor =
-            afterCursor().getOrNull()
-                ?: throw IllegalStateException("Cannot construct next page params")
-        return params.toBuilder().afterCursor(nextCursor).build()
+      val nextCursor = afterCursor().getOrNull() ?: throw IllegalStateException("Cannot construct next page params")
+      return params.toBuilder()
+          .afterCursor(nextCursor)
+          .build()
     }
 
     override fun nextPage(): TransactionLineItemListPage = service.list(nextPageParams())
@@ -53,6 +53,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [TransactionLineItemListPage].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -60,7 +61,8 @@ private constructor(
          * .items()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [TransactionLineItemListPage]. */
@@ -72,22 +74,35 @@ private constructor(
         private var items: List<TransactionLineItem>? = null
 
         @JvmSynthetic
-        internal fun from(transactionLineItemListPage: TransactionLineItemListPage) = apply {
-            service = transactionLineItemListPage.service
-            params = transactionLineItemListPage.params
-            headers = transactionLineItemListPage.headers
-            items = transactionLineItemListPage.items
-        }
+        internal fun from(transactionLineItemListPage: TransactionLineItemListPage) =
+            apply {
+                service = transactionLineItemListPage.service
+                params = transactionLineItemListPage.params
+                headers = transactionLineItemListPage.headers
+                items = transactionLineItemListPage.items
+            }
 
-        fun service(service: LineItemService) = apply { this.service = service }
+        fun service(service: LineItemService) =
+            apply {
+                this.service = service
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TransactionLineItemListParams) = apply { this.params = params }
+        fun params(params: TransactionLineItemListParams) =
+            apply {
+                this.params = params
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<TransactionLineItem>) = apply { this.items = items }
+        fun items(items: List<TransactionLineItem>) =
+            apply {
+                this.items = items
+            }
 
         /**
          * Returns an immutable instance of [TransactionLineItemListPage].
@@ -95,6 +110,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .params()
@@ -106,27 +122,30 @@ private constructor(
          */
         fun build(): TransactionLineItemListPage =
             TransactionLineItemListPage(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("headers", headers),
-                checkRequired("items", items),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "items", items
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TransactionLineItemListPage &&
-            service == other.service &&
-            params == other.params &&
-            headers == other.headers &&
-            items == other.items
+      return other is TransactionLineItemListPage && service == other.service && params == other.params && headers == other.headers && items == other.items
     }
 
     override fun hashCode(): Int = Objects.hash(service, params, headers, items)
 
-    override fun toString() =
-        "TransactionLineItemListPage{service=$service, params=$params, headers=$headers, items=$items}"
+    override fun toString() = "TransactionLineItemListPage{service=$service, params=$params, headers=$headers, items=$items}"
 }

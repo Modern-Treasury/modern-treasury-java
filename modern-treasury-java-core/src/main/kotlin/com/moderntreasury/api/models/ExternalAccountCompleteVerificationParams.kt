@@ -22,20 +22,17 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** complete verification of external account */
-class ExternalAccountCompleteVerificationParams
-private constructor(
+class ExternalAccountCompleteVerificationParams private constructor(
     private val id: String?,
     private val body: ExternalAccountCompleteVerificationRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+
 ) : Params {
 
     fun id(): Optional<String> = Optional.ofNullable(id)
 
-    /**
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
+    /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value). */
     fun amounts(): Optional<List<Long>> = body.amounts()
 
     /**
@@ -57,37 +54,35 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): ExternalAccountCompleteVerificationParams = builder().build()
+        @JvmStatic
+        fun none(): ExternalAccountCompleteVerificationParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of
-         * [ExternalAccountCompleteVerificationParams].
-         */
-        @JvmStatic fun builder() = Builder()
+        /** Returns a mutable builder for constructing an instance of [ExternalAccountCompleteVerificationParams]. */
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [ExternalAccountCompleteVerificationParams]. */
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var body: ExternalAccountCompleteVerificationRequest.Builder =
-            ExternalAccountCompleteVerificationRequest.builder()
+        private var body: ExternalAccountCompleteVerificationRequest.Builder = ExternalAccountCompleteVerificationRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(
-            externalAccountCompleteVerificationParams: ExternalAccountCompleteVerificationParams
-        ) = apply {
-            id = externalAccountCompleteVerificationParams.id
-            body = externalAccountCompleteVerificationParams.body.toBuilder()
-            additionalHeaders =
-                externalAccountCompleteVerificationParams.additionalHeaders.toBuilder()
-            additionalQueryParams =
-                externalAccountCompleteVerificationParams.additionalQueryParams.toBuilder()
-        }
+        internal fun from(externalAccountCompleteVerificationParams: ExternalAccountCompleteVerificationParams) =
+            apply {
+                id = externalAccountCompleteVerificationParams.id
+                body = externalAccountCompleteVerificationParams.body.toBuilder()
+                additionalHeaders = externalAccountCompleteVerificationParams.additionalHeaders.toBuilder()
+                additionalQueryParams = externalAccountCompleteVerificationParams.additionalQueryParams.toBuilder()
+            }
 
-        fun id(id: String?) = apply { this.id = id }
+        fun id(id: String?) =
+            apply {
+                this.id = id
+            }
 
         /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<String>) = id(id.getOrNull())
@@ -95,148 +90,191 @@ private constructor(
         /**
          * Sets the entire request body.
          *
-         * This is generally only useful if you are already constructing the body separately.
-         * Otherwise, it's more convenient to use the top-level setters instead:
+         * This is generally only useful if you are already constructing the body separately. Otherwise,
+         * it's more convenient to use the top-level setters instead:
          * - [amounts]
          */
-        fun body(body: ExternalAccountCompleteVerificationRequest) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: ExternalAccountCompleteVerificationRequest) =
+            apply {
+                this.body = body.toBuilder()
+            }
 
-        fun amounts(amounts: List<Long>) = apply { body.amounts(amounts) }
+        fun amounts(amounts: List<Long>) =
+            apply {
+                body.amounts(amounts)
+            }
 
         /**
          * Sets [Builder.amounts] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.amounts] with a well-typed `List<Long>` value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.amounts] with a well-typed `List<Long>` value instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun amounts(amounts: JsonField<List<Long>>) = apply { body.amounts(amounts) }
+        fun amounts(amounts: JsonField<List<Long>>) =
+            apply {
+                body.amounts(amounts)
+            }
 
         /**
          * Adds a single [Long] to [amounts].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addAmount(amount: Long) = apply { body.addAmount(amount) }
+        fun addAmount(amount: Long) =
+            apply {
+                body.addAmount(amount)
+            }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.additionalProperties(additionalBodyProperties)
+            }
 
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) =
+            apply {
+                body.putAdditionalProperty(
+                  key, value
+                )
+            }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) =
+            apply {
+                body.removeAdditionalProperty(key)
+            }
 
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) =
+            apply {
+                body.removeAllAdditionalProperties(keys)
+            }
 
-        fun additionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.clear()
-            putAllAdditionalHeaders(additionalHeaders)
-        }
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.clear()
+                putAllAdditionalHeaders(additionalHeaders)
+            }
 
-        fun putAdditionalHeader(name: String, value: String) = apply {
-            additionalHeaders.put(name, value)
-        }
+        fun putAdditionalHeader(name: String, value: String) =
+            apply {
+                additionalHeaders.put(name, value)
+            }
 
-        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.put(name, values)
-        }
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.put(name, values)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.putAll(additionalHeaders)
-        }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.putAll(additionalHeaders)
+            }
 
-        fun replaceAdditionalHeaders(name: String, value: String) = apply {
-            additionalHeaders.replace(name, value)
-        }
+        fun replaceAdditionalHeaders(name: String, value: String) =
+            apply {
+                additionalHeaders.replace(name, value)
+            }
 
-        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
-            additionalHeaders.replace(name, values)
-        }
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) =
+            apply {
+                additionalHeaders.replace(name, values)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            this.additionalHeaders.replaceAll(additionalHeaders)
-        }
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalHeaders.replaceAll(additionalHeaders)
+            }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) =
+            apply {
+                additionalHeaders.remove(name)
+            }
 
-        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
-            additionalHeaders.removeAll(names)
-        }
+        fun removeAllAdditionalHeaders(names: Set<String>) =
+            apply {
+                additionalHeaders.removeAll(names)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllAdditionalQueryParams(additionalQueryParams)
-        }
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.clear()
+                putAllAdditionalQueryParams(additionalQueryParams)
+            }
 
-        fun putAdditionalQueryParam(key: String, value: String) = apply {
-            additionalQueryParams.put(key, value)
-        }
+        fun putAdditionalQueryParam(key: String, value: String) =
+            apply {
+                additionalQueryParams.put(key, value)
+            }
 
-        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.put(key, values)
-        }
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.put(key, values)
+            }
 
-        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.putAll(additionalQueryParams)
-        }
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
 
         fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.putAll(additionalQueryParams)
             }
 
-        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
-            additionalQueryParams.replace(key, value)
-        }
+        fun replaceAdditionalQueryParams(key: String, value: String) =
+            apply {
+                additionalQueryParams.replace(key, value)
+            }
 
-        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
-            additionalQueryParams.replace(key, values)
-        }
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) =
+            apply {
+                additionalQueryParams.replace(key, values)
+            }
 
-        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
-            this.additionalQueryParams.replaceAll(additionalQueryParams)
-        }
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
 
         fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
             apply {
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) =
+            apply {
+                additionalQueryParams.remove(key)
+            }
 
-        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
-            additionalQueryParams.removeAll(keys)
-        }
+        fun removeAllAdditionalQueryParams(keys: Set<String>) =
+            apply {
+                additionalQueryParams.removeAll(keys)
+            }
 
         /**
          * Returns an immutable instance of [ExternalAccountCompleteVerificationParams].
@@ -245,10 +283,10 @@ private constructor(
          */
         fun build(): ExternalAccountCompleteVerificationParams =
             ExternalAccountCompleteVerificationParams(
-                id,
-                body.build(),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
+              id,
+              body.build(),
+              additionalHeaders.build(),
+              additionalQueryParams.build(),
             )
     }
 
@@ -264,24 +302,20 @@ private constructor(
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
-    class ExternalAccountCompleteVerificationRequest
-    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-    private constructor(
+    class ExternalAccountCompleteVerificationRequest @JsonCreator(mode = JsonCreator.Mode.DISABLED) private constructor(
         private val amounts: JsonField<List<Long>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
+
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("amounts")
-            @ExcludeMissing
-            amounts: JsonField<List<Long>> = JsonMissing.of()
-        ) : this(amounts, mutableMapOf())
+            @JsonProperty("amounts") @ExcludeMissing amounts: JsonField<List<Long>> = JsonMissing.of()
+        ) : this(
+          amounts, mutableMapOf()
+        )
 
-        /**
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
+        /** @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if the server responded with an unexpected value). */
         fun amounts(): Optional<List<Long>> = amounts.getOptional("amounts")
 
         /**
@@ -289,27 +323,26 @@ private constructor(
          *
          * Unlike [amounts], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("amounts") @ExcludeMissing fun _amounts(): JsonField<List<Long>> = amounts
+        @JsonProperty("amounts")
+        @ExcludeMissing
+        fun _amounts(): JsonField<List<Long>> = amounts
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
+          additionalProperties.put(key, value)
         }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun _additionalProperties(): Map<String, JsonValue> = Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
         companion object {
 
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [ExternalAccountCompleteVerificationRequest].
-             */
-            @JvmStatic fun builder() = Builder()
+            /** Returns a mutable builder for constructing an instance of [ExternalAccountCompleteVerificationRequest]. */
+            @JvmStatic
+            fun builder() = Builder()
         }
 
         /** A builder for [ExternalAccountCompleteVerificationRequest]. */
@@ -319,59 +352,62 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(
-                externalAccountCompleteVerificationRequest:
-                    ExternalAccountCompleteVerificationRequest
-            ) = apply {
-                amounts =
-                    externalAccountCompleteVerificationRequest.amounts.map { it.toMutableList() }
-                additionalProperties =
-                    externalAccountCompleteVerificationRequest.additionalProperties.toMutableMap()
-            }
+            internal fun from(externalAccountCompleteVerificationRequest: ExternalAccountCompleteVerificationRequest) =
+                apply {
+                    amounts = externalAccountCompleteVerificationRequest.amounts.map { it.toMutableList() }
+                    additionalProperties = externalAccountCompleteVerificationRequest.additionalProperties.toMutableMap()
+                }
 
             fun amounts(amounts: List<Long>) = amounts(JsonField.of(amounts))
 
             /**
              * Sets [Builder.amounts] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.amounts] with a well-typed `List<Long>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * You should usually call [Builder.amounts] with a well-typed `List<Long>` value instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun amounts(amounts: JsonField<List<Long>>) = apply {
-                this.amounts = amounts.map { it.toMutableList() }
-            }
+            fun amounts(amounts: JsonField<List<Long>>) =
+                apply {
+                    this.amounts = amounts.map { it.toMutableList() }
+                }
 
             /**
              * Adds a single [Long] to [amounts].
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
-            fun addAmount(amount: Long) = apply {
-                amounts =
-                    (amounts ?: JsonField.of(mutableListOf())).also {
+            fun addAmount(amount: Long) =
+                apply {
+                    amounts = (amounts ?: JsonField.of(mutableListOf())).also {
                         checkKnown("amounts", it).add(amount)
                     }
-            }
+                }
 
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
 
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
+            fun putAdditionalProperty(key: String, value: JsonValue) =
+                apply {
+                    additionalProperties.put(key, value)
+                }
 
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) =
+                apply {
+                    additionalProperties.remove(key)
+                }
 
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
+            fun removeAllAdditionalProperties(keys: Set<String>) =
+                apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
             /**
              * Returns an immutable instance of [ExternalAccountCompleteVerificationRequest].
@@ -380,30 +416,29 @@ private constructor(
              */
             fun build(): ExternalAccountCompleteVerificationRequest =
                 ExternalAccountCompleteVerificationRequest(
-                    (amounts ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toMutableMap(),
+                  (amounts?: JsonMissing.of()).map { it.toImmutable() }, additionalProperties.toMutableMap()
                 )
         }
 
         private var validated: Boolean = false
 
         /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
+         * Validates that the types of all values in this object match their expected types recursively.
          *
          * This method is _not_ forwards compatible with new types from the API for existing fields.
          *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
          */
-        fun validate(): ExternalAccountCompleteVerificationRequest = apply {
-            if (validated) {
-                return@apply
-            }
+        fun validate(): ExternalAccountCompleteVerificationRequest =
+            apply {
+                if (validated) {
+                  return@apply
+                }
 
-            amounts()
-            validated = true
-        }
+                amounts()
+                validated = true
+            }
 
         fun isValid(): Boolean =
             try {
@@ -414,45 +449,37 @@ private constructor(
             }
 
         /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
+         * Returns a score indicating how many valid values are contained in this object recursively.
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic internal fun validity(): Int = (amounts.asKnown().getOrNull()?.size ?: 0)
+        @JvmSynthetic
+        internal fun validity(): Int = (amounts.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is ExternalAccountCompleteVerificationRequest &&
-                amounts == other.amounts &&
-                additionalProperties == other.additionalProperties
+          return other is ExternalAccountCompleteVerificationRequest && amounts == other.amounts && additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy { Objects.hash(amounts, additionalProperties) }
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() =
-            "ExternalAccountCompleteVerificationRequest{amounts=$amounts, additionalProperties=$additionalProperties}"
+        override fun toString() = "ExternalAccountCompleteVerificationRequest{amounts=$amounts, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ExternalAccountCompleteVerificationParams &&
-            id == other.id &&
-            body == other.body &&
-            additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams
+      return other is ExternalAccountCompleteVerificationParams && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int = Objects.hash(id, body, additionalHeaders, additionalQueryParams)
 
-    override fun toString() =
-        "ExternalAccountCompleteVerificationParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    override fun toString() = "ExternalAccountCompleteVerificationParams{id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

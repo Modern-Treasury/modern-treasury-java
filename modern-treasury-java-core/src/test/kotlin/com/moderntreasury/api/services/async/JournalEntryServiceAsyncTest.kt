@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
 import com.moderntreasury.api.models.JournalEntryListParams
+import com.moderntreasury.api.models.JournalEntryRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -13,38 +14,33 @@ internal class JournalEntryServiceAsyncTest {
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val journalEntryServiceAsync = client.journalEntries()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val journalEntryServiceAsync = client.journalEntries()
 
-        val future = journalEntryServiceAsync.retrieve("id")
+      val future = journalEntryServiceAsync.retrieve("id")
 
-        val response = future.get()
+      val response = future.get()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val journalEntryServiceAsync = client.journalEntries()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val journalEntryServiceAsync = client.journalEntries()
 
-        val future =
-            journalEntryServiceAsync.list(
-                JournalEntryListParams.builder()
-                    .journalReportId("journal_report_id")
-                    .page(0L)
-                    .perPage(0L)
-                    .build()
-            )
+      val future = journalEntryServiceAsync.list(JournalEntryListParams.builder()
+          .journalReportId("journal_report_id")
+          .page(0L)
+          .perPage(0L)
+          .build())
 
-        val response = future.get()
+      val response = future.get()
     }
 }

@@ -6,6 +6,8 @@ import com.moderntreasury.api.core.AutoPagerAsync
 import com.moderntreasury.api.core.PageAsync
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
+import com.moderntreasury.api.models.BulkRequest
+import com.moderntreasury.api.models.BulkRequestListParams
 import com.moderntreasury.api.services.async.BulkRequestServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,34 +16,34 @@ import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
 /** @see BulkRequestServiceAsync.list */
-class BulkRequestListPageAsync
-private constructor(
+class BulkRequestListPageAsync private constructor(
     private val service: BulkRequestServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: BulkRequestListParams,
     private val headers: Headers,
     private val items: List<BulkRequest>,
+
 ) : PageAsync<BulkRequest> {
 
-    fun perPage(): Optional<String> =
-        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
+    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
-    fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
+    fun afterCursor(): Optional<String> = Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): BulkRequestListParams {
-        val nextCursor =
-            afterCursor().getOrNull()
-                ?: throw IllegalStateException("Cannot construct next page params")
-        return params.toBuilder().afterCursor(nextCursor).build()
+      val nextCursor = afterCursor().getOrNull() ?: throw IllegalStateException("Cannot construct next page params")
+      return params.toBuilder()
+          .afterCursor(nextCursor)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<BulkRequestListPageAsync> =
-        service.list(nextPageParams())
+    override fun nextPage(): CompletableFuture<BulkRequestListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<BulkRequest> = AutoPagerAsync.from(this, streamHandlerExecutor)
+    fun autoPager(): AutoPagerAsync<BulkRequest> =
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): BulkRequestListParams = params
@@ -57,6 +59,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [BulkRequestListPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -65,7 +68,8 @@ private constructor(
          * .items()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [BulkRequestListPageAsync]. */
@@ -78,27 +82,41 @@ private constructor(
         private var items: List<BulkRequest>? = null
 
         @JvmSynthetic
-        internal fun from(bulkRequestListPageAsync: BulkRequestListPageAsync) = apply {
-            service = bulkRequestListPageAsync.service
-            streamHandlerExecutor = bulkRequestListPageAsync.streamHandlerExecutor
-            params = bulkRequestListPageAsync.params
-            headers = bulkRequestListPageAsync.headers
-            items = bulkRequestListPageAsync.items
-        }
+        internal fun from(bulkRequestListPageAsync: BulkRequestListPageAsync) =
+            apply {
+                service = bulkRequestListPageAsync.service
+                streamHandlerExecutor = bulkRequestListPageAsync.streamHandlerExecutor
+                params = bulkRequestListPageAsync.params
+                headers = bulkRequestListPageAsync.headers
+                items = bulkRequestListPageAsync.items
+            }
 
-        fun service(service: BulkRequestServiceAsync) = apply { this.service = service }
+        fun service(service: BulkRequestServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: BulkRequestListParams) = apply { this.params = params }
+        fun params(params: BulkRequestListParams) =
+            apply {
+                this.params = params
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<BulkRequest>) = apply { this.items = items }
+        fun items(items: List<BulkRequest>) =
+            apply {
+                this.items = items
+            }
 
         /**
          * Returns an immutable instance of [BulkRequestListPageAsync].
@@ -106,6 +124,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -118,30 +137,33 @@ private constructor(
          */
         fun build(): BulkRequestListPageAsync =
             BulkRequestListPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("headers", headers),
-                checkRequired("items", items),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "items", items
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is BulkRequestListPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            headers == other.headers &&
-            items == other.items
+      return other is BulkRequestListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(service, streamHandlerExecutor, params, headers, items)
+    override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, headers, items)
 
-    override fun toString() =
-        "BulkRequestListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
+    override fun toString() = "BulkRequestListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
 }

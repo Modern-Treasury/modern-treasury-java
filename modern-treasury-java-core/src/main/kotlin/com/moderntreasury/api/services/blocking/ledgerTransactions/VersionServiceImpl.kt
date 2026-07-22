@@ -17,73 +17,68 @@ import com.moderntreasury.api.core.prepare
 import com.moderntreasury.api.models.LedgerTransactionVersion
 import com.moderntreasury.api.models.LedgerTransactionVersionListPage
 import com.moderntreasury.api.models.LedgerTransactionVersionListParams
+import com.moderntreasury.api.services.blocking.ledgerTransactions.VersionService
+import com.moderntreasury.api.services.blocking.ledgerTransactions.VersionServiceImpl
 import java.util.function.Consumer
 
-class VersionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
-    VersionService {
+class VersionServiceImpl internal constructor(
+    private val clientOptions: ClientOptions,
 
-    private val withRawResponse: VersionService.WithRawResponse by lazy {
-        WithRawResponseImpl(clientOptions)
-    }
+) : VersionService {
+
+    private val withRawResponse: VersionService.WithRawResponse by lazy { WithRawResponseImpl(clientOptions) }
 
     override fun withRawResponse(): VersionService.WithRawResponse = withRawResponse
 
-    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService =
-        VersionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService = VersionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun list(
-        params: LedgerTransactionVersionListParams,
-        requestOptions: RequestOptions,
-    ): LedgerTransactionVersionListPage =
+    override fun list(params: LedgerTransactionVersionListParams, requestOptions: RequestOptions): LedgerTransactionVersionListPage =
         // get /api/ledger_transaction_versions
         withRawResponse().list(params, requestOptions).parse()
 
-    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        VersionService.WithRawResponse {
+    class WithRawResponseImpl internal constructor(
+        private val clientOptions: ClientOptions,
 
-        private val errorHandler: Handler<HttpResponse> =
-            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    ) : VersionService.WithRawResponse {
 
-        override fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): VersionService.WithRawResponse =
-            VersionServiceImpl.WithRawResponseImpl(
-                clientOptions.toBuilder().apply(modifier::accept).build()
+        private val errorHandler: Handler<HttpResponse> = errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(modifier: Consumer<ClientOptions.Builder>): VersionService.WithRawResponse = VersionServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
+        private val listHandler: Handler<List<LedgerTransactionVersion>> = jsonHandler<List<LedgerTransactionVersion>>(clientOptions.jsonMapper)
+
+        override fun list(params: LedgerTransactionVersionListParams, requestOptions: RequestOptions): HttpResponseFor<LedgerTransactionVersionListPage> {
+          val request = HttpRequest.builder()
+            .method(HttpMethod.GET)
+            .baseUrl(clientOptions.baseUrl())
+            .addPathSegments("api", "ledger_transaction_versions")
+            .build()
+            .prepare(
+              clientOptions, params
             )
-
-        private val listHandler: Handler<List<LedgerTransactionVersion>> =
-            jsonHandler<List<LedgerTransactionVersion>>(clientOptions.jsonMapper)
-
-        override fun list(
-            params: LedgerTransactionVersionListParams,
-            requestOptions: RequestOptions,
-        ): HttpResponseFor<LedgerTransactionVersionListPage> {
-            val request =
-                HttpRequest.builder()
-                    .method(HttpMethod.GET)
-                    .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "ledger_transaction_versions")
-                    .build()
-                    .prepare(clientOptions, params)
-            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.execute(request, requestOptions)
-            return errorHandler.handle(response).parseable {
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.forEach { it.validate() }
-                        }
-                    }
-                    .let {
-                        LedgerTransactionVersionListPage.builder()
-                            .service(VersionServiceImpl(clientOptions))
-                            .params(params)
-                            .headers(response.headers())
-                            .items(it)
-                            .build()
-                    }
-            }
+          val requestOptions = requestOptions
+              .applyDefaults(RequestOptions.from(clientOptions))
+          val response = clientOptions.httpClient.execute(
+            request, requestOptions
+          )
+          return errorHandler.handle(response).parseable {
+              response.use {
+                  listHandler.handle(it)
+              }
+              .also {
+                  if (requestOptions.responseValidation!!) {
+                    it.forEach { it.validate() }
+                  }
+              }
+              .let {
+                  LedgerTransactionVersionListPage.builder()
+                      .service(VersionServiceImpl(clientOptions))
+                      .params(params)
+                      .headers(response.headers())
+                      .items(it)
+                      .build()
+              }
+          }
         }
     }
 }

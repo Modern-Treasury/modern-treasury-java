@@ -7,14 +7,13 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.RoutingNumberLookupRequest
 import com.moderntreasury.api.models.ValidationValidateRoutingNumberParams
+import com.moderntreasury.api.services.async.ValidationServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
 interface ValidationServiceAsync {
 
-    /**
-     * Returns a view of this service that provides access to raw HTTP responses for each method.
-     */
+    /** Returns a view of this service that provides access to raw HTTP responses for each method. */
     fun withRawResponse(): WithRawResponse
 
     /**
@@ -25,21 +24,15 @@ interface ValidationServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): ValidationServiceAsync
 
     /** Validates the routing number information supplied without creating a routing detail */
-    fun validateRoutingNumber(
-        params: ValidationValidateRoutingNumberParams
-    ): CompletableFuture<RoutingNumberLookupRequest> =
-        validateRoutingNumber(params, RequestOptions.none())
+    fun validateRoutingNumber(params: ValidationValidateRoutingNumberParams): CompletableFuture<RoutingNumberLookupRequest> =
+        validateRoutingNumber(
+          params, RequestOptions.none()
+        )
 
     /** @see validateRoutingNumber */
-    fun validateRoutingNumber(
-        params: ValidationValidateRoutingNumberParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<RoutingNumberLookupRequest>
+    fun validateRoutingNumber(params: ValidationValidateRoutingNumberParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<RoutingNumberLookupRequest>
 
-    /**
-     * A view of [ValidationServiceAsync] that provides access to raw HTTP responses for each
-     * method.
-     */
+    /** A view of [ValidationServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
         /**
@@ -47,23 +40,15 @@ interface ValidationServiceAsync {
          *
          * The original service is not modified.
          */
-        fun withOptions(
-            modifier: Consumer<ClientOptions.Builder>
-        ): ValidationServiceAsync.WithRawResponse
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): ValidationServiceAsync.WithRawResponse
 
-        /**
-         * Returns a raw HTTP response for `get /api/validations/routing_numbers`, but is otherwise
-         * the same as [ValidationServiceAsync.validateRoutingNumber].
-         */
-        fun validateRoutingNumber(
-            params: ValidationValidateRoutingNumberParams
-        ): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>> =
-            validateRoutingNumber(params, RequestOptions.none())
+        /** Returns a raw HTTP response for `get /api/validations/routing_numbers`, but is otherwise the             same as [ValidationServiceAsync.validateRoutingNumber]. */
+        fun validateRoutingNumber(params: ValidationValidateRoutingNumberParams): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>> =
+            validateRoutingNumber(
+              params, RequestOptions.none()
+            )
 
         /** @see validateRoutingNumber */
-        fun validateRoutingNumber(
-            params: ValidationValidateRoutingNumberParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>>
+        fun validateRoutingNumber(params: ValidationValidateRoutingNumberParams, requestOptions: RequestOptions = RequestOptions.none()): CompletableFuture<HttpResponseFor<RoutingNumberLookupRequest>>
     }
 }

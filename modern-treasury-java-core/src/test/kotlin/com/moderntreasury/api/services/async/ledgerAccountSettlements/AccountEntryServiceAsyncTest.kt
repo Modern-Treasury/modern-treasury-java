@@ -14,43 +14,35 @@ internal class AccountEntryServiceAsyncTest {
 
     @Test
     fun update() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val accountEntryServiceAsync = client.ledgerAccountSettlements().accountEntries()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val accountEntryServiceAsync = client.ledgerAccountSettlements().accountEntries()
 
-        val future =
-            accountEntryServiceAsync.update(
-                LedgerAccountSettlementAccountEntryUpdateParams.builder()
-                    .id("id")
-                    .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+      val future = accountEntryServiceAsync.update(LedgerAccountSettlementAccountEntryUpdateParams.builder()
+          .id("id")
+          .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
 
-        val response = future.get()
+      val response = future.get()
     }
 
     @Test
     fun delete() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val accountEntryServiceAsync = client.ledgerAccountSettlements().accountEntries()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val accountEntryServiceAsync = client.ledgerAccountSettlements().accountEntries()
 
-        val future =
-            accountEntryServiceAsync.delete(
-                LedgerAccountSettlementAccountEntryDeleteParams.builder()
-                    .id("id")
-                    .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+      val future = accountEntryServiceAsync.delete(LedgerAccountSettlementAccountEntryDeleteParams.builder()
+          .id("id")
+          .addLedgerEntryId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+          .build())
 
-        val response = future.get()
+      val response = future.get()
     }
 }

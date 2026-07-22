@@ -31,10 +31,7 @@ interface AsyncStreamResponse<T> {
      */
     fun subscribe(handler: Handler<T>, executor: Executor): AsyncStreamResponse<T>
 
-    /**
-     * Returns a future that completes when a stream is fully consumed, errors, or gets closed
-     * early.
-     */
+    /** Returns a future that completes when a stream is fully consumed, errors, or gets closed early. */
     fun onCompleteFuture(): CompletableFuture<Void?>
 
     /**

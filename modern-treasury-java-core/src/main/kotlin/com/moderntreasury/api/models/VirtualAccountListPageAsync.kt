@@ -6,6 +6,8 @@ import com.moderntreasury.api.core.AutoPagerAsync
 import com.moderntreasury.api.core.PageAsync
 import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
+import com.moderntreasury.api.models.VirtualAccount
+import com.moderntreasury.api.models.VirtualAccountListParams
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -14,35 +16,34 @@ import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
 /** @see VirtualAccountServiceAsync.list */
-class VirtualAccountListPageAsync
-private constructor(
+class VirtualAccountListPageAsync private constructor(
     private val service: VirtualAccountServiceAsync,
     private val streamHandlerExecutor: Executor,
     private val params: VirtualAccountListParams,
     private val headers: Headers,
     private val items: List<VirtualAccount>,
+
 ) : PageAsync<VirtualAccount> {
 
-    fun perPage(): Optional<String> =
-        Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
+    fun perPage(): Optional<String> = Optional.ofNullable(headers.values("X-Per-Page").firstOrNull())
 
-    fun afterCursor(): Optional<String> =
-        Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
+    fun afterCursor(): Optional<String> = Optional.ofNullable(headers.values("X-After-Cursor").firstOrNull())
 
     override fun hasNextPage(): Boolean = afterCursor().isPresent
 
     fun nextPageParams(): VirtualAccountListParams {
-        val nextCursor =
-            afterCursor().getOrNull()
-                ?: throw IllegalStateException("Cannot construct next page params")
-        return params.toBuilder().afterCursor(nextCursor).build()
+      val nextCursor = afterCursor().getOrNull() ?: throw IllegalStateException("Cannot construct next page params")
+      return params.toBuilder()
+          .afterCursor(nextCursor)
+          .build()
     }
 
-    override fun nextPage(): CompletableFuture<VirtualAccountListPageAsync> =
-        service.list(nextPageParams())
+    override fun nextPage(): CompletableFuture<VirtualAccountListPageAsync> = service.list(nextPageParams())
 
     fun autoPager(): AutoPagerAsync<VirtualAccount> =
-        AutoPagerAsync.from(this, streamHandlerExecutor)
+        AutoPagerAsync.from(
+          this, streamHandlerExecutor
+        )
 
     /** The parameters that were used to request this page. */
     fun params(): VirtualAccountListParams = params
@@ -58,6 +59,7 @@ private constructor(
          * Returns a mutable builder for constructing an instance of [VirtualAccountListPageAsync].
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -66,7 +68,8 @@ private constructor(
          * .items()
          * ```
          */
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     /** A builder for [VirtualAccountListPageAsync]. */
@@ -79,27 +82,41 @@ private constructor(
         private var items: List<VirtualAccount>? = null
 
         @JvmSynthetic
-        internal fun from(virtualAccountListPageAsync: VirtualAccountListPageAsync) = apply {
-            service = virtualAccountListPageAsync.service
-            streamHandlerExecutor = virtualAccountListPageAsync.streamHandlerExecutor
-            params = virtualAccountListPageAsync.params
-            headers = virtualAccountListPageAsync.headers
-            items = virtualAccountListPageAsync.items
-        }
+        internal fun from(virtualAccountListPageAsync: VirtualAccountListPageAsync) =
+            apply {
+                service = virtualAccountListPageAsync.service
+                streamHandlerExecutor = virtualAccountListPageAsync.streamHandlerExecutor
+                params = virtualAccountListPageAsync.params
+                headers = virtualAccountListPageAsync.headers
+                items = virtualAccountListPageAsync.items
+            }
 
-        fun service(service: VirtualAccountServiceAsync) = apply { this.service = service }
+        fun service(service: VirtualAccountServiceAsync) =
+            apply {
+                this.service = service
+            }
 
-        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
-        }
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) =
+            apply {
+                this.streamHandlerExecutor = streamHandlerExecutor
+            }
 
         /** The parameters that were used to request this page. */
-        fun params(params: VirtualAccountListParams) = apply { this.params = params }
+        fun params(params: VirtualAccountListParams) =
+            apply {
+                this.params = params
+            }
 
-        fun headers(headers: Headers) = apply { this.headers = headers }
+        fun headers(headers: Headers) =
+            apply {
+                this.headers = headers
+            }
 
         /** The response that this page was parsed from. */
-        fun items(items: List<VirtualAccount>) = apply { this.items = items }
+        fun items(items: List<VirtualAccount>) =
+            apply {
+                this.items = items
+            }
 
         /**
          * Returns an immutable instance of [VirtualAccountListPageAsync].
@@ -107,6 +124,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
+         *
          * ```java
          * .service()
          * .streamHandlerExecutor()
@@ -119,30 +137,33 @@ private constructor(
          */
         fun build(): VirtualAccountListPageAsync =
             VirtualAccountListPageAsync(
-                checkRequired("service", service),
-                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
-                checkRequired("params", params),
-                checkRequired("headers", headers),
-                checkRequired("items", items),
+              checkRequired(
+                "service", service
+              ),
+              checkRequired(
+                "streamHandlerExecutor", streamHandlerExecutor
+              ),
+              checkRequired(
+                "params", params
+              ),
+              checkRequired(
+                "headers", headers
+              ),
+              checkRequired(
+                "items", items
+              ),
             )
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is VirtualAccountListPageAsync &&
-            service == other.service &&
-            streamHandlerExecutor == other.streamHandlerExecutor &&
-            params == other.params &&
-            headers == other.headers &&
-            items == other.items
+      return other is VirtualAccountListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && headers == other.headers && items == other.items
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(service, streamHandlerExecutor, params, headers, items)
+    override fun hashCode(): Int = Objects.hash(service, streamHandlerExecutor, params, headers, items)
 
-    override fun toString() =
-        "VirtualAccountListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
+    override fun toString() = "VirtualAccountListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, headers=$headers, items=$items}"
 }

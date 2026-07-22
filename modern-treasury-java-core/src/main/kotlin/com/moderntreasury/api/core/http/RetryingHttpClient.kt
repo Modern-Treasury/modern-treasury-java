@@ -6,6 +6,9 @@ import com.moderntreasury.api.core.DefaultSleeper
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.Sleeper
 import com.moderntreasury.api.core.checkRequired
+import com.moderntreasury.api.core.http.HttpClient
+import com.moderntreasury.api.core.http.HttpRequest
+import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.errors.ModernTreasuryIoException
 import com.moderntreasury.api.errors.ModernTreasuryRetryableException
 import java.io.IOException
@@ -32,12 +35,14 @@ private constructor(
     private val idempotencyHeader: String?,
 ) : HttpClient {
 
-    override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
+    override fun execute(
+        request: HttpRequest,
+        requestOptions: RequestOptions,
+    ): HttpResponse {
         var modifiedRequest = maybeAddIdempotencyHeader(request)
 
         // Don't send the current retry count in the headers if the caller set their own value.
-        val shouldSendRetryCount =
-            !modifiedRequest.headers.names().contains("X-Stainless-Retry-Count")
+        val shouldSendRetryCount = !modifiedRequest.headers.names().contains("X-Stainless-Retry-Count")
 
         var retries = 0
 
@@ -51,20 +56,20 @@ private constructor(
             }
 
             val response =
-                try {
-                    val response = httpClient.execute(modifiedRequest, requestOptions)
-                    if (++retries > maxRetries || !shouldRetry(response)) {
-                        return response
-                    }
+                    try {
+                        val response = httpClient.execute(modifiedRequest, requestOptions)
+                        if (++retries > maxRetries || !shouldRetry(response)) {
+                            return response
+                        }
 
-                    response
-                } catch (throwable: Throwable) {
-                    if (++retries > maxRetries || !shouldRetry(throwable)) {
-                        throw throwable
-                    }
+                        response
+                    } catch (throwable: Throwable) {
+                        if (++retries > maxRetries || !shouldRetry(throwable)) {
+                            throw throwable
+                        }
 
-                    null
-                }
+                        null
+                    }
 
             val backoffDuration = getRetryBackoffDuration(retries, response)
             // All responses must be closed, so close the failed one before retrying.
@@ -80,8 +85,7 @@ private constructor(
         val modifiedRequest = maybeAddIdempotencyHeader(request)
 
         // Don't send the current retry count in the headers if the caller set their own value.
-        val shouldSendRetryCount =
-            !modifiedRequest.headers.names().contains("X-Stainless-Retry-Count")
+        val shouldSendRetryCount = !modifiedRequest.headers.names().contains("X-Stainless-Retry-Count")
 
         var retries = 0
 
@@ -98,35 +102,35 @@ private constructor(
             }
 
             return responseFuture
-                .handleAsync(
-                    fun(
-                        response: HttpResponse?,
-                        throwable: Throwable?,
-                    ): CompletableFuture<HttpResponse> {
-                        if (response != null) {
-                            if (++retries > maxRetries || !shouldRetry(response)) {
-                                return CompletableFuture.completedFuture(response)
+                    .handleAsync(
+                        fun(
+                            response: HttpResponse?,
+                            throwable: Throwable?
+                        ): CompletableFuture<HttpResponse> {
+                            if (response != null) {
+                                if (++retries > maxRetries || !shouldRetry(response)) {
+                                    return CompletableFuture.completedFuture(response)
+                                }
+                            } else {
+                                if (++retries > maxRetries || !shouldRetry(throwable!!)) {
+                                    val failedFuture = CompletableFuture<HttpResponse>()
+                                    failedFuture.completeExceptionally(throwable)
+                                    return failedFuture
+                                }
                             }
-                        } else {
-                            if (++retries > maxRetries || !shouldRetry(throwable!!)) {
-                                val failedFuture = CompletableFuture<HttpResponse>()
-                                failedFuture.completeExceptionally(throwable)
-                                return failedFuture
-                            }
-                        }
 
-                        val backoffDuration = getRetryBackoffDuration(retries, response)
-                        // All responses must be closed, so close the failed one before retrying.
-                        response?.close()
-                        return sleeper.sleepAsync(backoffDuration).thenCompose {
-                            executeWithRetries(requestWithRetryCount, requestOptions)
-                        }
+                            val backoffDuration = getRetryBackoffDuration(retries, response)
+                            // All responses must be closed, so close the failed one before retrying.
+                            response?.close()
+                            return sleeper.sleepAsync(backoffDuration).thenCompose {
+                                executeWithRetries(requestWithRetryCount, requestOptions)
+                            }
+                        },
+                    ) {
+                        // Run in the same thread.
+                        it.run()
                     }
-                ) {
-                    // Run in the same thread.
-                    it.run()
-                }
-                .thenCompose(Function.identity())
+                    .thenCompose(Function.identity())
         }
 
         return executeWithRetries(modifiedRequest, requestOptions)
@@ -183,40 +187,31 @@ private constructor(
 
     private fun shouldRetry(throwable: Throwable): Boolean =
         // Only retry known retryable exceptions, other exceptions are not intended to be retried.
-        throwable is IOException ||
-            throwable is ModernTreasuryIoException ||
-            throwable is ModernTreasuryRetryableException
+        throwable is IOException || throwable is ModernTreasuryIoException || throwable is ModernTreasuryRetryableException
 
     private fun getRetryBackoffDuration(retries: Int, response: HttpResponse?): Duration {
         // About the Retry-After header:
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
-        response
-            ?.headers()
-            ?.let { headers ->
-                headers
-                    .values("Retry-After-Ms")
-                    .getOrNull(0)
-                    ?.toFloatOrNull()
-                    ?.times(TimeUnit.MILLISECONDS.toNanos(1))
+        response?.headers()?.let { headers ->
+            headers.values("Retry-After-Ms").getOrNull(0)?.toFloatOrNull()?.times(TimeUnit.MILLISECONDS.toNanos(1))
                     ?: headers.values("Retry-After").getOrNull(0)?.let { retryAfter ->
                         retryAfter.toFloatOrNull()?.times(TimeUnit.SECONDS.toNanos(1))
-                            ?: try {
-                                ChronoUnit.NANOS.between(
-                                    OffsetDateTime.now(clock),
-                                    OffsetDateTime.parse(
-                                        retryAfter,
-                                        DateTimeFormatter.RFC_1123_DATE_TIME,
-                                    ),
-                                )
-                            } catch (e: DateTimeParseException) {
-                                null
-                            }
+                                ?: try {
+                                    ChronoUnit.NANOS.between(
+                                            OffsetDateTime.now(clock),
+                                            OffsetDateTime.parse(
+                                                    retryAfter,
+                                                    DateTimeFormatter.RFC_1123_DATE_TIME
+                                            )
+                                    )
+                                } catch (e: DateTimeParseException) {
+                                    null
+                                }
                     }
-            }
-            ?.let { retryAfterNanos ->
-                // If the API asks us to wait a certain amount of time, do what it says.
-                return Duration.ofNanos(retryAfterNanos.toLong())
-            }
+        }?.let { retryAfterNanos ->
+            // If the API asks us to wait a certain amount of time, do what it says.
+            return Duration.ofNanos(retryAfterNanos.toLong())
+        }
 
         // Apply exponential backoff, but not more than the max.
         val backoffSeconds = min(0.5 * 2.0.pow(retries - 1), 8.0)

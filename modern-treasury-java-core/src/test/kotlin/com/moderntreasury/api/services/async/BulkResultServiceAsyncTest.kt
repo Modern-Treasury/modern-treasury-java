@@ -4,6 +4,8 @@ package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
+import com.moderntreasury.api.models.BulkResultListParams
+import com.moderntreasury.api.models.BulkResultRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -12,33 +14,31 @@ internal class BulkResultServiceAsyncTest {
 
     @Test
     fun retrieve() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val bulkResultServiceAsync = client.bulkResults()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val bulkResultServiceAsync = client.bulkResults()
 
-        val bulkResultFuture = bulkResultServiceAsync.retrieve("id")
+      val bulkResultFuture = bulkResultServiceAsync.retrieve("id")
 
-        val bulkResult = bulkResultFuture.get()
-        bulkResult.validate()
+      val bulkResult = bulkResultFuture.get()
+      bulkResult.validate()
     }
 
     @Test
     fun list() {
-        val client =
-            ModernTreasuryOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My API Key")
-                .organizationId("my-organization-ID")
-                .build()
-        val bulkResultServiceAsync = client.bulkResults()
+      val client = ModernTreasuryOkHttpClientAsync.builder()
+          .baseUrl(TestServerExtension.BASE_URL)
+          .apiKey("My API Key")
+          .organizationId("my-organization-ID")
+          .build()
+      val bulkResultServiceAsync = client.bulkResults()
 
-        val pageFuture = bulkResultServiceAsync.list()
+      val pageFuture = bulkResultServiceAsync.list()
 
-        val page = pageFuture.get()
-        page.items().forEach { it.validate() }
+      val page = pageFuture.get()
+      page.items().forEach { it.validate() }
     }
 }

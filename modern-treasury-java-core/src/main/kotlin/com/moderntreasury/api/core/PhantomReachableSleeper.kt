@@ -16,8 +16,7 @@ internal class PhantomReachableSleeper(private val sleeper: Sleeper) : Sleeper {
 
     override fun sleep(duration: Duration) = sleeper.sleep(duration)
 
-    override fun sleepAsync(duration: Duration): CompletableFuture<Void> =
-        sleeper.sleepAsync(duration)
+    override fun sleepAsync(duration: Duration): CompletableFuture<Void> = sleeper.sleepAsync(duration)
 
     override fun close() = sleeper.close()
 }
