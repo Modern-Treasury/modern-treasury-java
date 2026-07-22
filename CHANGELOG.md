@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.31.0 (2026-07-22)
+
+Full Changelog: [v7.30.0...v7.31.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.30.0...v7.31.0)
+
+### Features
+
+* **api:** api update ([427a760](https://github.com/Modern-Treasury/modern-treasury-java/commit/427a760b59f2469025dd2a2a9070ba032bca1594))
+* **api:** api update ([9087ce4](https://github.com/Modern-Treasury/modern-treasury-java/commit/9087ce45cef3b033294d76e41066050ddc744be7))
+* **api:** api update ([56e6925](https://github.com/Modern-Treasury/modern-treasury-java/commit/56e6925d7bec2c46520afeaa98b3cd3c5cd46209))
+* **api:** api update ([03f689e](https://github.com/Modern-Treasury/modern-treasury-java/commit/03f689ef0f4a44ed4e5c05e432e0c7e10757743e))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([4ac931c](https://github.com/Modern-Treasury/modern-treasury-java/commit/4ac931c6ea4ca83c0ad53035c9edd668ffac43e1))
+
 ## 7.30.0 (2026-07-14)
 
 Full Changelog: [v7.29.0...v7.30.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.29.0...v7.30.0)
