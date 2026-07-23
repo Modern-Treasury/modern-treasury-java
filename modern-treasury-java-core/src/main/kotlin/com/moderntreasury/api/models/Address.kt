@@ -111,7 +111,7 @@ private constructor(
     fun liveMode(): Boolean = liveMode.getRequired("live_mode")
 
     /**
-     * Locality or City.
+     * Locality or City. Use the full city name rather than an abbreviation (e.g. San Francisco).
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -133,7 +133,8 @@ private constructor(
     fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
     /**
-     * Region or State.
+     * Region or State. This field is free-form; for US states, we recommend a two-letter code (e.g.
+     * CA). Full state names are also accepted.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -370,7 +371,10 @@ private constructor(
          */
         fun liveMode(liveMode: JsonField<Boolean>) = apply { this.liveMode = liveMode }
 
-        /** Locality or City. */
+        /**
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
+         */
         fun locality(locality: String?) = locality(JsonField.ofNullable(locality))
 
         /** Alias for calling [Builder.locality] with `locality.orElse(null)`. */
@@ -409,7 +413,10 @@ private constructor(
          */
         fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-        /** Region or State. */
+        /**
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
+         */
         fun region(region: String?) = region(JsonField.ofNullable(region))
 
         /** Alias for calling [Builder.region] with `region.orElse(null)`. */

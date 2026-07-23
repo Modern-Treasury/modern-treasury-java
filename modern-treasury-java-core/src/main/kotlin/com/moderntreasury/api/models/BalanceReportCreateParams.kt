@@ -852,6 +852,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** At least one of "amount" or "amount_string" is required. */
     class BalanceCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
