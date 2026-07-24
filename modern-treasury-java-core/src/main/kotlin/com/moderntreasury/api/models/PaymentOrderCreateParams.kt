@@ -410,7 +410,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun vendorAttributes(): Optional<JsonValue> = body.vendorAttributes()
+    fun vendorAttributes(): Optional<VendorAttributes> = body.vendorAttributes()
 
     /**
      * Returns the raw multipart value of [amount].
@@ -736,7 +736,7 @@ private constructor(
      * Unlike [vendorAttributes], this method doesn't throw if the multipart field has an unexpected
      * type.
      */
-    fun _vendorAttributes(): MultipartField<JsonValue> = body._vendorAttributes()
+    fun _vendorAttributes(): MultipartField<VendorAttributes> = body._vendorAttributes()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -1629,18 +1629,18 @@ private constructor(
          * Additional vendor specific fields for this payment. Data must be represented as key-value
          * pairs.
          */
-        fun vendorAttributes(vendorAttributes: JsonValue) = apply {
+        fun vendorAttributes(vendorAttributes: VendorAttributes) = apply {
             body.vendorAttributes(vendorAttributes)
         }
 
         /**
          * Sets [Builder.vendorAttributes] to an arbitrary multipart value.
          *
-         * You should usually call [Builder.vendorAttributes] with a well-typed [JsonValue] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.vendorAttributes] with a well-typed [VendorAttributes]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun vendorAttributes(vendorAttributes: MultipartField<JsonValue>) = apply {
+        fun vendorAttributes(vendorAttributes: MultipartField<VendorAttributes>) = apply {
             body.vendorAttributes(vendorAttributes)
         }
 
@@ -1877,7 +1877,7 @@ private constructor(
         private val ultimateOriginatingPartyName: MultipartField<String>,
         private val ultimateReceivingPartyIdentifier: MultipartField<String>,
         private val ultimateReceivingPartyName: MultipartField<String>,
-        private val vendorAttributes: MultipartField<JsonValue>,
+        private val vendorAttributes: MultipartField<VendorAttributes>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2282,7 +2282,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun vendorAttributes(): Optional<JsonValue> =
+        fun vendorAttributes(): Optional<VendorAttributes> =
             vendorAttributes.value.getOptional("vendor_attributes")
 
         /**
@@ -2693,7 +2693,7 @@ private constructor(
          */
         @JsonProperty("vendor_attributes")
         @ExcludeMissing
-        fun _vendorAttributes(): MultipartField<JsonValue> = vendorAttributes
+        fun _vendorAttributes(): MultipartField<VendorAttributes> = vendorAttributes
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2777,7 +2777,7 @@ private constructor(
             private var ultimateReceivingPartyIdentifier: MultipartField<String> =
                 MultipartField.of(null)
             private var ultimateReceivingPartyName: MultipartField<String> = MultipartField.of(null)
-            private var vendorAttributes: MultipartField<JsonValue> = MultipartField.of(null)
+            private var vendorAttributes: MultipartField<VendorAttributes> = MultipartField.of(null)
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -3692,17 +3692,17 @@ private constructor(
              * Additional vendor specific fields for this payment. Data must be represented as
              * key-value pairs.
              */
-            fun vendorAttributes(vendorAttributes: JsonValue) =
+            fun vendorAttributes(vendorAttributes: VendorAttributes) =
                 vendorAttributes(MultipartField.of(vendorAttributes))
 
             /**
              * Sets [Builder.vendorAttributes] to an arbitrary multipart value.
              *
-             * You should usually call [Builder.vendorAttributes] with a well-typed [JsonValue]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
+             * You should usually call [Builder.vendorAttributes] with a well-typed
+             * [VendorAttributes] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
-            fun vendorAttributes(vendorAttributes: MultipartField<JsonValue>) = apply {
+            fun vendorAttributes(vendorAttributes: MultipartField<VendorAttributes>) = apply {
                 this.vendorAttributes = vendorAttributes
             }
 
@@ -3843,6 +3843,7 @@ private constructor(
             ultimateOriginatingPartyName()
             ultimateReceivingPartyIdentifier()
             ultimateReceivingPartyName()
+            vendorAttributes().ifPresent { it.validate() }
             validated = true
         }
 
@@ -8454,6 +8455,107 @@ private constructor(
 
         override fun toString() =
             "UltimateOriginatingPartyAddress{country=$country, line1=$line1, line2=$line2, locality=$locality, postalCode=$postalCode, region=$region, additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * Additional vendor specific fields for this payment. Data must be represented as key-value
+     * pairs.
+     */
+    class VendorAttributes
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [VendorAttributes]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [VendorAttributes]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(vendorAttributes: VendorAttributes) = apply {
+                additionalProperties = vendorAttributes.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [VendorAttributes].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): VendorAttributes = VendorAttributes(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
+        fun validate(): VendorAttributes = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is VendorAttributes && additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "VendorAttributes{additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
