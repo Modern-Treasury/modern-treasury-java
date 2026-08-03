@@ -3,7 +3,10 @@
 <!-- x-release-please-start-version -->
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/7.30.1)
-[![javadoc](https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.30.1/javadoc.svg)](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.0)
+[![javadoc][javadoc-badge]][javadoc-doc]
+
+[javadoc-badge]: https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.30.1/javadoc.svg
+[javadoc-doc]: https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.1
 
 <!-- x-release-please-end -->
 

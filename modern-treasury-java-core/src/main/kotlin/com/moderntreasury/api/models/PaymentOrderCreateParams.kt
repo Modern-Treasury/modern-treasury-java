@@ -235,6 +235,16 @@ private constructor(
     fun nsfProtected(): Optional<Boolean> = body.nsfProtected()
 
     /**
+     * If present, this address will override the default originating party address used on the
+     * payment order. This works across all payment types.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun originatingPartyAddress(): Optional<OriginatingPartyAddress> =
+        body.originatingPartyAddress()
+
+    /**
      * If present, this will replace your default company name on receiver's bank statement. This
      * field can only be used for ACH payments currently. For ACH, only the first 16 characters of
      * this string will be used. Any additional characters will be truncated.
@@ -581,6 +591,15 @@ private constructor(
      * type.
      */
     fun _nsfProtected(): MultipartField<Boolean> = body._nsfProtected()
+
+    /**
+     * Returns the raw multipart value of [originatingPartyAddress].
+     *
+     * Unlike [originatingPartyAddress], this method doesn't throw if the multipart field has an
+     * unexpected type.
+     */
+    fun _originatingPartyAddress(): MultipartField<OriginatingPartyAddress> =
+        body._originatingPartyAddress()
 
     /**
      * Returns the raw multipart value of [originatingPartyName].
@@ -1217,6 +1236,32 @@ private constructor(
         }
 
         /**
+         * If present, this address will override the default originating party address used on the
+         * payment order. This works across all payment types.
+         */
+        fun originatingPartyAddress(originatingPartyAddress: OriginatingPartyAddress?) = apply {
+            body.originatingPartyAddress(originatingPartyAddress)
+        }
+
+        /**
+         * Alias for calling [Builder.originatingPartyAddress] with
+         * `originatingPartyAddress.orElse(null)`.
+         */
+        fun originatingPartyAddress(originatingPartyAddress: Optional<OriginatingPartyAddress>) =
+            originatingPartyAddress(originatingPartyAddress.getOrNull())
+
+        /**
+         * Sets [Builder.originatingPartyAddress] to an arbitrary multipart value.
+         *
+         * You should usually call [Builder.originatingPartyAddress] with a well-typed
+         * [OriginatingPartyAddress] value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
+        fun originatingPartyAddress(
+            originatingPartyAddress: MultipartField<OriginatingPartyAddress>
+        ) = apply { body.originatingPartyAddress(originatingPartyAddress) }
+
+        /**
          * If present, this will replace your default company name on receiver's bank statement.
          * This field can only be used for ACH payments currently. For ACH, only the first 16
          * characters of this string will be used. Any additional characters will be truncated.
@@ -1808,6 +1853,7 @@ private constructor(
                 "line_items" to _lineItems(),
                 "metadata" to _metadata(),
                 "nsf_protected" to _nsfProtected(),
+                "originating_party_address" to _originatingPartyAddress(),
                 "originating_party_name" to _originatingPartyName(),
                 "priority" to _priority(),
                 "process_after" to _processAfter(),
@@ -1858,6 +1904,7 @@ private constructor(
         private val lineItems: MultipartField<List<LineItemRequest>>,
         private val metadata: MultipartField<Metadata>,
         private val nsfProtected: MultipartField<Boolean>,
+        private val originatingPartyAddress: MultipartField<OriginatingPartyAddress>,
         private val originatingPartyName: MultipartField<String>,
         private val priority: MultipartField<Priority>,
         private val processAfter: MultipartField<OffsetDateTime>,
@@ -2087,6 +2134,16 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun nsfProtected(): Optional<Boolean> = nsfProtected.value.getOptional("nsf_protected")
+
+        /**
+         * If present, this address will override the default originating party address used on the
+         * payment order. This works across all payment types.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun originatingPartyAddress(): Optional<OriginatingPartyAddress> =
+            originatingPartyAddress.value.getOptional("originating_party_address")
 
         /**
          * If present, this will replace your default company name on receiver's bank statement.
@@ -2504,6 +2561,17 @@ private constructor(
         fun _nsfProtected(): MultipartField<Boolean> = nsfProtected
 
         /**
+         * Returns the raw multipart value of [originatingPartyAddress].
+         *
+         * Unlike [originatingPartyAddress], this method doesn't throw if the multipart field has an
+         * unexpected type.
+         */
+        @JsonProperty("originating_party_address")
+        @ExcludeMissing
+        fun _originatingPartyAddress(): MultipartField<OriginatingPartyAddress> =
+            originatingPartyAddress
+
+        /**
          * Returns the raw multipart value of [originatingPartyName].
          *
          * Unlike [originatingPartyName], this method doesn't throw if the multipart field has an
@@ -2751,6 +2819,8 @@ private constructor(
             private var lineItems: MultipartField<MutableList<LineItemRequest>>? = null
             private var metadata: MultipartField<Metadata> = MultipartField.of(null)
             private var nsfProtected: MultipartField<Boolean> = MultipartField.of(null)
+            private var originatingPartyAddress: MultipartField<OriginatingPartyAddress> =
+                MultipartField.of(null)
             private var originatingPartyName: MultipartField<String> = MultipartField.of(null)
             private var priority: MultipartField<Priority> = MultipartField.of(null)
             private var processAfter: MultipartField<OffsetDateTime> = MultipartField.of(null)
@@ -2804,6 +2874,7 @@ private constructor(
                 lineItems = paymentOrderCreateRequest.lineItems.map { it.toMutableList() }
                 metadata = paymentOrderCreateRequest.metadata
                 nsfProtected = paymentOrderCreateRequest.nsfProtected
+                originatingPartyAddress = paymentOrderCreateRequest.originatingPartyAddress
                 originatingPartyName = paymentOrderCreateRequest.originatingPartyName
                 priority = paymentOrderCreateRequest.priority
                 processAfter = paymentOrderCreateRequest.processAfter
@@ -3278,6 +3349,32 @@ private constructor(
             fun nsfProtected(nsfProtected: MultipartField<Boolean>) = apply {
                 this.nsfProtected = nsfProtected
             }
+
+            /**
+             * If present, this address will override the default originating party address used on
+             * the payment order. This works across all payment types.
+             */
+            fun originatingPartyAddress(originatingPartyAddress: OriginatingPartyAddress?) =
+                originatingPartyAddress(MultipartField.of(originatingPartyAddress))
+
+            /**
+             * Alias for calling [Builder.originatingPartyAddress] with
+             * `originatingPartyAddress.orElse(null)`.
+             */
+            fun originatingPartyAddress(
+                originatingPartyAddress: Optional<OriginatingPartyAddress>
+            ) = originatingPartyAddress(originatingPartyAddress.getOrNull())
+
+            /**
+             * Sets [Builder.originatingPartyAddress] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.originatingPartyAddress] with a well-typed
+             * [OriginatingPartyAddress] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun originatingPartyAddress(
+                originatingPartyAddress: MultipartField<OriginatingPartyAddress>
+            ) = apply { this.originatingPartyAddress = originatingPartyAddress }
 
             /**
              * If present, this will replace your default company name on receiver's bank statement.
@@ -3764,6 +3861,7 @@ private constructor(
                     (lineItems ?: MultipartField.of(null)).map { it.toImmutable() },
                     metadata,
                     nsfProtected,
+                    originatingPartyAddress,
                     originatingPartyName,
                     priority,
                     processAfter,
@@ -3825,6 +3923,7 @@ private constructor(
             lineItems().ifPresent { it.forEach { it.validate() } }
             metadata().ifPresent { it.validate() }
             nsfProtected()
+            originatingPartyAddress().ifPresent { it.validate() }
             originatingPartyName()
             priority().ifPresent { it.validate() }
             processAfter()
@@ -3883,6 +3982,7 @@ private constructor(
                 lineItems == other.lineItems &&
                 metadata == other.metadata &&
                 nsfProtected == other.nsfProtected &&
+                originatingPartyAddress == other.originatingPartyAddress &&
                 originatingPartyName == other.originatingPartyName &&
                 priority == other.priority &&
                 processAfter == other.processAfter &&
@@ -3929,6 +4029,7 @@ private constructor(
                 lineItems,
                 metadata,
                 nsfProtected,
+                originatingPartyAddress,
                 originatingPartyName,
                 priority,
                 processAfter,
@@ -3955,7 +4056,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -4743,6 +4844,8 @@ private constructor(
 
                 @JvmField val PAYMENT_ORDER = of("payment_order")
 
+                @JvmField val RETURN = of("return")
+
                 @JvmField val TRANSACTION = of("transaction")
 
                 @JvmStatic fun of(value: String) = DocumentableType(JsonField.of(value))
@@ -4760,6 +4863,7 @@ private constructor(
                 LEGAL_ENTITY,
                 ORGANIZATION,
                 PAYMENT_ORDER,
+                RETURN,
                 TRANSACTION,
             }
 
@@ -4784,6 +4888,7 @@ private constructor(
                 LEGAL_ENTITY,
                 ORGANIZATION,
                 PAYMENT_ORDER,
+                RETURN,
                 TRANSACTION,
                 /**
                  * An enum member indicating that [DocumentableType] was instantiated with an
@@ -4811,6 +4916,7 @@ private constructor(
                     LEGAL_ENTITY -> Value.LEGAL_ENTITY
                     ORGANIZATION -> Value.ORGANIZATION
                     PAYMENT_ORDER -> Value.PAYMENT_ORDER
+                    RETURN -> Value.RETURN
                     TRANSACTION -> Value.TRANSACTION
                     else -> Value._UNKNOWN
                 }
@@ -4836,6 +4942,7 @@ private constructor(
                     LEGAL_ENTITY -> Known.LEGAL_ENTITY
                     ORGANIZATION -> Known.ORGANIZATION
                     PAYMENT_ORDER -> Known.PAYMENT_ORDER
+                    RETURN -> Known.RETURN
                     TRANSACTION -> Known.TRANSACTION
                     else ->
                         throw ModernTreasuryInvalidDataException("Unknown DocumentableType: $value")
@@ -5705,6 +5812,346 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * If present, this address will override the default originating party address used on the
+     * payment order. This works across all payment types.
+     */
+    class OriginatingPartyAddress
+    private constructor(
+        private val country: MultipartField<String>,
+        private val line1: MultipartField<String>,
+        private val line2: MultipartField<String>,
+        private val locality: MultipartField<String>,
+        private val postalCode: MultipartField<String>,
+        private val region: MultipartField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        /**
+         * Country code conforms to [ISO 3166-1 alpha-2]
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun country(): Optional<String> = country.value.getOptional("country")
+
+        /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun line1(): Optional<String> = line1.value.getOptional("line1")
+
+        /**
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun line2(): Optional<String> = line2.value.getOptional("line2")
+
+        /**
+         * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+         * Francisco).
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun locality(): Optional<String> = locality.value.getOptional("locality")
+
+        /**
+         * The postal code of the address.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun postalCode(): Optional<String> = postalCode.value.getOptional("postal_code")
+
+        /**
+         * Region or State. This field is free-form; for US states, we recommend a two-letter code
+         * (e.g. CA). Full state names are also accepted.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun region(): Optional<String> = region.value.getOptional("region")
+
+        /**
+         * Returns the raw multipart value of [country].
+         *
+         * Unlike [country], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("country") @ExcludeMissing fun _country(): MultipartField<String> = country
+
+        /**
+         * Returns the raw multipart value of [line1].
+         *
+         * Unlike [line1], this method doesn't throw if the multipart field has an unexpected type.
+         */
+        @JsonProperty("line1") @ExcludeMissing fun _line1(): MultipartField<String> = line1
+
+        /**
+         * Returns the raw multipart value of [line2].
+         *
+         * Unlike [line2], this method doesn't throw if the multipart field has an unexpected type.
+         */
+        @JsonProperty("line2") @ExcludeMissing fun _line2(): MultipartField<String> = line2
+
+        /**
+         * Returns the raw multipart value of [locality].
+         *
+         * Unlike [locality], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("locality") @ExcludeMissing fun _locality(): MultipartField<String> = locality
+
+        /**
+         * Returns the raw multipart value of [postalCode].
+         *
+         * Unlike [postalCode], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        fun _postalCode(): MultipartField<String> = postalCode
+
+        /**
+         * Returns the raw multipart value of [region].
+         *
+         * Unlike [region], this method doesn't throw if the multipart field has an unexpected type.
+         */
+        @JsonProperty("region") @ExcludeMissing fun _region(): MultipartField<String> = region
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [OriginatingPartyAddress].
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [OriginatingPartyAddress]. */
+        class Builder internal constructor() {
+
+            private var country: MultipartField<String> = MultipartField.of(null)
+            private var line1: MultipartField<String> = MultipartField.of(null)
+            private var line2: MultipartField<String> = MultipartField.of(null)
+            private var locality: MultipartField<String> = MultipartField.of(null)
+            private var postalCode: MultipartField<String> = MultipartField.of(null)
+            private var region: MultipartField<String> = MultipartField.of(null)
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(originatingPartyAddress: OriginatingPartyAddress) = apply {
+                country = originatingPartyAddress.country
+                line1 = originatingPartyAddress.line1
+                line2 = originatingPartyAddress.line2
+                locality = originatingPartyAddress.locality
+                postalCode = originatingPartyAddress.postalCode
+                region = originatingPartyAddress.region
+                additionalProperties = originatingPartyAddress.additionalProperties.toMutableMap()
+            }
+
+            /** Country code conforms to [ISO 3166-1 alpha-2] */
+            fun country(country: String?) = country(MultipartField.of(country))
+
+            /** Alias for calling [Builder.country] with `country.orElse(null)`. */
+            fun country(country: Optional<String>) = country(country.getOrNull())
+
+            /**
+             * Sets [Builder.country] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.country] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun country(country: MultipartField<String>) = apply { this.country = country }
+
+            fun line1(line1: String?) = line1(MultipartField.of(line1))
+
+            /** Alias for calling [Builder.line1] with `line1.orElse(null)`. */
+            fun line1(line1: Optional<String>) = line1(line1.getOrNull())
+
+            /**
+             * Sets [Builder.line1] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.line1] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun line1(line1: MultipartField<String>) = apply { this.line1 = line1 }
+
+            fun line2(line2: String?) = line2(MultipartField.of(line2))
+
+            /** Alias for calling [Builder.line2] with `line2.orElse(null)`. */
+            fun line2(line2: Optional<String>) = line2(line2.getOrNull())
+
+            /**
+             * Sets [Builder.line2] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.line2] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun line2(line2: MultipartField<String>) = apply { this.line2 = line2 }
+
+            /**
+             * Locality or City. Use the full city name rather than an abbreviation (e.g. San
+             * Francisco).
+             */
+            fun locality(locality: String?) = locality(MultipartField.of(locality))
+
+            /** Alias for calling [Builder.locality] with `locality.orElse(null)`. */
+            fun locality(locality: Optional<String>) = locality(locality.getOrNull())
+
+            /**
+             * Sets [Builder.locality] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.locality] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun locality(locality: MultipartField<String>) = apply { this.locality = locality }
+
+            /** The postal code of the address. */
+            fun postalCode(postalCode: String?) = postalCode(MultipartField.of(postalCode))
+
+            /** Alias for calling [Builder.postalCode] with `postalCode.orElse(null)`. */
+            fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
+
+            /**
+             * Sets [Builder.postalCode] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.postalCode] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun postalCode(postalCode: MultipartField<String>) = apply {
+                this.postalCode = postalCode
+            }
+
+            /**
+             * Region or State. This field is free-form; for US states, we recommend a two-letter
+             * code (e.g. CA). Full state names are also accepted.
+             */
+            fun region(region: String?) = region(MultipartField.of(region))
+
+            /** Alias for calling [Builder.region] with `region.orElse(null)`. */
+            fun region(region: Optional<String>) = region(region.getOrNull())
+
+            /**
+             * Sets [Builder.region] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.region] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun region(region: MultipartField<String>) = apply { this.region = region }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [OriginatingPartyAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): OriginatingPartyAddress =
+                OriginatingPartyAddress(
+                    country,
+                    line1,
+                    line2,
+                    locality,
+                    postalCode,
+                    region,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
+        fun validate(): OriginatingPartyAddress = apply {
+            if (validated) {
+                return@apply
+            }
+
+            country()
+            line1()
+            line2()
+            locality()
+            postalCode()
+            region()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is OriginatingPartyAddress &&
+                country == other.country &&
+                line1 == other.line1 &&
+                line2 == other.line2 &&
+                locality == other.locality &&
+                postalCode == other.postalCode &&
+                region == other.region &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(country, line1, line2, locality, postalCode, region, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "OriginatingPartyAddress{country=$country, line1=$line1, line2=$line2, locality=$locality, postalCode=$postalCode, region=$region, additionalProperties=$additionalProperties}"
     }
 
     /**
