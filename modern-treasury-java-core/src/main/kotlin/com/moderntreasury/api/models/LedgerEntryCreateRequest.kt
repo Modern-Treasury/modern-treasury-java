@@ -19,6 +19,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
+/** At least one of "amount" or "amount_string" is required. */
 class LedgerEntryCreateRequest
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(

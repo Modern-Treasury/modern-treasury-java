@@ -113,7 +113,8 @@ private constructor(
     fun line2(): Optional<String> = line2.getOptional("line2")
 
     /**
-     * Whether this address is the primary address for the legal entity.
+     * Whether this address is the primary address for the legal entity. Optional; when omitted it
+     * is inferred from the address types.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -346,7 +347,10 @@ private constructor(
          */
         fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
-        /** Whether this address is the primary address for the legal entity. */
+        /**
+         * Whether this address is the primary address for the legal entity. Optional; when omitted
+         * it is inferred from the address types.
+         */
         fun primary(primary: Boolean?) = primary(JsonField.ofNullable(primary))
 
         /**
@@ -483,6 +487,8 @@ private constructor(
 
             @JvmField val BUSINESS = of("business")
 
+            @JvmField val BUSINESS_PHYSICAL = of("business_physical")
+
             @JvmField val BUSINESS_REGISTERED = of("business_registered")
 
             @JvmField val MAILING = of("mailing")
@@ -499,6 +505,7 @@ private constructor(
         /** An enum containing [AddressType]'s known values. */
         enum class Known {
             BUSINESS,
+            BUSINESS_PHYSICAL,
             BUSINESS_REGISTERED,
             MAILING,
             OTHER,
@@ -517,6 +524,7 @@ private constructor(
          */
         enum class Value {
             BUSINESS,
+            BUSINESS_PHYSICAL,
             BUSINESS_REGISTERED,
             MAILING,
             OTHER,
@@ -538,6 +546,7 @@ private constructor(
         fun value(): Value =
             when (this) {
                 BUSINESS -> Value.BUSINESS
+                BUSINESS_PHYSICAL -> Value.BUSINESS_PHYSICAL
                 BUSINESS_REGISTERED -> Value.BUSINESS_REGISTERED
                 MAILING -> Value.MAILING
                 OTHER -> Value.OTHER
@@ -558,6 +567,7 @@ private constructor(
         fun known(): Known =
             when (this) {
                 BUSINESS -> Known.BUSINESS
+                BUSINESS_PHYSICAL -> Known.BUSINESS_PHYSICAL
                 BUSINESS_REGISTERED -> Known.BUSINESS_REGISTERED
                 MAILING -> Known.MAILING
                 OTHER -> Known.OTHER

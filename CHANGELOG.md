@@ -1,5 +1,50 @@
 # Changelog
 
+## [7.30.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.30.0...v7.30.1) (2026-07-24)
+
+
+### Chores
+
+* regenerate SDKs from 24f3dc7dc33d9f75e2d589541d11b7a8bd943451 ([9a01c8c](https://github.com/Modern-Treasury/modern-treasury-java/commit/9a01c8c421f2860ee610e08704097a0f43a00e51))
+* regenerate SDKs from e1e0e3ef1458022fd1daec6fcf15bb4695c49a4b ([23618bd](https://github.com/Modern-Treasury/modern-treasury-java/commit/23618bde69c6739183f6ec008c3f33ae406f0ea2))
+
+## 7.30.0 (2026-07-14)
+
+Full Changelog: [v7.29.0...v7.30.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.29.0...v7.30.0)
+
+### Features
+
+* **api:** add legal entity simulation endpoint ([55a1cfd](https://github.com/Modern-Treasury/modern-treasury-java/commit/55a1cfddfcfbac98b6c193f007b4debaa5b19455))
+* **api:** api update ([406d8b0](https://github.com/Modern-Treasury/modern-treasury-java/commit/406d8b08ebf9c82b5b1ad01177f0e5d2d09d36c1))
+* **api:** api update ([52091c8](https://github.com/Modern-Treasury/modern-treasury-java/commit/52091c84732a9f1a5bbada6ed7202cc1fe3346c3))
+* **api:** api update ([f142c86](https://github.com/Modern-Treasury/modern-treasury-java/commit/f142c867953e6b64f1115584fd0dad3e2111b640))
+* **api:** api update ([a91bb21](https://github.com/Modern-Treasury/modern-treasury-java/commit/a91bb21045bcc21449eeebacbfb3508f33170aa9))
+* **api:** api update ([d416b4d](https://github.com/Modern-Treasury/modern-treasury-java/commit/d416b4d7b38846c1112a6d6fb3bd8d8c7d941618))
+* **api:** api update ([cb64078](https://github.com/Modern-Treasury/modern-treasury-java/commit/cb6407802fc8964205820d7de39454b970d62022))
+* **api:** api update ([c40187a](https://github.com/Modern-Treasury/modern-treasury-java/commit/c40187ac101c478480a80348201b271dd79bd76e))
+* **api:** api update ([2e951d5](https://github.com/Modern-Treasury/modern-treasury-java/commit/2e951d5f24346907606db080c8d06fce53a76edc))
+* **api:** api update ([611e2e7](https://github.com/Modern-Treasury/modern-treasury-java/commit/611e2e7f28c5cc1f05932605777d9a1937af07c0))
+* **api:** api update ([e1859ba](https://github.com/Modern-Treasury/modern-treasury-java/commit/e1859ba4d4bd66144023c697708a55aa5d41020a))
+* **api:** api update ([c7c0a47](https://github.com/Modern-Treasury/modern-treasury-java/commit/c7c0a47f0f3c09af4c2ab5bd15e417dee75b7f9c))
+* **api:** api update ([5f5ab91](https://github.com/Modern-Treasury/modern-treasury-java/commit/5f5ab91f9e60f020cd40cf21c07f4401b9cb7d71))
+* **api:** api update ([887a48a](https://github.com/Modern-Treasury/modern-treasury-java/commit/887a48a829fecf3f0a31e276f2742c4b99d552f2))
+* **api:** api update ([92bc4bd](https://github.com/Modern-Treasury/modern-treasury-java/commit/92bc4bd03424617506040faf819a986d468a2240))
+* **api:** api update ([e8e9c2d](https://github.com/Modern-Treasury/modern-treasury-java/commit/e8e9c2dbb447f899af0fc7c802300aa3e299ce53))
+* **api:** api update ([b18fb55](https://github.com/Modern-Treasury/modern-treasury-java/commit/b18fb559a671faa7ff3599cea156821c51aea565))
+* **api:** api update ([2570db3](https://github.com/Modern-Treasury/modern-treasury-java/commit/2570db31aeb9ef10a409dba5957d285a4536c18c))
+* **api:** api update ([30b33a1](https://github.com/Modern-Treasury/modern-treasury-java/commit/30b33a14c8fba3fb81ac1d3e97eddc7147a979e1))
+
+
+### Bug Fixes
+
+* generate free-form fields in multipart requests as MultipartField ([87ed6f3](https://github.com/Modern-Treasury/modern-treasury-java/commit/87ed6f3e1fec4c3f5453cdcca6246161a3661de5))
+* **tests:** skip mock-server tests for recursive response schemas ([e4baf9e](https://github.com/Modern-Treasury/modern-treasury-java/commit/e4baf9e42317feb7bf4ff8b99c539740cfddde42))
+
+
+### Chores
+
+* **internal:** codegen related update ([92a4b2c](https://github.com/Modern-Treasury/modern-treasury-java/commit/92a4b2cd007986c33157a71266ceee35d772a75f))
+
 ## 7.29.0 (2026-05-12)
 
 Full Changelog: [v7.28.0...v7.29.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.28.0...v7.29.0)
