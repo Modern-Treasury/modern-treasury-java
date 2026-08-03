@@ -4,14 +4,12 @@ package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.TestServerExtension
 import com.moderntreasury.api.client.okhttp.ModernTreasuryOkHttpClientAsync
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
 internal class BulkResultServiceAsyncTest {
 
-    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun retrieve() {
         val client =
@@ -28,7 +26,6 @@ internal class BulkResultServiceAsyncTest {
         bulkResult.validate()
     }
 
-    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
     @Test
     fun list() {
         val client =
