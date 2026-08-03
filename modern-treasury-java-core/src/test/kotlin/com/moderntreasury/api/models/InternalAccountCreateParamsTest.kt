@@ -51,9 +51,6 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
             .partyName("party_name")
-            .addRequestedAccountNumberType(
-                InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
-            )
             .vendorAttributes(
                 InternalAccountCreateParams.VendorAttributes.builder()
                     .putAdditionalProperty("key", JsonValue.from("value"))
@@ -106,9 +103,6 @@ internal class InternalAccountCreateParamsTest {
                         .build()
                 )
                 .partyName("party_name")
-                .addRequestedAccountNumberType(
-                    InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
-                )
                 .vendorAttributes(
                     InternalAccountCreateParams.VendorAttributes.builder()
                         .putAdditionalProperty("key", JsonValue.from("value"))
@@ -161,10 +155,6 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.partyName()).contains("party_name")
-        assertThat(body.requestedAccountNumberTypes().getOrNull())
-            .containsExactly(
-                InternalAccountCreateParams.RequestedAccountNumberType.ETHEREUM_ADDRESS
-            )
         assertThat(body.vendorAttributes())
             .contains(
                 InternalAccountCreateParams.VendorAttributes.builder()

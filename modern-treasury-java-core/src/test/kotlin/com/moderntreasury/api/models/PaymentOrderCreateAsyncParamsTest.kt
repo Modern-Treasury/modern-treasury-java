@@ -219,11 +219,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
             .ultimateOriginatingPartyName("ultimate_originating_party_name")
             .ultimateReceivingPartyIdentifier("ultimate_receiving_party_identifier")
             .ultimateReceivingPartyName("ultimate_receiving_party_name")
-            .vendorAttributes(
-                PaymentOrderCreateAsyncParams.VendorAttributes.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .build()
-            )
+            .vendorAttributes(JsonValue.from(mapOf<String, Any>()))
             .build()
     }
 
@@ -444,11 +440,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
                 .ultimateOriginatingPartyName("ultimate_originating_party_name")
                 .ultimateReceivingPartyIdentifier("ultimate_receiving_party_identifier")
                 .ultimateReceivingPartyName("ultimate_receiving_party_name")
-                .vendorAttributes(
-                    PaymentOrderCreateAsyncParams.VendorAttributes.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .build()
-                )
+                .vendorAttributes(JsonValue.from(mapOf<String, Any>()))
                 .build()
 
         val body = params._body()
@@ -667,12 +659,7 @@ internal class PaymentOrderCreateAsyncParamsTest {
         assertThat(body.ultimateReceivingPartyIdentifier())
             .contains("ultimate_receiving_party_identifier")
         assertThat(body.ultimateReceivingPartyName()).contains("ultimate_receiving_party_name")
-        assertThat(body.vendorAttributes())
-            .contains(
-                PaymentOrderCreateAsyncParams.VendorAttributes.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .build()
-            )
+        assertThat(body._vendorAttributes()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
     }
 
     @Test

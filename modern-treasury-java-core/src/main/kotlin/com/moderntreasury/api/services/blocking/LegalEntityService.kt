@@ -28,7 +28,7 @@ interface LegalEntityService {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): LegalEntityService
 
-    /** Create a legal entity. All country fields use ISO 3166-1 alpha-2 (e.g. US). */
+    /** create legal_entity */
     fun create(params: LegalEntityCreateParams): LegalEntity = create(params, RequestOptions.none())
 
     /** @see create */
