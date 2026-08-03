@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.31.0 (2026-08-03)
+
+Full Changelog: [v7.30.1...v7.31.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.30.1...v7.31.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([e6fc0e7](https://github.com/Modern-Treasury/modern-treasury-java/commit/e6fc0e75ef09d02da9aa3533fbad39a3443f3230))
+
+
+### Chores
+
+* regenerate SDKs from f8431d19ac72164ca8c950d87d1ab63a2ab77353 ([7c76074](https://github.com/Modern-Treasury/modern-treasury-java/commit/7c760742ca22c6034065509965d0c264e6d6d5e6))
+
 ## [7.30.1](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.30.0...v7.30.1) (2026-07-24)
 
 

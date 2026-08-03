@@ -2,11 +2,11 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/7.30.1)
+[![Maven Central](https://img.shields.io/maven-central/v/com.moderntreasury.api/modern-treasury-java)](https://central.sonatype.com/artifact/com.moderntreasury.api/modern-treasury-java/7.31.0)
 [![javadoc][javadoc-badge]][javadoc-doc]
 
-[javadoc-badge]: https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.30.1/javadoc.svg
-[javadoc-doc]: https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.1
+[javadoc-badge]: https://javadoc.io/badge2/com.moderntreasury.api/modern-treasury-java/7.31.0/javadoc.svg
+[javadoc-doc]: https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.31.0
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ Use the Modern Treasury MCP Server to enable AI assistants to interact with this
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.30.1).
+The REST API documentation can be found on [docs.moderntreasury.com](https://docs.moderntreasury.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.moderntreasury.api/modern-treasury-java/7.31.0).
 
 <!-- x-release-please-end -->
 
@@ -36,7 +36,7 @@ The REST API documentation can be found on [docs.moderntreasury.com](https://doc
 ### Gradle
 
 ```kotlin
-implementation("com.moderntreasury:modern-treasury-java:7.30.1")
+implementation("com.moderntreasury:modern-treasury-java:7.31.0")
 ```
 
 ### Maven
@@ -45,7 +45,7 @@ implementation("com.moderntreasury:modern-treasury-java:7.30.1")
 <dependency>
   <groupId>com.moderntreasury</groupId>
   <artifactId>modern-treasury-java</artifactId>
-  <version>7.30.1</version>
+  <version>7.31.0</version>
 </dependency>
 ```
 
