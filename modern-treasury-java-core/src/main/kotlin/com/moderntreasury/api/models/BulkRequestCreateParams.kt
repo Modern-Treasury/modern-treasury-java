@@ -1047,8 +1047,6 @@ private constructor(
 
             @JvmField val TRANSACTION_LINE_ITEM = of("transaction_line_item")
 
-            @JvmField val ENTITY_LINK = of("entity_link")
-
             @JvmStatic fun of(value: String) = ResourceType(JsonField.of(value))
         }
 
@@ -1060,7 +1058,6 @@ private constructor(
             EXPECTED_PAYMENT,
             TRANSACTION,
             TRANSACTION_LINE_ITEM,
-            ENTITY_LINK,
         }
 
         /**
@@ -1079,7 +1076,6 @@ private constructor(
             EXPECTED_PAYMENT,
             TRANSACTION,
             TRANSACTION_LINE_ITEM,
-            ENTITY_LINK,
             /**
              * An enum member indicating that [ResourceType] was instantiated with an unknown value.
              */
@@ -1101,7 +1097,6 @@ private constructor(
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 TRANSACTION -> Value.TRANSACTION
                 TRANSACTION_LINE_ITEM -> Value.TRANSACTION_LINE_ITEM
-                ENTITY_LINK -> Value.ENTITY_LINK
                 else -> Value._UNKNOWN
             }
 
@@ -1122,7 +1117,6 @@ private constructor(
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 TRANSACTION -> Known.TRANSACTION
                 TRANSACTION_LINE_ITEM -> Known.TRANSACTION_LINE_ITEM
-                ENTITY_LINK -> Known.ENTITY_LINK
                 else -> throw ModernTreasuryInvalidDataException("Unknown ResourceType: $value")
             }
 
