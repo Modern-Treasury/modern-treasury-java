@@ -1647,8 +1647,6 @@ private constructor(
 
             @JvmField val TRANSACTION = of("transaction")
 
-            @JvmField val ENTITY_LINK = of("entity_link")
-
             @JvmField val TRANSACTION_LINE_ITEM = of("transaction_line_item")
 
             @JvmField val BULK_ERROR = of("bulk_error")
@@ -1663,7 +1661,6 @@ private constructor(
             LEDGER_TRANSACTION,
             EXPECTED_PAYMENT,
             TRANSACTION,
-            ENTITY_LINK,
             TRANSACTION_LINE_ITEM,
             BULK_ERROR,
         }
@@ -1683,7 +1680,6 @@ private constructor(
             LEDGER_TRANSACTION,
             EXPECTED_PAYMENT,
             TRANSACTION,
-            ENTITY_LINK,
             TRANSACTION_LINE_ITEM,
             BULK_ERROR,
             /**
@@ -1706,7 +1702,6 @@ private constructor(
                 LEDGER_TRANSACTION -> Value.LEDGER_TRANSACTION
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
                 TRANSACTION -> Value.TRANSACTION
-                ENTITY_LINK -> Value.ENTITY_LINK
                 TRANSACTION_LINE_ITEM -> Value.TRANSACTION_LINE_ITEM
                 BULK_ERROR -> Value.BULK_ERROR
                 else -> Value._UNKNOWN
@@ -1728,7 +1723,6 @@ private constructor(
                 LEDGER_TRANSACTION -> Known.LEDGER_TRANSACTION
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
                 TRANSACTION -> Known.TRANSACTION
-                ENTITY_LINK -> Known.ENTITY_LINK
                 TRANSACTION_LINE_ITEM -> Known.TRANSACTION_LINE_ITEM
                 BULK_ERROR -> Known.BULK_ERROR
                 else -> throw ModernTreasuryInvalidDataException("Unknown EntityType: $value")
