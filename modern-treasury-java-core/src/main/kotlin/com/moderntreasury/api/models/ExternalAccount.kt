@@ -27,6 +27,7 @@ private constructor(
     private val id: JsonField<String>,
     private val accountDetails: JsonField<List<AccountDetail>>,
     private val accountType: JsonField<ExternalAccountType>,
+    private val cardId: JsonField<String>,
     private val contactDetails: JsonField<List<ContactDetail>>,
     private val counterpartyId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -56,6 +57,7 @@ private constructor(
         @JsonProperty("account_type")
         @ExcludeMissing
         accountType: JsonField<ExternalAccountType> = JsonMissing.of(),
+        @JsonProperty("card_id") @ExcludeMissing cardId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("contact_details")
         @ExcludeMissing
         contactDetails: JsonField<List<ContactDetail>> = JsonMissing.of(),
@@ -101,6 +103,7 @@ private constructor(
         id,
         accountDetails,
         accountType,
+        cardId,
         contactDetails,
         counterpartyId,
         createdAt,
@@ -140,6 +143,12 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun accountType(): ExternalAccountType = accountType.getRequired("account_type")
+
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun cardId(): Optional<String> = cardId.getOptional("card_id")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -288,6 +297,13 @@ private constructor(
     @JsonProperty("account_type")
     @ExcludeMissing
     fun _accountType(): JsonField<ExternalAccountType> = accountType
+
+    /**
+     * Returns the raw JSON value of [cardId].
+     *
+     * Unlike [cardId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("card_id") @ExcludeMissing fun _cardId(): JsonField<String> = cardId
 
     /**
      * Returns the raw JSON value of [contactDetails].
@@ -452,6 +468,7 @@ private constructor(
          * .id()
          * .accountDetails()
          * .accountType()
+         * .cardId()
          * .contactDetails()
          * .counterpartyId()
          * .createdAt()
@@ -480,6 +497,7 @@ private constructor(
         private var id: JsonField<String>? = null
         private var accountDetails: JsonField<MutableList<AccountDetail>>? = null
         private var accountType: JsonField<ExternalAccountType>? = null
+        private var cardId: JsonField<String>? = null
         private var contactDetails: JsonField<MutableList<ContactDetail>>? = null
         private var counterpartyId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
@@ -504,6 +522,7 @@ private constructor(
             id = externalAccount.id
             accountDetails = externalAccount.accountDetails.map { it.toMutableList() }
             accountType = externalAccount.accountType
+            cardId = externalAccount.cardId
             contactDetails = externalAccount.contactDetails.map { it.toMutableList() }
             counterpartyId = externalAccount.counterpartyId
             createdAt = externalAccount.createdAt
@@ -573,6 +592,19 @@ private constructor(
         fun accountType(accountType: JsonField<ExternalAccountType>) = apply {
             this.accountType = accountType
         }
+
+        fun cardId(cardId: String?) = cardId(JsonField.ofNullable(cardId))
+
+        /** Alias for calling [Builder.cardId] with `cardId.orElse(null)`. */
+        fun cardId(cardId: Optional<String>) = cardId(cardId.getOrNull())
+
+        /**
+         * Sets [Builder.cardId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.cardId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun cardId(cardId: JsonField<String>) = apply { this.cardId = cardId }
 
         fun contactDetails(contactDetails: List<ContactDetail>) =
             contactDetails(JsonField.of(contactDetails))
@@ -884,6 +916,7 @@ private constructor(
          * .id()
          * .accountDetails()
          * .accountType()
+         * .cardId()
          * .contactDetails()
          * .counterpartyId()
          * .createdAt()
@@ -910,6 +943,7 @@ private constructor(
                 checkRequired("id", id),
                 checkRequired("accountDetails", accountDetails).map { it.toImmutable() },
                 checkRequired("accountType", accountType),
+                checkRequired("cardId", cardId),
                 checkRequired("contactDetails", contactDetails).map { it.toImmutable() },
                 checkRequired("counterpartyId", counterpartyId),
                 checkRequired("createdAt", createdAt),
@@ -949,6 +983,7 @@ private constructor(
         id()
         accountDetails().forEach { it.validate() }
         accountType().validate()
+        cardId()
         contactDetails().forEach { it.validate() }
         counterpartyId()
         createdAt()
@@ -987,6 +1022,7 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (accountDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (accountType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (cardId.asKnown().isPresent) 1 else 0) +
             (contactDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
             (if (createdAt.asKnown().isPresent) 1 else 0) +
@@ -1558,6 +1594,7 @@ private constructor(
             id == other.id &&
             accountDetails == other.accountDetails &&
             accountType == other.accountType &&
+            cardId == other.cardId &&
             contactDetails == other.contactDetails &&
             counterpartyId == other.counterpartyId &&
             createdAt == other.createdAt &&
@@ -1583,6 +1620,7 @@ private constructor(
             id,
             accountDetails,
             accountType,
+            cardId,
             contactDetails,
             counterpartyId,
             createdAt,
@@ -1607,5 +1645,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ExternalAccount{id=$id, accountDetails=$accountDetails, accountType=$accountType, contactDetails=$contactDetails, counterpartyId=$counterpartyId, createdAt=$createdAt, discardedAt=$discardedAt, externalId=$externalId, ledgerAccountId=$ledgerAccountId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, updatedAt=$updatedAt, verificationSource=$verificationSource, verificationStatus=$verificationStatus, additionalProperties=$additionalProperties}"
+        "ExternalAccount{id=$id, accountDetails=$accountDetails, accountType=$accountType, cardId=$cardId, contactDetails=$contactDetails, counterpartyId=$counterpartyId, createdAt=$createdAt, discardedAt=$discardedAt, externalId=$externalId, ledgerAccountId=$ledgerAccountId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, updatedAt=$updatedAt, verificationSource=$verificationSource, verificationStatus=$verificationStatus, additionalProperties=$additionalProperties}"
 }
