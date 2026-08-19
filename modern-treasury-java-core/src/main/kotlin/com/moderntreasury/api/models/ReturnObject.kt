@@ -3071,8 +3071,6 @@ private constructor(
 
                 @JvmField val CURRENCYCLOUD_PAYMENT_ID = of("currencycloud_payment_id")
 
-                @JvmField val DC_BANK_TRANSACTION_ID = of("dc_bank_transaction_id")
-
                 @JvmField val EFT_TRACE_NUMBER = of("eft_trace_number")
 
                 @JvmField val EVOLVE_CORE_BATCH = of("evolve_core_batch")
@@ -3240,7 +3238,6 @@ private constructor(
                 CROSS_RIVER_TRANSACTION_ID,
                 CURRENCYCLOUD_CONVERSION_ID,
                 CURRENCYCLOUD_PAYMENT_ID,
-                DC_BANK_TRANSACTION_ID,
                 EFT_TRACE_NUMBER,
                 EVOLVE_CORE_BATCH,
                 EVOLVE_CORE_FILE_KEY,
@@ -3344,7 +3341,6 @@ private constructor(
                 CROSS_RIVER_TRANSACTION_ID,
                 CURRENCYCLOUD_CONVERSION_ID,
                 CURRENCYCLOUD_PAYMENT_ID,
-                DC_BANK_TRANSACTION_ID,
                 EFT_TRACE_NUMBER,
                 EVOLVE_CORE_BATCH,
                 EVOLVE_CORE_FILE_KEY,
@@ -3452,7 +3448,6 @@ private constructor(
                     CROSS_RIVER_TRANSACTION_ID -> Value.CROSS_RIVER_TRANSACTION_ID
                     CURRENCYCLOUD_CONVERSION_ID -> Value.CURRENCYCLOUD_CONVERSION_ID
                     CURRENCYCLOUD_PAYMENT_ID -> Value.CURRENCYCLOUD_PAYMENT_ID
-                    DC_BANK_TRANSACTION_ID -> Value.DC_BANK_TRANSACTION_ID
                     EFT_TRACE_NUMBER -> Value.EFT_TRACE_NUMBER
                     EVOLVE_CORE_BATCH -> Value.EVOLVE_CORE_BATCH
                     EVOLVE_CORE_FILE_KEY -> Value.EVOLVE_CORE_FILE_KEY
@@ -3560,7 +3555,6 @@ private constructor(
                     CROSS_RIVER_TRANSACTION_ID -> Known.CROSS_RIVER_TRANSACTION_ID
                     CURRENCYCLOUD_CONVERSION_ID -> Known.CURRENCYCLOUD_CONVERSION_ID
                     CURRENCYCLOUD_PAYMENT_ID -> Known.CURRENCYCLOUD_PAYMENT_ID
-                    DC_BANK_TRANSACTION_ID -> Known.DC_BANK_TRANSACTION_ID
                     EFT_TRACE_NUMBER -> Known.EFT_TRACE_NUMBER
                     EVOLVE_CORE_BATCH -> Known.EVOLVE_CORE_BATCH
                     EVOLVE_CORE_FILE_KEY -> Known.EVOLVE_CORE_FILE_KEY
