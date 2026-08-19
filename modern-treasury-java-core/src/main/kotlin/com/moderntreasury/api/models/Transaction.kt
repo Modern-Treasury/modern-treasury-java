@@ -308,7 +308,7 @@ private constructor(
 
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
-     * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
+     * `cleartouch`, `currencycloud`, `cross_river`, `dwolla`, `evolve`, `goldman_sachs`,
      * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -980,8 +980,8 @@ private constructor(
 
         /**
          * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
-         * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`,
-         * `goldman_sachs`, `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
+         * `cleartouch`, `currencycloud`, `cross_river`, `dwolla`, `evolve`, `goldman_sachs`,
+         * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
          */
         fun vendorCodeType(vendorCodeType: VendorCodeType?) =
             vendorCodeType(JsonField.ofNullable(vendorCodeType))
@@ -1753,7 +1753,7 @@ private constructor(
 
     /**
      * The type of `vendor_code` being reported. Can be one of `bai2`, `bankprov`, `bnk_dev`,
-     * `cleartouch`, `currencycloud`, `cross_river`, `dc_bank`, `dwolla`, `evolve`, `goldman_sachs`,
+     * `cleartouch`, `currencycloud`, `cross_river`, `dwolla`, `evolve`, `goldman_sachs`,
      * `iso20022`, `jpmc`, `mx`, `silvergate`, `swift`, `us_bank`, or others.
      */
     class VendorCodeType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1788,8 +1788,6 @@ private constructor(
             @JvmField val CROSS_RIVER = of("cross_river")
 
             @JvmField val CURRENCYCLOUD = of("currencycloud")
-
-            @JvmField val DC_BANK = of("dc_bank")
 
             @JvmField val DWOLLA = of("dwolla")
 
@@ -1839,7 +1837,6 @@ private constructor(
             COLUMN,
             CROSS_RIVER,
             CURRENCYCLOUD,
-            DC_BANK,
             DWOLLA,
             EVOLVE,
             FAKE_VENDOR,
@@ -1878,7 +1875,6 @@ private constructor(
             COLUMN,
             CROSS_RIVER,
             CURRENCYCLOUD,
-            DC_BANK,
             DWOLLA,
             EVOLVE,
             FAKE_VENDOR,
@@ -1921,7 +1917,6 @@ private constructor(
                 COLUMN -> Value.COLUMN
                 CROSS_RIVER -> Value.CROSS_RIVER
                 CURRENCYCLOUD -> Value.CURRENCYCLOUD
-                DC_BANK -> Value.DC_BANK
                 DWOLLA -> Value.DWOLLA
                 EVOLVE -> Value.EVOLVE
                 FAKE_VENDOR -> Value.FAKE_VENDOR
@@ -1962,7 +1957,6 @@ private constructor(
                 COLUMN -> Known.COLUMN
                 CROSS_RIVER -> Known.CROSS_RIVER
                 CURRENCYCLOUD -> Known.CURRENCYCLOUD
-                DC_BANK -> Known.DC_BANK
                 DWOLLA -> Known.DWOLLA
                 EVOLVE -> Known.EVOLVE
                 FAKE_VENDOR -> Known.FAKE_VENDOR
