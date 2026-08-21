@@ -274,6 +274,9 @@ internal class InvoiceTest {
                         .nsfProtected(true)
                         .object_("object")
                         .originatingAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .originatingAccountType(
+                            PaymentOrder.OriginatingAccountType.INTERNAL_ACCOUNT
+                        )
                         .originatingPartyAddress(
                             PaymentOrder.OriginatingPartyAddress.builder()
                                 .country("country")
@@ -676,6 +679,7 @@ internal class InvoiceTest {
                     .nsfProtected(true)
                     .object_("object")
                     .originatingAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .originatingAccountType(PaymentOrder.OriginatingAccountType.INTERNAL_ACCOUNT)
                     .originatingPartyAddress(
                         PaymentOrder.OriginatingPartyAddress.builder()
                             .country("country")
@@ -1074,6 +1078,9 @@ internal class InvoiceTest {
                         .nsfProtected(true)
                         .object_("object")
                         .originatingAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .originatingAccountType(
+                            PaymentOrder.OriginatingAccountType.INTERNAL_ACCOUNT
+                        )
                         .originatingPartyAddress(
                             PaymentOrder.OriginatingPartyAddress.builder()
                                 .country("country")
