@@ -62,6 +62,7 @@ private constructor(
     private val nsfProtected: JsonField<Boolean>,
     private val object_: JsonField<String>,
     private val originatingAccountId: JsonField<String>,
+    private val originatingAccountType: JsonField<OriginatingAccountType>,
     private val originatingPartyAddress: JsonField<OriginatingPartyAddress>,
     private val originatingPartyName: JsonField<String>,
     private val priority: JsonField<Priority>,
@@ -157,6 +158,9 @@ private constructor(
         @JsonProperty("originating_account_id")
         @ExcludeMissing
         originatingAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("originating_account_type")
+        @ExcludeMissing
+        originatingAccountType: JsonField<OriginatingAccountType> = JsonMissing.of(),
         @JsonProperty("originating_party_address")
         @ExcludeMissing
         originatingPartyAddress: JsonField<OriginatingPartyAddress> = JsonMissing.of(),
@@ -255,6 +259,7 @@ private constructor(
         nsfProtected,
         object_,
         originatingAccountId,
+        originatingAccountType,
         originatingPartyAddress,
         originatingPartyName,
         priority,
@@ -507,6 +512,13 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun originatingAccountId(): String = originatingAccountId.getRequired("originating_account_id")
+
+    /**
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun originatingAccountType(): OriginatingAccountType =
+        originatingAccountType.getRequired("originating_account_type")
 
     /**
      * If present, this address will override the default originating party address used on the
@@ -973,6 +985,16 @@ private constructor(
     fun _originatingAccountId(): JsonField<String> = originatingAccountId
 
     /**
+     * Returns the raw JSON value of [originatingAccountType].
+     *
+     * Unlike [originatingAccountType], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("originating_account_type")
+    @ExcludeMissing
+    fun _originatingAccountType(): JsonField<OriginatingAccountType> = originatingAccountType
+
+    /**
      * Returns the raw JSON value of [originatingPartyAddress].
      *
      * Unlike [originatingPartyAddress], this method doesn't throw if the JSON field has an
@@ -1254,6 +1276,7 @@ private constructor(
          * .nsfProtected()
          * .object_()
          * .originatingAccountId()
+         * .originatingAccountType()
          * .originatingPartyAddress()
          * .originatingPartyName()
          * .priority()
@@ -1314,6 +1337,7 @@ private constructor(
         private var nsfProtected: JsonField<Boolean>? = null
         private var object_: JsonField<String>? = null
         private var originatingAccountId: JsonField<String>? = null
+        private var originatingAccountType: JsonField<OriginatingAccountType>? = null
         private var originatingPartyAddress: JsonField<OriginatingPartyAddress>? = null
         private var originatingPartyName: JsonField<String>? = null
         private var priority: JsonField<Priority>? = null
@@ -1371,6 +1395,7 @@ private constructor(
             nsfProtected = paymentOrder.nsfProtected
             object_ = paymentOrder.object_
             originatingAccountId = paymentOrder.originatingAccountId
+            originatingAccountType = paymentOrder.originatingAccountType
             originatingPartyAddress = paymentOrder.originatingPartyAddress
             originatingPartyName = paymentOrder.originatingPartyName
             priority = paymentOrder.priority
@@ -1857,6 +1882,21 @@ private constructor(
         fun originatingAccountId(originatingAccountId: JsonField<String>) = apply {
             this.originatingAccountId = originatingAccountId
         }
+
+        fun originatingAccountType(originatingAccountType: OriginatingAccountType) =
+            originatingAccountType(JsonField.of(originatingAccountType))
+
+        /**
+         * Sets [Builder.originatingAccountType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.originatingAccountType] with a well-typed
+         * [OriginatingAccountType] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
+        fun originatingAccountType(originatingAccountType: JsonField<OriginatingAccountType>) =
+            apply {
+                this.originatingAccountType = originatingAccountType
+            }
 
         /**
          * If present, this address will override the default originating party address used on the
@@ -2475,6 +2515,7 @@ private constructor(
          * .nsfProtected()
          * .object_()
          * .originatingAccountId()
+         * .originatingAccountType()
          * .originatingPartyAddress()
          * .originatingPartyName()
          * .priority()
@@ -2533,6 +2574,7 @@ private constructor(
                 checkRequired("nsfProtected", nsfProtected),
                 checkRequired("object_", object_),
                 checkRequired("originatingAccountId", originatingAccountId),
+                checkRequired("originatingAccountType", originatingAccountType),
                 checkRequired("originatingPartyAddress", originatingPartyAddress),
                 checkRequired("originatingPartyName", originatingPartyName),
                 checkRequired("priority", priority),
@@ -2607,6 +2649,7 @@ private constructor(
         nsfProtected()
         object_()
         originatingAccountId()
+        originatingAccountType().validate()
         originatingPartyAddress().ifPresent { it.validate() }
         originatingPartyName()
         priority().validate()
@@ -2676,6 +2719,7 @@ private constructor(
             (if (nsfProtected.asKnown().isPresent) 1 else 0) +
             (if (object_.asKnown().isPresent) 1 else 0) +
             (if (originatingAccountId.asKnown().isPresent) 1 else 0) +
+            (originatingAccountType.asKnown().getOrNull()?.validity() ?: 0) +
             (originatingPartyAddress.asKnown().getOrNull()?.validity() ?: 0) +
             (if (originatingPartyName.asKnown().isPresent) 1 else 0) +
             (priority.asKnown().getOrNull()?.validity() ?: 0) +
@@ -4636,6 +4680,152 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
+    class OriginatingAccountType
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val INTERNAL_ACCOUNT = of("internal_account")
+
+            @JvmField val VIRTUAL_ACCOUNT = of("virtual_account")
+
+            @JvmStatic fun of(value: String) = OriginatingAccountType(JsonField.of(value))
+        }
+
+        /** An enum containing [OriginatingAccountType]'s known values. */
+        enum class Known {
+            INTERNAL_ACCOUNT,
+            VIRTUAL_ACCOUNT,
+        }
+
+        /**
+         * An enum containing [OriginatingAccountType]'s known values, as well as an [_UNKNOWN]
+         * member.
+         *
+         * An instance of [OriginatingAccountType] can contain an unknown value in a couple of
+         * cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            INTERNAL_ACCOUNT,
+            VIRTUAL_ACCOUNT,
+            /**
+             * An enum member indicating that [OriginatingAccountType] was instantiated with an
+             * unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
+                VIRTUAL_ACCOUNT -> Value.VIRTUAL_ACCOUNT
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
+                VIRTUAL_ACCOUNT -> Known.VIRTUAL_ACCOUNT
+                else ->
+                    throw ModernTreasuryInvalidDataException(
+                        "Unknown OriginatingAccountType: $value"
+                    )
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                ModernTreasuryInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
+        fun validate(): OriginatingAccountType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is OriginatingAccountType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     /**
@@ -7178,6 +7368,7 @@ private constructor(
             nsfProtected == other.nsfProtected &&
             object_ == other.object_ &&
             originatingAccountId == other.originatingAccountId &&
+            originatingAccountType == other.originatingAccountType &&
             originatingPartyAddress == other.originatingPartyAddress &&
             originatingPartyName == other.originatingPartyName &&
             priority == other.priority &&
@@ -7235,6 +7426,7 @@ private constructor(
             nsfProtected,
             object_,
             originatingAccountId,
+            originatingAccountType,
             originatingPartyAddress,
             originatingPartyName,
             priority,
@@ -7268,5 +7460,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, batchId=$batchId, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentHold=$currentHold, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, reconciliationStatus=$reconciliationStatus, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
+        "PaymentOrder{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, batchId=$batchId, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, currentHold=$currentHold, currentReturn=$currentReturn, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, foreignExchangeRate=$foreignExchangeRate, ledgerTransactionId=$ledgerTransactionId, liveMode=$liveMode, metadata=$metadata, nsfProtected=$nsfProtected, object_=$object_, originatingAccountId=$originatingAccountId, originatingAccountType=$originatingAccountType, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccountId=$receivingAccountId, receivingAccountType=$receivingAccountType, reconciliationStatus=$reconciliationStatus, referenceNumbers=$referenceNumbers, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, transactionIds=$transactionIds, type=$type, ultimateOriginatingAccount=$ultimateOriginatingAccount, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingAccountType=$ultimateOriginatingAccountType, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, updatedAt=$updatedAt, vendorAttributes=$vendorAttributes, vendorFailureReason=$vendorFailureReason, additionalProperties=$additionalProperties}"
 }
