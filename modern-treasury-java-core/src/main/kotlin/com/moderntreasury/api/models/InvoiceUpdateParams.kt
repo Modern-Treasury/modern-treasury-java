@@ -231,8 +231,8 @@ private constructor(
 
     /**
      * Invoice status must be updated in a `PATCH` request that does not modify any other invoice
-     * attributes. Valid state transitions are `draft` to `unpaid`, `draft` or `unpaid` to `voided`,
-     * and `draft` or `unpaid` to `paid`.
+     * attributes. Valid state transitions are `draft` to `unpaid`, `draft`, `unpaid` or `paid` to
+     * `voided`, and `draft` or `unpaid` to `paid`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -947,8 +947,8 @@ private constructor(
 
         /**
          * Invoice status must be updated in a `PATCH` request that does not modify any other
-         * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft` or `unpaid`
-         * to `voided`, and `draft` or `unpaid` to `paid`.
+         * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft`, `unpaid` or
+         * `paid` to `voided`, and `draft` or `unpaid` to `paid`.
          */
         fun status(status: String) = apply { body.status(status) }
 
@@ -1459,8 +1459,8 @@ private constructor(
 
         /**
          * Invoice status must be updated in a `PATCH` request that does not modify any other
-         * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft` or `unpaid`
-         * to `voided`, and `draft` or `unpaid` to `paid`.
+         * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft`, `unpaid` or
+         * `paid` to `voided`, and `draft` or `unpaid` to `paid`.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -2263,8 +2263,8 @@ private constructor(
 
             /**
              * Invoice status must be updated in a `PATCH` request that does not modify any other
-             * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft` or
-             * `unpaid` to `voided`, and `draft` or `unpaid` to `paid`.
+             * invoice attributes. Valid state transitions are `draft` to `unpaid`, `draft`,
+             * `unpaid` or `paid` to `voided`, and `draft` or `unpaid` to `paid`.
              */
             fun status(status: String) = status(JsonField.of(status))
 
