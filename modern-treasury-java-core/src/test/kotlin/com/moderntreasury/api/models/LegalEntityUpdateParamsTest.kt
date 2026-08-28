@@ -42,6 +42,9 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
             .businessDescription("business_description")
+            .businessDesignation(
+                LegalEntityUpdateParams.BusinessDesignation.EXEMPT_FINANCIAL_INSTITUTION
+            )
             .businessName("business_name")
             .citizenshipCountry("citizenship_country")
             .countryOfIncorporation("US")
@@ -210,6 +213,9 @@ internal class LegalEntityUpdateParamsTest {
                         .build()
                 )
                 .businessDescription("business_description")
+                .businessDesignation(
+                    LegalEntityUpdateParams.BusinessDesignation.EXEMPT_FINANCIAL_INSTITUTION
+                )
                 .businessName("business_name")
                 .citizenshipCountry("citizenship_country")
                 .countryOfIncorporation("US")
@@ -375,6 +381,8 @@ internal class LegalEntityUpdateParamsTest {
                     .build()
             )
         assertThat(body.businessDescription()).contains("business_description")
+        assertThat(body.businessDesignation())
+            .contains(LegalEntityUpdateParams.BusinessDesignation.EXEMPT_FINANCIAL_INSTITUTION)
         assertThat(body.businessName()).contains("business_name")
         assertThat(body.citizenshipCountry()).contains("citizenship_country")
         assertThat(body.countryOfIncorporation()).contains("US")
