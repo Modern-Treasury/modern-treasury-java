@@ -59,6 +59,14 @@ private constructor(
     fun businessDescription(): Optional<String> = body.businessDescription()
 
     /**
+     * Legal designation associated with the business.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun businessDesignation(): Optional<BusinessDesignation> = body.businessDesignation()
+
+    /**
      * The business's legal business name.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -351,6 +359,14 @@ private constructor(
      * type.
      */
     fun _businessDescription(): JsonField<String> = body._businessDescription()
+
+    /**
+     * Returns the raw JSON value of [businessDesignation].
+     *
+     * Unlike [businessDesignation], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _businessDesignation(): JsonField<BusinessDesignation> = body._businessDesignation()
 
     /**
      * Returns the raw JSON value of [businessName].
@@ -654,8 +670,8 @@ private constructor(
          * - [addresses]
          * - [bankSettings]
          * - [businessDescription]
+         * - [businessDesignation]
          * - [businessName]
-         * - [citizenshipCountry]
          * - etc.
          */
         fun body(body: LegalEntityUpdateRequest) = apply { this.body = body.toBuilder() }
@@ -722,6 +738,28 @@ private constructor(
          */
         fun businessDescription(businessDescription: JsonField<String>) = apply {
             body.businessDescription(businessDescription)
+        }
+
+        /** Legal designation associated with the business. */
+        fun businessDesignation(businessDesignation: BusinessDesignation?) = apply {
+            body.businessDesignation(businessDesignation)
+        }
+
+        /**
+         * Alias for calling [Builder.businessDesignation] with `businessDesignation.orElse(null)`.
+         */
+        fun businessDesignation(businessDesignation: Optional<BusinessDesignation>) =
+            businessDesignation(businessDesignation.getOrNull())
+
+        /**
+         * Sets [Builder.businessDesignation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.businessDesignation] with a well-typed
+         * [BusinessDesignation] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun businessDesignation(businessDesignation: JsonField<BusinessDesignation>) = apply {
+            body.businessDesignation(businessDesignation)
         }
 
         /** The business's legal business name. */
@@ -1553,6 +1591,7 @@ private constructor(
         private val addresses: JsonField<List<LegalEntityAddressCreateRequest>>,
         private val bankSettings: JsonField<BankSettings>,
         private val businessDescription: JsonField<String>,
+        private val businessDesignation: JsonField<BusinessDesignation>,
         private val businessName: JsonField<String>,
         private val citizenshipCountry: JsonField<String>,
         private val countryOfIncorporation: JsonField<String>,
@@ -1601,6 +1640,9 @@ private constructor(
             @JsonProperty("business_description")
             @ExcludeMissing
             businessDescription: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("business_designation")
+            @ExcludeMissing
+            businessDesignation: JsonField<BusinessDesignation> = JsonMissing.of(),
             @JsonProperty("business_name")
             @ExcludeMissing
             businessName: JsonField<String> = JsonMissing.of(),
@@ -1700,6 +1742,7 @@ private constructor(
             addresses,
             bankSettings,
             businessDescription,
+            businessDesignation,
             businessName,
             citizenshipCountry,
             countryOfIncorporation,
@@ -1760,6 +1803,15 @@ private constructor(
          */
         fun businessDescription(): Optional<String> =
             businessDescription.getOptional("business_description")
+
+        /**
+         * Legal designation associated with the business.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun businessDesignation(): Optional<BusinessDesignation> =
+            businessDesignation.getOptional("business_designation")
 
         /**
          * The business's legal business name.
@@ -2073,6 +2125,16 @@ private constructor(
         @JsonProperty("business_description")
         @ExcludeMissing
         fun _businessDescription(): JsonField<String> = businessDescription
+
+        /**
+         * Returns the raw JSON value of [businessDesignation].
+         *
+         * Unlike [businessDesignation], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("business_designation")
+        @ExcludeMissing
+        fun _businessDesignation(): JsonField<BusinessDesignation> = businessDesignation
 
         /**
          * Returns the raw JSON value of [businessName].
@@ -2415,6 +2477,7 @@ private constructor(
             private var addresses: JsonField<MutableList<LegalEntityAddressCreateRequest>>? = null
             private var bankSettings: JsonField<BankSettings> = JsonMissing.of()
             private var businessDescription: JsonField<String> = JsonMissing.of()
+            private var businessDesignation: JsonField<BusinessDesignation> = JsonMissing.of()
             private var businessName: JsonField<String> = JsonMissing.of()
             private var citizenshipCountry: JsonField<String> = JsonMissing.of()
             private var countryOfIncorporation: JsonField<String> = JsonMissing.of()
@@ -2460,6 +2523,7 @@ private constructor(
                 addresses = legalEntityUpdateRequest.addresses.map { it.toMutableList() }
                 bankSettings = legalEntityUpdateRequest.bankSettings
                 businessDescription = legalEntityUpdateRequest.businessDescription
+                businessDesignation = legalEntityUpdateRequest.businessDesignation
                 businessName = legalEntityUpdateRequest.businessName
                 citizenshipCountry = legalEntityUpdateRequest.citizenshipCountry
                 countryOfIncorporation = legalEntityUpdateRequest.countryOfIncorporation
@@ -2568,6 +2632,28 @@ private constructor(
              */
             fun businessDescription(businessDescription: JsonField<String>) = apply {
                 this.businessDescription = businessDescription
+            }
+
+            /** Legal designation associated with the business. */
+            fun businessDesignation(businessDesignation: BusinessDesignation?) =
+                businessDesignation(JsonField.ofNullable(businessDesignation))
+
+            /**
+             * Alias for calling [Builder.businessDesignation] with
+             * `businessDesignation.orElse(null)`.
+             */
+            fun businessDesignation(businessDesignation: Optional<BusinessDesignation>) =
+                businessDesignation(businessDesignation.getOrNull())
+
+            /**
+             * Sets [Builder.businessDesignation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.businessDesignation] with a well-typed
+             * [BusinessDesignation] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun businessDesignation(businessDesignation: JsonField<BusinessDesignation>) = apply {
+                this.businessDesignation = businessDesignation
             }
 
             /** The business's legal business name. */
@@ -3323,6 +3409,7 @@ private constructor(
                     (addresses ?: JsonMissing.of()).map { it.toImmutable() },
                     bankSettings,
                     businessDescription,
+                    businessDesignation,
                     businessName,
                     citizenshipCountry,
                     countryOfIncorporation,
@@ -3380,6 +3467,7 @@ private constructor(
             addresses().ifPresent { it.forEach { it.validate() } }
             bankSettings().ifPresent { it.validate() }
             businessDescription()
+            businessDesignation().ifPresent { it.validate() }
             businessName()
             citizenshipCountry()
             countryOfIncorporation()
@@ -3436,6 +3524,7 @@ private constructor(
             (addresses.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (bankSettings.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (businessDescription.asKnown().isPresent) 1 else 0) +
+                (businessDesignation.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (businessName.asKnown().isPresent) 1 else 0) +
                 (if (citizenshipCountry.asKnown().isPresent) 1 else 0) +
                 (if (countryOfIncorporation.asKnown().isPresent) 1 else 0) +
@@ -3482,6 +3571,7 @@ private constructor(
                 addresses == other.addresses &&
                 bankSettings == other.bankSettings &&
                 businessDescription == other.businessDescription &&
+                businessDesignation == other.businessDesignation &&
                 businessName == other.businessName &&
                 citizenshipCountry == other.citizenshipCountry &&
                 countryOfIncorporation == other.countryOfIncorporation &&
@@ -3524,6 +3614,7 @@ private constructor(
                 addresses,
                 bankSettings,
                 businessDescription,
+                businessDesignation,
                 businessName,
                 citizenshipCountry,
                 countryOfIncorporation,
@@ -3565,7 +3656,150 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LegalEntityUpdateRequest{addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessName=$businessName, citizenshipCountry=$citizenshipCountry, countryOfIncorporation=$countryOfIncorporation, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalStructure=$legalStructure, listedExchange=$listedExchange, metadata=$metadata, middleName=$middleName, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, suffix=$suffix, termsOfUse=$termsOfUse, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+            "LegalEntityUpdateRequest{addresses=$addresses, bankSettings=$bankSettings, businessDescription=$businessDescription, businessDesignation=$businessDesignation, businessName=$businessName, citizenshipCountry=$citizenshipCountry, countryOfIncorporation=$countryOfIncorporation, dateFormed=$dateFormed, dateOfBirth=$dateOfBirth, doingBusinessAsNames=$doingBusinessAsNames, email=$email, expectedActivityVolume=$expectedActivityVolume, externalId=$externalId, firstName=$firstName, identifications=$identifications, industryClassifications=$industryClassifications, intendedUse=$intendedUse, lastName=$lastName, legalStructure=$legalStructure, listedExchange=$listedExchange, metadata=$metadata, middleName=$middleName, operatingJurisdictions=$operatingJurisdictions, phoneNumbers=$phoneNumbers, politicallyExposedPerson=$politicallyExposedPerson, preferredName=$preferredName, prefix=$prefix, primarySocialMediaSites=$primarySocialMediaSites, regulators=$regulators, riskRating=$riskRating, serviceProviderLegalEntityId=$serviceProviderLegalEntityId, suffix=$suffix, termsOfUse=$termsOfUse, thirdPartyVerification=$thirdPartyVerification, thirdPartyVerifications=$thirdPartyVerifications, tickerSymbol=$tickerSymbol, wealthAndEmploymentDetails=$wealthAndEmploymentDetails, website=$website, additionalProperties=$additionalProperties}"
+    }
+
+    /** Legal designation associated with the business. */
+    class BusinessDesignation
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val EXEMPT_FINANCIAL_INSTITUTION = of("exempt_financial_institution")
+
+            @JvmField val NON_OPERATING_BUSINESS = of("non_operating_business")
+
+            @JvmStatic fun of(value: String) = BusinessDesignation(JsonField.of(value))
+        }
+
+        /** An enum containing [BusinessDesignation]'s known values. */
+        enum class Known {
+            EXEMPT_FINANCIAL_INSTITUTION,
+            NON_OPERATING_BUSINESS,
+        }
+
+        /**
+         * An enum containing [BusinessDesignation]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [BusinessDesignation] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            EXEMPT_FINANCIAL_INSTITUTION,
+            NON_OPERATING_BUSINESS,
+            /**
+             * An enum member indicating that [BusinessDesignation] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                EXEMPT_FINANCIAL_INSTITUTION -> Value.EXEMPT_FINANCIAL_INSTITUTION
+                NON_OPERATING_BUSINESS -> Value.NON_OPERATING_BUSINESS
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                EXEMPT_FINANCIAL_INSTITUTION -> Known.EXEMPT_FINANCIAL_INSTITUTION
+                NON_OPERATING_BUSINESS -> Known.NON_OPERATING_BUSINESS
+                else ->
+                    throw ModernTreasuryInvalidDataException("Unknown BusinessDesignation: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                ModernTreasuryInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
+         *   its expected type.
+         */
+        fun validate(): BusinessDesignation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: ModernTreasuryInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is BusinessDesignation && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     /** The business's legal structure. */
