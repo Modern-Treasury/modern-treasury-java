@@ -115,6 +115,14 @@ private constructor(
     fun routingDetails(): Optional<List<RoutingDetailCreateRequest>> = body.routingDetails()
 
     /**
+     * The ID of the virtual account setting used to allocate this virtual account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun virtualAccountSettingId(): Optional<String> = body.virtualAccountSettingId()
+
+    /**
      * Returns the raw JSON value of [internalAccountId].
      *
      * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected
@@ -186,6 +194,14 @@ private constructor(
      * Unlike [routingDetails], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _routingDetails(): JsonField<List<RoutingDetailCreateRequest>> = body._routingDetails()
+
+    /**
+     * Returns the raw JSON value of [virtualAccountSettingId].
+     *
+     * Unlike [virtualAccountSettingId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    fun _virtualAccountSettingId(): JsonField<String> = body._virtualAccountSettingId()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -416,6 +432,22 @@ private constructor(
             body.addRoutingDetail(routingDetail)
         }
 
+        /** The ID of the virtual account setting used to allocate this virtual account. */
+        fun virtualAccountSettingId(virtualAccountSettingId: String) = apply {
+            body.virtualAccountSettingId(virtualAccountSettingId)
+        }
+
+        /**
+         * Sets [Builder.virtualAccountSettingId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.virtualAccountSettingId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun virtualAccountSettingId(virtualAccountSettingId: JsonField<String>) = apply {
+            body.virtualAccountSettingId(virtualAccountSettingId)
+        }
+
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
@@ -573,6 +605,7 @@ private constructor(
         private val ledgerAccount: JsonField<LedgerAccountCreateRequest>,
         private val metadata: JsonField<Metadata>,
         private val routingDetails: JsonField<List<RoutingDetailCreateRequest>>,
+        private val virtualAccountSettingId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -606,6 +639,9 @@ private constructor(
             @JsonProperty("routing_details")
             @ExcludeMissing
             routingDetails: JsonField<List<RoutingDetailCreateRequest>> = JsonMissing.of(),
+            @JsonProperty("virtual_account_setting_id")
+            @ExcludeMissing
+            virtualAccountSettingId: JsonField<String> = JsonMissing.of(),
         ) : this(
             internalAccountId,
             name,
@@ -617,6 +653,7 @@ private constructor(
             ledgerAccount,
             metadata,
             routingDetails,
+            virtualAccountSettingId,
             mutableMapOf(),
         )
 
@@ -711,6 +748,15 @@ private constructor(
             routingDetails.getOptional("routing_details")
 
         /**
+         * The ID of the virtual account setting used to allocate this virtual account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun virtualAccountSettingId(): Optional<String> =
+            virtualAccountSettingId.getOptional("virtual_account_setting_id")
+
+        /**
          * Returns the raw JSON value of [internalAccountId].
          *
          * Unlike [internalAccountId], this method doesn't throw if the JSON field has an unexpected
@@ -803,6 +849,16 @@ private constructor(
         @ExcludeMissing
         fun _routingDetails(): JsonField<List<RoutingDetailCreateRequest>> = routingDetails
 
+        /**
+         * Returns the raw JSON value of [virtualAccountSettingId].
+         *
+         * Unlike [virtualAccountSettingId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("virtual_account_setting_id")
+        @ExcludeMissing
+        fun _virtualAccountSettingId(): JsonField<String> = virtualAccountSettingId
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -843,6 +899,7 @@ private constructor(
             private var ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var routingDetails: JsonField<MutableList<RoutingDetailCreateRequest>>? = null
+            private var virtualAccountSettingId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
@@ -859,6 +916,7 @@ private constructor(
                 metadata = virtualAccountCreateRequest.metadata
                 routingDetails =
                     virtualAccountCreateRequest.routingDetails.map { it.toMutableList() }
+                virtualAccountSettingId = virtualAccountCreateRequest.virtualAccountSettingId
                 additionalProperties =
                     virtualAccountCreateRequest.additionalProperties.toMutableMap()
             }
@@ -1046,6 +1104,21 @@ private constructor(
                     }
             }
 
+            /** The ID of the virtual account setting used to allocate this virtual account. */
+            fun virtualAccountSettingId(virtualAccountSettingId: String) =
+                virtualAccountSettingId(JsonField.of(virtualAccountSettingId))
+
+            /**
+             * Sets [Builder.virtualAccountSettingId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.virtualAccountSettingId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun virtualAccountSettingId(virtualAccountSettingId: JsonField<String>) = apply {
+                this.virtualAccountSettingId = virtualAccountSettingId
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1090,6 +1163,7 @@ private constructor(
                     ledgerAccount,
                     metadata,
                     (routingDetails ?: JsonMissing.of()).map { it.toImmutable() },
+                    virtualAccountSettingId,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1120,6 +1194,7 @@ private constructor(
             ledgerAccount().ifPresent { it.validate() }
             metadata().ifPresent { it.validate() }
             routingDetails().ifPresent { it.forEach { it.validate() } }
+            virtualAccountSettingId()
             validated = true
         }
 
@@ -1148,7 +1223,8 @@ private constructor(
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (ledgerAccount.asKnown().getOrNull()?.validity() ?: 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
-                (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
+                (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (virtualAccountSettingId.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1166,6 +1242,7 @@ private constructor(
                 ledgerAccount == other.ledgerAccount &&
                 metadata == other.metadata &&
                 routingDetails == other.routingDetails &&
+                virtualAccountSettingId == other.virtualAccountSettingId &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -1181,6 +1258,7 @@ private constructor(
                 ledgerAccount,
                 metadata,
                 routingDetails,
+                virtualAccountSettingId,
                 additionalProperties,
             )
         }
@@ -1188,7 +1266,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, metadata=$metadata, routingDetails=$routingDetails, additionalProperties=$additionalProperties}"
+            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, metadata=$metadata, routingDetails=$routingDetails, virtualAccountSettingId=$virtualAccountSettingId, additionalProperties=$additionalProperties}"
     }
 
     class AccountDetailCreateRequest
