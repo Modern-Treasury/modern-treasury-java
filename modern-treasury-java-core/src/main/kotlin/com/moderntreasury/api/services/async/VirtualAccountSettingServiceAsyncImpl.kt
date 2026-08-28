@@ -4,7 +4,6 @@ package com.moderntreasury.api.services.async
 
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
-import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.handlers.errorBodyHandler
 import com.moderntreasury.api.core.handlers.errorHandler
 import com.moderntreasury.api.core.handlers.jsonHandler
@@ -16,70 +15,69 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
-import com.moderntreasury.api.models.LegalEntityAssociation
-import com.moderntreasury.api.models.LegalEntityAssociationCreateParams
-import com.moderntreasury.api.models.LegalEntityAssociationDeleteParams
+import com.moderntreasury.api.models.VirtualAccountSetting
+import com.moderntreasury.api.models.VirtualAccountSettingCreateParams
+import com.moderntreasury.api.models.VirtualAccountSettingListPageAsync
+import com.moderntreasury.api.models.VirtualAccountSettingListParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
-import kotlin.jvm.optionals.getOrNull
 
-class LegalEntityAssociationServiceAsyncImpl
-internal constructor(private val clientOptions: ClientOptions) :
-    LegalEntityAssociationServiceAsync {
+class VirtualAccountSettingServiceAsyncImpl
+internal constructor(private val clientOptions: ClientOptions) : VirtualAccountSettingServiceAsync {
 
-    private val withRawResponse: LegalEntityAssociationServiceAsync.WithRawResponse by lazy {
+    private val withRawResponse: VirtualAccountSettingServiceAsync.WithRawResponse by lazy {
         WithRawResponseImpl(clientOptions)
     }
 
-    override fun withRawResponse(): LegalEntityAssociationServiceAsync.WithRawResponse =
+    override fun withRawResponse(): VirtualAccountSettingServiceAsync.WithRawResponse =
         withRawResponse
 
     override fun withOptions(
         modifier: Consumer<ClientOptions.Builder>
-    ): LegalEntityAssociationServiceAsync =
-        LegalEntityAssociationServiceAsyncImpl(
+    ): VirtualAccountSettingServiceAsync =
+        VirtualAccountSettingServiceAsyncImpl(
             clientOptions.toBuilder().apply(modifier::accept).build()
         )
 
     override fun create(
-        params: LegalEntityAssociationCreateParams,
+        params: VirtualAccountSettingCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LegalEntityAssociation> =
-        // post /api/legal_entity_associations
+    ): CompletableFuture<VirtualAccountSetting> =
+        // post /api/virtual_account_settings
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    override fun delete(
-        params: LegalEntityAssociationDeleteParams,
+    override fun list(
+        params: VirtualAccountSettingListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LegalEntityAssociation> =
-        // delete /api/legal_entity_associations/{id}
-        withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
+    ): CompletableFuture<VirtualAccountSettingListPageAsync> =
+        // get /api/virtual_account_settings
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        LegalEntityAssociationServiceAsync.WithRawResponse {
+        VirtualAccountSettingServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
-        ): LegalEntityAssociationServiceAsync.WithRawResponse =
-            LegalEntityAssociationServiceAsyncImpl.WithRawResponseImpl(
+        ): VirtualAccountSettingServiceAsync.WithRawResponse =
+            VirtualAccountSettingServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<LegalEntityAssociation> =
-            jsonHandler<LegalEntityAssociation>(clientOptions.jsonMapper)
+        private val createHandler: Handler<VirtualAccountSetting> =
+            jsonHandler<VirtualAccountSetting>(clientOptions.jsonMapper)
 
         override fun create(
-            params: LegalEntityAssociationCreateParams,
+            params: VirtualAccountSettingCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> {
+        ): CompletableFuture<HttpResponseFor<VirtualAccountSetting>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
                     .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "legal_entity_associations")
+                    .addPathSegments("api", "virtual_account_settings")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -99,22 +97,18 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val deleteHandler: Handler<LegalEntityAssociation> =
-            jsonHandler<LegalEntityAssociation>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<VirtualAccountSetting>> =
+            jsonHandler<List<VirtualAccountSetting>>(clientOptions.jsonMapper)
 
-        override fun delete(
-            params: LegalEntityAssociationDeleteParams,
+        override fun list(
+            params: VirtualAccountSettingListParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
+        ): CompletableFuture<HttpResponseFor<VirtualAccountSettingListPageAsync>> {
             val request =
                 HttpRequest.builder()
-                    .method(HttpMethod.DELETE)
+                    .method(HttpMethod.GET)
                     .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "legal_entity_associations", params._pathParam(0))
-                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .addPathSegments("api", "virtual_account_settings")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -123,11 +117,20 @@ internal constructor(private val clientOptions: ClientOptions) :
                 .thenApply { response ->
                     errorHandler.handle(response).parseable {
                         response
-                            .use { deleteHandler.handle(it) }
+                            .use { listHandler.handle(it) }
                             .also {
                                 if (requestOptions.responseValidation!!) {
-                                    it.validate()
+                                    it.forEach { it.validate() }
                                 }
+                            }
+                            .let {
+                                VirtualAccountSettingListPageAsync.builder()
+                                    .service(VirtualAccountSettingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                                    .params(params)
+                                    .headers(response.headers())
+                                    .items(it)
+                                    .build()
                             }
                     }
                 }

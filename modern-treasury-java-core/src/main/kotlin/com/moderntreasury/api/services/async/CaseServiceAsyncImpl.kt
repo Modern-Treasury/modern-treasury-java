@@ -13,74 +13,69 @@ import com.moderntreasury.api.core.http.HttpRequest
 import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponse.Handler
 import com.moderntreasury.api.core.http.HttpResponseFor
-import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepareAsync
-import com.moderntreasury.api.models.LegalEntityAssociation
-import com.moderntreasury.api.models.LegalEntityAssociationCreateParams
-import com.moderntreasury.api.models.LegalEntityAssociationDeleteParams
+import com.moderntreasury.api.models.Case
+import com.moderntreasury.api.models.CaseListPageAsync
+import com.moderntreasury.api.models.CaseListParams
+import com.moderntreasury.api.models.CaseRetrieveParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
-class LegalEntityAssociationServiceAsyncImpl
-internal constructor(private val clientOptions: ClientOptions) :
-    LegalEntityAssociationServiceAsync {
+class CaseServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CaseServiceAsync {
 
-    private val withRawResponse: LegalEntityAssociationServiceAsync.WithRawResponse by lazy {
+    private val withRawResponse: CaseServiceAsync.WithRawResponse by lazy {
         WithRawResponseImpl(clientOptions)
     }
 
-    override fun withRawResponse(): LegalEntityAssociationServiceAsync.WithRawResponse =
-        withRawResponse
+    override fun withRawResponse(): CaseServiceAsync.WithRawResponse = withRawResponse
 
-    override fun withOptions(
-        modifier: Consumer<ClientOptions.Builder>
-    ): LegalEntityAssociationServiceAsync =
-        LegalEntityAssociationServiceAsyncImpl(
-            clientOptions.toBuilder().apply(modifier::accept).build()
-        )
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CaseServiceAsync =
+        CaseServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: LegalEntityAssociationCreateParams,
+    override fun retrieve(
+        params: CaseRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LegalEntityAssociation> =
-        // post /api/legal_entity_associations
-        withRawResponse().create(params, requestOptions).thenApply { it.parse() }
+    ): CompletableFuture<Case> =
+        // get /api/cases/{id}
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    override fun delete(
-        params: LegalEntityAssociationDeleteParams,
+    override fun list(
+        params: CaseListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LegalEntityAssociation> =
-        // delete /api/legal_entity_associations/{id}
-        withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
+    ): CompletableFuture<CaseListPageAsync> =
+        // get /api/cases
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
-        LegalEntityAssociationServiceAsync.WithRawResponse {
+        CaseServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
-        ): LegalEntityAssociationServiceAsync.WithRawResponse =
-            LegalEntityAssociationServiceAsyncImpl.WithRawResponseImpl(
+        ): CaseServiceAsync.WithRawResponse =
+            CaseServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<LegalEntityAssociation> =
-            jsonHandler<LegalEntityAssociation>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Case> = jsonHandler<Case>(clientOptions.jsonMapper)
 
-        override fun create(
-            params: LegalEntityAssociationCreateParams,
+        override fun retrieve(
+            params: CaseRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> {
+        ): CompletableFuture<HttpResponseFor<Case>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
-                    .method(HttpMethod.POST)
+                    .method(HttpMethod.GET)
                     .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "legal_entity_associations")
-                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .addPathSegments("api", "cases", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -89,7 +84,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                 .thenApply { response ->
                     errorHandler.handle(response).parseable {
                         response
-                            .use { createHandler.handle(it) }
+                            .use { retrieveHandler.handle(it) }
                             .also {
                                 if (requestOptions.responseValidation!!) {
                                     it.validate()
@@ -99,22 +94,18 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val deleteHandler: Handler<LegalEntityAssociation> =
-            jsonHandler<LegalEntityAssociation>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<Case>> =
+            jsonHandler<List<Case>>(clientOptions.jsonMapper)
 
-        override fun delete(
-            params: LegalEntityAssociationDeleteParams,
+        override fun list(
+            params: CaseListParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LegalEntityAssociation>> {
-            // We check here instead of in the params builder because this can be specified
-            // positionally or in the params class.
-            checkRequired("id", params.id().getOrNull())
+        ): CompletableFuture<HttpResponseFor<CaseListPageAsync>> {
             val request =
                 HttpRequest.builder()
-                    .method(HttpMethod.DELETE)
+                    .method(HttpMethod.GET)
                     .baseUrl(clientOptions.baseUrl())
-                    .addPathSegments("api", "legal_entity_associations", params._pathParam(0))
-                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .addPathSegments("api", "cases")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -123,11 +114,20 @@ internal constructor(private val clientOptions: ClientOptions) :
                 .thenApply { response ->
                     errorHandler.handle(response).parseable {
                         response
-                            .use { deleteHandler.handle(it) }
+                            .use { listHandler.handle(it) }
                             .also {
                                 if (requestOptions.responseValidation!!) {
-                                    it.validate()
+                                    it.forEach { it.validate() }
                                 }
+                            }
+                            .let {
+                                CaseListPageAsync.builder()
+                                    .service(CaseServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                                    .params(params)
+                                    .headers(response.headers())
+                                    .items(it)
+                                    .build()
                             }
                     }
                 }

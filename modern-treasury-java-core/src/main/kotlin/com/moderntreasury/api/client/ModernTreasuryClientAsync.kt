@@ -11,6 +11,7 @@ import com.moderntreasury.api.services.async.AccountCollectionFlowServiceAsync
 import com.moderntreasury.api.services.async.AccountDetailServiceAsync
 import com.moderntreasury.api.services.async.BulkRequestServiceAsync
 import com.moderntreasury.api.services.async.BulkResultServiceAsync
+import com.moderntreasury.api.services.async.CaseServiceAsync
 import com.moderntreasury.api.services.async.ConnectionLegalEntityServiceAsync
 import com.moderntreasury.api.services.async.ConnectionServiceAsync
 import com.moderntreasury.api.services.async.CounterpartyServiceAsync
@@ -25,6 +26,7 @@ import com.moderntreasury.api.services.async.InternalAccountServiceAsync
 import com.moderntreasury.api.services.async.InvoiceServiceAsync
 import com.moderntreasury.api.services.async.JournalEntryServiceAsync
 import com.moderntreasury.api.services.async.JournalReportServiceAsync
+import com.moderntreasury.api.services.async.JournalSourceServiceAsync
 import com.moderntreasury.api.services.async.LedgerAccountBalanceMonitorServiceAsync
 import com.moderntreasury.api.services.async.LedgerAccountCategoryServiceAsync
 import com.moderntreasury.api.services.async.LedgerAccountServiceAsync
@@ -45,6 +47,7 @@ import com.moderntreasury.api.services.async.RoutingDetailServiceAsync
 import com.moderntreasury.api.services.async.TransactionServiceAsync
 import com.moderntreasury.api.services.async.ValidationServiceAsync
 import com.moderntreasury.api.services.async.VirtualAccountServiceAsync
+import com.moderntreasury.api.services.async.VirtualAccountSettingServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -156,9 +159,15 @@ interface ModernTreasuryClientAsync {
 
     fun journalEntries(): JournalEntryServiceAsync
 
+    fun journalSources(): JournalSourceServiceAsync
+
     fun journalReports(): JournalReportServiceAsync
 
     fun holds(): HoldServiceAsync
+
+    fun cases(): CaseServiceAsync
+
+    fun virtualAccountSettings(): VirtualAccountSettingServiceAsync
 
     /**
      * A test endpoint often used to confirm credentials and headers are being passed in correctly.
@@ -279,9 +288,15 @@ interface ModernTreasuryClientAsync {
 
         fun journalEntries(): JournalEntryServiceAsync.WithRawResponse
 
+        fun journalSources(): JournalSourceServiceAsync.WithRawResponse
+
         fun journalReports(): JournalReportServiceAsync.WithRawResponse
 
         fun holds(): HoldServiceAsync.WithRawResponse
+
+        fun cases(): CaseServiceAsync.WithRawResponse
+
+        fun virtualAccountSettings(): VirtualAccountSettingServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
