@@ -13,6 +13,7 @@ import com.moderntreasury.api.models.LegalEntityAssociationInlineCreate
 import com.moderntreasury.api.models.LegalEntityCreateParams
 import com.moderntreasury.api.models.LegalEntityIndustryClassification
 import com.moderntreasury.api.models.LegalEntityUpdateParams
+import com.moderntreasury.api.models.LegalEntityUpdateStatusParams
 import com.moderntreasury.api.models.ThirdPartyVerification
 import com.moderntreasury.api.models.WealthAndEmploymentDetails
 import java.time.LocalDate
@@ -682,5 +683,28 @@ internal class LegalEntityServiceAsyncTest {
 
         val page = pageFuture.get()
         page.items().forEach { it.validate() }
+    }
+
+    @Disabled("Mock server doesn't generate valid example responses for recursive schemas")
+    @Test
+    fun updateStatus() {
+        val client =
+            ModernTreasuryOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .organizationId("my-organization-ID")
+                .build()
+        val legalEntityServiceAsync = client.legalEntities()
+
+        val legalEntityFuture =
+            legalEntityServiceAsync.updateStatus(
+                LegalEntityUpdateStatusParams.builder()
+                    .id("id")
+                    .status(LegalEntityUpdateStatusParams.Status.ACTIVE)
+                    .build()
+            )
+
+        val legalEntity = legalEntityFuture.get()
+        legalEntity.validate()
     }
 }
