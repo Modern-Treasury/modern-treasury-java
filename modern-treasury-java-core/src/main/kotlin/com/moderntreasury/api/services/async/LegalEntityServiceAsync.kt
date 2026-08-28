@@ -11,6 +11,7 @@ import com.moderntreasury.api.models.LegalEntityListPageAsync
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
 import com.moderntreasury.api.models.LegalEntityUpdateParams
+import com.moderntreasury.api.models.LegalEntityUpdateStatusParams
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -117,6 +118,30 @@ interface LegalEntityServiceAsync {
     /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<LegalEntityListPageAsync> =
         list(LegalEntityListParams.none(), requestOptions)
+
+    /** Update Legal Entity Status (sandbox only) */
+    fun updateStatus(
+        id: String,
+        params: LegalEntityUpdateStatusParams,
+    ): CompletableFuture<LegalEntity> = updateStatus(id, params, RequestOptions.none())
+
+    /** @see updateStatus */
+    fun updateStatus(
+        id: String,
+        params: LegalEntityUpdateStatusParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LegalEntity> =
+        updateStatus(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see updateStatus */
+    fun updateStatus(params: LegalEntityUpdateStatusParams): CompletableFuture<LegalEntity> =
+        updateStatus(params, RequestOptions.none())
+
+    /** @see updateStatus */
+    fun updateStatus(
+        params: LegalEntityUpdateStatusParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LegalEntity>
 
     /**
      * A view of [LegalEntityServiceAsync] that provides access to raw HTTP responses for each
@@ -251,5 +276,36 @@ interface LegalEntityServiceAsync {
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<LegalEntityListPageAsync>> =
             list(LegalEntityListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `patch
+         * /api/simulations/legal_entities/{id}/update_status`, but is otherwise the same as
+         * [LegalEntityServiceAsync.updateStatus].
+         */
+        fun updateStatus(
+            id: String,
+            params: LegalEntityUpdateStatusParams,
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
+            updateStatus(id, params, RequestOptions.none())
+
+        /** @see updateStatus */
+        fun updateStatus(
+            id: String,
+            params: LegalEntityUpdateStatusParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
+            updateStatus(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see updateStatus */
+        fun updateStatus(
+            params: LegalEntityUpdateStatusParams
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
+            updateStatus(params, RequestOptions.none())
+
+        /** @see updateStatus */
+        fun updateStatus(
+            params: LegalEntityUpdateStatusParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LegalEntity>>
     }
 }
