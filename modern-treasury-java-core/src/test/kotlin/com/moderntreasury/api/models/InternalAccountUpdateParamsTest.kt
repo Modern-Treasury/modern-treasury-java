@@ -23,6 +23,16 @@ internal class InternalAccountUpdateParamsTest {
             )
             .name("name")
             .parentAccountId("parent_account_id")
+            .partyAddress(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .build()
+            )
             .status(InternalAccountUpdateParams.Status.PENDING_CLOSURE)
             .build()
     }
@@ -52,6 +62,16 @@ internal class InternalAccountUpdateParamsTest {
                 )
                 .name("name")
                 .parentAccountId("parent_account_id")
+                .partyAddress(
+                    AddressRequest.builder()
+                        .country("country")
+                        .line1("line1")
+                        .line2("line2")
+                        .locality("locality")
+                        .postalCode("postal_code")
+                        .region("region")
+                        .build()
+                )
                 .status(InternalAccountUpdateParams.Status.PENDING_CLOSURE)
                 .build()
 
@@ -69,6 +89,17 @@ internal class InternalAccountUpdateParamsTest {
             )
         assertThat(body.name()).contains("name")
         assertThat(body.parentAccountId()).contains("parent_account_id")
+        assertThat(body.partyAddress())
+            .contains(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .build()
+            )
         assertThat(body.status()).contains(InternalAccountUpdateParams.Status.PENDING_CLOSURE)
     }
 
