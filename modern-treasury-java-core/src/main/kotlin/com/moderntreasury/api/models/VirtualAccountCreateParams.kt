@@ -99,6 +99,14 @@ private constructor(
     fun ledgerAccount(): Optional<LedgerAccountCreateRequest> = body.ledgerAccount()
 
     /**
+     * The ledger account that you'd like to link to the virtual account.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun ledgerAccountId(): Optional<String> = body.ledgerAccountId()
+
+    /**
      * Additional data represented as key-value pairs. Both the key and value must be strings.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -180,6 +188,13 @@ private constructor(
      * Unlike [ledgerAccount], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _ledgerAccount(): JsonField<LedgerAccountCreateRequest> = body._ledgerAccount()
+
+    /**
+     * Returns the raw JSON value of [ledgerAccountId].
+     *
+     * Unlike [ledgerAccountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _ledgerAccountId(): JsonField<String> = body._ledgerAccountId()
 
     /**
      * Returns the raw JSON value of [metadata].
@@ -393,6 +408,22 @@ private constructor(
             body.ledgerAccount(ledgerAccount)
         }
 
+        /** The ledger account that you'd like to link to the virtual account. */
+        fun ledgerAccountId(ledgerAccountId: String) = apply {
+            body.ledgerAccountId(ledgerAccountId)
+        }
+
+        /**
+         * Sets [Builder.ledgerAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.ledgerAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
+            body.ledgerAccountId(ledgerAccountId)
+        }
+
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
          */
@@ -603,6 +634,7 @@ private constructor(
         private val debitLedgerAccountId: JsonField<String>,
         private val description: JsonField<String>,
         private val ledgerAccount: JsonField<LedgerAccountCreateRequest>,
+        private val ledgerAccountId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val routingDetails: JsonField<List<RoutingDetailCreateRequest>>,
         private val virtualAccountSettingId: JsonField<String>,
@@ -633,6 +665,9 @@ private constructor(
             @JsonProperty("ledger_account")
             @ExcludeMissing
             ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of(),
+            @JsonProperty("ledger_account_id")
+            @ExcludeMissing
+            ledgerAccountId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -651,6 +686,7 @@ private constructor(
             debitLedgerAccountId,
             description,
             ledgerAccount,
+            ledgerAccountId,
             metadata,
             routingDetails,
             virtualAccountSettingId,
@@ -729,6 +765,14 @@ private constructor(
          */
         fun ledgerAccount(): Optional<LedgerAccountCreateRequest> =
             ledgerAccount.getOptional("ledger_account")
+
+        /**
+         * The ledger account that you'd like to link to the virtual account.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun ledgerAccountId(): Optional<String> = ledgerAccountId.getOptional("ledger_account_id")
 
         /**
          * Additional data represented as key-value pairs. Both the key and value must be strings.
@@ -833,6 +877,16 @@ private constructor(
         fun _ledgerAccount(): JsonField<LedgerAccountCreateRequest> = ledgerAccount
 
         /**
+         * Returns the raw JSON value of [ledgerAccountId].
+         *
+         * Unlike [ledgerAccountId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("ledger_account_id")
+        @ExcludeMissing
+        fun _ledgerAccountId(): JsonField<String> = ledgerAccountId
+
+        /**
          * Returns the raw JSON value of [metadata].
          *
          * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
@@ -897,6 +951,7 @@ private constructor(
             private var debitLedgerAccountId: JsonField<String> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of()
+            private var ledgerAccountId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var routingDetails: JsonField<MutableList<RoutingDetailCreateRequest>>? = null
             private var virtualAccountSettingId: JsonField<String> = JsonMissing.of()
@@ -913,6 +968,7 @@ private constructor(
                 debitLedgerAccountId = virtualAccountCreateRequest.debitLedgerAccountId
                 description = virtualAccountCreateRequest.description
                 ledgerAccount = virtualAccountCreateRequest.ledgerAccount
+                ledgerAccountId = virtualAccountCreateRequest.ledgerAccountId
                 metadata = virtualAccountCreateRequest.metadata
                 routingDetails =
                     virtualAccountCreateRequest.routingDetails.map { it.toMutableList() }
@@ -1061,6 +1117,21 @@ private constructor(
                 this.ledgerAccount = ledgerAccount
             }
 
+            /** The ledger account that you'd like to link to the virtual account. */
+            fun ledgerAccountId(ledgerAccountId: String) =
+                ledgerAccountId(JsonField.of(ledgerAccountId))
+
+            /**
+             * Sets [Builder.ledgerAccountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ledgerAccountId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun ledgerAccountId(ledgerAccountId: JsonField<String>) = apply {
+                this.ledgerAccountId = ledgerAccountId
+            }
+
             /**
              * Additional data represented as key-value pairs. Both the key and value must be
              * strings.
@@ -1161,6 +1232,7 @@ private constructor(
                     debitLedgerAccountId,
                     description,
                     ledgerAccount,
+                    ledgerAccountId,
                     metadata,
                     (routingDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     virtualAccountSettingId,
@@ -1192,6 +1264,7 @@ private constructor(
             debitLedgerAccountId()
             description()
             ledgerAccount().ifPresent { it.validate() }
+            ledgerAccountId()
             metadata().ifPresent { it.validate() }
             routingDetails().ifPresent { it.forEach { it.validate() } }
             virtualAccountSettingId()
@@ -1222,6 +1295,7 @@ private constructor(
                 (if (debitLedgerAccountId.asKnown().isPresent) 1 else 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (ledgerAccount.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
                 (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (virtualAccountSettingId.asKnown().isPresent) 1 else 0)
@@ -1240,6 +1314,7 @@ private constructor(
                 debitLedgerAccountId == other.debitLedgerAccountId &&
                 description == other.description &&
                 ledgerAccount == other.ledgerAccount &&
+                ledgerAccountId == other.ledgerAccountId &&
                 metadata == other.metadata &&
                 routingDetails == other.routingDetails &&
                 virtualAccountSettingId == other.virtualAccountSettingId &&
@@ -1256,6 +1331,7 @@ private constructor(
                 debitLedgerAccountId,
                 description,
                 ledgerAccount,
+                ledgerAccountId,
                 metadata,
                 routingDetails,
                 virtualAccountSettingId,
@@ -1266,7 +1342,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, metadata=$metadata, routingDetails=$routingDetails, virtualAccountSettingId=$virtualAccountSettingId, additionalProperties=$additionalProperties}"
+            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, ledgerAccount=$ledgerAccount, ledgerAccountId=$ledgerAccountId, metadata=$metadata, routingDetails=$routingDetails, virtualAccountSettingId=$virtualAccountSettingId, additionalProperties=$additionalProperties}"
     }
 
     class AccountDetailCreateRequest
