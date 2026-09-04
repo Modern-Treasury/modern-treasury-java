@@ -45,6 +45,8 @@ import com.moderntreasury.api.services.async.ForeignExchangeQuoteServiceAsync
 import com.moderntreasury.api.services.async.ForeignExchangeQuoteServiceAsyncImpl
 import com.moderntreasury.api.services.async.HoldServiceAsync
 import com.moderntreasury.api.services.async.HoldServiceAsyncImpl
+import com.moderntreasury.api.services.async.IdentificationServiceAsync
+import com.moderntreasury.api.services.async.IdentificationServiceAsyncImpl
 import com.moderntreasury.api.services.async.IncomingPaymentDetailServiceAsync
 import com.moderntreasury.api.services.async.IncomingPaymentDetailServiceAsyncImpl
 import com.moderntreasury.api.services.async.InternalAccountServiceAsync
@@ -284,6 +286,10 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         VirtualAccountSettingServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val identifications: IdentificationServiceAsync by lazy {
+        IdentificationServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): ModernTreasuryClient = sync
 
     override fun withRawResponse(): ModernTreasuryClientAsync.WithRawResponse = withRawResponse
@@ -383,6 +389,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
 
     override fun virtualAccountSettings(): VirtualAccountSettingServiceAsync =
         virtualAccountSettings
+
+    override fun identifications(): IdentificationServiceAsync = identifications
 
     override fun ping(
         params: ClientPingParams,
@@ -573,6 +581,10 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
             VirtualAccountSettingServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val identifications: IdentificationServiceAsync.WithRawResponse by lazy {
+            IdentificationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
         ): ModernTreasuryClientAsync.WithRawResponse =
@@ -676,6 +688,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
 
         override fun virtualAccountSettings(): VirtualAccountSettingServiceAsync.WithRawResponse =
             virtualAccountSettings
+
+        override fun identifications(): IdentificationServiceAsync.WithRawResponse = identifications
 
         private val pingHandler: Handler<PingResponse> =
             jsonHandler<PingResponse>(clientOptions.jsonMapper)
