@@ -21,6 +21,7 @@ import com.moderntreasury.api.services.async.ExpectedPaymentServiceAsync
 import com.moderntreasury.api.services.async.ExternalAccountServiceAsync
 import com.moderntreasury.api.services.async.ForeignExchangeQuoteServiceAsync
 import com.moderntreasury.api.services.async.HoldServiceAsync
+import com.moderntreasury.api.services.async.IdentificationServiceAsync
 import com.moderntreasury.api.services.async.IncomingPaymentDetailServiceAsync
 import com.moderntreasury.api.services.async.InternalAccountServiceAsync
 import com.moderntreasury.api.services.async.InvoiceServiceAsync
@@ -169,6 +170,8 @@ interface ModernTreasuryClientAsync {
 
     fun virtualAccountSettings(): VirtualAccountSettingServiceAsync
 
+    fun identifications(): IdentificationServiceAsync
+
     /**
      * A test endpoint often used to confirm credentials and headers are being passed in correctly.
      */
@@ -297,6 +300,8 @@ interface ModernTreasuryClientAsync {
         fun cases(): CaseServiceAsync.WithRawResponse
 
         fun virtualAccountSettings(): VirtualAccountSettingServiceAsync.WithRawResponse
+
+        fun identifications(): IdentificationServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /api/ping`, but is otherwise the same as
