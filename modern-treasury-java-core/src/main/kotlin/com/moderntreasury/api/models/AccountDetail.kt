@@ -85,8 +85,8 @@ private constructor(
     fun accountNumberSafe(): String = accountNumberSafe.getRequired("account_number_safe")
 
     /**
-     * One of `iban`, `clabe`, or `other`. Use `other` if the bank account number is in a generic
-     * format.
+     * The type of the account number. For wallet addresses, use the chain-specific type (e.g.
+     * `ethereum_address`). Use `other` if the account number is in a generic format.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -298,8 +298,8 @@ private constructor(
         }
 
         /**
-         * One of `iban`, `clabe`, or `other`. Use `other` if the bank account number is in a
-         * generic format.
+         * The type of the account number. For wallet addresses, use the chain-specific type (e.g.
+         * `ethereum_address`). Use `other` if the account number is in a generic format.
          */
         fun accountNumberType(accountNumberType: AccountNumberType) =
             accountNumberType(JsonField.of(accountNumberType))
@@ -500,8 +500,8 @@ private constructor(
             (if (accountNumber.asKnown().isPresent) 1 else 0)
 
     /**
-     * One of `iban`, `clabe`, or `other`. Use `other` if the bank account number is in a generic
-     * format.
+     * The type of the account number. For wallet addresses, use the chain-specific type (e.g.
+     * `ethereum_address`). Use `other` if the account number is in a generic format.
      */
     class AccountNumberType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
