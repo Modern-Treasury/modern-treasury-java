@@ -14,6 +14,7 @@ class VirtualAccountListParams
 private constructor(
     private val afterCursor: String?,
     private val counterpartyId: String?,
+    private val externalId: String?,
     private val internalAccountId: String?,
     private val metadata: Metadata?,
     private val perPage: Long?,
@@ -24,6 +25,9 @@ private constructor(
     fun afterCursor(): Optional<String> = Optional.ofNullable(afterCursor)
 
     fun counterpartyId(): Optional<String> = Optional.ofNullable(counterpartyId)
+
+    /** Only return virtual accounts with this external ID. */
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     fun internalAccountId(): Optional<String> = Optional.ofNullable(internalAccountId)
 
@@ -56,6 +60,7 @@ private constructor(
 
         private var afterCursor: String? = null
         private var counterpartyId: String? = null
+        private var externalId: String? = null
         private var internalAccountId: String? = null
         private var metadata: Metadata? = null
         private var perPage: Long? = null
@@ -66,6 +71,7 @@ private constructor(
         internal fun from(virtualAccountListParams: VirtualAccountListParams) = apply {
             afterCursor = virtualAccountListParams.afterCursor
             counterpartyId = virtualAccountListParams.counterpartyId
+            externalId = virtualAccountListParams.externalId
             internalAccountId = virtualAccountListParams.internalAccountId
             metadata = virtualAccountListParams.metadata
             perPage = virtualAccountListParams.perPage
@@ -83,6 +89,12 @@ private constructor(
         /** Alias for calling [Builder.counterpartyId] with `counterpartyId.orElse(null)`. */
         fun counterpartyId(counterpartyId: Optional<String>) =
             counterpartyId(counterpartyId.getOrNull())
+
+        /** Only return virtual accounts with this external ID. */
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         fun internalAccountId(internalAccountId: String?) = apply {
             this.internalAccountId = internalAccountId
@@ -220,6 +232,7 @@ private constructor(
             VirtualAccountListParams(
                 afterCursor,
                 counterpartyId,
+                externalId,
                 internalAccountId,
                 metadata,
                 perPage,
@@ -235,6 +248,7 @@ private constructor(
             .apply {
                 afterCursor?.let { put("after_cursor", it) }
                 counterpartyId?.let { put("counterparty_id", it) }
+                externalId?.let { put("external_id", it) }
                 internalAccountId?.let { put("internal_account_id", it) }
                 metadata?.let {
                     it._additionalProperties().keys().forEach { key ->
@@ -355,6 +369,7 @@ private constructor(
         return other is VirtualAccountListParams &&
             afterCursor == other.afterCursor &&
             counterpartyId == other.counterpartyId &&
+            externalId == other.externalId &&
             internalAccountId == other.internalAccountId &&
             metadata == other.metadata &&
             perPage == other.perPage &&
@@ -366,6 +381,7 @@ private constructor(
         Objects.hash(
             afterCursor,
             counterpartyId,
+            externalId,
             internalAccountId,
             metadata,
             perPage,
@@ -374,5 +390,5 @@ private constructor(
         )
 
     override fun toString() =
-        "VirtualAccountListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "VirtualAccountListParams{afterCursor=$afterCursor, counterpartyId=$counterpartyId, externalId=$externalId, internalAccountId=$internalAccountId, metadata=$metadata, perPage=$perPage, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
