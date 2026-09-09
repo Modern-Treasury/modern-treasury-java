@@ -292,7 +292,7 @@ private constructor(
     fun prefix(): Optional<String> = body.prefix()
 
     /**
-     * A list of primary social media URLs for the business.
+     * A list of the entity's primary social media URLs.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -1385,7 +1385,7 @@ private constructor(
          */
         fun prefix(prefix: JsonField<String>) = apply { body.prefix(prefix) }
 
-        /** A list of primary social media URLs for the business. */
+        /** A list of the entity's primary social media URLs. */
         fun primarySocialMediaSites(primarySocialMediaSites: List<String>) = apply {
             body.primarySocialMediaSites(primarySocialMediaSites)
         }
@@ -2248,7 +2248,7 @@ private constructor(
         fun prefix(): Optional<String> = prefix.getOptional("prefix")
 
         /**
-         * A list of primary social media URLs for the business.
+         * A list of the entity's primary social media URLs.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -3552,7 +3552,7 @@ private constructor(
              */
             fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
 
-            /** A list of primary social media URLs for the business. */
+            /** A list of the entity's primary social media URLs. */
             fun primarySocialMediaSites(primarySocialMediaSites: List<String>) =
                 primarySocialMediaSites(JsonField.of(primarySocialMediaSites))
 
