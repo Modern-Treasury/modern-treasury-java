@@ -111,9 +111,9 @@ private constructor(
     fun documentableId(): Optional<String> = documentableId.getOptional("documentable_id")
 
     /**
-     * The type of the associated object. Currently can be one of `payment_order`, `transaction`,
-     * `expected_payment`, `return`, `legal_entity`, `counterparty`, `organization`, `case`,
-     * `internal_account`, `decision`, or `external_account`.
+     * The type of the associated object. Currently can be one of `connection`, `counterparty`,
+     * `expected_payment`, `identification`, `incoming_payment_detail`, `internal_account`,
+     * `legal_entity`, `payment_order`, `return`, or `transaction`.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -389,9 +389,9 @@ private constructor(
         }
 
         /**
-         * The type of the associated object. Currently can be one of `payment_order`,
-         * `transaction`, `expected_payment`, `return`, `legal_entity`, `counterparty`,
-         * `organization`, `case`, `internal_account`, `decision`, or `external_account`.
+         * The type of the associated object. Currently can be one of `connection`, `counterparty`,
+         * `expected_payment`, `identification`, `incoming_payment_detail`, `internal_account`,
+         * `legal_entity`, `payment_order`, `return`, or `transaction`.
          */
         fun documentableType(documentableType: DocumentableType?) =
             documentableType(JsonField.ofNullable(documentableType))
@@ -583,9 +583,9 @@ private constructor(
             (if (updatedAt.asKnown().isPresent) 1 else 0)
 
     /**
-     * The type of the associated object. Currently can be one of `payment_order`, `transaction`,
-     * `expected_payment`, `return`, `legal_entity`, `counterparty`, `organization`, `case`,
-     * `internal_account`, `decision`, or `external_account`.
+     * The type of the associated object. Currently can be one of `connection`, `counterparty`,
+     * `expected_payment`, `identification`, `incoming_payment_detail`, `internal_account`,
+     * `legal_entity`, `payment_order`, `return`, or `transaction`.
      */
     class DocumentableType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -608,8 +608,6 @@ private constructor(
 
             @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-            @JvmField val EXTERNAL_ACCOUNT = of("external_account")
-
             @JvmField val IDENTIFICATION = of("identification")
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
@@ -617,8 +615,6 @@ private constructor(
             @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
             @JvmField val LEGAL_ENTITY = of("legal_entity")
-
-            @JvmField val ORGANIZATION = of("organization")
 
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
@@ -634,12 +630,10 @@ private constructor(
             CONNECTION,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
             IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             LEGAL_ENTITY,
-            ORGANIZATION,
             PAYMENT_ORDER,
             RETURN,
             TRANSACTION,
@@ -658,12 +652,10 @@ private constructor(
             CONNECTION,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
             IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             LEGAL_ENTITY,
-            ORGANIZATION,
             PAYMENT_ORDER,
             RETURN,
             TRANSACTION,
@@ -686,12 +678,10 @@ private constructor(
                 CONNECTION -> Value.CONNECTION
                 COUNTERPARTY -> Value.COUNTERPARTY
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                 IDENTIFICATION -> Value.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
                 LEGAL_ENTITY -> Value.LEGAL_ENTITY
-                ORGANIZATION -> Value.ORGANIZATION
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 RETURN -> Value.RETURN
                 TRANSACTION -> Value.TRANSACTION
@@ -712,12 +702,10 @@ private constructor(
                 CONNECTION -> Known.CONNECTION
                 COUNTERPARTY -> Known.COUNTERPARTY
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                 IDENTIFICATION -> Known.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
                 LEGAL_ENTITY -> Known.LEGAL_ENTITY
-                ORGANIZATION -> Known.ORGANIZATION
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 RETURN -> Known.RETURN
                 TRANSACTION -> Known.TRANSACTION

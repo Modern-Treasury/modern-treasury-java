@@ -647,8 +647,6 @@ private constructor(
 
             @JvmField val EXPECTED_PAYMENT = of("expected_payment")
 
-            @JvmField val EXTERNAL_ACCOUNT = of("external_account")
-
             @JvmField val IDENTIFICATION = of("identification")
 
             @JvmField val INCOMING_PAYMENT_DETAIL = of("incoming_payment_detail")
@@ -656,8 +654,6 @@ private constructor(
             @JvmField val INTERNAL_ACCOUNT = of("internal_account")
 
             @JvmField val LEGAL_ENTITY = of("legal_entity")
-
-            @JvmField val ORGANIZATION = of("organization")
 
             @JvmField val PAYMENT_ORDER = of("payment_order")
 
@@ -673,12 +669,10 @@ private constructor(
             CONNECTION,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
             IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             LEGAL_ENTITY,
-            ORGANIZATION,
             PAYMENT_ORDER,
             RETURN,
             TRANSACTION,
@@ -697,12 +691,10 @@ private constructor(
             CONNECTION,
             COUNTERPARTY,
             EXPECTED_PAYMENT,
-            EXTERNAL_ACCOUNT,
             IDENTIFICATION,
             INCOMING_PAYMENT_DETAIL,
             INTERNAL_ACCOUNT,
             LEGAL_ENTITY,
-            ORGANIZATION,
             PAYMENT_ORDER,
             RETURN,
             TRANSACTION,
@@ -725,12 +717,10 @@ private constructor(
                 CONNECTION -> Value.CONNECTION
                 COUNTERPARTY -> Value.COUNTERPARTY
                 EXPECTED_PAYMENT -> Value.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                 IDENTIFICATION -> Value.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Value.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
                 LEGAL_ENTITY -> Value.LEGAL_ENTITY
-                ORGANIZATION -> Value.ORGANIZATION
                 PAYMENT_ORDER -> Value.PAYMENT_ORDER
                 RETURN -> Value.RETURN
                 TRANSACTION -> Value.TRANSACTION
@@ -751,12 +741,10 @@ private constructor(
                 CONNECTION -> Known.CONNECTION
                 COUNTERPARTY -> Known.COUNTERPARTY
                 EXPECTED_PAYMENT -> Known.EXPECTED_PAYMENT
-                EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                 IDENTIFICATION -> Known.IDENTIFICATION
                 INCOMING_PAYMENT_DETAIL -> Known.INCOMING_PAYMENT_DETAIL
                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
                 LEGAL_ENTITY -> Known.LEGAL_ENTITY
-                ORGANIZATION -> Known.ORGANIZATION
                 PAYMENT_ORDER -> Known.PAYMENT_ORDER
                 RETURN -> Known.RETURN
                 TRANSACTION -> Known.TRANSACTION
