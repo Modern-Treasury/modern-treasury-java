@@ -19,7 +19,7 @@ internal class VirtualAccountCreateParamsTest {
                     .accountNumber("account_number")
                     .accountNumberType(
                         VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                            .AU_NUMBER
+                            .ARBITRUM_ADDRESS
                     )
                     .build()
             )
@@ -81,7 +81,7 @@ internal class VirtualAccountCreateParamsTest {
                         .accountNumber("account_number")
                         .accountNumberType(
                             VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                                .AU_NUMBER
+                                .ARBITRUM_ADDRESS
                         )
                         .build()
                 )
@@ -142,7 +142,7 @@ internal class VirtualAccountCreateParamsTest {
                     .accountNumber("account_number")
                     .accountNumberType(
                         VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                            .AU_NUMBER
+                            .ARBITRUM_ADDRESS
                     )
                     .build()
             )

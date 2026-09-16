@@ -6960,6 +6960,8 @@ private constructor(
 
                         companion object {
 
+                            @JvmField val ARBITRUM_ADDRESS = of("arbitrum_address")
+
                             @JvmField val AU_NUMBER = of("au_number")
 
                             @JvmField val BASE_ADDRESS = of("base_address")
@@ -6994,6 +6996,7 @@ private constructor(
 
                         /** An enum containing [AccountNumberType]'s known values. */
                         enum class Known {
+                            ARBITRUM_ADDRESS,
                             AU_NUMBER,
                             BASE_ADDRESS,
                             CARD_TOKEN,
@@ -7022,6 +7025,7 @@ private constructor(
                          * - It was constructed with an arbitrary value using the [of] method.
                          */
                         enum class Value {
+                            ARBITRUM_ADDRESS,
                             AU_NUMBER,
                             BASE_ADDRESS,
                             CARD_TOKEN,
@@ -7052,6 +7056,7 @@ private constructor(
                          */
                         fun value(): Value =
                             when (this) {
+                                ARBITRUM_ADDRESS -> Value.ARBITRUM_ADDRESS
                                 AU_NUMBER -> Value.AU_NUMBER
                                 BASE_ADDRESS -> Value.BASE_ADDRESS
                                 CARD_TOKEN -> Value.CARD_TOKEN
@@ -7080,6 +7085,7 @@ private constructor(
                          */
                         fun known(): Known =
                             when (this) {
+                                ARBITRUM_ADDRESS -> Known.ARBITRUM_ADDRESS
                                 AU_NUMBER -> Known.AU_NUMBER
                                 BASE_ADDRESS -> Known.BASE_ADDRESS
                                 CARD_TOKEN -> Known.CARD_TOKEN
@@ -17800,6 +17806,8 @@ private constructor(
 
                         companion object {
 
+                            @JvmField val ARBITRUM_ADDRESS = of("arbitrum_address")
+
                             @JvmField val AU_NUMBER = of("au_number")
 
                             @JvmField val BASE_ADDRESS = of("base_address")
@@ -17834,6 +17842,7 @@ private constructor(
 
                         /** An enum containing [AccountNumberType]'s known values. */
                         enum class Known {
+                            ARBITRUM_ADDRESS,
                             AU_NUMBER,
                             BASE_ADDRESS,
                             CARD_TOKEN,
@@ -17862,6 +17871,7 @@ private constructor(
                          * - It was constructed with an arbitrary value using the [of] method.
                          */
                         enum class Value {
+                            ARBITRUM_ADDRESS,
                             AU_NUMBER,
                             BASE_ADDRESS,
                             CARD_TOKEN,
@@ -17892,6 +17902,7 @@ private constructor(
                          */
                         fun value(): Value =
                             when (this) {
+                                ARBITRUM_ADDRESS -> Value.ARBITRUM_ADDRESS
                                 AU_NUMBER -> Value.AU_NUMBER
                                 BASE_ADDRESS -> Value.BASE_ADDRESS
                                 CARD_TOKEN -> Value.CARD_TOKEN
@@ -17920,6 +17931,7 @@ private constructor(
                          */
                         fun known(): Known =
                             when (this) {
+                                ARBITRUM_ADDRESS -> Known.ARBITRUM_ADDRESS
                                 AU_NUMBER -> Known.AU_NUMBER
                                 BASE_ADDRESS -> Known.BASE_ADDRESS
                                 CARD_TOKEN -> Known.CARD_TOKEN
