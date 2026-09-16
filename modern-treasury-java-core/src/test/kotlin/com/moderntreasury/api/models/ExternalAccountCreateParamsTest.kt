@@ -17,7 +17,7 @@ internal class ExternalAccountCreateParamsTest {
                 ExternalAccountCreateParams.AccountDetail.builder()
                     .accountNumber("account_number")
                     .accountNumberType(
-                        ExternalAccountCreateParams.AccountDetail.AccountNumberType.AU_NUMBER
+                        ExternalAccountCreateParams.AccountDetail.AccountNumberType.ARBITRUM_ADDRESS
                     )
                     .build()
             )
@@ -93,7 +93,8 @@ internal class ExternalAccountCreateParamsTest {
                     ExternalAccountCreateParams.AccountDetail.builder()
                         .accountNumber("account_number")
                         .accountNumberType(
-                            ExternalAccountCreateParams.AccountDetail.AccountNumberType.AU_NUMBER
+                            ExternalAccountCreateParams.AccountDetail.AccountNumberType
+                                .ARBITRUM_ADDRESS
                         )
                         .build()
                 )
@@ -169,7 +170,7 @@ internal class ExternalAccountCreateParamsTest {
                 ExternalAccountCreateParams.AccountDetail.builder()
                     .accountNumber("account_number")
                     .accountNumberType(
-                        ExternalAccountCreateParams.AccountDetail.AccountNumberType.AU_NUMBER
+                        ExternalAccountCreateParams.AccountDetail.AccountNumberType.ARBITRUM_ADDRESS
                     )
                     .build()
             )
