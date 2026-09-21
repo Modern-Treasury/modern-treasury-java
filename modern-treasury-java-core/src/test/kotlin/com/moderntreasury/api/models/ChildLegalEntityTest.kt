@@ -297,8 +297,8 @@ internal class ChildLegalEntityTest {
                                 .liveMode(true)
                                 .metadata(
                                     ChildLegalEntity.Metadata.builder()
-                                        .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                        .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                         .build()
                                 )
@@ -424,8 +424,8 @@ internal class ChildLegalEntityTest {
                 .liveMode(true)
                 .metadata(
                     ChildLegalEntity.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                         .build()
                 )
@@ -780,8 +780,8 @@ internal class ChildLegalEntityTest {
                             .liveMode(true)
                             .metadata(
                                 ChildLegalEntity.Metadata.builder()
-                                    .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .putAdditionalProperty("key", JsonValue.from("value"))
                                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                     .build()
                             )
@@ -898,8 +898,8 @@ internal class ChildLegalEntityTest {
         assertThat(childLegalEntity.metadata())
             .isEqualTo(
                 ChildLegalEntity.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
@@ -1272,8 +1272,8 @@ internal class ChildLegalEntityTest {
                                 .liveMode(true)
                                 .metadata(
                                     ChildLegalEntity.Metadata.builder()
-                                        .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                        .putAdditionalProperty("key", JsonValue.from("value"))
                                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                                         .build()
                                 )
@@ -1399,8 +1399,8 @@ internal class ChildLegalEntityTest {
                 .liveMode(true)
                 .metadata(
                     ChildLegalEntity.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                         .build()
                 )
