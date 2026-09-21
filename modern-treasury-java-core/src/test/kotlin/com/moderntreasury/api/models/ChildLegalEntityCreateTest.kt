@@ -118,8 +118,8 @@ internal class ChildLegalEntityCreateTest {
                 .listedExchange("listed_exchange")
                 .metadata(
                     ChildLegalEntityCreate.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                         .build()
                 )
@@ -310,8 +310,8 @@ internal class ChildLegalEntityCreateTest {
         assertThat(childLegalEntityCreate.metadata())
             .contains(
                 ChildLegalEntityCreate.Metadata.builder()
-                    .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("key", JsonValue.from("value"))
                     .putAdditionalProperty("modern", JsonValue.from("treasury"))
                     .build()
             )
@@ -504,8 +504,8 @@ internal class ChildLegalEntityCreateTest {
                 .listedExchange("listed_exchange")
                 .metadata(
                     ChildLegalEntityCreate.Metadata.builder()
-                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("key", JsonValue.from("value"))
                         .putAdditionalProperty("modern", JsonValue.from("treasury"))
                         .build()
                 )

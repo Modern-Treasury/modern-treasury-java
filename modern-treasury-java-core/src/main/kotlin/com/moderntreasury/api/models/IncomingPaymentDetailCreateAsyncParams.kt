@@ -77,7 +77,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun direction(): Optional<Direction> = body.direction()
+    fun direction(): Optional<TransactionDirection> = body.direction()
 
     /**
      * The ID of one of your internal accounts.
@@ -145,7 +145,7 @@ private constructor(
      *
      * Unlike [direction], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _direction(): JsonField<Direction> = body._direction()
+    fun _direction(): JsonField<TransactionDirection> = body._direction()
 
     /**
      * Returns the raw JSON value of [internalAccountId].
@@ -293,16 +293,18 @@ private constructor(
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** One of `credit`, `debit`. */
-        fun direction(direction: Direction) = apply { body.direction(direction) }
+        fun direction(direction: TransactionDirection) = apply { body.direction(direction) }
 
         /**
          * Sets [Builder.direction] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.direction] with a well-typed [Direction] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.direction] with a well-typed [TransactionDirection]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun direction(direction: JsonField<Direction>) = apply { body.direction(direction) }
+        fun direction(direction: JsonField<TransactionDirection>) = apply {
+            body.direction(direction)
+        }
 
         /** The ID of one of your internal accounts. */
         fun internalAccountId(internalAccountId: String) = apply {
@@ -512,7 +514,7 @@ private constructor(
         private val currency: JsonField<Currency>,
         private val data: JsonValue,
         private val description: JsonField<String>,
-        private val direction: JsonField<Direction>,
+        private val direction: JsonField<TransactionDirection>,
         private val internalAccountId: JsonField<String>,
         private val subtype: JsonField<String>,
         private val type: JsonField<Type>,
@@ -535,7 +537,7 @@ private constructor(
             description: JsonField<String> = JsonMissing.of(),
             @JsonProperty("direction")
             @ExcludeMissing
-            direction: JsonField<Direction> = JsonMissing.of(),
+            direction: JsonField<TransactionDirection> = JsonMissing.of(),
             @JsonProperty("internal_account_id")
             @ExcludeMissing
             internalAccountId: JsonField<String> = JsonMissing.of(),
@@ -607,7 +609,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun direction(): Optional<Direction> = direction.getOptional("direction")
+        fun direction(): Optional<TransactionDirection> = direction.getOptional("direction")
 
         /**
          * The ID of one of your internal accounts.
@@ -681,7 +683,7 @@ private constructor(
          */
         @JsonProperty("direction")
         @ExcludeMissing
-        fun _direction(): JsonField<Direction> = direction
+        fun _direction(): JsonField<TransactionDirection> = direction
 
         /**
          * Returns the raw JSON value of [internalAccountId].
@@ -746,7 +748,7 @@ private constructor(
             private var currency: JsonField<Currency> = JsonMissing.of()
             private var data: JsonValue = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
-            private var direction: JsonField<Direction> = JsonMissing.of()
+            private var direction: JsonField<TransactionDirection> = JsonMissing.of()
             private var internalAccountId: JsonField<String> = JsonMissing.of()
             private var subtype: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
@@ -839,16 +841,18 @@ private constructor(
             }
 
             /** One of `credit`, `debit`. */
-            fun direction(direction: Direction) = direction(JsonField.of(direction))
+            fun direction(direction: TransactionDirection) = direction(JsonField.of(direction))
 
             /**
              * Sets [Builder.direction] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.direction] with a well-typed [Direction] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
+             * You should usually call [Builder.direction] with a well-typed [TransactionDirection]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
-            fun direction(direction: JsonField<Direction>) = apply { this.direction = direction }
+            fun direction(direction: JsonField<TransactionDirection>) = apply {
+                this.direction = direction
+            }
 
             /** The ID of one of your internal accounts. */
             fun internalAccountId(internalAccountId: String) =
@@ -1051,145 +1055,6 @@ private constructor(
 
         override fun toString() =
             "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, subtype=$subtype, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
-    }
-
-    /** One of `credit`, `debit`. */
-    class Direction @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            @JvmField val CREDIT = of("credit")
-
-            @JvmField val DEBIT = of("debit")
-
-            @JvmStatic fun of(value: String) = Direction(JsonField.of(value))
-        }
-
-        /** An enum containing [Direction]'s known values. */
-        enum class Known {
-            CREDIT,
-            DEBIT,
-        }
-
-        /**
-         * An enum containing [Direction]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [Direction] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            CREDIT,
-            DEBIT,
-            /**
-             * An enum member indicating that [Direction] was instantiated with an unknown value.
-             */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                CREDIT -> Value.CREDIT
-                DEBIT -> Value.DEBIT
-                else -> Value._UNKNOWN
-            }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value is a not a
-         *   known member.
-         */
-        fun known(): Known =
-            when (this) {
-                CREDIT -> Known.CREDIT
-                DEBIT -> Known.DEBIT
-                else -> throw ModernTreasuryInvalidDataException("Unknown Direction: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws ModernTreasuryInvalidDataException if this class instance's value does not have
-         *   the expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString().orElseThrow {
-                ModernTreasuryInvalidDataException("Value is not a String")
-            }
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
-         *   its expected type.
-         */
-        fun validate(): Direction = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: ModernTreasuryInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Direction && value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
     }
 
     /** One of `ach`, `wire`, `check`. */
