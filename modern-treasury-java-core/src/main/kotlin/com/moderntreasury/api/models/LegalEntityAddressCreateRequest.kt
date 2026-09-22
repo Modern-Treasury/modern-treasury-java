@@ -26,10 +26,10 @@ private constructor(
     private val country: JsonField<String>,
     private val line1: JsonField<String>,
     private val locality: JsonField<String>,
-    private val postalCode: JsonField<String>,
     private val region: JsonField<String>,
     private val addressTypes: JsonField<List<AddressType>>,
     private val line2: JsonField<String>,
+    private val postalCode: JsonField<String>,
     private val primary: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -39,23 +39,23 @@ private constructor(
         @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
         @JsonProperty("line1") @ExcludeMissing line1: JsonField<String> = JsonMissing.of(),
         @JsonProperty("locality") @ExcludeMissing locality: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("postal_code")
-        @ExcludeMissing
-        postalCode: JsonField<String> = JsonMissing.of(),
         @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
         @JsonProperty("address_types")
         @ExcludeMissing
         addressTypes: JsonField<List<AddressType>> = JsonMissing.of(),
         @JsonProperty("line2") @ExcludeMissing line2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        postalCode: JsonField<String> = JsonMissing.of(),
         @JsonProperty("primary") @ExcludeMissing primary: JsonField<Boolean> = JsonMissing.of(),
     ) : this(
         country,
         line1,
         locality,
-        postalCode,
         region,
         addressTypes,
         line2,
+        postalCode,
         primary,
         mutableMapOf(),
     )
@@ -83,14 +83,6 @@ private constructor(
     fun locality(): Optional<String> = locality.getOptional("locality")
 
     /**
-     * The postal code of the address.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
-
-    /**
      * Region or State. This field is free-form; for US states, we recommend a two-letter code (e.g.
      * CA). Full state names are also accepted.
      *
@@ -112,6 +104,14 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun line2(): Optional<String> = line2.getOptional("line2")
+
+    /**
+     * The postal code of the address.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun postalCode(): Optional<String> = postalCode.getOptional("postal_code")
 
     /**
      * Whether this address is the primary address for the legal entity. Optional; when omitted it
@@ -144,13 +144,6 @@ private constructor(
     @JsonProperty("locality") @ExcludeMissing fun _locality(): JsonField<String> = locality
 
     /**
-     * Returns the raw JSON value of [postalCode].
-     *
-     * Unlike [postalCode], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("postal_code") @ExcludeMissing fun _postalCode(): JsonField<String> = postalCode
-
-    /**
      * Returns the raw JSON value of [region].
      *
      * Unlike [region], this method doesn't throw if the JSON field has an unexpected type.
@@ -172,6 +165,13 @@ private constructor(
      * Unlike [line2], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("line2") @ExcludeMissing fun _line2(): JsonField<String> = line2
+
+    /**
+     * Returns the raw JSON value of [postalCode].
+     *
+     * Unlike [postalCode], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("postal_code") @ExcludeMissing fun _postalCode(): JsonField<String> = postalCode
 
     /**
      * Returns the raw JSON value of [primary].
@@ -203,7 +203,6 @@ private constructor(
          * .country()
          * .line1()
          * .locality()
-         * .postalCode()
          * .region()
          * ```
          */
@@ -216,10 +215,10 @@ private constructor(
         private var country: JsonField<String>? = null
         private var line1: JsonField<String>? = null
         private var locality: JsonField<String>? = null
-        private var postalCode: JsonField<String>? = null
         private var region: JsonField<String>? = null
         private var addressTypes: JsonField<MutableList<AddressType>>? = null
         private var line2: JsonField<String> = JsonMissing.of()
+        private var postalCode: JsonField<String> = JsonMissing.of()
         private var primary: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -229,11 +228,11 @@ private constructor(
                 country = legalEntityAddressCreateRequest.country
                 line1 = legalEntityAddressCreateRequest.line1
                 locality = legalEntityAddressCreateRequest.locality
-                postalCode = legalEntityAddressCreateRequest.postalCode
                 region = legalEntityAddressCreateRequest.region
                 addressTypes =
                     legalEntityAddressCreateRequest.addressTypes.map { it.toMutableList() }
                 line2 = legalEntityAddressCreateRequest.line2
+                postalCode = legalEntityAddressCreateRequest.postalCode
                 primary = legalEntityAddressCreateRequest.primary
                 additionalProperties =
                     legalEntityAddressCreateRequest.additionalProperties.toMutableMap()
@@ -282,21 +281,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun locality(locality: JsonField<String>) = apply { this.locality = locality }
-
-        /** The postal code of the address. */
-        fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
-
-        /** Alias for calling [Builder.postalCode] with `postalCode.orElse(null)`. */
-        fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
-
-        /**
-         * Sets [Builder.postalCode] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.postalCode] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
         /**
          * Region or State. This field is free-form; for US states, we recommend a two-letter code
@@ -354,6 +338,21 @@ private constructor(
          */
         fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
+        /** The postal code of the address. */
+        fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
+
+        /** Alias for calling [Builder.postalCode] with `postalCode.orElse(null)`. */
+        fun postalCode(postalCode: Optional<String>) = postalCode(postalCode.getOrNull())
+
+        /**
+         * Sets [Builder.postalCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.postalCode] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
+
         /**
          * Whether this address is the primary address for the legal entity. Optional; when omitted
          * it is inferred from the address types.
@@ -407,7 +406,6 @@ private constructor(
          * .country()
          * .line1()
          * .locality()
-         * .postalCode()
          * .region()
          * ```
          *
@@ -418,10 +416,10 @@ private constructor(
                 checkRequired("country", country),
                 checkRequired("line1", line1),
                 checkRequired("locality", locality),
-                checkRequired("postalCode", postalCode),
                 checkRequired("region", region),
                 (addressTypes ?: JsonMissing.of()).map { it.toImmutable() },
                 line2,
+                postalCode,
                 primary,
                 additionalProperties.toMutableMap(),
             )
@@ -445,10 +443,10 @@ private constructor(
         country()
         line1()
         locality()
-        postalCode()
         region()
         addressTypes().ifPresent { it.forEach { it.validate() } }
         line2()
+        postalCode()
         primary()
         validated = true
     }
@@ -471,10 +469,10 @@ private constructor(
         (if (country.asKnown().isPresent) 1 else 0) +
             (if (line1.asKnown().isPresent) 1 else 0) +
             (if (locality.asKnown().isPresent) 1 else 0) +
-            (if (postalCode.asKnown().isPresent) 1 else 0) +
             (if (region.asKnown().isPresent) 1 else 0) +
             (addressTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (line2.asKnown().isPresent) 1 else 0) +
+            (if (postalCode.asKnown().isPresent) 1 else 0) +
             (if (primary.asKnown().isPresent) 1 else 0)
 
     class AddressType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -655,10 +653,10 @@ private constructor(
             country == other.country &&
             line1 == other.line1 &&
             locality == other.locality &&
-            postalCode == other.postalCode &&
             region == other.region &&
             addressTypes == other.addressTypes &&
             line2 == other.line2 &&
+            postalCode == other.postalCode &&
             primary == other.primary &&
             additionalProperties == other.additionalProperties
     }
@@ -668,10 +666,10 @@ private constructor(
             country,
             line1,
             locality,
-            postalCode,
             region,
             addressTypes,
             line2,
+            postalCode,
             primary,
             additionalProperties,
         )
@@ -680,5 +678,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LegalEntityAddressCreateRequest{country=$country, line1=$line1, locality=$locality, postalCode=$postalCode, region=$region, addressTypes=$addressTypes, line2=$line2, primary=$primary, additionalProperties=$additionalProperties}"
+        "LegalEntityAddressCreateRequest{country=$country, line1=$line1, locality=$locality, region=$region, addressTypes=$addressTypes, line2=$line2, postalCode=$postalCode, primary=$primary, additionalProperties=$additionalProperties}"
 }
