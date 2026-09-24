@@ -7,7 +7,6 @@ import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.jsonMapper
 import java.time.LocalDate
 import java.time.OffsetDateTime
-import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -112,7 +111,7 @@ internal class ExpectedPaymentTest {
             .isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(expectedPayment.reconciliationMethod())
             .contains(ExpectedPayment.ReconciliationMethod.AUTOMATIC)
-        assertThat(expectedPayment.reconciliationRuleVariables().getOrNull())
+        assertThat(expectedPayment.reconciliationRuleVariables())
             .containsExactly(
                 ReconciliationRule.builder()
                     .amountLowerBound(0L)
