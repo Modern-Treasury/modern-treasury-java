@@ -14,7 +14,7 @@ internal class IdentificationUpdateParamsTest {
             .id("id")
             .expirationDate(LocalDate.parse("2019-12-27"))
             .idNumber("id_number")
-            .idType(IdentificationUpdateParams.IdType.AR_CUIL)
+            .idType(IdentificationUpdateParams.IdType.AD_NRT)
             .issuingCountry("issuing_country")
             .issuingRegion("issuing_region")
             .build()
@@ -36,7 +36,7 @@ internal class IdentificationUpdateParamsTest {
                 .id("id")
                 .expirationDate(LocalDate.parse("2019-12-27"))
                 .idNumber("id_number")
-                .idType(IdentificationUpdateParams.IdType.AR_CUIL)
+                .idType(IdentificationUpdateParams.IdType.AD_NRT)
                 .issuingCountry("issuing_country")
                 .issuingRegion("issuing_region")
                 .build()
@@ -45,7 +45,7 @@ internal class IdentificationUpdateParamsTest {
 
         assertThat(body.expirationDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.idNumber()).contains("id_number")
-        assertThat(body.idType()).contains(IdentificationUpdateParams.IdType.AR_CUIL)
+        assertThat(body.idType()).contains(IdentificationUpdateParams.IdType.AD_NRT)
         assertThat(body.issuingCountry()).contains("issuing_country")
         assertThat(body.issuingRegion()).contains("issuing_region")
     }
