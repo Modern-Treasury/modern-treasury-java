@@ -10267,16 +10267,8 @@ private constructor(
 
                 /** An array of reconciliation rule variables for this payment. */
                 fun reconciliationRuleVariables(
-                    reconciliationRuleVariables: List<ReconciliationRule>?
-                ) = reconciliationRuleVariables(JsonField.ofNullable(reconciliationRuleVariables))
-
-                /**
-                 * Alias for calling [Builder.reconciliationRuleVariables] with
-                 * `reconciliationRuleVariables.orElse(null)`.
-                 */
-                fun reconciliationRuleVariables(
-                    reconciliationRuleVariables: Optional<List<ReconciliationRule>>
-                ) = reconciliationRuleVariables(reconciliationRuleVariables.getOrNull())
+                    reconciliationRuleVariables: List<ReconciliationRule>
+                ) = reconciliationRuleVariables(JsonField.of(reconciliationRuleVariables))
 
                 /**
                  * Sets [Builder.reconciliationRuleVariables] to an arbitrary JSON value.
@@ -20784,16 +20776,8 @@ private constructor(
 
                 /** An array of reconciliation rule variables for this payment. */
                 fun reconciliationRuleVariables(
-                    reconciliationRuleVariables: List<ReconciliationRule>?
-                ) = reconciliationRuleVariables(JsonField.ofNullable(reconciliationRuleVariables))
-
-                /**
-                 * Alias for calling [Builder.reconciliationRuleVariables] with
-                 * `reconciliationRuleVariables.orElse(null)`.
-                 */
-                fun reconciliationRuleVariables(
-                    reconciliationRuleVariables: Optional<List<ReconciliationRule>>
-                ) = reconciliationRuleVariables(reconciliationRuleVariables.getOrNull())
+                    reconciliationRuleVariables: List<ReconciliationRule>
+                ) = reconciliationRuleVariables(JsonField.of(reconciliationRuleVariables))
 
                 /**
                  * Sets [Builder.reconciliationRuleVariables] to an arbitrary JSON value.
