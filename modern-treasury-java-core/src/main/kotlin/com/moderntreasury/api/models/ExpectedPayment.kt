@@ -377,11 +377,11 @@ private constructor(
     /**
      * An array of reconciliation rule variables for this payment.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun reconciliationRuleVariables(): Optional<List<ReconciliationRule>> =
-        reconciliationRuleVariables.getOptional("reconciliation_rule_variables")
+    fun reconciliationRuleVariables(): List<ReconciliationRule> =
+        reconciliationRuleVariables.getRequired("reconciliation_rule_variables")
 
     /**
      * For `ach`, this field will be passed through on an addenda record. For `wire` payments the
@@ -1256,16 +1256,8 @@ private constructor(
         }
 
         /** An array of reconciliation rule variables for this payment. */
-        fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>?) =
-            reconciliationRuleVariables(JsonField.ofNullable(reconciliationRuleVariables))
-
-        /**
-         * Alias for calling [Builder.reconciliationRuleVariables] with
-         * `reconciliationRuleVariables.orElse(null)`.
-         */
-        fun reconciliationRuleVariables(
-            reconciliationRuleVariables: Optional<List<ReconciliationRule>>
-        ) = reconciliationRuleVariables(reconciliationRuleVariables.getOrNull())
+        fun reconciliationRuleVariables(reconciliationRuleVariables: List<ReconciliationRule>) =
+            reconciliationRuleVariables(JsonField.of(reconciliationRuleVariables))
 
         /**
          * Sets [Builder.reconciliationRuleVariables] to an arbitrary JSON value.
@@ -1558,7 +1550,7 @@ private constructor(
         metadata().validate()
         object_()
         reconciliationMethod().ifPresent { it.validate() }
-        reconciliationRuleVariables().ifPresent { it.forEach { it.validate() } }
+        reconciliationRuleVariables().forEach { it.validate() }
         remittanceInformation()
         statementDescriptor()
         status().validate()
