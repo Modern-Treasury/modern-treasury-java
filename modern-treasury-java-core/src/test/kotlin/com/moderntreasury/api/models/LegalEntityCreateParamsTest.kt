@@ -69,7 +69,7 @@ internal class LegalEntityCreateParamsTest {
             .addIdentification(
                 IdentificationCreateRequest.builder()
                     .idNumber("id_number")
-                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                    .idType(IdentificationCreateRequest.IdType.AD_NRT)
                     .addDocument(
                         IdentificationCreateRequest.Document.builder()
                             .documentType(
@@ -164,7 +164,7 @@ internal class LegalEntityCreateParamsTest {
                             .addIdentification(
                                 IdentificationCreateRequest.builder()
                                     .idNumber("id_number")
-                                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                    .idType(IdentificationCreateRequest.IdType.AD_NRT)
                                     .addDocument(
                                         IdentificationCreateRequest.Document.builder()
                                             .documentType(
@@ -445,7 +445,7 @@ internal class LegalEntityCreateParamsTest {
                 .addIdentification(
                     IdentificationCreateRequest.builder()
                         .idNumber("id_number")
-                        .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                        .idType(IdentificationCreateRequest.IdType.AD_NRT)
                         .addDocument(
                             IdentificationCreateRequest.Document.builder()
                                 .documentType(
@@ -544,7 +544,7 @@ internal class LegalEntityCreateParamsTest {
                                 .addIdentification(
                                     IdentificationCreateRequest.builder()
                                         .idNumber("id_number")
-                                        .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                        .idType(IdentificationCreateRequest.IdType.AD_NRT)
                                         .addDocument(
                                             IdentificationCreateRequest.Document.builder()
                                                 .documentType(
@@ -846,7 +846,7 @@ internal class LegalEntityCreateParamsTest {
             .containsExactly(
                 IdentificationCreateRequest.builder()
                     .idNumber("id_number")
-                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                    .idType(IdentificationCreateRequest.IdType.AD_NRT)
                     .addDocument(
                         IdentificationCreateRequest.Document.builder()
                             .documentType(
@@ -943,7 +943,7 @@ internal class LegalEntityCreateParamsTest {
                             .addIdentification(
                                 IdentificationCreateRequest.builder()
                                     .idNumber("id_number")
-                                    .idType(IdentificationCreateRequest.IdType.AR_CUIL)
+                                    .idType(IdentificationCreateRequest.IdType.AD_NRT)
                                     .addDocument(
                                         IdentificationCreateRequest.Document.builder()
                                             .documentType(

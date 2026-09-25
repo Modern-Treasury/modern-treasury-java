@@ -941,6 +941,24 @@ private constructor(
 
         companion object {
 
+            @JvmField val AD_NRT = of("ad_nrt")
+
+            @JvmField val AE_EID = of("ae_eid")
+
+            @JvmField val AE_TRN = of("ae_trn")
+
+            @JvmField val AG_TIN = of("ag_tin")
+
+            @JvmField val AI_TIN = of("ai_tin")
+
+            @JvmField val AL_NID = of("al_nid")
+
+            @JvmField val AL_NIPT = of("al_nipt")
+
+            @JvmField val AM_TIN = of("am_tin")
+
+            @JvmField val AO_NIF = of("ao_nif")
+
             @JvmField val AR_CUIL = of("ar_cuil")
 
             @JvmField val AR_CUIT = of("ar_cuit")
@@ -953,13 +971,41 @@ private constructor(
 
             @JvmField val AU_TFN = of("au_tfn")
 
+            @JvmField val AW_TIN = of("aw_tin")
+
+            @JvmField val AZ_PIN = of("az_pin")
+
+            @JvmField val BB_TIN = of("bb_tin")
+
+            @JvmField val BD_TIN = of("bd_tin")
+
             @JvmField val BE_ENT = of("be_ent")
 
             @JvmField val BE_NRN = of("be_nrn")
 
+            @JvmField val BF_IFU = of("bf_ifu")
+
+            @JvmField val BG_EGN = of("bg_egn")
+
+            @JvmField val BH_CPR = of("bh_cpr")
+
+            @JvmField val BH_VAT = of("bh_vat")
+
+            @JvmField val BJ_IFU = of("bj_ifu")
+
+            @JvmField val BO_NIT = of("bo_nit")
+
             @JvmField val BR_CNPJ = of("br_cnpj")
 
             @JvmField val BR_CPF = of("br_cpf")
+
+            @JvmField val BS_TIN = of("bs_tin")
+
+            @JvmField val BT_BIN = of("bt_bin")
+
+            @JvmField val BW_TIN = of("bw_tin")
+
+            @JvmField val BZ_TIN = of("bz_tin")
 
             @JvmField val CA_BN = of("ca_bn")
 
@@ -969,13 +1015,21 @@ private constructor(
 
             @JvmField val CH_UID = of("ch_uid")
 
+            @JvmField val CI_NCC = of("ci_ncc")
+
             @JvmField val CL_RUN = of("cl_run")
 
             @JvmField val CL_RUT = of("cl_rut")
 
+            @JvmField val CM_NIU = of("cm_niu")
+
             @JvmField val CO_CEDULAS = of("co_cedulas")
 
             @JvmField val CO_NIT = of("co_nit")
+
+            @JvmField val CR_CPF = of("cr_cpf")
+
+            @JvmField val CW_CRIB = of("cw_crib")
 
             @JvmField val CY_TIN = of("cy_tin")
 
@@ -993,7 +1047,15 @@ private constructor(
 
             @JvmField val DK_CVR = of("dk_cvr")
 
+            @JvmField val DM_TIN = of("dm_tin")
+
+            @JvmField val DO_CEDULA = of("do_cedula")
+
+            @JvmField val DO_RNC = of("do_rnc")
+
             @JvmField val DRIVERS_LICENSE = of("drivers_license")
+
+            @JvmField val EC_RUC = of("ec_ruc")
 
             @JvmField val EE_IK = of("ee_ik")
 
@@ -1007,6 +1069,10 @@ private constructor(
 
             @JvmField val FI_YTJ = of("fi_ytj")
 
+            @JvmField val FJ_TIN = of("fj_tin")
+
+            @JvmField val FO_PTAL = of("fo_ptal")
+
             @JvmField val FR_NIF = of("fr_nif")
 
             @JvmField val FR_SIREN = of("fr_siren")
@@ -1019,7 +1085,29 @@ private constructor(
 
             @JvmField val GB_VAT = of("gb_vat")
 
+            @JvmField val GD_TIN = of("gd_tin")
+
+            @JvmField val GE_IC = of("ge_ic")
+
+            @JvmField val GE_PN = of("ge_pn")
+
+            @JvmField val GE_TIN = of("ge_tin")
+
             @JvmField val GENERIC_INTERNATIONAL = of("generic_international")
+
+            @JvmField val GG_SIN = of("gg_sin")
+
+            @JvmField val GH_PIN = of("gh_pin")
+
+            @JvmField val GH_TIN = of("gh_tin")
+
+            @JvmField val GI_TRN = of("gi_trn")
+
+            @JvmField val GL_CPR = of("gl_cpr")
+
+            @JvmField val GL_GER = of("gl_ger")
+
+            @JvmField val GM_TIN = of("gm_tin")
 
             @JvmField val GR_VAT = of("gr_vat")
 
@@ -1148,24 +1236,51 @@ private constructor(
 
         /** An enum containing [IdType]'s known values. */
         enum class Known {
+            AD_NRT,
+            AE_EID,
+            AE_TRN,
+            AG_TIN,
+            AI_TIN,
+            AL_NID,
+            AL_NIPT,
+            AM_TIN,
+            AO_NIF,
             AR_CUIL,
             AR_CUIT,
             AT_ATIN,
             AT_VAT,
             AU_ABN,
             AU_TFN,
+            AW_TIN,
+            AZ_PIN,
+            BB_TIN,
+            BD_TIN,
             BE_ENT,
             BE_NRN,
+            BF_IFU,
+            BG_EGN,
+            BH_CPR,
+            BH_VAT,
+            BJ_IFU,
+            BO_NIT,
             BR_CNPJ,
             BR_CPF,
+            BS_TIN,
+            BT_BIN,
+            BW_TIN,
+            BZ_TIN,
             CA_BN,
             CA_SIN,
             CH_AHV,
             CH_UID,
+            CI_NCC,
             CL_RUN,
             CL_RUT,
+            CM_NIU,
             CO_CEDULAS,
             CO_NIT,
+            CR_CPF,
+            CW_CRIB,
             CY_TIN,
             CZ_ICO,
             CZ_RC,
@@ -1174,20 +1289,37 @@ private constructor(
             DE_VAT,
             DK_CPR,
             DK_CVR,
+            DM_TIN,
+            DO_CEDULA,
+            DO_RNC,
             DRIVERS_LICENSE,
+            EC_RUC,
             EE_IK,
             EE_RK,
             ES_NIE,
             ES_NIF,
             FI_HETU,
             FI_YTJ,
+            FJ_TIN,
+            FO_PTAL,
             FR_NIF,
             FR_SIREN,
             FR_VAT,
             GB_NINO,
             GB_UTR,
             GB_VAT,
+            GD_TIN,
+            GE_IC,
+            GE_PN,
+            GE_TIN,
             GENERIC_INTERNATIONAL,
+            GG_SIN,
+            GH_PIN,
+            GH_TIN,
+            GI_TRN,
+            GL_CPR,
+            GL_GER,
+            GM_TIN,
             GR_VAT,
             HK_BRN,
             HK_HKID,
@@ -1261,24 +1393,51 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            AD_NRT,
+            AE_EID,
+            AE_TRN,
+            AG_TIN,
+            AI_TIN,
+            AL_NID,
+            AL_NIPT,
+            AM_TIN,
+            AO_NIF,
             AR_CUIL,
             AR_CUIT,
             AT_ATIN,
             AT_VAT,
             AU_ABN,
             AU_TFN,
+            AW_TIN,
+            AZ_PIN,
+            BB_TIN,
+            BD_TIN,
             BE_ENT,
             BE_NRN,
+            BF_IFU,
+            BG_EGN,
+            BH_CPR,
+            BH_VAT,
+            BJ_IFU,
+            BO_NIT,
             BR_CNPJ,
             BR_CPF,
+            BS_TIN,
+            BT_BIN,
+            BW_TIN,
+            BZ_TIN,
             CA_BN,
             CA_SIN,
             CH_AHV,
             CH_UID,
+            CI_NCC,
             CL_RUN,
             CL_RUT,
+            CM_NIU,
             CO_CEDULAS,
             CO_NIT,
+            CR_CPF,
+            CW_CRIB,
             CY_TIN,
             CZ_ICO,
             CZ_RC,
@@ -1287,20 +1446,37 @@ private constructor(
             DE_VAT,
             DK_CPR,
             DK_CVR,
+            DM_TIN,
+            DO_CEDULA,
+            DO_RNC,
             DRIVERS_LICENSE,
+            EC_RUC,
             EE_IK,
             EE_RK,
             ES_NIE,
             ES_NIF,
             FI_HETU,
             FI_YTJ,
+            FJ_TIN,
+            FO_PTAL,
             FR_NIF,
             FR_SIREN,
             FR_VAT,
             GB_NINO,
             GB_UTR,
             GB_VAT,
+            GD_TIN,
+            GE_IC,
+            GE_PN,
+            GE_TIN,
             GENERIC_INTERNATIONAL,
+            GG_SIN,
+            GH_PIN,
+            GH_TIN,
+            GI_TRN,
+            GL_CPR,
+            GL_GER,
+            GM_TIN,
             GR_VAT,
             HK_BRN,
             HK_HKID,
@@ -1375,24 +1551,51 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                AD_NRT -> Value.AD_NRT
+                AE_EID -> Value.AE_EID
+                AE_TRN -> Value.AE_TRN
+                AG_TIN -> Value.AG_TIN
+                AI_TIN -> Value.AI_TIN
+                AL_NID -> Value.AL_NID
+                AL_NIPT -> Value.AL_NIPT
+                AM_TIN -> Value.AM_TIN
+                AO_NIF -> Value.AO_NIF
                 AR_CUIL -> Value.AR_CUIL
                 AR_CUIT -> Value.AR_CUIT
                 AT_ATIN -> Value.AT_ATIN
                 AT_VAT -> Value.AT_VAT
                 AU_ABN -> Value.AU_ABN
                 AU_TFN -> Value.AU_TFN
+                AW_TIN -> Value.AW_TIN
+                AZ_PIN -> Value.AZ_PIN
+                BB_TIN -> Value.BB_TIN
+                BD_TIN -> Value.BD_TIN
                 BE_ENT -> Value.BE_ENT
                 BE_NRN -> Value.BE_NRN
+                BF_IFU -> Value.BF_IFU
+                BG_EGN -> Value.BG_EGN
+                BH_CPR -> Value.BH_CPR
+                BH_VAT -> Value.BH_VAT
+                BJ_IFU -> Value.BJ_IFU
+                BO_NIT -> Value.BO_NIT
                 BR_CNPJ -> Value.BR_CNPJ
                 BR_CPF -> Value.BR_CPF
+                BS_TIN -> Value.BS_TIN
+                BT_BIN -> Value.BT_BIN
+                BW_TIN -> Value.BW_TIN
+                BZ_TIN -> Value.BZ_TIN
                 CA_BN -> Value.CA_BN
                 CA_SIN -> Value.CA_SIN
                 CH_AHV -> Value.CH_AHV
                 CH_UID -> Value.CH_UID
+                CI_NCC -> Value.CI_NCC
                 CL_RUN -> Value.CL_RUN
                 CL_RUT -> Value.CL_RUT
+                CM_NIU -> Value.CM_NIU
                 CO_CEDULAS -> Value.CO_CEDULAS
                 CO_NIT -> Value.CO_NIT
+                CR_CPF -> Value.CR_CPF
+                CW_CRIB -> Value.CW_CRIB
                 CY_TIN -> Value.CY_TIN
                 CZ_ICO -> Value.CZ_ICO
                 CZ_RC -> Value.CZ_RC
@@ -1401,20 +1604,37 @@ private constructor(
                 DE_VAT -> Value.DE_VAT
                 DK_CPR -> Value.DK_CPR
                 DK_CVR -> Value.DK_CVR
+                DM_TIN -> Value.DM_TIN
+                DO_CEDULA -> Value.DO_CEDULA
+                DO_RNC -> Value.DO_RNC
                 DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
+                EC_RUC -> Value.EC_RUC
                 EE_IK -> Value.EE_IK
                 EE_RK -> Value.EE_RK
                 ES_NIE -> Value.ES_NIE
                 ES_NIF -> Value.ES_NIF
                 FI_HETU -> Value.FI_HETU
                 FI_YTJ -> Value.FI_YTJ
+                FJ_TIN -> Value.FJ_TIN
+                FO_PTAL -> Value.FO_PTAL
                 FR_NIF -> Value.FR_NIF
                 FR_SIREN -> Value.FR_SIREN
                 FR_VAT -> Value.FR_VAT
                 GB_NINO -> Value.GB_NINO
                 GB_UTR -> Value.GB_UTR
                 GB_VAT -> Value.GB_VAT
+                GD_TIN -> Value.GD_TIN
+                GE_IC -> Value.GE_IC
+                GE_PN -> Value.GE_PN
+                GE_TIN -> Value.GE_TIN
                 GENERIC_INTERNATIONAL -> Value.GENERIC_INTERNATIONAL
+                GG_SIN -> Value.GG_SIN
+                GH_PIN -> Value.GH_PIN
+                GH_TIN -> Value.GH_TIN
+                GI_TRN -> Value.GI_TRN
+                GL_CPR -> Value.GL_CPR
+                GL_GER -> Value.GL_GER
+                GM_TIN -> Value.GM_TIN
                 GR_VAT -> Value.GR_VAT
                 HK_BRN -> Value.HK_BRN
                 HK_HKID -> Value.HK_HKID
@@ -1490,24 +1710,51 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                AD_NRT -> Known.AD_NRT
+                AE_EID -> Known.AE_EID
+                AE_TRN -> Known.AE_TRN
+                AG_TIN -> Known.AG_TIN
+                AI_TIN -> Known.AI_TIN
+                AL_NID -> Known.AL_NID
+                AL_NIPT -> Known.AL_NIPT
+                AM_TIN -> Known.AM_TIN
+                AO_NIF -> Known.AO_NIF
                 AR_CUIL -> Known.AR_CUIL
                 AR_CUIT -> Known.AR_CUIT
                 AT_ATIN -> Known.AT_ATIN
                 AT_VAT -> Known.AT_VAT
                 AU_ABN -> Known.AU_ABN
                 AU_TFN -> Known.AU_TFN
+                AW_TIN -> Known.AW_TIN
+                AZ_PIN -> Known.AZ_PIN
+                BB_TIN -> Known.BB_TIN
+                BD_TIN -> Known.BD_TIN
                 BE_ENT -> Known.BE_ENT
                 BE_NRN -> Known.BE_NRN
+                BF_IFU -> Known.BF_IFU
+                BG_EGN -> Known.BG_EGN
+                BH_CPR -> Known.BH_CPR
+                BH_VAT -> Known.BH_VAT
+                BJ_IFU -> Known.BJ_IFU
+                BO_NIT -> Known.BO_NIT
                 BR_CNPJ -> Known.BR_CNPJ
                 BR_CPF -> Known.BR_CPF
+                BS_TIN -> Known.BS_TIN
+                BT_BIN -> Known.BT_BIN
+                BW_TIN -> Known.BW_TIN
+                BZ_TIN -> Known.BZ_TIN
                 CA_BN -> Known.CA_BN
                 CA_SIN -> Known.CA_SIN
                 CH_AHV -> Known.CH_AHV
                 CH_UID -> Known.CH_UID
+                CI_NCC -> Known.CI_NCC
                 CL_RUN -> Known.CL_RUN
                 CL_RUT -> Known.CL_RUT
+                CM_NIU -> Known.CM_NIU
                 CO_CEDULAS -> Known.CO_CEDULAS
                 CO_NIT -> Known.CO_NIT
+                CR_CPF -> Known.CR_CPF
+                CW_CRIB -> Known.CW_CRIB
                 CY_TIN -> Known.CY_TIN
                 CZ_ICO -> Known.CZ_ICO
                 CZ_RC -> Known.CZ_RC
@@ -1516,20 +1763,37 @@ private constructor(
                 DE_VAT -> Known.DE_VAT
                 DK_CPR -> Known.DK_CPR
                 DK_CVR -> Known.DK_CVR
+                DM_TIN -> Known.DM_TIN
+                DO_CEDULA -> Known.DO_CEDULA
+                DO_RNC -> Known.DO_RNC
                 DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
+                EC_RUC -> Known.EC_RUC
                 EE_IK -> Known.EE_IK
                 EE_RK -> Known.EE_RK
                 ES_NIE -> Known.ES_NIE
                 ES_NIF -> Known.ES_NIF
                 FI_HETU -> Known.FI_HETU
                 FI_YTJ -> Known.FI_YTJ
+                FJ_TIN -> Known.FJ_TIN
+                FO_PTAL -> Known.FO_PTAL
                 FR_NIF -> Known.FR_NIF
                 FR_SIREN -> Known.FR_SIREN
                 FR_VAT -> Known.FR_VAT
                 GB_NINO -> Known.GB_NINO
                 GB_UTR -> Known.GB_UTR
                 GB_VAT -> Known.GB_VAT
+                GD_TIN -> Known.GD_TIN
+                GE_IC -> Known.GE_IC
+                GE_PN -> Known.GE_PN
+                GE_TIN -> Known.GE_TIN
                 GENERIC_INTERNATIONAL -> Known.GENERIC_INTERNATIONAL
+                GG_SIN -> Known.GG_SIN
+                GH_PIN -> Known.GH_PIN
+                GH_TIN -> Known.GH_TIN
+                GI_TRN -> Known.GI_TRN
+                GL_CPR -> Known.GL_CPR
+                GL_GER -> Known.GL_GER
+                GM_TIN -> Known.GM_TIN
                 GR_VAT -> Known.GR_VAT
                 HK_BRN -> Known.HK_BRN
                 HK_HKID -> Known.HK_HKID
