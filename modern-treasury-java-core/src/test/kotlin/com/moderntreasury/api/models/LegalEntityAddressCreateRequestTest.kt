@@ -17,22 +17,22 @@ internal class LegalEntityAddressCreateRequestTest {
                 .country("country")
                 .line1("line1")
                 .locality("locality")
-                .region("region")
                 .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                 .line2("line2")
                 .postalCode("postal_code")
                 .primary(true)
+                .region("region")
                 .build()
 
         assertThat(legalEntityAddressCreateRequest.country()).contains("country")
         assertThat(legalEntityAddressCreateRequest.line1()).contains("line1")
         assertThat(legalEntityAddressCreateRequest.locality()).contains("locality")
-        assertThat(legalEntityAddressCreateRequest.region()).contains("region")
         assertThat(legalEntityAddressCreateRequest.addressTypes().getOrNull())
             .containsExactly(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
         assertThat(legalEntityAddressCreateRequest.line2()).contains("line2")
         assertThat(legalEntityAddressCreateRequest.postalCode()).contains("postal_code")
         assertThat(legalEntityAddressCreateRequest.primary()).contains(true)
+        assertThat(legalEntityAddressCreateRequest.region()).contains("region")
     }
 
     @Test
@@ -43,11 +43,11 @@ internal class LegalEntityAddressCreateRequestTest {
                 .country("country")
                 .line1("line1")
                 .locality("locality")
-                .region("region")
                 .addAddressType(LegalEntityAddressCreateRequest.AddressType.BUSINESS)
                 .line2("line2")
                 .postalCode("postal_code")
                 .primary(true)
+                .region("region")
                 .build()
 
         val roundtrippedLegalEntityAddressCreateRequest =
