@@ -522,6 +522,8 @@ private constructor(
 
             @JvmField val AU_NUMBER = of("au_number")
 
+            @JvmField val AVALANCHE_ADDRESS = of("avalanche_address")
+
             @JvmField val BASE_ADDRESS = of("base_address")
 
             @JvmField val CARD_TOKEN = of("card_token")
@@ -555,6 +557,7 @@ private constructor(
         enum class Known {
             ARBITRUM_ADDRESS,
             AU_NUMBER,
+            AVALANCHE_ADDRESS,
             BASE_ADDRESS,
             CARD_TOKEN,
             CLABE,
@@ -582,6 +585,7 @@ private constructor(
         enum class Value {
             ARBITRUM_ADDRESS,
             AU_NUMBER,
+            AVALANCHE_ADDRESS,
             BASE_ADDRESS,
             CARD_TOKEN,
             CLABE,
@@ -613,6 +617,7 @@ private constructor(
             when (this) {
                 ARBITRUM_ADDRESS -> Value.ARBITRUM_ADDRESS
                 AU_NUMBER -> Value.AU_NUMBER
+                AVALANCHE_ADDRESS -> Value.AVALANCHE_ADDRESS
                 BASE_ADDRESS -> Value.BASE_ADDRESS
                 CARD_TOKEN -> Value.CARD_TOKEN
                 CLABE -> Value.CLABE
@@ -642,6 +647,7 @@ private constructor(
             when (this) {
                 ARBITRUM_ADDRESS -> Known.ARBITRUM_ADDRESS
                 AU_NUMBER -> Known.AU_NUMBER
+                AVALANCHE_ADDRESS -> Known.AVALANCHE_ADDRESS
                 BASE_ADDRESS -> Known.BASE_ADDRESS
                 CARD_TOKEN -> Known.CARD_TOKEN
                 CLABE -> Known.CLABE
