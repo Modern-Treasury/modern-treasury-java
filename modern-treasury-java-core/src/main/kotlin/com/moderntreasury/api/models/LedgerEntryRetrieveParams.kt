@@ -13,18 +13,11 @@ import kotlin.jvm.optionals.getOrNull
 class LedgerEntryRetrieveParams
 private constructor(
     private val id: String?,
-    private val showBalances: Boolean?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun id(): Optional<String> = Optional.ofNullable(id)
-
-    /**
-     * If true, response will include the balances attached to the ledger entry. If there is no
-     * balance available, null will be returned instead.
-     */
-    fun showBalances(): Optional<Boolean> = Optional.ofNullable(showBalances)
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -48,14 +41,12 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: String? = null
-        private var showBalances: Boolean? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
         internal fun from(ledgerEntryRetrieveParams: LedgerEntryRetrieveParams) = apply {
             id = ledgerEntryRetrieveParams.id
-            showBalances = ledgerEntryRetrieveParams.showBalances
             additionalHeaders = ledgerEntryRetrieveParams.additionalHeaders.toBuilder()
             additionalQueryParams = ledgerEntryRetrieveParams.additionalQueryParams.toBuilder()
         }
@@ -64,22 +55,6 @@ private constructor(
 
         /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<String>) = id(id.getOrNull())
-
-        /**
-         * If true, response will include the balances attached to the ledger entry. If there is no
-         * balance available, null will be returned instead.
-         */
-        fun showBalances(showBalances: Boolean?) = apply { this.showBalances = showBalances }
-
-        /**
-         * Alias for [Builder.showBalances].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun showBalances(showBalances: Boolean) = showBalances(showBalances as Boolean?)
-
-        /** Alias for calling [Builder.showBalances] with `showBalances.orElse(null)`. */
-        fun showBalances(showBalances: Optional<Boolean>) = showBalances(showBalances.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -185,12 +160,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): LedgerEntryRetrieveParams =
-            LedgerEntryRetrieveParams(
-                id,
-                showBalances,
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            LedgerEntryRetrieveParams(id, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
@@ -201,13 +171,7 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                showBalances?.let { put("show_balances", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -216,14 +180,12 @@ private constructor(
 
         return other is LedgerEntryRetrieveParams &&
             id == other.id &&
-            showBalances == other.showBalances &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int =
-        Objects.hash(id, showBalances, additionalHeaders, additionalQueryParams)
+    override fun hashCode(): Int = Objects.hash(id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "LedgerEntryRetrieveParams{id=$id, showBalances=$showBalances, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "LedgerEntryRetrieveParams{id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
