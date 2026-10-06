@@ -564,6 +564,8 @@ private constructor(
 
             @JvmField val COLUMN_TRANSFER_ID = of("column_transfer_id")
 
+            @JvmField val CROSS_RIVER_CARD_NETWORK = of("cross_river_card_network")
+
             @JvmField val CROSS_RIVER_CARD_TRACE_NUMBER = of("cross_river_card_trace_number")
 
             @JvmField val CROSS_RIVER_CORE_TRANSACTION_ID = of("cross_river_core_transaction_id")
@@ -735,6 +737,7 @@ private constructor(
             COLUMN_FX_QUOTE_ID,
             COLUMN_REVERSAL_PAIR_TRANSFER_ID,
             COLUMN_TRANSFER_ID,
+            CROSS_RIVER_CARD_NETWORK,
             CROSS_RIVER_CARD_TRACE_NUMBER,
             CROSS_RIVER_CORE_TRANSACTION_ID,
             CROSS_RIVER_FED_BATCH_ID,
@@ -835,6 +838,7 @@ private constructor(
             COLUMN_FX_QUOTE_ID,
             COLUMN_REVERSAL_PAIR_TRANSFER_ID,
             COLUMN_TRANSFER_ID,
+            CROSS_RIVER_CARD_NETWORK,
             CROSS_RIVER_CARD_TRACE_NUMBER,
             CROSS_RIVER_CORE_TRANSACTION_ID,
             CROSS_RIVER_FED_BATCH_ID,
@@ -941,6 +945,7 @@ private constructor(
                 COLUMN_FX_QUOTE_ID -> Value.COLUMN_FX_QUOTE_ID
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Value.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                 COLUMN_TRANSFER_ID -> Value.COLUMN_TRANSFER_ID
+                CROSS_RIVER_CARD_NETWORK -> Value.CROSS_RIVER_CARD_NETWORK
                 CROSS_RIVER_CARD_TRACE_NUMBER -> Value.CROSS_RIVER_CARD_TRACE_NUMBER
                 CROSS_RIVER_CORE_TRANSACTION_ID -> Value.CROSS_RIVER_CORE_TRANSACTION_ID
                 CROSS_RIVER_FED_BATCH_ID -> Value.CROSS_RIVER_FED_BATCH_ID
@@ -1047,6 +1052,7 @@ private constructor(
                 COLUMN_FX_QUOTE_ID -> Known.COLUMN_FX_QUOTE_ID
                 COLUMN_REVERSAL_PAIR_TRANSFER_ID -> Known.COLUMN_REVERSAL_PAIR_TRANSFER_ID
                 COLUMN_TRANSFER_ID -> Known.COLUMN_TRANSFER_ID
+                CROSS_RIVER_CARD_NETWORK -> Known.CROSS_RIVER_CARD_NETWORK
                 CROSS_RIVER_CARD_TRACE_NUMBER -> Known.CROSS_RIVER_CARD_TRACE_NUMBER
                 CROSS_RIVER_CORE_TRANSACTION_ID -> Known.CROSS_RIVER_CORE_TRANSACTION_ID
                 CROSS_RIVER_FED_BATCH_ID -> Known.CROSS_RIVER_FED_BATCH_ID
