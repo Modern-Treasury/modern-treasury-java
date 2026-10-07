@@ -127,11 +127,16 @@ interface InternalAccountServiceAsync {
     fun list(requestOptions: RequestOptions): CompletableFuture<InternalAccountListPageAsync> =
         list(InternalAccountListParams.none(), requestOptions)
 
-    /** request closure of internal account */
+    /**
+     * This endpoint has been deprecated. Request closure with PATCH /api/internal_accounts/{id} and
+     * status: "pending_closure".
+     */
+    @Deprecated("deprecated")
     fun requestClosure(id: String): CompletableFuture<InternalAccount> =
         requestClosure(id, InternalAccountRequestClosureParams.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         id: String,
         params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
@@ -140,23 +145,27 @@ interface InternalAccountServiceAsync {
         requestClosure(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         id: String,
         params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
     ): CompletableFuture<InternalAccount> = requestClosure(id, params, RequestOptions.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         params: InternalAccountRequestClosureParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InternalAccount>
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         params: InternalAccountRequestClosureParams
     ): CompletableFuture<InternalAccount> = requestClosure(params, RequestOptions.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         id: String,
         requestOptions: RequestOptions,
@@ -333,10 +342,12 @@ interface InternalAccountServiceAsync {
          * Returns a raw HTTP response for `post /api/internal_accounts/{id}/request_closure`, but
          * is otherwise the same as [InternalAccountServiceAsync.requestClosure].
          */
+        @Deprecated("deprecated")
         fun requestClosure(id: String): CompletableFuture<HttpResponseFor<InternalAccount>> =
             requestClosure(id, InternalAccountRequestClosureParams.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         fun requestClosure(
             id: String,
             params: InternalAccountRequestClosureParams =
@@ -346,6 +357,7 @@ interface InternalAccountServiceAsync {
             requestClosure(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         fun requestClosure(
             id: String,
             params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
@@ -353,18 +365,21 @@ interface InternalAccountServiceAsync {
             requestClosure(id, params, RequestOptions.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         fun requestClosure(
             params: InternalAccountRequestClosureParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InternalAccount>>
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         fun requestClosure(
             params: InternalAccountRequestClosureParams
         ): CompletableFuture<HttpResponseFor<InternalAccount>> =
             requestClosure(params, RequestOptions.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         fun requestClosure(
             id: String,
             requestOptions: RequestOptions,
