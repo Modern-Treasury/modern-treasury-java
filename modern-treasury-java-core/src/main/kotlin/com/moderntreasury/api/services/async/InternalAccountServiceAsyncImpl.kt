@@ -79,6 +79,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         // get /api/internal_accounts
         withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
+    @Deprecated("deprecated")
     override fun requestClosure(
         params: InternalAccountRequestClosureParams,
         requestOptions: RequestOptions,
@@ -252,6 +253,7 @@ internal constructor(private val clientOptions: ClientOptions) : InternalAccount
         private val requestClosureHandler: Handler<InternalAccount> =
             jsonHandler<InternalAccount>(clientOptions.jsonMapper)
 
+        @Deprecated("deprecated")
         override fun requestClosure(
             params: InternalAccountRequestClosureParams,
             requestOptions: RequestOptions,
