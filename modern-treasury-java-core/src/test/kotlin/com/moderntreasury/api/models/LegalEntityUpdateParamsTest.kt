@@ -116,6 +116,7 @@ internal class LegalEntityUpdateParamsTest {
             )
             .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
             .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .status(LegalEntityUpdateParams.Status.PENDING)
             .suffix("suffix")
             .termsOfUse(
                 LegalEntityUpdateParams.TermsOfUse.builder()
@@ -291,6 +292,7 @@ internal class LegalEntityUpdateParamsTest {
                 )
                 .riskRating(LegalEntityUpdateParams.RiskRating.LOW)
                 .serviceProviderLegalEntityId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .status(LegalEntityUpdateParams.Status.PENDING)
                 .suffix("suffix")
                 .termsOfUse(
                     LegalEntityUpdateParams.TermsOfUse.builder()
@@ -460,6 +462,7 @@ internal class LegalEntityUpdateParamsTest {
         assertThat(body.riskRating()).contains(LegalEntityUpdateParams.RiskRating.LOW)
         assertThat(body.serviceProviderLegalEntityId())
             .contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.status()).contains(LegalEntityUpdateParams.Status.PENDING)
         assertThat(body.suffix()).contains("suffix")
         assertThat(body.termsOfUse())
             .contains(
