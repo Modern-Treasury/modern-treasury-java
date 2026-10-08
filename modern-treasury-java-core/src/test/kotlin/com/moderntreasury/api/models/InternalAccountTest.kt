@@ -245,7 +245,7 @@ internal class InternalAccountTest {
                     .build()
             )
         assertThat(internalAccount.status()).contains(InternalAccount.Status.ACTIVE)
-        assertThat(internalAccount.title()).contains("title")
+        assertThat(internalAccount.title()).isEqualTo("title")
         assertThat(internalAccount.updatedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(internalAccount.vendorId()).contains("vendor_id")
