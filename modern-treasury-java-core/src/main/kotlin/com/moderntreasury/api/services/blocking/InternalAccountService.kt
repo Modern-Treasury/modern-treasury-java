@@ -122,11 +122,16 @@ interface InternalAccountService {
     fun list(requestOptions: RequestOptions): InternalAccountListPage =
         list(InternalAccountListParams.none(), requestOptions)
 
-    /** request closure of internal account */
+    /**
+     * This endpoint has been deprecated. Request closure with PATCH /api/internal_accounts/{id} and
+     * status: "pending_closure".
+     */
+    @Deprecated("deprecated")
     fun requestClosure(id: String): InternalAccount =
         requestClosure(id, InternalAccountRequestClosureParams.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         id: String,
         params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
@@ -134,22 +139,26 @@ interface InternalAccountService {
     ): InternalAccount = requestClosure(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         id: String,
         params: InternalAccountRequestClosureParams = InternalAccountRequestClosureParams.none(),
     ): InternalAccount = requestClosure(id, params, RequestOptions.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(
         params: InternalAccountRequestClosureParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InternalAccount
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(params: InternalAccountRequestClosureParams): InternalAccount =
         requestClosure(params, RequestOptions.none())
 
     /** @see requestClosure */
+    @Deprecated("deprecated")
     fun requestClosure(id: String, requestOptions: RequestOptions): InternalAccount =
         requestClosure(id, InternalAccountRequestClosureParams.none(), requestOptions)
 
@@ -324,11 +333,13 @@ interface InternalAccountService {
          * Returns a raw HTTP response for `post /api/internal_accounts/{id}/request_closure`, but
          * is otherwise the same as [InternalAccountService.requestClosure].
          */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(id: String): HttpResponseFor<InternalAccount> =
             requestClosure(id, InternalAccountRequestClosureParams.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(
             id: String,
@@ -339,6 +350,7 @@ interface InternalAccountService {
             requestClosure(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(
             id: String,
@@ -346,6 +358,7 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccount> = requestClosure(id, params, RequestOptions.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(
             params: InternalAccountRequestClosureParams,
@@ -353,12 +366,14 @@ interface InternalAccountService {
         ): HttpResponseFor<InternalAccount>
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(
             params: InternalAccountRequestClosureParams
         ): HttpResponseFor<InternalAccount> = requestClosure(params, RequestOptions.none())
 
         /** @see requestClosure */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun requestClosure(
             id: String,
