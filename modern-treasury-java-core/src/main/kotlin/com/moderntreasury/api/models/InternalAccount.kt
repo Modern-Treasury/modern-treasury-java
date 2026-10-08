@@ -47,6 +47,7 @@ private constructor(
     private val partyType: JsonField<PartyType>,
     private val routingDetails: JsonField<List<RoutingDetail>>,
     private val status: JsonField<Status>,
+    private val title: JsonField<String>,
     private val updatedAt: JsonField<OffsetDateTime>,
     private val vendorId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -105,6 +106,7 @@ private constructor(
         @ExcludeMissing
         routingDetails: JsonField<List<RoutingDetail>> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("title") @ExcludeMissing title: JsonField<String> = JsonMissing.of(),
         @JsonProperty("updated_at")
         @ExcludeMissing
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -133,6 +135,7 @@ private constructor(
         partyType,
         routingDetails,
         status,
+        title,
         updatedAt,
         vendorId,
         mutableMapOf(),
@@ -324,6 +327,15 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun status(): Optional<Status> = status.getOptional("status")
+
+    /**
+     * The account title at the financial institution, used in place of the party name. Only
+     * applicable to accounts created under supported connections.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun title(): Optional<String> = title.getOptional("title")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -527,6 +539,13 @@ private constructor(
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     /**
+     * Returns the raw JSON value of [title].
+     *
+     * Unlike [title], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("title") @ExcludeMissing fun _title(): JsonField<String> = title
+
+    /**
      * Returns the raw JSON value of [updatedAt].
      *
      * Unlike [updatedAt], this method doesn't throw if the JSON field has an unexpected type.
@@ -584,6 +603,7 @@ private constructor(
          * .partyType()
          * .routingDetails()
          * .status()
+         * .title()
          * .updatedAt()
          * .vendorId()
          * ```
@@ -617,6 +637,7 @@ private constructor(
         private var partyType: JsonField<PartyType>? = null
         private var routingDetails: JsonField<MutableList<RoutingDetail>>? = null
         private var status: JsonField<Status>? = null
+        private var title: JsonField<String>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
         private var vendorId: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -646,6 +667,7 @@ private constructor(
             partyType = internalAccount.partyType
             routingDetails = internalAccount.routingDetails.map { it.toMutableList() }
             status = internalAccount.status
+            title = internalAccount.title
             updatedAt = internalAccount.updatedAt
             vendorId = internalAccount.vendorId
             additionalProperties = internalAccount.additionalProperties.toMutableMap()
@@ -1054,6 +1076,23 @@ private constructor(
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        /**
+         * The account title at the financial institution, used in place of the party name. Only
+         * applicable to accounts created under supported connections.
+         */
+        fun title(title: String?) = title(JsonField.ofNullable(title))
+
+        /** Alias for calling [Builder.title] with `title.orElse(null)`. */
+        fun title(title: Optional<String>) = title(title.getOrNull())
+
+        /**
+         * Sets [Builder.title] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.title] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun title(title: JsonField<String>) = apply { this.title = title }
+
         fun updatedAt(updatedAt: OffsetDateTime) = updatedAt(JsonField.of(updatedAt))
 
         /**
@@ -1128,6 +1167,7 @@ private constructor(
          * .partyType()
          * .routingDetails()
          * .status()
+         * .title()
          * .updatedAt()
          * .vendorId()
          * ```
@@ -1159,6 +1199,7 @@ private constructor(
                 checkRequired("partyType", partyType),
                 checkRequired("routingDetails", routingDetails).map { it.toImmutable() },
                 checkRequired("status", status),
+                checkRequired("title", title),
                 checkRequired("updatedAt", updatedAt),
                 checkRequired("vendorId", vendorId),
                 additionalProperties.toMutableMap(),
@@ -1203,6 +1244,7 @@ private constructor(
         partyType().ifPresent { it.validate() }
         routingDetails().forEach { it.validate() }
         status().ifPresent { it.validate() }
+        title()
         updatedAt()
         vendorId()
         validated = true
@@ -1246,6 +1288,7 @@ private constructor(
             (partyType.asKnown().getOrNull()?.validity() ?: 0) +
             (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (title.asKnown().isPresent) 1 else 0) +
             (if (updatedAt.asKnown().isPresent) 1 else 0) +
             (if (vendorId.asKnown().isPresent) 1 else 0)
 
@@ -2698,6 +2741,7 @@ private constructor(
             partyType == other.partyType &&
             routingDetails == other.routingDetails &&
             status == other.status &&
+            title == other.title &&
             updatedAt == other.updatedAt &&
             vendorId == other.vendorId &&
             additionalProperties == other.additionalProperties
@@ -2728,6 +2772,7 @@ private constructor(
             partyType,
             routingDetails,
             status,
+            title,
             updatedAt,
             vendorId,
             additionalProperties,
@@ -2737,5 +2782,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, debitable=$debitable, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, debitable=$debitable, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, title=$title, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }
