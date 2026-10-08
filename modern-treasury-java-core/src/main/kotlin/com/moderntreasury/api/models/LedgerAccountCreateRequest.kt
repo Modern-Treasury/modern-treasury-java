@@ -628,8 +628,6 @@ private constructor(
 
         companion object {
 
-            @JvmField val COUNTERPARTY = of("counterparty")
-
             @JvmField val EXTERNAL_ACCOUNT = of("external_account")
 
             @JvmField val INTERNAL_ACCOUNT = of("internal_account")
@@ -641,7 +639,6 @@ private constructor(
 
         /** An enum containing [LedgerableType]'s known values. */
         enum class Known {
-            COUNTERPARTY,
             EXTERNAL_ACCOUNT,
             INTERNAL_ACCOUNT,
             VIRTUAL_ACCOUNT,
@@ -657,7 +654,6 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            COUNTERPARTY,
             EXTERNAL_ACCOUNT,
             INTERNAL_ACCOUNT,
             VIRTUAL_ACCOUNT,
@@ -677,7 +673,6 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                COUNTERPARTY -> Value.COUNTERPARTY
                 EXTERNAL_ACCOUNT -> Value.EXTERNAL_ACCOUNT
                 INTERNAL_ACCOUNT -> Value.INTERNAL_ACCOUNT
                 VIRTUAL_ACCOUNT -> Value.VIRTUAL_ACCOUNT
@@ -695,7 +690,6 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                COUNTERPARTY -> Known.COUNTERPARTY
                 EXTERNAL_ACCOUNT -> Known.EXTERNAL_ACCOUNT
                 INTERNAL_ACCOUNT -> Known.INTERNAL_ACCOUNT
                 VIRTUAL_ACCOUNT -> Known.VIRTUAL_ACCOUNT
