@@ -477,6 +477,8 @@ private constructor(
 
             @JvmField val COMPLETED = of("completed")
 
+            @JvmField val FAILED = of("failed")
+
             @JvmField val PENDING = of("pending")
 
             @JvmField val RETURNED = of("returned")
@@ -487,6 +489,7 @@ private constructor(
         /** An enum containing [Status]'s known values. */
         enum class Known {
             COMPLETED,
+            FAILED,
             PENDING,
             RETURNED,
         }
@@ -502,6 +505,7 @@ private constructor(
          */
         enum class Value {
             COMPLETED,
+            FAILED,
             PENDING,
             RETURNED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
@@ -518,6 +522,7 @@ private constructor(
         fun value(): Value =
             when (this) {
                 COMPLETED -> Value.COMPLETED
+                FAILED -> Value.FAILED
                 PENDING -> Value.PENDING
                 RETURNED -> Value.RETURNED
                 else -> Value._UNKNOWN
@@ -535,6 +540,7 @@ private constructor(
         fun known(): Known =
             when (this) {
                 COMPLETED -> Known.COMPLETED
+                FAILED -> Known.FAILED
                 PENDING -> Known.PENDING
                 RETURNED -> Known.RETURNED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
