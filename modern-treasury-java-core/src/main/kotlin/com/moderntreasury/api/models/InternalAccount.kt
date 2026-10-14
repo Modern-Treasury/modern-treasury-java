@@ -329,13 +329,14 @@ private constructor(
     fun status(): Optional<Status> = status.getOptional("status")
 
     /**
-     * The account title at the financial institution, used in place of the party name. Only
-     * applicable to accounts created under supported connections.
+     * The account title at the financial institution. Defaults to the party name unless a custom
+     * title was set on creation. Custom titles are only applicable to accounts created under
+     * supported connections.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun title(): Optional<String> = title.getOptional("title")
+    fun title(): String = title.getRequired("title")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -1077,13 +1078,11 @@ private constructor(
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
-         * The account title at the financial institution, used in place of the party name. Only
-         * applicable to accounts created under supported connections.
+         * The account title at the financial institution. Defaults to the party name unless a
+         * custom title was set on creation. Custom titles are only applicable to accounts created
+         * under supported connections.
          */
-        fun title(title: String?) = title(JsonField.ofNullable(title))
-
-        /** Alias for calling [Builder.title] with `title.orElse(null)`. */
-        fun title(title: Optional<String>) = title(title.getOrNull())
+        fun title(title: String) = title(JsonField.of(title))
 
         /**
          * Sets [Builder.title] to an arbitrary JSON value.
