@@ -151,9 +151,9 @@ private constructor(
         body.requestedAccountNumberTypes()
 
     /**
-     * The account title at the financial institution, used in place of the party name. Only
-     * applicable to accounts created under supported connections. Please reach out to your customer
-     * success manager to enable this capability for your program.
+     * The account title at the financial institution, used in place of the party name. Defaults to
+     * the party name if not set. Only applicable to accounts created under supported connections.
+     * Please reach out to your customer success manager to enable this capability for your program.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -578,9 +578,10 @@ private constructor(
             }
 
         /**
-         * The account title at the financial institution, used in place of the party name. Only
-         * applicable to accounts created under supported connections. Please reach out to your
-         * customer success manager to enable this capability for your program.
+         * The account title at the financial institution, used in place of the party name. Defaults
+         * to the party name if not set. Only applicable to accounts created under supported
+         * connections. Please reach out to your customer success manager to enable this capability
+         * for your program.
          */
         fun title(title: String?) = apply { body.title(title) }
 
@@ -967,9 +968,10 @@ private constructor(
             requestedAccountNumberTypes.getOptional("requested_account_number_types")
 
         /**
-         * The account title at the financial institution, used in place of the party name. Only
-         * applicable to accounts created under supported connections. Please reach out to your
-         * customer success manager to enable this capability for your program.
+         * The account title at the financial institution, used in place of the party name. Defaults
+         * to the party name if not set. Only applicable to accounts created under supported
+         * connections. Please reach out to your customer success manager to enable this capability
+         * for your program.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
@@ -1457,9 +1459,10 @@ private constructor(
             }
 
             /**
-             * The account title at the financial institution, used in place of the party name. Only
-             * applicable to accounts created under supported connections. Please reach out to your
-             * customer success manager to enable this capability for your program.
+             * The account title at the financial institution, used in place of the party name.
+             * Defaults to the party name if not set. Only applicable to accounts created under
+             * supported connections. Please reach out to your customer success manager to enable
+             * this capability for your program.
              */
             fun title(title: String?) = title(JsonField.ofNullable(title))
 
@@ -2657,15 +2660,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val BASE_WALLET = of("base_wallet")
-
             @JvmField val CASH = of("cash")
 
             @JvmField val CHECKING = of("checking")
-
-            @JvmField val CRYPTO_WALLET = of("crypto_wallet")
-
-            @JvmField val ETHEREUM_WALLET = of("ethereum_wallet")
 
             @JvmField val GENERAL_LEDGER = of("general_ledger")
 
@@ -2677,30 +2674,21 @@ private constructor(
 
             @JvmField val OVERDRAFT = of("overdraft")
 
-            @JvmField val POLYGON_WALLET = of("polygon_wallet")
-
             @JvmField val SAVINGS = of("savings")
-
-            @JvmField val SOLANA_WALLET = of("solana_wallet")
 
             @JvmStatic fun of(value: String) = AccountType(JsonField.of(value))
         }
 
         /** An enum containing [AccountType]'s known values. */
         enum class Known {
-            BASE_WALLET,
             CASH,
             CHECKING,
-            CRYPTO_WALLET,
-            ETHEREUM_WALLET,
             GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
             OVERDRAFT,
-            POLYGON_WALLET,
             SAVINGS,
-            SOLANA_WALLET,
         }
 
         /**
@@ -2713,19 +2701,14 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            BASE_WALLET,
             CASH,
             CHECKING,
-            CRYPTO_WALLET,
-            ETHEREUM_WALLET,
             GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
             OVERDRAFT,
-            POLYGON_WALLET,
             SAVINGS,
-            SOLANA_WALLET,
             /**
              * An enum member indicating that [AccountType] was instantiated with an unknown value.
              */
@@ -2741,19 +2724,14 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                BASE_WALLET -> Value.BASE_WALLET
                 CASH -> Value.CASH
                 CHECKING -> Value.CHECKING
-                CRYPTO_WALLET -> Value.CRYPTO_WALLET
-                ETHEREUM_WALLET -> Value.ETHEREUM_WALLET
                 GENERAL_LEDGER -> Value.GENERAL_LEDGER
                 LOAN -> Value.LOAN
                 NON_RESIDENT -> Value.NON_RESIDENT
                 OTHER -> Value.OTHER
                 OVERDRAFT -> Value.OVERDRAFT
-                POLYGON_WALLET -> Value.POLYGON_WALLET
                 SAVINGS -> Value.SAVINGS
-                SOLANA_WALLET -> Value.SOLANA_WALLET
                 else -> Value._UNKNOWN
             }
 
@@ -2768,19 +2746,14 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                BASE_WALLET -> Known.BASE_WALLET
                 CASH -> Known.CASH
                 CHECKING -> Known.CHECKING
-                CRYPTO_WALLET -> Known.CRYPTO_WALLET
-                ETHEREUM_WALLET -> Known.ETHEREUM_WALLET
                 GENERAL_LEDGER -> Known.GENERAL_LEDGER
                 LOAN -> Known.LOAN
                 NON_RESIDENT -> Known.NON_RESIDENT
                 OTHER -> Known.OTHER
                 OVERDRAFT -> Known.OVERDRAFT
-                POLYGON_WALLET -> Known.POLYGON_WALLET
                 SAVINGS -> Known.SAVINGS
-                SOLANA_WALLET -> Known.SOLANA_WALLET
                 else -> throw ModernTreasuryInvalidDataException("Unknown AccountType: $value")
             }
 
