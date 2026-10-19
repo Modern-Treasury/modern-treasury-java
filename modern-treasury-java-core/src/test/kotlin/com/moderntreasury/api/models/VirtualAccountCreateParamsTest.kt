@@ -55,6 +55,16 @@ internal class VirtualAccountCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .partyAddress(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .build()
+            )
             .addRoutingDetail(
                 VirtualAccountCreateParams.RoutingDetailCreateRequest.builder()
                     .routingNumber("routing_number")
@@ -115,6 +125,16 @@ internal class VirtualAccountCreateParamsTest {
                 .metadata(
                     VirtualAccountCreateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .partyAddress(
+                    AddressRequest.builder()
+                        .country("country")
+                        .line1("line1")
+                        .line2("line2")
+                        .locality("locality")
+                        .postalCode("postal_code")
+                        .region("region")
                         .build()
                 )
                 .addRoutingDetail(
@@ -178,6 +198,17 @@ internal class VirtualAccountCreateParamsTest {
             .contains(
                 VirtualAccountCreateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
+        assertThat(body.partyAddress())
+            .contains(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
                     .build()
             )
         assertThat(body.routingDetails().getOrNull())

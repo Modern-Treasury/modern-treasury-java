@@ -123,6 +123,15 @@ private constructor(
     fun metadata(): Optional<Metadata> = body.metadata()
 
     /**
+     * The address of the owner of the virtual account. When absent, the internal account's party
+     * address is used.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun partyAddress(): Optional<AddressRequest> = body.partyAddress()
+
+    /**
      * An array of routing detail objects.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -217,6 +226,13 @@ private constructor(
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /**
+     * Returns the raw JSON value of [partyAddress].
+     *
+     * Unlike [partyAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _partyAddress(): JsonField<AddressRequest> = body._partyAddress()
 
     /**
      * Returns the raw JSON value of [routingDetails].
@@ -468,6 +484,23 @@ private constructor(
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
+        /**
+         * The address of the owner of the virtual account. When absent, the internal account's
+         * party address is used.
+         */
+        fun partyAddress(partyAddress: AddressRequest) = apply { body.partyAddress(partyAddress) }
+
+        /**
+         * Sets [Builder.partyAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.partyAddress] with a well-typed [AddressRequest] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun partyAddress(partyAddress: JsonField<AddressRequest>) = apply {
+            body.partyAddress(partyAddress)
+        }
+
         /** An array of routing detail objects. */
         fun routingDetails(routingDetails: List<RoutingDetailCreateRequest>) = apply {
             body.routingDetails(routingDetails)
@@ -667,6 +700,7 @@ private constructor(
         private val ledgerAccount: JsonField<LedgerAccountCreateRequest>,
         private val ledgerAccountId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
+        private val partyAddress: JsonField<AddressRequest>,
         private val routingDetails: JsonField<List<RoutingDetailCreateRequest>>,
         private val virtualAccountSettingId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -705,6 +739,9 @@ private constructor(
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("party_address")
+            @ExcludeMissing
+            partyAddress: JsonField<AddressRequest> = JsonMissing.of(),
             @JsonProperty("routing_details")
             @ExcludeMissing
             routingDetails: JsonField<List<RoutingDetailCreateRequest>> = JsonMissing.of(),
@@ -723,6 +760,7 @@ private constructor(
             ledgerAccount,
             ledgerAccountId,
             metadata,
+            partyAddress,
             routingDetails,
             virtualAccountSettingId,
             mutableMapOf(),
@@ -824,6 +862,15 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
+
+        /**
+         * The address of the owner of the virtual account. When absent, the internal account's
+         * party address is used.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun partyAddress(): Optional<AddressRequest> = partyAddress.getOptional("party_address")
 
         /**
          * An array of routing detail objects.
@@ -946,6 +993,16 @@ private constructor(
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /**
+         * Returns the raw JSON value of [partyAddress].
+         *
+         * Unlike [partyAddress], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("party_address")
+        @ExcludeMissing
+        fun _partyAddress(): JsonField<AddressRequest> = partyAddress
+
+        /**
          * Returns the raw JSON value of [routingDetails].
          *
          * Unlike [routingDetails], this method doesn't throw if the JSON field has an unexpected
@@ -1006,6 +1063,7 @@ private constructor(
             private var ledgerAccount: JsonField<LedgerAccountCreateRequest> = JsonMissing.of()
             private var ledgerAccountId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var partyAddress: JsonField<AddressRequest> = JsonMissing.of()
             private var routingDetails: JsonField<MutableList<RoutingDetailCreateRequest>>? = null
             private var virtualAccountSettingId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1024,6 +1082,7 @@ private constructor(
                 ledgerAccount = virtualAccountCreateRequest.ledgerAccount
                 ledgerAccountId = virtualAccountCreateRequest.ledgerAccountId
                 metadata = virtualAccountCreateRequest.metadata
+                partyAddress = virtualAccountCreateRequest.partyAddress
                 routingDetails =
                     virtualAccountCreateRequest.routingDetails.map { it.toMutableList() }
                 virtualAccountSettingId = virtualAccountCreateRequest.virtualAccountSettingId
@@ -1216,6 +1275,24 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
+            /**
+             * The address of the owner of the virtual account. When absent, the internal account's
+             * party address is used.
+             */
+            fun partyAddress(partyAddress: AddressRequest) =
+                partyAddress(JsonField.of(partyAddress))
+
+            /**
+             * Sets [Builder.partyAddress] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.partyAddress] with a well-typed [AddressRequest]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun partyAddress(partyAddress: JsonField<AddressRequest>) = apply {
+                this.partyAddress = partyAddress
+            }
+
             /** An array of routing detail objects. */
             fun routingDetails(routingDetails: List<RoutingDetailCreateRequest>) =
                 routingDetails(JsonField.of(routingDetails))
@@ -1304,6 +1381,7 @@ private constructor(
                     ledgerAccount,
                     ledgerAccountId,
                     metadata,
+                    partyAddress,
                     (routingDetails ?: JsonMissing.of()).map { it.toImmutable() },
                     virtualAccountSettingId,
                     additionalProperties.toMutableMap(),
@@ -1337,6 +1415,7 @@ private constructor(
             ledgerAccount().ifPresent { it.validate() }
             ledgerAccountId()
             metadata().ifPresent { it.validate() }
+            partyAddress().ifPresent { it.validate() }
             routingDetails().ifPresent { it.forEach { it.validate() } }
             virtualAccountSettingId()
             validated = true
@@ -1369,6 +1448,7 @@ private constructor(
                 (ledgerAccount.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (ledgerAccountId.asKnown().isPresent) 1 else 0) +
                 (metadata.asKnown().getOrNull()?.validity() ?: 0) +
+                (partyAddress.asKnown().getOrNull()?.validity() ?: 0) +
                 (routingDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (virtualAccountSettingId.asKnown().isPresent) 1 else 0)
 
@@ -1389,6 +1469,7 @@ private constructor(
                 ledgerAccount == other.ledgerAccount &&
                 ledgerAccountId == other.ledgerAccountId &&
                 metadata == other.metadata &&
+                partyAddress == other.partyAddress &&
                 routingDetails == other.routingDetails &&
                 virtualAccountSettingId == other.virtualAccountSettingId &&
                 additionalProperties == other.additionalProperties
@@ -1407,6 +1488,7 @@ private constructor(
                 ledgerAccount,
                 ledgerAccountId,
                 metadata,
+                partyAddress,
                 routingDetails,
                 virtualAccountSettingId,
                 additionalProperties,
@@ -1416,7 +1498,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, externalId=$externalId, ledgerAccount=$ledgerAccount, ledgerAccountId=$ledgerAccountId, metadata=$metadata, routingDetails=$routingDetails, virtualAccountSettingId=$virtualAccountSettingId, additionalProperties=$additionalProperties}"
+            "VirtualAccountCreateRequest{internalAccountId=$internalAccountId, name=$name, accountDetails=$accountDetails, counterpartyId=$counterpartyId, creditLedgerAccountId=$creditLedgerAccountId, debitLedgerAccountId=$debitLedgerAccountId, description=$description, externalId=$externalId, ledgerAccount=$ledgerAccount, ledgerAccountId=$ledgerAccountId, metadata=$metadata, partyAddress=$partyAddress, routingDetails=$routingDetails, virtualAccountSettingId=$virtualAccountSettingId, additionalProperties=$additionalProperties}"
     }
 
     class AccountDetailCreateRequest
@@ -2311,6 +2393,8 @@ private constructor(
 
                 @JvmField val SWIFT = of("swift")
 
+                @JvmField val VASP = of("vasp")
+
                 @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
 
                 @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
@@ -2337,6 +2421,7 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE,
                 SG_INTERBANK_CLEARING_CODE,
                 SWIFT,
+                VASP,
                 ZA_NATIONAL_CLEARING_CODE,
             }
 
@@ -2370,6 +2455,7 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE,
                 SG_INTERBANK_CLEARING_CODE,
                 SWIFT,
+                VASP,
                 ZA_NATIONAL_CLEARING_CODE,
                 /**
                  * An enum member indicating that [RoutingNumberType] was instantiated with an
@@ -2406,6 +2492,7 @@ private constructor(
                     SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                     SG_INTERBANK_CLEARING_CODE -> Value.SG_INTERBANK_CLEARING_CODE
                     SWIFT -> Value.SWIFT
+                    VASP -> Value.VASP
                     ZA_NATIONAL_CLEARING_CODE -> Value.ZA_NATIONAL_CLEARING_CODE
                     else -> Value._UNKNOWN
                 }
@@ -2440,6 +2527,7 @@ private constructor(
                     SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                     SG_INTERBANK_CLEARING_CODE -> Known.SG_INTERBANK_CLEARING_CODE
                     SWIFT -> Known.SWIFT
+                    VASP -> Known.VASP
                     ZA_NATIONAL_CLEARING_CODE -> Known.ZA_NATIONAL_CLEARING_CODE
                     else ->
                         throw ModernTreasuryInvalidDataException(
