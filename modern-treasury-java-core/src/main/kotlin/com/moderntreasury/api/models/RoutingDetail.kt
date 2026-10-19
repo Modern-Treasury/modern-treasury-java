@@ -922,6 +922,8 @@ private constructor(
 
             @JvmField val SWIFT = of("swift")
 
+            @JvmField val VASP = of("vasp")
+
             @JvmField val ZA_NATIONAL_CLEARING_CODE = of("za_national_clearing_code")
 
             @JvmStatic fun of(value: String) = RoutingNumberType(JsonField.of(value))
@@ -948,6 +950,7 @@ private constructor(
             SE_BANKGIRO_CLEARING_CODE,
             SG_INTERBANK_CLEARING_CODE,
             SWIFT,
+            VASP,
             ZA_NATIONAL_CLEARING_CODE,
         }
 
@@ -980,6 +983,7 @@ private constructor(
             SE_BANKGIRO_CLEARING_CODE,
             SG_INTERBANK_CLEARING_CODE,
             SWIFT,
+            VASP,
             ZA_NATIONAL_CLEARING_CODE,
             /**
              * An enum member indicating that [RoutingNumberType] was instantiated with an unknown
@@ -1016,6 +1020,7 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE -> Value.SE_BANKGIRO_CLEARING_CODE
                 SG_INTERBANK_CLEARING_CODE -> Value.SG_INTERBANK_CLEARING_CODE
                 SWIFT -> Value.SWIFT
+                VASP -> Value.VASP
                 ZA_NATIONAL_CLEARING_CODE -> Value.ZA_NATIONAL_CLEARING_CODE
                 else -> Value._UNKNOWN
             }
@@ -1050,6 +1055,7 @@ private constructor(
                 SE_BANKGIRO_CLEARING_CODE -> Known.SE_BANKGIRO_CLEARING_CODE
                 SG_INTERBANK_CLEARING_CODE -> Known.SG_INTERBANK_CLEARING_CODE
                 SWIFT -> Known.SWIFT
+                VASP -> Known.VASP
                 ZA_NATIONAL_CLEARING_CODE -> Known.ZA_NATIONAL_CLEARING_CODE
                 else ->
                     throw ModernTreasuryInvalidDataException("Unknown RoutingNumberType: $value")
