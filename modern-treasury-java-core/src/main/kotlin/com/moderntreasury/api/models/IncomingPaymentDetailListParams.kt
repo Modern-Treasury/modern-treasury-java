@@ -57,8 +57,8 @@ private constructor(
     fun perPage(): Optional<Long> = Optional.ofNullable(perPage)
 
     /**
-     * The current status of the incoming payment order. One of `pending`, `completed`, or
-     * `returned`.
+     * The current status of the incoming payment order. One of `pending`, `completed`, `returned`,
+     * `failed`, or `held`.
      */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
@@ -179,8 +179,8 @@ private constructor(
         fun perPage(perPage: Optional<Long>) = perPage(perPage.getOrNull())
 
         /**
-         * The current status of the incoming payment order. One of `pending`, `completed`, or
-         * `returned`.
+         * The current status of the incoming payment order. One of `pending`, `completed`,
+         * `returned`, `failed`, or `held`.
          */
         fun status(status: Status?) = apply { this.status = status }
 
@@ -458,8 +458,8 @@ private constructor(
     }
 
     /**
-     * The current status of the incoming payment order. One of `pending`, `completed`, or
-     * `returned`.
+     * The current status of the incoming payment order. One of `pending`, `completed`, `returned`,
+     * `failed`, or `held`.
      */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -477,6 +477,10 @@ private constructor(
 
             @JvmField val COMPLETED = of("completed")
 
+            @JvmField val FAILED = of("failed")
+
+            @JvmField val HELD = of("held")
+
             @JvmField val PENDING = of("pending")
 
             @JvmField val RETURNED = of("returned")
@@ -487,6 +491,8 @@ private constructor(
         /** An enum containing [Status]'s known values. */
         enum class Known {
             COMPLETED,
+            FAILED,
+            HELD,
             PENDING,
             RETURNED,
         }
@@ -502,6 +508,8 @@ private constructor(
          */
         enum class Value {
             COMPLETED,
+            FAILED,
+            HELD,
             PENDING,
             RETURNED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
@@ -518,6 +526,8 @@ private constructor(
         fun value(): Value =
             when (this) {
                 COMPLETED -> Value.COMPLETED
+                FAILED -> Value.FAILED
+                HELD -> Value.HELD
                 PENDING -> Value.PENDING
                 RETURNED -> Value.RETURNED
                 else -> Value._UNKNOWN
@@ -535,6 +545,8 @@ private constructor(
         fun known(): Known =
             when (this) {
                 COMPLETED -> Known.COMPLETED
+                FAILED -> Known.FAILED
+                HELD -> Known.HELD
                 PENDING -> Known.PENDING
                 RETURNED -> Known.RETURNED
                 else -> throw ModernTreasuryInvalidDataException("Unknown Status: $value")
