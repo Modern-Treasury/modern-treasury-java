@@ -51,6 +51,7 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
             .partyName("party_name")
+            .partyType(InternalAccountCreateParams.PartyType.INDIVIDUAL)
             .addRequestedAccountNumberType(
                 InternalAccountCreateParams.RequestedAccountNumberType.ARBITRUM_ADDRESS
             )
@@ -107,6 +108,7 @@ internal class InternalAccountCreateParamsTest {
                         .build()
                 )
                 .partyName("party_name")
+                .partyType(InternalAccountCreateParams.PartyType.INDIVIDUAL)
                 .addRequestedAccountNumberType(
                     InternalAccountCreateParams.RequestedAccountNumberType.ARBITRUM_ADDRESS
                 )
@@ -163,6 +165,7 @@ internal class InternalAccountCreateParamsTest {
                     .build()
             )
         assertThat(body.partyName()).contains("party_name")
+        assertThat(body.partyType()).contains(InternalAccountCreateParams.PartyType.INDIVIDUAL)
         assertThat(body.requestedAccountNumberTypes().getOrNull())
             .containsExactly(
                 InternalAccountCreateParams.RequestedAccountNumberType.ARBITRUM_ADDRESS
