@@ -884,7 +884,9 @@ private constructor(
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
          * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
-         * `closing_available`, `current_available`, 'previously_closed_book', or `other`.
+         * `closing_available`, `closing_pending_inflows`, `closing_pending_outflows`,
+         * `current_available`, 'previously_closed_book', `current_pending_inflows`,
+         * `current_pending_outflows`, or `other`.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1021,7 +1023,9 @@ private constructor(
             /**
              * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
              * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
-             * `closing_available`, `current_available`, 'previously_closed_book', or `other`.
+             * `closing_available`, `closing_pending_inflows`, `closing_pending_outflows`,
+             * `current_available`, 'previously_closed_book', `current_pending_inflows`,
+             * `current_pending_outflows`, or `other`.
              */
             fun balanceType(balanceType: BalanceType) = balanceType(JsonField.of(balanceType))
 
@@ -1193,7 +1197,9 @@ private constructor(
         /**
          * The specific type of balance reported. One of `opening_ledger`, `closing_ledger`,
          * `current_ledger`, `opening_available`, `opening_available_next_business_day`,
-         * `closing_available`, `current_available`, 'previously_closed_book', or `other`.
+         * `closing_available`, `closing_pending_inflows`, `closing_pending_outflows`,
+         * `current_available`, 'previously_closed_book', `current_pending_inflows`,
+         * `current_pending_outflows`, or `other`.
          */
         class BalanceType @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -1214,9 +1220,17 @@ private constructor(
 
                 @JvmField val CLOSING_LEDGER = of("closing_ledger")
 
+                @JvmField val CLOSING_PENDING_INFLOWS = of("closing_pending_inflows")
+
+                @JvmField val CLOSING_PENDING_OUTFLOWS = of("closing_pending_outflows")
+
                 @JvmField val CURRENT_AVAILABLE = of("current_available")
 
                 @JvmField val CURRENT_LEDGER = of("current_ledger")
+
+                @JvmField val CURRENT_PENDING_INFLOWS = of("current_pending_inflows")
+
+                @JvmField val CURRENT_PENDING_OUTFLOWS = of("current_pending_outflows")
 
                 @JvmField val OPENING_AVAILABLE = of("opening_available")
 
@@ -1236,8 +1250,12 @@ private constructor(
             enum class Known {
                 CLOSING_AVAILABLE,
                 CLOSING_LEDGER,
+                CLOSING_PENDING_INFLOWS,
+                CLOSING_PENDING_OUTFLOWS,
                 CURRENT_AVAILABLE,
                 CURRENT_LEDGER,
+                CURRENT_PENDING_INFLOWS,
+                CURRENT_PENDING_OUTFLOWS,
                 OPENING_AVAILABLE,
                 OPENING_AVAILABLE_NEXT_BUSINESS_DAY,
                 OPENING_LEDGER,
@@ -1257,8 +1275,12 @@ private constructor(
             enum class Value {
                 CLOSING_AVAILABLE,
                 CLOSING_LEDGER,
+                CLOSING_PENDING_INFLOWS,
+                CLOSING_PENDING_OUTFLOWS,
                 CURRENT_AVAILABLE,
                 CURRENT_LEDGER,
+                CURRENT_PENDING_INFLOWS,
+                CURRENT_PENDING_OUTFLOWS,
                 OPENING_AVAILABLE,
                 OPENING_AVAILABLE_NEXT_BUSINESS_DAY,
                 OPENING_LEDGER,
@@ -1282,8 +1304,12 @@ private constructor(
                 when (this) {
                     CLOSING_AVAILABLE -> Value.CLOSING_AVAILABLE
                     CLOSING_LEDGER -> Value.CLOSING_LEDGER
+                    CLOSING_PENDING_INFLOWS -> Value.CLOSING_PENDING_INFLOWS
+                    CLOSING_PENDING_OUTFLOWS -> Value.CLOSING_PENDING_OUTFLOWS
                     CURRENT_AVAILABLE -> Value.CURRENT_AVAILABLE
                     CURRENT_LEDGER -> Value.CURRENT_LEDGER
+                    CURRENT_PENDING_INFLOWS -> Value.CURRENT_PENDING_INFLOWS
+                    CURRENT_PENDING_OUTFLOWS -> Value.CURRENT_PENDING_OUTFLOWS
                     OPENING_AVAILABLE -> Value.OPENING_AVAILABLE
                     OPENING_AVAILABLE_NEXT_BUSINESS_DAY -> Value.OPENING_AVAILABLE_NEXT_BUSINESS_DAY
                     OPENING_LEDGER -> Value.OPENING_LEDGER
@@ -1305,8 +1331,12 @@ private constructor(
                 when (this) {
                     CLOSING_AVAILABLE -> Known.CLOSING_AVAILABLE
                     CLOSING_LEDGER -> Known.CLOSING_LEDGER
+                    CLOSING_PENDING_INFLOWS -> Known.CLOSING_PENDING_INFLOWS
+                    CLOSING_PENDING_OUTFLOWS -> Known.CLOSING_PENDING_OUTFLOWS
                     CURRENT_AVAILABLE -> Known.CURRENT_AVAILABLE
                     CURRENT_LEDGER -> Known.CURRENT_LEDGER
+                    CURRENT_PENDING_INFLOWS -> Known.CURRENT_PENDING_INFLOWS
+                    CURRENT_PENDING_OUTFLOWS -> Known.CURRENT_PENDING_OUTFLOWS
                     OPENING_AVAILABLE -> Known.OPENING_AVAILABLE
                     OPENING_AVAILABLE_NEXT_BUSINESS_DAY -> Known.OPENING_AVAILABLE_NEXT_BUSINESS_DAY
                     OPENING_LEDGER -> Known.OPENING_LEDGER
