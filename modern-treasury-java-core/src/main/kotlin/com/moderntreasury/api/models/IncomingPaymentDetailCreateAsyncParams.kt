@@ -12,6 +12,7 @@ import com.moderntreasury.api.core.JsonField
 import com.moderntreasury.api.core.JsonMissing
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.Params
+import com.moderntreasury.api.core.checkRequired
 import com.moderntreasury.api.core.http.Headers
 import com.moderntreasury.api.core.http.QueryParams
 import com.moderntreasury.api.errors.ModernTreasuryInvalidDataException
@@ -28,6 +29,14 @@ private constructor(
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
+
+    /**
+     * One of `ach`, `wire`, `check`.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun type(): Type = body.type()
 
     /**
      * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -55,6 +64,8 @@ private constructor(
 
     /**
      * An object passed through to the simulated IPD that could reflect what a vendor would pass.
+     * For `type: check` with `subtype: lockbox` (sandbox Modern Treasury payment accounts only),
+     * `data` must include `payor_name`, otherwise the request returns 422.
      *
      * This arbitrary value can be deserialized into a custom type using the `convert` method:
      * ```java
@@ -89,20 +100,13 @@ private constructor(
 
     /**
      * An additional layer of classification for the type of incoming payment detail, e.g.
-     * `ethereum` for a `stablecoin` type.
+     * `ethereum` for a `stablecoin` type. For `type: check`, `subtype: lockbox` simulates a lockbox
+     * check deposit.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
     fun subtype(): Optional<String> = body.subtype()
-
-    /**
-     * One of `ach`, `wire`, `check`.
-     *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
-     */
-    fun type(): Optional<Type> = body.type()
 
     /**
      * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -111,6 +115,13 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun virtualAccountId(): Optional<String> = body.virtualAccountId()
+
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _type(): JsonField<Type> = body._type()
 
     /**
      * Returns the raw JSON value of [amount].
@@ -163,13 +174,6 @@ private constructor(
     fun _subtype(): JsonField<String> = body._subtype()
 
     /**
-     * Returns the raw JSON value of [type].
-     *
-     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _type(): JsonField<Type> = body._type()
-
-    /**
      * Returns the raw JSON value of [virtualAccountId].
      *
      * Unlike [virtualAccountId], this method doesn't throw if the JSON field has an unexpected
@@ -189,11 +193,14 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): IncomingPaymentDetailCreateAsyncParams = builder().build()
-
         /**
          * Returns a mutable builder for constructing an instance of
          * [IncomingPaymentDetailCreateAsyncParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .type()
+         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -221,14 +228,25 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [type]
          * - [amount]
          * - [asOfDate]
          * - [currency]
          * - [data]
-         * - [description]
          * - etc.
          */
         fun body(body: IncomingPaymentDetailCreateRequest) = apply { this.body = body.toBuilder() }
+
+        /** One of `ach`, `wire`, `check`. */
+        fun type(type: Type) = apply { body.type(type) }
+
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** Value in specified currency's smallest unit. e.g. $10 would be represented as 1000. */
         fun amount(amount: Long) = apply { body.amount(amount) }
@@ -273,7 +291,8 @@ private constructor(
 
         /**
          * An object passed through to the simulated IPD that could reflect what a vendor would
-         * pass.
+         * pass. For `type: check` with `subtype: lockbox` (sandbox Modern Treasury payment accounts
+         * only), `data` must include `payor_name`, otherwise the request returns 422.
          */
         fun data(data: JsonValue) = apply { body.data(data) }
 
@@ -324,7 +343,8 @@ private constructor(
 
         /**
          * An additional layer of classification for the type of incoming payment detail, e.g.
-         * `ethereum` for a `stablecoin` type.
+         * `ethereum` for a `stablecoin` type. For `type: check`, `subtype: lockbox` simulates a
+         * lockbox check deposit.
          */
         fun subtype(subtype: String?) = apply { body.subtype(subtype) }
 
@@ -338,17 +358,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun subtype(subtype: JsonField<String>) = apply { body.subtype(subtype) }
-
-        /** One of `ach`, `wire`, `check`. */
-        fun type(type: Type) = apply { body.type(type) }
-
-        /**
-         * Sets [Builder.type] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** An optional parameter to associate the incoming payment detail to a virtual account. */
         fun virtualAccountId(virtualAccountId: String?) = apply {
@@ -491,6 +500,13 @@ private constructor(
          * Returns an immutable instance of [IncomingPaymentDetailCreateAsyncParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .type()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): IncomingPaymentDetailCreateAsyncParams =
             IncomingPaymentDetailCreateAsyncParams(
@@ -509,6 +525,7 @@ private constructor(
     class IncomingPaymentDetailCreateRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val type: JsonField<Type>,
         private val amount: JsonField<Long>,
         private val asOfDate: JsonField<LocalDate>,
         private val currency: JsonField<Currency>,
@@ -517,13 +534,13 @@ private constructor(
         private val direction: JsonField<TransactionDirection>,
         private val internalAccountId: JsonField<String>,
         private val subtype: JsonField<String>,
-        private val type: JsonField<Type>,
         private val virtualAccountId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("as_of_date")
             @ExcludeMissing
@@ -542,11 +559,11 @@ private constructor(
             @ExcludeMissing
             internalAccountId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("subtype") @ExcludeMissing subtype: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("virtual_account_id")
             @ExcludeMissing
             virtualAccountId: JsonField<String> = JsonMissing.of(),
         ) : this(
+            type,
             amount,
             asOfDate,
             currency,
@@ -555,10 +572,17 @@ private constructor(
             direction,
             internalAccountId,
             subtype,
-            type,
             virtualAccountId,
             mutableMapOf(),
         )
+
+        /**
+         * One of `ach`, `wire`, `check`.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
 
         /**
          * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -586,7 +610,8 @@ private constructor(
 
         /**
          * An object passed through to the simulated IPD that could reflect what a vendor would
-         * pass.
+         * pass. For `type: check` with `subtype: lockbox` (sandbox Modern Treasury payment accounts
+         * only), `data` must include `payor_name`, otherwise the request returns 422.
          *
          * This arbitrary value can be deserialized into a custom type using the `convert` method:
          * ```java
@@ -622,20 +647,13 @@ private constructor(
 
         /**
          * An additional layer of classification for the type of incoming payment detail, e.g.
-         * `ethereum` for a `stablecoin` type.
+         * `ethereum` for a `stablecoin` type. For `type: check`, `subtype: lockbox` simulates a
+         * lockbox check deposit.
          *
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
         fun subtype(): Optional<String> = subtype.getOptional("subtype")
-
-        /**
-         * One of `ach`, `wire`, `check`.
-         *
-         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
-         *   if the server responded with an unexpected value).
-         */
-        fun type(): Optional<Type> = type.getOptional("type")
 
         /**
          * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -645,6 +663,13 @@ private constructor(
          */
         fun virtualAccountId(): Optional<String> =
             virtualAccountId.getOptional("virtual_account_id")
+
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
          * Returns the raw JSON value of [amount].
@@ -703,13 +728,6 @@ private constructor(
         @JsonProperty("subtype") @ExcludeMissing fun _subtype(): JsonField<String> = subtype
 
         /**
-         * Returns the raw JSON value of [type].
-         *
-         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
-
-        /**
          * Returns the raw JSON value of [virtualAccountId].
          *
          * Unlike [virtualAccountId], this method doesn't throw if the JSON field has an unexpected
@@ -736,6 +754,11 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [IncomingPaymentDetailCreateRequest].
+             *
+             * The following fields are required:
+             * ```java
+             * .type()
+             * ```
              */
             @JvmStatic fun builder() = Builder()
         }
@@ -743,6 +766,7 @@ private constructor(
         /** A builder for [IncomingPaymentDetailCreateRequest]. */
         class Builder internal constructor() {
 
+            private var type: JsonField<Type>? = null
             private var amount: JsonField<Long> = JsonMissing.of()
             private var asOfDate: JsonField<LocalDate> = JsonMissing.of()
             private var currency: JsonField<Currency> = JsonMissing.of()
@@ -751,7 +775,6 @@ private constructor(
             private var direction: JsonField<TransactionDirection> = JsonMissing.of()
             private var internalAccountId: JsonField<String> = JsonMissing.of()
             private var subtype: JsonField<String> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
             private var virtualAccountId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -759,6 +782,7 @@ private constructor(
             internal fun from(
                 incomingPaymentDetailCreateRequest: IncomingPaymentDetailCreateRequest
             ) = apply {
+                type = incomingPaymentDetailCreateRequest.type
                 amount = incomingPaymentDetailCreateRequest.amount
                 asOfDate = incomingPaymentDetailCreateRequest.asOfDate
                 currency = incomingPaymentDetailCreateRequest.currency
@@ -767,11 +791,22 @@ private constructor(
                 direction = incomingPaymentDetailCreateRequest.direction
                 internalAccountId = incomingPaymentDetailCreateRequest.internalAccountId
                 subtype = incomingPaymentDetailCreateRequest.subtype
-                type = incomingPaymentDetailCreateRequest.type
                 virtualAccountId = incomingPaymentDetailCreateRequest.virtualAccountId
                 additionalProperties =
                     incomingPaymentDetailCreateRequest.additionalProperties.toMutableMap()
             }
+
+            /** One of `ach`, `wire`, `check`. */
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
              * Value in specified currency's smallest unit. e.g. $10 would be represented as 1000.
@@ -819,7 +854,8 @@ private constructor(
 
             /**
              * An object passed through to the simulated IPD that could reflect what a vendor would
-             * pass.
+             * pass. For `type: check` with `subtype: lockbox` (sandbox Modern Treasury payment
+             * accounts only), `data` must include `payor_name`, otherwise the request returns 422.
              */
             fun data(data: JsonValue) = apply { this.data = data }
 
@@ -871,7 +907,8 @@ private constructor(
 
             /**
              * An additional layer of classification for the type of incoming payment detail, e.g.
-             * `ethereum` for a `stablecoin` type.
+             * `ethereum` for a `stablecoin` type. For `type: check`, `subtype: lockbox` simulates a
+             * lockbox check deposit.
              */
             fun subtype(subtype: String?) = subtype(JsonField.ofNullable(subtype))
 
@@ -886,18 +923,6 @@ private constructor(
              * supported value.
              */
             fun subtype(subtype: JsonField<String>) = apply { this.subtype = subtype }
-
-            /** One of `ach`, `wire`, `check`. */
-            fun type(type: Type) = type(JsonField.of(type))
-
-            /**
-             * Sets [Builder.type] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
              * An optional parameter to associate the incoming payment detail to a virtual account.
@@ -945,9 +970,17 @@ private constructor(
              * Returns an immutable instance of [IncomingPaymentDetailCreateRequest].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): IncomingPaymentDetailCreateRequest =
                 IncomingPaymentDetailCreateRequest(
+                    checkRequired("type", type),
                     amount,
                     asOfDate,
                     currency,
@@ -956,7 +989,6 @@ private constructor(
                     direction,
                     internalAccountId,
                     subtype,
-                    type,
                     virtualAccountId,
                     additionalProperties.toMutableMap(),
                 )
@@ -978,6 +1010,7 @@ private constructor(
                 return@apply
             }
 
+            type().validate()
             amount()
             asOfDate()
             currency().ifPresent { it.validate() }
@@ -985,7 +1018,6 @@ private constructor(
             direction().ifPresent { it.validate() }
             internalAccountId()
             subtype()
-            type().ifPresent { it.validate() }
             virtualAccountId()
             validated = true
         }
@@ -1006,14 +1038,14 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (amount.asKnown().isPresent) 1 else 0) +
+            (type.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (amount.asKnown().isPresent) 1 else 0) +
                 (if (asOfDate.asKnown().isPresent) 1 else 0) +
                 (currency.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (direction.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (internalAccountId.asKnown().isPresent) 1 else 0) +
                 (if (subtype.asKnown().isPresent) 1 else 0) +
-                (type.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (virtualAccountId.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
@@ -1022,6 +1054,7 @@ private constructor(
             }
 
             return other is IncomingPaymentDetailCreateRequest &&
+                type == other.type &&
                 amount == other.amount &&
                 asOfDate == other.asOfDate &&
                 currency == other.currency &&
@@ -1030,13 +1063,13 @@ private constructor(
                 direction == other.direction &&
                 internalAccountId == other.internalAccountId &&
                 subtype == other.subtype &&
-                type == other.type &&
                 virtualAccountId == other.virtualAccountId &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
             Objects.hash(
+                type,
                 amount,
                 asOfDate,
                 currency,
@@ -1045,7 +1078,6 @@ private constructor(
                 direction,
                 internalAccountId,
                 subtype,
-                type,
                 virtualAccountId,
                 additionalProperties,
             )
@@ -1054,7 +1086,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IncomingPaymentDetailCreateRequest{amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, subtype=$subtype, type=$type, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
+            "IncomingPaymentDetailCreateRequest{type=$type, amount=$amount, asOfDate=$asOfDate, currency=$currency, data=$data, description=$description, direction=$direction, internalAccountId=$internalAccountId, subtype=$subtype, virtualAccountId=$virtualAccountId, additionalProperties=$additionalProperties}"
     }
 
     /** One of `ach`, `wire`, `check`. */

@@ -12,6 +12,7 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
     @Test
     fun create() {
         IncomingPaymentDetailCreateAsyncParams.builder()
+            .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
             .amount(0L)
             .asOfDate(LocalDate.parse("2019-12-27"))
             .currency(Currency.AED)
@@ -20,7 +21,6 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
             .direction(TransactionDirection.CREDIT)
             .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .subtype("subtype")
-            .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
             .virtualAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .build()
     }
@@ -29,6 +29,7 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
     fun body() {
         val params =
             IncomingPaymentDetailCreateAsyncParams.builder()
+                .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
                 .amount(0L)
                 .asOfDate(LocalDate.parse("2019-12-27"))
                 .currency(Currency.AED)
@@ -37,12 +38,12 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
                 .direction(TransactionDirection.CREDIT)
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .subtype("subtype")
-                .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
                 .virtualAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
 
         val body = params._body()
 
+        assertThat(body.type()).isEqualTo(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
         assertThat(body.amount()).contains(0L)
         assertThat(body.asOfDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.currency()).contains(Currency.AED)
@@ -51,14 +52,18 @@ internal class IncomingPaymentDetailCreateAsyncParamsTest {
         assertThat(body.direction()).contains(TransactionDirection.CREDIT)
         assertThat(body.internalAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.subtype()).contains("subtype")
-        assertThat(body.type()).contains(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
         assertThat(body.virtualAccountId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = IncomingPaymentDetailCreateAsyncParams.builder().build()
+        val params =
+            IncomingPaymentDetailCreateAsyncParams.builder()
+                .type(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
+                .build()
 
         val body = params._body()
+
+        assertThat(body.type()).isEqualTo(IncomingPaymentDetailCreateAsyncParams.Type.ACH)
     }
 }

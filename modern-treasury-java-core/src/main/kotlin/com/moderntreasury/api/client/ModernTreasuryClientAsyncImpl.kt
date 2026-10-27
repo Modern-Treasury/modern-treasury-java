@@ -35,6 +35,8 @@ import com.moderntreasury.api.services.async.CounterpartyServiceAsync
 import com.moderntreasury.api.services.async.CounterpartyServiceAsyncImpl
 import com.moderntreasury.api.services.async.DocumentServiceAsync
 import com.moderntreasury.api.services.async.DocumentServiceAsyncImpl
+import com.moderntreasury.api.services.async.EmbeddableFlowServiceAsync
+import com.moderntreasury.api.services.async.EmbeddableFlowServiceAsyncImpl
 import com.moderntreasury.api.services.async.EventServiceAsync
 import com.moderntreasury.api.services.async.EventServiceAsyncImpl
 import com.moderntreasury.api.services.async.ExpectedPaymentServiceAsync
@@ -290,6 +292,10 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         IdentificationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val embeddableFlows: EmbeddableFlowServiceAsync by lazy {
+        EmbeddableFlowServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): ModernTreasuryClient = sync
 
     override fun withRawResponse(): ModernTreasuryClientAsync.WithRawResponse = withRawResponse
@@ -391,6 +397,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
         virtualAccountSettings
 
     override fun identifications(): IdentificationServiceAsync = identifications
+
+    override fun embeddableFlows(): EmbeddableFlowServiceAsync = embeddableFlows
 
     override fun ping(
         params: ClientPingParams,
@@ -585,6 +593,10 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
             IdentificationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val embeddableFlows: EmbeddableFlowServiceAsync.WithRawResponse by lazy {
+            EmbeddableFlowServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
         ): ModernTreasuryClientAsync.WithRawResponse =
@@ -690,6 +702,8 @@ class ModernTreasuryClientAsyncImpl(private val clientOptions: ClientOptions) :
             virtualAccountSettings
 
         override fun identifications(): IdentificationServiceAsync.WithRawResponse = identifications
+
+        override fun embeddableFlows(): EmbeddableFlowServiceAsync.WithRawResponse = embeddableFlows
 
         private val pingHandler: Handler<PingResponse> =
             jsonHandler<PingResponse>(clientOptions.jsonMapper)
