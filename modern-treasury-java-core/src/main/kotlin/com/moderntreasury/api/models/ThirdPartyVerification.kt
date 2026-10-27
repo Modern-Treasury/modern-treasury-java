@@ -591,6 +591,8 @@ private constructor(
 
             @JvmField val VERIFF = of("veriff")
 
+            @JvmField val SMARTY = of("smarty")
+
             @JvmStatic fun of(value: String) = Vendor(JsonField.of(value))
         }
 
@@ -603,6 +605,7 @@ private constructor(
             SOCURE,
             SUMSUB,
             VERIFF,
+            SMARTY,
         }
 
         /**
@@ -622,6 +625,7 @@ private constructor(
             SOCURE,
             SUMSUB,
             VERIFF,
+            SMARTY,
             /** An enum member indicating that [Vendor] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -642,6 +646,7 @@ private constructor(
                 SOCURE -> Value.SOCURE
                 SUMSUB -> Value.SUMSUB
                 VERIFF -> Value.VERIFF
+                SMARTY -> Value.SMARTY
                 else -> Value._UNKNOWN
             }
 
@@ -663,6 +668,7 @@ private constructor(
                 SOCURE -> Known.SOCURE
                 SUMSUB -> Known.SUMSUB
                 VERIFF -> Known.VERIFF
+                SMARTY -> Known.SMARTY
                 else -> throw ModernTreasuryInvalidDataException("Unknown Vendor: $value")
             }
 

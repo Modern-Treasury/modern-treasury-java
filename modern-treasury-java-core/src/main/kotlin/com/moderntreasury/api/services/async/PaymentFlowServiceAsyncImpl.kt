@@ -38,6 +38,7 @@ class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentFlowServiceAsync =
         PaymentFlowServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+    @Deprecated("deprecated")
     override fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions,
@@ -82,6 +83,7 @@ class PaymentFlowServiceAsyncImpl internal constructor(private val clientOptions
         private val createHandler: Handler<PaymentFlow> =
             jsonHandler<PaymentFlow>(clientOptions.jsonMapper)
 
+        @Deprecated("deprecated")
         override fun create(
             params: PaymentFlowCreateParams,
             requestOptions: RequestOptions,
