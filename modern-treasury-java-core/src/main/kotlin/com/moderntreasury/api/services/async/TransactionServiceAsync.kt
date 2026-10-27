@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.http.HttpResponse
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.Transaction
 import com.moderntreasury.api.models.TransactionCreateParams
+import com.moderntreasury.api.models.TransactionCreateRequest
 import com.moderntreasury.api.models.TransactionDeleteParams
 import com.moderntreasury.api.models.TransactionListPageAsync
 import com.moderntreasury.api.models.TransactionListParams
@@ -42,6 +43,22 @@ interface TransactionServiceAsync {
         params: TransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Transaction>
+
+    /** @see create */
+    fun create(
+        transactionCreateRequest: TransactionCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Transaction> =
+        create(
+            TransactionCreateParams.builder()
+                .transactionCreateRequest(transactionCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(transactionCreateRequest: TransactionCreateRequest): CompletableFuture<Transaction> =
+        create(transactionCreateRequest, RequestOptions.none())
 
     /** Get details on a single transaction. */
     fun retrieve(id: String): CompletableFuture<Transaction> =
@@ -183,6 +200,24 @@ interface TransactionServiceAsync {
             params: TransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Transaction>>
+
+        /** @see create */
+        fun create(
+            transactionCreateRequest: TransactionCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Transaction>> =
+            create(
+                TransactionCreateParams.builder()
+                    .transactionCreateRequest(transactionCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        fun create(
+            transactionCreateRequest: TransactionCreateRequest
+        ): CompletableFuture<HttpResponseFor<Transaction>> =
+            create(transactionCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/transactions/{id}`, but is otherwise the same

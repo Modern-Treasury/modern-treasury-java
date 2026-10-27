@@ -15,11 +15,10 @@ internal class VirtualAccountCreateParamsTest {
             .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .name("name")
             .addAccountDetail(
-                VirtualAccountCreateParams.AccountDetailCreateRequest.builder()
+                AccountDetailCreateRequest.builder()
                     .accountNumber("account_number")
                     .accountNumberType(
-                        VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                            .ARBITRUM_ADDRESS
+                        AccountDetailCreateRequest.AccountNumberType.ARBITRUM_ADDRESS
                     )
                     .build()
             )
@@ -55,15 +54,21 @@ internal class VirtualAccountCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .partyAddress(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .build()
+            )
             .addRoutingDetail(
-                VirtualAccountCreateParams.RoutingDetailCreateRequest.builder()
+                RoutingDetailCreateRequest.builder()
                     .routingNumber("routing_number")
-                    .routingNumberType(
-                        VirtualAccountCreateParams.RoutingDetailCreateRequest.RoutingNumberType.ABA
-                    )
-                    .paymentType(
-                        VirtualAccountCreateParams.RoutingDetailCreateRequest.PaymentType.ACH
-                    )
+                    .routingNumberType(RoutingDetailCreateRequest.RoutingNumberType.ABA)
+                    .paymentType(RoutingDetailCreateRequest.PaymentType.ACH)
                     .build()
             )
             .virtualAccountSettingId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -77,11 +82,10 @@ internal class VirtualAccountCreateParamsTest {
                 .internalAccountId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .name("name")
                 .addAccountDetail(
-                    VirtualAccountCreateParams.AccountDetailCreateRequest.builder()
+                    AccountDetailCreateRequest.builder()
                         .accountNumber("account_number")
                         .accountNumberType(
-                            VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                                .ARBITRUM_ADDRESS
+                            AccountDetailCreateRequest.AccountNumberType.ARBITRUM_ADDRESS
                         )
                         .build()
                 )
@@ -117,16 +121,21 @@ internal class VirtualAccountCreateParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .partyAddress(
+                    AddressRequest.builder()
+                        .country("country")
+                        .line1("line1")
+                        .line2("line2")
+                        .locality("locality")
+                        .postalCode("postal_code")
+                        .region("region")
+                        .build()
+                )
                 .addRoutingDetail(
-                    VirtualAccountCreateParams.RoutingDetailCreateRequest.builder()
+                    RoutingDetailCreateRequest.builder()
                         .routingNumber("routing_number")
-                        .routingNumberType(
-                            VirtualAccountCreateParams.RoutingDetailCreateRequest.RoutingNumberType
-                                .ABA
-                        )
-                        .paymentType(
-                            VirtualAccountCreateParams.RoutingDetailCreateRequest.PaymentType.ACH
-                        )
+                        .routingNumberType(RoutingDetailCreateRequest.RoutingNumberType.ABA)
+                        .paymentType(RoutingDetailCreateRequest.PaymentType.ACH)
                         .build()
                 )
                 .virtualAccountSettingId("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -138,11 +147,10 @@ internal class VirtualAccountCreateParamsTest {
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.accountDetails().getOrNull())
             .containsExactly(
-                VirtualAccountCreateParams.AccountDetailCreateRequest.builder()
+                AccountDetailCreateRequest.builder()
                     .accountNumber("account_number")
                     .accountNumberType(
-                        VirtualAccountCreateParams.AccountDetailCreateRequest.AccountNumberType
-                            .ARBITRUM_ADDRESS
+                        AccountDetailCreateRequest.AccountNumberType.ARBITRUM_ADDRESS
                     )
                     .build()
             )
@@ -180,16 +188,23 @@ internal class VirtualAccountCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.partyAddress())
+            .contains(
+                AddressRequest.builder()
+                    .country("country")
+                    .line1("line1")
+                    .line2("line2")
+                    .locality("locality")
+                    .postalCode("postal_code")
+                    .region("region")
+                    .build()
+            )
         assertThat(body.routingDetails().getOrNull())
             .containsExactly(
-                VirtualAccountCreateParams.RoutingDetailCreateRequest.builder()
+                RoutingDetailCreateRequest.builder()
                     .routingNumber("routing_number")
-                    .routingNumberType(
-                        VirtualAccountCreateParams.RoutingDetailCreateRequest.RoutingNumberType.ABA
-                    )
-                    .paymentType(
-                        VirtualAccountCreateParams.RoutingDetailCreateRequest.PaymentType.ACH
-                    )
+                    .routingNumberType(RoutingDetailCreateRequest.RoutingNumberType.ABA)
+                    .paymentType(RoutingDetailCreateRequest.PaymentType.ACH)
                     .build()
             )
         assertThat(body.virtualAccountSettingId()).contains("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
