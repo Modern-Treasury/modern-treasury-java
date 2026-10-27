@@ -29,10 +29,12 @@ interface PaymentFlowServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): PaymentFlowServiceAsync
 
     /** create payment_flow */
+    @Deprecated("deprecated")
     fun create(params: PaymentFlowCreateParams): CompletableFuture<PaymentFlow> =
         create(params, RequestOptions.none())
 
     /** @see create */
+    @Deprecated("deprecated")
     fun create(
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -127,11 +129,13 @@ interface PaymentFlowServiceAsync {
          * Returns a raw HTTP response for `post /api/payment_flows`, but is otherwise the same as
          * [PaymentFlowServiceAsync.create].
          */
+        @Deprecated("deprecated")
         fun create(
             params: PaymentFlowCreateParams
         ): CompletableFuture<HttpResponseFor<PaymentFlow>> = create(params, RequestOptions.none())
 
         /** @see create */
+        @Deprecated("deprecated")
         fun create(
             params: PaymentFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

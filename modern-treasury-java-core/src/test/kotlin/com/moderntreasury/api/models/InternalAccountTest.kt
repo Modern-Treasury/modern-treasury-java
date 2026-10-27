@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.moderntreasury.api.core.JsonValue
 import com.moderntreasury.api.core.jsonMapper
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -42,7 +43,8 @@ internal class InternalAccountTest {
                         .accountNumber("account_number")
                         .build()
                 )
-                .accountType(InternalAccount.AccountType.BASE_WALLET)
+                .accountType(InternalAccount.AccountType.CASH)
+                .addAllowedAchDebitCompanyId("string")
                 .connection(
                     Connection.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -156,7 +158,9 @@ internal class InternalAccountTest {
                     .accountNumber("account_number")
                     .build()
             )
-        assertThat(internalAccount.accountType()).contains(InternalAccount.AccountType.BASE_WALLET)
+        assertThat(internalAccount.accountType()).contains(InternalAccount.AccountType.CASH)
+        assertThat(internalAccount.allowedAchDebitCompanyIds().getOrNull())
+            .containsExactly("string")
         assertThat(internalAccount.connection())
             .isEqualTo(
                 Connection.builder()
@@ -245,7 +249,7 @@ internal class InternalAccountTest {
                     .build()
             )
         assertThat(internalAccount.status()).contains(InternalAccount.Status.ACTIVE)
-        assertThat(internalAccount.title()).contains("title")
+        assertThat(internalAccount.title()).isEqualTo("title")
         assertThat(internalAccount.updatedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(internalAccount.vendorId()).contains("vendor_id")
@@ -283,7 +287,8 @@ internal class InternalAccountTest {
                         .accountNumber("account_number")
                         .build()
                 )
-                .accountType(InternalAccount.AccountType.BASE_WALLET)
+                .accountType(InternalAccount.AccountType.CASH)
+                .addAllowedAchDebitCompanyId("string")
                 .connection(
                     Connection.builder()
                         .id("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
