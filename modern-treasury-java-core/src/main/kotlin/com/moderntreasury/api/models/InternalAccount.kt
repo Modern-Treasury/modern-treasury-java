@@ -28,6 +28,7 @@ private constructor(
     private val accountCapabilities: JsonField<List<AccountCapability>>,
     private val accountDetails: JsonField<List<AccountDetail>>,
     private val accountType: JsonField<AccountType>,
+    private val allowedAchDebitCompanyIds: JsonField<List<String>>,
     private val connection: JsonField<Connection>,
     private val contraLedgerAccountId: JsonField<String>,
     private val counterpartyId: JsonField<String>,
@@ -65,6 +66,9 @@ private constructor(
         @JsonProperty("account_type")
         @ExcludeMissing
         accountType: JsonField<AccountType> = JsonMissing.of(),
+        @JsonProperty("allowed_ach_debit_company_ids")
+        @ExcludeMissing
+        allowedAchDebitCompanyIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("connection")
         @ExcludeMissing
         connection: JsonField<Connection> = JsonMissing.of(),
@@ -116,6 +120,7 @@ private constructor(
         accountCapabilities,
         accountDetails,
         accountType,
+        allowedAchDebitCompanyIds,
         connection,
         contraLedgerAccountId,
         counterpartyId,
@@ -172,6 +177,17 @@ private constructor(
      *   the server responded with an unexpected value).
      */
     fun accountType(): Optional<AccountType> = accountType.getOptional("account_type")
+
+    /**
+     * The ACH Company IDs allowed to debit this account. `null` allows every company. An empty
+     * array allows none. Debits from any other company are returned with code R10. Only applicable
+     * to debitable accounts under a Modern Treasury PSP connection.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun allowedAchDebitCompanyIds(): Optional<List<String>> =
+        allowedAchDebitCompanyIds.getOptional("allowed_ach_debit_company_ids")
 
     /**
      * Specifies which financial institution the accounts belong to.
@@ -305,7 +321,8 @@ private constructor(
     fun partyName(): String = partyName.getRequired("party_name")
 
     /**
-     * Either individual or business.
+     * Either individual or business. Inherits from associated LegalEntity legal_entity_type, if one
+     * exists.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
@@ -329,13 +346,14 @@ private constructor(
     fun status(): Optional<Status> = status.getOptional("status")
 
     /**
-     * The account title at the financial institution, used in place of the party name. Only
-     * applicable to accounts created under supported connections.
+     * The account title at the financial institution. Defaults to the party name unless a custom
+     * title was set on creation. Custom titles are only applicable to accounts created under
+     * supported connections.
      *
-     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
-     *   the server responded with an unexpected value).
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun title(): Optional<String> = title.getOptional("title")
+    fun title(): String = title.getRequired("title")
 
     /**
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type or is
@@ -385,6 +403,16 @@ private constructor(
     @JsonProperty("account_type")
     @ExcludeMissing
     fun _accountType(): JsonField<AccountType> = accountType
+
+    /**
+     * Returns the raw JSON value of [allowedAchDebitCompanyIds].
+     *
+     * Unlike [allowedAchDebitCompanyIds], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("allowed_ach_debit_company_ids")
+    @ExcludeMissing
+    fun _allowedAchDebitCompanyIds(): JsonField<List<String>> = allowedAchDebitCompanyIds
 
     /**
      * Returns the raw JSON value of [connection].
@@ -584,6 +612,7 @@ private constructor(
          * .accountCapabilities()
          * .accountDetails()
          * .accountType()
+         * .allowedAchDebitCompanyIds()
          * .connection()
          * .contraLedgerAccountId()
          * .counterpartyId()
@@ -618,6 +647,7 @@ private constructor(
         private var accountCapabilities: JsonField<MutableList<AccountCapability>>? = null
         private var accountDetails: JsonField<MutableList<AccountDetail>>? = null
         private var accountType: JsonField<AccountType>? = null
+        private var allowedAchDebitCompanyIds: JsonField<MutableList<String>>? = null
         private var connection: JsonField<Connection>? = null
         private var contraLedgerAccountId: JsonField<String>? = null
         private var counterpartyId: JsonField<String>? = null
@@ -648,6 +678,8 @@ private constructor(
             accountCapabilities = internalAccount.accountCapabilities.map { it.toMutableList() }
             accountDetails = internalAccount.accountDetails.map { it.toMutableList() }
             accountType = internalAccount.accountType
+            allowedAchDebitCompanyIds =
+                internalAccount.allowedAchDebitCompanyIds.map { it.toMutableList() }
             connection = internalAccount.connection
             contraLedgerAccountId = internalAccount.contraLedgerAccountId
             counterpartyId = internalAccount.counterpartyId
@@ -755,6 +787,44 @@ private constructor(
          */
         fun accountType(accountType: JsonField<AccountType>) = apply {
             this.accountType = accountType
+        }
+
+        /**
+         * The ACH Company IDs allowed to debit this account. `null` allows every company. An empty
+         * array allows none. Debits from any other company are returned with code R10. Only
+         * applicable to debitable accounts under a Modern Treasury PSP connection.
+         */
+        fun allowedAchDebitCompanyIds(allowedAchDebitCompanyIds: List<String>?) =
+            allowedAchDebitCompanyIds(JsonField.ofNullable(allowedAchDebitCompanyIds))
+
+        /**
+         * Alias for calling [Builder.allowedAchDebitCompanyIds] with
+         * `allowedAchDebitCompanyIds.orElse(null)`.
+         */
+        fun allowedAchDebitCompanyIds(allowedAchDebitCompanyIds: Optional<List<String>>) =
+            allowedAchDebitCompanyIds(allowedAchDebitCompanyIds.getOrNull())
+
+        /**
+         * Sets [Builder.allowedAchDebitCompanyIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowedAchDebitCompanyIds] with a well-typed
+         * `List<String>` value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun allowedAchDebitCompanyIds(allowedAchDebitCompanyIds: JsonField<List<String>>) = apply {
+            this.allowedAchDebitCompanyIds = allowedAchDebitCompanyIds.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [String] to [allowedAchDebitCompanyIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAllowedAchDebitCompanyId(allowedAchDebitCompanyId: String) = apply {
+            allowedAchDebitCompanyIds =
+                (allowedAchDebitCompanyIds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("allowedAchDebitCompanyIds", it).add(allowedAchDebitCompanyId)
+                }
         }
 
         /** Specifies which financial institution the accounts belong to. */
@@ -1020,7 +1090,10 @@ private constructor(
          */
         fun partyName(partyName: JsonField<String>) = apply { this.partyName = partyName }
 
-        /** Either individual or business. */
+        /**
+         * Either individual or business. Inherits from associated LegalEntity legal_entity_type, if
+         * one exists.
+         */
         fun partyType(partyType: PartyType?) = partyType(JsonField.ofNullable(partyType))
 
         /** Alias for calling [Builder.partyType] with `partyType.orElse(null)`. */
@@ -1077,13 +1150,11 @@ private constructor(
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
-         * The account title at the financial institution, used in place of the party name. Only
-         * applicable to accounts created under supported connections.
+         * The account title at the financial institution. Defaults to the party name unless a
+         * custom title was set on creation. Custom titles are only applicable to accounts created
+         * under supported connections.
          */
-        fun title(title: String?) = title(JsonField.ofNullable(title))
-
-        /** Alias for calling [Builder.title] with `title.orElse(null)`. */
-        fun title(title: Optional<String>) = title(title.getOrNull())
+        fun title(title: String) = title(JsonField.of(title))
 
         /**
          * Sets [Builder.title] to an arbitrary JSON value.
@@ -1148,6 +1219,7 @@ private constructor(
          * .accountCapabilities()
          * .accountDetails()
          * .accountType()
+         * .allowedAchDebitCompanyIds()
          * .connection()
          * .contraLedgerAccountId()
          * .counterpartyId()
@@ -1180,6 +1252,9 @@ private constructor(
                 checkRequired("accountCapabilities", accountCapabilities).map { it.toImmutable() },
                 checkRequired("accountDetails", accountDetails).map { it.toImmutable() },
                 checkRequired("accountType", accountType),
+                checkRequired("allowedAchDebitCompanyIds", allowedAchDebitCompanyIds).map {
+                    it.toImmutable()
+                },
                 checkRequired("connection", connection),
                 checkRequired("contraLedgerAccountId", contraLedgerAccountId),
                 checkRequired("counterpartyId", counterpartyId),
@@ -1225,6 +1300,7 @@ private constructor(
         accountCapabilities().forEach { it.validate() }
         accountDetails().forEach { it.validate() }
         accountType().ifPresent { it.validate() }
+        allowedAchDebitCompanyIds()
         connection().validate()
         contraLedgerAccountId()
         counterpartyId()
@@ -1269,6 +1345,7 @@ private constructor(
             (accountCapabilities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (accountDetails.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (accountType.asKnown().getOrNull()?.validity() ?: 0) +
+            (allowedAchDebitCompanyIds.asKnown().getOrNull()?.size ?: 0) +
             (connection.asKnown().getOrNull()?.validity() ?: 0) +
             (if (contraLedgerAccountId.asKnown().isPresent) 1 else 0) +
             (if (counterpartyId.asKnown().isPresent) 1 else 0) +
@@ -2119,15 +2196,9 @@ private constructor(
 
         companion object {
 
-            @JvmField val BASE_WALLET = of("base_wallet")
-
             @JvmField val CASH = of("cash")
 
             @JvmField val CHECKING = of("checking")
-
-            @JvmField val CRYPTO_WALLET = of("crypto_wallet")
-
-            @JvmField val ETHEREUM_WALLET = of("ethereum_wallet")
 
             @JvmField val GENERAL_LEDGER = of("general_ledger")
 
@@ -2139,30 +2210,21 @@ private constructor(
 
             @JvmField val OVERDRAFT = of("overdraft")
 
-            @JvmField val POLYGON_WALLET = of("polygon_wallet")
-
             @JvmField val SAVINGS = of("savings")
-
-            @JvmField val SOLANA_WALLET = of("solana_wallet")
 
             @JvmStatic fun of(value: String) = AccountType(JsonField.of(value))
         }
 
         /** An enum containing [AccountType]'s known values. */
         enum class Known {
-            BASE_WALLET,
             CASH,
             CHECKING,
-            CRYPTO_WALLET,
-            ETHEREUM_WALLET,
             GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
             OVERDRAFT,
-            POLYGON_WALLET,
             SAVINGS,
-            SOLANA_WALLET,
         }
 
         /**
@@ -2175,19 +2237,14 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            BASE_WALLET,
             CASH,
             CHECKING,
-            CRYPTO_WALLET,
-            ETHEREUM_WALLET,
             GENERAL_LEDGER,
             LOAN,
             NON_RESIDENT,
             OTHER,
             OVERDRAFT,
-            POLYGON_WALLET,
             SAVINGS,
-            SOLANA_WALLET,
             /**
              * An enum member indicating that [AccountType] was instantiated with an unknown value.
              */
@@ -2203,19 +2260,14 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                BASE_WALLET -> Value.BASE_WALLET
                 CASH -> Value.CASH
                 CHECKING -> Value.CHECKING
-                CRYPTO_WALLET -> Value.CRYPTO_WALLET
-                ETHEREUM_WALLET -> Value.ETHEREUM_WALLET
                 GENERAL_LEDGER -> Value.GENERAL_LEDGER
                 LOAN -> Value.LOAN
                 NON_RESIDENT -> Value.NON_RESIDENT
                 OTHER -> Value.OTHER
                 OVERDRAFT -> Value.OVERDRAFT
-                POLYGON_WALLET -> Value.POLYGON_WALLET
                 SAVINGS -> Value.SAVINGS
-                SOLANA_WALLET -> Value.SOLANA_WALLET
                 else -> Value._UNKNOWN
             }
 
@@ -2230,19 +2282,14 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                BASE_WALLET -> Known.BASE_WALLET
                 CASH -> Known.CASH
                 CHECKING -> Known.CHECKING
-                CRYPTO_WALLET -> Known.CRYPTO_WALLET
-                ETHEREUM_WALLET -> Known.ETHEREUM_WALLET
                 GENERAL_LEDGER -> Known.GENERAL_LEDGER
                 LOAN -> Known.LOAN
                 NON_RESIDENT -> Known.NON_RESIDENT
                 OTHER -> Known.OTHER
                 OVERDRAFT -> Known.OVERDRAFT
-                POLYGON_WALLET -> Known.POLYGON_WALLET
                 SAVINGS -> Known.SAVINGS
-                SOLANA_WALLET -> Known.SOLANA_WALLET
                 else -> throw ModernTreasuryInvalidDataException("Unknown AccountType: $value")
             }
 
@@ -2418,7 +2465,10 @@ private constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
-    /** Either individual or business. */
+    /**
+     * Either individual or business. Inherits from associated LegalEntity legal_entity_type, if one
+     * exists.
+     */
     class PartyType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -2722,6 +2772,7 @@ private constructor(
             accountCapabilities == other.accountCapabilities &&
             accountDetails == other.accountDetails &&
             accountType == other.accountType &&
+            allowedAchDebitCompanyIds == other.allowedAchDebitCompanyIds &&
             connection == other.connection &&
             contraLedgerAccountId == other.contraLedgerAccountId &&
             counterpartyId == other.counterpartyId &&
@@ -2753,6 +2804,7 @@ private constructor(
             accountCapabilities,
             accountDetails,
             accountType,
+            allowedAchDebitCompanyIds,
             connection,
             contraLedgerAccountId,
             counterpartyId,
@@ -2782,5 +2834,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, debitable=$debitable, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, title=$title, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
+        "InternalAccount{id=$id, accountCapabilities=$accountCapabilities, accountDetails=$accountDetails, accountType=$accountType, allowedAchDebitCompanyIds=$allowedAchDebitCompanyIds, connection=$connection, contraLedgerAccountId=$contraLedgerAccountId, counterpartyId=$counterpartyId, createdAt=$createdAt, currency=$currency, debitable=$debitable, externalId=$externalId, ledgerAccountId=$ledgerAccountId, legalEntityId=$legalEntityId, liveMode=$liveMode, metadata=$metadata, name=$name, object_=$object_, parentAccountId=$parentAccountId, partyAddress=$partyAddress, partyName=$partyName, partyType=$partyType, routingDetails=$routingDetails, status=$status, title=$title, updatedAt=$updatedAt, vendorId=$vendorId, additionalProperties=$additionalProperties}"
 }
