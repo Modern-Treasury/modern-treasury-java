@@ -29,10 +29,12 @@ interface AccountCollectionFlowService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountCollectionFlowService
 
     /** create account_collection_flow */
+    @Deprecated("deprecated")
     fun create(params: AccountCollectionFlowCreateParams): AccountCollectionFlow =
         create(params, RequestOptions.none())
 
     /** @see create */
+    @Deprecated("deprecated")
     fun create(
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -127,12 +129,14 @@ interface AccountCollectionFlowService {
          * Returns a raw HTTP response for `post /api/account_collection_flows`, but is otherwise
          * the same as [AccountCollectionFlowService.create].
          */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun create(
             params: AccountCollectionFlowCreateParams
         ): HttpResponseFor<AccountCollectionFlow> = create(params, RequestOptions.none())
 
         /** @see create */
+        @Deprecated("deprecated")
         @MustBeClosed
         fun create(
             params: AccountCollectionFlowCreateParams,
