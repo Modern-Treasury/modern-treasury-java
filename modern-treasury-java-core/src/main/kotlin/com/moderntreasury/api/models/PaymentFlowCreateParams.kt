@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** create payment_flow */
+@Deprecated("deprecated")
 class PaymentFlowCreateParams
 private constructor(
     private val body: PaymentFlowCreateRequest,

@@ -109,25 +109,14 @@ interface IncomingPaymentDetailService {
         list(IncomingPaymentDetailListParams.none(), requestOptions)
 
     /** Simulate Incoming Payment Detail */
-    fun createAsync(): IncomingPaymentDetail =
-        createAsync(IncomingPaymentDetailCreateAsyncParams.none())
+    fun createAsync(params: IncomingPaymentDetailCreateAsyncParams): IncomingPaymentDetail =
+        createAsync(params, RequestOptions.none())
 
     /** @see createAsync */
     fun createAsync(
-        params: IncomingPaymentDetailCreateAsyncParams =
-            IncomingPaymentDetailCreateAsyncParams.none(),
+        params: IncomingPaymentDetailCreateAsyncParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IncomingPaymentDetail
-
-    /** @see createAsync */
-    fun createAsync(
-        params: IncomingPaymentDetailCreateAsyncParams =
-            IncomingPaymentDetailCreateAsyncParams.none()
-    ): IncomingPaymentDetail = createAsync(params, RequestOptions.none())
-
-    /** @see createAsync */
-    fun createAsync(requestOptions: RequestOptions): IncomingPaymentDetail =
-        createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
 
     /**
      * A view of [IncomingPaymentDetailService] that provides access to raw HTTP responses for each
@@ -267,27 +256,15 @@ interface IncomingPaymentDetailService {
          * [IncomingPaymentDetailService.createAsync].
          */
         @MustBeClosed
-        fun createAsync(): HttpResponseFor<IncomingPaymentDetail> =
-            createAsync(IncomingPaymentDetailCreateAsyncParams.none())
-
-        /** @see createAsync */
-        @MustBeClosed
         fun createAsync(
-            params: IncomingPaymentDetailCreateAsyncParams =
-                IncomingPaymentDetailCreateAsyncParams.none(),
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<IncomingPaymentDetail>
-
-        /** @see createAsync */
-        @MustBeClosed
-        fun createAsync(
-            params: IncomingPaymentDetailCreateAsyncParams =
-                IncomingPaymentDetailCreateAsyncParams.none()
+            params: IncomingPaymentDetailCreateAsyncParams
         ): HttpResponseFor<IncomingPaymentDetail> = createAsync(params, RequestOptions.none())
 
         /** @see createAsync */
         @MustBeClosed
-        fun createAsync(requestOptions: RequestOptions): HttpResponseFor<IncomingPaymentDetail> =
-            createAsync(IncomingPaymentDetailCreateAsyncParams.none(), requestOptions)
+        fun createAsync(
+            params: IncomingPaymentDetailCreateAsyncParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IncomingPaymentDetail>
     }
 }
