@@ -5,6 +5,7 @@ package com.moderntreasury.api.services.async
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
+import com.moderntreasury.api.models.AccountCapability
 import com.moderntreasury.api.models.InternalAccount
 import com.moderntreasury.api.models.InternalAccountCreateParams
 import com.moderntreasury.api.models.InternalAccountListPageAsync
@@ -12,7 +13,6 @@ import com.moderntreasury.api.models.InternalAccountListParams
 import com.moderntreasury.api.models.InternalAccountRequestClosureParams
 import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityParams
-import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityResponse
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.async.internalAccounts.BalanceReportServiceAsync
 import java.util.concurrent.CompletableFuture
@@ -176,7 +176,7 @@ interface InternalAccountServiceAsync {
     fun updateAccountCapability(
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
-    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
+    ): CompletableFuture<AccountCapability> =
         updateAccountCapability(id, params, RequestOptions.none())
 
     /** @see updateAccountCapability */
@@ -184,20 +184,19 @@ interface InternalAccountServiceAsync {
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
+    ): CompletableFuture<AccountCapability> =
         updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams
-    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse> =
-        updateAccountCapability(params, RequestOptions.none())
+    ): CompletableFuture<AccountCapability> = updateAccountCapability(params, RequestOptions.none())
 
     /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<InternalAccountUpdateAccountCapabilityResponse>
+    ): CompletableFuture<AccountCapability>
 
     /**
      * A view of [InternalAccountServiceAsync] that provides access to raw HTTP responses for each
@@ -394,7 +393,7 @@ interface InternalAccountServiceAsync {
         fun updateAccountCapability(
             id: String,
             params: InternalAccountUpdateAccountCapabilityParams,
-        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountCapability>> =
             updateAccountCapability(id, params, RequestOptions.none())
 
         /** @see updateAccountCapability */
@@ -402,19 +401,19 @@ interface InternalAccountServiceAsync {
             id: String,
             params: InternalAccountUpdateAccountCapabilityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountCapability>> =
             updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see updateAccountCapability */
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams
-        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountCapability>> =
             updateAccountCapability(params, RequestOptions.none())
 
         /** @see updateAccountCapability */
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>>
+        ): CompletableFuture<HttpResponseFor<AccountCapability>>
     }
 }
