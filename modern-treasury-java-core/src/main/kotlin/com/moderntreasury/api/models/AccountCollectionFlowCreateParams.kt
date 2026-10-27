@@ -24,6 +24,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /** create account_collection_flow */
+@Deprecated("deprecated")
 class AccountCollectionFlowCreateParams
 private constructor(
     private val body: AccountCollectionFlowCreateRequest,
