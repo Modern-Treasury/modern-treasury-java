@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.ExpectedPayment
 import com.moderntreasury.api.models.ExpectedPaymentCreateParams
+import com.moderntreasury.api.models.ExpectedPaymentCreateRequest
 import com.moderntreasury.api.models.ExpectedPaymentDeleteParams
 import com.moderntreasury.api.models.ExpectedPaymentListPage
 import com.moderntreasury.api.models.ExpectedPaymentListParams
@@ -42,6 +43,22 @@ interface ExpectedPaymentService {
     fun create(
         params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
     ): ExpectedPayment = create(params, RequestOptions.none())
+
+    /** @see create */
+    fun create(
+        expectedPaymentCreateRequest: ExpectedPaymentCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExpectedPayment =
+        create(
+            ExpectedPaymentCreateParams.builder()
+                .expectedPaymentCreateRequest(expectedPaymentCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(expectedPaymentCreateRequest: ExpectedPaymentCreateRequest): ExpectedPayment =
+        create(expectedPaymentCreateRequest, RequestOptions.none())
 
     /** @see create */
     fun create(requestOptions: RequestOptions): ExpectedPayment =
@@ -189,6 +206,26 @@ interface ExpectedPaymentService {
         fun create(
             params: ExpectedPaymentCreateParams = ExpectedPaymentCreateParams.none()
         ): HttpResponseFor<ExpectedPayment> = create(params, RequestOptions.none())
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            expectedPaymentCreateRequest: ExpectedPaymentCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExpectedPayment> =
+            create(
+                ExpectedPaymentCreateParams.builder()
+                    .expectedPaymentCreateRequest(expectedPaymentCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            expectedPaymentCreateRequest: ExpectedPaymentCreateRequest
+        ): HttpResponseFor<ExpectedPayment> =
+            create(expectedPaymentCreateRequest, RequestOptions.none())
 
         /** @see create */
         @MustBeClosed
