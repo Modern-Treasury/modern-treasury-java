@@ -145,6 +145,16 @@ private constructor(
     fun effectiveDate(): Optional<LocalDate> = body.effectiveDate()
 
     /**
+     * A unique identifier passed through to the receiving bank. Only supported for `ach` (maximum
+     * 15 characters) and `wire` (maximum 35 characters). If not provided, Modern Treasury generates
+     * one. Some banks may truncate this value or use their own identifier instead.
+     *
+     * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
+     *   the server responded with an unexpected value).
+     */
+    fun endToEndId(): Optional<String> = body.endToEndId()
+
+    /**
      * RFP payments require an expires_at. This value must be past the effective_date.
      *
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -523,6 +533,13 @@ private constructor(
      * type.
      */
     fun _effectiveDate(): MultipartField<LocalDate> = body._effectiveDate()
+
+    /**
+     * Returns the raw multipart value of [endToEndId].
+     *
+     * Unlike [endToEndId], this method doesn't throw if the multipart field has an unexpected type.
+     */
+    fun _endToEndId(): MultipartField<String> = body._endToEndId()
 
     /**
      * Returns the raw multipart value of [expiresAt].
@@ -1061,6 +1078,26 @@ private constructor(
         fun effectiveDate(effectiveDate: MultipartField<LocalDate>) = apply {
             body.effectiveDate(effectiveDate)
         }
+
+        /**
+         * A unique identifier passed through to the receiving bank. Only supported for `ach`
+         * (maximum 15 characters) and `wire` (maximum 35 characters). If not provided, Modern
+         * Treasury generates one. Some banks may truncate this value or use their own identifier
+         * instead.
+         */
+        fun endToEndId(endToEndId: String?) = apply { body.endToEndId(endToEndId) }
+
+        /** Alias for calling [Builder.endToEndId] with `endToEndId.orElse(null)`. */
+        fun endToEndId(endToEndId: Optional<String>) = endToEndId(endToEndId.getOrNull())
+
+        /**
+         * Sets [Builder.endToEndId] to an arbitrary multipart value.
+         *
+         * You should usually call [Builder.endToEndId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun endToEndId(endToEndId: MultipartField<String>) = apply { body.endToEndId(endToEndId) }
 
         /** RFP payments require an expires_at. This value must be past the effective_date. */
         fun expiresAt(expiresAt: OffsetDateTime?) = apply { body.expiresAt(expiresAt) }
@@ -1894,6 +1931,7 @@ private constructor(
                 "description" to _description(),
                 "documents" to _documents(),
                 "effective_date" to _effectiveDate(),
+                "end_to_end_id" to _endToEndId(),
                 "expires_at" to _expiresAt(),
                 "external_id" to _externalId(),
                 "fallback_type" to _fallbackType(),
@@ -1946,6 +1984,7 @@ private constructor(
         private val description: MultipartField<String>,
         private val documents: MultipartField<List<PaymentOrderDocumentCreateRequest>>,
         private val effectiveDate: MultipartField<LocalDate>,
+        private val endToEndId: MultipartField<String>,
         private val expiresAt: MultipartField<OffsetDateTime>,
         private val externalId: MultipartField<String>,
         private val fallbackType: MultipartField<FallbackType>,
@@ -2093,6 +2132,17 @@ private constructor(
          *   if the server responded with an unexpected value).
          */
         fun effectiveDate(): Optional<LocalDate> = effectiveDate.value.getOptional("effective_date")
+
+        /**
+         * A unique identifier passed through to the receiving bank. Only supported for `ach`
+         * (maximum 15 characters) and `wire` (maximum 35 characters). If not provided, Modern
+         * Treasury generates one. Some banks may truncate this value or use their own identifier
+         * instead.
+         *
+         * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
+         *   if the server responded with an unexpected value).
+         */
+        fun endToEndId(): Optional<String> = endToEndId.value.getOptional("end_to_end_id")
 
         /**
          * RFP payments require an expires_at. This value must be past the effective_date.
@@ -2524,6 +2574,16 @@ private constructor(
         fun _effectiveDate(): MultipartField<LocalDate> = effectiveDate
 
         /**
+         * Returns the raw multipart value of [endToEndId].
+         *
+         * Unlike [endToEndId], this method doesn't throw if the multipart field has an unexpected
+         * type.
+         */
+        @JsonProperty("end_to_end_id")
+        @ExcludeMissing
+        fun _endToEndId(): MultipartField<String> = endToEndId
+
+        /**
          * Returns the raw multipart value of [expiresAt].
          *
          * Unlike [expiresAt], this method doesn't throw if the multipart field has an unexpected
@@ -2882,6 +2942,7 @@ private constructor(
             private var documents: MultipartField<MutableList<PaymentOrderDocumentCreateRequest>>? =
                 null
             private var effectiveDate: MultipartField<LocalDate> = MultipartField.of(null)
+            private var endToEndId: MultipartField<String> = MultipartField.of(null)
             private var expiresAt: MultipartField<OffsetDateTime> = MultipartField.of(null)
             private var externalId: MultipartField<String> = MultipartField.of(null)
             private var fallbackType: MultipartField<FallbackType> = MultipartField.of(null)
@@ -2941,6 +3002,7 @@ private constructor(
                 description = paymentOrderCreateRequest.description
                 documents = paymentOrderCreateRequest.documents.map { it.toMutableList() }
                 effectiveDate = paymentOrderCreateRequest.effectiveDate
+                endToEndId = paymentOrderCreateRequest.endToEndId
                 expiresAt = paymentOrderCreateRequest.expiresAt
                 externalId = paymentOrderCreateRequest.externalId
                 fallbackType = paymentOrderCreateRequest.fallbackType
@@ -3227,6 +3289,28 @@ private constructor(
              */
             fun effectiveDate(effectiveDate: MultipartField<LocalDate>) = apply {
                 this.effectiveDate = effectiveDate
+            }
+
+            /**
+             * A unique identifier passed through to the receiving bank. Only supported for `ach`
+             * (maximum 15 characters) and `wire` (maximum 35 characters). If not provided, Modern
+             * Treasury generates one. Some banks may truncate this value or use their own
+             * identifier instead.
+             */
+            fun endToEndId(endToEndId: String?) = endToEndId(MultipartField.of(endToEndId))
+
+            /** Alias for calling [Builder.endToEndId] with `endToEndId.orElse(null)`. */
+            fun endToEndId(endToEndId: Optional<String>) = endToEndId(endToEndId.getOrNull())
+
+            /**
+             * Sets [Builder.endToEndId] to an arbitrary multipart value.
+             *
+             * You should usually call [Builder.endToEndId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun endToEndId(endToEndId: MultipartField<String>) = apply {
+                this.endToEndId = endToEndId
             }
 
             /** RFP payments require an expires_at. This value must be past the effective_date. */
@@ -3959,6 +4043,7 @@ private constructor(
                     description,
                     (documents ?: MultipartField.of(null)).map { it.toImmutable() },
                     effectiveDate,
+                    endToEndId,
                     expiresAt,
                     externalId,
                     fallbackType,
@@ -4022,6 +4107,7 @@ private constructor(
             description()
             documents().ifPresent { it.forEach { it.validate() } }
             effectiveDate()
+            endToEndId()
             expiresAt()
             externalId()
             fallbackType().ifPresent { it.validate() }
@@ -4082,6 +4168,7 @@ private constructor(
                 description == other.description &&
                 documents == other.documents &&
                 effectiveDate == other.effectiveDate &&
+                endToEndId == other.endToEndId &&
                 expiresAt == other.expiresAt &&
                 externalId == other.externalId &&
                 fallbackType == other.fallbackType &&
@@ -4130,6 +4217,7 @@ private constructor(
                 description,
                 documents,
                 effectiveDate,
+                endToEndId,
                 expiresAt,
                 externalId,
                 fallbackType,
@@ -4168,7 +4256,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+            "PaymentOrderCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, documents=$documents, effectiveDate=$effectiveDate, endToEndId=$endToEndId, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
     }
 
     /**
