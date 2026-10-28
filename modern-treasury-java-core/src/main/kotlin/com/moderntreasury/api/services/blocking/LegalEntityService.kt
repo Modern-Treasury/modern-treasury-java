@@ -8,6 +8,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LegalEntity
 import com.moderntreasury.api.models.LegalEntityCreateParams
+import com.moderntreasury.api.models.LegalEntityCreateRequest
 import com.moderntreasury.api.models.LegalEntityListPage
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
@@ -37,6 +38,22 @@ interface LegalEntityService {
         params: LegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LegalEntity
+
+    /** @see create */
+    fun create(
+        legalEntityCreateRequest: LegalEntityCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LegalEntity =
+        create(
+            LegalEntityCreateParams.builder()
+                .legalEntityCreateRequest(legalEntityCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(legalEntityCreateRequest: LegalEntityCreateRequest): LegalEntity =
+        create(legalEntityCreateRequest, RequestOptions.none())
 
     /** Get details on a single legal entity. */
     fun retrieve(id: String): LegalEntity = retrieve(id, LegalEntityRetrieveParams.none())
@@ -163,6 +180,25 @@ interface LegalEntityService {
             params: LegalEntityCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LegalEntity>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            legalEntityCreateRequest: LegalEntityCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LegalEntity> =
+            create(
+                LegalEntityCreateParams.builder()
+                    .legalEntityCreateRequest(legalEntityCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            legalEntityCreateRequest: LegalEntityCreateRequest
+        ): HttpResponseFor<LegalEntity> = create(legalEntityCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same

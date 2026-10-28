@@ -19,7 +19,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class InternalAccountUpdateAccountCapabilityResponse
+class AccountCapability
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
@@ -223,8 +223,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [InternalAccountUpdateAccountCapabilityResponse].
+         * Returns a mutable builder for constructing an instance of [AccountCapability].
          *
          * The following fields are required:
          * ```java
@@ -242,7 +241,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [InternalAccountUpdateAccountCapabilityResponse]. */
+    /** A builder for [AccountCapability]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -257,21 +256,17 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(
-            internalAccountUpdateAccountCapabilityResponse:
-                InternalAccountUpdateAccountCapabilityResponse
-        ) = apply {
-            id = internalAccountUpdateAccountCapabilityResponse.id
-            createdAt = internalAccountUpdateAccountCapabilityResponse.createdAt
-            direction = internalAccountUpdateAccountCapabilityResponse.direction
-            discardedAt = internalAccountUpdateAccountCapabilityResponse.discardedAt
-            identifier = internalAccountUpdateAccountCapabilityResponse.identifier
-            liveMode = internalAccountUpdateAccountCapabilityResponse.liveMode
-            object_ = internalAccountUpdateAccountCapabilityResponse.object_
-            paymentType = internalAccountUpdateAccountCapabilityResponse.paymentType
-            updatedAt = internalAccountUpdateAccountCapabilityResponse.updatedAt
-            additionalProperties =
-                internalAccountUpdateAccountCapabilityResponse.additionalProperties.toMutableMap()
+        internal fun from(accountCapability: AccountCapability) = apply {
+            id = accountCapability.id
+            createdAt = accountCapability.createdAt
+            direction = accountCapability.direction
+            discardedAt = accountCapability.discardedAt
+            identifier = accountCapability.identifier
+            liveMode = accountCapability.liveMode
+            object_ = accountCapability.object_
+            paymentType = accountCapability.paymentType
+            updatedAt = accountCapability.updatedAt
+            additionalProperties = accountCapability.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -418,7 +413,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [InternalAccountUpdateAccountCapabilityResponse].
+         * Returns an immutable instance of [AccountCapability].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -437,8 +432,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): InternalAccountUpdateAccountCapabilityResponse =
-            InternalAccountUpdateAccountCapabilityResponse(
+        fun build(): AccountCapability =
+            AccountCapability(
                 checkRequired("id", id),
                 checkRequired("createdAt", createdAt),
                 checkRequired("direction", direction),
@@ -462,7 +457,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
      *   expected type.
      */
-    fun validate(): InternalAccountUpdateAccountCapabilityResponse = apply {
+    fun validate(): AccountCapability = apply {
         if (validated) {
             return@apply
         }
@@ -787,7 +782,7 @@ private constructor(
             return true
         }
 
-        return other is InternalAccountUpdateAccountCapabilityResponse &&
+        return other is AccountCapability &&
             id == other.id &&
             createdAt == other.createdAt &&
             direction == other.direction &&
@@ -818,5 +813,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InternalAccountUpdateAccountCapabilityResponse{id=$id, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, identifier=$identifier, liveMode=$liveMode, object_=$object_, paymentType=$paymentType, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "AccountCapability{id=$id, createdAt=$createdAt, direction=$direction, discardedAt=$discardedAt, identifier=$identifier, liveMode=$liveMode, object_=$object_, paymentType=$paymentType, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 }
