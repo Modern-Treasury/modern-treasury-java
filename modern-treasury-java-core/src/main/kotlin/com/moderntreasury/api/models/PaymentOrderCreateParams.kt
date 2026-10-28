@@ -132,7 +132,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g. if
      *   the server responded with an unexpected value).
      */
-    fun documents(): Optional<List<DocumentCreateRequest>> = body.documents()
+    fun documents(): Optional<List<PaymentOrderDocumentCreateRequest>> = body.documents()
 
     /**
      * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -514,7 +514,7 @@ private constructor(
      *
      * Unlike [documents], this method doesn't throw if the multipart field has an unexpected type.
      */
-    fun _documents(): MultipartField<List<DocumentCreateRequest>> = body._documents()
+    fun _documents(): MultipartField<List<PaymentOrderDocumentCreateRequest>> = body._documents()
 
     /**
      * Returns the raw multipart value of [effectiveDate].
@@ -1020,25 +1020,29 @@ private constructor(
          * An array of documents to be attached to the payment order. Note that if you attach
          * documents, the request's content type must be `multipart/form-data`.
          */
-        fun documents(documents: List<DocumentCreateRequest>) = apply { body.documents(documents) }
+        fun documents(documents: List<PaymentOrderDocumentCreateRequest>) = apply {
+            body.documents(documents)
+        }
 
         /**
          * Sets [Builder.documents] to an arbitrary multipart value.
          *
          * You should usually call [Builder.documents] with a well-typed
-         * `List<DocumentCreateRequest>` value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
+         * `List<PaymentOrderDocumentCreateRequest>` value instead. This method is primarily for
+         * setting the field to an undocumented or not yet supported value.
          */
-        fun documents(documents: MultipartField<List<DocumentCreateRequest>>) = apply {
+        fun documents(documents: MultipartField<List<PaymentOrderDocumentCreateRequest>>) = apply {
             body.documents(documents)
         }
 
         /**
-         * Adds a single [DocumentCreateRequest] to [documents].
+         * Adds a single [PaymentOrderDocumentCreateRequest] to [documents].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addDocument(document: DocumentCreateRequest) = apply { body.addDocument(document) }
+        fun addDocument(document: PaymentOrderDocumentCreateRequest) = apply {
+            body.addDocument(document)
+        }
 
         /**
          * Date transactions are to be posted to the participants' account. Defaults to the current
@@ -1940,7 +1944,7 @@ private constructor(
         private val chargeBearer: MultipartField<ChargeBearer>,
         private val currency: MultipartField<Currency>,
         private val description: MultipartField<String>,
-        private val documents: MultipartField<List<DocumentCreateRequest>>,
+        private val documents: MultipartField<List<PaymentOrderDocumentCreateRequest>>,
         private val effectiveDate: MultipartField<LocalDate>,
         private val expiresAt: MultipartField<OffsetDateTime>,
         private val externalId: MultipartField<String>,
@@ -2077,7 +2081,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type (e.g.
          *   if the server responded with an unexpected value).
          */
-        fun documents(): Optional<List<DocumentCreateRequest>> =
+        fun documents(): Optional<List<PaymentOrderDocumentCreateRequest>> =
             documents.value.getOptional("documents")
 
         /**
@@ -2507,7 +2511,7 @@ private constructor(
          */
         @JsonProperty("documents")
         @ExcludeMissing
-        fun _documents(): MultipartField<List<DocumentCreateRequest>> = documents
+        fun _documents(): MultipartField<List<PaymentOrderDocumentCreateRequest>> = documents
 
         /**
          * Returns the raw multipart value of [effectiveDate].
@@ -2875,7 +2879,8 @@ private constructor(
             private var chargeBearer: MultipartField<ChargeBearer> = MultipartField.of(null)
             private var currency: MultipartField<Currency> = MultipartField.of(null)
             private var description: MultipartField<String> = MultipartField.of(null)
-            private var documents: MultipartField<MutableList<DocumentCreateRequest>>? = null
+            private var documents: MultipartField<MutableList<PaymentOrderDocumentCreateRequest>>? =
+                null
             private var effectiveDate: MultipartField<LocalDate> = MultipartField.of(null)
             private var expiresAt: MultipartField<OffsetDateTime> = MultipartField.of(null)
             private var externalId: MultipartField<String> = MultipartField.of(null)
@@ -3168,9 +3173,9 @@ private constructor(
              * An array of documents to be attached to the payment order. Note that if you attach
              * documents, the request's content type must be `multipart/form-data`.
              */
-            fun documents(documents: List<DocumentCreateRequest>) =
+            fun documents(documents: List<PaymentOrderDocumentCreateRequest>) =
                 documents(
-                    MultipartField.builder<List<DocumentCreateRequest>>()
+                    MultipartField.builder<List<PaymentOrderDocumentCreateRequest>>()
                         .value(documents)
                         .contentType("application/octet-stream")
                         .build()
@@ -3180,22 +3185,25 @@ private constructor(
              * Sets [Builder.documents] to an arbitrary multipart value.
              *
              * You should usually call [Builder.documents] with a well-typed
-             * `List<DocumentCreateRequest>` value instead. This method is primarily for setting the
-             * field to an undocumented or not yet supported value.
+             * `List<PaymentOrderDocumentCreateRequest>` value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
              */
-            fun documents(documents: MultipartField<List<DocumentCreateRequest>>) = apply {
-                this.documents = documents.map { it.toMutableList() }
-            }
+            fun documents(documents: MultipartField<List<PaymentOrderDocumentCreateRequest>>) =
+                apply {
+                    this.documents = documents.map { it.toMutableList() }
+                }
 
             /**
-             * Adds a single [DocumentCreateRequest] to [documents].
+             * Adds a single [PaymentOrderDocumentCreateRequest] to [documents].
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
-            fun addDocument(document: DocumentCreateRequest) = apply {
+            fun addDocument(document: PaymentOrderDocumentCreateRequest) = apply {
                 documents =
                     (documents
-                            ?: MultipartField.builder<MutableList<DocumentCreateRequest>>()
+                            ?: MultipartField.builder<
+                                    MutableList<PaymentOrderDocumentCreateRequest>
+                                >()
                                 .value(mutableListOf())
                                 .contentType("application/octet-stream")
                                 .build())
@@ -4658,7 +4666,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class DocumentCreateRequest
+    class PaymentOrderDocumentCreateRequest
     private constructor(
         private val file: MultipartField<InputStream>,
         private val documentType: MultipartField<String>,
@@ -4748,7 +4756,8 @@ private constructor(
         companion object {
 
             /**
-             * Returns a mutable builder for constructing an instance of [DocumentCreateRequest].
+             * Returns a mutable builder for constructing an instance of
+             * [PaymentOrderDocumentCreateRequest].
              *
              * The following fields are required:
              * ```java
@@ -4758,7 +4767,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [DocumentCreateRequest]. */
+        /** A builder for [PaymentOrderDocumentCreateRequest]. */
         class Builder internal constructor() {
 
             private var file: MultipartField<InputStream>? = null
@@ -4768,12 +4777,15 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(documentCreateRequest: DocumentCreateRequest) = apply {
-                file = documentCreateRequest.file
-                documentType = documentCreateRequest.documentType
-                documentableId = documentCreateRequest.documentableId
-                documentableType = documentCreateRequest.documentableType
-                additionalProperties = documentCreateRequest.additionalProperties.toMutableMap()
+            internal fun from(
+                paymentOrderDocumentCreateRequest: PaymentOrderDocumentCreateRequest
+            ) = apply {
+                file = paymentOrderDocumentCreateRequest.file
+                documentType = paymentOrderDocumentCreateRequest.documentType
+                documentableId = paymentOrderDocumentCreateRequest.documentableId
+                documentableType = paymentOrderDocumentCreateRequest.documentableType
+                additionalProperties =
+                    paymentOrderDocumentCreateRequest.additionalProperties.toMutableMap()
             }
 
             fun file(file: InputStream) = file(MultipartField.of(file))
@@ -4860,7 +4872,7 @@ private constructor(
             }
 
             /**
-             * Returns an immutable instance of [DocumentCreateRequest].
+             * Returns an immutable instance of [PaymentOrderDocumentCreateRequest].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              *
@@ -4871,8 +4883,8 @@ private constructor(
              *
              * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): DocumentCreateRequest =
-                DocumentCreateRequest(
+            fun build(): PaymentOrderDocumentCreateRequest =
+                PaymentOrderDocumentCreateRequest(
                     checkRequired("file", file),
                     documentType,
                     documentableId,
@@ -4892,7 +4904,7 @@ private constructor(
          * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match
          *   its expected type.
          */
-        fun validate(): DocumentCreateRequest = apply {
+        fun validate(): PaymentOrderDocumentCreateRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -5109,7 +5121,7 @@ private constructor(
                 return true
             }
 
-            return other is DocumentCreateRequest &&
+            return other is PaymentOrderDocumentCreateRequest &&
                 file == other.file &&
                 documentType == other.documentType &&
                 documentableId == other.documentableId &&
@@ -5124,7 +5136,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "DocumentCreateRequest{file=$file, documentType=$documentType, documentableId=$documentableId, documentableType=$documentableType, additionalProperties=$additionalProperties}"
+            "PaymentOrderDocumentCreateRequest{file=$file, documentType=$documentType, documentableId=$documentableId, documentableType=$documentableType, additionalProperties=$additionalProperties}"
     }
 
     /**

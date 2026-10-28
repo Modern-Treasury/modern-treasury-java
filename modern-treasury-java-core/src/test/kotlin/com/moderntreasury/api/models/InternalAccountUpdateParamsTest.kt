@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,6 +13,7 @@ internal class InternalAccountUpdateParamsTest {
     fun create() {
         InternalAccountUpdateParams.builder()
             .id("id")
+            .addAllowedAchDebitCompanyId("x")
             .contraLedgerAccountId("contra_ledger_account_id")
             .counterpartyId("counterparty_id")
             .externalId("external_id")
@@ -52,6 +54,7 @@ internal class InternalAccountUpdateParamsTest {
         val params =
             InternalAccountUpdateParams.builder()
                 .id("id")
+                .addAllowedAchDebitCompanyId("x")
                 .contraLedgerAccountId("contra_ledger_account_id")
                 .counterpartyId("counterparty_id")
                 .externalId("external_id")
@@ -79,6 +82,7 @@ internal class InternalAccountUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.allowedAchDebitCompanyIds().getOrNull()).containsExactly("x")
         assertThat(body.contraLedgerAccountId()).contains("contra_ledger_account_id")
         assertThat(body.counterpartyId()).contains("counterparty_id")
         assertThat(body.externalId()).contains("external_id")
