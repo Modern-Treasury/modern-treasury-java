@@ -254,7 +254,11 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
-        fun partyAddress(partyAddress: AddressRequest) = apply { body.partyAddress(partyAddress) }
+        fun partyAddress(partyAddress: AddressRequest?) = apply { body.partyAddress(partyAddress) }
+
+        /** Alias for calling [Builder.partyAddress] with `partyAddress.orElse(null)`. */
+        fun partyAddress(partyAddress: Optional<AddressRequest>) =
+            partyAddress(partyAddress.getOrNull())
 
         /**
          * Sets [Builder.partyAddress] to an arbitrary JSON value.
@@ -707,8 +711,12 @@ private constructor(
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
-            fun partyAddress(partyAddress: AddressRequest) =
-                partyAddress(JsonField.of(partyAddress))
+            fun partyAddress(partyAddress: AddressRequest?) =
+                partyAddress(JsonField.ofNullable(partyAddress))
+
+            /** Alias for calling [Builder.partyAddress] with `partyAddress.orElse(null)`. */
+            fun partyAddress(partyAddress: Optional<AddressRequest>) =
+                partyAddress(partyAddress.getOrNull())
 
             /**
              * Sets [Builder.partyAddress] to an arbitrary JSON value.
