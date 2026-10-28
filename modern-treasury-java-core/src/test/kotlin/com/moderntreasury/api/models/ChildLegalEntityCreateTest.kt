@@ -134,7 +134,7 @@ internal class ChildLegalEntityCreateTest {
                 .prefix("prefix")
                 .addPrimarySocialMediaSite("string")
                 .addRegulator(
-                    ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                    LegalEntityRegulator.builder()
                         .jurisdiction("jurisdiction")
                         .name("name")
                         .registrationNumber("registration_number")
@@ -329,7 +329,7 @@ internal class ChildLegalEntityCreateTest {
             .containsExactly("string")
         assertThat(childLegalEntityCreate.regulators().getOrNull())
             .containsExactly(
-                ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                LegalEntityRegulator.builder()
                     .jurisdiction("jurisdiction")
                     .name("name")
                     .registrationNumber("registration_number")
@@ -520,7 +520,7 @@ internal class ChildLegalEntityCreateTest {
                 .prefix("prefix")
                 .addPrimarySocialMediaSite("string")
                 .addRegulator(
-                    ChildLegalEntityCreate.LegalEntityRegulator.builder()
+                    LegalEntityRegulator.builder()
                         .jurisdiction("jurisdiction")
                         .name("name")
                         .registrationNumber("registration_number")

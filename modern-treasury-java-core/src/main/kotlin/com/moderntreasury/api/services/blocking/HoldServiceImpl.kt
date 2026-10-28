@@ -16,15 +16,12 @@ import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.core.http.json
 import com.moderntreasury.api.core.http.parseable
 import com.moderntreasury.api.core.prepare
+import com.moderntreasury.api.models.Hold
 import com.moderntreasury.api.models.HoldCreateParams
-import com.moderntreasury.api.models.HoldCreateResponse
 import com.moderntreasury.api.models.HoldListPage
 import com.moderntreasury.api.models.HoldListParams
-import com.moderntreasury.api.models.HoldListResponse
 import com.moderntreasury.api.models.HoldRetrieveParams
-import com.moderntreasury.api.models.HoldRetrieveResponse
 import com.moderntreasury.api.models.HoldUpdateParams
-import com.moderntreasury.api.models.HoldUpdateResponse
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -39,24 +36,15 @@ class HoldServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): HoldService =
         HoldServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: HoldCreateParams,
-        requestOptions: RequestOptions,
-    ): HoldCreateResponse =
+    override fun create(params: HoldCreateParams, requestOptions: RequestOptions): Hold =
         // post /api/holds
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(
-        params: HoldRetrieveParams,
-        requestOptions: RequestOptions,
-    ): HoldRetrieveResponse =
+    override fun retrieve(params: HoldRetrieveParams, requestOptions: RequestOptions): Hold =
         // get /api/holds/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(
-        params: HoldUpdateParams,
-        requestOptions: RequestOptions,
-    ): HoldUpdateResponse =
+    override fun update(params: HoldUpdateParams, requestOptions: RequestOptions): Hold =
         // patch /api/holds/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -77,13 +65,12 @@ class HoldServiceImpl internal constructor(private val clientOptions: ClientOpti
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<HoldCreateResponse> =
-            jsonHandler<HoldCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Hold> = jsonHandler<Hold>(clientOptions.jsonMapper)
 
         override fun create(
             params: HoldCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<HoldCreateResponse> {
+        ): HttpResponseFor<Hold> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -105,13 +92,12 @@ class HoldServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val retrieveHandler: Handler<HoldRetrieveResponse> =
-            jsonHandler<HoldRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Hold> = jsonHandler<Hold>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: HoldRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<HoldRetrieveResponse> {
+        ): HttpResponseFor<Hold> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -135,13 +121,12 @@ class HoldServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val updateHandler: Handler<HoldUpdateResponse> =
-            jsonHandler<HoldUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Hold> = jsonHandler<Hold>(clientOptions.jsonMapper)
 
         override fun update(
             params: HoldUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<HoldUpdateResponse> {
+        ): HttpResponseFor<Hold> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -166,8 +151,8 @@ class HoldServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val listHandler: Handler<List<HoldListResponse>> =
-            jsonHandler<List<HoldListResponse>>(clientOptions.jsonMapper)
+        private val listHandler: Handler<List<Hold>> =
+            jsonHandler<List<Hold>>(clientOptions.jsonMapper)
 
         override fun list(
             params: HoldListParams,
