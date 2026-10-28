@@ -6,6 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.moderntreasury.api.core.ClientOptions
 import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
+import com.moderntreasury.api.models.AccountCapability
 import com.moderntreasury.api.models.InternalAccount
 import com.moderntreasury.api.models.InternalAccountCreateParams
 import com.moderntreasury.api.models.InternalAccountListPage
@@ -13,7 +14,6 @@ import com.moderntreasury.api.models.InternalAccountListParams
 import com.moderntreasury.api.models.InternalAccountRequestClosureParams
 import com.moderntreasury.api.models.InternalAccountRetrieveParams
 import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityParams
-import com.moderntreasury.api.models.InternalAccountUpdateAccountCapabilityResponse
 import com.moderntreasury.api.models.InternalAccountUpdateParams
 import com.moderntreasury.api.services.blocking.internalAccounts.BalanceReportService
 import java.util.function.Consumer
@@ -166,28 +166,26 @@ interface InternalAccountService {
     fun updateAccountCapability(
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
-    ): InternalAccountUpdateAccountCapabilityResponse =
-        updateAccountCapability(id, params, RequestOptions.none())
+    ): AccountCapability = updateAccountCapability(id, params, RequestOptions.none())
 
     /** @see updateAccountCapability */
     fun updateAccountCapability(
         id: String,
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InternalAccountUpdateAccountCapabilityResponse =
+    ): AccountCapability =
         updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams
-    ): InternalAccountUpdateAccountCapabilityResponse =
-        updateAccountCapability(params, RequestOptions.none())
+    ): AccountCapability = updateAccountCapability(params, RequestOptions.none())
 
     /** @see updateAccountCapability */
     fun updateAccountCapability(
         params: InternalAccountUpdateAccountCapabilityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): InternalAccountUpdateAccountCapabilityResponse
+    ): AccountCapability
 
     /**
      * A view of [InternalAccountService] that provides access to raw HTTP responses for each
@@ -390,7 +388,7 @@ interface InternalAccountService {
         fun updateAccountCapability(
             id: String,
             params: InternalAccountUpdateAccountCapabilityParams,
-        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+        ): HttpResponseFor<AccountCapability> =
             updateAccountCapability(id, params, RequestOptions.none())
 
         /** @see updateAccountCapability */
@@ -399,14 +397,14 @@ interface InternalAccountService {
             id: String,
             params: InternalAccountUpdateAccountCapabilityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+        ): HttpResponseFor<AccountCapability> =
             updateAccountCapability(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see updateAccountCapability */
         @MustBeClosed
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams
-        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse> =
+        ): HttpResponseFor<AccountCapability> =
             updateAccountCapability(params, RequestOptions.none())
 
         /** @see updateAccountCapability */
@@ -414,6 +412,6 @@ interface InternalAccountService {
         fun updateAccountCapability(
             params: InternalAccountUpdateAccountCapabilityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<InternalAccountUpdateAccountCapabilityResponse>
+        ): HttpResponseFor<AccountCapability>
     }
 }

@@ -7,6 +7,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.AccountCollectionFlow
 import com.moderntreasury.api.models.AccountCollectionFlowCreateParams
+import com.moderntreasury.api.models.AccountCollectionFlowCreateRequest
 import com.moderntreasury.api.models.AccountCollectionFlowListPageAsync
 import com.moderntreasury.api.models.AccountCollectionFlowListParams
 import com.moderntreasury.api.models.AccountCollectionFlowRetrieveParams
@@ -40,6 +41,26 @@ interface AccountCollectionFlowServiceAsync {
         params: AccountCollectionFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountCollectionFlow>
+
+    /** @see create */
+    @Deprecated("deprecated")
+    fun create(
+        accountCollectionFlowCreateRequest: AccountCollectionFlowCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountCollectionFlow> =
+        create(
+            AccountCollectionFlowCreateParams.builder()
+                .accountCollectionFlowCreateRequest(accountCollectionFlowCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    @Deprecated("deprecated")
+    fun create(
+        accountCollectionFlowCreateRequest: AccountCollectionFlowCreateRequest
+    ): CompletableFuture<AccountCollectionFlow> =
+        create(accountCollectionFlowCreateRequest, RequestOptions.none())
 
     /** get account_collection_flow */
     fun retrieve(id: String): CompletableFuture<AccountCollectionFlow> =
@@ -154,6 +175,26 @@ interface AccountCollectionFlowServiceAsync {
             params: AccountCollectionFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>>
+
+        /** @see create */
+        @Deprecated("deprecated")
+        fun create(
+            accountCollectionFlowCreateRequest: AccountCollectionFlowCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            create(
+                AccountCollectionFlowCreateParams.builder()
+                    .accountCollectionFlowCreateRequest(accountCollectionFlowCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @Deprecated("deprecated")
+        fun create(
+            accountCollectionFlowCreateRequest: AccountCollectionFlowCreateRequest
+        ): CompletableFuture<HttpResponseFor<AccountCollectionFlow>> =
+            create(accountCollectionFlowCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/account_collection_flows/{id}`, but is

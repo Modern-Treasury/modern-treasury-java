@@ -20,7 +20,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class HoldRetrieveResponse
+class Hold
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
@@ -276,7 +276,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [HoldRetrieveResponse].
+         * Returns a mutable builder for constructing an instance of [Hold].
          *
          * The following fields are required:
          * ```java
@@ -292,7 +292,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [HoldRetrieveResponse]. */
+    /** A builder for [Hold]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -310,20 +310,20 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(holdRetrieveResponse: HoldRetrieveResponse) = apply {
-            id = holdRetrieveResponse.id
-            createdAt = holdRetrieveResponse.createdAt
-            object_ = holdRetrieveResponse.object_
-            status = holdRetrieveResponse.status
-            targetId = holdRetrieveResponse.targetId
-            targetType = holdRetrieveResponse.targetType
-            updatedAt = holdRetrieveResponse.updatedAt
-            liveMode = holdRetrieveResponse.liveMode
-            metadata = holdRetrieveResponse.metadata
-            reason = holdRetrieveResponse.reason
-            resolution = holdRetrieveResponse.resolution
-            resolvedAt = holdRetrieveResponse.resolvedAt
-            additionalProperties = holdRetrieveResponse.additionalProperties.toMutableMap()
+        internal fun from(hold: Hold) = apply {
+            id = hold.id
+            createdAt = hold.createdAt
+            object_ = hold.object_
+            status = hold.status
+            targetId = hold.targetId
+            targetType = hold.targetType
+            updatedAt = hold.updatedAt
+            liveMode = hold.liveMode
+            metadata = hold.metadata
+            reason = hold.reason
+            resolution = hold.resolution
+            resolvedAt = hold.resolvedAt
+            additionalProperties = hold.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -499,7 +499,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [HoldRetrieveResponse].
+         * Returns an immutable instance of [Hold].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -516,8 +516,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): HoldRetrieveResponse =
-            HoldRetrieveResponse(
+        fun build(): Hold =
+            Hold(
                 checkRequired("id", id),
                 checkRequired("createdAt", createdAt),
                 checkRequired("object_", object_),
@@ -544,7 +544,7 @@ private constructor(
      * @throws ModernTreasuryInvalidDataException if any value type in this object doesn't match its
      *   expected type.
      */
-    fun validate(): HoldRetrieveResponse = apply {
+    fun validate(): Hold = apply {
         if (validated) {
             return@apply
         }
@@ -1107,7 +1107,7 @@ private constructor(
             return true
         }
 
-        return other is HoldRetrieveResponse &&
+        return other is Hold &&
             id == other.id &&
             createdAt == other.createdAt &&
             object_ == other.object_ &&
@@ -1144,5 +1144,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "HoldRetrieveResponse{id=$id, createdAt=$createdAt, object_=$object_, status=$status, targetId=$targetId, targetType=$targetType, updatedAt=$updatedAt, liveMode=$liveMode, metadata=$metadata, reason=$reason, resolution=$resolution, resolvedAt=$resolvedAt, additionalProperties=$additionalProperties}"
+        "Hold{id=$id, createdAt=$createdAt, object_=$object_, status=$status, targetId=$targetId, targetType=$targetType, updatedAt=$updatedAt, liveMode=$liveMode, metadata=$metadata, reason=$reason, resolution=$resolution, resolvedAt=$resolvedAt, additionalProperties=$additionalProperties}"
 }
