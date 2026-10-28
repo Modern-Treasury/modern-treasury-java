@@ -3,6 +3,7 @@
 package com.moderntreasury.api.models
 
 import com.moderntreasury.api.core.JsonValue
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,16 +13,20 @@ internal class LedgerAccountUpdateParamsTest {
     fun create() {
         LedgerAccountUpdateParams.builder()
             .id("id")
-            .description("description")
-            .externalId("external_id")
-            .metadata(
-                LedgerAccountUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+            .ledgerAccountUpdateRequest(
+                LedgerAccountUpdateRequest.builder()
+                    .description("description")
+                    .externalId("external_id")
+                    .metadata(
+                        LedgerAccountUpdateRequest.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .name("name")
                     .build()
             )
-            .name("name")
             .build()
     }
 
@@ -39,37 +44,45 @@ internal class LedgerAccountUpdateParamsTest {
         val params =
             LedgerAccountUpdateParams.builder()
                 .id("id")
-                .description("description")
-                .externalId("external_id")
-                .metadata(
-                    LedgerAccountUpdateParams.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .putAdditionalProperty("key", JsonValue.from("value"))
-                        .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                .ledgerAccountUpdateRequest(
+                    LedgerAccountUpdateRequest.builder()
+                        .description("description")
+                        .externalId("external_id")
+                        .metadata(
+                            LedgerAccountUpdateRequest.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .putAdditionalProperty("key", JsonValue.from("value"))
+                                .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                                .build()
+                        )
+                        .name("name")
                         .build()
                 )
-                .name("name")
                 .build()
 
-        val body = params._body()
+        val body = params._body().getOrNull()
 
-        assertThat(body.description()).contains("description")
-        assertThat(body.externalId()).contains("external_id")
-        assertThat(body.metadata())
-            .contains(
-                LedgerAccountUpdateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .putAdditionalProperty("key", JsonValue.from("value"))
-                    .putAdditionalProperty("modern", JsonValue.from("treasury"))
+        assertThat(body)
+            .isEqualTo(
+                LedgerAccountUpdateRequest.builder()
+                    .description("description")
+                    .externalId("external_id")
+                    .metadata(
+                        LedgerAccountUpdateRequest.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("key", JsonValue.from("value"))
+                            .putAdditionalProperty("modern", JsonValue.from("treasury"))
+                            .build()
+                    )
+                    .name("name")
                     .build()
             )
-        assertThat(body.name()).contains("name")
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
         val params = LedgerAccountUpdateParams.builder().id("id").build()
 
-        val body = params._body()
+        val body = params._body().getOrNull()
     }
 }

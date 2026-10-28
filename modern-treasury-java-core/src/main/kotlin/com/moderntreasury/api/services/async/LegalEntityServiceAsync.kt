@@ -7,6 +7,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.LegalEntity
 import com.moderntreasury.api.models.LegalEntityCreateParams
+import com.moderntreasury.api.models.LegalEntityCreateRequest
 import com.moderntreasury.api.models.LegalEntityListPageAsync
 import com.moderntreasury.api.models.LegalEntityListParams
 import com.moderntreasury.api.models.LegalEntityRetrieveParams
@@ -38,6 +39,22 @@ interface LegalEntityServiceAsync {
         params: LegalEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<LegalEntity>
+
+    /** @see create */
+    fun create(
+        legalEntityCreateRequest: LegalEntityCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<LegalEntity> =
+        create(
+            LegalEntityCreateParams.builder()
+                .legalEntityCreateRequest(legalEntityCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(legalEntityCreateRequest: LegalEntityCreateRequest): CompletableFuture<LegalEntity> =
+        create(legalEntityCreateRequest, RequestOptions.none())
 
     /** Get details on a single legal entity. */
     fun retrieve(id: String): CompletableFuture<LegalEntity> =
@@ -171,6 +188,24 @@ interface LegalEntityServiceAsync {
             params: LegalEntityCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<LegalEntity>>
+
+        /** @see create */
+        fun create(
+            legalEntityCreateRequest: LegalEntityCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
+            create(
+                LegalEntityCreateParams.builder()
+                    .legalEntityCreateRequest(legalEntityCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        fun create(
+            legalEntityCreateRequest: LegalEntityCreateRequest
+        ): CompletableFuture<HttpResponseFor<LegalEntity>> =
+            create(legalEntityCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/legal_entities/{id}`, but is otherwise the same
