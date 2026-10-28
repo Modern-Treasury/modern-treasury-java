@@ -7,6 +7,7 @@ import com.moderntreasury.api.core.RequestOptions
 import com.moderntreasury.api.core.http.HttpResponseFor
 import com.moderntreasury.api.models.PaymentFlow
 import com.moderntreasury.api.models.PaymentFlowCreateParams
+import com.moderntreasury.api.models.PaymentFlowCreateRequest
 import com.moderntreasury.api.models.PaymentFlowListPageAsync
 import com.moderntreasury.api.models.PaymentFlowListParams
 import com.moderntreasury.api.models.PaymentFlowRetrieveParams
@@ -39,6 +40,24 @@ interface PaymentFlowServiceAsync {
         params: PaymentFlowCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PaymentFlow>
+
+    /** @see create */
+    @Deprecated("deprecated")
+    fun create(
+        paymentFlowCreateRequest: PaymentFlowCreateRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PaymentFlow> =
+        create(
+            PaymentFlowCreateParams.builder()
+                .paymentFlowCreateRequest(paymentFlowCreateRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see create */
+    @Deprecated("deprecated")
+    fun create(paymentFlowCreateRequest: PaymentFlowCreateRequest): CompletableFuture<PaymentFlow> =
+        create(paymentFlowCreateRequest, RequestOptions.none())
 
     /** get payment_flow */
     fun retrieve(id: String): CompletableFuture<PaymentFlow> =
@@ -140,6 +159,26 @@ interface PaymentFlowServiceAsync {
             params: PaymentFlowCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PaymentFlow>>
+
+        /** @see create */
+        @Deprecated("deprecated")
+        fun create(
+            paymentFlowCreateRequest: PaymentFlowCreateRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            create(
+                PaymentFlowCreateParams.builder()
+                    .paymentFlowCreateRequest(paymentFlowCreateRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see create */
+        @Deprecated("deprecated")
+        fun create(
+            paymentFlowCreateRequest: PaymentFlowCreateRequest
+        ): CompletableFuture<HttpResponseFor<PaymentFlow>> =
+            create(paymentFlowCreateRequest, RequestOptions.none())
 
         /**
          * Returns a raw HTTP response for `get /api/payment_flows/{id}`, but is otherwise the same
