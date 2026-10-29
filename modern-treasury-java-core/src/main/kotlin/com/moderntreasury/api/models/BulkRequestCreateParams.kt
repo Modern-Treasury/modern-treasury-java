@@ -1805,6 +1805,7 @@ private constructor(
             private val currency: JsonField<Currency>,
             private val description: JsonField<String>,
             private val effectiveDate: JsonField<LocalDate>,
+            private val endToEndId: JsonField<String>,
             private val expiresAt: JsonField<OffsetDateTime>,
             private val externalId: JsonField<String>,
             private val fallbackType: JsonField<FallbackType>,
@@ -1872,6 +1873,9 @@ private constructor(
                 @JsonProperty("effective_date")
                 @ExcludeMissing
                 effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
+                @JsonProperty("end_to_end_id")
+                @ExcludeMissing
+                endToEndId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("expires_at")
                 @ExcludeMissing
                 expiresAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -1978,6 +1982,7 @@ private constructor(
                 currency,
                 description,
                 effectiveDate,
+                endToEndId,
                 expiresAt,
                 externalId,
                 fallbackType,
@@ -2118,6 +2123,17 @@ private constructor(
              *   (e.g. if the server responded with an unexpected value).
              */
             fun effectiveDate(): Optional<LocalDate> = effectiveDate.getOptional("effective_date")
+
+            /**
+             * A unique identifier passed through to the receiving bank. Only supported for `ach`
+             * (maximum 15 characters) and `wire` (maximum 35 characters). If not provided, Modern
+             * Treasury generates one. Some banks may truncate this value or use their own
+             * identifier instead.
+             *
+             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun endToEndId(): Optional<String> = endToEndId.getOptional("end_to_end_id")
 
             /**
              * RFP payments require an expires_at. This value must be past the effective_date.
@@ -2540,6 +2556,16 @@ private constructor(
             fun _effectiveDate(): JsonField<LocalDate> = effectiveDate
 
             /**
+             * Returns the raw JSON value of [endToEndId].
+             *
+             * Unlike [endToEndId], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("end_to_end_id")
+            @ExcludeMissing
+            fun _endToEndId(): JsonField<String> = endToEndId
+
+            /**
              * Returns the raw JSON value of [expiresAt].
              *
              * Unlike [expiresAt], this method doesn't throw if the JSON field has an unexpected
@@ -2894,6 +2920,7 @@ private constructor(
                 private var currency: JsonField<Currency> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
                 private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
+                private var endToEndId: JsonField<String> = JsonMissing.of()
                 private var expiresAt: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var externalId: JsonField<String> = JsonMissing.of()
                 private var fallbackType: JsonField<FallbackType> = JsonMissing.of()
@@ -2947,6 +2974,7 @@ private constructor(
                         currency = paymentOrderAsyncCreateRequest.currency
                         description = paymentOrderAsyncCreateRequest.description
                         effectiveDate = paymentOrderAsyncCreateRequest.effectiveDate
+                        endToEndId = paymentOrderAsyncCreateRequest.endToEndId
                         expiresAt = paymentOrderAsyncCreateRequest.expiresAt
                         externalId = paymentOrderAsyncCreateRequest.externalId
                         fallbackType = paymentOrderAsyncCreateRequest.fallbackType
@@ -3200,6 +3228,28 @@ private constructor(
                  */
                 fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
                     this.effectiveDate = effectiveDate
+                }
+
+                /**
+                 * A unique identifier passed through to the receiving bank. Only supported for
+                 * `ach` (maximum 15 characters) and `wire` (maximum 35 characters). If not
+                 * provided, Modern Treasury generates one. Some banks may truncate this value or
+                 * use their own identifier instead.
+                 */
+                fun endToEndId(endToEndId: String?) = endToEndId(JsonField.ofNullable(endToEndId))
+
+                /** Alias for calling [Builder.endToEndId] with `endToEndId.orElse(null)`. */
+                fun endToEndId(endToEndId: Optional<String>) = endToEndId(endToEndId.getOrNull())
+
+                /**
+                 * Sets [Builder.endToEndId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endToEndId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun endToEndId(endToEndId: JsonField<String>) = apply {
+                    this.endToEndId = endToEndId
                 }
 
                 /**
@@ -3953,6 +4003,7 @@ private constructor(
                         currency,
                         description,
                         effectiveDate,
+                        endToEndId,
                         expiresAt,
                         externalId,
                         fallbackType,
@@ -4016,6 +4067,7 @@ private constructor(
                 currency().ifPresent { it.validate() }
                 description()
                 effectiveDate()
+                endToEndId()
                 expiresAt()
                 externalId()
                 fallbackType().ifPresent { it.validate() }
@@ -4077,6 +4129,7 @@ private constructor(
                     (currency.asKnown().getOrNull()?.validity() ?: 0) +
                     (if (description.asKnown().isPresent) 1 else 0) +
                     (if (effectiveDate.asKnown().isPresent) 1 else 0) +
+                    (if (endToEndId.asKnown().isPresent) 1 else 0) +
                     (if (expiresAt.asKnown().isPresent) 1 else 0) +
                     (if (externalId.asKnown().isPresent) 1 else 0) +
                     (fallbackType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -9079,6 +9132,7 @@ private constructor(
                     currency == other.currency &&
                     description == other.description &&
                     effectiveDate == other.effectiveDate &&
+                    endToEndId == other.endToEndId &&
                     expiresAt == other.expiresAt &&
                     externalId == other.externalId &&
                     fallbackType == other.fallbackType &&
@@ -9127,6 +9181,7 @@ private constructor(
                     currency,
                     description,
                     effectiveDate,
+                    endToEndId,
                     expiresAt,
                     externalId,
                     fallbackType,
@@ -9165,7 +9220,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PaymentOrderAsyncCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
+                "PaymentOrderAsyncCreateRequest{amount=$amount, direction=$direction, originatingAccountId=$originatingAccountId, type=$type, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, chargeBearer=$chargeBearer, currency=$currency, description=$description, effectiveDate=$effectiveDate, endToEndId=$endToEndId, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, ledgerTransaction=$ledgerTransaction, ledgerTransactionId=$ledgerTransactionId, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, subtype=$subtype, transactionMonitoringEnabled=$transactionMonitoringEnabled, ultimateOriginatingAccountId=$ultimateOriginatingAccountId, ultimateOriginatingPartyAddress=$ultimateOriginatingPartyAddress, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, vendorAttributes=$vendorAttributes, additionalProperties=$additionalProperties}"
         }
 
         class ExpectedPaymentCreateRequest
@@ -12908,6 +12963,7 @@ private constructor(
             private val description: JsonField<String>,
             private val direction: JsonField<Direction>,
             private val effectiveDate: JsonField<LocalDate>,
+            private val endToEndId: JsonField<String>,
             private val expiresAt: JsonField<OffsetDateTime>,
             private val externalId: JsonField<String>,
             private val fallbackType: JsonField<FallbackType>,
@@ -12970,6 +13026,9 @@ private constructor(
                 @JsonProperty("effective_date")
                 @ExcludeMissing
                 effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
+                @JsonProperty("end_to_end_id")
+                @ExcludeMissing
+                endToEndId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("expires_at")
                 @ExcludeMissing
                 expiresAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -13066,6 +13125,7 @@ private constructor(
                 description,
                 direction,
                 effectiveDate,
+                endToEndId,
                 expiresAt,
                 externalId,
                 fallbackType,
@@ -13195,6 +13255,17 @@ private constructor(
              *   (e.g. if the server responded with an unexpected value).
              */
             fun effectiveDate(): Optional<LocalDate> = effectiveDate.getOptional("effective_date")
+
+            /**
+             * A unique identifier passed through to the receiving bank. Only supported for `ach`
+             * (maximum 15 characters) and `wire` (maximum 35 characters). If not provided, Modern
+             * Treasury generates one. Some banks may truncate this value or use their own
+             * identifier instead.
+             *
+             * @throws ModernTreasuryInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun endToEndId(): Optional<String> = endToEndId.getOptional("end_to_end_id")
 
             /**
              * RFP payments require an expires_at. This value must be past the effective_date.
@@ -13590,6 +13661,16 @@ private constructor(
             fun _effectiveDate(): JsonField<LocalDate> = effectiveDate
 
             /**
+             * Returns the raw JSON value of [endToEndId].
+             *
+             * Unlike [endToEndId], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("end_to_end_id")
+            @ExcludeMissing
+            fun _endToEndId(): JsonField<String> = endToEndId
+
+            /**
              * Returns the raw JSON value of [expiresAt].
              *
              * Unlike [expiresAt], this method doesn't throw if the JSON field has an unexpected
@@ -13898,6 +13979,7 @@ private constructor(
                 private var description: JsonField<String> = JsonMissing.of()
                 private var direction: JsonField<Direction> = JsonMissing.of()
                 private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
+                private var endToEndId: JsonField<String> = JsonMissing.of()
                 private var expiresAt: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var externalId: JsonField<String> = JsonMissing.of()
                 private var fallbackType: JsonField<FallbackType> = JsonMissing.of()
@@ -13946,6 +14028,7 @@ private constructor(
                     description = paymentOrderUpdateRequestWithId.description
                     direction = paymentOrderUpdateRequestWithId.direction
                     effectiveDate = paymentOrderUpdateRequestWithId.effectiveDate
+                    endToEndId = paymentOrderUpdateRequestWithId.endToEndId
                     expiresAt = paymentOrderUpdateRequestWithId.expiresAt
                     externalId = paymentOrderUpdateRequestWithId.externalId
                     fallbackType = paymentOrderUpdateRequestWithId.fallbackType
@@ -14194,6 +14277,28 @@ private constructor(
                  */
                 fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
                     this.effectiveDate = effectiveDate
+                }
+
+                /**
+                 * A unique identifier passed through to the receiving bank. Only supported for
+                 * `ach` (maximum 15 characters) and `wire` (maximum 35 characters). If not
+                 * provided, Modern Treasury generates one. Some banks may truncate this value or
+                 * use their own identifier instead.
+                 */
+                fun endToEndId(endToEndId: String?) = endToEndId(JsonField.ofNullable(endToEndId))
+
+                /** Alias for calling [Builder.endToEndId] with `endToEndId.orElse(null)`. */
+                fun endToEndId(endToEndId: Optional<String>) = endToEndId(endToEndId.getOrNull())
+
+                /**
+                 * Sets [Builder.endToEndId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endToEndId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun endToEndId(endToEndId: JsonField<String>) = apply {
+                    this.endToEndId = endToEndId
                 }
 
                 /**
@@ -14874,6 +14979,7 @@ private constructor(
                         description,
                         direction,
                         effectiveDate,
+                        endToEndId,
                         expiresAt,
                         externalId,
                         fallbackType,
@@ -14934,6 +15040,7 @@ private constructor(
                 description()
                 direction().ifPresent { it.validate() }
                 effectiveDate()
+                endToEndId()
                 expiresAt()
                 externalId()
                 fallbackType().ifPresent { it.validate() }
@@ -14992,6 +15099,7 @@ private constructor(
                     (if (description.asKnown().isPresent) 1 else 0) +
                     (direction.asKnown().getOrNull()?.validity() ?: 0) +
                     (if (effectiveDate.asKnown().isPresent) 1 else 0) +
+                    (if (endToEndId.asKnown().isPresent) 1 else 0) +
                     (if (expiresAt.asKnown().isPresent) 1 else 0) +
                     (if (externalId.asKnown().isPresent) 1 else 0) +
                     (fallbackType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -19702,6 +19810,7 @@ private constructor(
                     description == other.description &&
                     direction == other.direction &&
                     effectiveDate == other.effectiveDate &&
+                    endToEndId == other.endToEndId &&
                     expiresAt == other.expiresAt &&
                     externalId == other.externalId &&
                     fallbackType == other.fallbackType &&
@@ -19747,6 +19856,7 @@ private constructor(
                     description,
                     direction,
                     effectiveDate,
+                    endToEndId,
                     expiresAt,
                     externalId,
                     fallbackType,
@@ -19782,7 +19892,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PaymentOrderUpdateRequestWithId{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, currency=$currency, description=$description, direction=$direction, effectiveDate=$effectiveDate, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingAccountId=$originatingAccountId, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, type=$type, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
+                "PaymentOrderUpdateRequestWithId{id=$id, accounting=$accounting, accountingCategoryId=$accountingCategoryId, accountingLedgerClassId=$accountingLedgerClassId, amount=$amount, chargeBearer=$chargeBearer, counterpartyId=$counterpartyId, currency=$currency, description=$description, direction=$direction, effectiveDate=$effectiveDate, endToEndId=$endToEndId, expiresAt=$expiresAt, externalId=$externalId, fallbackType=$fallbackType, foreignExchangeContract=$foreignExchangeContract, foreignExchangeIndicator=$foreignExchangeIndicator, lineItems=$lineItems, metadata=$metadata, nsfProtected=$nsfProtected, originatingAccountId=$originatingAccountId, originatingPartyAddress=$originatingPartyAddress, originatingPartyName=$originatingPartyName, originatingSecondaryPartyName=$originatingSecondaryPartyName, priority=$priority, processAfter=$processAfter, purpose=$purpose, receivingAccount=$receivingAccount, receivingAccountId=$receivingAccountId, reconciliationStatus=$reconciliationStatus, remittanceInformation=$remittanceInformation, sendRemittanceAdvice=$sendRemittanceAdvice, statementDescriptor=$statementDescriptor, status=$status, subtype=$subtype, type=$type, ultimateOriginatingPartyIdentifier=$ultimateOriginatingPartyIdentifier, ultimateOriginatingPartyName=$ultimateOriginatingPartyName, ultimateReceivingPartyIdentifier=$ultimateReceivingPartyIdentifier, ultimateReceivingPartyName=$ultimateReceivingPartyName, additionalProperties=$additionalProperties}"
         }
 
         class ExpectedPaymentUpdateRequestWithId
