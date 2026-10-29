@@ -587,6 +587,8 @@ private constructor(
 
             @JvmField val EFT_TRACE_NUMBER = of("eft_trace_number")
 
+            @JvmField val END_TO_END_IDENTIFICATION = of("end_to_end_identification")
+
             @JvmField val EVOLVE_CORE_BATCH = of("evolve_core_batch")
 
             @JvmField val EVOLVE_CORE_FILE_KEY = of("evolve_core_file_key")
@@ -613,6 +615,8 @@ private constructor(
             @JvmField val GOLDMAN_SACHS_REQUEST_ID = of("goldman_sachs_request_id")
 
             @JvmField val GOLDMAN_SACHS_UNIQUE_PAYMENT_ID = of("goldman_sachs_unique_payment_id")
+
+            @JvmField val INSTRUCTION_IDENTIFICATION = of("instruction_identification")
 
             @JvmField val JPMC_CCN = of("jpmc_ccn")
 
@@ -667,6 +671,8 @@ private constructor(
 
             @JvmField val RBC_WIRE_REFERENCE_ID = of("rbc_wire_reference_id")
 
+            @JvmField val RETURN_IDENTIFICATION = of("return_identification")
+
             @JvmField val RTP_INSTRUCTION_ID = of("rtp_instruction_id")
 
             @JvmField val SILVERGATE_PAYMENT_ID = of("silvergate_payment_id")
@@ -679,10 +685,14 @@ private constructor(
 
             @JvmField val SWIFT_UETR = of("swift_uetr")
 
+            @JvmField val TRANSACTION_IDENTIFICATION = of("transaction_identification")
+
             @JvmField val TURNKEY_ACTIVITY_ID = of("turnkey_activity_id")
 
             @JvmField
             val TURNKEY_SEND_TRANSACTION_STATUS_ID = of("turnkey_send_transaction_status_id")
+
+            @JvmField val UETR = of("uetr")
 
             @JvmField
             val UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER = of("umb_product_partner_account_number")
@@ -748,6 +758,7 @@ private constructor(
             CURRENCYCLOUD_CONVERSION_ID,
             CURRENCYCLOUD_PAYMENT_ID,
             EFT_TRACE_NUMBER,
+            END_TO_END_IDENTIFICATION,
             EVOLVE_CORE_BATCH,
             EVOLVE_CORE_FILE_KEY,
             EVOLVE_CORE_SEQ,
@@ -761,6 +772,7 @@ private constructor(
             GOLDMAN_SACHS_PAYMENT_REQUEST_ID,
             GOLDMAN_SACHS_REQUEST_ID,
             GOLDMAN_SACHS_UNIQUE_PAYMENT_ID,
+            INSTRUCTION_IDENTIFICATION,
             JPMC_CCN,
             JPMC_CLEARING_SYSTEM_REFERENCE,
             JPMC_CUSTOMER_REFERENCE_ID,
@@ -787,14 +799,17 @@ private constructor(
             PNC_REQUEST_FOR_PAYMENT_ID,
             PNC_TRANSACTION_REFERENCE_NUMBER,
             RBC_WIRE_REFERENCE_ID,
+            RETURN_IDENTIFICATION,
             RTP_INSTRUCTION_ID,
             SILVERGATE_PAYMENT_ID,
             SVB_END_TO_END_ID,
             SVB_PAYMENT_ID,
             SWIFT_MIR,
             SWIFT_UETR,
+            TRANSACTION_IDENTIFICATION,
             TURNKEY_ACTIVITY_ID,
             TURNKEY_SEND_TRANSACTION_STATUS_ID,
+            UETR,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
@@ -849,6 +864,7 @@ private constructor(
             CURRENCYCLOUD_CONVERSION_ID,
             CURRENCYCLOUD_PAYMENT_ID,
             EFT_TRACE_NUMBER,
+            END_TO_END_IDENTIFICATION,
             EVOLVE_CORE_BATCH,
             EVOLVE_CORE_FILE_KEY,
             EVOLVE_CORE_SEQ,
@@ -862,6 +878,7 @@ private constructor(
             GOLDMAN_SACHS_PAYMENT_REQUEST_ID,
             GOLDMAN_SACHS_REQUEST_ID,
             GOLDMAN_SACHS_UNIQUE_PAYMENT_ID,
+            INSTRUCTION_IDENTIFICATION,
             JPMC_CCN,
             JPMC_CLEARING_SYSTEM_REFERENCE,
             JPMC_CUSTOMER_REFERENCE_ID,
@@ -888,14 +905,17 @@ private constructor(
             PNC_REQUEST_FOR_PAYMENT_ID,
             PNC_TRANSACTION_REFERENCE_NUMBER,
             RBC_WIRE_REFERENCE_ID,
+            RETURN_IDENTIFICATION,
             RTP_INSTRUCTION_ID,
             SILVERGATE_PAYMENT_ID,
             SVB_END_TO_END_ID,
             SVB_PAYMENT_ID,
             SWIFT_MIR,
             SWIFT_UETR,
+            TRANSACTION_IDENTIFICATION,
             TURNKEY_ACTIVITY_ID,
             TURNKEY_SEND_TRANSACTION_STATUS_ID,
+            UETR,
             UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER,
             USBANK_PAYMENT_APPLICATION_REFERENCE_ID,
             USBANK_PAYMENT_ID,
@@ -956,6 +976,7 @@ private constructor(
                 CURRENCYCLOUD_CONVERSION_ID -> Value.CURRENCYCLOUD_CONVERSION_ID
                 CURRENCYCLOUD_PAYMENT_ID -> Value.CURRENCYCLOUD_PAYMENT_ID
                 EFT_TRACE_NUMBER -> Value.EFT_TRACE_NUMBER
+                END_TO_END_IDENTIFICATION -> Value.END_TO_END_IDENTIFICATION
                 EVOLVE_CORE_BATCH -> Value.EVOLVE_CORE_BATCH
                 EVOLVE_CORE_FILE_KEY -> Value.EVOLVE_CORE_FILE_KEY
                 EVOLVE_CORE_SEQ -> Value.EVOLVE_CORE_SEQ
@@ -969,6 +990,7 @@ private constructor(
                 GOLDMAN_SACHS_PAYMENT_REQUEST_ID -> Value.GOLDMAN_SACHS_PAYMENT_REQUEST_ID
                 GOLDMAN_SACHS_REQUEST_ID -> Value.GOLDMAN_SACHS_REQUEST_ID
                 GOLDMAN_SACHS_UNIQUE_PAYMENT_ID -> Value.GOLDMAN_SACHS_UNIQUE_PAYMENT_ID
+                INSTRUCTION_IDENTIFICATION -> Value.INSTRUCTION_IDENTIFICATION
                 JPMC_CCN -> Value.JPMC_CCN
                 JPMC_CLEARING_SYSTEM_REFERENCE -> Value.JPMC_CLEARING_SYSTEM_REFERENCE
                 JPMC_CUSTOMER_REFERENCE_ID -> Value.JPMC_CUSTOMER_REFERENCE_ID
@@ -995,14 +1017,17 @@ private constructor(
                 PNC_REQUEST_FOR_PAYMENT_ID -> Value.PNC_REQUEST_FOR_PAYMENT_ID
                 PNC_TRANSACTION_REFERENCE_NUMBER -> Value.PNC_TRANSACTION_REFERENCE_NUMBER
                 RBC_WIRE_REFERENCE_ID -> Value.RBC_WIRE_REFERENCE_ID
+                RETURN_IDENTIFICATION -> Value.RETURN_IDENTIFICATION
                 RTP_INSTRUCTION_ID -> Value.RTP_INSTRUCTION_ID
                 SILVERGATE_PAYMENT_ID -> Value.SILVERGATE_PAYMENT_ID
                 SVB_END_TO_END_ID -> Value.SVB_END_TO_END_ID
                 SVB_PAYMENT_ID -> Value.SVB_PAYMENT_ID
                 SWIFT_MIR -> Value.SWIFT_MIR
                 SWIFT_UETR -> Value.SWIFT_UETR
+                TRANSACTION_IDENTIFICATION -> Value.TRANSACTION_IDENTIFICATION
                 TURNKEY_ACTIVITY_ID -> Value.TURNKEY_ACTIVITY_ID
                 TURNKEY_SEND_TRANSACTION_STATUS_ID -> Value.TURNKEY_SEND_TRANSACTION_STATUS_ID
+                UETR -> Value.UETR
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Value.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
                     Value.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
@@ -1063,6 +1088,7 @@ private constructor(
                 CURRENCYCLOUD_CONVERSION_ID -> Known.CURRENCYCLOUD_CONVERSION_ID
                 CURRENCYCLOUD_PAYMENT_ID -> Known.CURRENCYCLOUD_PAYMENT_ID
                 EFT_TRACE_NUMBER -> Known.EFT_TRACE_NUMBER
+                END_TO_END_IDENTIFICATION -> Known.END_TO_END_IDENTIFICATION
                 EVOLVE_CORE_BATCH -> Known.EVOLVE_CORE_BATCH
                 EVOLVE_CORE_FILE_KEY -> Known.EVOLVE_CORE_FILE_KEY
                 EVOLVE_CORE_SEQ -> Known.EVOLVE_CORE_SEQ
@@ -1076,6 +1102,7 @@ private constructor(
                 GOLDMAN_SACHS_PAYMENT_REQUEST_ID -> Known.GOLDMAN_SACHS_PAYMENT_REQUEST_ID
                 GOLDMAN_SACHS_REQUEST_ID -> Known.GOLDMAN_SACHS_REQUEST_ID
                 GOLDMAN_SACHS_UNIQUE_PAYMENT_ID -> Known.GOLDMAN_SACHS_UNIQUE_PAYMENT_ID
+                INSTRUCTION_IDENTIFICATION -> Known.INSTRUCTION_IDENTIFICATION
                 JPMC_CCN -> Known.JPMC_CCN
                 JPMC_CLEARING_SYSTEM_REFERENCE -> Known.JPMC_CLEARING_SYSTEM_REFERENCE
                 JPMC_CUSTOMER_REFERENCE_ID -> Known.JPMC_CUSTOMER_REFERENCE_ID
@@ -1102,14 +1129,17 @@ private constructor(
                 PNC_REQUEST_FOR_PAYMENT_ID -> Known.PNC_REQUEST_FOR_PAYMENT_ID
                 PNC_TRANSACTION_REFERENCE_NUMBER -> Known.PNC_TRANSACTION_REFERENCE_NUMBER
                 RBC_WIRE_REFERENCE_ID -> Known.RBC_WIRE_REFERENCE_ID
+                RETURN_IDENTIFICATION -> Known.RETURN_IDENTIFICATION
                 RTP_INSTRUCTION_ID -> Known.RTP_INSTRUCTION_ID
                 SILVERGATE_PAYMENT_ID -> Known.SILVERGATE_PAYMENT_ID
                 SVB_END_TO_END_ID -> Known.SVB_END_TO_END_ID
                 SVB_PAYMENT_ID -> Known.SVB_PAYMENT_ID
                 SWIFT_MIR -> Known.SWIFT_MIR
                 SWIFT_UETR -> Known.SWIFT_UETR
+                TRANSACTION_IDENTIFICATION -> Known.TRANSACTION_IDENTIFICATION
                 TURNKEY_ACTIVITY_ID -> Known.TURNKEY_ACTIVITY_ID
                 TURNKEY_SEND_TRANSACTION_STATUS_ID -> Known.TURNKEY_SEND_TRANSACTION_STATUS_ID
+                UETR -> Known.UETR
                 UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER -> Known.UMB_PRODUCT_PARTNER_ACCOUNT_NUMBER
                 USBANK_PAYMENT_APPLICATION_REFERENCE_ID ->
                     Known.USBANK_PAYMENT_APPLICATION_REFERENCE_ID
