@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.34.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.33.0...v7.34.0) (2026-10-30)
+
+
+### Features
+
+* regenerate SDKs from 176269eb5098cfc524613566c8e9ea10851696ed ([dac8ad4](https://github.com/Modern-Treasury/modern-treasury-java/commit/dac8ad4d23608a1efef4309f67af65bb0c44138a))
+* regenerate SDKs from 1b98627bc3fb6fba36199f351d17a128b60bc444 ([ae1bd02](https://github.com/Modern-Treasury/modern-treasury-java/commit/ae1bd026e1099e71c851731969b462b37c045837))
+* regenerate SDKs from 63071125f6951ec66ee60d220567de6b3f3edf2a ([d2acb1b](https://github.com/Modern-Treasury/modern-treasury-java/commit/d2acb1b42f1e0cab207568b29bebf0ad5bb61fd8))
+* regenerate SDKs from 854e6ca8ee0d4fcbc920723911a39b1acb617730 ([f24764e](https://github.com/Modern-Treasury/modern-treasury-java/commit/f24764e5a7332beee16eb9b52eaf570fe97d7c82))
+* regenerate SDKs from a3780cfef61e2467da889269d05e9d4215f3feea ([1ead7c0](https://github.com/Modern-Treasury/modern-treasury-java/commit/1ead7c04ce514e8e5b94c89d431e4ec202e4cf74))
+
 ## [7.33.0](https://github.com/Modern-Treasury/modern-treasury-java/compare/v7.32.0...v7.33.0) (2026-10-28)
 
 
