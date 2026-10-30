@@ -15,11 +15,6 @@ internal class CounterpartyCreateParamsTest {
     fun create() {
         CounterpartyCreateParams.builder()
             .name("name")
-            .accounting(
-                CounterpartyCreateParams.Accounting.builder()
-                    .type(CounterpartyCreateParams.Accounting.Type.CUSTOMER)
-                    .build()
-            )
             .addAccount(
                 CounterpartyCreateParams.Account.builder()
                     .addAccountDetail(
@@ -101,7 +96,6 @@ internal class CounterpartyCreateParamsTest {
             )
             .email("dev@stainless.com")
             .externalId("external_id")
-            .ledgerType(CounterpartyCreateParams.LedgerType.CUSTOMER)
             .legalEntity(
                 CounterpartyCreateParams.LegalEntityCreateRequest.builder()
                     .legalEntityType(
@@ -553,11 +547,6 @@ internal class CounterpartyCreateParamsTest {
         val params =
             CounterpartyCreateParams.builder()
                 .name("name")
-                .accounting(
-                    CounterpartyCreateParams.Accounting.builder()
-                        .type(CounterpartyCreateParams.Accounting.Type.CUSTOMER)
-                        .build()
-                )
                 .addAccount(
                     CounterpartyCreateParams.Account.builder()
                         .addAccountDetail(
@@ -640,7 +629,6 @@ internal class CounterpartyCreateParamsTest {
                 )
                 .email("dev@stainless.com")
                 .externalId("external_id")
-                .ledgerType(CounterpartyCreateParams.LedgerType.CUSTOMER)
                 .legalEntity(
                     CounterpartyCreateParams.LegalEntityCreateRequest.builder()
                         .legalEntityType(
@@ -1105,12 +1093,6 @@ internal class CounterpartyCreateParamsTest {
         val body = params._body()
 
         assertThat(body.name()).contains("name")
-        assertThat(body.accounting())
-            .contains(
-                CounterpartyCreateParams.Accounting.builder()
-                    .type(CounterpartyCreateParams.Accounting.Type.CUSTOMER)
-                    .build()
-            )
         assertThat(body.accounts().getOrNull())
             .containsExactly(
                 CounterpartyCreateParams.Account.builder()
@@ -1193,7 +1175,6 @@ internal class CounterpartyCreateParamsTest {
             )
         assertThat(body.email()).contains("dev@stainless.com")
         assertThat(body.externalId()).contains("external_id")
-        assertThat(body.ledgerType()).contains(CounterpartyCreateParams.LedgerType.CUSTOMER)
         assertThat(body.legalEntity())
             .contains(
                 CounterpartyCreateParams.LegalEntityCreateRequest.builder()
